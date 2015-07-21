@@ -761,16 +761,16 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					}
 					data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
 					//Set attempts
-					Label attempts=new Label(Integer.toString(noOfAttempts));
-					attempts.setStyleName(STYLE_TABLE_CENTER);
+//					Label attempts=new Label(Integer.toString(noOfAttempts));
+//					attempts.setStyleName(STYLE_TABLE_CENTER);
 //					data.setValue(i, 4, attempts.toString());
 
 					//Set time spent
-					data.setValue(i, 5,AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+					data.setValue(i, 4,AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
 
 					//Set reactions
 					int reaction=result.get(i).getReaction();
-					data.setValue(i, 6, new AnalyticsReactionWidget(reaction).toString());
+					data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
 				}
 			}
 			Options options = Options.create();

@@ -114,11 +114,16 @@ public class AddResourceAssessmentsPresenter extends PresenterWidget<IsAddResour
 
 	@Override
 	public boolean validateIsAssessments(String collectionType,String category,String type) {
-		boolean flag=true;
-		if(!QUESTION.equalsIgnoreCase(category)&& ASSESSMENT.equals(collectionType) && !type.equalsIgnoreCase("OE")){
-			flag = false;
+		boolean flag=false;
+		if(ASSESSMENT.equalsIgnoreCase(collectionType)){
+			if(QUESTION.equalsIgnoreCase(category) && (type!=null && !(type.equalsIgnoreCase("OE")))){
+				flag=true;
+			}else{
+				flag=false;
+			}
+		}else{
+			flag=true;
 		}
 		return flag;
 	}
-
 }

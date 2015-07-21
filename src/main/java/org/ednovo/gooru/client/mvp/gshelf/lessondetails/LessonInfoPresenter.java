@@ -141,7 +141,6 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			public void onSuccess(Void result) {
 				folderObj.setTitle(createDo.getTitle());
 				folderObj.setType(LESSON);
-				//folderDo.setGooruOid(id);
 				
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,isCreateColl);
 				if(isCreateColl && type!=null){

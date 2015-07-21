@@ -58,6 +58,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLABORATORS, contentId, type);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.GROUP_BY_STATUS, GooruConstants.TRUE);
+		logger.info("getAssociatedCollaborators:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 
@@ -92,6 +93,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	public ArrayList<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId){
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_COLLABORATORS, collectionId);
+		logger.info("addCollaboratorToCollectionById:"+url);
 		String formData = lstEmailId.toString();
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword(), formData);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -121,6 +123,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	public void removeCollaboratorsFromListByEmailIds(String collectionId, String toRemove){
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLABORATORS, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, toRemove);
+		logger.info("removeCollaboratorsFromListByEmailIds:"+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 

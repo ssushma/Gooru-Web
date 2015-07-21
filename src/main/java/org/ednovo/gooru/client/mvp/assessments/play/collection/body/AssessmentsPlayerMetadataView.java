@@ -159,6 +159,10 @@ public class AssessmentsPlayerMetadataView extends BaseViewWithHandlers<Assessme
 				int height=rightPanelMetadata.getElement().getOffsetHeight();
 				if(height>650){
 					leftPanelContainer.getElement().setAttribute("style", "min-height:"+height+"px;");
+				}else{
+					int clientHeight = Window.getClientHeight();
+					clientHeight = clientHeight - 175;
+					leftPanelContainer.getElement().setAttribute("style", "min-height:"+clientHeight+"px;");
 				}
 			}
 	      });

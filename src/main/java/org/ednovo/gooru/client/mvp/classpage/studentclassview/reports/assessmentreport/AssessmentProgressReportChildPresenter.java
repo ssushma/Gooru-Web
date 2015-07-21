@@ -71,11 +71,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 	String sessionId=null;
 
-
-
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
-
+	
 	int count=0;
 
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
@@ -116,7 +113,6 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		classObj.setAssessmentId(collectionId);
 		classObj.setClassId(classId);
 		classObj.setSessionId(sessionId);
-
 		getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId,printData);
 	}
 
@@ -135,7 +131,12 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
 
 		if (sessionId != null){
-			AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+			ClassDo classObj=new ClassDo();
+			classObj.setAssessmentId(collectionId);
+			classObj.setClassId(classId);
+			classObj.setSessionId(sessionId);
+			
+			AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 				@Override
 				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 
@@ -193,7 +194,12 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			@Override
 			public void onSuccess() {
 				getView().loadingIcon();
-				AppClientFactory.getInjector().getAnalyticsService().getUserSessionDataByUser(StringUtil.getClassObj(),collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
+				ClassDo classObj=new ClassDo();
+				classObj.setAssessmentId(collectionId);
+				classObj.setClassId(classpageId);
+				classObj.setSessionId(sessionId);
+
+				AppClientFactory.getInjector().getAnalyticsService().getUserSessionDataByUser(classObj,collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 
 					@Override
 					public void onSuccess(ArrayList<UserDataDo> result) {
@@ -326,7 +332,11 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 	@Override
 	public void getCollectionScoreForSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+		ClassDo classObj=new ClassDo();
+		classObj.setAssessmentId(collectionId);
+		classObj.setClassId(classId);
+		classObj.setSessionId(sessionId);
+		AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 
