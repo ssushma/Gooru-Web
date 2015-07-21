@@ -103,6 +103,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
 		lblErrorMessage.setText("");
+		lblErrorMessage.setVisible(false);
 		courseTitle.getElement().setPropertyString("placeholder", i18n.GL3347());
 		courseTitle.addBlurHandler(new BlurHandler() {
 			@Override
@@ -259,13 +260,14 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		if(validateInputs()){
-			lblErrorMessage.setVisible(true);
+			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(courseTitle.getText().trim(),false);	
 		}else{
 			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
-			courseTitle.addStyleName("textAreaErrorMessage");
+			courseTitle.setStyleName("textAreaErrorMessage");
+			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");
 		}
 
@@ -274,13 +276,14 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
 		if(validateInputs()){
-			lblErrorMessage.setVisible(true);
+			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(courseTitle.getText().trim(),true);
 		}else{
 			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
-			courseTitle.addStyleName("textAreaErrorMessage");
+			courseTitle.setStyleName("textAreaErrorMessage");
+			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");	
 		}
 	}

@@ -216,7 +216,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
 				@Override
 				public void onSuccess(CollectionItemDo result) {
-					if(result.getStatusCode()==200){
+					if(result!=null && result.getStatusCode()==200){
 						successparams.put("id", selectedFolderOrCollectionid);
 						getView().displaySuccessPopup(title,selectedFolderOrCollectionid,urlparams,searchType,null);
 					}else{
@@ -387,7 +387,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			AppClientFactory.getInjector().getResourceService().CopyToplevelMyCollections(getCollectionGooruId(), folderId, this.collectionTitle, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
-					if(result.getStatusCode()==200){
+					if(result!=null  && result.getStatusCode()==200){
 						FolderDo folderDo=getFolderDo(result);
 						HashMap<String,String> params = new HashMap<String,String>();
 						if(urlparams!=null && urlparams.get("o3")!=null) {
@@ -428,7 +428,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		AppClientFactory.getInjector().getResourceService().CopyCollectionToLesson(courseId, unitId, lessonId, getCollectionGooruId(),this.collectionTitle, new org.ednovo.gooru.application.client.SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
-				if(result.getStatusCode()==200){
+				if(result!=null && result.getStatusCode()==200){
 					FolderDo folderDo=getFolderDo(result);
 					HashMap<String,String> params = new HashMap<String,String>();
 					if(urlparams!=null && urlparams.get("o3")!=null) {
@@ -469,7 +469,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		AppClientFactory.getInjector().getResourceService().moveCollectionTOLesson(courseId, unitId, lessonId, getCollectionGooruId(), new org.ednovo.gooru.application.client.SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
-				if(result.getStatusCode()==200){
+				if(result!=null && result.getStatusCode()==200){
 					FolderDo folderDo=getFolderDo(result);
 					HashMap<String,String> params = new HashMap<String,String>();
 					if(urlparams!=null && urlparams.get("o3")!=null) {
@@ -505,7 +505,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		AppClientFactory.getInjector().getResourceService().moveCollectionToMyCOllections(getCollectionGooruId(), folderId, this.collectionTitle, new SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
-				if(result.getStatusCode()==200){
+				if(result!=null && result.getStatusCode()==200){
 					FolderDo folderDo=getFolderDo(result);
 					HashMap<String,String> params = new HashMap<String,String>();
 					if(urlparams!=null && urlparams.get("o3")!=null) {
