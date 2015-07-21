@@ -831,7 +831,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiHandler("collectionListScrollpanel")
 	public void onScroll(ScrollEvent event){
-		//executeScroll(true);
+		executeScroll(true);
 	}
 
 	@Override
