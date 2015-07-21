@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPre
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
-import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -110,13 +109,14 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 
 	@Override
 	public void createAndSaveLessonDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-				params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+				getView().resetBtns();
+				params.put("o1",o1);
+				params.put("o2",o2);
 				params.put("o3",result.getGooruOid());
 				params.put("view", "Course");
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
@@ -139,6 +139,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				getView().resetBtns();
 				folderObj.setTitle(createDo.getTitle());
 				folderObj.setType(LESSON);
 				
@@ -176,6 +177,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
+				getView().resetBtns();
 				getView().callCreateAndUpdate(isCreate,value,type);
 			}
 		});

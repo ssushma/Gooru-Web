@@ -24,11 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.skils;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : KeyDo.java
  * 
@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class KeyDo implements Serializable{
+public class KeyDo implements IsSerializable{
 	/**
 	 */
 	private static final long serialVersionUID = 1L;

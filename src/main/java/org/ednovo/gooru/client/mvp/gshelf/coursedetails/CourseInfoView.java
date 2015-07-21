@@ -259,6 +259,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	}
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		saveCourseBtn.addStyleName("disabled");
+		saveCourseBtn.setEnabled(false);
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
@@ -269,12 +271,15 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			courseTitle.setStyleName("textAreaErrorMessage");
 			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");
+			resetBtns();
 		}
 
 	}
 
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
+		nextUnitBtn.addStyleName("disabled");
+		nextUnitBtn.setEnabled(false);
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
@@ -284,7 +289,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			lblErrorMessage.setVisible(true);
 			courseTitle.setStyleName("textAreaErrorMessage");
 			courseTitle.addStyleName("form-control");
-			lblErrorMessage.setText("Please Enter Course Title");	
+			lblErrorMessage.setText("Please Enter Course Title");
+			resetBtns();
 		}
 	}
 	/**
@@ -411,5 +417,13 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public void courseTitleKeyUphandler(KeyUpEvent event){
 		courseTitle.removeStyleName("textAreaErrorMessage");
 		lblErrorMessage.setVisible(false);
+	}
+	
+	@Override
+	public void resetBtns() {
+		saveCourseBtn.removeStyleName("disabled");
+		saveCourseBtn.setEnabled(true);
+		nextUnitBtn.removeStyleName("disabled");
+		nextUnitBtn.setEnabled(true);
 	}
 }

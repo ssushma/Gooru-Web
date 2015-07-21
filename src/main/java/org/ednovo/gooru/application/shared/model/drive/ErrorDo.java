@@ -24,13 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.drive;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class ErrorDo implements Serializable{
+public class ErrorDo implements IsSerializable{
 	/**
 	 * 
 	 */

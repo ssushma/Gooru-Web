@@ -1,12 +1,11 @@
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class LastModifiedUserDo implements Serializable{
+public class LastModifiedUserDo implements IsSerializable{
 
 	/**
 	 * 

@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonFilter("userRole")
 @JsonInclude(Include.NON_NULL)
-public class UserRoleDo implements Serializable {
+public class UserRoleDo implements IsSerializable {
 
 	/**
 	 *

@@ -24,16 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.featured;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class FeaturedCollectionContentDo implements Serializable{
+public class FeaturedCollectionContentDo implements IsSerializable{
 
 	private static final long serialVersionUID = -6903126019265446978L;
 

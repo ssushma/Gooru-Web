@@ -24,12 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
 import java.util.Date;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 
-public class TagDo implements Serializable {
+public class TagDo implements IsSerializable {
 
 	/**
 	 *
