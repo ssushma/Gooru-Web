@@ -583,9 +583,10 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 				}
 			});
 		}else{
+			clearSlot(COLLECTION_REPORTS_SLOT);
 			getView().hidePanel();
-			 getView().showMessageWhenDataNotFound();
 			collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
+			setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 		}
 	}
 
