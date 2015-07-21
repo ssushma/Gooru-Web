@@ -174,7 +174,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 			if(COURSE.equalsIgnoreCase(type)){
 				enableCreateButtons(false);
+				pnlAddContainer.setVisible(true);
 				h2Title.setText(i18n.GL1180());
+				lblAddNew.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
 				enableCreateButtons(true);

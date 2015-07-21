@@ -22,14 +22,14 @@
 			<g:HTMLPanel ui:field="pnlMainButtonsContainer">
 				<g:VerticalPanel styleName="tableDiv" ui:field="pnlCourseList" />
 				<g:HTMLPanel ui:field="pnlAddContainer" styleName="addCourse">
-					<event:HTMLEventPanel ui:field="createPanel">
-						<span>+ Add New</span>
-						<g:Label ui:field="lblAddNew" />
+					<event:HTMLEventPanel styleName="courseTextAdd" ui:field="createPanel">
+						<span class="courseTextAdd">+ Add New</span>
+						<g:Label styleName="courseTextAdd" ui:field="lblAddNew" />
 					</event:HTMLEventPanel>
-					<g:HTMLPanel ui:field="pnlCreate" styleName="pnlCreate">
-						<g:Label ui:field="lblAddNewForResource" styleName="pnlCreate" />
+					<g:HTMLPanel ui:field="pnlCreate" styleName="pnlCreate courseTextAdd">
+						<g:Label ui:field="lblAddNewForResource" styleName="pnlCreate courseTextAdd" />
 						or
-						<g:Label ui:field="lblAddNewForQuestion" styleName="pnlCreate" />
+						<g:Label ui:field="lblAddNewForQuestion" styleName="pnlCreate courseTextAdd" />
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
