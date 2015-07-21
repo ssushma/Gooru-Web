@@ -178,7 +178,7 @@ public class TinyMCE extends Composite{
      */
     protected void onLoad() {
         super.onLoad();
-        
+
         DeferredCommand.addCommand(new Command() {
             public void execute() {
                     setWidth("100%");
@@ -187,7 +187,7 @@ public class TinyMCE extends Composite{
                     setMarkAsBlankLabel();
             }
     });
-        
+
       /*  Scheduler.get().scheduleDeferred(new ScheduledCommand(){
 			@Override
 			public void execute() {
@@ -387,8 +387,6 @@ public class TinyMCE extends Composite{
 		    theme_advanced_toolbar_align : "left",
 		    theme_advanced_statusbar_location : "none",
 		    plugins : 'asciimath,asciisvg,table,inlinepopups,fillintheblank',
-		    AScgiloc : 'http://www.imathas.com/editordemo/php/svgimg.php',			      //change me
-		  	ASdloc : 'http://www.imathas.com/editordemo/jscripts/tiny_mce/plugins/asciisvg/js/d.svg',  //change me
 		  	     setup : function (ed) {
 		  	     	ed.onKeyPress.add(function(ed, event) {
       				var content=this.getContent({format : 'raw'});
@@ -433,10 +431,7 @@ public class TinyMCE extends Composite{
 								event.returnValue = false; // disable Enter Key
 				  	     	}
       				});
-				},
-
-
-		    content_css : "css/content.css"
+				}
 		});
 	}-*/;
 
@@ -516,7 +511,7 @@ public class TinyMCE extends Composite{
 		}
 		return noHTMLString.length();
 	}
-	
+
 	public void clearErrorMessage(String tinyMceId){
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText("");
