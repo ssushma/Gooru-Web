@@ -259,7 +259,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				}
 			}
 		}
-		if(tabView==null || tabView.equals(COURSE)){
+		if(tabView==null || tabView.equalsIgnoreCase(COURSE)){
 			enableDisableCourseButton(true);
 			organizelbl.setText(i18n.GL3335());
 		//	btnSelectedText.setText(i18n.GL3335());
@@ -270,7 +270,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			createNewAssessment.setVisible(false);
 			collectionListScrollpanel.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
 			
-		}else if(tabView.equals(FOLDER)){
+		}else if(tabView.equalsIgnoreCase(FOLDER)){
 			enableDisableCourseButton(false);
 			organizelbl.setText(i18n.GL0180());
 		//	btnSelectedText.setText(i18n.GL0180());
@@ -602,8 +602,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		Iterator<Widget> widgets = shelfFolderTree.iterator();
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
+			if(((ShelfTreeWidget) widget).getCollectionDo()!=null){
 			if (widget instanceof ShelfTreeWidget && ((ShelfTreeWidget) widget).getCollectionDo().getGooruOid().equals(collectionId)) {
 				flag = true;
+			}
 			}
 		}
 		return flag;

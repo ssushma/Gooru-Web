@@ -126,6 +126,8 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 	
 	@UiHandler("btnSaveExternalAssessment")
 	public void clickEventOfSave(ClickEvent event){
+		btnSaveExternalAssessment.addStyleName("disabled");
+		btnSaveExternalAssessment.setEnabled(false);
 		String assessmentExistingTitle=txtAssessmentTitle.getText();
 		String assessmentURL=txtAssessmentURL.getText();
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
@@ -218,5 +220,11 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			pnlSharable.addStyleName(SELECTEDSTYLE);
 			lblRequiresNo.addStyleName(SELECTEDSTYLE);
 		}
+	}
+	
+	@Override
+	public void resetBtns() {
+		btnSaveExternalAssessment.removeStyleName("disabled");
+		btnSaveExternalAssessment.setEnabled(true);
 	}
 }
