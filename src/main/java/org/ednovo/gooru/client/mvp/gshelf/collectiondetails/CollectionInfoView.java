@@ -147,6 +147,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public CollectionInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
+		lblErrorMessage.setVisible(false);
 		collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
 
 		collectionTitle.addBlurHandler(new BlurHandler() {
@@ -898,7 +899,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	
 	@UiHandler("collectionTitle")
 	public void collectionTitleKeyUphandler(KeyUpEvent event){
-		collectionTitle.addStyleName("textAreaErrorMessage");
+		collectionTitle.removeStyleName("textAreaErrorMessage");
 		lblErrorMessage.setVisible(false);
 	}
 }
