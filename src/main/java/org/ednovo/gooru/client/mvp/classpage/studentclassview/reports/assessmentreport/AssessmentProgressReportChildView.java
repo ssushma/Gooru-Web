@@ -193,8 +193,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	public void setLabelAndIds() {
 
-		PrintPnl.getElement().getStyle().setHeight(Window.getClientHeight()-106, Unit.PX);
-
+		PrintPnl.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-106)+"px");
 		progressRadial.getElement().setId("fpnlprogressRadial");
 
 		String collectionType = i18n.GL4006();
