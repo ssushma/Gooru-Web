@@ -44,7 +44,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -175,7 +174,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 			if(COURSE.equalsIgnoreCase(type)){
 				enableCreateButtons(false);
+				pnlAddContainer.setVisible(true);
 				h2Title.setText(i18n.GL1180());
+				lblAddNew.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
 				enableCreateButtons(true);

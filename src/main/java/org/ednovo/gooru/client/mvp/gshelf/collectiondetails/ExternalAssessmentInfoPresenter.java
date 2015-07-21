@@ -125,7 +125,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 				
 				//folderDo.setGooruOid(id);
 				myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, folderObj);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,true);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false);
 			}
 		});
 	}
