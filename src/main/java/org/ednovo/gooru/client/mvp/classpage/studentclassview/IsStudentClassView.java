@@ -75,4 +75,6 @@ public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHan
 	
 	void disableSwitchBtn(boolean isDisable);
 	
+	void setEmptyContainerVisiblity(boolean isVisible);
+	
 }

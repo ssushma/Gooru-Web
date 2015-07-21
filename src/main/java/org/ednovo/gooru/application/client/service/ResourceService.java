@@ -96,6 +96,16 @@ public interface ResourceService extends BaseService {
 	public CollectionItemDo createCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
 	
 	/**
+	 * Create new collection item
+	 * @param collectionId of the existing collection  
+	 * @param resourceId of the existing resource , which is being as collection item
+	 * @param resourceType
+	 * @return serialized to {@link CollectionItemDo} after create 
+	 * @throws GwtException
+	 */
+	public CollectionItemDo createNewCollectionItem(String collectionId, String resourceId,String resourceType)  throws GwtException, ServerDownException;
+	
+	/**
 	 * copy as new collection item
 	 * @param collectionId of the existing collection  (can be null)
 	 * @param resourceId of the existing resource , which is being as collection item

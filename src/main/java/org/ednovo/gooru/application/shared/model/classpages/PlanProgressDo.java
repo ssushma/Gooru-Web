@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : PlanProgressDo.java
  * 
@@ -37,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
-public class PlanProgressDo implements Serializable {
+public class PlanProgressDo implements IsSerializable {
 
 	private static final long serialVersionUID = 1L;
 	private String title;

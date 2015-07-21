@@ -59,7 +59,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPresenter> implements IsTeachUnitReportView {
 
-	@UiField HTMLPanel unitTablePanel;
+	@UiField HTMLPanel unitTablePanel, heightPanel;
 	@UiField Label assessementLink, collectionLink;
 	@UiField SpanPanel textLbl, currentContentName, previousContentName, nextContentName;
 	@UiField HTMLPanel topContainer, learningMapContainer, headerLinksContainer;
@@ -251,6 +251,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 	public void onLoad() {
 		super.onLoad();
 		//sortAndFixed();
+		heightPanel.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-200)+"px");
 	}
 	
 	public class ClickUnitName implements ClickHandler {
@@ -344,6 +345,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 		if(matchedCount==0&&size==1) {
 			previousContentStr = null;
 			nextContentStr = null;
+			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
 		} else if(matchedCount==0&&size>1) {
 			previousContentStr = null;
 			nextContentStr = dataList.get(matchedCount+1).getGooruOId();
@@ -401,7 +403,7 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(userName,userUid);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(currentContentName.getText(), userName,userUid);
 		}
 	}
 }

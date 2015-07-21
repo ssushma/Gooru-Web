@@ -53,19 +53,14 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	@Inject
 	private ClasspageServiceAsync classpageServiceAsync;
 	
-	ClasspageDo classpageDo;
-	
 	StudentsAssociatedListDo studentsAssociatedListDo;
 	
 	List<String> emailId;
-	
-	String classId;
 	
 	@Inject
 	public EditClassStudentPresenter(EventBus eventBus,IsEditClassStudentView view){
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		this.classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 	}
 	
 	
@@ -116,6 +111,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			getView().setReportView();
 		} else {
 			getView().setRoasterView();
+			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 			if(classId != null){
 				generateShareLink(classId);
 				getActiveMembersListByCollectionId(classId,pageSize*activeListPageNum, pageSize, "active",true,true,false);
@@ -139,7 +135,6 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	}
 
 	public void setClassDetails(ClasspageDo classpageDo) {
-		this.classpageDo=classpageDo;
 		getView().setClassView(classpageDo);
 	}
 

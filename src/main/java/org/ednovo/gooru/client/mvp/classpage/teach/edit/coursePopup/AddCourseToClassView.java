@@ -56,9 +56,9 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	}
 	
 	@UiField HTMLPanel floderTreeContainer;
-	@UiField Anchor cancelResourcePopupBtnLbl;
+	@UiField Anchor cancelResourcePopupBtnLbl,btnAddNew;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
-	@UiField Button btnAddNew,btnAddExisting;
+	@UiField Button btnAddExisting;
 	@UiField Label addtocollHeaderText,addingTextLbl,lblEmptyErrorMessage,lblError;
 	
 	String classId;
@@ -126,7 +126,6 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			    }
 			  }
 		});
-		this.classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 	}
 
 	private void removePreviousSelectedItem() {
@@ -230,7 +229,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 				if(folderDo.getType().equalsIgnoreCase("course")){
 					folderContainer.removeStyleName("foldermenuLevel");
 					floderTreeContainer.getElement().setId("gShelfMainContainer");
-					folderContainer.addStyleName("folderLevel");
+					folderContainer.addStyleName("courseLevel");
 					folderContainer.addStyleName("course");
 					folderContainer.getElement().getStyle().setBackgroundColor("white");
 				}
@@ -278,12 +277,20 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
+		classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		if(classId != null && currectCourseSelectedTreeItem.getGooruOid() != null){
 			getUiHandlers().connectCourseToClass(classId,currectCourseSelectedTreeItem.getGooruOid());
 		}
 	}
+	@UiHandler("btnAddNew")
+	public void createNewCourse(ClickEvent event){
+		AppClientFactory.printInfoLogger("clicked in create new course");
+		AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.MYCONTENT);
+		hide();
+	}
+	
 	@Override
-	public Button getAddButton(){
+	public Anchor getAddButton(){
 		return btnAddNew;
 	}
 	@Override

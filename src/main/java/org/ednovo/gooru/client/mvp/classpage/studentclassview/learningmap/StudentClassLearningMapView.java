@@ -267,11 +267,17 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 				String gooruOid = planProgressDo.getItem().get(j).getGooruOId();
 				contentGooruIds = contentGooruIds + gooruOid +",";
 			}
-			getUiHandlers().getLessonPlanData(contentGooruIds);
+			if(contentGooruIds!=null&&!contentGooruIds.isEmpty()) {
+				getUiHandlers().getLessonPlanData(contentGooruIds);
+			} else {
+				setLessonContent(null, null, null);
+			}
 		}
+		
 		if(matchedCount==0&&size==1) {
 			previousContentStr = null;
 			nextContentStr = null;
+			name = titleTxt+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle();
 		} else if(matchedCount==0&&size>1) {
 			previousContentStr = null;
 			nextContentStr = dataList.get(matchedCount+1).getGooruOId();
@@ -303,7 +309,11 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 			containerData.removeStyleName("margin-top-20");
 		}
 		
-		int size = collectionList.getItems().size();
+		int size = 0;
+		
+		if(collectionList!=null&&collectionList.getItems()!=null) {
+			size = collectionList.getItems().size();
+		}
 		setTextPanelsVisiblity(true,true,false,true);
 		if(size>0) {
 			setScoreMapVisiblity(true);
