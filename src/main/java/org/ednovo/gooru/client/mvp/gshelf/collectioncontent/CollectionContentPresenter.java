@@ -113,8 +113,16 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	protected void onReveal(){
 		super.onReveal();
+		getView().onLoad();
+		getView().reset();
 	}
 
+	@Override
+	protected void onHide() {
+		super.onHide();
+		getView().onUnload();
+	}
+	
 	@Override
 	public void setData(final FolderDo folderDo) {
 		if(folderDo!=null){
