@@ -140,6 +140,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
+				getView().resetBtns();
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
 				params.put("o2", result.getGooruOid());
 				params.put("view", "Course");
@@ -163,6 +164,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				getView().resetBtns();
 				folderDo.setTitle(createDo.getTitle());
 				folderDo.setType(UNIT);
 				folderDo.setIdeas(createDo.getIdeas());
@@ -188,6 +190,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
+				getView().resetBtns();
 				getView().callCreateAndUpdate(isCreate,value,index);
 			}
 		});
