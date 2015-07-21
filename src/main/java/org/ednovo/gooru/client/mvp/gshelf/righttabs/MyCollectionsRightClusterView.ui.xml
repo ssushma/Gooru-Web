@@ -33,7 +33,7 @@
 									<span class="sr-only">Toggle Dropdown</span>
 								</button>
 							</hpanel:HTMLEventPanel>
-							<hpanel:HTMLEventPanel styleName="dropdown-menu" ui:field="copyPopupPanel">
+							<hpanel:HTMLEventPanel styleName="dropdown-menu copyPopupPanel" ui:field="copyPopupPanel">
 								<g:Label ui:field="copyLbl" styleName="copyLblStyle"/>
 								<g:Label ui:field="moveLbl" styleName="copyLblStyle"/>
 								<g:Label ui:field="myCollDelLbl" text="Delete" styleName="copyLblStyle"></g:Label>
