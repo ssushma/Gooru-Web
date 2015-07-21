@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc"
     xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
-	<g:HTMLPanel styleName="dashboardContainer">
+	<g:HTMLPanel styleName="dashboardContainer" ui:field="dashboardContainer">
 		<g:HTMLPanel styleName="container" ui:field="topContainer">
 		   <div class="row">
 		      <div class="classProgressIndications teachReportUnitNavigationView no-gutter">
@@ -27,6 +27,6 @@
 		      </div>
 		   </div>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="" ui:field="lessonTablePanel"></g:HTMLPanel>
+		<g:HTMLPanel styleName="scrollTBL" ui:field="lessonTablePanel"></g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

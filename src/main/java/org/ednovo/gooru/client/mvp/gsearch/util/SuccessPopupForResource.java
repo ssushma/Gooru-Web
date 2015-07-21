@@ -91,13 +91,14 @@ public class SuccessPopupForResource extends PopupPanel {
 				element.removeAttribute("style");
 			}
 			hide();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, getParams()); 
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
 		}
 	}
 	public void setData(final String collectionName,String selectedGooruOid,HashMap<String, String> params,String type,FolderDo folderDo){
 		setCollectionName(collectionName);
 		setSelectedGooruOid(selectedGooruOid);
 		setParams(params);
+		this.params = params;
 		this.folderDo = folderDo;
 		this.searchType = type;
 		StringBuffer buffer = new StringBuffer();

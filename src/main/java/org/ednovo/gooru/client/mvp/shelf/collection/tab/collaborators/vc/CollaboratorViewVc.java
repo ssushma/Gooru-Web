@@ -172,14 +172,14 @@ public abstract class CollaboratorViewVc extends Composite {
 		}
 		if (collaboratorsDo !=null && collaboratorsDo.getGooruUid() != null){
 			//Getting all the List of Classpages for the particular(collaborator) user
-			AppClientFactory.getInjector().getClasspageService().getClasspagesListByCollectionId(collectionDo.getGooruOid(), collaboratorsDo.getGooruUid(), new SimpleAsyncCallback<ArrayList<ClassPageCollectionDo>>() {
+			/*AppClientFactory.getInjector().getClasspageService().getClasspagesListByCollectionId(collectionDo.getGooruOid(), collaboratorsDo.getGooruUid(), new SimpleAsyncCallback<ArrayList<ClassPageCollectionDo>>() {
 	
 				@Override
 				public void onSuccess(ArrayList<ClassPageCollectionDo> result) {
 					classpageTitles = result;
 				}
 				
-			});
+			});*/
 		}
 	}
 	

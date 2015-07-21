@@ -112,6 +112,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		this.collectionShareTabPresenter=collectionShareTabPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.courseSharePresenter=courseSharePresenter;
+		collectionShareTabPresenter.setMyCollectionRightClusterPresenter(this);
+		collectionContentPresenter.setMyCollectionRightClusterPresenter(this);
 		externalAssessmentInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		courseInfoPresenter.setMyCollectionRightClusterPresenter(this);
 		collectionInfoPresenter.setMyCollectionRightClusterPresenter(this);
@@ -184,7 +186,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setInSlot(INNER_SLOT, collectionContentPresenter);
 			}else{
 				shelfMainPresenter.getMyCollectionsListPresenter().getView().loadingImage();
-				shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true,folderObj);
+				shelfMainPresenter.getMyCollectionsListPresenter().setData(type, getFolderListDoChild(), true, true, folderObj);
+				//shelfMainPresenter.getMyCollectionsListPresenter().setDataInContentSlot(type, folderObj.getGooruOid(),true,folderObj);
 				setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
 			}
 		}else if(index==3){
@@ -195,7 +198,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				collectionShareTabPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
+			Window.scrollTo(0, 0);
 		}
+		
 	}
 	//This method is not using present
 	@Override
@@ -456,7 +461,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle) {
 		// TODO Auto-generated method stub
-		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		shelfMainPresenter.SetDefaultTypeAndVersion();
@@ -486,6 +491,17 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void enableAddButton() {
 		searchAddResourceToCollectionPresenter.enableAddButton();
+	}
+	public void disableCollabaratorOptions(boolean isHide) {
+		getView().disableCollabaratorOptions(isHide);
+	}
+	
+	/**
+	 * This handles the display of respective view title and respective type icon.
+	 */
+	@Override
+	public void setViewTitleWthicon(String title, String type) {
+		shelfMainPresenter.setTileIcon(title,type);
 	}
 	
 	

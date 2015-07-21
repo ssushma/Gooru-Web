@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPre
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -122,6 +123,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
+				getView().resetBtns();
 				params.put("o1", result.getGooruOid());
 				params.put("view", COURSE);
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit);
@@ -135,11 +137,11 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
+				Window.scrollTo(0, 0);
 			}
 		});
 	}
-	public void setMyCollectionRightClusterPresenter(
-			MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
+	public void setMyCollectionRightClusterPresenter(MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter) {
 		this.myCollectionsRightClusterPresenter=myCollectionsRightClusterPresenter;
 	}
 	public void setData(FolderDo folderObj) {
@@ -152,6 +154,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,null,createObj, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				getView().resetBtns();
 				folderDo.setTitle(createObj.getTitle());
 				folderDo.setType(COURSE);
 				folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
@@ -161,6 +164,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
 				}else{
+					Window.scrollTo(0, 0);
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, folderDo);
 				}
 			}
@@ -173,6 +177,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
+				getView().resetBtns();
 				getView().callCreateAndUpdate(isCreate,value);
 			}
 		});

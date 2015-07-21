@@ -118,6 +118,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
+		setInSlot(CENTURYSKILLS,centurySkillsPresenter);
 
 	}
 
@@ -133,8 +134,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	@Override
 	protected void onReveal(){
 		super.onReveal();
-		setInSlot(CENTURYSKILLS,centurySkillsPresenter);
-
 		setDepthofKnowledgeDetails();
 		setAudienceDetails();
 		Window.enableScrolling(true);
@@ -208,9 +207,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				params.put(O1_LEVEL, o1);
 			}
 			AppClientFactory.getInjector().getfolderService().createCollection(createObj, parentId, false, new SimpleAsyncCallback<FolderDo>() {
-
 				@Override
 				public void onSuccess(FolderDo result) {
+					getView().resetBtns();
 					params.put("id", result.getGooruOid());
 					params.put("view", FOLDER);
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
@@ -221,14 +220,15 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		}else{
 			AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
 				@Override
-				public void onSuccess(FolderDo result) {				
+				public void onSuccess(FolderDo result) {
+					getView().resetBtns();
 					Map<String, String> params= new HashMap<String, String>();
 					params.put(O1_LEVEL, o1);
 					params.put(O2_LEVEL, o2);
 					params.put(O3_LEVEL, o3);
 					params.put("id", result.getGooruOid());
 					params.put("view", "course");
-
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 					myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
@@ -236,8 +236,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				}
 			});
 		}
-		
-		
+		Window.scrollTo(0, 0);
 	}
 
 	/*private void createCollectionInFolder() {
@@ -267,10 +266,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-		createDo.setAudienceIds(StringUtil.getKeys(getView().getAudienceContainer().getSelectedValues().keySet()));
-		createDo.setDepthOfKnowledgeIds(StringUtil.getKeys(getView().getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
-		createDo.setSkillIds(StringUtil.getKeysLong(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest().keySet()));
-		createDo.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
+	
 		folderDo.setTitle(createDo.getTitle());
 		folderDo.setCollectionType(createDo.getCollectionType());
 		folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
@@ -281,9 +277,8 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			getFolderServiceAsync().updateCollectionDetails(createDo,id, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
-					AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
-					
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+					getView().resetBtns();
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false);
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
 				}
@@ -296,16 +291,15 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+					getView().resetBtns();
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
 				}
 			});
 		}
-		
-		
-		
+		Window.scrollTo(0, 0);
 	}
 
 	@Override
@@ -315,6 +309,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
+				getView().resetBtns();
 				getView().callCreateAndUpdate(isCreate,value,index,collectionType);
 			}
 		});
@@ -384,59 +379,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
-	@Override
-	public void updateCollectionDetails(String text,CreateDo createObj){
-		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
-		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view", null);
-		
-		if(view!=null&&view.equalsIgnoreCase("course")){
-			String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-			String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
-			String lessonId=AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
-			CreateDo createDo=new CreateDo();
-			createDo.setTitle(text);
-			createDo.setAudienceIds(StringUtil.getKeys(getView().getAudienceContainer().getSelectedValues().keySet()));
-			createDo.setDepthOfKnowledgeIds(StringUtil.getKeys(getView().getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
-			createDo.setSkillIds(StringUtil.getKeysLong(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest().keySet()));
-			
-			getFolderServiceAsync().updateCourse(courseId, unitId, lessonId, collectionUid, createDo, new AsyncCallback<Void>() {
-				
-				@Override
-				public void onSuccess(Void result) {
-					// TODO Auto-generated method stub
-					AppClientFactory.printInfoLogger("I am in updateCourse UpdateCollection Success");
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			
-		}else{
-			
-			getFolderServiceAsync().updateCollectionDetails(createObj,collectionUid, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
-
-				@Override
-				public void onSuccess(Void result) {
-					// TODO Auto-generated method stub
-					AppClientFactory.printInfoLogger("I am In updateCollectionDetails success ");
-				}
-
-				@Override
-				public void onFailure(Throwable caught) {
-
-					// TODO Auto-generated method stub
-
-					AppClientFactory.printInfoLogger("I am In updateCollectionDetails Failure ");
-
-				}
-			});
-			
-		}
-		
-	}
+	
 	public void callCourseInfoTaxonomy(){
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2",null);

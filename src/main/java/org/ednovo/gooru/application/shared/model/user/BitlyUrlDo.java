@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
@@ -42,7 +42,7 @@ import java.io.Serializable;
  * @Reviewer:
  */
 
-public class BitlyUrlDo implements Serializable {
+public class BitlyUrlDo implements IsSerializable {
 
 	/**
 	 * 

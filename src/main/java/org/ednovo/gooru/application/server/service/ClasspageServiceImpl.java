@@ -836,6 +836,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_TITLES, collectionId);
+		logger.info("getCollectionClasspageAssoc:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasses(jsonRep);
@@ -1330,6 +1331,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		JsonRepresentation jsonRep = null;
 		ArrayList<ClassPageCollectionDo> lstClasspageTitle=new  ArrayList<ClassPageCollectionDo>();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_CLASSPAGES_BY_USER_ID,collectionId, collabUId);
+		logger.info("getClasspagesListByCollectionId:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1941,27 +1943,15 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			resourceObj = jsonRep.getJsonObject();
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
+					getLogger().info(resourceObj.getJSONArray("content").toString());
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
-					if(dataList!=null&&dataList.size()>1) {
-						if(type.equalsIgnoreCase("plan")) {
-							if(!(unitId!=null&&lessonId!=null)) {
-								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
-									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
-									}
-								}
-								Collections.sort(dataList, new ArrayListSorter("sequence", true));
-							}
-						} else if (type.equalsIgnoreCase("progress")) {
-							if(!(unitId!=null&&lessonId!=null)) {
-								for(int unitCount=0;unitCount<dataList.size();unitCount++) {
-									if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>1) {
-										Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
-									}
-								}
-								Collections.sort(dataList, new ArrayListSorter("sequence", true));
+					if(dataList!=null&&dataList.size()>0) {
+						for(int unitCount=0;unitCount<dataList.size();unitCount++) {
+							if(dataList.get(unitCount).getItem()!=null&&dataList.get(unitCount).getItem().size()>0) {
+								Collections.sort(dataList.get(unitCount).getItem(), new ArrayListSorter("sequence", true));
 							}
 						}
+						Collections.sort(dataList, new ArrayListSorter("sequence", true));
 					}
 				}
 			}
@@ -1988,6 +1978,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			resourceObj = jsonRep.getJsonObject();
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
+					getLogger().info(resourceObj.getJSONArray("content").toString());
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
 					if(dataList!=null&dataList.size()>1) {
 						for(int unitCount=0;unitCount<dataList.size();unitCount++) {
@@ -2027,6 +2018,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			resourceObj = jsonRep.getJsonObject();
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
+					getLogger().info(resourceObj.getJSONArray("content").toString());
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
 					if(dataList!=null&dataList.size()>0) {
 						for(int unitCount=0;unitCount<dataList.size();unitCount++) {
@@ -2074,6 +2066,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			resourceObj = jsonRep.getJsonObject();
 			if(resourceObj!=null){
 				if(resourceObj.optJSONArray("content") != null){
+					getLogger().info(resourceObj.getJSONArray("content").toString());
 					dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<MasterReportDo>>(){});
 					if(dataList!=null&dataList.size()>0) {
 						Collections.sort(dataList, new ArrayListSorter("sequence", true));
@@ -2100,6 +2093,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
+				getLogger().info(jsonRep.getJsonObject().toString());
 				collectionList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<PlanContentDo>(){});			
 			}
 		} catch (Exception e) {
@@ -2132,6 +2126,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			resourceObj = jsonRep.getJsonObject();
 			if(resourceObj!=null){
 				if(resourceObj.getJSONArray("content") != null && resourceObj.optJSONArray("content") != null){
+					getLogger().info(resourceObj.getJSONArray("content").toString());
 					userPlayedSessions = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<UserPlayedSessionDo>>() {});
 				}
 				Collections.sort(userPlayedSessions, new ArrayListSorter("sequence", false));

@@ -262,12 +262,12 @@ public class ShelfTreeWidget extends FocusPanel {
 				titleLbl.setWidth("82px");
 				titleFocPanel.addStyleName("child");
 				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
-				htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
+				//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
 			} else if(nextLevel == 4) {
 				titleLbl.setWidth("100px");
 				titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 				titleFocPanel.addStyleName("collectionChild");
-				htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
+				//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
 				try {
 					titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
 				} catch (Exception e){
@@ -302,12 +302,12 @@ public class ShelfTreeWidget extends FocusPanel {
 		} else if(nextLevel == 3) {
 			titleLbl.setWidth("82px");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
-			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
+			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
 		} else if(nextLevel == 4) {
 			titleLbl.setWidth("100px");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 			titleFocPanel.addStyleName("collectionChild");
-			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
+			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
 		}
 	}
 	
@@ -443,6 +443,12 @@ public class ShelfTreeWidget extends FocusPanel {
 	 */
 	public FolderDo getCollectionDo() {
 		return collectionDo;
+	}
+	/**
+	 * @return folderDo
+	 */
+	public FolderDo getFolderDo() {
+		return folderDo;
 	}
 
 	public void glowTitle() {

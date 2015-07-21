@@ -59,11 +59,12 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 * @param result
 	 * @param index
 	 */
-	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
+	void callCreateAndUpdate(boolean isCreate,boolean result,int index,String courseId);
 	
 
 	void appendDoamins(List<CourseSubjectDo> libraryCodeDo, int selectedId);
 
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray); 
-
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);
+	
+	void resetBtns(); 
 }

@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.code;
 
-import java.io.Serializable;
 import java.util.List;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class LibraryCodeDo implements Serializable {
+public class LibraryCodeDo implements IsSerializable {
 	
 	/**
 	 * 

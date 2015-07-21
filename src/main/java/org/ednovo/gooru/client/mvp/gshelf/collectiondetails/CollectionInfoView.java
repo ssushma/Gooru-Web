@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.InfoUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -56,10 +57,13 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -68,6 +72,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -142,7 +147,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public CollectionInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
+		lblErrorMessage.setVisible(false);
+		collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
 
+		collectionTitle.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, false);
+			}
+		});
 		depthOfKnowledgeContainer.setVisible(false);
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
@@ -500,16 +513,18 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCouseData(final FolderDo courseObj, String type) {
+		this.courseObjG=courseObj;
+		standardsUI.clear();
 		resetDOK_Century_Lang();
 		depthOfKnowledgeContainer.setFolderDo(courseObj);
 		audienceContainer.setFolderDetails(courseObj);
 		getUiHandlers().getCenturySkillsPresenters().getView().setFolderDo(courseObj);
 		languageObjectiveContainer.setLanguageObjective(courseObj);
 		this.type = type;
+		
 		ulSelectedItems.clear();
 		selectedValues.clear();
 		if(courseObj!=null){
-			this.courseObjG=courseObj;
 			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
@@ -546,8 +561,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         }
 		setStaticData(type);			
-		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
-			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?"":(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?"":courseObj.getTitle());
 		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
@@ -555,6 +569,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
+		getUiHandlers().callCourseInfoTaxonomy();
 	}
 	public void setStaticData(String type)
 	{   
@@ -577,7 +592,20 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
+		saveCollectionBtn.addStyleName("disabled");
+		saveCollectionBtn.setEnabled(false);
+		if(validateInputs()){
+			lblErrorMessage.setVisible(false);
+			collectionTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
+		
+		}else{
+			Window.scrollTo(collectionTitle.getAbsoluteLeft(), collectionTitle.getAbsoluteTop()-(collectionTitle.getOffsetHeight()*3));
+			lblErrorMessage.setVisible(true);
+			collectionTitle.addStyleName("textAreaErrorMessage");
+			lblErrorMessage.setText("Please Enter Collection Title");
+			resetBtns();
+		}
 	}
 
 	@UiHandler("uploadImageLbl")
@@ -596,7 +624,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 */
 	@Override
 	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
-		if(result && index==0){
+		String title=collectionTitle.getText().trim();
+		if((result && index==0)||(title.equalsIgnoreCase("")&&index==0)){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
@@ -609,10 +638,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				createOrUpDate.setDescription(learningObjective.getText());
 				createOrUpDate.setCollectionType(collectionType);
 				createOrUpDate.setStandardIds(getSelectedStandards());
-				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-				if(id!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,id,isCreate,courseObjG);
+				createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+				createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
+				createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
+				createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
+				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
+					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG);
 				}else{
+					
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
 				}
 			}
@@ -856,5 +889,27 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		return false;
 	}
 	
+	public boolean validateInputs(){
+		String collectionTitleStr=collectionTitle.getText().trim();
+		if(collectionTitleStr.equalsIgnoreCase("")||collectionTitleStr.equalsIgnoreCase(i18n.GL3367())){
+			return false;
+		}else{
+			return true;
+		}
+		
+		
+	}
+	
+	@UiHandler("collectionTitle")
+	public void collectionTitleKeyUphandler(KeyUpEvent event){
+		collectionTitle.removeStyleName("textAreaErrorMessage");
+		lblErrorMessage.setVisible(false);
+	}
+	@Override
+	public void resetBtns() {
+		saveCollectionBtn.removeStyleName("disabled");
+		saveCollectionBtn.setEnabled(true);
+
+	}
 }
 

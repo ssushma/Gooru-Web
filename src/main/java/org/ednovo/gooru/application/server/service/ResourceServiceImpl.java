@@ -218,6 +218,29 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
+	public CollectionItemDo createNewCollectionItem(String collectionId, String resourceId,String resoruceType) {
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url;
+		try{
+			if("Question".equalsIgnoreCase(resoruceType)){
+				url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_ADDQUESTION_COLLECTION,collectionId,resourceId);
+			}else{
+				url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+			}
+			getLogger().info("--- createNewCollectionItem -- "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			getLogger().info("--- jsonRep -- "+jsonRep.getJsonObject());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			getLogger().info("--- getURL -- "+getURL);
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return deserializeCollectionItem(jsonResponseRepget);
+	}
+	@Override
 	public void deleteCollectionItem(String collectionItemId) {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_ITEM, collectionItemId);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
@@ -348,6 +371,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
+				obj.setCollaborator(jsonRep.getJsonObject().isNull("isCollaborator")?false:jsonRep.getJsonObject().getBoolean("isCollaborator"));
 				UserDo user=new UserDo();
 				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
 				obj.setUser(user);

@@ -42,7 +42,7 @@ public interface IsCollectionShareTabView extends IsViewWithHandlers<CollectionS
 
 	void setShareUrl(String shareUrl);
 
-	void setData(CollectionDo collectionDo, FolderDo folderDo);
+	void setCollectionData(CollectionDo collectionDo, FolderDo folderDo);
 
 	HTMLPanel getCollaboratorPanel();
 
