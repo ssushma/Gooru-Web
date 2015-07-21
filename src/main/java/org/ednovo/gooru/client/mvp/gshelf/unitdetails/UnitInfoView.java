@@ -332,10 +332,15 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		saveUnitBtn.addStyleName("disabled");
 		saveUnitBtn.setEnabled(false);
+		CreateDo createOrUpDate=new CreateDo();
+		createOrUpDate.setTitle(unitTitle.getText());
+		createOrUpDate.setIdeas(txaBigIdeas.getText());
+		createOrUpDate.setQuestions(txaEssentialQuestions.getText());
+		createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0,courseId);
+			getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0,courseId,createOrUpDate);
 		}else{
 			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -350,10 +355,15 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		nextCreateLessonBtn.addStyleName("disabled");
 		nextCreateLessonBtn.setEnabled(false);
+		CreateDo createOrUpDate=new CreateDo();
+		createOrUpDate.setTitle(unitTitle.getText());
+		createOrUpDate.setIdeas(txaBigIdeas.getText());
+		createOrUpDate.setQuestions(txaEssentialQuestions.getText());
+		createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0,courseId);
+			getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0,courseId,createOrUpDate);
 		}else{
 			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -368,7 +378,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result,int index,String courseId){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,int index,String courseId,CreateDo createOrUpDate){
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(unitTitle, lblErrorMessage, result);
 			isCreateLessonClicked=true;
@@ -380,15 +390,10 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			isCreateLessonClicked=true;
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(txaBigIdeas.getText().trim(),isCreate,1,courseId);
+				getUiHandlers().checkProfanity(createOrUpDate.getIdeas().trim(),isCreate,1,courseId,createOrUpDate);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(txaEssentialQuestions.getText().trim(),isCreate,2,courseId);
+				getUiHandlers().checkProfanity(createOrUpDate.getQuestions().trim(),isCreate,2,courseId,createOrUpDate);
 			}else if(index==2){
-				CreateDo createOrUpDate=new CreateDo();
-				createOrUpDate.setTitle(unitTitle.getText());
-				createOrUpDate.setIdeas(txaBigIdeas.getText());
-				createOrUpDate.setQuestions(txaEssentialQuestions.getText());
-				createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
 				if(courseObj!=null && courseObj.getGooruOid()!=null){
 					getUiHandlers().updateUnitDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj);
 				}else{

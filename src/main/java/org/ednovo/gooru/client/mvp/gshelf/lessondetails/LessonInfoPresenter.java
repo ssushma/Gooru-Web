@@ -171,14 +171,14 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void checkProfanity(String textValue, final boolean isCreate,final String type) {
+	public void checkProfanity(String textValue, final boolean isCreate,final String type,final CreateDo createOrUpDate) {
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
 				getView().resetBtns();
-				getView().callCreateAndUpdate(isCreate,value,type);
+				getView().callCreateAndUpdate(isCreate,value,type,createOrUpDate);
 			}
 		});
 	}

@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -41,7 +42,7 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 	void setLessonInfoData(FolderDo folderObj); 
 	
-	void callCreateAndUpdate(boolean isCreate,boolean result,String type);
+	void callCreateAndUpdate(boolean isCreate,boolean result,String type, CreateDo createOrUpDate); 
 
 	void displayStandardsList(List<DomainStandardsDo> result);
 

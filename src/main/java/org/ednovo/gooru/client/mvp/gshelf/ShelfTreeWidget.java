@@ -379,28 +379,18 @@ public class ShelfTreeWidget extends FocusPanel {
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-
-			if(collectionDo!=null)
-			{
-				if(collectionDo.getType()!=null)
-				{
-					if(collectionDo!=null && !collectionDo.getType().equals(FOLDER) &&!collectionDo.getType().equalsIgnoreCase(COURSE) &&!collectionDo.getType().equalsIgnoreCase(UNIT) &&!collectionDo.getType().equalsIgnoreCase(LESSON)) {
-						if (event.getSource().equals(titleFocPanel)) {
-							MixpanelUtil.Expand_CollectionPanel();
-							if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
-								Storage stockStore = Storage.getLocalStorageIfSupported();
-								if (stockStore != null) {
-									stockStore.setItem("tabKey", "resourceTab");
-								}
-								if(isValue){
-									openCollectionInShelf();
-								}
-								isValue=true;
-							}
-							setOpen();
-						}  
+			String type=(collectionDo!=null&&collectionDo.getType()!=null)?collectionDo.getType():getTreeWidgetType();
+			if(!type.equals(FOLDER) &&!type.equalsIgnoreCase(COURSE) &&!type.equalsIgnoreCase(UNIT) &&!type.equalsIgnoreCase(LESSON)) {
+				if (event.getSource().equals(titleFocPanel)) {
+					MixpanelUtil.Expand_CollectionPanel();
+					if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.MYCONTENT)) {
+						if(isValue){
+							openCollectionInShelf();
+						}
+						isValue=true;
 					}
-				}
+					setOpen();
+				}  
 			}
 		}
 	}
@@ -460,6 +450,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		this.position = position;
 		String gooruoId = collectionDo==null?"":collectionDo.getGooruOid();
 		String title = collectionDo==null?"":collectionDo.getTitle();
+		String type = collectionDo==null?getTreeWidgetType():collectionDo.getType();
 		if(level==1) {
 			this.urlParams.put(O1_LEVEL, collectionDo.getGooruOid());
 			this.urlParams.put(COURSE, collectionDo.getTitle());
@@ -489,7 +480,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
 			this.urlParams.put(UNIT, urlParams.get(UNIT)); 
 			this.urlParams.put(LESSON, urlParams.get(LESSON));
-			this.urlParams.put(COLLECTION.equalsIgnoreCase(collectionDo.getType())?COLLECTION:(ASSESSMENT.equalsIgnoreCase(collectionDo.getType()))?ASSESSMENT:ASSESSMENT_URL,  title);
+			this.urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:(ASSESSMENT.equalsIgnoreCase(type))?ASSESSMENT:ASSESSMENT_URL,  title);
 			
 //			this.urlParams.put("levelFourType", collectionDo.getTitle()+"#"+"Collection");
 			
@@ -612,6 +603,8 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	public void openCollectionInShelf() {
     	Map<String,String> params = new HashMap<String,String>();
+    	String gooruoId = collectionDo==null?null:collectionDo.getGooruOid();
+    	
     	if(getLevel()==2) {
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 		} else if(getLevel()==3) {
@@ -622,7 +615,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			params.put(O3_LEVEL, urlParams.get(O3_LEVEL));
 		}
-    	params.put(ID, collectionDo.getGooruOid());
+    	params.put(ID, gooruoId);
     	params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view")); 
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 	}

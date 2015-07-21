@@ -52,8 +52,9 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	 * @param textValue
 	 * @param isCreate
 	 * @param type
+	 * @param createOrUpDate 
 	 */
-	public void checkProfanity(String textValue,boolean isCreate,String type);
+	public void checkProfanity(String textValue,boolean isCreate,String type, CreateDo createOrUpDate);
 	/**
 	 * This method is used to update lesson details
 	 * @param createObj

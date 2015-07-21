@@ -595,9 +595,19 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		saveCollectionBtn.addStyleName("disabled");
 		saveCollectionBtn.setEnabled(false);
 		if(validateInputs()){
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setTitle(collectionTitle.getText());
+			createOrUpDate.setDescription(learningObjective.getText());
+			createOrUpDate.setCollectionType(type);
+			createOrUpDate.setStandardIds(getSelectedStandards());
+			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+			createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
+			createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
+			createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
+			
 			lblErrorMessage.setVisible(false);
 			collectionTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
+			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type,createOrUpDate);
 		
 		}else{
 			Window.scrollTo(collectionTitle.getAbsoluteLeft(), collectionTitle.getAbsoluteTop()-(collectionTitle.getOffsetHeight()*3));
@@ -623,7 +633,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
+	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType,CreateDo createOrUpDate) {
 		String title=collectionTitle.getText().trim();
 		if((result && index==0)||(title.equalsIgnoreCase("")&&index==0)){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
@@ -631,17 +641,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(learningObjective.getText().trim(),true,1,collectionType);
+				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),true,1,collectionType,createOrUpDate);
 			}else if(index==1){
-				CreateDo createOrUpDate=new CreateDo();
-				createOrUpDate.setTitle(collectionTitle.getText());
-				createOrUpDate.setDescription(learningObjective.getText());
-				createOrUpDate.setCollectionType(collectionType);
-				createOrUpDate.setStandardIds(getSelectedStandards());
-				createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
-				createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
-				createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
-				createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
+				
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG);
 				}else{
