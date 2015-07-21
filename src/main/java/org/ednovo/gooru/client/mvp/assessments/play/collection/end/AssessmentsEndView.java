@@ -141,6 +141,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
 		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/main-styles.min.css'>";
 		downloadFile.setVisible(false);
+		downloadFile.setUrl("");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
@@ -344,6 +345,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			final AdvancedFlexTable adTable=new AdvancedFlexTable();
 			adTable.removeAllRows();
 			adTable.getElement().setId("report-student-assessment-report");
+			adTable.addStyleName("table table-bordered reportTableStyle");
 			questionsTable.add(adTable);
 
 			Label heading1 = new Label(i18n.GL3259());
@@ -525,7 +527,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 			}
 //			sortAndFixed();
-			adTable.addStyleName("table table-bordered reportTableStyle");
+
 		}else {
 			Label erroeMsg=new Label();
 			erroeMsg.setStyleName(STYLE_ERROR_MSG);
@@ -596,7 +598,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			data.addColumn(ColumnType.STRING, i18n.GL0308());
 			data.addColumn(ColumnType.STRING, i18n.GL2288());
 			data.addColumn(ColumnType.STRING, i18n.GL3269());
-			data.addColumn(ColumnType.STRING, i18n.GL3270());
+//			data.addColumn(ColumnType.STRING, i18n.GL3270());
 			data.addColumn(ColumnType.STRING, i18n.GL2084());
 			data.addColumn(ColumnType.STRING, i18n.GL3271());
 
@@ -604,7 +606,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			if(result.size()!=0){
 				for(int i=0;i<result.size();i++) {
 					isTickdisplay=false;
-					data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+					data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
 
 					Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 					questionTitle.setStyleName(STYLE_TABLE_CENTER);
@@ -761,7 +763,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					//Set attempts
 					Label attempts=new Label(Integer.toString(noOfAttempts));
 					attempts.setStyleName(STYLE_TABLE_CENTER);
-					data.setValue(i, 4, attempts.toString());
+//					data.setValue(i, 4, attempts.toString());
 
 					//Set time spent
 					data.setValue(i, 5,AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());

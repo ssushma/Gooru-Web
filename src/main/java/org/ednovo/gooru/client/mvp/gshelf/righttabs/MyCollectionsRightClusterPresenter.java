@@ -198,8 +198,9 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				collectionShareTabPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
+			Window.scrollTo(0, 0);
 		}
-		Window.scrollTo(0, 0);
+		
 	}
 	//This method is not using present
 	@Override
