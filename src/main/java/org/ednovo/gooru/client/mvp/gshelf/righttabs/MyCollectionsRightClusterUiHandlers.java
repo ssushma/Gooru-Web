@@ -72,4 +72,6 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle);
 	public void enableAddButton();
 	
+	public void setViewTitleWthicon(String title, String type);
+	
 }

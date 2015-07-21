@@ -353,9 +353,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 		if(id!=null && folderDo!=null){
 			getView().getCollectionLabel().setVisible(true);
+			getView().getTitleIconContainer().setVisible(true);
 			setCollectionContent(folderDo);
 		}else{
 			getView().getCollectionLabel().setVisible(false);
+			getView().getTitleIconContainer().setVisible(false);
 			if(listOfContent!=null && listOfContent.size()>0){
 				myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
 				setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
@@ -510,5 +512,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void addNewContent(String type) {
 		getMyCollectionsRightClusterPresenter().addNewContent(type);
+	}
+
+	public void setTileIcon(String title, String type) {
+		getView().setViewTitleWthIcon(title,type);
 	}
 }
