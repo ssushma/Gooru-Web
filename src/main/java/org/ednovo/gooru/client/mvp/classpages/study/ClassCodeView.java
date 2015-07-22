@@ -31,24 +31,25 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
-import org.ednovo.gooru.application.shared.model.content.AttachToDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
-import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClassPopupView;
-import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.uc.H1Panel;
+import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.H3Panel;
+import org.ednovo.gooru.client.uc.H4Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -59,9 +60,7 @@ import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -88,17 +87,19 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField Button btnCreateClass,btnEnter, disabledBtn;
-	
-	@UiField Label lblCreateAClass,lblEasyToOrganize,lblAccessAClass,lblEasyAccessForStudents,lblUniqueClassCode, lblOne, lblTwo, lblThree;
-	
-	@UiField Label lblManageAssignments,lblClearDue,lblMonitorStudentProgress,lblMonitorDesc, lblFavoriteClasses, lblClassOne, lblClassTwo, lblClassThree, lblClassFour;
-	
-	@UiField Anchor ancSampleReport;
-	
-	@UiField HTMLEventPanel panelClassOne, panelClassTwo, panelClassThree, panelClassFour;
-	
 	@UiField TextBoxWithPlaceholder txtCode;
+
+	@UiField Button btnCreateClass, btnEnter, disabledBtn;
+	
+	@UiField H1Panel txtLearnH1;
+	
+	@UiField H2Panel txtTeacherH2;
+	
+	@UiField H3Panel txtExploreH3, txtLearnH3, txtFeedbackH3, txtScoreH3;
+	
+	@UiField H4Panel txtClassCodeH4;
+	
+	@UiField PPanel txtStudyP, txtQuizP, txtTeachP;
 	
 	AlertMessageUc alertMessageUc;
 	
@@ -111,26 +112,18 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	interface ClassCodeViewUiBinder extends UiBinder<Widget, ClassCodeView> {
 
 	}
-
-	
-	
 	
 	@Inject
 	public ClassCodeView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		
 		setText();
-		
 		SetButtonHandler setButtonVisibility = new SetButtonHandler() {
-
 			@Override
 			public void setButtonVisibility() {
 				setCreateClassVisibility();
 			}
 		};
-		AppClientFactory.getEventBus().addHandler(
-				SetButtonEvent.TYPE, setButtonVisibility);
-		
+		AppClientFactory.getEventBus().addHandler(SetButtonEvent.TYPE, setButtonVisibility);
 		Window.enableScrolling(true);
 	}
 	/**
@@ -178,131 +171,57 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	*/
 	
 	private void setText() {
+		
+		txtLearnH1.setText(i18n.GL3461_1());
+		StringUtil.setAttributes(txtLearnH1.getElement(), "txtLearnH1", i18n.GL3461_1(), i18n.GL3461_1());
+		
+		txtExploreH3.setText(i18n.GL3461_2());
+		StringUtil.setAttributes(txtExploreH3.getElement(), "txtExploreH3", i18n.GL3461_2(), i18n.GL3461_2());
+		
+		txtClassCodeH4.setText(i18n.GL3461_3());
+		StringUtil.setAttributes(txtClassCodeH4.getElement(), "txtClassCodeH4", i18n.GL3461_3(), i18n.GL3461_3());
+		
+		txtLearnH3.setText(i18n.GL3461_4());
+		StringUtil.setAttributes(txtLearnH3.getElement(), "txtLearnH3", i18n.GL3461_4(), i18n.GL3461_4());
+		
+		txtStudyP.setText(i18n.GL3461_5());
+		StringUtil.setAttributes(txtStudyP.getElement(), "txtStudyP", i18n.GL3461_5(), i18n.GL3461_5());
+		
+		txtFeedbackH3.setText(i18n.GL3461_6());
+		StringUtil.setAttributes(txtFeedbackH3.getElement(), "txtFeedbackH3", i18n.GL3461_6(), i18n.GL3461_6());
+		
+		txtQuizP.setText(i18n.GL3461_7());
+		StringUtil.setAttributes(txtQuizP.getElement(), "txtQuizP", i18n.GL3461_7(), i18n.GL3461_7());
+		
+		txtTeacherH2.setText(i18n.GL3461_8());
+		StringUtil.setAttributes(txtTeacherH2.getElement(), "txtTeacherH2", i18n.GL3461_8(), i18n.GL3461_8());
+
+		txtScoreH3.setText(i18n.GL3461_9());
+		StringUtil.setAttributes(txtScoreH3.getElement(), "txtScoreH3", i18n.GL3461_9(), i18n.GL3461_9());
+		
+		txtTeachP.setText(i18n.GL3461_10());
+		StringUtil.setAttributes(txtTeachP.getElement(), "txtTeachP", i18n.GL3461_10(), i18n.GL3461_10());
+		
 		setCreateClassVisibility();
 		btnCreateClass.setText(i18n.GL1771());
-		btnCreateClass.getElement().setId("btnCreateClass");
-		btnCreateClass.getElement().setAttribute("alt",i18n.GL1771());
-		btnCreateClass.getElement().setAttribute("title",i18n.GL1771());
+		StringUtil.setAttributes(btnCreateClass.getElement(), "btnCreateClass", i18n.GL1771(), i18n.GL1771());
 		
 		btnEnter.setText(i18n.GL0213());
-		btnEnter.getElement().setId("btnEnter");
-		btnEnter.getElement().setAttribute("alt",i18n.GL0213());
-		btnEnter.getElement().setAttribute("title",i18n.GL0213());
+		StringUtil.setAttributes(btnEnter.getElement(), "btnEnter", i18n.GL0213(), i18n.GL0213());
 		
 		disabledBtn.setText(i18n.GL0213());
-		disabledBtn.getElement().setId("btnDisable");
-		disabledBtn.getElement().setAttribute("alt",i18n.GL0213());
-		disabledBtn.getElement().setAttribute("title",i18n.GL0213());
-		
-		lblCreateAClass.setText(i18n.GL1771());
-		lblCreateAClass.getElement().setId("lblCreateAClass");
-		lblCreateAClass.getElement().setAttribute("alt",i18n.GL1771());
-		lblCreateAClass.getElement().setAttribute("title",i18n.GL1771());
-		
-		lblEasyToOrganize.setText(i18n.GL1772());
-		lblEasyToOrganize.getElement().setId("lblEasyToOrganize");
-		lblEasyToOrganize.getElement().setAttribute("alt",i18n.GL1772());
-		lblEasyToOrganize.getElement().setAttribute("title",i18n.GL1772());
-		
-		lblAccessAClass.setText(i18n.GL1773());
-		lblAccessAClass.getElement().setId("lblAccessAClass");
-		lblAccessAClass.getElement().setAttribute("alt",i18n.GL1773());
-		lblAccessAClass.getElement().setAttribute("title",i18n.GL1773());
-		
-		lblEasyAccessForStudents.setText(i18n.GL1774());
-		lblEasyAccessForStudents.getElement().setId("lblEasyAccessForStudents");
-		lblEasyAccessForStudents.getElement().setAttribute("alt",i18n.GL1774());
-		lblEasyAccessForStudents.getElement().setAttribute("title",i18n.GL1774());
-		
-		lblUniqueClassCode.setText(i18n.GL1775());
-		lblUniqueClassCode.getElement().setId("lblUniqueClassCode");
-		lblUniqueClassCode.getElement().setAttribute("alt",i18n.GL1775());
-		lblUniqueClassCode.getElement().setAttribute("title",i18n.GL1775());
-		
-		lblOne.setText(i18n.GL_GRR_NUMERIC_ONE());
-		lblOne.getElement().setId("lblOne");
-		lblOne.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_ONE());
-		lblOne.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_ONE());
-		
-		lblTwo.setText(i18n.GL_GRR_NUMERIC_TWO());
-		lblTwo.getElement().setId("lblTwo");
-		lblTwo.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_TWO());
-		lblTwo.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_TWO());
-		
-		lblThree.setText(i18n.GL_GRR_NUMERIC_THREE());
-		lblThree.getElement().setId("lblThree");
-		lblThree.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_THREE());
-		lblThree.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_THREE());
-		
-		lblManageAssignments.setText(i18n.GL1776());
-		lblManageAssignments.getElement().setId("lblManageAssignments");
-		lblManageAssignments.getElement().setAttribute("alt",i18n.GL1776());
-		lblManageAssignments.getElement().setAttribute("title",i18n.GL1776());
-		
-		lblClearDue.setText(i18n.GL1777());
-		lblClearDue.getElement().setId("lblClearDue");
-		lblClearDue.getElement().setAttribute("alt",i18n.GL1777());
-		lblClearDue.getElement().setAttribute("title",i18n.GL1777());
-		
-		lblMonitorStudentProgress.setText(i18n.GL1778());
-		lblMonitorStudentProgress.getElement().setId("lblMonitorStudentProgress");
-		lblMonitorStudentProgress.getElement().setAttribute("alt",i18n.GL1778());
-		lblMonitorStudentProgress.getElement().setAttribute("title",i18n.GL1778());
-		
-		lblMonitorDesc.setText(i18n.GL1779());
-		lblMonitorDesc.getElement().setId("lblMonitorDesc");
-		lblMonitorDesc.getElement().setAttribute("alt",i18n.GL1779());
-		lblMonitorDesc.getElement().setAttribute("title",i18n.GL1779());
-		
-		ancSampleReport.setText(i18n.GL1780());
-		ancSampleReport.getElement().setId("lnkSampleReport");
-		ancSampleReport.getElement().setAttribute("alt",i18n.GL1780());
-		ancSampleReport.getElement().setAttribute("title",i18n.GL1780());
-		ancSampleReport.setVisible(false);
-		
-		lblFavoriteClasses.setText(i18n.GL1781());
-		lblFavoriteClasses.getElement().setId("lblFavoriteClasses");
-		lblFavoriteClasses.getElement().setAttribute("alt",i18n.GL1781());
-		lblFavoriteClasses.getElement().setAttribute("title",i18n.GL1781());
-		
-		lblClassOne.setText(i18n.GL1782());
-		lblClassOne.getElement().setId("lblClassOne");
-		lblClassOne.getElement().setAttribute("alt",i18n.GL1782());
-		lblClassOne.getElement().setAttribute("title",i18n.GL1782());
-		
-		lblClassTwo.setText(i18n.GL1783());
-		lblClassTwo.getElement().setId("lblClassTwo");
-		lblClassTwo.getElement().setAttribute("alt",i18n.GL1783());
-		lblClassTwo.getElement().setAttribute("title",i18n.GL1783());
-		
-		lblClassThree.setText(i18n.GL1784());	
-		lblClassThree.getElement().setId("lblClassThree");
-		lblClassThree.getElement().setAttribute("alt",i18n.GL1784());
-		lblClassThree.getElement().setAttribute("title",i18n.GL1784());
-		
-		lblClassFour.setText( i18n.GL1784_1());
-		lblClassFour.getElement().setId("lblClassFour");
-		lblClassFour.getElement().setAttribute("alt",i18n.GL1784_1());
-		lblClassFour.getElement().setAttribute("title",i18n.GL1784_1());
+		StringUtil.setAttributes(disabledBtn.getElement(), "btnDisable", i18n.GL0213(), i18n.GL0213());
+		disabledBtn.setVisible(false);
 		
 		txtCode.setPlaceholder(i18n.GL1785());
 		txtCode.getElement().setId("txtCode");
-		panelClassOne.getElement().setId("pnlClassOne");
-		panelClassTwo.getElement().setId("pnlClassTwo");
-		panelClassThree.getElement().setId("pnlClassThree");
-		panelClassFour.getElement().setId("pnlClassFour");
-		
-		disabledBtn.setVisible(false);
-		
 		txtCode.addFocusHandler(new FocusHandler() {
-			
 			@Override
 			public void onFocus(FocusEvent event) {
 				txtCode.getElement().addClassName("textTransform");
 			}
 		});
 		txtCode.addBlurHandler(new BlurHandler() {
-			
 			@Override
 			public void onBlur(BlurEvent event) {
 				if (txtCode.getText().length() > 0 ){
@@ -317,111 +236,53 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		Window.enableScrolling(true);
 	}
 	
-	@UiHandler("panelClassOne")
-	public void OpenFirstClass(ClickEvent event){
-		OpenClasspageEdit("272e9c46-c0a9-427a-9a0d-f31eb051ce3a", PlaceTokens.STUDENT);
-	}
-	
-	@UiHandler("panelClassTwo")
-	public void OpenSecondClass(ClickEvent event){
-		OpenClasspageEdit("087ddf35-6b2b-4411-9832-d8e789a25888", PlaceTokens.STUDENT);
-	}
-
-	@UiHandler("panelClassThree")
-	public void OpenThreeClass(ClickEvent event){
-		OpenClasspageEdit("6b2fbea8-b3e9-4b74-937b-28e209049eec", PlaceTokens.STUDENT);
-	}
-	@UiHandler("panelClassFour")
-	public void OpenFourClass(ClickEvent event){
-		OpenClasspageEdit("18c2e8db-ffcc-471e-960b-78b5ae30b98d", PlaceTokens.STUDENT);
-	}
-	
 	/**
-	 * 
 	 * @function OpenClasspageEdit 
-	 * 
 	 * @created_date : 07-Dec-2014
-	 * 
 	 * @description
-	 * 
-	 * 
 	 * @parm(s) : @param gooruOId
 	 * @parm(s) : @param token
-	 * 
 	 * @return : void
-	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
 		AppClientFactory.getPlaceManager().revealPlace(token, params);
-		
-		/*Map<String, String> params = new HashMap<String, String>();
-		params.put("id", gooruOId);
-		params.put("classpageId", gooruOId);
-		params.put("pageNum", "0");
-		params.put("pageSize", "10");
-		params.put("pos", "1");
-		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
-			params.put("tab","classList");
-		}*/
-		AppClientFactory.getPlaceManager().revealPlace(
-				token, params);
+		AppClientFactory.getPlaceManager().revealPlace(token, params);
 	}
 	/**
-	 * 
 	 * @fileName : ClassCodeView.java
-	 *
 	 * @description : 
-	 *
-	 *
 	 * @version : 1.0
-	 *
 	 * @date: 07-Dec-2014
-	 *
 	 * @Author Gooru Team
-	 *
 	 * @Reviewer:
 	 */
 	public class OnClickCreateClass implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
 			MixpanelUtil.ClickOnNewClassPage();
-
 			newPopup = new NewClassPopupView()  {
-
 				@Override
 				public void createNewClasspage(String title, String grade, boolean sharing) {
-
 					MixpanelUtil.Create_NewClasspage();
 					CollectionDo collectionDo = new CollectionDo();
 					collectionDo.setTitle(title);
 					collectionDo.setCollectionType("classpage");
-					AppClientFactory
-							.getInjector()
-							.getClasspageService()
-							.createClass(title,grade,sharing,new SimpleAsyncCallback<ClasspageDo>()
-									 {
-
-										@Override
-										public void onSuccess(ClasspageDo result) {
-											String[] uri=result.getUri().split("/");
-											final String classpageId =  uri[uri.length-1];
-											String title = result.getName();
-											OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
-											newPopup.ClosePopup();
-										}
-									});
+					AppClientFactory.getInjector().getClasspageService().createClass(title,grade,sharing,new SimpleAsyncCallback<ClasspageDo>() {
+						@Override
+						public void onSuccess(ClasspageDo result) {
+							String[] uri=result.getUri().split("/");
+							final String classpageId =  uri[uri.length-1];
+							String title = result.getName();
+							OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
+							newPopup.ClosePopup();
+						}
+					});
 				}
 			};
 		}
-		
 	}
 	/**
 	 * 
@@ -617,4 +478,13 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		btnEnter.setVisible(!isVisible);
 		disabledBtn.setVisible(isVisible);
 	}
+	
+	@Override
+	public void onLoad() {
+		animate();
+	}
+	
+	public static native void animate() /*-{
+		new $wnd.WOW().init();
+	}-*/;
 }
