@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -63,6 +64,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -329,6 +331,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("saveUnitBtn")
 	public void clickOnSaveUnitBtn(ClickEvent saveCourseEvent){
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		saveUnitBtn.addStyleName("disabled");
 		saveUnitBtn.setEnabled(false);
@@ -340,7 +343,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0,courseId,createOrUpDate);
+			getUiHandlers().checkProfanity(unitTitle.getText().trim(),false,0,courseId,createOrUpDate,currentShelfTreeWidget);
 		}else{
 			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -352,6 +355,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	@UiHandler("nextCreateLessonBtn")
 	public void clickOnNextLessonBtn(ClickEvent saveCourseEvent){
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		nextCreateLessonBtn.addStyleName("disabled");
 		nextCreateLessonBtn.setEnabled(false);
@@ -363,7 +367,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0,courseId,createOrUpDate);
+			getUiHandlers().checkProfanity(unitTitle.getText().trim(),true,0,courseId,createOrUpDate,currentShelfTreeWidget);
 		}else{
 			Window.scrollTo(unitTitle.getAbsoluteLeft(), unitTitle.getAbsoluteTop()-(unitTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -378,7 +382,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result,int index,String courseId,CreateDo createOrUpDate){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,int index,String courseId,CreateDo createOrUpDate, TreeItem currentShelfTreeWidget){
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(unitTitle, lblErrorMessage, result);
 			isCreateLessonClicked=true;
@@ -390,14 +394,14 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			isCreateLessonClicked=true;
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(createOrUpDate.getIdeas().trim(),isCreate,1,courseId,createOrUpDate);
+				getUiHandlers().checkProfanity(createOrUpDate.getIdeas().trim(),isCreate,1,courseId,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(createOrUpDate.getQuestions().trim(),isCreate,2,courseId,createOrUpDate);
+				getUiHandlers().checkProfanity(createOrUpDate.getQuestions().trim(),isCreate,2,courseId,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==2){
 				if(courseObj!=null && courseObj.getGooruOid()!=null){
-					getUiHandlers().updateUnitDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj);
+					getUiHandlers().updateUnitDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj,currentShelfTreeWidget);
 				}else{
-					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate,courseObj,courseId);
+					getUiHandlers().createAndSaveUnitDetails(createOrUpDate,isCreate,courseObj,courseId,currentShelfTreeWidget);
 				}
 			}
 		}

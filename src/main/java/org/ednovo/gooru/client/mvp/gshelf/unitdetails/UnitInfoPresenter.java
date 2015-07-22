@@ -35,12 +35,14 @@ import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -132,7 +134,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void createAndSaveUnitDetails(final CreateDo createDo,final boolean isCreateLesson,final FolderDo courseObj,final String courseId) {
+	public void createAndSaveUnitDetails(final CreateDo createDo,final boolean isCreateLesson,final FolderDo courseObj,final String courseId,final TreeItem currentShelfTreeWidget) {
 		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, courseId,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
@@ -140,13 +142,13 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				params.put("o1",courseId);
 				params.put("o2", result.getGooruOid());
 				params.put("view", "Course");
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateLesson,currentShelfTreeWidget);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,UNIT); 
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				if(isCreateLesson){
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, result);
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
+					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON,currentShelfTreeWidget);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
 				}
@@ -155,7 +157,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
+	public void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final FolderDo folderDo,final TreeItem currentShelfTreeWidget) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,id,null,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
@@ -166,12 +168,12 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 				folderDo.setIdeas(createDo.getIdeas());
 				folderDo.setQuestions(createDo.getQuestions());
 				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit,currentShelfTreeWidget);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,UNIT); 
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, folderDo);
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON);
+					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON,currentShelfTreeWidget);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, folderDo);
 				}
@@ -180,13 +182,13 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String courseId,final CreateDo createOrUpDate){
+	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String courseId,final CreateDo createOrUpDate,final TreeItem currentShelfTreeWidget){
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,index,courseId,createOrUpDate);
+				getView().callCreateAndUpdate(isCreate,value,index,courseId,createOrUpDate,currentShelfTreeWidget);
 				getView().resetBtns();
 			}
 		});
@@ -247,5 +249,11 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		taxonomyPopupPresenter.setSelectedUlContainer(unitLiPanelWithCloseArray);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 0);
 		addToPopupSlot(taxonomyPopupPresenter);
+	}
+	
+	@Override
+	public TreeItem getSelectedWidget() {
+		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget(); 
+		return shelfTreeWidget;
 	}
 }

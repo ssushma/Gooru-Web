@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.home;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
@@ -42,6 +45,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -201,6 +205,35 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 			@Override
 			public void onSuccess(ClasspageListDo result) {
 				getView().setClassVisiblityData(result);
+			}
+			
+		});
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpages.home.ClassHomeUiHandlers#getV2TeachStudy()
+	 */
+	@Override
+	public void getV2TeachStudy() {
+		AppClientFactory.getInjector().getClasspageService().v3GetAllClass(new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				getView().setClassesData(result);
+				/*if(result){
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("view", "myclass");
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
+				}else{
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("view", "myclass");
+					AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.NEWSTUDY);
+				}*/
 			}
 			
 		});

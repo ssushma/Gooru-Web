@@ -326,7 +326,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					getUiHandlers().setBreadCrumbs(null);
 					getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(), widgetType, null);
 				}
-				collectionListScrollpanel.getElement().setScrollTop(shelfTreeWidget.getAbsoluteTop()+shelfTreeWidget.getOffsetHeight());
+				//collectionListScrollpanel.getElement().setScrollTop(shelfTreeWidget.getAbsoluteTop()+shelfTreeWidget.getOffsetHeight());
 			}
 		});
 		floderTreeContainer.add(shelfFolderTree);
@@ -766,7 +766,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 * To add new unit/lesson/collection/assessment template to the existing tree
 	 */
 	@Override
-	public void createNewItem(String type) {
+	public void createNewItem(String type,TreeItem currentShelfTreeWidget) {
 		String o2=null,id=null,o3=null;
 		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		if(null==o1){
@@ -829,23 +829,30 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				shelfTreeWidget.getTitleFocPanel().addStyleName("assessment");
 				shelfTreeWidget.setLevel(4);
 			}
-
-                        if (shelfTreeWidget != null) {
-                            shelfTreeWidget.setWidgetPositions(nextLevel, 1, selectedWidget.getUrlParams());
-                            TreeItem item = new TreeItem(shelfTreeWidget);
-                            treeChildSelectedItem.insertItem(treeChildSelectedItem.getChildCount(), item);
-                            treeChildSelectedItem.setState(true);
-                            if(!COLLECTION.equalsIgnoreCase(type) && !type.contains(ASSESSMENT)){ 
-                                    shelfTreeWidget.setFolderOpenedStatus(true);
-                            }else{
-                                    shelfTreeWidget.setCollectionOpenedStatus(true);
-                            }
-                            correctStyle(item);
-                            treeChildSelectedItem=item;
-                        } else {
-                            // TODO: AM: Need to define the exceptional behavior
-                        }
 			
+			if (shelfTreeWidget == null) {
+				StringBuilder builder = new StringBuilder("createNewItem: shelfTreeWidget is null");
+				AppClientFactory.printSevereLogger(builder.toString());
+				throw new IllegalStateException(builder.toString());
+			}
+
+			shelfTreeWidget.setWidgetPositions(nextLevel, 1, selectedWidget.getUrlParams());
+			TreeItem item = new TreeItem(shelfTreeWidget);
+			if(currentShelfTreeWidget!=null){
+				currentShelfTreeWidget.insertItem(currentShelfTreeWidget.getChildCount(), item);
+				currentShelfTreeWidget.setState(true);
+			}else{
+				treeChildSelectedItem.insertItem(treeChildSelectedItem.getChildCount(), item);
+				treeChildSelectedItem.setState(true);
+			}
+			if(!COLLECTION.equalsIgnoreCase(type) && !type.contains(ASSESSMENT)){ 
+				shelfTreeWidget.setFolderOpenedStatus(true);
+			}else{
+				shelfTreeWidget.setCollectionOpenedStatus(true);
+			}
+			
+			correctStyle(item);
+			treeChildSelectedItem=item;
 			setFolderActiveStatus();
 		}
 	}
@@ -1004,11 +1011,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
     * as we create/update course/unit/lesson/collection 
     */
 	@Override
-	public void updateTreeWidget(FolderDo courseDo,boolean flag) {
-		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
+	public void updateTreeWidget(FolderDo courseDo,boolean flag, TreeItem currentShelfTreeWidget) {
+		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) currentShelfTreeWidget.getWidget();
 		shelfTreeWidget.updateData(courseDo);
 		String type = shelfTreeWidget.getTreeWidgetType();
-		//updateUrlParams(type);
 		if(COURSE.equalsIgnoreCase(type)){
 			HashMap<String,String> urlParams = new HashMap<>();
 			urlParams.put(COURSE, courseDo.getTitle()); 
@@ -1017,6 +1023,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		}else if(UNIT.equalsIgnoreCase(type)){
 			ShelfTreeWidget parentShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
 			HashMap<String,String> urlParams = new HashMap<>();
+
 			urlParams.put(COURSE,parentShelfTreeWidget.getUrlParams().get(COURSE));
 			urlParams.put(UNIT, courseDo.getTitle());
 			
@@ -1024,12 +1031,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(O2_LEVEL,courseDo.getGooruOid());
 			shelfTreeWidget.setUrlParams(urlParams);
 		}else if(LESSON.equalsIgnoreCase(type)){
-			ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
+			ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) currentShelfTreeWidget.getParentItem().getParentItem().getWidget();
 			HashMap<String,String> urlParams = new HashMap<>();
 			urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));
 			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
 
-			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
+			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) currentShelfTreeWidget.getParentItem().getWidget();
 			unitShelfTreeWidget.getCollectionDo().getSummary().setLessonCount(unitShelfTreeWidget.getElement().getChildCount());
 			
 			urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
@@ -1044,17 +1051,17 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				getCollectionLabel().setText(courseDo.getTitle());
 				shelfTreeWidget.setUrlParams(getTreeParentIds(courseDo));
 			}else{
-				ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getParentItem().getWidget();
-				HashMap<String,String> urlParams = new HashMap<>();
+				ShelfTreeWidget courseShelfTreeWidget = (ShelfTreeWidget) currentShelfTreeWidget.getParentItem().getParentItem().getParentItem().getWidget();
+				HashMap<String,String> urlParams = new HashMap<String,String>();
 				urlParams.put(COURSE,courseShelfTreeWidget.getUrlParams().get(COURSE));
 				urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
 
-				ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getParentItem().getWidget();
+				ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) currentShelfTreeWidget.getParentItem().getParentItem().getWidget();
 				urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
 				urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get(O2_LEVEL));
 
-				ShelfTreeWidget lessonShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
-				urlParams.put(LESSON, lessonShelfTreeWidget.getUrlParams().get(LESSON));
+				ShelfTreeWidget lessonShelfTreeWidget = (ShelfTreeWidget) currentShelfTreeWidget.getParentItem().getWidget();
+				urlParams.put(LESSON, lessonShelfTreeWidget.getUrlParams().get(LESSON)); 
 				urlParams.put(O3_LEVEL,unitShelfTreeWidget.getUrlParams().get(O3_LEVEL));
 				if(flag){
 					if(COLLECTION.equalsIgnoreCase(type)){
@@ -1069,6 +1076,8 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}
 		}
 	}
+	
+	
 	@Override
 	public void updateWidgetsCount(CollectionItemDo collectionItem) {
 		ShelfTreeWidget collectionShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
@@ -1346,12 +1355,18 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			if(o3!=null){
 				removeDeletedTreeWidget(sourceId, type);
 			}else if(o2!=null){
-				removeDeletedTreeWidget(sourceId, LESSON);
+				removeDeletedTreeWidget(sourceId, LESSON); 
 			}else if(o1!=null){
 				removeDeletedTreeWidget(sourceId, UNIT);
 			}else{
-				removeDeletedTreeWidget(sourceId, COURSE);
+				removeDeletedTreeWidget(sourceId, COURSE); 
 			}
 		}
 	};
-}
+
+	@Override
+	public TreeItem getCurrentEditingWidget() {
+//		TreeItem shelfTreeWidget = treeChildSelectedItem;
+		return treeChildSelectedItem;
+	}
+} 

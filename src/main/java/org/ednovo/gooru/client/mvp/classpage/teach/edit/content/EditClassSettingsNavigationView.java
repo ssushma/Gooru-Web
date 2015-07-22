@@ -26,10 +26,10 @@ package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
 import java.util.Map;
 
-import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -41,7 +41,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -68,9 +67,9 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditClassSettingsNavigationUiHandler> implements IsEditClassSettingsNavigationView{
 
-	@UiField LiPanel classInfo,minLiPnl/*,settLiPanel*/;
+	@UiField LiPanel classInfo,minLiPnl,studentsPnl/*,settLiPanel*/;
 
-	@UiField Anchor classInfoAnr,minmumScoreAnr/*,contentSettingsAnr*/;
+	@UiField Anchor classInfoAnr,minmumScoreAnr,studentsAnr/*,contentSettingsAnr*/;
 
 	@UiField InlineLabel courseLbl,titleLbl;
 
@@ -100,6 +99,12 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		minmumScoreAnr.getElement().setId("minmumAnrId");
 		minmumScoreAnr.getElement().setAttribute("alt",i18n.GL3403());
 		minmumScoreAnr.getElement().setAttribute("title",i18n.GL3403());
+		
+		studentsAnr.setText("Students");
+		studentsAnr.getElement().setId("studentsAnrId");
+		studentsAnr.getElement().setAttribute("alt",i18n.GL3403());
+		studentsAnr.getElement().setAttribute("title",i18n.GL3403());
+		
 
 		/*contentSettingsAnr.setText(i18n.GL3404());
 		contentSettingsAnr.getElement().setId("contentSettingAnrId");
@@ -123,6 +128,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 
 		classInfoAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classInfo));
 		minmumScoreAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
+		studentsAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,studentsPnl));
 		//settLiPanel.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
 		
 		previewBtn.setVisible(false);
@@ -139,13 +145,14 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO)){
 			classInfo.setStyleName(CssTokens.ACTIVE);
 			minLiPnl.removeStyleName(CssTokens.ACTIVE);
-			//settLiPanel.removeStyleName(CssTokens.ACTIVE);
+			studentsPnl.removeStyleName(CssTokens.ACTIVE);
+			
 		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE)){
 			minLiPnl.setStyleName(CssTokens.ACTIVE);
 			classInfo.removeStyleName(CssTokens.ACTIVE);
-			//settLiPanel.removeStyleName(CssTokens.ACTIVE);
-		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
-			//settLiPanel.setStyleName(CssTokens.ACTIVE);
+			studentsPnl.removeStyleName(CssTokens.ACTIVE);
+		}else if(subPageView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER)){
+			studentsPnl.addStyleName(CssTokens.ACTIVE);
 			classInfo.removeStyleName(CssTokens.ACTIVE);
 			minLiPnl.removeStyleName(CssTokens.ACTIVE);
 		}
@@ -166,6 +173,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		@Override
 		public void onClick(ClickEvent event) {
 			minLiPnl.removeStyleName(CssTokens.ACTIVE);
+			studentsPnl.removeStyleDependentName(CssTokens.ACTIVE);
 			//settLiPanel.removeStyleName(CssTokens.ACTIVE);
 			classInfo.removeStyleName(CssTokens.ACTIVE);
 			liPanel.addStyleName(CssTokens.ACTIVE);
@@ -175,6 +183,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 			params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
 			AppClientFactory.getPlaceManager().revealPlace(request,params);
 			
+			getUiHandlers().setClearAllPanel();
 		//	request = request.with(name, value);
 			
 			
@@ -241,5 +250,14 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 			getUiHandlers().addCourseToClass();
 		}
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassSettingsNavigationView#setClassData(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	@Override
+	public void setClassData(ClasspageDo classpageDo) {
+		String studentCount = "("+classpageDo.getMemberCount()+")";
+		studentsAnr.setText(i18n.GL3344() +" " +studentCount);
 	}
 }

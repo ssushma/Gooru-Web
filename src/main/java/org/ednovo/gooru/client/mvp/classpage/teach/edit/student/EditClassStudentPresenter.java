@@ -80,9 +80,8 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			public void onSuccess(ArrayList<CollaboratorsDo> result) {
 				getView().displayInvitationSuccessPopUp(result.size());
 				//If the same user email id is invited the result size will be "0" at that time we are enabling the invite button.
-				
-				CollaboratorsDo collaboratorsDo =new CollaboratorsDo();
 				for(int i=0;i<emailId.size();i++){
+					CollaboratorsDo collaboratorsDo =new CollaboratorsDo();
 					collaboratorsDo.setEmailId(emailId.get(i).toString().replaceAll("\"",""));
 					result.add(collaboratorsDo);
 				}
@@ -102,11 +101,17 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 		});
 		
 	}
+	
+	
 
 	@Override
 	public void onReveal() {
-		
-		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
+		/*String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		if(classId != null){
+			generateShareLink(classId);
+			getActiveMembersListByCollectionId(classId,pageSize*activeListPageNum, pageSize, "active",true,true,false);
+		}*/
+		/*String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS)) {
 			getView().setReportView();
 		} else {
@@ -116,7 +121,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 				generateShareLink(classId);
 				getActiveMembersListByCollectionId(classId,pageSize*activeListPageNum, pageSize, "active",true,true,false);
 			}
-		}
+		}*/
 	}
 
 	@Override
@@ -169,7 +174,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	 */
 	@Override
 	public void addStudents(String classpageId, List<String> emailIds) {
-		this.emailId=emailIds;
+		emailId=emailIds;
 		getClasspageServiceAsync().inviteStudentToClass(classpageId, emailIds, getAddMembersAsyncCallback());
 	}
 
@@ -286,6 +291,20 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 				getView().removePendingUserWidget(membersViewVc,pendingFlag);
 			}
 		});
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentViewUiHandler#getMembersDetails()
+	 */
+	@Override
+	public void getMembersDetails() {
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		if(classId != null){
+			generateShareLink(classId);
+			getActiveMembersListByCollectionId(classId,pageSize*activeListPageNum, pageSize, "active",true,true,false);
+		}
 	}
 	
 }

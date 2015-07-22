@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubDomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.StandardsCodeDecView;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -66,13 +67,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -382,6 +384,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("saveLessonBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		saveLessonBtn.addStyleName("disabled");
@@ -393,7 +396,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null,createOrUpDate,courseId,unitId);
+			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
 
 		}else{
 			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
@@ -406,6 +409,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("btnSaveAndCreateCollection")
 	public void clickOnSaveAndCreateCollection(ClickEvent saveCourseEvent){
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		btnSaveAndCreateCollection.addStyleName("disabled");
@@ -417,7 +421,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION,createOrUpDate,courseId,unitId);
+			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
 
 		}else{
 			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
@@ -430,6 +434,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
+		final TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		Window.enableScrolling(false);
 		final String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		final String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
@@ -443,14 +448,14 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					assessmentPopup.hide();
 					Window.enableScrolling(true);
 					//This will display the normal assessment info
-					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT,createOrUpDate,courseId,unitId);
+					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
 				}
 				@Override
 				public void clickOnExternalAssessmentClick() {
 					assessmentPopup.hide();
 					Window.enableScrolling(true);
 					//This will display the external assessment info
-					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL,createOrUpDate,courseId,unitId);
+					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
 				}
 			};
 			assessmentPopup.setGlassEnabled(true);
@@ -466,15 +471,15 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		
 	}
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result,String type,CreateDo createOrUpDate,String courseId,String unitId){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,String type,CreateDo createOrUpDate,String courseId,String unitId,TreeItem currentShelfTreeWidget){
 
 		if(result){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, result);
 		}else{
 			if(courseObj!=null && courseObj.getGooruOid()!=null){
-				getUiHandlers().updateLessonDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,type,courseObj);
+				getUiHandlers().updateLessonDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,type,courseObj,currentShelfTreeWidget);
 			}else{
-				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type,courseId,unitId);
+				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type,courseId,unitId,currentShelfTreeWidget);
 			}
 		}
 	}

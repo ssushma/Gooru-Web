@@ -241,8 +241,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return deserializeCollectionItem(jsonResponseRepget);
 	}
 	@Override
-	public void deleteCollectionItem(String collectionItemId) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_ITEM, collectionItemId);
+	public void deleteCollectionItem(String collectionId,String collectionItemId) {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_ITEM,collectionId,collectionItemId);
+		getLogger().info("--- deleteCollectionItem -- "+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
@@ -2384,6 +2385,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo addCollectionItem(String collectionId,String resourceId) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
 		CollectionItemDo collectionItemDo= new CollectionItemDo();
+		getLogger().info("addCollectionItem collectionId::::::"+collectionId);
+		getLogger().info("addCollectionItem resourceId::::::"+resourceId);
 		String url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
 		getLogger().info("addCollectionItem post API call::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
