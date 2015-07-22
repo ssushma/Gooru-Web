@@ -117,6 +117,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	String type;
 	private String clickType;
 	String title,description,category,thumbnailUrl;
+	
+	FolderDo folderDo;
 
 	Map<String, ContentResourceWidgetWithMove> moveWidgets=new HashMap<String, ContentResourceWidgetWithMove>();
 	private static final String MESSAGE_HEADER = i18n.GL0748();
@@ -143,6 +145,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void setData(CollectionDo listOfContent,FolderDo folderDo, RefreshType type){
 		this.listOfContent = listOfContent;
+		this.folderDo = folderDo;
 		if (AppClientFactory.isContentAdmin() || listOfContent
 				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
 						.getGooruUId())){
@@ -150,6 +153,25 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}else if(listOfContent.isIsCollaborator()){
 			 getUiHandlers().disableCollabaratorOptions(false);
 		}
+		
+			if (listOfContent.getMeta()!=null /*&& listOfContent.getMeta().getCollaboratorCount() > 0 */&& listOfContent.getLastModifiedUser() != null){
+				String lastModifiedDate = listOfContent.getLastModified().toString() != null ? getTimeStamp(listOfContent.getLastModified().getTime()+"") : "";
+				String lastModifiedUser = listOfContent.getLastModifiedUser().getUsername() != null ?  listOfContent.getLastModifiedUser().getUsername() : "";
+				System.out.println("lastModifiedDate:"+lastModifiedDate);
+				System.out.println("lastModifiedUser:"+lastModifiedUser);
+				//lblLastEditedBy.setText(StringUtil.generateMessage(i18n.GL1112(), lastModifiedDate, lastModifiedUser));
+				//lblLastEditedBy.setVisible(lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("") ? true : false);
+				if (lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("")){
+					//panelActionItems.getElement().getStyle().setTop(111, Unit.PX);
+				}else{
+					//panelActionItems.getElement().getStyle().clearTop();
+				}
+			}
+			else{
+				//lblLastEditedBy.setVisible(false);
+				//panelActionItems.getElement().getStyle().clearTop();
+			}
+		
 		lblTitle.setVisible(false);
 		if(folderDo.getType().equalsIgnoreCase("assessment") || folderDo.getType().equalsIgnoreCase("assessment/url")){
 			btnAddResources.setVisible(false);		
@@ -185,7 +207,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			pnlReosurceList.clear();
 		}
 		if (type.equals(RefreshType.INSERT)){
-			final ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem) {
+			final ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem,folderDo.getType()) {
 				@Override
 				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow, String moveId,String moveGooruOid) {
 					int movingIndex= Integer.parseInt(movingPosition);
@@ -602,4 +624,61 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			contentResourceWidgetWithMove.setCollectionDetails(collectionItemDo);
 		}
 	}
+	
+	/**
+	 * @function getCreatedTime 
+	 * 
+	 * @created_date : 22-Jul-2015
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param commentCreatedTime
+	 * 
+	 * @return : String
+	 */
+	private String getTimeStamp(String commentCreatedTime) {
+		String createdTime = null;
+		Long currentTime = System.currentTimeMillis();
+		Long commentTime = Long.parseLong(commentCreatedTime);
+		Long elapsedTime = (currentTime - commentTime);
+		
+		int seconds = (int) (elapsedTime / 1000) % 60 ;
+		int minutes = (int) ((elapsedTime / (1000*60)) % 60);
+		int hours   = (int) ((elapsedTime / (1000*60*60)) % 24);
+		int days = (int) (elapsedTime / (1000*60*60*24));
+		
+		if(days>0) {
+			createdTime = days + getTimePrefix(days," "+i18n.GL0562(), i18n.GL0579(), i18n.GL0580());
+		} else if(hours>0&&hours<24) {
+			createdTime = hours + getTimePrefix(hours," "+i18n.GL0563(), i18n.GL1435(), i18n.GL1436());
+		} else if(minutes>0&&minutes<60) {
+			createdTime = minutes + getTimePrefix(minutes," "+i18n.GL0564(), i18n.GL1437(), i18n.GL1438());
+		} else if(seconds<=60) {
+			createdTime = i18n.GL0561();
+		}
+		return createdTime;
+	}
+	
+	/**
+	 * @function getTimePrefix 
+	 * 
+	 * @created_date : 22-Jul-2015
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param count
+	 * @parm(s) : @param msg
+	 * @parm(s) : @param regex
+	 * @parm(s) : @param replacement
+	 * 
+	 * @return : String
+	 *
+	 */
+	private String getTimePrefix(int count, String msg, String regex, String replacement) {
+		if(count==1) {
+			msg = msg.replaceAll(regex, replacement);
+		}
+		return msg;
+	}
+
 }
