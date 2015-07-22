@@ -46,7 +46,7 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	 * @param createDo {@link String} 
 	 * @param isCreateLesson {@link boolean} 
 	 */
-	public void createAndSaveUnitDetails(CreateDo createDo,boolean isCreateLesson,FolderDo courseObj);
+	public void createAndSaveUnitDetails(CreateDo createDo,boolean isCreateLesson,FolderDo courseObj,String courseId);
 	/**
 	 * This method is used to update the unit info details
 	 * @param createDo
@@ -58,8 +58,9 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	 * This method is used to check profanity checker
 	 * @param textValue
 	 * @param isCreate
+	 * @param createOrUpDate 
 	 */
-	void checkProfanity(String textValue,final boolean isCreate,int index);
+	void checkProfanity(String textValue,final boolean isCreate,int index,String courseId, CreateDo createOrUpDate);
 
 	void showUnitInfo();
 

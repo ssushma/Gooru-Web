@@ -37,8 +37,6 @@ import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
-import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter.ShowNewCollectionWidget;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -99,11 +97,12 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
-		getView().setCollectionContentPresenter(this);
 		this.addResourcePresenter = addResourcePresenter;
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
+
 		this.searchAddResourceToCollectionPresenter = searchAddResourceToCollectionPresenter;
+		getView().setCollectionContentPresenter(this);
 	
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
 			@Override
@@ -122,8 +121,16 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	protected void onReveal(){
 		super.onReveal();
+		getView().onLoad();
+		getView().reset();
 	}
 
+	@Override
+	protected void onHide() {
+		super.onHide();
+		getView().onUnload();
+	}
+	
 	@Override
 	public void setData(final FolderDo folderDo) {
 		if(folderDo!=null){
@@ -375,8 +382,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 
 	@Override
+
 	public void showResourcePopup(CollectionItemDo collectionItem) {
-		/*shelfMainPresenter.SetDefaultTypeAndVersion();*/
 		myCollectionsRightClusterPresenter.getShelfMainPresenter().SetDefaultTypeAndVersion();
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
@@ -386,6 +393,10 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		searchAddResourceToCollectionPresenter.setCollectionsData(true);
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
 		Window.enableScrolling(false);
+	}
+
+	public void disableCollabaratorOptions(boolean isHide) {
+		myCollectionsRightClusterPresenter.disableCollabaratorOptions(isHide);
 	}
 }
 

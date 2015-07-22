@@ -126,8 +126,19 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 	
 	@UiHandler("btnSaveExternalAssessment")
 	public void clickEventOfSave(ClickEvent event){
+		btnSaveExternalAssessment.addStyleName("disabled");
+		btnSaveExternalAssessment.setEnabled(false);
 		String assessmentExistingTitle=txtAssessmentTitle.getText();
 		String assessmentURL=txtAssessmentURL.getText();
+		
+		CreateDo createOrUpDate=new CreateDo();
+		createOrUpDate.setTitle(txtAssessmentTitle.getText());
+		createOrUpDate.setUrl(txtAssessmentURL.getText());
+		createOrUpDate.setGoals(txaAssessmentDescription.getText());
+		createOrUpDate.setCollectionType(ASSESSMENTURL);
+		createOrUpDate.setSharing(selectedSharing);
+		createOrUpDate.setIsLoginRequired(isLoginRequired);
+		
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblErrorMessage.setVisible(true);
 			lblErrorMessage.setText(i18n.GL1026());
@@ -158,13 +169,13 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				lblErrorMessageForURL.setVisible(true);
 				lblErrorMessageForURL.setText(i18n.GL0926());
 			}else{
-				getUiHandlers().checkProfanity(txtAssessmentTitle.getText().trim(),true,0);
+				getUiHandlers().checkProfanity(txtAssessmentTitle.getText().trim(),true,0,createOrUpDate);
 			}
 		}
 	}
 
 	@Override
-	public void callCreateAndUpdate(boolean isCreate, boolean result, int index) {
+	public void callCreateAndUpdate(boolean isCreate, boolean result, int index,CreateDo createOrUpDate) {
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(txtAssessmentTitle, lblErrorMessage, result);
 		}else if(result && index==1){
@@ -173,17 +184,11 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaAssessmentDescription, lblErrorMessageForDesc, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(txtAssessmentURL.getText().trim(),isCreate,1);
+				getUiHandlers().checkProfanity(createOrUpDate.getUrl().trim(),isCreate,1,createOrUpDate);
 			}else if(index==1){
-				getUiHandlers().checkProfanity(txaAssessmentDescription.getText().trim(),isCreate,2);
+				if(createOrUpDate.getGoals()!=null)
+				getUiHandlers().checkProfanity(createOrUpDate.getGoals().trim(),isCreate,2,createOrUpDate);
 			}else if(index==2){
-				CreateDo createOrUpDate=new CreateDo();
-				createOrUpDate.setTitle(txtAssessmentTitle.getText());
-				createOrUpDate.setUrl(txtAssessmentURL.getText());
-				createOrUpDate.setGoals(txaAssessmentDescription.getText());
-				createOrUpDate.setCollectionType(ASSESSMENTURL);
-				createOrUpDate.setSharing(selectedSharing);
-				createOrUpDate.setIsLoginRequired(isLoginRequired);
 				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 				if(id!=null){
 					getUiHandlers().updateAssessmentDetails(createOrUpDate,id,isCreate,folderObj);
@@ -218,5 +223,11 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			pnlSharable.addStyleName(SELECTEDSTYLE);
 			lblRequiresNo.addStyleName(SELECTEDSTYLE);
 		}
+	}
+	
+	@Override
+	public void resetBtns() {
+		btnSaveExternalAssessment.removeStyleName("disabled");
+		btnSaveExternalAssessment.setEnabled(true);
 	}
 }

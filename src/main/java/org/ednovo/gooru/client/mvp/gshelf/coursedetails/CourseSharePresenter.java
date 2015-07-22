@@ -99,14 +99,14 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
     */
 	public void getAssociatedClasses() {
 		// TODO Auto-generated method stub
-		String courseId= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		final String courseId= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		if(courseId!=null){
 			AppClientFactory.getInjector().getClasspageService().getClassesAssociatedWithCourse(courseId, new SimpleAsyncCallback<ArrayList<ClasspageDo>>() {
 
 				@Override
 				public void onSuccess(ArrayList<ClasspageDo> result) {
 					if(result!=null && result.size()>0){
-						getView().showClassesInList(result);
+						getView().showClassesInList(result,courseId);
 					}
 					
 				}
@@ -125,7 +125,7 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 			@Override
 			public void onSuccess(ClasspageDo result) {
 				getTeachClassesList();
-				getView().showClassesInList(null);
+				getView().showClassesInList(null,folderDo.getGooruOid());
 			}
 			
 		});

@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
@@ -192,7 +193,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
-		if (AppClientFactory.isAnonymous()){
+		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+		if (idParm != null && AppClientFactory.isAnonymous()){
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+			
+		}else if(AppClientFactory.isAnonymous()){
 			getView().setNoDataForAnonymousUser(true);
 		}else{
 			if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
@@ -356,9 +361,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 		if(id!=null && folderDo!=null){
 			getView().getCollectionLabel().setVisible(true);
+			getView().getTitleIconContainer().setVisible(true);
 			setCollectionContent(folderDo);
 		}else{
 			getView().getCollectionLabel().setVisible(false);
+			getView().getTitleIconContainer().setVisible(false);
 			myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
 			setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 		}
@@ -509,5 +516,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void addNewContent(String type) {
 		getMyCollectionsRightClusterPresenter().addNewContent(type);
+	}
+
+	public void setTileIcon(String title, String type) {
+		getView().setViewTitleWthIcon(title,type);
 	}
 }

@@ -60,8 +60,10 @@ public interface IsAssessmentProgressReportView extends IsChildView<AssessmentPr
 
 	public void resetCollectionMetaData();
 
-	public void setQuestionsData(ArrayList<UserDataDo> questionsData);
+	public void setQuestionsData(ArrayList<UserDataDo> questionsData, String contentType);
 
+	public void setResourcesData(ArrayList<UserDataDo> questionsData);
+	
 	public void setQuestionsPrintData(ArrayList<UserDataDo> questionsData);
 
 	public void setPdfForEmail(String result);

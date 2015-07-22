@@ -57,6 +57,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemD
 import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.NewResourceDo;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
@@ -2446,6 +2447,40 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		getLogger().info("response:::::"+jsonResponseRep.getStatusCode());
 		return deserializeCollectionItem(jsonRep);
+	}
+	@Override
+	public List<ListValuesDo> getEducationalUseList() throws GwtException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_EDUCATIONAL_USE,getLoggedInSessionToken());
+		getLogger().info("-- get Educatioal -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
+		return listValues;
+	}
+	
+	public List<ListValuesDo> deserializeListValues(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<ListValuesDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return new ArrayList<ListValuesDo>();
+	}
+	
+	@Override
+	public List<ListValuesDo> getMomentOfLearning()throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_MOMENT_OF_LEARERNING,getLoggedInSessionToken());
+		getLogger().info("-- get Moment  of Learning -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
+		return listValues;
 	}
 	
 }

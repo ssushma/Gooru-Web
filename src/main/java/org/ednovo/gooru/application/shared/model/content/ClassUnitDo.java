@@ -1,15 +1,15 @@
 package org.ednovo.gooru.application.shared.model.content;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class ClassUnitDo implements Serializable{
+public class ClassUnitDo implements IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 

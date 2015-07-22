@@ -112,7 +112,7 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 		addRegisteredHandler(PreFilterEvent.TYPE, this);
 		addRegisteredHandler(UpdateProfileHeaderImageEvent.TYPE, this);
 
-		showPrefilterPopup();
+		//showPrefilterPopup();
 
 //		AppClientFactory.getInjector().getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 //			@Override
@@ -193,6 +193,7 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 
 		}
 	}
+	//This method using for pre-filter popup
 	private void showPrefilterPopup() {
 		getView().showPrefilter(addStandardsPresenter);
 	}

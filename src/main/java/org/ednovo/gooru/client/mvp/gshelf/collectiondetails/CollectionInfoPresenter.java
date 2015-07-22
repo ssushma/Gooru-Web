@@ -209,6 +209,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			AppClientFactory.getInjector().getfolderService().createCollection(createObj, parentId, false, new SimpleAsyncCallback<FolderDo>() {
 				@Override
 				public void onSuccess(FolderDo result) {
+					getView().resetBtns();
 					params.put("id", result.getGooruOid());
 					params.put("view", FOLDER);
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
@@ -219,13 +220,18 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		}else{
 			AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
 				@Override
-				public void onSuccess(FolderDo result) {				
+				public void onSuccess(FolderDo result) {
+					getView().resetBtns();
 					Map<String, String> params= new HashMap<String, String>();
 					params.put(O1_LEVEL, o1);
 					params.put(O2_LEVEL, o2);
 					params.put(O3_LEVEL, o3);
 					params.put("id", result.getGooruOid());
 					params.put("view", "course");
+					result.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
+					result.setDepthOfKnowledge(StringUtil.getCheckBoxSelectedDo(getView().getDepthOfKnowledgeContainer().getSelectedValue()));
+					result.setSkills(StringUtil.getStandardFos(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest()));
+					result.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
@@ -275,6 +281,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			getFolderServiceAsync().updateCollectionDetails(createDo,id, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
+					getView().resetBtns();
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false);
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
@@ -288,6 +295,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createDo, new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
+					getView().resetBtns();
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
@@ -299,13 +307,14 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String collectionType){
+	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String collectionType,final CreateDo createOrUpDate){
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,index,collectionType);
+				getView().resetBtns();
+				getView().callCreateAndUpdate(isCreate,value,index,collectionType,createOrUpDate);
 			}
 		});
 	}

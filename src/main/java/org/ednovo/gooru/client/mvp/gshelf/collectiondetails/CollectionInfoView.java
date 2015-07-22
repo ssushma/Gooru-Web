@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
@@ -592,16 +591,29 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		saveCollectionBtn.addStyleName("disabled");
+		saveCollectionBtn.setEnabled(false);
 		if(validateInputs()){
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setTitle(collectionTitle.getText());
+			createOrUpDate.setDescription(learningObjective.getText());
+			createOrUpDate.setCollectionType(type);
+			createOrUpDate.setStandardIds(getSelectedStandards());
+			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+			createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
+			createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
+			createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
+			
 			lblErrorMessage.setVisible(false);
 			collectionTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
+			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type,createOrUpDate);
 		
 		}else{
 			Window.scrollTo(collectionTitle.getAbsoluteLeft(), collectionTitle.getAbsoluteTop()-(collectionTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
 			collectionTitle.addStyleName("textAreaErrorMessage");
 			lblErrorMessage.setText("Please Enter Collection Title");
+			resetBtns();
 		}
 	}
 
@@ -620,7 +632,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
+	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType,CreateDo createOrUpDate) {
 		String title=collectionTitle.getText().trim();
 		if((result && index==0)||(title.equalsIgnoreCase("")&&index==0)){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
@@ -628,17 +640,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(learningObjective.getText().trim(),true,1,collectionType);
+				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),true,1,collectionType,createOrUpDate);
 			}else if(index==1){
-				CreateDo createOrUpDate=new CreateDo();
-				createOrUpDate.setTitle(collectionTitle.getText());
-				createOrUpDate.setDescription(learningObjective.getText());
-				createOrUpDate.setCollectionType(collectionType);
-				createOrUpDate.setStandardIds(getSelectedStandards());
-				createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
-				createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
-				createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
-				createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
+				
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG);
 				}else{
@@ -901,6 +905,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void collectionTitleKeyUphandler(KeyUpEvent event){
 		collectionTitle.removeStyleName("textAreaErrorMessage");
 		lblErrorMessage.setVisible(false);
+	}
+	@Override
+	public void resetBtns() {
+		saveCollectionBtn.removeStyleName("disabled");
+		saveCollectionBtn.setEnabled(true);
+
 	}
 }
 

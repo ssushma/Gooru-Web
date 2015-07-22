@@ -33,7 +33,7 @@ public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUi
 
 	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId,PrintUserDataDO printData);
 
-	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData);
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData, String type);
 
 	public void clearslot();
 

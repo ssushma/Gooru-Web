@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -58,12 +59,14 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 	 * @param isCreate
 	 * @param result
 	 * @param index
+	 * @param createOrUpDate 
 	 */
-	void callCreateAndUpdate(boolean isCreate,boolean result,int index);
+	void callCreateAndUpdate(boolean isCreate,boolean result,int index,String courseId, CreateDo createOrUpDate);
 	
 
 	void appendDoamins(List<CourseSubjectDo> libraryCodeDo, int selectedId);
 
-	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray); 
-
+	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);
+	
+	void resetBtns(); 
 }

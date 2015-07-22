@@ -9,9 +9,10 @@ public interface ExternalAssessmentInfoUiHandlers extends BaseUiHandlers {
 	 * This method is used for checking profanity
 	 * @param textValue
 	 * @param isCreate
+	 * @param createOrUpDate 
 	 * @param type
 	 */
-	public void checkProfanity(String textValue,boolean isCreate,int index);
+	public void checkProfanity(String textValue,boolean isCreate,int index, CreateDo createOrUpDate);
 	/**
 	 * To Create Course
 	 * @param createObj {@link String} 

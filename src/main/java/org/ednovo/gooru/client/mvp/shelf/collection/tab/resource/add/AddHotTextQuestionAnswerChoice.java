@@ -40,6 +40,8 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -165,7 +167,8 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 	@Override
 	public void onLoad(){
 		super.onLoad();
-		 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+		DeferredCommand.addCommand(new Command() {
+			 //Scheduler.get().scheduleDeferred(new ScheduledCommand(){
 				@Override
 				public void execute() {
 						setRichTextData();

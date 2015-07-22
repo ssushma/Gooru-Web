@@ -8,7 +8,7 @@
 		<div class="courseNameBlock">
 			<p>Course Name</p>
 			<p>
-				<g:TextBox styleName="form-control" ui:field="courseTitle"/>
+				<g:TextBox styleName="form-control" ui:field="courseTitle" maxLength="50"/>
 				<g:Label ui:field="lblErrorMessage" styleName="errorMessage text-right"></g:Label>
 			</p>
 		</div>

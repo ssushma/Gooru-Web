@@ -298,6 +298,11 @@
 	width: 90px;
 	height: 60px;
 }
+.studentAssessmentReportViewContainer .scoreBrief .lessonDetails .thumbnailImage.blueBorder img {
+    border-left: 5px solid #0074be;
+	width: 90px;
+	height: 60px;
+}
 .studentAssessmentReportViewContainer .scoreBrief .lessonDetails, .studentAssessmentReportViewContainer .scoreBrief .totalIndividualScore, .studentAssessmentReportViewContainer .scoreBrief .infoGraphic {
 	border-right: 1px solid #dddddd;
 }
@@ -776,3 +781,26 @@ table#report-student-assessment-report th{
   	line-height: 33px;
 }
 
+.studentAssessmentBodyBlock .displayCollectionIcons {
+	display: table;
+	margin: 20px 20px 0px 20px;
+	border-radius: 10px;
+	cursor: pointer;
+	border: 1px solid #ddd;
+	overflow: hidden;
+}
+
+.studentAssessmentBodyBlock .displayCollectionIcons .element {
+	display: table-cell;
+	padding: 19px 32px;
+	text-align: center;
+	border: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+}
+.studentAssessmentBodyBlock .displayCollectionIcons .element:last-child {
+	border-right: none;
+}
+.studentAssessmentBodyBlock .displayCollectionIcons .element.active {
+	background: #85b9df none repeat scroll 0 0;
+	color: #fff;
+}

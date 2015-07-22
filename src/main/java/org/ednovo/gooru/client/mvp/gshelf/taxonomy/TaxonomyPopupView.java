@@ -560,6 +560,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			setStandardsActiveStyle(liPanel,previousSelectedStdLiPanel);
 			final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
 			liPanelWithClose.setId(id);
+			liPanelWithClose.setName(title.getText());
 			liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
 			addOrRemoveContent(liPanel,previousSelectedDomainLiPanel,liPanelWithClose);
 			previousSelectedStdLiPanel = liPanel;
