@@ -260,7 +260,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setUnitTemplate(UNIT,null);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
 			}else if(type.contains(LESSON)){
-				System.out.println("in lesson right cluster");
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON,null);
 			}else if(type.toLowerCase().contains(FOLDER.toLowerCase())){
