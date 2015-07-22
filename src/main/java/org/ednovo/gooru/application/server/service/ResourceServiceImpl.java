@@ -242,8 +242,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return deserializeCollectionItem(jsonResponseRepget);
 	}
 	@Override
-	public void deleteCollectionItem(String collectionItemId) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_ITEM, collectionItemId);
+	public void deleteCollectionItem(String collectionId,String collectionItemId) {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_ITEM,collectionId,collectionItemId);
+		getLogger().info("--- deleteCollectionItem -- "+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 

@@ -185,8 +185,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 	
 	@Override
-	public void deleteCollectionItem(final String collectionItemId, final int itemSequence) {
-		AppClientFactory.getInjector().getResourceService().deleteCollectionItem(collectionItemId, new SimpleAsyncCallback<Void>() {
+	public void deleteCollectionItem(String collectionId,final String collectionItemId, final int itemSequence) {
+		AppClientFactory.getInjector().getResourceService().deleteCollectionItem(collectionId,collectionItemId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				getView().updateDeleteItem(collectionItemId, itemSequence);
