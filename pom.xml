@@ -589,7 +589,7 @@
 							<jsSourceDir>scripts</jsSourceDir>
 							<jsSourceIncludes>
 									<jsSourceInclude>01_bootstrap.js</jsSourceInclude>
-									<jsSourceInclude>02_waypoints.js</jsSourceInclude>
+									<jsSourceInclude>02_wow.js</jsSourceInclude>
 									<jsSourceInclude>03_custom.js</jsSourceInclude>
 									<jsSourceInclude>jquery-migrate-1.2.1.js</jsSourceInclude>
 									<jsSourceInclude>04_highcharts.js</jsSourceInclude>
