@@ -38,7 +38,6 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubDomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.StandardsCodeDecView;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -90,7 +89,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	interface LessonViewUiBinder extends UiBinder<Widget, LessonInfoView> {
 	}
 
-	@UiField HTMLPanel lessonInfo,standardsUI;
+	@UiField HTMLPanel lessonInfo,standardsUI,pnlStandards;
 	@UiField TextBox lessonTitle;
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse, taxonomyToggleBtn;
@@ -687,5 +686,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		btnSaveAndCreateCollection.setEnabled(true);
 		btnSaveAndCreateAssessment.removeStyleName("disabled");
 		btnSaveAndCreateAssessment.setEnabled(true);
+	}
+	@Override
+	public HTMLPanel getStadardsPanel(){
+		return pnlStandards;
 	}
 }

@@ -39,7 +39,6 @@ import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
@@ -393,8 +392,11 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			@Override
 			public void onSuccess(FolderDo result) {
 				if(result.getSubdomain()!=null && result.getSubdomain().size()>0){
+					getView().getStadardsPanel().setVisible(true);
 					CourseSubjectDo courseSubjectObj=result.getSubdomain().get(0);
 					callTaxonomyService(courseSubjectObj.getId());
+				}else{
+					getView().getStadardsPanel().setVisible(false);
 				}
 			}
 		});
