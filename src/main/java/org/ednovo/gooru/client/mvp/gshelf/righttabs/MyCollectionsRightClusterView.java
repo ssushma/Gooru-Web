@@ -333,13 +333,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		enableAndHideTabs(true);
 		enableOrHidePreviewBtn();
 		enableOrHideShareTab();
-		System.out.println("isCollaborator::"+isCollaborator);
-		if(COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
-			disableCollabaratorOptions(isCollaborator);
-		}else{
-			disableCollabaratorOptions(true);
-		}
-		
 	}
 	
 	
@@ -358,21 +351,30 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 */
 	private void enableOrHidePreviewBtn() {
 		if(currentTypeView!=null){
+			/*if(COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
+				disableCollabaratorOptions(isCollaborator);
+			}else{
+				disableCollabaratorOptions(true);
+			}*/
+			
 			if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 				lnkPreview.setVisible(true);
 				toggleButton.setVisible(true);
 				deletePnl.setVisible(false);
 				copyLbl.setVisible(true);
-				moveLbl.setVisible(true);
+				disableCollabaratorOptions(isCollaborator);
+//				moveLbl.setVisible(true);
 			}else{
 				lnkPreview.setVisible(false);
 				toggleButton.setVisible(true);
 				copyLbl.setVisible(false);
 				moveLbl.setVisible(false);
+				myCollDelLbl.setVisible(true);
 				deletePnl.setVisible(false);
 			}
 		}else{
 			lnkPreview.setVisible(false);
+			
 		}
 	}
 	@Override
@@ -820,6 +822,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 
 	public Anchor getPreviewLink(){
+		toggleButton.setVisible(true);
 		return lnkPreview;
 	}
 }
