@@ -6,7 +6,7 @@
             <div class="shareThisCollection">
               <h5>Share This Collection</h5>
               <p>
-                <g:TextArea styleName="form-control" ui:field="shareTextArea"></g:TextArea>
+                <g:TextArea styleName="form-control" ui:field="shareTextArea" readOnly="true"></g:TextArea>
               </p>
               <div class="linkFormat"><g:Anchor ui:field="bitlyLink">Bit.ly</g:Anchor> <span class="devider">|</span> <g:Anchor ui:field="embedLink">Embed</g:Anchor></div>
             </div>
