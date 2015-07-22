@@ -36,12 +36,14 @@ import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -119,21 +121,21 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit,final FolderDo folderDo) {
+	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit,final FolderDo folderDo, final TreeItem currentShelfTreeWidget) {
 		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,null,null,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				getView().resetBtns();
 				params.put("o1", result.getGooruOid());
 				params.put("view", COURSE);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateUnit,currentShelfTreeWidget);
 				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,COURSE); 
 				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, result);
 					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(UNIT);
+					myCollectionsRightClusterPresenter.setUnitTemplate(UNIT,currentShelfTreeWidget);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
@@ -150,7 +152,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 	}
 
 	@Override
-	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
+	public void updateCourseDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,final FolderDo folderDo, final TreeItem currentShelfTreeWidget) {
 		AppClientFactory.getInjector().getfolderService().updateCourse(id,null,null,null,createObj, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
@@ -158,11 +160,11 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 				folderDo.setTitle(createObj.getTitle());
 				folderDo.setType(COURSE);
 				folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,isCreateUnit,currentShelfTreeWidget);
 				if(isCreateUnit){
 					myCollectionsRightClusterPresenter.setTabItems(1, COURSE, folderDo);
 					myCollectionsRightClusterPresenter.setTabItems(1, UNIT, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate("Unit");
+					myCollectionsRightClusterPresenter.setUnitTemplate("Unit",currentShelfTreeWidget);
 				}else{
 					Window.scrollTo(0, 0);
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, folderDo);
@@ -171,14 +173,14 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 		});
 	}
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final CreateDo createOrUpDate){
+	public void checkProfanity(String textValue,final boolean isCreate,final CreateDo createOrUpDate, final TreeItem currentShelfTreeWidget){
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
 				getView().resetBtns();
-				getView().callCreateAndUpdate(isCreate,value,createOrUpDate);
+				getView().callCreateAndUpdate(isCreate,value,createOrUpDate,currentShelfTreeWidget);
 			}
 		});
 	}
@@ -194,5 +196,11 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 			public void onFailure(Throwable caught) {
 			}
 		});
+	}
+
+	@Override
+	public TreeItem getSelectedWidget() {
+		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget(); 
+		return shelfTreeWidget;
 	}
 }

@@ -26,10 +26,10 @@
 #getStartedContainer .settingsMenu .classAnrSettings{
 	color:#ffffff;
 	display:inline-block;
-	margin-right:10px;
+	margin-right:0;
 	font-weight:bold;
 	cursor:pointer;
-	padding: 15px 15px 15px 10px;
+	padding: 15px 10px 15px 0;
 }
 #getStartedContainer .settingsMenu .classAnrSettings:hover,  #getStartedContainer .settingsMenu  .classAnrSettings:focus{
 	opacity: 0.75;
@@ -1212,6 +1212,7 @@ text-align:left;
     margin-top: 25px;
     background: #ffffff;
     border-radius: 4px 4px;
+    display: table;
 }
 .myClassesLanding .myClassesTabs a {
     display: table-cell;
@@ -1263,7 +1264,346 @@ text-align:left;
     text-align: right;
 }
 
+/** new empty study page**/
 
+.myClassesGettingStartTopMenu {
+    margin: 25px 0;
+}
+.myClassesArchivedMenu a {
+    color: #515151;
+    display: table-cell;
+    font-size: 16px;
+    padding: 12px 30px;
+    background: #ffffff;
+}
+.myClassesArchivedMenu a:first-child {
+    border-radius: 4px 0 0 4px;
+}
+.myClassesArchivedMenu a:last-child {
+    border-radius: 0 4px 4px 0;
+}
+.myClassesArchivedMenu a:hover,
+.myClassesArchivedMenu a:focus {
+    background: #e5f1f8;
+    color: #0074c6;
+    text-decoration: none;
+}
+.myClassesArchivedMenu a.active {
+    background: #e5f1f8 none repeat scroll 0 0;
+    color: #0074c6;
+    text-decoration: none;
+}
+.myClassesArchivedMenu {
+    display: inline-block;
+    border-radius: 4px 4px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.myClassesGettingStartTopMenu .classcodeBox {
+    text-align: right;
+}
+.myClassesGettingStartTopMenu .classcodeBox .form-control {
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 15px;
+    width: auto;
+    height: 36px;
+}
+.myClassesGettingStartTopMenu button.primary {
+    padding: 9px 20px;
+}
+.myClasesGettingStartMainBlock.whiteBG {
+    background: #ffffff url(../images/myclassesGettingStarted-bg.png) no-repeat center bottom;
+    background-size: 100% auto;
+}
+.PaddingGutter {
+    padding: 60px 150px;
+}
+.myClassesCodeSearch .classcodeBox {
+    text-align: right;
+}
+.myClassesCodeSearch .classcodeBox .form-control {
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 15px;
+    width: auto;
+    height: 36px;
+}
+.myClassesCodeSearch h3 {
+    margin: 0 0;
+    font-family: "Arvo", serif !important;
+    font-size: 20px;
+    color: #515151;
+}
+.myClassesCodeSearch .classcodeBox button.primary {
+    padding: 9px 12px;
+}
+.myClassesCodeSearch {
+    border-bottom: 1px solid #939492;
+    padding-bottom: 10px;
+}
+.myClassesSteps h2 {
+    margin: 27px 0;
+    font-family: "Arvo", serif !important;
+    font-size: 28px;
+    color: #4d4e4c;
+    font-weight: bold;
+    text-align: center;
+}
+.myClassesSteps .stepsBlockInner {
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 100%;
+}
+.myClassesSteps .stepsBlockInner .numaricCircle {
+    width: 39px;
+    height: 39px;
+    background: #4b9841;
+    float: left;
+    border-radius: 50% 50%;
+    color: #ffffff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 40px;
+    position: relative;
+    margin-right: 12px;
+}
+.myClassesSteps .stepsBlockInner .numaricCircle:before {
+    width: 35px;
+    height: 35px;
+    border: 2px solid #ffffff;
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    border-radius: 50% 50%;
+}
+.myClassesSteps .stepsBlockInner .StepsContent {
+    float: left;
+    width: 76%;
+}
+.myClassesSteps .stepsBlockInner .StepsContent h3 {
+    font-family: "Arvo", serif !important;
+    font-size: 20px;
+    color: #3b813f;
+    margin: 0 0 5px 0;
+}
+.supportLink {
+    margin: 25px 54px 0 0;
+    text-align: right;
+}
+.supportLink a:hover,
+.supportLink a:focus {
+    text-decoration: none;
+}
+.emptyCreateClass{
+	text-align: center;
+	padding-bottom: 15px;
+}
+
+
+/** content pacing css **/
+
+.setScoreContainer {
+    background: #f8fafb;
+    border: 1px solid #dddddd;
+    border-left: none;
+    border-right: none;
+    padding: 20px 18px;
+}
+.setScoreContainer p {
+    margin: 0 0;
+}
+.setScoreContainer p.help-block {
+    font-style: italic;
+    color: #999999;
+}
+.setScoreContainer h4 {
+    margin: 0 0 10px 0;
+}
+.setScoreContainer .selectCourseButton {
+    margin-top: 20px;
+    text-align: center;
+}
+.setScoreContainer .AssignedCourseBlock {
+    border-right: 1px solid #dddddd;
+}
+.setScoreContainer .scoreBoxBlock {
+    margin-top: 20px;
+}
+.setScoreContainer .scoreBoxBlock .textBoxDiv .form-control {
+    color: #78b172;
+    font-size: 24px;
+    font-weight: bolder;
+    width: 73px;
+    display: inline-block;
+}
+.setScoreContainer .scoreBoxBlock .textBoxDiv {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 15px;
+}
+.setScoreContainer .scoreBoxBlock .textBoxDiv span {
+    font-size: 20px;
+    font-weight: bold;
+    color: #999999;
+}
+button.grey {
+    background: #999999;
+    border: medium none;
+    border-radius: 4px;
+    color: #ffffff;
+    display: inline-block;
+    font-family: Arial, sans-serif !important;
+    padding: 7px 9px;
+}
+button.grey:hover {
+    background: #666666;
+}
+.setScoreContainer .scoreBoxBlock button.grey {
+    padding: 9px 22px;
+}
+.setScoreContainer .selectCourseButton button.primary {
+    padding: 9px 22px;
+}
+.howItWorks {
+    padding: 30px 30px;
+}
+.howItWorks h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #0074be;
+    font-family: "Arvo", serif !important;
+    margin: 0 0 10px 0;
+}
+.howItWorks p {
+    font-size: 12px;
+    font-family: "Arvo", serif !important;
+    margin: 0 225px;
+    text-align: center;
+}
+.howItWorks .AssessmentandCollections {
+    margin: 63px 195px 0 195px;
+}
+.howItWorks .AssessmentandCollections span {
+    display: block;
+    font-size: 12px;
+    font-family: "Arvo", serif;
+    margin: 0 0 15px 0;
+}
+.howItWorks .AssessmentandCollections span em {
+    font-weight: bold;
+    font-style: normal;
+}
+.howItWorks .AssessmentandCollections span img {
+    margin: 0 8px;
+}
+.howItWorks .AssessmentandCollections span.leftMargin {
+    margin-left: 11px;
+}
+.CourseandUnitViewContainer {
+    padding: 0 90px 90px;
+}
+.CourseandUnitViewContainer .courseViewBlock,
+.CourseandUnitViewContainer .unitViewBlock {
+    border: 1px solid #dddddd;
+    border-radius: 4px 4px;
+    padding: 0 0;
+    background: #ffffff;
+}
+.CourseandUnitViewContainer .scoreStutusTable .tableDiv {
+    border-collapse: collapse;
+    display: table;
+    width: 100%;
+}
+.CourseandUnitViewContainer .scoreStutusTable .tableDiv .tableRow {
+    border-bottom: 1px solid #dddddd;
+    display: table-row;
+    width: 100%;
+}
+.CourseandUnitViewContainer .scoreStutusTable .tableDiv .tableColumn {
+    display: table-cell;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+.CourseandUnitViewContainer h3 {
+    font-size: 16px;
+    font-family: "Arvo", serif !important;
+    margin: 0 0 12px 0;
+}
+.CourseandUnitViewContainer {
+    font-family: "Arvo", serif !important;
+    font-size: 12px;
+}
+.CourseandUnitViewContainer .indiacationText {
+    margin: 20px 0;
+}
+.CourseandUnitViewContainer .borderText {
+    border-bottom: 1px solid #dddddd;
+}
+.CourseandUnitViewContainer .scoreStutusTable .tableDiv .tableColumn .tblHeading {
+    font-size: 16px;
+    width: 70px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.CourseandUnitViewContainer .scoreStutusTable .tableDiv .tableColumn .scoreStatus {
+    width: 132px;
+}
+.CourseandUnitViewContainer .scoreStutusTable .tableDiv .tableColumn .scoreStatusGreyText {
+    color: #999999;
+    line-height: 15px;
+}
+.ContentPacingMenu ul {
+    margin: 0;
+    padding: 0;
+}
+.ContentPacingMenu ul li {
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+}
+.ContentPacingMenu ul li a {
+    color: #999999;
+    display: block;
+    padding: 15px;
+    font-size: 16px;
+}
+.ContentPacingMenu ul li a:hover,
+.ContentPacingMenu ul li a:focus {
+    background: #e7f1f9 none repeat scroll 0 0;
+    color: #1076bb;
+    text-decoration: none;
+}
+.ContentPacingMenu ul li.active a {
+    background: #e7f1f9 none repeat scroll 0 0;
+    color: #1076bb;
+}
+.pageContainerBG {
+    background: #ffffff url("../images/myclassesGettingStarted-bg.png") no-repeat center bottom;
+}
+
+.setScoreContainer .selectCourseButton .coureEditActions .folderIcon{
+	background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px;
+	width:35px;
+	height:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.setScoreContainer .selectCourseButton .coureEditActions .classTitle{
+	color: #515151;
+	font-weight: bold;
+	margin: 0 8px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 150px;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: left;
+}
 
 
 
@@ -2005,3 +2345,198 @@ text-align:left;
         height: 30px;
     }
 }
+
+/** new empty study class media scripts **/
+
+@media (min-width: 240px) and (max-width: 319px) {
+    .myClassesArchivedMenu {
+        display: table;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+    .myClassesArchivedMenu {
+        display: table;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    .myClassesGettingStartTopMenu a {
+        width: 1%;
+        padding: 12px 15px;
+    }
+    .myClassesGettingStartTopMenu {
+        text-align: center;
+    }
+    .myClassesGettingStartTopMenu button.primary {
+        margin-bottom: 15px;
+    }
+    .myClassesGettingStartTopMenu .classcodeBox {
+        text-align: center;
+    }
+    .PaddingGutter {
+        padding: 30px 20px;
+    }
+    .myClassesCodeSearch .classcodeBox {
+        text-align: left;
+        margin-top: 15px;
+    }
+    .supportLink {
+        margin: 25px 0 0;
+        text-align: center;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .myClassesArchivedMenu {
+        display: table;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+    .myClassesArchivedMenu {
+        display: table;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    .myClassesGettingStartTopMenu a {
+        width: 1%;
+        padding: 12px 15px;
+    }
+    .myClassesGettingStartTopMenu {
+        text-align: center;
+    }
+    .myClassesGettingStartTopMenu button.primary {
+        margin-bottom: 15px;
+    }
+    .myClassesGettingStartTopMenu .classcodeBox {
+        text-align: center;
+    }
+    .PaddingGutter {
+        padding: 30px 20px;
+    }
+    .myClassesCodeSearch .classcodeBox {
+        text-align: left;
+        margin-top: 15px;
+    }
+    .supportLink {
+        margin: 25px 0 0;
+        text-align: center;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .ClassmenuAndButtons {
+        text-align: center;
+    }
+    .myClassesGettingStartTopMenu .classcodeBox {
+        margin-top: 15px;
+        text-align: center;
+    }
+    .PaddingGutter {
+        padding: 60px;
+    }
+    .myClassesCodeSearch .classcodeBox {
+        margin-top: 15px;
+        text-align: left;
+    }
+    .supportLink {
+        margin: 25px 0 0;
+        text-align: center;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .PaddingGutter {
+        padding: 60px 30px;
+    }
+    .myClassesGettingStartTopMenu {
+        margin: 25px 15px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
+
+/** content pacing media scripts  **/
+
+@media (min-width: 240px) and (max-width: 319px) {
+    .setScoreContainer {
+        padding: 20px 10px;
+    }
+    .setScoreContainer .AssignedCourseBlock {
+        border-bottom: 1px solid #dddddd;
+        border-right: none;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    .setScoreContainer .scoreBoxBlock .textBoxDiv .form-control {
+        width: 60px;
+    }
+    .howItWorks p {
+        margin: 0 0;
+    }
+    .howItWorks .AssessmentandCollections {
+        margin: 55px 0;
+    }
+    .CourseandUnitViewContainer {
+        padding: 0 0 90px;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .setScoreContainer {
+        padding: 20px 10px;
+    }
+    .setScoreContainer .AssignedCourseBlock {
+        border-bottom: 1px solid #dddddd;
+        border-right: none;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    .setScoreContainer .scoreBoxBlock .textBoxDiv .form-control {
+        width: 60px;
+    }
+    .howItWorks p {
+        margin: 0 0;
+    }
+    .howItWorks .AssessmentandCollections {
+        margin: 55px 0;
+    }
+    .CourseandUnitViewContainer {
+        padding: 0 0 90px;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .setScoreContainer {
+        padding: 20px 10px;
+    }
+    .setScoreContainer .AssignedCourseBlock {
+        border-bottom: 1px solid #dddddd;
+        border-right: none;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    .setScoreContainer .scoreBoxBlock .textBoxDiv .form-control {
+        width: 60px;
+    }
+    .howItWorks p {
+        margin: 0 0;
+    }
+    .howItWorks .AssessmentandCollections {
+        margin: 55px 0;
+    }
+    .CourseandUnitViewContainer {
+        padding: 0 0 90px;
+    }
+    .CourseandUnitViewContainer .courseViewBlock,
+    .CourseandUnitViewContainer .unitViewBlock {
+        display: inline-block;
+    }
+    .CourseandUnitViewContainer {
+        text-align: center;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .howItWorks p {
+        margin: 0 100px;
+    }
+    .howItWorks .AssessmentandCollections {
+        margin: 63px 65px 0;
+    }
+    .CourseandUnitViewContainer {
+        padding: 0 50px 90px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}

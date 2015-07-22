@@ -27,7 +27,10 @@ package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+
+import com.google.gwt.user.client.ui.TreeItem;
 
 /**
  * @author Search Team
@@ -45,19 +48,24 @@ public interface CourseInfoUiHandlers extends BaseUiHandlers {
 	 * To Create Course
 	 * @param courseTitle {@link String} 
 	 * @param isCreateUnit {@link boolean} 
+	 * @param currentShelfTreeWidget 
 	 */
-	public void createAndSaveCourseDetails(CreateDo createDo,boolean isCreateUnit,FolderDo folderDo);
+	public void createAndSaveCourseDetails(CreateDo createDo,boolean isCreateUnit,FolderDo folderDo, TreeItem currentShelfTreeWidget);
 	/**
 	 * To update the course details
+	 * @param currentShelfTreeWidget 
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(CreateDo createDo, String id,boolean isCreateUnit,FolderDo folderDo);
+	public void updateCourseDetails(CreateDo createDo, String id,boolean isCreateUnit,FolderDo folderDo, TreeItem currentShelfTreeWidget);
 	
 	/**
 	 * This method is used for profanity checker
 	 * @param textValue
 	 * @param createOrUpDate 
+	 * @param treeSelectedItem 
 	 * @param index 
 	 */
-	public void checkProfanity(String textValue,boolean isCreate, CreateDo createOrUpDate);
+	public void checkProfanity(String textValue,boolean isCreate, CreateDo createOrUpDate, TreeItem treeSelectedItem);
+
+	public TreeItem getSelectedWidget();  
 }
