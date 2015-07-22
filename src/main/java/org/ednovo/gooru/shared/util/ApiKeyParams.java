@@ -83,6 +83,8 @@ public interface ApiKeyParams {
 	String COLLECTION_TYPE = "collectionType";
 	String EXCLUDE_TYPE = "excludeType";
 	
+	String INCLUDE_LASTMODIFIED_USER = "includeLastModifiedUser";
+	
 	/**
 	 * Collaborators related parameters.
 	 */

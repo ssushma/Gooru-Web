@@ -30,6 +30,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -60,25 +61,27 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	
 	AddCourseToClassPresenter addCourseToClassPresenter;
 	
+	EditClassStudentPresenter editClassStudentPresenter;
+	
 	@Inject
-	public EditClassSettingsNavigationPresenter(EventBus eventBus,IsEditClassSettingsNavigationView view,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter,AddCourseToClassPresenter addCourseToClassPresenter){
+	public EditClassSettingsNavigationPresenter(EventBus eventBus,IsEditClassSettingsNavigationView view,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter,AddCourseToClassPresenter addCourseToClassPresenter,EditClassStudentPresenter editClassStudentPresenter){
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.editClassSettingsPresenter=editClassSettingsPresenter;
 		this.editClassContentPresenter=editClassContentPresenter;
 		this.addCourseToClassPresenter=addCourseToClassPresenter;
+		this.editClassStudentPresenter=editClassStudentPresenter;
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
-		//getCourseData();
 		
 	}
 
 	@Override
 	public void onReveal() {
-		getCourseData();
+		/*getCourseData();*/
 	}
 
 	@Override
@@ -88,25 +91,30 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	
 	@Override
 	protected void onReset() {
-		loadNavigationPage();
-		getView().setActiveStyles();
 	}
 	
 	public void  loadNavigationPage(){
 		String subPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		clearSlot(CLASS_CONETENT_TAB);
 		clearSlot(CLASS_SETTINGS_TAB);
+		clearSlot(CLASS_ROASTER_TAB);
 		if(subPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO)) {
 			addToSlot(CLASS_SETTINGS_TAB, editClassSettingsPresenter);
-		} else if(subPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE) || subPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)) {
+		} else if(subPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE))  {
 			addToSlot(CLASS_CONETENT_TAB, editClassContentPresenter);
+		}else if(subPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER)){
+			addToSlot(CLASS_ROASTER_TAB, editClassStudentPresenter);
 		}
-		
+		getView().setActiveStyles();
+
 	}
 
 	public void setClassDetails(ClasspageDo classpageDo) {
+		
+		getView().setClassData(classpageDo);
 		editClassSettingsPresenter.setClassData(classpageDo);
 		editClassContentPresenter.setClassData(classpageDo);
+		editClassStudentPresenter.setClassDetails(classpageDo);
 	}
 	
 	public void getCourseData(){
@@ -127,6 +135,7 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 		}else{
 			getView().setAddCourseData();
 		}
+		editClassStudentPresenter.getMembersDetails();
 		
 	}
 
@@ -139,6 +148,27 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 		addCourseToClassPresenter.getView().getAppPopUp().show();
 		addCourseToClassPresenter.getView().getAppPopUp().center();
 		addCourseToClassPresenter.getView().getAppPopUp().setGlassEnabled(true);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationUiHandler#setClearAllPanel()
+	 */
+	@Override
+	public void setClearAllPanel() {
+		String subPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
+		if(subPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO)) {
+			if(editClassSettingsPresenter != null){
+				editClassSettingsPresenter.getView().clearAllErrorLabel();
+			}
+		} else if(subPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE))  {
+			if(editClassContentPresenter != null){
+				editClassContentPresenter.getView().clearAllErrorLabel();
+			}
+		}else if(subPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER)){
+			if(editClassStudentPresenter != null){
+				editClassStudentPresenter.getView().clearAllErrorLabel();
+			}
+		}
 	}
 	
 }

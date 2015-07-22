@@ -112,7 +112,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	@UiField Button  btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard, btnGradesCaret, btnSubjectCaret;
 	@UiField Anchor ancLogin, lblSampleReports,btnLearnAboutApproach;
 	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup, flexTable;
-	@UiField Anchor achTerms, achPrivacy,achCopyright;
 	@UiField UlPanel ulSubjectPanel;
 	@UiField Label lblErrorMessage;
 	@UiField Button enterLbl;
@@ -317,78 +316,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		});
 
 	}
-
-	@UiHandler("achTerms")
-	public void onClickTermsLink(ClickEvent envent){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-
-			@Override
-			public void onSuccess() {
-
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-
-				TermsOfUse termsOfUse = new TermsOfUse(){
-
-					@Override
-					public void openParentPopup() {
-
-
-					}
-
-				};
-				termsOfUse.show();
-				termsOfUse.center();
-
-			}
-		});
-	}
-	@UiHandler("achPrivacy")
-	public void onClickPrivacyLink(ClickEvent envent){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-
-			@Override
-			public void onSuccess() {
-
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-				TermsAndPolicyVc termsAndPolicyVc = new TermsAndPolicyVc(false) {
-
-					@Override
-					public void openParentPopup() {
-
-					}
-				};
-				termsAndPolicyVc.show();
-				termsAndPolicyVc.center();
-
-			}
-		});
-	}
-
-	@UiHandler("achCopyright")
-	public void onClickCopyrightLink(ClickEvent envent){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-
-			@Override
-			public void onSuccess() {
-
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-
-				CopyRightPolicyVc copyRightPolicy = new CopyRightPolicyVc() {
-
-					@Override
-					public void openParentPopup() {
-						//No need to set.
-					}
-				};
-				copyRightPolicy.center();
-				copyRightPolicy.show();
-			}
-		});
-	}
-
+	
 	@UiHandler("btnBrowseStandard")
 	public void onClickBrowseStandards(ClickEvent event){
 		getUiHandlers().getAddStandards();
@@ -1135,4 +1063,13 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	public void setUlSubjectPanel(UlPanel ulSubjectPanel) {
 		this.ulSubjectPanel = ulSubjectPanel;
 	}
+	
+	@Override
+	public void onLoad() {
+		animate();
+	}
+	
+	public static native void animate() /*-{
+		new $wnd.WOW().init();
+	}-*/;
 }

@@ -121,7 +121,7 @@ public interface ResourceService extends BaseService {
 	 * @param collectionItemId of the collection item
 	 * @throws GwtException
 	 */
-	public void deleteCollectionItem(String collectionItemId)  throws GwtException, ServerDownException;
+	public void deleteCollectionItem(String collectionId,String collectionItemId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Reorder the collection item

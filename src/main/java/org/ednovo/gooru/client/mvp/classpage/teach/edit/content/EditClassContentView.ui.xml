@@ -4,7 +4,7 @@
 	xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style src=""></ui:style>
-		<g:HTMLPanel styleName="geryBackgroundBody paddingBlock">
+		<!-- <g:HTMLPanel styleName="geryBackgroundBody paddingBlock">
 			<g:HTMLPanel styleName="setScoreContainer" ui:field="scoreContainer">
 					<g:HTMLPanel styleName="col-md-6 col-sm-6">
 						<g:HTMLPanel styleName="setScoreLeft">
@@ -34,7 +34,7 @@
 					   <g:HTMLPanel ui:field="unitsPanel"></g:HTMLPanel>
 					 </g:ScrollPanel>
 					 </panel:HTMLEventPanel>
-			        <!--  <g:HTMLPanel styleName="labelStyle customs-select" ui:field="unitList">
+			         <g:HTMLPanel styleName="labelStyle customs-select" ui:field="unitList">
 			             <g:ListBox ui:field="unitListBox" ></g:ListBox>
 			            <select>
 			               <option>Rates &amp; Ratios</option>
@@ -42,7 +42,7 @@
 			               <option>Steak</option>
 			               <option>Other</option>
 			            </select>
-			         </g:HTMLPanel> -->
+			         </g:HTMLPanel>
 			         <uc:PPanel ui:field="choseTxtPanel"></uc:PPanel>
 			         <uc:PPanel ui:field="noteTxtPanel"></uc:PPanel>
 			      </g:HTMLPanel>
@@ -88,7 +88,67 @@
 			   </g:HTMLPanel>
 			</g:HTMLPanel>
 			</g:HTMLPanel>
-		</g:HTMLPanel>
-</ui:UiBinder> 
+		</g:HTMLPanel> -->
+<g:HTMLPanel>
+   <div class="setScoreContainer">
+      <div class="col-md-6 col-sm-6">
+         <div class="AssignedCourseBlock">
+            <h4>Assigned Course</h4>
+            <p>The course assigned to this class can be edited in My Content.</p>
+            <p class="help-block"> Students can see all collections and assessments saved in this Course </p>
+            <div class="selectCourseButton">
+               <g:Button styleName="primary" ui:field="createCourseBtn">Select a Course</g:Button>
+               <g:HTMLPanel styleName="coureEditActions" ui:field="coursePanel">
+                   <span class="folderIcon"></span>
+                   <g:InlineLabel styleName="classTitle" ui:field="titleLbl">Sciece Course</g:InlineLabel> 
+				</g:HTMLPanel>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+         <div class="AssignedCourse">
+            <h4>Lesson Pacing</h4>
+            <p>Set a minimum score for all Assessments in this Class</p>
+            <p class="help-block"> Students must meet this score for every assessment in a lesson to recieve a trophy. </p>
+            <div class="scoreBoxBlock">
+               <img src="images/prize.png"/>
+               <div class="textBoxDiv">
+                  <g:TextBox styleName="form-control" ui:field="scoreTextBox"></g:TextBox><span>%</span>
+               </div>
+               <g:Button styleName="grey" ui:field="saveBtn"></g:Button>
+			   <g:Label ui:field="saveLblText"></g:Label>
+			   <g:Label ui:field="errorLabel"></g:Label>
+            </div>
+         </div>
+      </div>
+      <div class="clearfix"></div>
+   </div>
+   <div class="pageContainerBG">
+      <div class="howItWorks">
+         <h2>How Pacing Works</h2>
+         <p>Content pacing applies to assessments in this course. Students must meet the minimum score for all assessments in a lesson to see a trophy on the lesson level.</p>
+         <hr/>
+         <div class="AssessmentandCollections">
+            <span><em>Assessment</em> <img src="images/floderIcon-org.png"/> For assessments, students must meet the minimum score to get a trophy. </span>
+            <span class="leftMargin"><em>Collection</em> <img src="images/floderIcon-blue.png"/> Please note that collections in the lesson are not scored. </span>
+         </div>
+      </div>
+      <div class="CourseandUnitViewContainer">
+         <div class="col-md-6 col-sm-6">
+            <div class="courseViewBlock">
+               <img src="images/course-View.png" class="img-responsive"/>
+            </div>
+         </div>
+         <div class="col-md-6 col-sm-6">
+            <div class="unitViewBlock">
+               <img src="images/unit-view.png" class="img-responsive"/>
+            </div>
+         </div>
+         <div class="clearfix"></div>
+      </div>
+   </div>
+</g:HTMLPanel>
+</ui:UiBinder>
+
 
 

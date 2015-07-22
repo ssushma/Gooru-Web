@@ -60,7 +60,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	 * This method is used to delete resoruce
 	 * @param collectionItemId
 	 */
-	public void deleteCollectionItem(String collectionItemId, int itemSequence);
+	public void deleteCollectionItem(String collectionId,String collectionItemId, int itemSequence);
 	/**
 	 * This method is used to update the pdf pages
 	 * @param collectionItem
@@ -328,5 +328,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItem);
 	void updateVideoTimeUpdate(CollectionItemDo collectionItemDo);
 	public void updateWidgetCount(CollectionItemDo collectionItem);
+	public void showResourcePopup(CollectionItemDo collectionItem);
 	public void disableCollabaratorOptions(boolean b);
+
 }

@@ -4,13 +4,13 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style src=""></ui:style>
  <g:HTMLPanel>
-	<g:HTMLPanel styleName="studentsMenuBlock no-gutter">
+	<!-- <g:HTMLPanel styleName="studentsMenuBlock no-gutter">
 	   <g:HTMLPanel styleName="col-md-6 col-sm-6">
 	      <g:HTMLPanel styleName="studentsLeftMenu">
 	         <ul>
 	            <uc:LiPanel ui:field="roasterPanel"><g:Anchor ui:field="roasterAnr"></g:Anchor></uc:LiPanel>
 	            <uc:LiPanel ui:field="reportPanel"><g:Anchor ui:field="reportPanelAnr"></g:Anchor></uc:LiPanel>
-	           <!--  <uc:LiPanel ui:field="collectionPanel"><g:Anchor ui:field="collRepoAnr"></g:Anchor></uc:LiPanel> -->
+	            <uc:LiPanel ui:field="collectionPanel"><g:Anchor ui:field="collRepoAnr"></g:Anchor></uc:LiPanel>
 	         </ul>
 	      </g:HTMLPanel>
 	   </g:HTMLPanel>
@@ -24,7 +24,7 @@
 	      </g:HTMLPanel>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-	</g:HTMLPanel>
+	</g:HTMLPanel> -->
 	<g:HTMLPanel styleName="geryBackgroundBody">
 	   <g:FlowPanel ui:field="reportBox"></g:FlowPanel>
 	   <g:HTMLPanel styleName="rosterContainer" ui:field="roasterMainConatiner">
@@ -86,7 +86,7 @@
 			  <g:Label ui:field="lblActivePleaseWait" styleName="pleaseWait"/>
 		 </g:HTMLPanel>
 	   </g:HTMLPanel>
-	   <g:HTMLPanel styleName="classReportMenuBlock no-gutter" ui:field="reportContainer">
+	  <!--  <g:HTMLPanel styleName="classReportMenuBlock no-gutter" ui:field="reportContainer">
 		   <g:HTMLPanel styleName="col-md-5 col-sm-7">
 		      <g:HTMLPanel styleName="classMenuLeft">
 		        <ul>
@@ -105,7 +105,7 @@
 		   </g:HTMLPanel>
 		</g:HTMLPanel>
 	   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-	 </g:HTMLPanel>
+	 </g:HTMLPanel> -->
 	</g:HTMLPanel>
   </g:HTMLPanel>
 </ui:UiBinder>

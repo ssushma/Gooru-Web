@@ -93,6 +93,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	private static final String QUESTION = "question";
 
 	private static final String MYCONTENT ="coursebuilder";
+	private boolean isFromCopyResource= false;
 	
 
 	HashMap<String,String> successparams = new HashMap<String, String>();
@@ -213,6 +214,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					}
 				}
 			});*/
+			
 			AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
 				@Override
 				public void onSuccess(CollectionItemDo result) {
@@ -565,6 +567,11 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	@Override
 	public void enableAddButton() {
 		getView().enableAddButton();
+	}
+
+	public void setCollectionsData(boolean value) {
+		isFromCopyResource=value;
+		getView().isFromCopyResource(isFromCopyResource);
 	}
 
 }
