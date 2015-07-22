@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FolderInfoWidget extends Composite {
@@ -64,6 +65,7 @@ public class FolderInfoWidget extends Composite {
 	
 	@UiHandler("saveFolderBtn")
 	public void clickSaveFolderBtn(ClickEvent clickEvent){
+		final TreeItem currentItem = rightPresenter.getCurrentTreeItem();
 		if(!StringUtil.isEmpty(folderTitleTxtBox.getText())){
 			if(folderTitleTxtBox.getText().length()<50){
 				Map<String, String> parms = new HashMap<String, String>();
@@ -80,11 +82,11 @@ public class FolderInfoWidget extends Composite {
 							String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 							String gooruOid=folderObj.getGooruOid();
 						    if(o3!=null){
-						       updateFolder(o3);
+						       updateFolder(o3,currentItem);
 						    }else if(o2!=null){
-						    	 updateFolder(o2);
+						    	 updateFolder(o2,currentItem);
 						    }else if(o1!=null){
-						    	updateFolder(o1);
+						    	updateFolder(o1,currentItem);
 						    }
 							/*if(o1!=null){
 								updateFolder(o1);
@@ -126,7 +128,7 @@ public class FolderInfoWidget extends Composite {
 				params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1"));
 				params.put("o2", folderDo.getGooruOid());
 				params.put("view", "Folder");
-				rightPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
+//				rightPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,true);
 				rightPresenter.setTabItems(2, FOLDER, folderDo);
 			}
 		});
@@ -143,15 +145,16 @@ public class FolderInfoWidget extends Composite {
 	/**
 	 * To update the folder details.
 	 * @param folderId 
+	 * @param currentItem 
 	 */
-	protected void updateFolder(String folderId) {
+	protected void updateFolder(String folderId, final TreeItem currentItem) { 
 		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, folderTitleTxtBox.getText().trim(), null, null, null, new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
 				folderObj.setTitle(folderTitleTxtBox.getText());
 				folderObj.setType("folder");
-				rightPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false);
+				rightPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false,currentItem);
 				rightPresenter.setTabItems(2, FOLDER, folderObj);
 			}
 		});

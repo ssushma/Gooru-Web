@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -60,6 +61,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -259,6 +261,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	}
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		saveCourseBtn.addStyleName("disabled");
 		saveCourseBtn.setEnabled(false);
 		if(validateInputs()){
@@ -268,7 +271,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			
 			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(courseTitle.getText().trim(),false,createOrUpDate);	
+			getUiHandlers().checkProfanity(courseTitle.getText().trim(),false,createOrUpDate,currentShelfTreeWidget);	
 		}else{
 			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -282,6 +285,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
+		TreeItem treeSelectedItem  = getUiHandlers().getSelectedWidget();
 		nextUnitBtn.addStyleName("disabled");
 		nextUnitBtn.setEnabled(false);
 		if(validateInputs()){
@@ -291,7 +295,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			
 			lblErrorMessage.setVisible(false);
 			courseTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(courseTitle.getText().trim(),true,createOrUpDate);
+			getUiHandlers().checkProfanity(courseTitle.getText().trim(),true,createOrUpDate,treeSelectedItem);
 		}else{
 			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
@@ -307,19 +311,18 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result,CreateDo createOrUpDate){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,CreateDo createOrUpDate, TreeItem currentShelfTreeWidget){
 		if(result){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, result);
 		}else{
-			
 			List<Integer> taxonomyList=getSelectedCourseIds();
 			if(taxonomyList.size()>0){
 				lblGradeErrorMsg.setVisible(false);
 				createOrUpDate.setTaxonomyCourseIds(taxonomyList);
 				if(courseObj!=null && courseObj.getGooruOid()!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj);
+					getUiHandlers().updateCourseDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj,currentShelfTreeWidget);
 				}else{
-					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,courseObj);
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,courseObj,currentShelfTreeWidget);
 				}
 			}else{
 				lblGradeErrorMsg.setVisible(true);
