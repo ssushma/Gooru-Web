@@ -22,7 +22,7 @@
 
 			<p>This course is found in</p>
 
-			<g:HTMLPanel ui:field="classListPnl"></g:HTMLPanel>
+			<g:VerticalPanel ui:field="classListPnl"></g:VerticalPanel>
 			
 			
 		</div>
