@@ -61,6 +61,7 @@ public interface PlaceTokens {
 	String REGISTER="registration";
 	String STUDENT = "students-view";
 	String STUDY = "myclasses";
+	String NEWSTUDY = "mynewclasses";
 	String CLASSHOME = "myclasseshome";
 	String PROFILE_PAGE = "profilepage";
 	String RUSD_LIBRARY = "rusd";

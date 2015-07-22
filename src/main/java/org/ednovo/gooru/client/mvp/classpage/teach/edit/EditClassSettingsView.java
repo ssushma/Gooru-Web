@@ -35,7 +35,6 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.event.setClassImageEvent;
 import org.ednovo.gooru.client.mvp.classpage.event.setClassImageHandler;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
@@ -67,7 +66,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.visualization.client.Color;
 
 
 /**
@@ -117,6 +115,8 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	boolean sharing;
 
 	private static final String SHORTEN_URL = "shortenUrl";
+	
+	ClasspageDo classpageDo;
 
 	private static EditClassSettingsViewUiBinder uiBinder = GWT.create(EditClassSettingsViewUiBinder.class);
 
@@ -440,9 +440,14 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	 */
 	@Override
 	public void setData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
 			if(classpageDo != null){
-				classTitleTextLbl.setText(classpageDo.getName());
-				classCodeTxtPanel.setText(classpageDo.getClassCode());
+				if(classpageDo.getName() != null){
+					classTitleTextLbl.setText(classpageDo.getName());
+				}
+				if(classpageDo.getClassCode() !=null){
+					classCodeTxtPanel.setText(classpageDo.getClassCode());
+				}
 				boolean visiblity = classpageDo.isVisibility();
 				if(visiblity){
 					publicPanel.addStyleName(CssTokens.ACTIVE);
@@ -597,10 +602,27 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView#setUpdateClassData()
 	 */
 	@Override
-	public void setUpdateClassData() {
+	public void setUpdateClassData(ClasspageDo updateClass) {
+		classpageDo.setName(updateClass.getName());
+		classpageDo.setGrades(updateClass.getGrades());
+		classpageDo.setVisibility(updateClass.isVisibility());
 		saveBtn.setVisible(true);
 		setSaveEnabled(false);
 		saveLbl.setVisible(false);
+		setData(classpageDo);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.IsEditClassSettingsView#clearAllErrorLabel()
+	 */
+	@Override
+	public void clearAllErrorLabel() {
+		errorLbl.setVisible(false);
+		classTitleTextLbl.getElement().getStyle().clearBackgroundColor();
+		saveBtn.setVisible(true);
+		setSaveEnabled(false);
+		setData(classpageDo);
 	}
 
 }
