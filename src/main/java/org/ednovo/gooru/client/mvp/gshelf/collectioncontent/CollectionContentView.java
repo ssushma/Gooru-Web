@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentResourceWidgetWithMove;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.EditQuestionPopupVc;
@@ -48,10 +49,12 @@ import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -70,6 +73,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -104,6 +108,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	private HandlerRegistration handlerRegistration=null;
 	
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
+	
+	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -137,6 +143,14 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void setData(CollectionDo listOfContent,FolderDo folderDo, RefreshType type){
 		this.listOfContent = listOfContent;
+		if (AppClientFactory.isContentAdmin() || listOfContent
+				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
+						.getGooruUId())){
+		    getUiHandlers().disableCollabaratorOptions(true);
+		}else if(listOfContent.isIsCollaborator()){
+			 getUiHandlers().disableCollabaratorOptions(false);
+		}
+		lblTitle.setVisible(false);
 		if(folderDo.getType().equalsIgnoreCase("assessment") || folderDo.getType().equalsIgnoreCase("assessment/url")){
 			btnAddResources.setVisible(false);		
 			lblSpanOr.setVisible(false);
@@ -162,6 +176,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 	@Override
 	public void setDisplayResourceItem(CollectionItemDo collectionItem,RefreshType type, int index){
+		
+		
 		int tmpIndex = index;
 		Window.enableScrolling(true);
 		if (tmpIndex ==-1){
@@ -171,7 +187,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			pnlReosurceList.clear();
 		}
 		if (type.equals(RefreshType.INSERT)){
-			ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem) {
+			final ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem) {
 				@Override
 				public void moveWidgetPosition(String movingPosition,String currentWidgetPosition, boolean isDownArrow, String moveId,String moveGooruOid) {
 					int movingIndex= Integer.parseInt(movingPosition);
@@ -187,13 +203,22 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 							int currentIndex= Integer.parseInt(currentWidgetPosition);
 							pnlReosurceList.insert(pnlReosurceList.getWidget(currentIndex), movingIndex);
 						}
+					}else{
+						int index=Integer.parseInt(currentWidgetPosition);
+						Element widget=(Element) pnlReosurceList.getWidget(index).getElement().getLastChild();
+						toolTipPopupPanel.clear();
+						toolTipPopupPanel.setWidget(new GlobalToolTip(StringUtil.generateMessage(i18n.GL3005(),movingIndex+"")));
+						toolTipPopupPanel.setStyleName("");
+						toolTipPopupPanel.setPopupPosition(widget.getAbsoluteLeft()+120, widget.getAbsoluteTop()+30);
+						toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+						toolTipPopupPanel.show();
+						new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
 					}
 				}
 				@Override
 				public void updateNarration(CollectionItemDo collectionItem,String narration) {
 					getUiHandlers().updateNarrationItem(collectionItem, narration);
 				}
-				
 				@Override
 				public void editResource(final CollectionItemDo collectionItem) {
 					String resourceType="";
@@ -205,6 +230,15 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (resourceType.equalsIgnoreCase("Question")) {
+						
+						if(collectionItem.getCollection()!=null){
+							collectionItem.getCollection().setCollectionType(listOfContent.getCollectionType());
+						}else{
+							CollectionDo colDo=new CollectionDo();
+							colDo.setCollectionType(listOfContent.getCollectionType());
+							collectionItem.setCollection(colDo);
+						}
+						
 						getUiHandlers().showEditQuestionResourcePopup(collectionItem);
 					} else if(resourceType.equals("resource/url") || resourceType.equals("video/youtube")
 							|| resourceType.equals("vimeo/video")){
@@ -270,6 +304,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				public void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop) {
 					// TODO Auto-generated method stub
 					getUiHandlers().updateVideoTimeUpdate(collectionItemDo);
+				}
+				@Override
+				public void dispalyNewResourcePopup(
+						CollectionItemDo collectionItemDo) {
+					// TODO Auto-generated method stub
+					getUiHandlers().showResourcePopup(collectionItemDo);
 				}
 			};
 			widgetMove.setPresenter(collectionContentPresenter);

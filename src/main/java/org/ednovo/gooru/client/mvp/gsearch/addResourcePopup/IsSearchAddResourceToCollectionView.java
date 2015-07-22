@@ -67,4 +67,5 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	public Label getMycontentLbl();
 	public void setFromMyCourse(boolean value);
 	public void enableAddButton();
+	public void isFromCopyResource(boolean isFromCopyResource);
 }

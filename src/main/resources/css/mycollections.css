@@ -104,7 +104,7 @@
     float: right;
     height: 52px;
     width: 52px;
-}	
+}
 
 #gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader span.plus {
     background: #a6cba2;
@@ -194,7 +194,7 @@
 #gShelfMainContainer .collectionScrlPanel {
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
-	min-height:430px;	
+	min-height:430px;
 	width:235px;
 	background: none repeat scroll 0% 0% rgb(240, 240, 240);
 }
@@ -314,7 +314,7 @@ button.btn-disabled{
 	color:#515151;
 	padding:8px 15px;
 	font-size:12px;
-	
+
 }
 #gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li a:hover, #gShelfMainContainer .tagCoursePanel .tagCoursePanelBody ul li a:focus{
 	background:#87badd;
@@ -397,7 +397,7 @@ button.btn-disabled{
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-top: 6px dashed;
-   
+
 }
 #gShelfMainContainer .folderLeftActionBtn{
 	font-size:13px;
@@ -427,7 +427,7 @@ button.btn-disabled{
 			display:block;
 			color:#515151;
 			font-size:13px;
-	
+
 }
 
 
@@ -448,6 +448,7 @@ button.btn-disabled{
 	background:#f6f6f6;
 	border-top:1px solid #ffffff;
 }
+
 
 /*////////////////////// Folder tree styles ///////////////////*/
 
@@ -670,7 +671,7 @@ button.btn-disabled{
 
 
 @media (max-width: 767px) {
-	
+
 	#gShelfMainContainer .floderLeftContainer{
 		margin-right:0;
 		position: fixed;
@@ -696,7 +697,7 @@ button.btn-disabled{
 	}
 }
 @media (min-width: 768px) and (max-width: 991px) {
-		
+
 		#gShelfMainContainer .tagCoursePanel .tagCoursePanelHeader button {
 		    font-size: 13px;
 		    font-weight: bold;
@@ -710,9 +711,9 @@ button.btn-disabled{
 
 
 		@media (min-width: 992px) and (max-width: 1199px) {
-			
-			
-			
+
+
+
 		}
 
 
@@ -720,12 +721,12 @@ button.btn-disabled{
 
 
 @media (min-width: 1200px) {
-	
-	
-	
 
-	
-	
+
+
+
+
+
 }
 
 
@@ -811,7 +812,7 @@ button.btn-disabled{
     /* With less: .text-overflow(); */
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
 }
 
 #gShelfMainContainer .btn-breadcrumb > *:nth-child(n+2) {
@@ -823,7 +824,7 @@ button.btn-disabled{
 @media (max-width: 767px) {
    #gShelfMainContainer .btn-breadcrumb > *:nth-last-child(-n+2) {
         display:block;
-    } 
+    }
    #gShelfMainContainer .btn-breadcrumb > * div {
         max-width: 60px;
     }
@@ -833,7 +834,7 @@ button.btn-disabled{
 @media (min-width: 768px) and (max-width:991px) {
    #gShelfMainContainer .btn-breadcrumb > *:nth-last-child(-n+4) {
         display:block;
-    } 
+    }
     #gShelfMainContainer .btn-breadcrumb > * div {
         max-width: 100px;
     }
@@ -843,7 +844,7 @@ button.btn-disabled{
 @media (min-width: 992px) {
     #gShelfMainContainer .btn-breadcrumb > *:nth-last-child(-n+6) {
         display:block;
-    } 
+    }
     #gShelfMainContainer .btn-breadcrumb > * div {
         max-width: 170px;
     }
@@ -896,7 +897,7 @@ button.btn-disabled{
 	display:table-cell;
 	padding:4px 10px;
 	vertical-align:middle;
-	
+
 }
 #gShelfCousesList .tableColumn:first-child{
 	width: 8%;
@@ -1046,16 +1047,16 @@ button.btn-disabled{
 	cursor:pointer;
 }
 @media (max-width: 767px) {
-	
+
 }
 @media (min-width: 768px) and (max-width: 991px) {
-		
+
 }
 @media (min-width: 992px) and (max-width: 1199px) {
 
 }
 @media (min-width: 1200px) {
-	
+
 }
 /* === For Course list Css end ================================== */
 
@@ -1094,7 +1095,7 @@ button.btn-disabled{
 	font-size:17px;
 	color:#515151;
 	position:relative;
-	
+
 }
 #gShelfCourseInfo .breadcrumbMain .active:hover,#gShelfCourseInfo .breadcrumbMain .active:focus{
 	opacity:1;
@@ -1108,29 +1109,29 @@ button.btn-disabled{
 #gShelfCourseInfo .breadcrumbMain div.active:after{
 	content:"";
 	position:absolute;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 32px solid transparent;
 	border-bottom: 34px solid transparent;
-	
+
 	border-left: 20px solid #cddeea;
 	right:-20px;
 	top:0;
-	 z-index:97; 
+	 z-index:97;
 }
 
 #gShelfCourseInfo .breadcrumbMain div.active:before{
 	content:"";
 	position:absolute;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 32px solid transparent;
 	border-bottom: 34px solid transparent;
-	
+
 	border-left: 20px solid #f0f0f0;
 	right:-22px;
 	top:0;
-	 z-index:97; 
+	 z-index:97;
 }
 
 #gShelfCourseInfo .equifier {
@@ -1578,27 +1579,27 @@ button.btn-disabled {
 	#gShelfCourseInfo .floderLeftContainer {
 		margin-right: 0;
 	}
-	
+
 	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader button {
 		margin-bottom: 2px;
 		width: 100%;
 	}
-	
+
 	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelFooter .filterTags ul li
 		{
 		margin: 0 10px 10px 0;
 	}
-	
+
 	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupLeft {
 		border-right: none;
 		background: #f5f5f5;
 	}
-	
+
 	#gShelfCourseInfo .createMenu {
 		margin-right: 15px;
 		margin-left: 15px;
 	}
-	
+
 	#gShelfCourseInfo .tagCoursePanel .tagCoursePanelBody .courseGroupRight
 	{
 		border-top: 1px solid #dddddd;
@@ -1655,7 +1656,7 @@ padding-bottom: 10px;
 	padding:15px 15px 15px 15px;
 }
 #pnlLessonInfo .questionsBlock{
-	
+
 	padding:15px 0;
 		border-bottom:1px solid #dddddd;
 }
@@ -1731,7 +1732,7 @@ padding-bottom: 10px;
 
 
 @media (max-width: 767px) {
-	
+
 #pnlLessonInfo .unitCoverListLeft, #info .unitCoverListMiddle, #info .unitCoverListRight{
 	min-height:inherit;
 }
@@ -1755,16 +1756,16 @@ padding-bottom: 10px;
 
 
 	@media (min-width: 768px) and (max-width: 991px) {
-		
+
 
 	}
 
 
 
 		@media (min-width: 992px) and (max-width: 1199px) {
-			
-			
-			
+
+
+
 		}
 
 
@@ -1772,12 +1773,12 @@ padding-bottom: 10px;
 
 
 @media (min-width: 1200px) {
-	
-	
-	
 
-	
-	
+
+
+
+
+
 }
 
 
@@ -1806,7 +1807,7 @@ padding-bottom: 10px;
     /* With less: .text-overflow(); */
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
 }
 
 #pnlLessonInfo .btn-breadcrumb > *:nth-child(n+2) {
@@ -1817,7 +1818,7 @@ padding-bottom: 10px;
 @media (max-width: 767px) {
     #pnlLessonInfo .btn-breadcrumb > *:nth-last-child(-n+2) {
         display:block;
-    } 
+    }
     #pnlLessonInfo .btn-breadcrumb > * div {
         max-width: 60px;
     }
@@ -1827,7 +1828,7 @@ padding-bottom: 10px;
 @media (min-width: 768px) and (max-width:991px) {
     #pnlLessonInfo .btn-breadcrumb > *:nth-last-child(-n+4) {
         display:block;
-    } 
+    }
     #pnlLessonInfo .btn-breadcrumb > * div {
         max-width: 100px;
     }
@@ -1837,7 +1838,7 @@ padding-bottom: 10px;
 @media (min-width: 992px) {
     #pnlLessonInfo .btn-breadcrumb > *:nth-last-child(-n+6) {
         display:block;
-    } 
+    }
     #pnlLessonInfo .btn-breadcrumb > * div {
         max-width: 170px;
     }
@@ -1862,7 +1863,7 @@ padding-bottom: 10px;
 	font-weight:bold;
 	color:#515151;
 	padding:10px 10px;
-	
+
 }
 #pnlLessonInfo .lessonCover .panel-body{
 	padding:0 0;
@@ -1927,7 +1928,7 @@ padding-bottom: 10px;
 	margin-bottom:2px;
 }
 #pnlLessonInfo .folderBlockSitemap a {
-  
+
     padding: 16px;
 
 }
@@ -1940,16 +1941,16 @@ padding-bottom: 10px;
 
 
 	@media (min-width: 768px) and (max-width: 991px) {
-		
+
 
 	}
 
 
 
 		@media (min-width: 992px) and (max-width: 1199px) {
-			
-			
-			
+
+
+
 		}
 
 
@@ -1957,12 +1958,12 @@ padding-bottom: 10px;
 
 
 @media (min-width: 1200px) {
-	
-	
-	
 
-	
-	
+
+
+
+
+
 }
 
 
@@ -1975,19 +1976,19 @@ padding-bottom: 10px;
 }
 #standardsDetails  header.standerdHeader{
 	padding:8px 0;
-	border-radius:4px 4px 0 0; 
+	border-radius:4px 4px 0 0;
 	-webkit-border-radius:4px 4px 0 0;
 	-moz-border-radius:4px 4px 0 0;
-	border-top:1px solid #ffffff;	
+	border-top:1px solid #ffffff;
 	background: #efefef;
 	background: -webkit-gradient(linear, 0 0, 0 100%, from(#666666), to(#515151));
 	background: -webkit-linear-gradient(top, #666666, #515151);
 		background: -moz-linear-gradient(top, #666666, #515151);
 	background: -ms-linear-gradient(top, #666666, #515151);
 	background: -o-linear-gradient(top, #666666, #515151);
-	
-	
-	
+
+
+
 }
 #standardsDetails .filterTags {
   display: inline-block;
@@ -2004,6 +2005,7 @@ padding-bottom: 10px;
   margin: 0;
   padding: 8px 10px;
   margin-left: 5px;
+  margin-top: 5px;
 }
 #standardsDetails .filterTags ul li div{
  display: inline-block;
@@ -2059,15 +2061,15 @@ padding-left:7px;
 }
 #standardsDetails  .standarFooterContainer{
 	background:#ffffff;
-	border-radius:0 0 4px 4px; 
-	-webkit-border-radius:0 0 4px 4px; 
-	-moz-border-radius:0 0 4px 4px; 
+	border-radius:0 0 4px 4px;
+	-webkit-border-radius:0 0 4px 4px;
+	-moz-border-radius:0 0 4px 4px;
 }
 #standardsDetails  .listGroup .border-right{
 	padding-left:0 !important;
 	padding-right:0 !important;
 	border-right:1px solid #cccccc;
-	
+
 }
 
 #standardsDetails  .listGroup ul li a{
@@ -2121,7 +2123,7 @@ padding-left:7px;
 	#standardsDetails .listGroup .border-right{
 		border-right:none;
 		border-bottom:1px solid #cccccc;
-	}		
+	}
 }
 
 @media (min-width: 480px) and (max-width: 767px)  {
@@ -2142,9 +2144,9 @@ padding-left:7px;
 
 
 		@media (min-width: 992px) and (max-width: 1199px) {
-			
-			
-			
+
+
+
 		}
 
 
@@ -2152,12 +2154,12 @@ padding-left:7px;
 
 
 @media (min-width: 1200px) {
-	
-	
-	
 
-	
-	
+
+
+
+
+
 }
 
 /* == For Standards end======*/
@@ -2194,7 +2196,7 @@ padding-left:7px;
 	font-size:17px;
 	color:#515151;
 	position:relative;
-	
+
 }
 #resourceEdit .breadcrumbMain a:hover, #resourceEdit .breadcrumbMain a:focus{
 	opacity:1;
@@ -2207,11 +2209,11 @@ padding-left:7px;
 #resourceEdit .breadcrumbMain a.active:after{
 	content:"";
 	position:absolute;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 29px solid transparent;
 	border-bottom: 29px solid transparent;
-	
+
 	border-left: 15px solid #cddeea;
 	right:-15px;
 	top:0;
@@ -2221,11 +2223,11 @@ padding-left:7px;
 #resourceEdit .breadcrumbMain a.active:before{
 	content:"";
 	position:absolute;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 29px solid transparent;
 	border-bottom: 29px solid transparent;
-	
+
 	border-left: 15px solid #fff;
 	right:-17px;
 	top:0;
@@ -2753,7 +2755,7 @@ vertical-align:middle;
 	}
 	#resourceEdit .tableListOrder {
 		display:block;
-	
+
 	    margin: 0 auto;
 	    text-align: center;
 	    width: 26px;
@@ -2764,7 +2766,7 @@ vertical-align:middle;
 	#resourceEdit .tableColumn .tableListTags .timeText{
 		width:75%;
 	}
-	
+
 	#resourceEdit .actionItems .dropdown-menu{
 		left:auto;
 		right:0;
@@ -2790,10 +2792,10 @@ vertical-align:middle;
 		}
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-			
+
 }
 @media (min-width: 1200px) {
-	
+
 }
 
 
@@ -2806,7 +2808,7 @@ vertical-align:middle;
 	font-size:17px;
 	color:#515151;
 	position:relative;
-	
+
 }
 .breadcrumbMain a:hover, .breadcrumbMain a:focus{
 	opacity:1;
@@ -2819,11 +2821,11 @@ vertical-align:middle;
 .breadcrumbMain a.active:after{
 	content:"";
 	position:absolute;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 32px solid transparent;
 	border-bottom: 34px solid transparent;
-	
+
 	border-left: 20px solid #cddeea;
 	right:-20px;
 	top:0;
@@ -2833,11 +2835,11 @@ vertical-align:middle;
 .breadcrumbMain a.active:before{
 	content:"";
 	position:absolute;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 32px solid transparent;
 	border-bottom: 34px solid transparent;
-	
+
 	border-left: 20px solid #f0f0f0;
 	right:-22px;
 	top:0;
@@ -2905,7 +2907,7 @@ vertical-align:middle;
 }
 
 #unitinfo .questionsBlock{
-	
+
 	padding:15px 0;
 		border-bottom:1px solid #dddddd;
 }
@@ -2988,7 +2990,7 @@ padding-left: 15px !important;
 	font-style:normal;
 }
 @media (max-width: 767px) {
-	
+
 #unitinfo .unitCoverListLeft, #unitinfo .unitCoverListMiddle, #unitinfo .unitCoverListRight{
 	min-height:inherit;
 }
@@ -3012,16 +3014,16 @@ padding-left: 15px !important;
 
 
 	@media (min-width: 768px) and (max-width: 991px) {
-		
+
 
 	}
 
 
 
 		@media (min-width: 992px) and (max-width: 1199px) {
-			
-			
-			
+
+
+
 		}
 
 
@@ -3029,12 +3031,12 @@ padding-left: 15px !important;
 
 
 @media (min-width: 1200px) {
-	
-	
-	
 
-	
-	
+
+
+
+
+
 }
 
 
@@ -3124,7 +3126,7 @@ padding-left: 15px !important;
     /* With less: .text-overflow(); */
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
 }
 
 .btn-breadcrumb > *:nth-child(n+2) {
@@ -3135,7 +3137,7 @@ padding-left: 15px !important;
 @media (max-width: 767px) {
     .btn-breadcrumb > *:nth-last-child(-n+2) {
         display:block;
-    } 
+    }
     .btn-breadcrumb > * div {
         max-width: 60px;
     }
@@ -3145,7 +3147,7 @@ padding-left: 15px !important;
 @media (min-width: 768px) and (max-width:991px) {
     .btn-breadcrumb > *:nth-last-child(-n+4) {
         display:block;
-    } 
+    }
     .btn-breadcrumb > * div {
         max-width: 100px;
     }
@@ -3155,7 +3157,7 @@ padding-left: 15px !important;
 @media (min-width: 992px) {
     .btn-breadcrumb > *:nth-last-child(-n+6) {
         display:block;
-    } 
+    }
     .btn-breadcrumb > * div {
         max-width: 170px;
     }
@@ -3253,7 +3255,7 @@ display: table-cell;
 
 #pnlCollectionInfo .fractionDetailsTable .panel-heading {
     background-color: transparent;
-    
+
 }
 
 #pnlCollectionInfo .fractionDetailsTable .panel-heading  h3{
@@ -3275,6 +3277,7 @@ display: table-cell;
 }
 #pnlCollectionInfo .fractionDetailsTable  .dropDownRight .dropdown-menu li{
 	padding:5px 15px;
+	cursor: pointer;
 }
 #pnlCollectionInfo .fractionDetailsTable  .dropDownRight .btn-primary {
     background-color: #87badd;
@@ -3454,7 +3457,7 @@ overflow: hidden;
     padding: 8px 10px;
 }
 .myCollectionLeftSidebar .myCollectionMainHeader span.plus {
- 
+
     font-size: 40px;
     line-height: 40px;
 
@@ -3471,12 +3474,12 @@ overflow: hidden;
 	text-align:left;
 }
 	}
-	
-	
+
+
 		@media (min-width: 992px) and (max-width: 1199px) {
-			
-			
-			
+
+
+
 		}
 
 
@@ -3484,12 +3487,12 @@ overflow: hidden;
 
 
 @media (min-width: 1200px) {
-	
-	
-	
 
-	
-	
+
+
+
+
+
 }
 #pnlCollectionInfo .collectionTitleDetails {
     border-bottom: 1px solid #dddddd;
@@ -3525,7 +3528,7 @@ font-size: 9pt;
 	padding:15px 15px 15px 15px;
 }
 #pnlCollectionInfo .questionsBlock{
-	
+
 	padding:15px 0;
 		border-bottom:1px solid #dddddd;
 }
@@ -3598,7 +3601,7 @@ width:100% !important;
 	font-style:normal;
 }
 @media (max-width: 767px) {
-	
+
 #pnlCollectionInfo .unitCoverListLeft, #info .unitCoverListMiddle, #info .unitCoverListRight{
 	min-height:inherit;
 }
@@ -3622,16 +3625,16 @@ width:100% !important;
 
 
 	@media (min-width: 768px) and (max-width: 991px) {
-		
+
 
 	}
 
 
 
 		@media (min-width: 992px) and (max-width: 1199px) {
-			
-			
-			
+
+
+
 		}
 
 
@@ -3639,12 +3642,12 @@ width:100% !important;
 
 
 @media (min-width: 1200px) {
-	
-	
-	
 
-	
-	
+
+
+
+
+
 }
 #pnlCollectionInfo .collectionTitleDetails {
     border-bottom: 1px solid #dddddd;
@@ -3676,7 +3679,7 @@ width:100% !important;
     /* With less: .text-overflow(); */
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
 }
 
 #pnlCollectionInfo .btn-breadcrumb > *:nth-child(n+2) {
@@ -3687,7 +3690,7 @@ width:100% !important;
 @media (max-width: 767px) {
     #pnlCollectionInfo .btn-breadcrumb > *:nth-last-child(-n+2) {
         display:block;
-    } 
+    }
     #pnlCollectionInfo .btn-breadcrumb > * div {
         max-width: 60px;
     }
@@ -3697,7 +3700,7 @@ width:100% !important;
 @media (min-width: 768px) and (max-width:991px) {
     #pnlCollectionInfo .btn-breadcrumb > *:nth-last-child(-n+4) {
         display:block;
-    } 
+    }
     #pnlCollectionInfo .btn-breadcrumb > * div {
         max-width: 100px;
     }
@@ -3707,7 +3710,7 @@ width:100% !important;
 @media (min-width: 992px) {
     #pnlCollectionInfo .btn-breadcrumb > *:nth-last-child(-n+6) {
         display:block;
-    } 
+    }
     #pnlCollectionInfo .btn-breadcrumb > * div {
         max-width: 170px;
     }
@@ -3732,7 +3735,7 @@ width:100% !important;
 	font-weight:bold;
 	color:#515151;
 	padding:10px 10px;
-	
+
 }
 #pnlCollectionInfo .lessonCover .panel-body{
 	padding:0 0;
@@ -3796,7 +3799,7 @@ width:100% !important;
 	margin-bottom:2px;
 }
 #pnlCollectionInfo .folderBlockSitemap a {
-  
+
     padding: 16px;
 
 }
@@ -3809,16 +3812,16 @@ width:100% !important;
 
 
 	@media (min-width: 768px) and (max-width: 991px) {
-		
+
 
 	}
 
 
 
 		@media (min-width: 992px) and (max-width: 1199px) {
-			
-			
-			
+
+
+
 		}
 
 
@@ -3826,12 +3829,12 @@ width:100% !important;
 
 
 @media (min-width: 1200px) {
-	
-	
-	
 
-	
-	
+
+
+
+
+
 }
 
 #pnlCollectionInfo .collectionTitleDetails {
@@ -3852,7 +3855,7 @@ width:100% !important;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-top: 6px dashed;
-   
+
 }
 /* === For Collection info Css end ================================== */
 
@@ -3893,7 +3896,7 @@ width:100% !important;
 	padding:10px 10px;
 	width:75%;
 	margin-bottom:20px;
-	
+
 }
 .shareColContainer .inActive {
 	opacity: 0.6;
@@ -3940,14 +3943,14 @@ right:1px;
 		padding:15px 15px;
 		border-bottom:1px solid #dddddd;
 	}
-	
-	
+
+
 	 .shareColContainer .currentCollaborators .tableDiv
     {
         display: table;
     }
-    
-    
+
+
    .shareColContainer .currentCollaborators  .tablerow
     {
         display: table-row;
@@ -3958,18 +3961,18 @@ right:1px;
 		border:none;
 		padding:10px 10px;
     }
-	
+
 	.shareColContainer .currentCollaborators .collaboratorsImage img{
 		width:43px;
 		height:43px;
 		border-radius:50% 50%;
 		border:2px solid #87badd;
 	}
-	
+
 		.shareColContainer .currentCollaborators .collaboratorsImage{
 			width:90px;
 		}
-		
+
 		.shareColContainer .currentCollaborators .collaboratorsName{
 			width:120px;
 		}
@@ -4065,7 +4068,7 @@ right:1px;
 	color:#ffffff;
 	border-radius:6px 6px 0 0;
 	margin-top:-2px;
-	
+
 }
 #addAssessmentPopup .close{
 	font-size:35px;
@@ -4108,7 +4111,7 @@ right:1px;
 	.colxs6-reset{
 		width:100% !important;
 	}
-	
+
 }
 @media (min-width: 320px) and (max-width: 479px) {
 	#addAssessmentPopup .modal-dialog{
@@ -4130,10 +4133,10 @@ right:1px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-			
+
 }
 @media (min-width: 1200px) {
-	
+
 }
 /* === Assessment popup start ================================== */
 
@@ -4535,5 +4538,54 @@ right:1px;
 
 #gShelfMainContainer .folderLevel.child .tooltipContainer .arrow, .folderLevel.parent .tooltipContainer .arrow {
     left:20px; /* to override folder level arrow */
+}
+
+
+/** Folder Course Tree Style in Add Course Popup **/
+
+#gShelfMainContainer .courseLevel {
+    background-color:#f0f0f0;
+    border-top:1px solid white;
+   /*  border-bottom:1px solid #ddd; */
+    height: 50px;
+    line-height: 50px;
+   /*  padding-right:15px; */
+    position:relative;
+    box-sizing:content-box;
+    width: 100%;
+}
+#gShelfMainContainer .courseLevel.active {
+	background-color: white !important;
+	/* border-left: 8px solid #515151; */
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-radius: 4px;
+	/* margin-left: -7px; */
+    z-index:10;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+#gShelfMainContainer .courseLevel .title {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.2em;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: transparent !important;
+}
+
+#gShelfMainContainer .courseLevel { /* grandparent level - default */
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px;
+}
+
+#gShelfMainContainer .courseLevel.course{ /* grandparent level - default */
+    padding-left:80px;
+}
+
+#gShelfMainContainer .courseLevel.course {
+    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
 }
 

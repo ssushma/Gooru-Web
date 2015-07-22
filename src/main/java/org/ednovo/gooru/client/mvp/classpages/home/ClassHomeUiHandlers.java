@@ -84,4 +84,26 @@ public interface ClassHomeUiHandlers extends BaseUiHandlers {
 	
 	void getV1TeachStudy(String limit, String offset);
 
+	/**
+	 * @function getV2TeachStudy 
+	 * 
+	 * @created_date : 21-Jul-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param string
+	 * @parm(s) : @param string2
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void getV2TeachStudy();
+
 }

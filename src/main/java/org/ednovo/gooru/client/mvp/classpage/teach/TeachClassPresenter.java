@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachCl
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentDashboardPresenter;
 
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
@@ -59,12 +60,9 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  */
 public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, IsTeachClassProxy> implements TeachClassViewUiHandlers{
 	
-	
-	EditClassPresenter editClassPresenter;
-	
-	EditClassStudentPresenter editClassStudentPresenter;
-	
 	EditClassSettingsNavigationPresenter editClassSettingsNavigationPresenter;
+	
+	TeachStudentDashboardPresenter teachStudentDashboardPresenter;
 	
 	String classpageId="";
 	
@@ -80,13 +78,11 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	}
 
 	@Inject
-	public TeachClassPresenter(IsTeachClassView view,IsTeachClassProxy proxy,EditClassPresenter editClassPresenter,EditClassStudentPresenter editClassStudentPresenter,EditClassSettingsNavigationPresenter editClassSettingsNavigationPresenter){
+	public TeachClassPresenter(IsTeachClassView view,IsTeachClassProxy proxy,EditClassSettingsNavigationPresenter editClassSettingsNavigationPresenter,TeachStudentDashboardPresenter teachStudentDashboardPresenter){
 		super(view, proxy);
 		getView().setUiHandlers(this);
-		this.editClassPresenter=editClassPresenter;
-		this.editClassStudentPresenter=editClassStudentPresenter;
 		this.editClassSettingsNavigationPresenter=editClassSettingsNavigationPresenter;
-		
+		this.teachStudentDashboardPresenter = teachStudentDashboardPresenter;
 	}
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
@@ -122,8 +118,9 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 				public void onSuccess(ClasspageDo result) {
 					classpageDo=result;
 					getView().setClassHeaderView(result);
-					editClassStudentPresenter.setClassDetails(result);
+					//editClassStudentPresenter.setClassDetails(result);
 					editClassSettingsNavigationPresenter.setClassDetails(result); 
+					editClassSettingsNavigationPresenter.getCourseData();
 				}
 				
 			});
@@ -148,17 +145,18 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	public void  loadNavigationPage(){
 		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
-		clearSlot(EMPTY_TAB);
-		clearSlot(STUDENT_TAB);
-		clearSlot(CLASS_CONTENT_TAB);
-		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTES)) {
-			addToSlot(STUDENT_TAB, editClassStudentPresenter);
-		}else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)){
-			addToSlot(CLASS_CONTENT_TAB, editClassSettingsNavigationPresenter);
-		}else{
-			addToSlot(EMPTY_TAB, editClassPresenter);
+		try{
+			clearSlot(CLASS_CONTENT_TAB);
+			clearSlot(CLASS_DASHBOARD_TAB);
+			if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_SETTINGS)){
+				addToSlot(CLASS_CONTENT_TAB, editClassSettingsNavigationPresenter);
+				editClassSettingsNavigationPresenter.loadNavigationPage();
+			}else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_DASHBOARD)){
+				addToSlot(CLASS_DASHBOARD_TAB, teachStudentDashboardPresenter);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		
 	}
 
 }

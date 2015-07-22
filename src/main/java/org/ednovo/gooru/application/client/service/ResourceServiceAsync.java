@@ -68,7 +68,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void copyCollectionItem(String collectionId, String resourceId, AsyncCallback<CollectionItemDo> callback);
 	
-	void deleteCollectionItem(String collectionItemId, AsyncCallback<Void> callback);
+	void deleteCollectionItem(String collectionId,String collectionItemId, AsyncCallback<Void> callback);
 	
 	void reorderCollectionItem(CollectionItemDo collectionItemDo, AsyncCallback<CollectionItemDo> callback);
 	

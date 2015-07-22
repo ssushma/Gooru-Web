@@ -569,6 +569,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			super.onLoad();
 			setEditQuestionImage();
 			
+			
 			DeferredCommand.addCommand(new Command() {
 
 				//Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -1025,8 +1026,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				//addQuestionResourceWidget.setCheckedData(collectionItemDo.getDepthOfKnowledges());
 				
 				addQuestionResourceWidget.getHideRightsToolTip();
-
-				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("assessment")){
+				
+				if(collectionItemDo.getCollection()!=null&&collectionItemDo.getCollection().getCollectionType().equalsIgnoreCase("assessment")){
 					hideTabButtons(false, true, false);
 				}else{
 					hideTabButtons(false, true, true);

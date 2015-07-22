@@ -14,8 +14,9 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="col-md-7 col-sm-7 topBlueRight">
 						 <g:HTMLPanel styleName="settingsMenu">
-						  <g:Button styleName="primary" ui:field="studentPreviewbtn"></g:Button>
+						<!--   <g:Button styleName="primary" ui:field="studentPreviewbtn"></g:Button> -->
 						 <panel:HTMLEventPanel styleName="classAnrSettings" ui:field="studentAnr"><img src="images/Classpage/studentsIco.png"/><g:InlineLabel ui:field="studentLbl"/></panel:HTMLEventPanel>
+						 <panel:HTMLEventPanel styleName="classAnrSettings" ui:field="dashBoardAnr"><img src="images/Classpage/dashbardIcon.png"/><g:InlineLabel ui:field="dashBoardLbl"/></panel:HTMLEventPanel>
 						 <panel:HTMLEventPanel styleName="classAnrSettings" ui:field="classSettingsAnr"><img src="images/Classpage/classSettingsIco.png"/><g:InlineLabel ui:field="settingsLbl"/></panel:HTMLEventPanel>
 						 </g:HTMLPanel>
 						<g:HTMLPanel styleName="rightWhiteBox"><uc:SpanPanel ui:field="classCodePanel"></uc:SpanPanel></g:HTMLPanel>
@@ -33,6 +34,7 @@
 						</g:HTMLPanel>
 					</g:HTMLPanel> -->
 					<g:SimplePanel ui:field="bodyMenuView"></g:SimplePanel>
+					<g:FlowPanel ui:field="reportBox"></g:FlowPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
