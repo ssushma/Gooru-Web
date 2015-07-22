@@ -613,4 +613,9 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			contentResourceWidgetWithMove.setCollectionDetails(collectionItemDo);
 		}
 	}
+	
+	@Override
+	public void onLoad() {
+		getUiHandlers().loadAddResourcePopup();
+	}
 }
