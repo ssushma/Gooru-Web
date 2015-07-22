@@ -162,6 +162,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 	@Override
 	public void setDisplayResourceItem(CollectionItemDo collectionItem,RefreshType type, int index){
+		
+		
 		int tmpIndex = index;
 		Window.enableScrolling(true);
 		if (tmpIndex ==-1){
@@ -205,6 +207,15 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (resourceType.equalsIgnoreCase("Question")) {
+						
+						if(collectionItem.getCollection()!=null){
+							collectionItem.getCollection().setCollectionType(listOfContent.getCollectionType());
+						}else{
+							CollectionDo colDo=new CollectionDo();
+							colDo.setCollectionType(listOfContent.getCollectionType());
+							collectionItem.setCollection(colDo);
+						}
+						
 						getUiHandlers().showEditQuestionResourcePopup(collectionItem);
 					} else if(resourceType.equals("resource/url") || resourceType.equals("video/youtube")
 							|| resourceType.equals("vimeo/video")){
