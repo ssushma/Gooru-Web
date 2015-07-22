@@ -16,6 +16,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -56,6 +57,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public abstract class ContentResourceWidgetWithMove extends Composite{
 
@@ -82,6 +84,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiField Image imgDisplayIcon;
 	@UiField Button btnEdit;
 	@UiField InlineLabel spnResourceType;
+	@UiField HTMLEventPanel titleBlockPnl;
+	
 
 	//final strings
 	private static final String VIDEO_TIME =i18n.GL0974();
@@ -95,6 +99,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String MESSAGE_CONTENT =i18n.GL0968();
 	private static final String MESSAGE_HEADER =i18n.GL0748();
 	private static final String VALID_END_PAGE = i18n.GL2025();
+	
+	private static final String COLLECTION = "collection";
+	private static final String ASSESSMENT = "assessment";
 
 	boolean youtube,isPdf;
 	boolean isHavingBadWords=false;
@@ -110,9 +117,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private ConfirmationPopupVc deleteConfirmationPopupVc;
 
 	AddTagesPopupView popup;
+	
+	String collectionType;
 
-	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem) {
+	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem, String CollectionType) {
 		this.collectionItem=collectionItem;
+		this.collectionType=CollectionType;
 		initWidget(uiBinder.createAndBindUi(this));
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
@@ -167,6 +177,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	        	hidePopup(event);
 	          }
 	    });
+		titleBlockPnl.addClickHandler(new TitleClickHandler());
 	}
 
 	protected void hidePopup(NativePreviewEvent event) {
@@ -915,6 +926,42 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		enableOrDisableTimeEdit(true);
 		checkYoutubeResourceOrNot(itemDo,true);
 		}
+	/**
+	 * To navigate to collection/assessment player 
+	 * @author gooruTeam
+	 */
+	private class TitleClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);	
+			String selectedFolderId;
+			if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+				selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o3");
+			}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+				selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
+			}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+				selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
+			}else{
+				selectedFolderId="";
+			}
+			HashMap<String,String> params = new HashMap<String,String>();
+			params.put("id", collectionId);
+			
+			params.put("rid", collectionItem.getCollectionItemId());
+			if(!StringUtil.isEmpty(collectionItem.getNarration())){
+				params.put("tab", collectionItem.getNarration());
+			}
+			if(!selectedFolderId.isEmpty()){
+				params.put("folderId", selectedFolderId);
+			}
+			String	placeToken=COLLECTION.equalsIgnoreCase(collectionType)?PlaceTokens.COLLECTION_PLAY:PlaceTokens.ASSESSMENT_PLAY;
+			System.out.println("clickevent:::"+placeToken);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(placeToken, params);
+			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+		}
+		
+	}
 
 
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId,String moveGooruOid);

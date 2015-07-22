@@ -134,7 +134,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void setData(final FolderDo folderDo) {
 		if(folderDo!=null){
-			AppClientFactory.getInjector().getResourceService().getCollection(folderDo.getGooruOid(),true, new SimpleAsyncCallback<CollectionDo>() {
+			AppClientFactory.getInjector().getResourceService().getCollection(folderDo.getGooruOid(),false, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					getView().setData(result,folderDo, RefreshType.INSERT);

@@ -99,7 +99,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	
 	@UiField Anchor lnkMyCourses,lnkMyFoldersAndCollecctions;
 	
-	@UiField Label organizelbl,lblCollectionTitle;
+	@UiField Label organizelbl,lblCollectionTitle,lblLastEditedBy;
 	
 	@UiField InlineLabel imgIconLbl;
 	
