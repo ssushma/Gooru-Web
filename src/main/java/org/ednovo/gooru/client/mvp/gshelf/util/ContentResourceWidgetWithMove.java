@@ -116,6 +116,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		lblTopArrow.addClickHandler(new ArrowClickHandler(false));
 		lblDownArrow.addClickHandler(new ArrowClickHandler(true));
+		copyResource.addClickHandler(new DisplayNewResourcePopup());
 		narrationTxtArea.getElement().setAttribute("maxlength", "500");
 		narrationTxtArea.getElement().setId("tatNarrationTxtArea");
 
@@ -893,7 +894,15 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	
 	public abstract void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop);
 	
+	public abstract void dispalyNewResourcePopup(CollectionItemDo collectionItemDo);
+	
 	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
 		this.collectionContentPresenter=collectionContentPresenter;
+	}
+	public class DisplayNewResourcePopup implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			dispalyNewResourcePopup(collectionItem);
+		}
 	}
 }

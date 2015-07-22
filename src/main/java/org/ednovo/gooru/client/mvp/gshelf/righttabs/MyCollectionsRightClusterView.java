@@ -658,7 +658,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		@Override
 		public void onClick(ClickEvent event) {
 			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-			getUiHandlers().EnableMyCollectionsTreeData(collectionId,folderObj.getTitle());
+			
+			
+			getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
 			/*copyLbl.getElement().addClassName("selected");
 			moveLbl.getElement().removeClassName("selected");
 			myCollDelLbl.getElement().removeClassName("selected");*/
@@ -682,10 +684,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 				String viewParamVal= AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+				
 				if(viewParamVal!=null && viewParamVal.equalsIgnoreCase("folder")){
-					getUiHandlers().EnableMyCollectionsTreeData(collectionId,folderObj.getTitle());
+					getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
 				}else{
-					getUiHandlers().DisableMyCollectionsTreeData(collectionId,folderObj.getTitle());
+					getUiHandlers().DisableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
 				}
 			}
 		}
