@@ -150,6 +150,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}else if(listOfContent.isIsCollaborator()){
 			 getUiHandlers().disableCollabaratorOptions(false);
 		}
+		lblTitle.setVisible(false);
 		if(folderDo.getType().equalsIgnoreCase("assessment") || folderDo.getType().equalsIgnoreCase("assessment/url")){
 			btnAddResources.setVisible(false);		
 			lblSpanOr.setVisible(false);
