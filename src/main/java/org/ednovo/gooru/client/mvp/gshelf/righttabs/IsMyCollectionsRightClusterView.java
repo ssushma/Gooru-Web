@@ -73,6 +73,10 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	public void disableAndEnableBreadCums(boolean isVisible);
 	
 	public void setFolderInfoWidget(FolderDo folderObj, MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter);
+	
 	public void disableCollabaratorOptions(boolean isHide);
+	
+	public void setIsCollaboratorValue(boolean isHide);
+	
 	public Anchor getPreviewLink();
 }
