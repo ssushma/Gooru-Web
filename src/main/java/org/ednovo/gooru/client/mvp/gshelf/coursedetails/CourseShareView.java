@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.gshelf.util.ClassListWidget;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -77,6 +78,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 		setWidget(uiBinder.createAndBindUi(this));
 		classListBox.addChangeHandler(new SelectClassHandler());
 		errorMsgLbl.setVisible(false);
+		classListPnl.getElement().getStyle().setWidth(100, Unit.PCT);
 	}
 	
 	private class SelectClassHandler implements ChangeHandler{
