@@ -189,7 +189,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		}
 		return false;
 	}
-	public void setData(int index,CollectionItemDo collectionItem){
+	public final void setData(int index,CollectionItemDo collectionItem){
 		int indexVal=index+1;
 		if(indexVal==1){
 			lblTopArrow.setVisible(false);
@@ -215,7 +215,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		txtMoveTextBox.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
-				String enteredString=txtMoveTextBox.getText().toString().trim();
+				String enteredString=txtMoveTextBox.getText().trim();
 				String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index").trim();
 				if(enteredString.isEmpty()){
 					txtMoveTextBox.setText((Integer.parseInt(currentWidgetString)+1)+"");
@@ -266,7 +266,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public class ReorderText implements KeyUpHandler {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			String enteredString=txtMoveTextBox.getText().toString().trim();
+			String enteredString=txtMoveTextBox.getText().trim();
 			String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index");
 			if(!enteredString.isEmpty()){
 				int enteredValue=Integer.parseInt(enteredString);
@@ -322,7 +322,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			GWT.runAsync(new SimpleRunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					String movingPosition=txtMoveTextBox.getText().toString().trim();
+					String movingPosition=txtMoveTextBox.getText().trim();
 					String currentWidgetPosition=txtMoveTextBox.getElement().getAttribute("index").trim();
 					String moveId=txtMoveTextBox.getElement().getAttribute("moveId");
 					String moveGooruOid=txtMoveTextBox.getElement().getAttribute("moveGooruOId");
@@ -660,7 +660,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 
 		lblUpdateTextMessage.setVisible(true);
 		actionVerPanel.setVisible(false);
-		Map<String, String> parms = new HashMap<String, String>();
+		Map<String, String> parms = new HashMap<>();
 		parms.put("text", narrationTxtArea.getText());
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
