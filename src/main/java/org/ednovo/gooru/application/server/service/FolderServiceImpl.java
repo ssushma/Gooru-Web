@@ -171,7 +171,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	public List<CollectionItemDo> getAllFolders() throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.LIST_MY_FOLDERS);
-		Map<String, String> params = new LinkedHashMap<String, String>();
+		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.PAGE_SIZE, WORKSPACE_PAGE_SIZE);
 		params.put(GooruConstants.ORDER_BY, ORDER_BY);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
@@ -205,7 +205,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
-		return new ArrayList<ListValuesDo>();
+		return new ArrayList<>();
 	}
 	
 	public List<CollectionItemDo> deserializeWorkspace(JsonRepresentation jsonRep) {
@@ -217,7 +217,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
-		return new ArrayList<CollectionItemDo>();
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -245,7 +245,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
-		return new ArrayList<CollectionDo>();
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -266,16 +266,15 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				logger.error("Exception::", e);
 			}
 		}
-		return new ArrayList<CollectionItemDo>();
+		return new ArrayList<>();
 	}
 
 	@Override
 	public FolderListDo getChildFolders(int offset, int limit, String parentId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
-		String sessionToken=getLoggedInSessionToken();
 		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId);
-		Map<String, String> params = new LinkedHashMap<String, String>();
+		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.OFFSET, String.valueOf(offset));
 		params.put(GooruConstants.LIMIT, String.valueOf(limit));
 		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
@@ -306,7 +305,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	public FolderListDo getChildFoldersForCourse(int offset, int limit,String courseId,String unitId,String lessonId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
-		String sessionToken=getLoggedInSessionToken();
 		if(courseId!=null && unitId==null){
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNITS_BY_COURSEID, courseId);
 		}else if(courseId!=null && unitId!=null && lessonId==null){
@@ -314,7 +312,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}else if(courseId!=null && unitId!=null && lessonId!=null){
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COLLECTIONS_BY_COLLECTIONID, courseId,unitId,lessonId);
 		}
-		Map<String, String> params = new LinkedHashMap<String, String>();
+		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.OFFSET, String.valueOf(offset));
 		params.put(GooruConstants.LIMIT, String.valueOf(limit));
 		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
@@ -333,6 +331,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderListForCourse(jsonRep);
 	}
+        
 	public FolderListDo deserializeFolderListForCourse(JsonRepresentation jsonRep) {
 		FolderListDo listObj=new FolderListDo();
 		try {
@@ -345,6 +344,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return listObj;
 	}
+        
 	public FolderListDo deserializeFolderList(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -389,10 +389,13 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	
 	public FolderDo deserializeCreatedFolder(JsonRepresentation jsonRep) {
 		try {
-			getLogger().info("jsonRep.getJsonObject().toString():::::::"+jsonRep.getJsonObject().toString());
+                        // TODO: Remove this hard coded -1 with UNKNOWN_SIZE as provided by Restlet
 			if (jsonRep != null && jsonRep.getSize() != -1) {
+        			getLogger().info("jsonRep.getJsonObject().toString():::::::"+jsonRep.getJsonObject().toString());
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderDo>() {});
-			}
+			} else {
+                            getLogger().error(new StringBuilder("deserializeCreatedFolder: jsonRep is either null or UNKNOWN_SIZE").toString());
+                        }
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}
@@ -408,7 +411,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 	@Override
 	public void moveCollectionIntoFolder(String sourceId, String targetId) throws GwtException {
-		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_MOVE_COLLECTION);
 		JSONObject folderObject=new JSONObject();
@@ -446,7 +448,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			collectionDataObject.put("goals", data.getGoals());
 			if (courseCodeId != null) {
 				courseIdObj.put("codeId", courseCodeId);
-				ArrayList<JSONObject> taxonomyArray= new ArrayList<JSONObject>();
+				ArrayList<JSONObject> taxonomyArray= new ArrayList<>();
 				taxonomyArray.add(courseIdObj);
 				collectionDataObject.put("taxonomySet", taxonomyArray);
 			}
@@ -486,7 +488,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 	@Override
 	public void updateFolder(String folderId, String title, String ideas, String questions, String performance) throws GwtException {
-		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_FOLDER_METADATA, folderId);
 		logger.info("updateFolder : "+url);
@@ -556,7 +557,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
 		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_RESOURCE_LIST, parentId);
-		Map<String, String> params = new LinkedHashMap<String, String>();
+		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 
 		if(sharingType!=null){
@@ -573,50 +574,56 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		return deserializeFolderList(jsonRep);
 	}
 
-	@Override
-	public void reorderFoldersOrCollections(String courseId,String unitId,String lessonId,String collectionId,int itemToBeMovedPosSeqNumb, String collectionItemId,String type) throws GwtException, ServerDownException {
-		JsonRepresentation jsonRep = null;
-		String url = null;
-		try {	
-			getLogger().info("-- itemToBeMovedPosSeqNumbI - - - - "+itemToBeMovedPosSeqNumb);
-			getLogger().info("-- collectionItemId - - - - "+collectionItemId);
-			getLogger().info("-- collectionId - - - - "+collectionId);
-		JSONObject jsonObj=new JSONObject();
-		if(type!=null && type.equalsIgnoreCase("Folder")){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA,collectionId,collectionItemId);
-			//url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"");
-		}else{
-			/*if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
-				//Reorder resources
-				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA,collectionId,collectionItemId);
-			}else*/ if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
-				//Reorder collections
-				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA,collectionId,collectionItemId);
-			}else if(courseId!=null && unitId!=null && lessonId==null){
-				//Reorder lessons
-				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_LESSON_METADATA,courseId,unitId,collectionItemId);
-			}else if(courseId!=null && unitId==null){
-				//Reorder units
-				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA,courseId,collectionItemId);
-			}else if(courseId==null){
-				//Reorder courses
-				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA,collectionItemId);
-			}
-		}
-		jsonObj.put("position",itemToBeMovedPosSeqNumb);
-		getLogger().info("-- Folder Re-order API - - - - "+url);
-		getLogger().info("-- payload Re-order API - - - - "+jsonObj.toString());
-		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObj.toString());
-		}catch (Exception e) {
-			logger.error("Exception::", e);
-		}
-	}
+    @Override
+    public void reorderFoldersOrCollections(String courseId, String unitId, String lessonId, String collectionId, int itemToBeMovedPosSeqNumb, String collectionItemId, String type) throws GwtException, ServerDownException {
+        JsonRepresentation jsonRep = null;
+        String url = null;
+        try {
+            getLogger().info("-- itemToBeMovedPosSeqNumbI - - - - " + itemToBeMovedPosSeqNumb);
+            getLogger().info("-- collectionItemId - - - - " + collectionItemId);
+            getLogger().info("-- collectionId - - - - " + collectionId);
+            JSONObject jsonObj = new JSONObject();
+            if (type != null && type.equalsIgnoreCase("Folder")) {
+                url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA, collectionId, collectionItemId);
+                //url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"");
+            } else {
+                /*if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+                 //Reorder resources
+                 url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA,collectionId,collectionItemId);
+                 }else*/
+                if (courseId != null && unitId != null && lessonId != null && collectionId != null && collectionItemId != null) {
+                    //Reorder collections
+                    url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTONITEM_METADATA, collectionId, collectionItemId);
+                } else if (courseId != null && unitId != null && lessonId == null) {
+                    //Reorder lessons
+                    url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_LESSON_METADATA, courseId, unitId, collectionItemId);
+                } else if (courseId != null && unitId == null) {
+                    //Reorder units
+                    url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA, courseId, collectionItemId);
+                } else if (courseId != null) {
+                    //Reorder courses
+                    url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA, collectionItemId);
+                }
+            }
+            jsonObj.put("position", itemToBeMovedPosSeqNumb);
+            getLogger().info("-- Folder Re-order API - - - - " + url);
+            getLogger().info("-- payload Re-order API - - - - " + jsonObj.toString());
+            // TODO: AM: We need to handle the case where in the return value is checked 
+            // as well as in case of exception being thrown we need to show something
+            // on UI
+            JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), jsonObj.toString());
+        } catch (Exception e) {
+            // TODO: AM: Need to communicate back to UI about this exception instead of 
+            // just eating it up
+            logger.error("Exception::", e);
+        }
+    }
 
 	@Override
 	public FolderTocDo getTocFolders(String folderId,boolean fromPPP) throws GwtException,ServerDownException {
 		FolderTocDo folderTocDo = new FolderTocDo();
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId);
-		Map<String, String> params = new LinkedHashMap<String, String>();
+		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 		if(!fromPPP){
 		params.put(GooruConstants.SHARING, GooruConstants.PUBLIC);
@@ -626,9 +633,12 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		getLogger().info("-- Folder toc API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep!=null && jsonResponseRep.getJsonRepresentation()!=null){
-			folderTocDo =deserializeFolderTocList(jsonResponseRep.getJsonRepresentation());
-		}
-		folderTocDo.setStatusCode(jsonResponseRep.getStatusCode());
+			folderTocDo = deserializeFolderTocList(jsonResponseRep.getJsonRepresentation());
+        		folderTocDo.setStatusCode(jsonResponseRep.getStatusCode());
+		} else {
+                    logger.error(new StringBuilder("getTocFolders: jsonResponseRep is null for url ").append(url).toString());
+                }
+                
 		return folderTocDo;
 	}
 	public FolderTocDo deserializeFolderTocList(JsonRepresentation jsonRep) {
@@ -655,7 +665,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 	@Override
 	public Map<String,String> getFolderRouteNodes(String folderId) throws GwtException, ServerDownException {
-		Map<String,String> folderList=new LinkedHashMap<String, String>();
+		Map<String,String> folderList=new LinkedHashMap<>();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_FOLDER_ROUTE_NODES, folderId);
 		getLogger().info("getFolderRouteNodes:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -705,8 +715,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
 			logger.info("rest point: "+ getRestEndPoint());
-			logger.info("uri : "+jsonRep.getJsonObject().getString("uri").toString());
-			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			logger.info("uri : "+jsonRep.getJsonObject().getString("uri"));
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
 			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
 			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRepGet);
@@ -744,8 +754,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
 			logger.info("rest point: "+ getRestEndPoint());
-			logger.info("uri : "+jsonRep.getJsonObject().getString("uri").toString());
-			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			logger.info("uri : "+jsonRep.getJsonObject().getString("uri"));
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
 			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
 			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRepGet);
@@ -784,7 +794,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 	@Override
 	public void updateCourse(String courseId,String unitId,String lessonId,String collectionId, CreateDo createDo) throws GwtException, ServerDownException {
-		JsonRepresentation jsonRep = null;
 		String url = null;
 	
 		if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
@@ -811,7 +820,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 	@Override
 	public Integer deleteCourse(String o1CourseId) throws GwtException,ServerDownException {
-		JsonRepresentation jsonRep = null;
 		
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_COURSE, o1CourseId);
 		getLogger().info("DELETE_COURSE:::::::"+url);
@@ -885,18 +893,13 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public void updateCollectionDetails(CreateDo createDoObj,String collectionId, Map<Integer,String> audience,Map<Integer,String> dok,Map<Long,String> centurySkills,String languageObjective){
 		
-		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTION, collectionId);
 		JSONObject collectionObject=new JSONObject();
 		try {
 			
 			collectionObject.put("languageObjective", languageObjective);
-			
-			List<String> auKeys=new ArrayList<String>();
-			List<String> dokKeys=new ArrayList<String>();
-			List<String> centurySkillsKeys=new ArrayList<String>();
-		
+			List<String> dokKeys=new ArrayList<>();		
 			Set<Integer> keys=audience.keySet();
 			
 			collectionObject.put("audienceIds", getKeys(audience.keySet()));
@@ -914,15 +917,16 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	
 	
 	public List<String> getKeys(Set<Integer> keys){
-		List<String> keyString=new ArrayList<String>();		
+		List<String> keyString=new ArrayList<>();		
 	
 		for(Integer key:keys){
 			keyString.add(key+"");
 		}
 		return keyString;
 	}
+        
 	public List<String> getKeysLong(Set<Long> keys){
-		List<String> keyString=new ArrayList<String>();		
+		List<String> keyString=new ArrayList<>();		
 	
 		for(Long key:keys){
 			keyString.add(key+"");
