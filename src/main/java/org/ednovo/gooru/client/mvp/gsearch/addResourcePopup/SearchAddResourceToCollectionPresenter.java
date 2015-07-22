@@ -376,7 +376,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	@Override
 	public void getCourseItems(final TreeItem item,String courseId, String UnitId,
 			String lessionId, String typeValue) {
-		AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,courseId, UnitId, lessionId, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+		final String COLLECTION_ASSESMENT="collection,assessment";
+		AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,courseId, UnitId, lessionId, null, COLLECTION_ASSESMENT, false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
 				getView().setFolderItems(item,result);
