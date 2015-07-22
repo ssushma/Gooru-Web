@@ -106,6 +106,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private boolean isCopySelected= false;
 	private boolean isMoveSelected= false;
 	
+	private boolean isCollaborator= false;
+	
 	
 	public MyCollectionsRightClusterView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -331,6 +333,13 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		enableAndHideTabs(true);
 		enableOrHidePreviewBtn();
 		enableOrHideShareTab();
+		System.out.println("isCollaborator::"+isCollaborator);
+		if(COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
+			disableCollabaratorOptions(isCollaborator);
+		}else{
+			disableCollabaratorOptions(true);
+		}
+		
 	}
 	
 	
@@ -803,6 +812,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		myCollDelLbl.setVisible(hide);
 	}
 	@Override
+	public void setIsCollaboratorValue(boolean isHide) {
+		this.isCollaborator=isHide;
+	}
+
 	public Anchor getPreviewLink(){
 		return lnkPreview;
 	}

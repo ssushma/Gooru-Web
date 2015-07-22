@@ -12,11 +12,11 @@
               <g:Anchor ui:field="classNameAnch"></g:Anchor>
 				<!-- <a href="">AdNum Block 1</a> -->
 			</g:HTMLPanel>
-			<div class="col-md-6 col-sm-6 col-xs-7">
+			<!-- <div class="col-md-6 col-sm-6 col-xs-7">
 				<g:HTMLPanel styleName="text-right">
 				 <g:Anchor ui:field="editClassAnch">Edit class content visibility</g:Anchor> 
 				</g:HTMLPanel>
-			</div>
+			</div> -->
 			<div class="clearfix"></div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

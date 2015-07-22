@@ -73,7 +73,7 @@ public class DepthKnowledgeView extends Composite {
 	public void setCollectionDo(CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
 		if(collectionDo!=null){
-			setSelectedValues(collectionDo.getDepthOfKnowledges());
+		//	setSelectedValues(collectionDo.getDepthOfKnowledges());
 		}
 	}
 	
@@ -81,6 +81,8 @@ public class DepthKnowledgeView extends Composite {
 		AppClientFactory.printInfoLogger(" folder DOK");
 		reset();
 		if(folderDo!=null){
+			AppClientFactory.printInfoLogger("Folder Do..........."+folderDo.getGooruOid());
+			AppClientFactory.printInfoLogger("Depth of knowledge.........."+folderDo.getDepthOfKnowledge());
 			setSelectedValues(folderDo.getDepthOfKnowledge());
 
 		}
@@ -102,8 +104,11 @@ public class DepthKnowledgeView extends Composite {
 		selectedValues=new HashMap<Integer, String>();
 		int count=detailsContainer.getWidgetCount();
 		if(list!=null){
+			
 			for(checkboxSelectedDo checkboxSelectedDoObj:list){
+				AppClientFactory.printInfoLogger(checkboxSelectedDoObj.getId()+"================="+ checkboxSelectedDoObj.getName());
 				selectedValues.put(checkboxSelectedDoObj.getId(), checkboxSelectedDoObj.getName());
+			
 			}
 		}
 		for(int i=0;i<count;i++){

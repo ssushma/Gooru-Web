@@ -47,6 +47,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -64,7 +65,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	
 	@UiField ListBox classListBox;
 	@UiField Button assignCourseBtn;
-	@UiField HTMLPanel classListPnl;
+	@UiField VerticalPanel classListPnl;
 	@UiField Label errorMsgLbl;
 	
 	/**
@@ -119,18 +120,18 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	}
 
 	@Override
-	public void showClassesInList(ArrayList<ClasspageDo> classPageDo) {
+	public void showClassesInList(ArrayList<ClasspageDo> classPageDo, String courseId) {
 		if(classPageDo!=null){
 			classListPnl.clear();
 			for(ClasspageDo classObj:classPageDo){
-				ClassListWidget classListWidget = new ClassListWidget(classObj.getName(),classObj.getClassUid());
+				ClassListWidget classListWidget = new ClassListWidget(classObj.getName(),classObj.getClassUid(),courseId);
 				classListPnl.add(classListWidget);
 			}
 		}else{
 			String name=classListBox.getItemText(classListBox.getSelectedIndex());
 			String classId= classListBox.getValue(classListBox.getSelectedIndex());
-			ClassListWidget classListWidget = new ClassListWidget(name,classId);
-			classListPnl.add(classListWidget);
+			ClassListWidget classListWidget = new ClassListWidget(name,classId,courseId);
+			classListPnl.insert(classListWidget,0);
 		}
 		
 	}
