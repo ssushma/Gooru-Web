@@ -3113,11 +3113,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						final Label titleLabel = new Label(mediaTitleVal);
 						titleLabel.setStyleName(CollectionAssignCBundle.INSTANCE.css().classpageTitleText());
 						titleLabel.getElement().setAttribute("id", listValuesDo.getId()+"");
+						titleLabel.setText(listValuesDo.getName());
 						//Set Click event for title
 						titleLabel.addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {		
-								String optionSelected = titleLabel.getElement().getId();
+								String optionSelected = titleLabel.getText();
 								lblMediaPlaceHolder.setText(optionSelected);
 								spanelMediaFeaturePanel.setVisible(false);
 								lblMediaPlaceHolder.getElement().setId(titleLabel.getElement().getId());
