@@ -298,6 +298,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_COLLECTION_RESOURCES, collectionGooruOid);
 		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.INCLUDU_ITEMS,GooruConstants.TRUE);
+		//Get last modified user details when collaborate
+		if(!skipCollectionItem){
+			params.put(GooruConstants.INCLUDE_LASTMODIFIED_USER,GooruConstants.TRUE);
+		}
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("get coll res url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());

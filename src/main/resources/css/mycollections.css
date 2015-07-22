@@ -1411,6 +1411,12 @@ button.btn-disabled {
 	vertical-align: middle;
 	overflow: hidden;
 }
+#gShelfMainContainer .lastEditedBy {
+	text-align: right;
+	margin: 7px 26px 0px 0px;
+	background: #ffffff;
+	font-size: 12px;
+}
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;
 }
@@ -2476,9 +2482,11 @@ vertical-align:middle;
 #resourceEdit .tableMainHeader .resourceNameBlock .resourceTitle{
 	float:left;
 	width:75%;
+	cursor:pointer
 }
 #resourceEdit .tableMainHeader .resourceNameBlock span{
 	margin-right:8px;
+	cursor:pointer
 }
 #resourceEdit .tableMainHeader .resourceNameBlock span.webpageIcon{
 	width:25px;
