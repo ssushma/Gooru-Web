@@ -43,6 +43,7 @@ import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
@@ -67,7 +68,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void copyCollectionItem(String collectionId, String resourceId, AsyncCallback<CollectionItemDo> callback);
 	
-	void deleteCollectionItem(String collectionItemId, AsyncCallback<Void> callback);
+	void deleteCollectionItem(String collectionId,String collectionItemId, AsyncCallback<Void> callback);
 	
 	void reorderCollectionItem(CollectionItemDo collectionItemDo, AsyncCallback<CollectionItemDo> callback);
 	
@@ -93,7 +94,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 //	void getMyUserCollections(AsyncCallback<List<CollectionItemsListDo>> callback) throws GwtException;
 
-	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<CodeDo> standards,String hostName,List<String> tagList, AsyncCallback<CollectionItemDo> callback);
+	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<CodeDo> standards,List<StandardFo> centurySklills,String hostName,List<String> tagList, AsyncCallback<CollectionItemDo> callback);
 	
 	void getResourceMetaInfo(String url, AsyncCallback<ResourceMetaInfoDo> callback);
 	
@@ -204,4 +205,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void updateTimeMetadata(String collectionItemId, String start, String stop, AsyncCallback<CollectionItemDo> callback);
 	void getEducationalUseList(AsyncCallback<List<ListValuesDo>> asyncCallback) throws  GwtException;
 	void getMomentOfLearning(AsyncCallback<List<ListValuesDo>> asyncCallback) throws  GwtException;
+	void getMediaFeature(AsyncCallback<List<ListValuesDo>> asyncCallback) throws  GwtException;
+	void getAccessHazards(AsyncCallback<List<ListValuesDo>> asyncCallback) throws  GwtException;
 }

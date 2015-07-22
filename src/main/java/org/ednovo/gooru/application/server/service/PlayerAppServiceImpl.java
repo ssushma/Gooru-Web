@@ -453,25 +453,25 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 	@Override
 	public String createSessionItemAttemptTryForOe(String contentGooruOid,String sessionTrackerId,String sessionItemTrackerId,String answerId,String attemptStatus,String attemptAnswerResult) {
-		JSONObject sessionItemAttemptTry=new JSONObject();
-		try {
-			/*assessmentAnswer.put("attemptItemTryStatus",attemptStatus);
-			assessmentAnswer.put("answerText",attemptAnswerResult);
-			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);*/
-
-			sessionItemAttemptTry.put("contentGooruId", contentGooruOid);
-			//sessionItemAttemptTry.put("answerId",answerId);
-			sessionItemAttemptTry.put("answerStatus",attemptStatus);
-			sessionItemAttemptTry.put("sessionActivityId",sessionTrackerId);
-			sessionItemAttemptTry.put("answerText",attemptAnswerResult);
-			//sessionItemAttemptTry.put("answerOptionSequence","");
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId);
-			getLogger().info("--->>  createSessionItemAttemptTryOE --- "+url);
-			getLogger().info("--->>  createSessionItemAttemptTry payloadOE  --- "+sessionItemAttemptTry.toString());
-			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemAttemptTry.toString());
-		} catch (JSONException e) {
-			logger.error("Exception::", e);
-		}
+//		JSONObject sessionItemAttemptTry=new JSONObject();
+//		try {
+//			/*assessmentAnswer.put("attemptItemTryStatus",attemptStatus);
+//			assessmentAnswer.put("answerText",attemptAnswerResult);
+//			sessionItemAttemptTry.put("sessionItemAttemptTry",assessmentAnswer);*/
+//
+//			sessionItemAttemptTry.put("contentGooruId", contentGooruOid);
+//			//sessionItemAttemptTry.put("answerId",answerId);
+//			sessionItemAttemptTry.put("answerStatus",attemptStatus);
+//			sessionItemAttemptTry.put("sessionActivityId",sessionTrackerId);
+//			sessionItemAttemptTry.put("answerText",attemptAnswerResult);
+//			//sessionItemAttemptTry.put("answerOptionSequence","");
+//			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId);
+//			getLogger().info("--->>  createSessionItemAttemptTryOE --- "+url);
+//			getLogger().info("--->>  createSessionItemAttemptTry payloadOE  --- "+sessionItemAttemptTry.toString());
+//			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemAttemptTry.toString());
+//		} catch (JSONException e) {
+//			logger.error("Exception::", e);
+//		}
 		return "";
 	}
 

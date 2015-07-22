@@ -1,16 +1,16 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc" xmlns:event="urn:import:org.ednovo.gooru.client.ui">
 	<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel styleName="tableRow">
 		<div class="tableColumn">
 			<div class="tableMainHeader">
 				<g:Label styleName="resourceNumber" ui:field="lblItemSequence" />
-				<div class="resourceNameBlock">
+				<event:HTMLEventPanel styleName="resourceNameBlock" ui:field="titleBlockPnl">
 					<g:InlineLabel ui:field="spnResourceType" />
 					<g:Label styleName="resourceTitle" ui:field="lblResourceTitle" />
-				</div>
+				</event:HTMLEventPanel>
 			</div>
 		</div>
 		<div class="tableColumn">

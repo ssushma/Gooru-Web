@@ -65,7 +65,7 @@ public enum UrlToken {
 
 	V2_CREATE_COLLECTION_ITEM("/v2/collection/{0}/item?"),
 
-	V2_DELETE_COLLECTION_ITEM("/v2/collection/item/{0}?"),
+	V2_DELETE_COLLECTION_ITEM("/v3/collection/{0}/item/{1}?"),
 
 	SHARE_SHORTEN_URL("/url/shorten/{0}?"), // Not used v1 shorten API call
 
@@ -666,10 +666,11 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	GET_AUDIENCELIST("/v1/meta/audience?"),
 
 	V3_UPDATE_COLLECTION("/v3/collection/{0}"),
-	
 	V1_GET_COURSE("/v1/course/{0}?"),
 	V1_GET_MOMENT_OF_LEARERNING("/v1/meta/moments_of_learning"),
 	V1_GET_EDUCATIONAL_USE("/v1/meta/educational_use"),
+	V1_GET_MEDIA_FEATURES("/v1/meta/media_feature"),
+	V1_GET_ACCESS_HAZARD("v1/meta/access_hazard"),
 	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?"),
 	V3_ADDQUESTION_COLLECTION("/v3/collection/{0}/question/{1}?"),
 	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?");

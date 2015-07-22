@@ -1131,55 +1131,9 @@ public class HeaderUc extends Composite
 					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					if (userDo != null && !userDo.getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
-						AppClientFactory.printInfoLogger("ifffffffff");
-						AppClientFactory.getInjector().getClasspageService().v3GetAllClass(new AsyncCallback<Boolean>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								
-							}
-
-							@Override
-							public void onSuccess(Boolean result) {
-								System.out.println("onSuccess....:"+result);
-								if(result){
-									AppClientFactory.printInfoLogger("iside ifffffffff");
-									Map<String, String> params = new HashMap<String, String>();
-									params.put("view", "myclass");
-									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
-								}else{
-									AppClientFactory.printInfoLogger("elsennnnnnnnnnn");
-									AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-								}
-								
-							}
-						});
-						/*AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
-											@Override
-											public void onSuccess(ClasspageListDo result) {
-												// hasClasses =
-												// result.getSearchResults().size() > 0
-												// ? true : false;
-												//if(result!=null){
-												if (result != null && result.getSearchResults() != null) {
-													AppClientFactory.printInfoLogger("iside ifffffffff");
-													if (result.getSearchResults().size() > 0) {
-														AppClientFactory.printInfoLogger("iside ifffffffff"+result.getSearchResults().size());
-														Map<String, String> params = new HashMap<String, String>();
-														params.put("view", "myclass");
-														AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
-													} else {
-														AppClientFactory.printInfoLogger("elsennnnnnnnnnn");
-														AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-													}
-												} else {
-													AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-												}
-											} else {
-												AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-											}
-											}
-					 });*/
+						Map<String, String> params = new HashMap<String, String>();
+						params.put("view", "myclass");
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
 					} else {
 						AppClientFactory.printInfoLogger("elssssssssssss");
 						name = "teach";
