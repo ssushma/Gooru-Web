@@ -1055,7 +1055,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@Override
 	public void updateWidgetsCount(CollectionItemDo collectionItem) {
 		ShelfTreeWidget collectionShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
-		String type=collectionItem.getResource().getResourceFormat().getDisplayName();
+		String type=collectionItem!=null?collectionItem.getResource()!=null?(collectionItem.getResource().getResourceFormat()!=null?collectionItem.getResource().getResourceFormat().getDisplayName():""):"":"";
 		if("Question".equalsIgnoreCase(type)){
 			collectionShelfTreeWidget.getCollectionDo().getSummary().setQuestionCount(collectionShelfTreeWidget.getCollectionDo().getSummary().getQuestionCount()+1);
 		}else{
