@@ -328,5 +328,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItem);
 	void updateVideoTimeUpdate(CollectionItemDo collectionItemDo);
 	public void updateWidgetCount(CollectionItemDo collectionItem);
+	public void showResourcePopup(CollectionItemDo collectionItem);
 	public void disableCollabaratorOptions(boolean b);
+
 }

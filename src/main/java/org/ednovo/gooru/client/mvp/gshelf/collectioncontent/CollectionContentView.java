@@ -305,6 +305,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 					// TODO Auto-generated method stub
 					getUiHandlers().updateVideoTimeUpdate(collectionItemDo);
 				}
+				@Override
+				public void dispalyNewResourcePopup(
+						CollectionItemDo collectionItemDo) {
+					// TODO Auto-generated method stub
+					getUiHandlers().showResourcePopup(collectionItemDo);
+				}
 			};
 			widgetMove.setPresenter(collectionContentPresenter);
 			widgetMove.getElement().setAttribute("itemSequence", collectionItem.getItemSequence()+"");
