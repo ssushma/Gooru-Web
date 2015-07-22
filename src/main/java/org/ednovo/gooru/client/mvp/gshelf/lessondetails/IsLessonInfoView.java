@@ -32,6 +32,9 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.TreeItem;
+
 /**
  * @author Search Team
  *
@@ -40,7 +43,7 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 	void setLessonInfoData(FolderDo folderObj); 
 	
-	void callCreateAndUpdate(boolean isCreate,boolean result,String type, CreateDo createOrUpDate,String courseId,String unitId); 
+	void callCreateAndUpdate(boolean isCreate,boolean result,String type, CreateDo createOrUpDate,String courseId,String unitId, TreeItem currentShelfTreeWidget); 
 
 	void displayStandardsList(List<DomainStandardsDo> result);
 
@@ -50,5 +53,6 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 	void resetBtns(); 
 	
+	HTMLPanel getStadardsPanel();
 
 }

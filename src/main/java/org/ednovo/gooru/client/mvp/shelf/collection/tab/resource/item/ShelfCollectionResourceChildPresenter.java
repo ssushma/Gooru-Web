@@ -102,7 +102,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	 * @param collectionItemId  gooruOid of collection item
 	 */
 	public void deleteCollectionItem(String collectionItemId) {
-		this.getResourceService().deleteCollectionItem(collectionItemId, getDeleteCollectionItemAsyncCallback());
+		this.getResourceService().deleteCollectionItem("",collectionItemId, getDeleteCollectionItemAsyncCallback());
 	}
 
 	/**

@@ -95,13 +95,13 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentViewUiHandler> implements IsEditClassStudentView {
 	
-	@UiField LiPanel roasterPanel,reportPanel;
+	//@UiField LiPanel roasterPanel,reportPanel;
 	
-	@UiField Anchor roasterAnr,reportPanelAnr,studentAnr;
+	//@UiField Anchor roasterAnr,reportPanelAnr,studentAnr;
 	
 	@UiField PPanel classCodePanel,shareLnkPanel,emailAddTxt,analyPanel;
 	
-	@UiField InlineLabel classCodeTxtPanel,courseHeaderLbl,courseTitleLbl;
+	@UiField InlineLabel classCodeTxtPanel/*,courseHeaderLbl,courseTitleLbl*/;
 	
 	@UiField TextBox sharTxtBox,fullTxtBox/*,inviteTxtBox*/;
 	
@@ -111,7 +111,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@UiField VerticalPanel tableContainer,pendingContainer;
 	
-	@UiField HTMLPanel panelSuggestBox,roasterMainConatiner,reportContainer/*,panelActions,panelCode*/;
+	@UiField HTMLPanel panelSuggestBox,roasterMainConatiner/*,reportContainer,panelActions,panelCode*/;
 
 	@UiField Label lblPleaseWait,lblErrorMessage;
 	
@@ -131,13 +131,13 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	@UiField HTMLPanel pendindUserContainer,activeUserConatiner;
 	
-	@UiField Image studentImage;
+	//@UiField Image studentImage;
 	
-	@UiField Anchor notePanel,ancPendingListSeeMore,ancActiveListSeeMore;
+	@UiField Anchor /*notePanel,*/ancPendingListSeeMore,ancActiveListSeeMore;
 	
 	@UiField Label lblActivePleaseWait,lblPendingPleaseWait;
 	
-	@UiField Button connectCourseBtn,addStudentBtn;
+	//@UiField Button connectCourseBtn,addStudentBtn;
 
 	@UiField FlowPanel reportBox;
 	
@@ -183,17 +183,17 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		reportContainer.setVisible(false);
+		/*reportContainer.setVisible(false);
 		roasterAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,roasterPanel));
-		reportPanelAnr.addClickHandler(new MasteryReportPlace(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));
+		reportPanelAnr.addClickHandler(new MasteryReportPlace(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));*/
 	}
 	
 	public void setIds(){
-		roasterAnr.setText(i18n.GL3416());
+		/*roasterAnr.setText(i18n.GL3416());
 		roasterAnr.getElement().setId("roasterAnrId");
 		
 		reportPanelAnr.setText(i18n.GL3421());
-		reportPanelAnr.getElement().setId("reportPanelId");
+		reportPanelAnr.getElement().setId("reportPanelId");*/
 		
 		classCodePanel.setText(i18n.GL0184());
 		classCodePanel.getElement().setId("classCodePanelId");
@@ -228,19 +228,19 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		image2.addMouseOverHandler(new MouseOverShowClassCodeToolTip2());
 		image2.addMouseOutHandler(new MouseOutHideToolTip2());
 		
-		notePanel.setText(i18n.GL3422());
-		notePanel.getElement().setId("notePanelId");
+		/*notePanel.setText(i18n.GL3422());
+		notePanel.getElement().setId("notePanelId");*/
 		
-		studentImage.setUrl(STUDENTIMAGE);
+		//studentImage.setUrl(STUDENTIMAGE);
 		
-		addStudentBtn.setText(i18n.GL3423());
+		/*addStudentBtn.setText(i18n.GL3423());
 		addStudentBtn.getElement().setId("addStudentBtnId");
 		
 		connectCourseBtn.setText(i18n.GL3424());
-		connectCourseBtn.getElement().setId("connectCourseBtnId");
+		connectCourseBtn.getElement().setId("connectCourseBtnId");*/
 		
-		courseHeaderLbl.setText(i18n.GL0574());
-		courseHeaderLbl.getElement().setId("courseHeaderLblId");
+		/*courseHeaderLbl.setText(i18n.GL0574());
+		courseHeaderLbl.getElement().setId("courseHeaderLblId");*/
 		
 		
 		lblPleaseWait.setText(i18n.GL1137());
@@ -301,7 +301,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	public void setTabVisible(boolean isVisible){
 		roasterMainConatiner.setVisible(isVisible);
-		reportContainer.setVisible(!isVisible);
+		/*reportContainer.setVisible(!isVisible);*/
 	}
 	
 	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{
@@ -425,7 +425,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}
 	}
 	
-	public class MasteryReportPlace implements ClickHandler{
+	/*public class MasteryReportPlace implements ClickHandler{
 
 		String subView;
 		LiPanel liPanel;
@@ -452,7 +452,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 		
-	}
+	}*/
 	
 	public class EditClassStudentTabHandler implements ClickHandler{
 
@@ -466,8 +466,8 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			roasterPanel.removeStyleName(CssTokens.ACTIVE);
-			reportPanel.removeStyleName(CssTokens.ACTIVE);
+			/*roasterPanel.removeStyleName(CssTokens.ACTIVE);
+			reportPanel.removeStyleName(CssTokens.ACTIVE);*/
 			liPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
@@ -484,10 +484,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		String subView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
 		if(subView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER)){
 			setTabVisible(true);
-			roasterPanel.setStyleName(CssTokens.ACTIVE);
+			//roasterPanel.setStyleName(CssTokens.ACTIVE);
 		}else{
 			setTabVisible(false);
-			reportPanel.setStyleName(CssTokens.ACTIVE);
+			//reportPanel.setStyleName(CssTokens.ACTIVE);
 		}
 	}
 
@@ -495,8 +495,8 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public void setReportView() {
 		reportBox.clear();
 		setReportVisiblity(true);
-		reportPanel.setStyleName(CssTokens.ACTIVE);
-		roasterPanel.removeStyleName(CssTokens.ACTIVE);
+		/*reportPanel.setStyleName(CssTokens.ACTIVE);
+		roasterPanel.removeStyleName(CssTokens.ACTIVE);*/
 		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			reportBox.add(new TeachCourseReportChildView(classpageDo));
@@ -510,13 +510,13 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	private void setReportVisiblity(boolean isVisible) {
 		reportBox.setVisible(isVisible);
 		roasterMainConatiner.setVisible(!isVisible);
-		reportContainer.setVisible(false);
+		//reportContainer.setVisible(false);
 	}
 
 	@Override
 	public void setRoasterView() {
-		roasterPanel.addStyleName(CssTokens.ACTIVE);
-		reportPanel.removeStyleName(CssTokens.ACTIVE);
+		/*roasterPanel.addStyleName(CssTokens.ACTIVE);
+		reportPanel.removeStyleName(CssTokens.ACTIVE);*/
 		setReportVisiblity(false);
 	}
 
@@ -668,6 +668,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}else */if(pendingListTotalCount==0){
 			ancPendingListSeeMore.setVisible(false);
 			pendindUserContainer.setVisible(false);
+			pendingContainer.clear();
 		}else{
 			lblPendingPleaseWait.setVisible(false);
 			pendindUserContainer.setVisible(true);
@@ -891,7 +892,16 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public void setReportDataView() {
 		reportBox.setVisible(false);
 		roasterMainConatiner.setVisible(false);
-		reportContainer.setVisible(true);
+		//reportContainer.setVisible(true);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView#clearAllErrorLable()
+	 */
+	@Override
+	public void clearAllErrorLabel() {
+		createAutoSuggestBox();
+        lblErrorMessage.setVisible(false);
 	}
 
 	

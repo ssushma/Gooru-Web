@@ -33,8 +33,10 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -46,7 +48,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -80,6 +81,9 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	private SimpleAsyncCallback<Void> removeImageAsyncCallback;
 
 	private SimpleAsyncCallback<CollectionItemDo> updateResourceItemAsyncCallback;
+	
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter = null;
+	
 
 	@Inject
 	private ResourceServiceAsync resourceService;
@@ -90,12 +94,14 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter) {
+	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.addResourcePresenter = addResourcePresenter;
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
+
+		this.searchAddResourceToCollectionPresenter = searchAddResourceToCollectionPresenter;
 		getView().setCollectionContentPresenter(this);
 	
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
@@ -130,7 +136,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void setData(final FolderDo folderDo) {
 		if(folderDo!=null){
-			AppClientFactory.getInjector().getResourceService().getCollection(folderDo.getGooruOid(),true, new SimpleAsyncCallback<CollectionDo>() {
+			AppClientFactory.getInjector().getResourceService().getCollection(folderDo.getGooruOid(),false, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					getView().setData(result,folderDo, RefreshType.INSERT);
@@ -181,8 +187,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 	
 	@Override
-	public void deleteCollectionItem(final String collectionItemId, final int itemSequence) {
-		AppClientFactory.getInjector().getResourceService().deleteCollectionItem(collectionItemId, new SimpleAsyncCallback<Void>() {
+	public void deleteCollectionItem(String collectionId,final String collectionItemId, final int itemSequence) {
+		AppClientFactory.getInjector().getResourceService().deleteCollectionItem(collectionId,collectionItemId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				getView().updateDeleteItem(collectionItemId, itemSequence);
@@ -380,6 +386,19 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 
 	@Override
+
+	public void showResourcePopup(CollectionItemDo collectionItem) {
+		myCollectionsRightClusterPresenter.getShelfMainPresenter().SetDefaultTypeAndVersion();
+		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		System.out.println("resource id-----"+collectionItem.getResource().getGooruOid());
+		resourceSearchResultDo.setGooruOid(collectionItem.getResource().getGooruOid());
+		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"coursebuilder",null);
+		searchAddResourceToCollectionPresenter.setCollectionsData(true);
+		addToPopupSlot(searchAddResourceToCollectionPresenter);
+		Window.enableScrolling(false);
+	}
+
 	public void disableCollabaratorOptions(boolean isHide) {
 		myCollectionsRightClusterPresenter.disableCollabaratorOptions(isHide);
 	}

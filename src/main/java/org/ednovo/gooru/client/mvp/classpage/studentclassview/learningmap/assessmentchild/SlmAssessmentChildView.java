@@ -223,11 +223,17 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			} else if(type.equalsIgnoreCase("collection")) {
 				token = PlaceTokens.COLLECTION_PLAY;
 			}
-			if(userId!=null&&userId.equalsIgnoreCase(AppClientFactory.getGooruUid())) {
-				
-			} else if(status!=null&&status.equalsIgnoreCase("active")) {
+			
+			if(status!=null&&status.equalsIgnoreCase("active")) {
 				params.put("isStudent", "true");	// This should be changed based on; whether user has joined or not.
 			}
+			
+			if(status==null) {
+				status = "debug-point";
+			}
+			contentImage.getElement().setAttribute("debug-point", status);
+			contentName.getElement().setAttribute("debug-point", status);
+			
 			params.put("id", gooruOid);
 			params.put("cid", classUId);
 			params.put("courseId", courseGooruOid);

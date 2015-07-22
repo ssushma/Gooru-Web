@@ -51,6 +51,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -186,7 +187,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	@Override
-	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit) {
+	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit,final TreeItem currentShelfTreeWidget) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);	
@@ -212,7 +213,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					getView().resetBtns();
 					params.put("id", result.getGooruOid());
 					params.put("view", FOLDER);
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true,currentShelfTreeWidget);
 					myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				}
@@ -232,7 +233,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					result.setDepthOfKnowledge(StringUtil.getCheckBoxSelectedDo(getView().getDepthOfKnowledgeContainer().getSelectedValue()));
 					result.setSkills(StringUtil.getStandardFos(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest()));
 					result.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true,currentShelfTreeWidget);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 					myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
@@ -265,7 +266,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		addToPopupSlot(standardsPopupPresenter);
 	}
 	@Override
-	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final FolderDo folderDo) {
+	public void updateCourseDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,final FolderDo folderDo, final TreeItem currentShelfTreeWidget) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
@@ -282,7 +283,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				@Override
 				public void onSuccess(Void result) {
 					getView().resetBtns();
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false,currentShelfTreeWidget);
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
 				}
@@ -296,7 +297,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				@Override
 				public void onSuccess(Void result) {
 					getView().resetBtns();
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false,currentShelfTreeWidget);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
@@ -307,14 +308,14 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String collectionType,final CreateDo createOrUpDate){
+	public void checkProfanity(String textValue,final boolean isCreate,final int index,final String collectionType,final CreateDo createOrUpDate,final TreeItem currentShelfTreeWidget){
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
 				getView().resetBtns();
-				getView().callCreateAndUpdate(isCreate,value,index,collectionType,createOrUpDate);
+				getView().callCreateAndUpdate(isCreate,value,index,collectionType,createOrUpDate,currentShelfTreeWidget);
 			}
 		});
 	}
@@ -391,8 +392,11 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			@Override
 			public void onSuccess(FolderDo result) {
 				if(result.getSubdomain()!=null && result.getSubdomain().size()>0){
+					getView().getStadardsPanel().setVisible(true);
 					CourseSubjectDo courseSubjectObj=result.getSubdomain().get(0);
 					callTaxonomyService(courseSubjectObj.getId());
+				}else{
+					getView().getStadardsPanel().setVisible(false);
 				}
 			}
 		});
@@ -416,4 +420,10 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
    		String view =AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		return view==null?COURSE:view;
    	}
+   	
+   	@Override
+	public TreeItem getSelectedWidget() {
+		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget(); 
+		return shelfTreeWidget;
+	}
 }

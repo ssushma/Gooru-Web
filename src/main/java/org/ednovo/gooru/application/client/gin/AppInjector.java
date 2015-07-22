@@ -40,12 +40,14 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompletePr
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportPresenter;
+import org.ednovo.gooru.client.mvp.classpage.study.StudyClassCodePresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentDashboardPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
@@ -333,8 +335,10 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<EditClassStudentPresenter> getEditClassStudentPresenter();
 	
+	AsyncProvider<TeachStudentDashboardPresenter> getTeachStudentDashboardPresenter();
+	
 	AsyncProvider<AddCourseToClassPresenter> getAddCourseToClassPresenter();
-
+	
 	AsyncProvider<AssessmentsPreviewPlayerPresenter> getAssessmentsPreviewPlayerPresenter();
 
 	AsyncProvider<AssessmentsResourcePlayerPresenter> getAssessmentsResourcePlayerPresenter();

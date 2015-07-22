@@ -10,6 +10,7 @@
 				<ul>
 				    <uc:LiPanel ui:field="classInfo"><g:Anchor ui:field="classInfoAnr"></g:Anchor></uc:LiPanel>
 				    <uc:LiPanel ui:field="minLiPnl"><g:Anchor ui:field="minmumScoreAnr"></g:Anchor></uc:LiPanel>
+				    <uc:LiPanel ui:field="studentsPnl"><g:Anchor ui:field="studentsAnr"></g:Anchor></uc:LiPanel>
 				   <!--  <uc:LiPanel ui:field="settLiPanel"><g:Anchor ui:field="contentSettingsAnr"></g:Anchor></uc:LiPanel> -->
 				</ul>
 			</g:HTMLPanel>
