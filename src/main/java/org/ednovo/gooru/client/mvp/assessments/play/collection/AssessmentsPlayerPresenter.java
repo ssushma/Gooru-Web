@@ -1369,6 +1369,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 				newCollectionStartTime=collectionStartTime;
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(),
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
+				AppClientFactory.printInfoLogger("Assessments Player Presenter sessionIdCreationCount : "+sessionIdCreationCount);
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
