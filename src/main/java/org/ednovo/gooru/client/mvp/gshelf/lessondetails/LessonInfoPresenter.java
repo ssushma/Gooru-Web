@@ -210,8 +210,11 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 			@Override
 			public void onSuccess(FolderDo result) {
 				if(result.getSubdomain()!=null && result.getSubdomain().size()>0){
+					getView().getStadardsPanel().setVisible(true);
 					CourseSubjectDo courseSubjectObj=result.getSubdomain().get(0);
 					callTaxonomyService(courseSubjectObj.getId());
+				}else{
+					getView().getStadardsPanel().setVisible(false);
 				}
 			}
 		}); 

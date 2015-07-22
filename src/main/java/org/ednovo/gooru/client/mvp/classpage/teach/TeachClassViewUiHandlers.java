@@ -59,4 +59,6 @@ public interface TeachClassViewUiHandlers extends BaseUiHandlers{
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> CLASS_CONTENT_TAB = new Type<RevealContentHandler<?>>();
 
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> CLASS_DASHBOARD_TAB = new Type<RevealContentHandler<?>>();
 }

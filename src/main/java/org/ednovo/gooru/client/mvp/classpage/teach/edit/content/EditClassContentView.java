@@ -86,9 +86,19 @@ import com.google.gwt.user.client.ui.Widget;
 public class EditClassContentView extends BaseViewWithHandlers<EditClassContentViewUiHandler> implements IsEditClassContentView {
 	
 	
-	@UiField InlineLabel markAllLbl,visiblLbl,hiddenLbl;
+	@UiField TextBox scoreTextBox;
 	
-	@UiField Button saveBtn;
+	@UiField Button saveBtn,createCourseBtn;
+	
+	@UiField Label errorLabel,saveLblText;
+	
+	@UiField HTMLPanel coursePanel;
+	
+	@UiField InlineLabel titleLbl;
+	
+	/*@UiField InlineLabel markAllLbl,visiblLbl,hiddenLbl;
+	
+	
 	
 	@UiField HTMLPanel scoreContainer,contentSeetingsContainer;
 	
@@ -100,23 +110,23 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	@UiField PPanel lessonPanel,collectionTitlePanel,visiblePanel;
 	
-	@UiField HTMLPanel tableConatiner,unitsPanel;
+	@UiField HTMLPanel tableConatiner,unitsPanel;*/
 	
 	ClasspageDo classpageDo;
 	
 	//@UiField ListBox unitListBox;
 	
 	int miniScore;
-	
+	/*
 	@UiField Label errorLabel,saveLblText,selectedLbl;
 	
-	@UiField ScrollPanel unitScrollPanel;
+	@UiField ScrollPanel unitScrollPanel;*/
 	
 	String unitId;
 	
 	boolean hasClickedOnDropDwn = false;
 	
-	@UiField CheckBox hiddenBox,makeAllVisChkBox;
+	//@UiField CheckBox hiddenBox,makeAllVisChkBox;
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -139,11 +149,12 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 
 	public EditClassContentView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		scoreTextBox.setMaxLength(3);
+		//scoreTextBox.setMaxLength(3);
 		setId();
 		saveBtn.setEnabled(false);
+		coursePanel.setVisible(false);
 		saveBtn.addStyleName(CssTokens.DISABLED);
-		AppClientFactory.getEventBus().addHandler(SetCollectionTypeVisibilityEvent.TYPE, updateVisiblity);
+	//	AppClientFactory.getEventBus().addHandler(SetCollectionTypeVisibilityEvent.TYPE, updateVisiblity);
 		scoreTextBox.addBlurHandler(new BlurHandler() {
 			
 			@Override
@@ -172,7 +183,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 			}
 		});
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
-		unitList.addClickHandler(new ClickHandler() {
+		/*unitList.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -201,11 +212,11 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 		
 		makeAllVisChkBox.addClickHandler(new UpdateAllVisiblityHandler());
-		unitScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
+		unitScrollPanel.addScrollHandler(new ScrollDropdownListContainer());*/
 		
 	}
 	
-	SetCollectionTypeVisibilityHandler updateVisiblity = new SetCollectionTypeVisibilityHandler() {
+	/*SetCollectionTypeVisibilityHandler updateVisiblity = new SetCollectionTypeVisibilityHandler() {
 		
 		@Override
 		public void setCollectionTypeVisibility(long collectionId) {
@@ -217,7 +228,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 			unitId=selectedLbl.getElement().getId();
 			getUiHandlers().updateCollectionOrAssignmentVisiblity(classLessonDos,unitId);
 		}
-	};
+	};*/
 	
 	@UiHandler("saveBtn")
 	public void saveClass(ClickEvent event){
@@ -232,9 +243,6 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	private class NumbersOnly implements KeyPressHandler{
 
-		/* (non-Javadoc)
-		 * @see com.google.gwt.event.dom.client.KeyPressHandler#onKeyPress(com.google.gwt.event.dom.client.KeyPressEvent)
-		 */
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
 			if (!Character.isDigit(event.getCharCode()) 
@@ -261,8 +269,8 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	}
 	
 	public void setTabVisible(boolean visible){
-		scoreContainer.setVisible(visible);
-		contentSeetingsContainer.setVisible(!visible);
+		//scoreContainer.setVisible(visible);
+		//contentSeetingsContainer.setVisible(!visible);
 	}
 	
 	@Override
@@ -279,22 +287,22 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	public void setId(){
 
-		scorePanel.setText(i18n.GL3407());
+		/*scorePanel.setText(i18n.GL3407());
 		scorePanel.getElement().setId("scorePnlId");
 		scorePanel.getElement().setAttribute("alt",i18n.GL3407());
-		scorePanel.getElement().setAttribute("title",i18n.GL3407());
+		scorePanel.getElement().setAttribute("title",i18n.GL3407());*/
 		
-		helpPanel.setText(i18n.GL3408());
+		/*helpPanel.setText(i18n.GL3408());
 		helpPanel.getElement().setId("helpPnlId");
 		helpPanel.getElement().setAttribute("alt",i18n.GL3408());
-		helpPanel.getElement().setAttribute("title",i18n.GL3408());
+		helpPanel.getElement().setAttribute("title",i18n.GL3408());*/
 		
 		saveBtn.setText(i18n.GL0141());
 		saveBtn.getElement().setId("saveBtnId");
 		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
 		saveBtn.getElement().setAttribute("title",i18n.GL0141());
 		
-		unitPanel.setText(i18n.GL3281());
+		/*unitPanel.setText(i18n.GL3281());
 		unitPanel.getElement().setId("unitPanelId");
 		
 		scoreContainer.getElement().setId("scoreContainerId");
@@ -321,26 +329,26 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		collectionTitlePanel.getElement().setId("collectionTitlePanelId");
 		
 		visiblePanel.setText(i18n.GL3415());
-		visiblePanel.getElement().setId("visibliePanelId");
+		visiblePanel.getElement().setId("visibliePanelId");*/
 		
 		errorLabel.getElement().setId("errorLblId");
 		saveLblText.setText(i18n.GL3426());
 		saveLblText.getElement().setId("saveLblTxtId");
 		
 		saveLblText.setVisible(false);
-		unitScrollPanel.setVisible(false);
+		/*unitScrollPanel.setVisible(false);
 		
 		hiddenBox.setEnabled(false);
-		hiddenBox.getElement().getStyle().setCursor(Cursor.DEFAULT);
+		hiddenBox.getElement().getStyle().setCursor(Cursor.DEFAULT);*/
 	}
 	@Override
 	public void setClassData(ClasspageDo classpageDo) {
 		this.classpageDo=classpageDo;
 		this.visiblity=classpageDo.isVisibility();
 		if(classpageDo.getMinimumScore() >0){
-			scoreTextBox.setText(classpageDo.getMinimumScore()+"");
+			//scoreTextBox.setText(classpageDo.getMinimumScore()+"");
 		}else{
-			scoreTextBox.setText("");
+			//scoreTextBox.setText("");
 		}
 		
 	}
@@ -350,13 +358,54 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	 */
 	@Override
 	public void setUpdateClass(ClasspageDo result) {
-		saveLblText.setVisible(false);
-		saveBtn.setVisible(true);
+		throw new RuntimeException("Not implemented");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#getUnitListView(java.util.List)
 	 */
+	@Override
+	public void getUnitListView(List<FolderDo> result) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setLessonData(java.util.List)
+	 */
+	@Override
+	public void setLessonData(List<ClassLessonDo> result) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setEmptyUnitListData()
+	 */
+	@Override
+	public void setEmptyUnitListData() {
+		throw new RuntimeException("Not implemented");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#clearAllErrorLabel()
+	 */
+	@Override
+	public void clearAllErrorLabel() {
+		throw new RuntimeException("Not implemented");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setUpdateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
+	 */
+	/*@Override
+	public void setUpdateClass(ClasspageDo result) {
+		classpageDo=result;
+		saveLblText.setVisible(false);
+		saveBtn.setVisible(true);
+	}
+
+	 (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#getUnitListView(java.util.List)
+	 
 	@Override
 	public void getUnitListView(List<FolderDo> result) {
 		if(result.size() > 0){
@@ -382,7 +431,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 					}
 				});
 				unitsPanel.add(label);
-				/*unitListBox.addItem(unitName, unitId);*/
+				unitListBox.addItem(unitName, unitId);
 			}
 			selectedLbl.setText(result.get(0).getTitle());
 			selectedLbl.getElement().setId(unitId);
@@ -390,9 +439,9 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		getUiHandlers().getLessonList(unitId);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setLessonData(java.util.List)
-	 */
+	 
 	@Override
 	public void setLessonData(List<ClassLessonDo> result) {
 		tableConatiner.clear();
@@ -414,9 +463,9 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	}
 	
 	private class UpdateAllVisiblityHandler implements ClickHandler{
-		/* (non-Javadoc)
+		 (non-Javadoc)
 		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 */
+		 
 		@Override
 		public void onClick(ClickEvent event) {
 			int widgetCount = tableConatiner.getWidgetCount();
@@ -446,9 +495,9 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 			}
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setEmptyUnitListData()
-	 */
+	 
 	@Override
 	public void setEmptyUnitListData() {
 		selectedLbl.setText("Unit");
@@ -461,4 +510,13 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		tableConatiner.clear();
 		tableConatiner.add(label);
 	}
+
+	 (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#clearAllErrorLabel()
+	 
+	@Override
+	public void clearAllErrorLabel() {
+		errorLabel.setVisible(false);
+		setClassData(classpageDo);
+	}*/
 }

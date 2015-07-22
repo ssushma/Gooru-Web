@@ -57,4 +57,6 @@ public interface EditClassStudentViewUiHandler extends BaseUiHandlers {
 	void removePendingUserFromCalss(ClasspageDo classpageDo, String emailId,int pendingOffSet, boolean pendingFlag, MembersViewVc membersViewVc);
 
 	void removeActiveUserFromClass(ClasspageDo classpageDo, String emailId,int pendingOffSet, boolean pendingFlag, MembersViewVc membersViewVc);
+	
+	void getMembersDetails();
 }

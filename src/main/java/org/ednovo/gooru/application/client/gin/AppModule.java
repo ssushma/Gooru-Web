@@ -143,6 +143,9 @@ import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.Studen
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.IsStudentClassReportView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportView;
+import org.ednovo.gooru.client.mvp.classpage.study.IsStudyClassCodeView;
+import org.ednovo.gooru.client.mvp.classpage.study.StudyClassCodePresenter;
+import org.ednovo.gooru.client.mvp.classpage.study.StudyClassCodeView;
 import org.ednovo.gooru.client.mvp.classpage.teach.IsTeachClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
@@ -165,6 +168,9 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.IsAddCourseT
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentView;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.IsEditClassStudentView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.IsTeachStudentDashboardView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentDashboardPresenter;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentDashboardView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.IsAddAssignmentContainerView;
@@ -789,14 +795,14 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenterWidget(EditClassSettingsNavigationPresenter.class, IsEditClassSettingsNavigationView.class, EditClassSettingsNavigationView.class);
 
+		bindPresenterWidget(TeachStudentDashboardPresenter.class, IsTeachStudentDashboardView.class, TeachStudentDashboardView.class);
 		bindPresenter(StudentClassPresenter.class, IsStudentClassView.class, StudentClassView.class, IsStudentClassProxy.class);
 
 		bindPresenterWidget(StudentClassLearningMapPresenter.class,IsStudentClassLearningMapView.class, StudentClassLearningMapView.class);
 
 		bindPresenterWidget(StudentClassReportPresenter.class,IsStudentClassReportView.class, StudentClassReportView.class);
 		bindPresenterWidget(AddCourseToClassPresenter.class, IsAddCourseToClassView.class, AddCourseToClassView.class);
-
-
+		
 
 		bindPresenter(AssessmentsPlayerPresenter.class, IsAssessmentsPlayerView.class, AssessmentsPlayerView.class,IsAssessmentsPlayerProxy.class);
 		bindPresenterWidget(AddAssessmentsPresenter.class, IsAddAssessmentsView.class, AddAssessmentsView.class);
