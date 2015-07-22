@@ -492,8 +492,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	public void disableCollabaratorOptions(boolean isHide) {
 		getView().disableCollabaratorOptions(isHide);
+		getView().setIsCollaboratorValue(isHide);
 	}
-	
 	/**
 	 * This handles the display of respective view title and respective type icon.
 	 */
