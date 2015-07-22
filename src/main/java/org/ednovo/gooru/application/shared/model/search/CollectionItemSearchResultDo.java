@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.search;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class CollectionItemSearchResultDo extends ResourceSearchResultDo implements Serializable {
+public class CollectionItemSearchResultDo extends ResourceSearchResultDo implements IsSerializable {
 
 	private static final long serialVersionUID = 1L;
 	

@@ -25,14 +25,14 @@
 package org.ednovo.gooru.application.shared.model.content;
 
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonInclude(Include.NON_NULL)
-public class CollectionMetaInfoDo implements Serializable {
+public class CollectionMetaInfoDo implements IsSerializable {
 
 	private static final long serialVersionUID = 8598215298047619076L;
 	private List<StandardFo> standards;

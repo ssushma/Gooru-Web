@@ -924,7 +924,7 @@ public class HeaderUc extends Composite
 					if (name.equalsIgnoreCase("teach")) {
 						popup.setNameToken(PlaceTokens.EDIT_CLASSPAGE);
 					} else if (name.equalsIgnoreCase("organize")) {
-						popup.setNameToken(PlaceTokens.SHELF);
+						popup.setNameToken(PlaceTokens.MYCONTENT);
 					}
 					name = null;
 				}

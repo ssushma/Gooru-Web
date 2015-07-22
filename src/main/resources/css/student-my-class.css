@@ -1874,7 +1874,10 @@ th.headcol.whitebg {
 .modal-widget-1000 {
 	width: 98%;
 	margin: 0 auto;
-	background: #fff;
+	background: #fafafa;
+}
+.modal-widget-1000 .rowContainer:last-child {
+	border-bottom: 1px solid #ddd;	
 }
 .teach-popup-student-content-margin {
 	margin: 0px 15px;
@@ -2099,6 +2102,93 @@ svg.dotted.round {
     fill: none;
     overflow: visible;
 }
+
+.setProgressBar {
+	float: left;
+	height: 25px;
+	background-color: rgb(16, 118, 187);
+}
+
+.alignCenterAndBackground {
+	background-color: inherit !important;
+	text-align: center;
+	width: auto;
+}
+
+.category_new_type_audio {
+	background: url("${cdn.endpoint}/images/analytics/categoryAnalytics.png") no-repeat 0px
+		-277px;
+	height: 22px;
+	position: relative;
+	top: 0px;
+	width: 32px;
+}
+
+.category_new_type_image {
+	background: url("${cdn.endpoint}/images/analytics/categoryAnalytics.png") no-repeat 0
+		-251px;
+	height: 22px;
+	position: relative;
+	top: 0px;
+	width: 32px;
+}
+
+.category_new_type_other {
+	background: url("${cdn.endpoint}/images/analytics/categoryAnalytics.png") no-repeat 0
+		-140px;
+	height: 22px;
+	position: relative;
+	top: 0px;
+	width: 32px;
+}
+
+.category_new_type_interactive {
+	background: url("${cdn.endpoint}/images/analytics/categoryAnalytics.png") no-repeat 0
+		-27px;
+	height: 22px;
+	position: relative;
+	top: 0px;
+	width: 32px;
+}
+
+.category_new_type_question {
+	background: url("${cdn.endpoint}/images/analytics/categoryAnalytics.png") no-repeat 0
+		-139px;
+	height: 22px;
+	margin-left: 8px;
+	margin-right: auto;
+	position: relative;
+	top: 0px;
+	width: 32px;
+}
+
+.category_new_type_text {
+	background: url("${cdn.endpoint}/images/analytics/categoryAnalytics.png") no-repeat 0
+		-55px;
+	height: 22px;
+	position: relative;
+	top: 0px;
+	width: 32px;
+}
+
+.category_new_type_video {
+	background: url("${cdn.endpoint}/images/analytics/categoryAnalytics.png") no-repeat 0 2px;
+	height: 22px;
+	position: relative;
+	top: 0px;
+	width: 32px;
+}
+
+.category_new_type_webpage {
+	background: url("${cdn.endpoint}/images/analytics/categoryAnalytics.png") no-repeat 0
+		-222px;
+	height: 22px;
+	position: relative;
+	top: 0px;
+	width: 32px;
+}
+
+
 /* for Webkit's CSS-only solution */
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {

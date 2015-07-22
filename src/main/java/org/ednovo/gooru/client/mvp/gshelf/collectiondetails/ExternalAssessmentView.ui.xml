@@ -8,7 +8,7 @@
 		<div class="assessmentTitle">
 		<uc:Paragraph>Assessment Title</uc:Paragraph>
 		<p>
-			<g:TextBox styleName="form-control"  ui:field="txtAssessmentTitle"/>
+			<g:TextBox styleName="form-control"  ui:field="txtAssessmentTitle" maxLength="50"/>
 			<g:Label ui:field="lblErrorMessage"/>
 		 </p>
 		</div>

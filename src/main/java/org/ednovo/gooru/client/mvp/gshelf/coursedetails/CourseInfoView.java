@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -48,16 +49,19 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -68,11 +72,11 @@ import com.google.inject.Inject;
 public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> implements IsCourseInfoView {
 
 	private static GooruGradesViewUiBinder uiBinder = GWT.create(GooruGradesViewUiBinder.class);
-	
+
 	@UiTemplate("CourseInfoView.ui.xml")
 	interface GooruGradesViewUiBinder extends UiBinder<Widget, CourseInfoView> {
 	}	
-	
+
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
@@ -81,15 +85,15 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@UiField TextBox courseTitle;
 	@UiField Label lblErrorMessage,lblGradeErrorMsg;
 	@UiField AudienceView audienceContainer;
-	
+
 	Map<Integer, ArrayList<String>> selectedValues=new HashMap<Integer,ArrayList<String>>();
-	
+
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
 	final String ACTIVE="active";
-	
+
 	LiPanel tempLiPanel=null;
-	
+
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -101,6 +105,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
 		lblErrorMessage.setText("");
+		lblErrorMessage.setVisible(false);
+		courseTitle.getElement().setPropertyString("placeholder", i18n.GL3347());
 		courseTitle.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -111,7 +117,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		btnHigherEducation.addClickHandler(new CallTaxonomy(2));
 		btnProfessionalLearning.addClickHandler(new CallTaxonomy(3));
 	}
-	
 	class CallTaxonomy implements ClickHandler{
 		int selectedIndex;
 		CallTaxonomy(int selectedIndex){
@@ -136,7 +141,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	void removeGradeButtonStyleName() {
 		btnK12.removeStyleName(ACTIVE);
 		btnHigherEducation.removeStyleName(ACTIVE);
-		btnHigherEducation.removeStyleName(ACTIVE);
+		btnProfessionalLearning.removeStyleName(ACTIVE);
 	}
 	/**
 	 * This method will display the Grades according to the subject
@@ -154,11 +159,11 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 						public void onClick(ClickEvent event) {
 							//This will remove the selected value when we are trying by close button
 							for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
-							     Map.Entry<Integer, ArrayList<String>> entry = it.next();
-							     if(entry.getValue().contains(courseObj.getName())){
-							    	 entry.getValue().remove(courseObj.getName());
-							     }
-							 }
+								Map.Entry<Integer, ArrayList<String>> entry = it.next();
+								if(entry.getValue().contains(courseObj.getName())){
+									entry.getValue().remove(courseObj.getName());
+								}
+							}
 							removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
 							liPanelWithClose.removeFromParent();
 						}
@@ -205,8 +210,6 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Override
 	public void setCourseList(List<CourseSubjectDo> libraryCode) {
 		ulMainGradePanel.clear();
-		removeGradeButtonStyleName();
-		btnK12.addStyleName(ACTIVE);
 		if (libraryCode.size()>0) {
 			for (CourseSubjectDo libraryCodeDo : libraryCode) {
 				String titleText=libraryCodeDo.getName().trim();
@@ -258,12 +261,49 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	}
 	@UiHandler("saveCourseBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(courseTitle.getText().trim(),false);
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
+		saveCourseBtn.addStyleName("disabled");
+		saveCourseBtn.setEnabled(false);
+		if(validateInputs()){
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+			createOrUpDate.setTitle(courseTitle.getText());
+			
+			lblErrorMessage.setVisible(false);
+			courseTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(courseTitle.getText().trim(),false,createOrUpDate,currentShelfTreeWidget);	
+		}else{
+			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
+			lblErrorMessage.setVisible(true);
+			courseTitle.setStyleName("textAreaErrorMessage");
+			courseTitle.addStyleName("form-control");
+			lblErrorMessage.setText("Please Enter Course Title");
+			resetBtns();
+		}
+
 	}
-	
+
 	@UiHandler("nextUnitBtn")
 	public void clickOnNextUnitBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(courseTitle.getText().trim(),true);
+		TreeItem treeSelectedItem  = getUiHandlers().getSelectedWidget();
+		nextUnitBtn.addStyleName("disabled");
+		nextUnitBtn.setEnabled(false);
+		if(validateInputs()){
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+			createOrUpDate.setTitle(courseTitle.getText());
+			
+			lblErrorMessage.setVisible(false);
+			courseTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(courseTitle.getText().trim(),true,createOrUpDate,treeSelectedItem);
+		}else{
+			Window.scrollTo(courseTitle.getAbsoluteLeft(), courseTitle.getAbsoluteTop()-(courseTitle.getOffsetHeight()*3));
+			lblErrorMessage.setVisible(true);
+			courseTitle.setStyleName("textAreaErrorMessage");
+			courseTitle.addStyleName("form-control");
+			lblErrorMessage.setText("Please Enter Course Title");
+			resetBtns();
+		}
 	}
 	/**
 	 * This method is used to call create and update API
@@ -271,21 +311,18 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,CreateDo createOrUpDate, TreeItem currentShelfTreeWidget){
 		if(result){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, result);
 		}else{
-			CreateDo createOrUpDate=new CreateDo();
-			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
-			createOrUpDate.setTitle(courseTitle.getText());
 			List<Integer> taxonomyList=getSelectedCourseIds();
 			if(taxonomyList.size()>0){
 				lblGradeErrorMsg.setVisible(false);
 				createOrUpDate.setTaxonomyCourseIds(taxonomyList);
 				if(courseObj!=null && courseObj.getGooruOid()!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj);
+					getUiHandlers().updateCourseDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,courseObj,currentShelfTreeWidget);
 				}else{
-					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,courseObj);
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,courseObj,currentShelfTreeWidget);
 				}
 			}else{
 				lblGradeErrorMsg.setVisible(true);
@@ -298,8 +335,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		this.courseObj=courseObj;
 		ulSelectedItems.clear();
 		selectedValues.clear();
-		courseTitle.setText(courseObj==null?i18n.GL3347():courseObj.getTitle());
-		
+		btnK12.addStyleName(ACTIVE);
+		courseTitle.setText(courseObj==null?"":!courseObj.getTitle().equalsIgnoreCase(i18n.GL3347())?courseObj.getTitle():"");
 		audienceContainer.setFolderDetails(courseObj);
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
@@ -316,11 +353,11 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 					@Override
 					public void onClick(ClickEvent event) {
 						for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
-						     Map.Entry<Integer, ArrayList<String>> entry = it.next();
-						     if(entry.getValue().contains(courseSubjectDo.getName())){
-						    	 entry.getValue().remove(courseSubjectDo.getName());
-						     }
-						 }
+							Map.Entry<Integer, ArrayList<String>> entry = it.next();
+							if(entry.getValue().contains(courseSubjectDo.getName())){
+								entry.getValue().remove(courseSubjectDo.getName());
+							}
+						}
 						removeGradeWidget(courseGradeWidget.getGradePanel(),courseSubjectDo.getId());
 						liPanelWithClose.removeFromParent();
 					}
@@ -370,9 +407,32 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public AudienceView getAudienceContainer() {
 		return audienceContainer;
 	}
-	
+
 	@Override
 	public FolderDo getCourseDetails(){
 		return courseObj;
+	}
+
+	public boolean validateInputs(){
+		String collectionTitleStr=courseTitle.getText().trim();
+		if(collectionTitleStr.equalsIgnoreCase("")||collectionTitleStr.equalsIgnoreCase(i18n.GL3347())){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	@UiHandler("courseTitle")
+	public void courseTitleKeyUphandler(KeyUpEvent event){
+		courseTitle.removeStyleName("textAreaErrorMessage");
+		lblErrorMessage.setVisible(false);
+	}
+	
+	@Override
+	public void resetBtns() {
+		saveCourseBtn.removeStyleName("disabled");
+		saveCourseBtn.setEnabled(true);
+		nextUnitBtn.removeStyleName("disabled");
+		nextUnitBtn.setEnabled(true);
 	}
 }

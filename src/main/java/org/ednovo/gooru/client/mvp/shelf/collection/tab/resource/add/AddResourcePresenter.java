@@ -39,8 +39,6 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 
 
-import gwtupload.client.PreloadedImage.OnErrorPreloadedImageHandler;
-
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -79,6 +77,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> implements AddResourceUiHandlers{
 	
 	private ImageUploadPresenter imageUploadPresenter;
+	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionItemDo> collectionItemAsyncCallback;

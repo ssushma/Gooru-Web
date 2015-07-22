@@ -27,16 +27,16 @@
 
 package org.ednovo.gooru.application.shared.model.search;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 
 @JsonInclude(Include.NON_NULL)
-public class SearchResourcesTagsDo implements Serializable {
+public class SearchResourcesTagsDo implements IsSerializable {
 
 	/**
 	 * 

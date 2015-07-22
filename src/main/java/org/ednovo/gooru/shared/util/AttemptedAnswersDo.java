@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.shared.util;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.Map;
 
-public class AttemptedAnswersDo implements Serializable{
+public class AttemptedAnswersDo implements IsSerializable{
 	
 	private static final long serialVersionUID = 4393225749052874789L;
 	

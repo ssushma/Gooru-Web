@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class BiographyDo implements Serializable{
+public class BiographyDo implements IsSerializable{
 	
 	private static final long serialVersionUID = -2570709586812060758L;
 	

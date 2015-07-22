@@ -45,6 +45,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
@@ -124,6 +125,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
 		clearSlot(INNER_SLOT);
+		collectionContentPresenter.getView().reset();
 		if(folderObj==null){
 			selectedWidgetsTitleType = null;
 		}
@@ -132,16 +134,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		getView().setDefaultActiveTab(index);
 		getView().setCurrentTypeView(type);
 		getView().enableAndHideTabs(!StringUtil.isEmpty(folderObj==null?"":folderObj.getGooruOid())); 
-		
 		if(view!=null && FOLDER.equalsIgnoreCase(view)){
 			getView().disableAndEnableBreadCums(false);
 		}else{
 			getView().disableAndEnableBreadCums(true);
 		}
-		
 		if(index==1 || ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType())){
 				//For displaying template and data
-				//getView().enableAndHideTabs(true);
 				if(COURSE.equalsIgnoreCase(type)){
 					courseInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, courseInfoPresenter);
@@ -161,7 +160,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					collectionInfoPresenter.setData(folderObj,type);
 					setInSlot(INNER_SLOT, collectionInfoPresenter);
 				}else if(FOLDER.equalsIgnoreCase(type)){
-					//To disabel bread cums
+					//To disable bread cums
 					getView().disableAndEnableBreadCums(false);
 					getView().setFolderInfoWidget(folderObj, this);
 				}else{
@@ -171,6 +170,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 						getView().disableAndEnableBreadCums(true);
 					}
 					getView().enableAndHideTabs(false);
+					getView().getPreviewLink().setVisible(true);
 					externalAssessmentInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
@@ -198,6 +198,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				collectionShareTabPresenter.setData(folderObj);
 				setInSlot(INNER_SLOT, collectionShareTabPresenter);
 			}
+			Window.scrollTo(0, 0);
 		}
 	}
 	//This method is not using present
@@ -207,11 +208,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		//getView().setDefaultActiveTab();
 	}
 
-	@Override
-	public void setUnitTemplate(String type){	
+	
+	public void setUnitTemplate(String type, TreeItem currentShelfTreeWidget){  	    
 		//shelfMainPresenter.getMyCollectionsListPresenter().setData(type, null, true, true, null);
 		//setInSlot(INNER_SLOT, shelfMainPresenter.getMyCollectionsListPresenter());
-		shelfMainPresenter.createNewUnitItem(type);
+		shelfMainPresenter.createNewUnitItem(type,currentShelfTreeWidget);
 		folderListDoChild=null;
 		getView().enableAndHideTabs(false);
 	}
@@ -253,22 +254,22 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		if(type!=null){
 			if(type.contains(COURSE)){
 			    setTabItems(1,COURSE , null);
-				setUnitTemplate(COURSE);
+				setUnitTemplate(COURSE,null);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
 			}else if(type.contains(UNIT)){	
 			    setTabItems(1, UNIT, null);
-				setUnitTemplate(UNIT);
+				setUnitTemplate(UNIT,null);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
 			}else if(type.contains(LESSON)){
 				System.out.println("in lesson right cluster");
 				setTabItems(1, LESSON, null);
-				setUnitTemplate(LESSON);
+				setUnitTemplate(LESSON,null);
 			}else if(type.toLowerCase().contains(FOLDER.toLowerCase())){
 				setTabItems(1, FOLDER, null);
-				setUnitTemplate(FOLDER);
+				setUnitTemplate(FOLDER,null);
 			}else if(type.toLowerCase().contains(COLLECTION.toLowerCase())){
 				setTabItems(1, COLLECTION, null);
-				setUnitTemplate(COLLECTION);
+				setUnitTemplate(COLLECTION,null);
 			}else if(type.toLowerCase().contains(ASSESSMENT.toLowerCase())){
 				Window.enableScrolling(false);
 				assessmentPopup=new AssessmentPopupWidget() {
@@ -276,7 +277,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					public void clickOnNoramlAssessmentClick() {
 						Window.enableScrolling(true);
 						setTabItems(1, ASSESSMENT, null);
-						setUnitTemplate(ASSESSMENT);
+						setUnitTemplate(ASSESSMENT,null);
 						assessmentPopup.hide();
 					}
 					@Override
@@ -285,7 +286,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 						Window.enableScrolling(true);
 						//This will display the external assessment info
 						setTabItems(1, ASSESSMENT_URL, null);
-						setUnitTemplate(ASSESSMENT_URL);
+						setUnitTemplate(ASSESSMENT_URL,null);
 					}
 				};
 				assessmentPopup.setGlassEnabled(true);
@@ -459,7 +460,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle) {
 		// TODO Auto-generated method stub
-		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "collection",collectionTitle);
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		shelfMainPresenter.SetDefaultTypeAndVersion();
@@ -492,6 +493,18 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	public void disableCollabaratorOptions(boolean isHide) {
 		getView().disableCollabaratorOptions(isHide);
+		getView().setIsCollaboratorValue(isHide);
+	}
+	/**
+	 * This handles the display of respective view title and respective type icon.
+	 */
+	@Override
+	public void setViewTitleWthicon(String title, String type) {
+		shelfMainPresenter.setTileIcon(title,type);
+	}
+	
+	public TreeItem getCurrentTreeItem() {
+		return shelfMainPresenter.getEditingWidget();
 	}
 	
 	

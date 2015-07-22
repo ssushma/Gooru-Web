@@ -36,14 +36,15 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
-import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -66,6 +67,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
+	
 	Map<String, String> params= new HashMap<String, String>();
 	final String LESSON="Lesson";
 
@@ -109,22 +111,21 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void createAndSaveLessonDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType) {
-		String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, o1,o2,null, new SimpleAsyncCallback<FolderDo>() {
+	public void createAndSaveLessonDetails(CreateDo createDo,final boolean isCreateCollOrAssessment,final String creationType,final String courseId,final String unitId, final TreeItem currentShelfTreeWidget) {
+		AppClientFactory.getInjector().getfolderService().createCourse(createDo, true, courseId,unitId,null, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
-				params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-				params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+				getView().resetBtns();
+				params.put("o1",courseId);
+				params.put("o2",unitId);
 				params.put("o3",result.getGooruOid());
 				params.put("view", "Course");
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result,isCreateCollOrAssessment,currentShelfTreeWidget);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				if(isCreateCollOrAssessment && creationType!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, result);
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(creationType);
+					myCollectionsRightClusterPresenter.setUnitTemplate(creationType,currentShelfTreeWidget);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
@@ -133,21 +134,21 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		});
 	}
 	@Override
-	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateColl,final String type,final FolderDo folderObj) {
+	public void updateLessonDetails(final CreateDo createDo, final String id,final boolean isCreateColl,final String type,final FolderDo folderObj,final TreeItem currentShelfTreeWidget) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,id,null,createDo, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				getView().resetBtns();
 				folderObj.setTitle(createDo.getTitle());
 				folderObj.setType(LESSON);
-				//folderDo.setGooruOid(id);
 				
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,isCreateColl);
+				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,isCreateColl,currentShelfTreeWidget);
 				if(isCreateColl && type!=null){
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, folderObj);
 					myCollectionsRightClusterPresenter.setTabItems(1, type, null);
-					myCollectionsRightClusterPresenter.setUnitTemplate(type);
+					myCollectionsRightClusterPresenter.setUnitTemplate(type,currentShelfTreeWidget);
 				}else{
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, folderObj);
 				}
@@ -171,19 +172,21 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void checkProfanity(String textValue, final boolean isCreate,final String type) {
+	public void checkProfanity(String textValue, final boolean isCreate,final String type,final CreateDo createOrUpDate,final String courseId,final String unitId,final TreeItem currentShelfTreeWidget) {
+
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,type);
+				getView().resetBtns();
+				getView().callCreateAndUpdate(isCreate,value,type,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
 			}
 		});
 	}
 	@Override
 	public void callTaxonomyService(int subdomainId) {
-		getTaxonomyService().getStandardsList(subdomainId,new SimpleAsyncCallback<List<DomainStandardsDo>>() {
+		getTaxonomyService().getStandardsList(subdomainId,new SimpleAsyncCallback<List<DomainStandardsDo>>() { 
 			@Override
 			public void onSuccess(List<DomainStandardsDo> result) {
 				if(result.size()>0){
@@ -217,6 +220,12 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	public void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray) {
 		getView().addTaxonomyData(liPanelWithCloseArray,removedLiPanelWithCloseArray);
 		
+	}
+	
+	@Override
+	public TreeItem getSelectedWidget() {
+		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget(); 
+		return shelfTreeWidget;
 	}
 
 }

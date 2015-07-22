@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
@@ -38,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubDomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
@@ -57,10 +57,13 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -69,6 +72,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -76,6 +80,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -143,7 +148,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public CollectionInfoView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
+		lblErrorMessage.setVisible(false);
+		collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
 
+		collectionTitle.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, false);
+			}
+		});
 		depthOfKnowledgeContainer.setVisible(false);
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
@@ -549,8 +562,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         }
 		setStaticData(type);			
-		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?i18n.GL3367():
-			(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?i18n.GL3460():courseObj.getTitle());
+		collectionTitle.setText((courseObj==null&&COLLECTION.equalsIgnoreCase(type))?"":(courseObj==null&&ASSESSMENT.equalsIgnoreCase(type))?"":courseObj.getTitle());
 		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
@@ -581,7 +593,31 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 	@UiHandler("saveCollectionBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type);
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
+		saveCollectionBtn.addStyleName("disabled");
+		saveCollectionBtn.setEnabled(false);
+		if(validateInputs()){
+			CreateDo createOrUpDate=new CreateDo();
+			createOrUpDate.setTitle(collectionTitle.getText());
+			createOrUpDate.setDescription(learningObjective.getText());
+			createOrUpDate.setCollectionType(type);
+			createOrUpDate.setStandardIds(getSelectedStandards());
+			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
+			createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
+			createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
+			createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
+			
+			lblErrorMessage.setVisible(false);
+			collectionTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type,createOrUpDate,currentShelfTreeWidget);
+		
+		}else{
+			Window.scrollTo(collectionTitle.getAbsoluteLeft(), collectionTitle.getAbsoluteTop()-(collectionTitle.getOffsetHeight()*3));
+			lblErrorMessage.setVisible(true);
+			collectionTitle.addStyleName("textAreaErrorMessage");
+			lblErrorMessage.setText("Please Enter Collection Title");
+			resetBtns();
+		}
 	}
 
 	@UiHandler("uploadImageLbl")
@@ -599,28 +635,22 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	 * @param isCreate
 	 */
 	@Override
-	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType) {
-		if(result && index==0){
+	public void callCreateAndUpdate(boolean isCreate, Boolean result, int index,String collectionType,CreateDo createOrUpDate,TreeItem currentShelfTreeWidget) {
+		String title=collectionTitle.getText().trim();
+		if((result && index==0)||(title.equalsIgnoreCase("")&&index==0)){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
 		}else{
 			if(index==0){
-				getUiHandlers().checkProfanity(learningObjective.getText().trim(),true,1,collectionType);
+				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),true,1,collectionType,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==1){
-				CreateDo createOrUpDate=new CreateDo();
-				createOrUpDate.setTitle(collectionTitle.getText());
-				createOrUpDate.setDescription(learningObjective.getText());
-				createOrUpDate.setCollectionType(collectionType);
-				createOrUpDate.setStandardIds(getSelectedStandards());
-				createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
-				createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
-				createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
-				createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
+				
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
-					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG);
+					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG,currentShelfTreeWidget);
 				}else{
-					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate);
+					
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
 				}
 			}
 		}
@@ -861,6 +891,29 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
+	}
+	
+	public boolean validateInputs(){
+		String collectionTitleStr=collectionTitle.getText().trim();
+		if(collectionTitleStr.equalsIgnoreCase("")||collectionTitleStr.equalsIgnoreCase(i18n.GL3367())){
+			return false;
+		}else{
+			return true;
+		}
+		
+		
+	}
+	
+	@UiHandler("collectionTitle")
+	public void collectionTitleKeyUphandler(KeyUpEvent event){
+		collectionTitle.removeStyleName("textAreaErrorMessage");
+		lblErrorMessage.setVisible(false);
+	}
+	@Override
+	public void resetBtns() {
+		saveCollectionBtn.removeStyleName("disabled");
+		saveCollectionBtn.setEnabled(true);
+
 	}
 }
 

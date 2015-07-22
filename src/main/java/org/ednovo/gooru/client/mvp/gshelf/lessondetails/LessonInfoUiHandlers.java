@@ -29,9 +29,12 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
+
+import com.google.gwt.user.client.ui.TreeItem;
 
 /**
  * @author Search Team
@@ -45,23 +48,28 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	 * @param createObj
 	 * @param isCreateCollOrAssessment
 	 * @param creationType
+	 * @param currentShelfTreeWidget 
 	 */
-	public void createAndSaveLessonDetails(CreateDo createObj,final boolean isCreateCollOrAssessment,String creationType);
+	public void createAndSaveLessonDetails(CreateDo createObj,final boolean isCreateCollOrAssessment,String creationType,String courseId,String unitId, TreeItem currentShelfTreeWidget);
 	/**
 	 * This method is used for checking profanity
 	 * @param textValue
 	 * @param isCreate
 	 * @param type
+	 * @param createOrUpDate 
+	 * @param currentShelfTreeWidget 
 	 */
-	public void checkProfanity(String textValue,boolean isCreate,String type);
+	public void checkProfanity(String textValue,boolean isCreate,String type, CreateDo createOrUpDate,final String courseId,final String unitId, TreeItem currentShelfTreeWidget);
+
 	/**
 	 * This method is used to update lesson details
 	 * @param createObj
 	 * @param id
 	 * @param isCreateUnit
 	 * @param type
+	 * @param currentShelfTreeWidget 
 	 */
-	public void updateLessonDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type,FolderDo folderObj);
+	public void updateLessonDetails(final CreateDo createObj, final String id,final boolean isCreateUnit,String type,FolderDo folderObj, TreeItem currentShelfTreeWidget);
 	
 	public MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 
@@ -73,5 +81,7 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	public void callCourseInfoTaxonomy();
 	
 	void invokeTaxonomyPopup(String type,List<LiPanelWithClose> lessonLiPanelWithCloseArray);
+	
+	TreeItem getSelectedWidget();
 
 }

@@ -32,9 +32,13 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -53,6 +57,12 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
+	
+	final String COURSE="Course";
+	
+	private String VIEW ="view";
+	
+	private static final String FOLDER = "Folder";
 	
 	/**
 	 * Class constructor
@@ -76,58 +86,109 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 	}
 
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final int index) {
+	public void checkProfanity(String textValue,final boolean isCreate,final int index,final CreateDo createOrUpDate,final TreeItem currentShelfTreeWidget) {
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,index);
+				getView().callCreateAndUpdate(isCreate,value,index, createOrUpDate,currentShelfTreeWidget);
 			}
 		});
 	}
 
 	@Override
-	public void createAndSaveAssessmentDetails(CreateDo createObj,boolean isCreateAssessment) {
+	public void createAndSaveAssessmentDetails(CreateDo createObj,boolean isCreateAssessment,final TreeItem currentShelfTreeWidget) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);		
-		AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
-			@Override
-			public void onSuccess(FolderDo result) {				
-				Map<String, String> params= new HashMap<String, String>();
+		String parentId = null;
+		if(getViewType().equalsIgnoreCase(FOLDER)){
+			final Map<String, String> params= new HashMap<String, String>();
+			if(o3!=null){
 				params.put(O1_LEVEL, o1);
 				params.put(O2_LEVEL, o2);
 				params.put(O3_LEVEL, o3);
-				params.put("id",result.getGooruOid());
-				params.put("view", "course");
-
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
-				myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,ASSESSMENTURL); 
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
-				myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, result);
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+				parentId=o3;
+			}else if(o2!=null){
+				params.put(O1_LEVEL, o1);
+				params.put(O2_LEVEL, o2);
+				parentId=o2;
+			}else if(o1!=null){
+				parentId=o1;
+				params.put(O1_LEVEL, o1);
 			}
-		});
+			AppClientFactory.getInjector().getfolderService().createCollection(createObj, parentId, false, new SimpleAsyncCallback<FolderDo>() {
+				@Override
+				public void onSuccess(FolderDo result) {
+					getView().resetBtns();
+					params.put("id", result.getGooruOid());
+					params.put("view", FOLDER);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true,currentShelfTreeWidget);
+					myCollectionsRightClusterPresenter.setTabItems(2, ASSESSMENTURL, result);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+				}
+			});
+		}else{
+			AppClientFactory.getInjector().getfolderService().createCourse(createObj, true,o1,o2,o3, new SimpleAsyncCallback<FolderDo>() {
+				@Override
+				public void onSuccess(FolderDo result) {
+					getView().resetBtns();
+					Map<String, String> params= new HashMap<String, String>();
+					params.put(O1_LEVEL, o1);
+					params.put(O2_LEVEL, o2);
+					params.put(O3_LEVEL, o3);
+					params.put("id", result.getGooruOid());
+					params.put("view", "course");
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true,currentShelfTreeWidget);
+					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,ASSESSMENTURL); 
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
+					myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, result);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+				}
+			});
+		}
+		
 	}
 
 	@Override
-	public void updateAssessmentDetails(final CreateDo createOrUpDate, String id,boolean isCreateAssessment,final FolderDo folderObj) {
+	public void updateAssessmentDetails(final CreateDo createOrUpDate, String id,boolean isCreateAssessment,final FolderDo folderObj,final TreeItem currentShelfTreeWidget) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-		AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createOrUpDate, new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void result) {
-				folderObj.setTitle(createOrUpDate.getTitle());
-				folderObj.setCollectionType(ASSESSMENTURL);
-				
-				//folderDo.setGooruOid(id);
-				myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, folderObj);
-				myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,true);
-			}
-		});
+		folderObj.setTitle(createOrUpDate.getTitle());
+		folderObj.setCollectionType(ASSESSMENTURL);
+;
+		if(getViewType().equalsIgnoreCase(FOLDER)){
+			AppClientFactory.getInjector().getfolderService().updateCollectionDetails(createOrUpDate,id, null,null, null, null, new AsyncCallback<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					getView().resetBtns();
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false,currentShelfTreeWidget);
+					myCollectionsRightClusterPresenter.setTabItems(2, createOrUpDate.getCollectionType(), folderObj);
+					AppClientFactory.getPlaceManager().revealCurrentPlace();
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					AppClientFactory.printInfoLogger("I am In updateCollectionDetails Failure ");
+				}
+			});
+		}else{
+			AppClientFactory.getInjector().getfolderService().updateCourse(o1,o2,o3,o4,createOrUpDate, new SimpleAsyncCallback<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					getView().resetBtns();
+			
+					
+					//folderDo.setGooruOid(id);
+					myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, folderObj);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false,currentShelfTreeWidget);
+					AppClientFactory.getPlaceManager().revealCurrentPlace();
+				}
+			});
+		}
+		Window.scrollTo(0, 0);
 	}
 	/**
 	 * This method is used to set the right cluster presenter
@@ -142,5 +203,18 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 	 */
 	public void setData(FolderDo folderObj){
 		getView().setData(folderObj);
+	}
+	/**
+   	 * @return viewType
+   	 */
+   	public String getViewType(){
+   		String view =AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		return view==null?COURSE:view;
+   	}
+   	
+   	@Override
+	public TreeItem getSelectedWidget() {
+   		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget(); 
+		return shelfTreeWidget;
 	}
 }

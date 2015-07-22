@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
@@ -96,6 +97,16 @@ public interface ResourceService extends BaseService {
 	public CollectionItemDo createCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
 	
 	/**
+	 * Create new collection item
+	 * @param collectionId of the existing collection  
+	 * @param resourceId of the existing resource , which is being as collection item
+	 * @param resourceType
+	 * @return serialized to {@link CollectionItemDo} after create 
+	 * @throws GwtException
+	 */
+	public CollectionItemDo createNewCollectionItem(String collectionId, String resourceId,String resourceType)  throws GwtException, ServerDownException;
+	
+	/**
 	 * copy as new collection item
 	 * @param collectionId of the existing collection  (can be null)
 	 * @param resourceId of the existing resource , which is being as collection item
@@ -110,7 +121,7 @@ public interface ResourceService extends BaseService {
 	 * @param collectionItemId of the collection item
 	 * @throws GwtException
 	 */
-	public void deleteCollectionItem(String collectionItemId)  throws GwtException, ServerDownException;
+	public void deleteCollectionItem(String collectionId,String collectionItemId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Reorder the collection item
@@ -427,5 +438,6 @@ public interface ResourceService extends BaseService {
 	
 	public CollectionItemDo addCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
 	public CollectionItemDo updateTimeMetadata(String collectionItemId, String start, String stop)  throws GwtException, ServerDownException;
-
+	public List<ListValuesDo> getEducationalUseList() throws GwtException;
+	public List<ListValuesDo> getMomentOfLearning()throws GwtException ;
 }

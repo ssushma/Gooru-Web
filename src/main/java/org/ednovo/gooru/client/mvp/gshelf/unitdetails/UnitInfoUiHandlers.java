@@ -29,9 +29,12 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
+
+import com.google.gwt.user.client.ui.TreeItem;
 
 /**
  * @author Search Team
@@ -45,21 +48,25 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	 * To Create and Save the details of Course
 	 * @param createDo {@link String} 
 	 * @param isCreateLesson {@link boolean} 
+	 * @param currentShelfTreeWidget 
 	 */
-	public void createAndSaveUnitDetails(CreateDo createDo,boolean isCreateLesson,FolderDo courseObj);
+	public void createAndSaveUnitDetails(CreateDo createDo,boolean isCreateLesson,FolderDo courseObj,String courseId, TreeItem currentShelfTreeWidget);
 	/**
 	 * This method is used to update the unit info details
 	 * @param createDo
 	 * @param id
 	 * @param isCreateUnit
+	 * @param currentShelfTreeWidget 
 	 */
-	void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,FolderDo courseObj);
+	void updateUnitDetails(final CreateDo createDo, final String id,final boolean isCreateUnit,FolderDo courseObj, TreeItem currentShelfTreeWidget);
 	/**
 	 * This method is used to check profanity checker
 	 * @param textValue
 	 * @param isCreate
+	 * @param createOrUpDate 
+	 * @param currentShelfTreeWidget 
 	 */
-	void checkProfanity(String textValue,final boolean isCreate,int index);
+	void checkProfanity(String textValue,final boolean isCreate,int index,String courseId, CreateDo createOrUpDate, TreeItem currentShelfTreeWidget);
 
 	void showUnitInfo();
 
@@ -77,4 +84,6 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 
 	void getPaginatedDomainsBasedOnCourseId(int courseId, int selectedId,
 			int offSetVal);
+
+	public TreeItem getSelectedWidget(); 
 }

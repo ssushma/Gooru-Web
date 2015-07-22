@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
@@ -53,6 +54,7 @@ import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -74,7 +76,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Inject
 	private ResourceServiceAsync resourceService;
 
-	private boolean clrPanel=false;
+	private boolean clrPanel=false; 
 	
 	private String type="Course";
 	
@@ -192,7 +194,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
-		if (AppClientFactory.isAnonymous()){
+		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+		if (idParm != null && AppClientFactory.isAnonymous()){
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+			
+		}else if(AppClientFactory.isAnonymous()){
 			getView().setNoDataForAnonymousUser(true);
 		}else{
 			if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
@@ -259,7 +265,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void getEditPageHeight(PopupPanel editQuestionPopupPanel,boolean isHeightClear) {
 		
 	}
-	
 	public SimpleAsyncCallback<FolderListDo> getUserCollectionAsyncCallback(boolean clearShelfPanel) {
 		clrPanel=clearShelfPanel;
 		if (userCollectionAsyncCallback == null) {
@@ -269,7 +274,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 					if(o1==null){
 						if(clrPanel){
-							setRightListData(result.getSearchResult(),null);
+							if(result.getSearchResult().size()>0){
+								setRightListData(result.getSearchResult(),null);
+							}else{
+								setInSlot(RIGHT_SLOT, null);
+							}
 						}else{
 							myCollectionsListPresenter.setData(type,result.getSearchResult(),clrPanel,false,null);
 						}
@@ -353,15 +362,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 		if(id!=null && folderDo!=null){
 			getView().getCollectionLabel().setVisible(true);
+			getView().getTitleIconContainer().setVisible(true);
 			setCollectionContent(folderDo);
 		}else{
 			getView().getCollectionLabel().setVisible(false);
-			if(listOfContent!=null && listOfContent.size()>0){
-				myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
-				setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
-			}else{
-				setInSlot(RIGHT_SLOT, null,false);
-			}
+			getView().getTitleIconContainer().setVisible(false);
+			myCollectionsListPresenter.setData(view,listOfContent,clrPanel,false,folderDo);
+			setInSlot(RIGHT_SLOT, myCollectionsListPresenter,false);	
 		}
 	}
 
@@ -417,12 +424,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,typeVal,false,getUserCollectionAsyncCallback(clearShelfPanel));		
 	}
 
-	public void createNewUnitItem(String type) {
-		getView().createNewItem(type);
+	public void createNewUnitItem(String type, TreeItem currentShelfTreeWidget) { 
+		getView().createNewItem(type,currentShelfTreeWidget);
 	}
 
-	public void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag) {
-		getView().updateTreeWidget(courseDo, flag);
+	public void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag, TreeItem currentShelfTreeWidget) { 
+		getView().updateTreeWidget(courseDo, flag, currentShelfTreeWidget);
 	}
 	
 	@Override
@@ -506,5 +513,17 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		version=null;
 		type="Course";
 		ShelfMainView.pageNumber=1;
+	}
+	@Override
+	public void addNewContent(String type) {
+		getMyCollectionsRightClusterPresenter().addNewContent(type);
+	}
+
+	public void setTileIcon(String title, String type) {
+		getView().setViewTitleWthIcon(title,type);
+	}
+
+	public TreeItem getEditingWidget() { 
+		return getView().getCurrentEditingWidget();
 	}
 }

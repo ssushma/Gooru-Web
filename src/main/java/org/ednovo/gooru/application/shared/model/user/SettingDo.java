@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.user;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.Date;
 
-public class SettingDo implements Serializable {
+public class SettingDo implements IsSerializable {
 
 	private static final long serialVersionUID = -2570709586812060758L;
 	

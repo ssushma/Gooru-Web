@@ -32,7 +32,10 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TreeItem;
+import com.google.gwt.user.client.ui.UIObject;
 
 /**
  * @author Search Team
@@ -66,12 +69,13 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
      */
 	void updateLeftShelfPanelActiveStyle();
 
-	void createNewItem(String type);
+	void createNewItem(String type, TreeItem currentShelfTreeWidget); 
     /**
      * Updating tree widget 
      * @param courseDo {@link FolderDo}
+     * @param currentShelfTreeWidget 
      */
-	void updateTreeWidget(FolderDo courseDo, boolean flag);
+	void updateTreeWidget(FolderDo courseDo, boolean flag, TreeItem currentShelfTreeWidget); 
 
 	void enableDisableCourseButton(boolean isEnable);
 	/**
@@ -87,4 +91,12 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	String getViewType();
 
 	void updateWidgetsCount(CollectionItemDo collectionItem);
+
+	InlineLabel getImgInlineLbl();
+
+	void setViewTitleWthIcon(String title, String type);
+
+	HTMLPanel getTitleIconContainer();
+
+	TreeItem getCurrentEditingWidget();  
 }

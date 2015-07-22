@@ -33,9 +33,7 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
-import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -49,7 +47,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -64,7 +61,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class TeachLessonReportChildView extends ChildView<TeachLessonReportChildPresenter> implements IsTeachLessonReportView {
 
-	@UiField HTMLPanel lessonTablePanel;
+	@UiField HTMLPanel lessonTablePanel, dashboardContainer;
 	
 	@UiField HTMLEventPanel allContentPanel;
 	
@@ -151,6 +148,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	public void onLoad() {
 		super.onLoad();
 		//sortAndFixed();
+		dashboardContainer.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-120)+"px");
 	}
 	
 	public void setDataTable(ArrayList<MasterReportDo> collectionProgressData, String contentView) {
@@ -180,9 +178,9 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 					 }
 					 questionColumnIndex++;
 				}else{
-					 HTML resourcePnl=new HTML("Resource&nbsp;"+collectionProgressDataDo.getSequence());
-					 adTable.setHeaderWidget(rowCount+1,resourcePnl);
-					 resourceColumnIndex++;
+						HTML resourcePnl=new HTML(collectionProgressDataDo.getSequence()+":&nbsp;Resource");
+						adTable.setHeaderWidget(rowCount+1,resourcePnl);
+						resourceColumnIndex++;
 				}
 			}
 			if(defaultUserDataForUsers!=null){
@@ -194,78 +192,27 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		        		  	  String color=WHITE;
 		        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
 			        		  if(collectionProgressData.get(j).getType()!=null && !collectionProgressData.get(j).getType().equalsIgnoreCase(QUESTION)){
-			        			  
+				        		  
 			        		  }else{
-			        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
-			        			//  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions().toString();
-			        			  
-			        			  Map<String, Integer> answerOption = collectionProgressData.get(j).getUsageData().get(i).getOptions();
-			        			  String answer="";
 			        			  int attemptCount=collectionProgressData.get(j).getUsageData().get(i).getAttempts();
-			        			  if((typeOfQuestion!=null) && (typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE"))){
-			        				  Label viewResponselbl=new Label();
-					        		  mainDataVpnl.add(viewResponselbl);
-			        				  String answerText="--";
-			        				  if(answerOption!=null){
-						        		  answerText=VIEWRESPONSE;
-						        		 // viewResponselbl.getElement().getParentElement().addClassName(res.css().viewResponseInCollectionProgress());
-			        				  }else{
-			        					  answerText="--";
-			        					  viewResponselbl.getElement().getParentElement().getStyle().setBackgroundColor(WHITE);
-			        				  }
-			        				  viewResponselbl.setText(answerText);
-			        				  //viewResponselbl.addClickHandler(new ClickOnTableCell());
-			        				  viewResponselbl.getElement().setAttribute("questionCount", (j+1)+"");
-			        				  viewResponselbl.getElement().setAttribute("questionType", typeOfQuestion);
-			        				  viewResponselbl.getElement().setAttribute("question", AnalyticsUtil.html2text(collectionProgressData.get(j).getTitle()!=null?collectionProgressData.get(j).getTitle():""));
-				        				if(collectionProgressData.get(j).getUsageData()!=null && collectionProgressData.get(j).getUsageData().get(i) != null && collectionProgressData.get(j).getUsageData().get(i).getText() != null){
-				        					  viewResponselbl.getElement().setAttribute("questionAnswer",  AnalyticsUtil.html2text(collectionProgressData.get(j).getUsageData().get(i).getText()));
-				        				  }
-			        				  }else{
-			        				  String answerText="";
-					        		  if(answerOption!=null){
-					        			  	for (Map.Entry<String, Integer> entry : answerOption.entrySet()) {
-					        			  		if(entry.getValue()==1) {
-					        			  			answer = entry.getKey();
-					        			  		}
-					        				}
-						        		  if(typeOfQuestion.equalsIgnoreCase("TF")){
-				        					  if(answer.equalsIgnoreCase("A")){
-				        						  answerText="true";
-				        					  }else if(answer.equalsIgnoreCase("B")){
-				        						  answerText="false";
-				        					  }else{
-				        						  answerText="--";
-				        					  }
-				        				  }else{
-				        					  answerText=answer;
-				        				  }
-					        		  }else{
-					        			  answerText="--";
-					        		  }
-			        				  Label answerlbl=new Label(answerText);
-					        		  mainDataVpnl.add(answerlbl);
-			        			  }
-			        			  if(answerOption!=null && collectionProgressData.get(j).getMetaData()!=null){
-			        					int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
-			        					 if(scoreValue>=1){
-			        						 if(attemptCount>1){
-						        				  color=ORANGE;
-						        			  }else if(attemptCount==1){
-						        				  score++;
-						        				  color=GREEN;
-						        			  }else{
-						        				  color=WHITE;
-						        			  }
-			        					 }else{
-			        						 color=ORANGE;
-			        					 }
+			        			  int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
+			        			  if(scoreValue>=1){
+									  color=GREEN;
+									  score++;
+			        			  }else{
+			        				  if(attemptCount>=1){
+										  color=ORANGE;
+									  } else {
+										  color=WHITE;
+										  Label answerlbl=new Label("--");
+										  mainDataVpnl.add(answerlbl);
+									  }
 			        			  }
 			        		  }
-			        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUsageData().get(i).getTimeSpent()));
-			        		  mainDataVpnl.add(timeStamplbl);
 			        		  adTable.setWidget(i, position+2,mainDataVpnl);
 			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color: "+color);
+			        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUsageData().get(i).getTimeSpent()));
+			        		  mainDataVpnl.add(timeStamplbl);
 			        		  position++;
 		        	   }
 		        	  HTML studentName = new HTML(defaultUserDataForUsers.getUsageData().get(i).getUserName());
@@ -287,7 +234,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		sortAndFixed();
 	}
 	
 	private String getTimeSpent(Long commentCreatedTime) {
@@ -335,31 +281,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
 
-	private HTMLPanel getCollectionResourceData(String timeSpent) {
-		final HTMLPanel panel = new HTMLPanel("");
-		panel.add(new Label("--"));
-		panel.add(new Label(timeSpent));
-		panel.addStyleName("text-center");
-		return panel;
-	}
-	
-	private HTMLPanel getCollectionQuestionData(String value, String timeSpent) {
-		final HTMLPanel panel = new HTMLPanel("");
-		panel.add(new Label(value));
-		panel.add(new Label(timeSpent));
-		panel.addStyleName("green");
-		panel.addStyleName("text-center");
-		return panel;
-	}
-	
-	private HTMLPanel getAssessmentQuestionData(String value) {
-		final HTMLPanel panel = new HTMLPanel("");
-		panel.add(new Label(value));
-		panel.addStyleName("green");
-		panel.addStyleName("text-center");
-		return panel;
-	}
-	
 	@UiHandler("allContentPanel")
 	public void backToUnitView(ClickEvent event) {
 		Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
@@ -393,82 +314,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(userName,userId);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(collectionTitle.getText(),userName,userId);
 		}
 	}
-	
-	
-	public void setData1Table(ArrayList<PlanProgressDo> result, String contentView) {
-		boolean isAssessment = false;
-		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
-			isAssessment = true;
-		}
-		
-		lessonTablePanelWidget.getElement().setId("collection-table-report-data-id");
-		lessonTablePanel.add(lessonTablePanelWidget);
-		lessonTablePanel.getElement().setId("lessonTablePanelID");
-		lessonTablePanel.getElement().setClassName("scrollTBL");
-		lessonTablePanelWidget.addStyleName("table table-bordered tableStyle");
-		Label studentNameLbl = new Label("Student");
-		studentNameLbl.setStyleName("text-center");
-		studentNameLbl.setWidth("100px");
-		int columnCount = 0;
-		lessonTablePanelWidget.setHeaderWidget(0, studentNameLbl);
-		columnCount++;
-		
-		Label scoreLbl = new Label("Score");
-		scoreLbl.setStyleName("text-center");
-		scoreLbl.setWidth("75px");
-		lessonTablePanelWidget.setHeaderWidget(1, scoreLbl);
-		columnCount++;
-		
-		for(int headerColumnCount=2;headerColumnCount<20;headerColumnCount++) {
-			String headerTitle = "";
-			if(isAssessment) {
-				headerTitle = headerColumnCount+": &nbsp;Question";
-			} else {
-				headerTitle = headerColumnCount+": &nbsp;Resource";
-			}
-			HTML resourceName = new HTML(headerTitle);
-			resourceName.setStyleName("text-center");
-			resourceName.setWidth("75px");
-			lessonTablePanelWidget.setHeaderWidget(headerColumnCount, resourceName);
-			columnCount++;
-		}
-		
-		for(int rowWidgetCount=0;rowWidgetCount<20;rowWidgetCount++) {
-			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
-				if(columnWidgetCount==0) {
-					Anchor studentName = new Anchor("Student "+rowWidgetCount);
-					studentName.setStyleName("text-center");
-					//studentName.addClickHandler(new StudentPlaySummary("studentId"));
-					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount,studentName);
-					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
-				} else if(columnWidgetCount==1) {
-					final HTMLPanel scoreWidget = new HTMLPanel("");
-					scoreWidget.add(new Label("8/10"));
-					scoreWidget.add(new Label("80%"));
-					scoreWidget.setStyleName("text-center");
-					lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, scoreWidget);
-					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("white");
-				} else {
-					if(isAssessment) {
-						if(columnWidgetCount%2==1) {
-							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getAssessmentQuestionData("B"));
-						} else {
-							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getAssessmentQuestionData("View Answer"));
-						}
-					} else {
-						if(columnWidgetCount%2==1) {
-							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getCollectionResourceData("03:14"));
-						} else {
-							lessonTablePanelWidget.setWidget(rowWidgetCount, columnWidgetCount, getCollectionQuestionData("A","04:15"));
-						}
-					}
-					lessonTablePanelWidget.getWidget(rowWidgetCount, columnWidgetCount).getElement().getParentElement().setClassName("lightgreen");
-				}
-			}
-		}
-	}
-
 }

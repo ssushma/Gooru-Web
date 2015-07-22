@@ -10,9 +10,8 @@
 		<div class="collectionTitleDetails">
 			<ppanel:PPanel ui:field="colltitle"></ppanel:PPanel>
 			<p>
-				<g:TextBox styleName="form-control" ui:field="collectionTitle"
-					text="{i18n.GL3367}" title="{i18n.GL3367}" />
-				<g:Label ui:field="lblErrorMessage"></g:Label>
+				<g:TextBox styleName="form-control" ui:field="collectionTitle" maxLength="50" title="{i18n.GL3367}" />
+				<g:Label ui:field="lblErrorMessage" styleName="errorMessage text-right"></g:Label>
 			</p>
 		</div>
 		<div class="collectionImageDetails">

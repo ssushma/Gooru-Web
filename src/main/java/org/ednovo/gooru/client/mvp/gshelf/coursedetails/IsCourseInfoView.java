@@ -28,8 +28,12 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
+
+import com.google.gwt.user.client.ui.TreeItem;
 
 /**
  * @author Search Team
@@ -55,13 +59,16 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	 * To get the course title 
 	 * @return {@link String}
 	 */
-	String getCourseTitle();
+	String getCourseTitle(); 
 	/**
 	 * This method is used for calling create and update api
 	 * @param isCreate
 	 * @param result
+	 * @param createOrUpDate 
+	 * @param currentShelfTreeWidget 
 	 */
-	void callCreateAndUpdate(boolean isCreate,boolean result);
+	void callCreateAndUpdate(boolean isCreate,boolean result, CreateDo createOrUpDate, TreeItem currentShelfTreeWidget); 
 	AudienceView getAudienceContainer();
 	FolderDo getCourseDetails();
+	void resetBtns();
 }

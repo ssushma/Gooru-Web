@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
@@ -62,9 +63,11 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void createCollectionItem(String collectionId, String resourceId, AsyncCallback<CollectionItemDo> callback);
 	
+	void createNewCollectionItem(String collectionId, String resourceId,String resourceType,AsyncCallback<CollectionItemDo> callback);
+	
 	void copyCollectionItem(String collectionId, String resourceId, AsyncCallback<CollectionItemDo> callback);
 	
-	void deleteCollectionItem(String collectionItemId, AsyncCallback<Void> callback);
+	void deleteCollectionItem(String collectionId,String collectionItemId, AsyncCallback<Void> callback);
 	
 	void reorderCollectionItem(CollectionItemDo collectionItemDo, AsyncCallback<CollectionItemDo> callback);
 	
@@ -199,6 +202,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     void addCollectionItem(String collectionId, String resourceId,AsyncCallback<CollectionItemDo> callback)  throws GwtException, ServerDownException;
     
 	void updateTimeMetadata(String collectionItemId, String start, String stop, AsyncCallback<CollectionItemDo> callback);
-
-
+	void getEducationalUseList(AsyncCallback<List<ListValuesDo>> asyncCallback) throws  GwtException;
+	void getMomentOfLearning(AsyncCallback<List<ListValuesDo>> asyncCallback) throws  GwtException;
 }

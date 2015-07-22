@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubDomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.StandardsCodeDecView;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -57,6 +58,7 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -65,13 +67,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -94,8 +97,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment,taxonomyBtn;
 	@UiField Label lblErrorMessage;
 	@UiField UlPanel ulSelectedItems;
-	
-	
+
+
 	AssessmentPopupWidget assessmentPopup;
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -107,11 +110,13 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
+	private static final String O1_LEVEL = "o1";
+	private static final String O2_LEVEL = "o2";
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
-	
+
 	List<LiPanelWithClose> lessonLiPanelWithCloseArray = new ArrayList<LiPanelWithClose>();
-	
+
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}
@@ -121,6 +126,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		setWidget(uiBinder.createAndBindUi(this));
 		lessonInfo.getElement().setId("pnlLessonInfo");
 		lessonInfo.getElement().setAttribute("style", "min-height:"+Window.getClientHeight()+"px");
+		lblErrorMessage.setText("Please Enter Valid Lesson Name");
+		lblErrorMessage.setVisible(false);
 		Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
@@ -131,10 +138,10 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
-	        public void onPreviewNativeEvent(NativePreviewEvent event) {
-	        	hideDropDown(event);
-	          }
-	    });
+			public void onPreviewNativeEvent(NativePreviewEvent event) {
+				hideDropDown(event);
+			}
+		});
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -145,6 +152,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				}
 			}
 		});
+		lessonTitle.getElement().setPropertyString("placeholder", i18n.GL3365());
 		lessonTitle.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -152,8 +160,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		});
 	}
-	
-	
+
+
 	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
 		standardsUI.clear();
 		final String selValues = getSelectedStandards().toString();
@@ -171,7 +179,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			{
 				if(domainStand.getTypeId().equals(1))
 				{
-					
+
 				}
 				else if(domainStand.getTypeId().equals(2))
 				{
@@ -181,46 +189,46 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				{
 					standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);		
 				}
-				
+
 			}
 			standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
-			
+
 			if(selValues.contains(standardsList.get(i).getCodeId().toString()))
 			{
 				standardsCode.getWidgetContainer().addStyleName("active");
 			}
 			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
 					{
-					
-					standardsCode.getWidgetContainer().addStyleName("active");
-					standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
-					
-					if(!selValues.contains(domainStand.getCodeId().toString())){
-						selectedValues.add(domainStand.getCodeId());
-					}
-					
-					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
-					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-						@Override
-						public void onClick(ClickEvent event) {
-							//This will remove the selected value when we are trying by close button
-							if(selValues.contains(domainStand.getCodeId().toString())){
-								selectedValues.remove(domainStand.getCodeId());
-							}
-							standardsCode.removeStyleName("active");
-							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-							liPanelWithClose.removeFromParent();
+
+						standardsCode.getWidgetContainer().addStyleName("active");
+						standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+
+						if(!selValues.contains(domainStand.getCodeId().toString())){
+							selectedValues.add(domainStand.getCodeId());
 						}
-					});
-					//selectedValues.add(domainStand.getCodeId());
-					liPanelWithClose.setId(domainStand.getCodeId());
-					liPanelWithClose.setName(domainStand.getCode());
-					liPanelWithClose.setRelatedId(domainStand.getCodeId());
-					ulSelectedItems.add(liPanelWithClose);
+
+						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								//This will remove the selected value when we are trying by close button
+								if(selValues.contains(domainStand.getCodeId().toString())){
+									selectedValues.remove(domainStand.getCodeId());
+								}
+								standardsCode.removeStyleName("active");
+								removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+								liPanelWithClose.removeFromParent();
+							}
+						});
+						//selectedValues.add(domainStand.getCodeId());
+						liPanelWithClose.setId(domainStand.getCodeId());
+						liPanelWithClose.setName(domainStand.getCode());
+						liPanelWithClose.setRelatedId(domainStand.getCodeId());
+						ulSelectedItems.add(liPanelWithClose);
 					}
 					else
 					{
@@ -233,36 +241,36 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			displaySubStandardsList(standardsList.get(i).getNode());
 		}
 	}
-		
-		public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
+
+	public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
 		//	standardsUI.clear();
-			final String selValues = getSelectedStandards().toString();
-			
-			for(int i=0;i<standardsList.size();i++)
+		final String selValues = getSelectedStandards().toString();
+
+		for(int i=0;i<standardsList.size();i++)
+		{
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
+			final SubDomainStandardsDo domainStand = standardsList.get(i);
+			standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
+			standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+
+			if(selValues.contains(standardsList.get(i).getCodeId().toString()))
 			{
-				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
-				final SubDomainStandardsDo domainStand = standardsList.get(i);
-				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
-				standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
-				
-				if(selValues.contains(standardsList.get(i).getCodeId().toString()))
-				{
-					standardsCode.getWidgetContainer().addStyleName("active");
-				}
-				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-					
-					@Override
-					public void onClick(ClickEvent event) {
-						if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
-						{
-						
+				standardsCode.getWidgetContainer().addStyleName("active");
+			}
+			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
+					{
+
 						standardsCode.getWidgetContainer().addStyleName("active");
-						
-						
+
+
 						if(!selValues.contains(domainStand.getCodeId().toString())){
 							selectedValues.add(domainStand.getCodeId());
 						}
-						
+
 						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
 						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 							@Override
@@ -281,47 +289,47 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						liPanelWithClose.setName(domainStand.getCode());
 						liPanelWithClose.setRelatedId(domainStand.getCodeId());
 						ulSelectedItems.add(liPanelWithClose);
-						}
-						else
-						{
-							standardsCode.getWidgetContainer().removeStyleName("active");
-							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-						}
 					}
-				});
-				standardsUI.add(standardsCode);
-				displaySubSubStandardsList(standardsList.get(i).getNode());
-			}
-		
+					else
+					{
+						standardsCode.getWidgetContainer().removeStyleName("active");
+						removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+					}
+				}
+			});
+			standardsUI.add(standardsCode);
+			displaySubSubStandardsList(standardsList.get(i).getNode());
+		}
+
 
 	}
 	public void displaySubSubStandardsList(final List<SubSubDomainStandardsDo> standardsList){
-			//standardsUI.clear();
+		//standardsUI.clear();
 		final String selValues = getSelectedStandards().toString();
-			for(int i=0;i<standardsList.size();i++)
+		for(int i=0;i<standardsList.size();i++)
+		{
+			final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
+			final SubSubDomainStandardsDo domainStand = standardsList.get(i);
+			standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
+			standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+
+			if(selValues.contains(standardsList.get(i).getCodeId().toString()))
 			{
-				final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList.get(i).getCode(), standardsList.get(i).getLabel(),false);
-				final SubSubDomainStandardsDo domainStand = standardsList.get(i);
-				standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
-				standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
-				
-				if(selValues.contains(standardsList.get(i).getCodeId().toString()))
-				{
-					standardsCode.getWidgetContainer().addStyleName("active");
-				}
-				standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-					
-					@Override
-					public void onClick(ClickEvent event) {
-						if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
-						{
-						
+				standardsCode.getWidgetContainer().addStyleName("active");
+			}
+			standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
+					{
+
 						standardsCode.getWidgetContainer().addStyleName("active");
-						
+
 						if(!selValues.contains(domainStand.getCodeId().toString())){
 							selectedValues.add(domainStand.getCodeId());
 						}
-						
+
 						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
 						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 							@Override
@@ -340,18 +348,18 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						liPanelWithClose.setName(domainStand.getCode());
 						liPanelWithClose.setRelatedId(domainStand.getCodeId());
 						ulSelectedItems.add(liPanelWithClose);
-						}
-						else
-						{
-							standardsCode.getWidgetContainer().removeStyleName("active");
-							removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-						}
-						
 					}
-				});
-				standardsUI.add(standardsCode);
-			}
-		
+					else
+					{
+						standardsCode.getWidgetContainer().removeStyleName("active");
+						removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+					}
+
+				}
+			});
+			standardsUI.add(standardsCode);
+		}
+
 
 	}
 	public void populateStandardValues(){
@@ -387,47 +395,102 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	}
 	@UiHandler("saveLessonBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null);
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		saveLessonBtn.addStyleName("disabled");
+		saveLessonBtn.setEnabled(false);
+		if (validateInputs()) {
+			final CreateDo createOrUpDate=new CreateDo(); 
+			createOrUpDate.setTitle(lessonTitle.getText());
+			createOrUpDate.setStandardIds(getSelectedStandards());
+			
+			lblErrorMessage.setVisible(false);
+			lessonTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
+
+		}else{
+			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
+			lessonTitle.setStyleName("textAreaErrorMessage");
+			lessonTitle.addStyleName("form-control");	
+			lblErrorMessage.setVisible(true);
+			resetBtns();
+
+		}
 	}
 	@UiHandler("btnSaveAndCreateCollection")
 	public void clickOnSaveAndCreateCollection(ClickEvent saveCourseEvent){
-		getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION);
+		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		btnSaveAndCreateCollection.addStyleName("disabled");
+		btnSaveAndCreateCollection.setEnabled(false);
+		if (validateInputs()) {
+			final CreateDo createOrUpDate=new CreateDo(); 
+			createOrUpDate.setTitle(lessonTitle.getText());
+			createOrUpDate.setStandardIds(getSelectedStandards());
+			
+			lblErrorMessage.setVisible(false);
+			lessonTitle.removeStyleName("textAreaErrorMessage");
+			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
+
+		}else{
+			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
+			lessonTitle.setStyleName("textAreaErrorMessage");
+			lessonTitle.addStyleName("form-control");	
+			lblErrorMessage.setVisible(true);
+			resetBtns();
+		}
+
 	}
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
+		final TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		Window.enableScrolling(false);
-		assessmentPopup=new AssessmentPopupWidget() {
-			@Override
-			public void clickOnNoramlAssessmentClick() {
-				assessmentPopup.hide();
-				Window.enableScrolling(true);
-				//This will display the normal assessment info
-				getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT);
-			}
-			@Override
-			public void clickOnExternalAssessmentClick() {
-				assessmentPopup.hide();
-				Window.enableScrolling(true);
-				//This will display the external assessment info
-				getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL);
-			}
-		};
-		assessmentPopup.setGlassEnabled(true);
-		assessmentPopup.show();
-		assessmentPopup.center();
+		final String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		final String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		if(validateInputs()){
+			final CreateDo createOrUpDate=new CreateDo(); 
+			createOrUpDate.setTitle(lessonTitle.getText());
+			createOrUpDate.setStandardIds(getSelectedStandards());
+			assessmentPopup=new AssessmentPopupWidget() {
+				@Override
+				public void clickOnNoramlAssessmentClick() {
+					assessmentPopup.hide();
+					Window.enableScrolling(true);
+					//This will display the normal assessment info
+					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
+				}
+				@Override
+				public void clickOnExternalAssessmentClick() {
+					assessmentPopup.hide();
+					Window.enableScrolling(true);
+					//This will display the external assessment info
+					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
+				}
+			};
+			assessmentPopup.setGlassEnabled(true);
+			assessmentPopup.show();
+			assessmentPopup.center();
+		}else{
+			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
+			lessonTitle.setStyleName("textAreaErrorMessage");
+			lessonTitle.addStyleName("form-control");	
+			lblErrorMessage.setVisible(true);
+			resetBtns();
+		}
+		
 	}
 	@Override
-	public void callCreateAndUpdate(boolean isCreate,boolean result,String type){
+	public void callCreateAndUpdate(boolean isCreate,boolean result,String type,CreateDo createOrUpDate,String courseId,String unitId,TreeItem currentShelfTreeWidget){
+
 		if(result){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, result);
 		}else{
-			CreateDo createOrUpDate=new CreateDo();
-			createOrUpDate.setTitle(lessonTitle.getText());
-			createOrUpDate.setStandardIds(getSelectedStandards());
 			if(courseObj!=null && courseObj.getGooruOid()!=null){
-				getUiHandlers().updateLessonDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,type,courseObj);
+				getUiHandlers().updateLessonDetails(createOrUpDate,courseObj.getGooruOid(),isCreate,type,courseObj,currentShelfTreeWidget);
 			}else{
-				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type);
+				getUiHandlers().createAndSaveLessonDetails(createOrUpDate,isCreate,type,courseId,unitId,currentShelfTreeWidget);
 			}
 		}
 	}
@@ -458,14 +521,14 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 		return taxonomyCourseIds;
 	}
-	
+
 	@Override
 	public void setLessonInfoData(FolderDo folderObj) {
 		this.courseObj=folderObj;
 		ulSelectedItems.clear();
 		selectedValues.clear();
 		standardsUI.clear();
-		lessonTitle.setText(folderObj==null?i18n.GL3365():folderObj.getTitle());
+		lessonTitle.setText(folderObj==null?"":!folderObj.getTitle().equalsIgnoreCase(i18n.GL3365())?folderObj.getTitle():"");
 		if(folderObj!=null){
 			if(folderObj.getStandards()!=null && folderObj.getStandards().size()>0){
 				//Render the existing standards
@@ -476,14 +539,14 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 						@Override
 						public void onClick(ClickEvent event) {
 							for(int i=0;i<selectedValues.size();i++) {							     
-							     if((selectedValues.get(i)).equals(courseSubjectDo.getId())){
-							    	 selectedValues.remove(courseSubjectDo.getId());
-							    	 Element element = Document.get().getElementById(courseSubjectDo.getId().toString());
-							    	 if(element!=null){
-							 			element.removeClassName("active");
-							 		}
-							     }
-							 }
+								if((selectedValues.get(i)).equals(courseSubjectDo.getId())){
+									selectedValues.remove(courseSubjectDo.getId());
+									Element element = Document.get().getElementById(courseSubjectDo.getId().toString());
+									if(element!=null){
+										element.removeClassName("active");
+									}
+								}
+							}
 							removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
 							liPanelWithClose.removeFromParent();
 						}
@@ -492,7 +555,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					liPanelWithClose.setName(courseSubjectDo.getCode());
 					ulSelectedItems.add(liPanelWithClose);
 				}
-	
+
 			}
 		}
 		getUiHandlers().callCourseInfoTaxonomy();
@@ -520,7 +583,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		}
 	}
-	
+
 	private class OnClickTaxonomy implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -531,7 +594,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			getUiHandlers().invokeTaxonomyPopup("Lesson",lessonLiPanelWithCloseArray);
 		}
 	}
-	
+
 
 	/**
 	 * Adds the selected domains from the taxonomy popup into lesson info view.
@@ -542,13 +605,13 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
 				ulSelectedItems.add(liPanelWithCloseArray.get(i));
 			}
-			
+
 			if(i<removedLiPanelWithCloseArray.size()){ 
 				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
 			}
 		}
 	}
-	
+
 	/**
 	 * Checks the selected widgets in info view got from taxonomy popup.
 	 * @param id
@@ -565,7 +628,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * Removes the widget, which has been removed from taxonomy popup from info view 
 	 * @param removeWidgetId
@@ -579,22 +642,50 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		}
 	}
-	
+
 	protected void hideDropDown(NativePreviewEvent event) {
 		if(event.getTypeInt()==Event.ONCLICK){
-    		Event nativeEvent = Event.as(event.getNativeEvent());
-        	boolean target=eventTargetsPopup(nativeEvent);
-        	if(!target){
-        		standardsDropListValues.getElement().removeAttribute("style");
-        	}
-    	}
+			Event nativeEvent = Event.as(event.getNativeEvent());
+			boolean target=eventTargetsPopup(nativeEvent);
+			if(!target){
+				standardsDropListValues.getElement().removeAttribute("style");
+			}
+		}
 	}
-	
+
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
 			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
+	}
+	public boolean validateInputs(){
+		String collectionTitleStr=lessonTitle.getText().trim();
+		if(collectionTitleStr.equalsIgnoreCase("")||collectionTitleStr.equalsIgnoreCase(i18n.GL3365())){
+			return false;
+		}else{
+			return true;
+		}
+
+
+	}
+
+	@UiHandler("lessonTitle")
+	public void collectionTitleKeyUphandler(KeyUpEvent event){
+		lessonTitle.removeStyleName("textAreaErrorMessage");
+		lblErrorMessage.setVisible(false);
+	}
+	/**
+	 * Adds the selected domains from the taxonomy popup into unit info view.
+	 */
+	@Override
+	public void resetBtns() {
+		saveLessonBtn.removeStyleName("disabled");
+		saveLessonBtn.setEnabled(true);
+		btnSaveAndCreateCollection.removeStyleName("disabled");
+		btnSaveAndCreateCollection.setEnabled(true);
+		btnSaveAndCreateAssessment.removeStyleName("disabled");
+		btnSaveAndCreateAssessment.setEnabled(true);
 	}
 }

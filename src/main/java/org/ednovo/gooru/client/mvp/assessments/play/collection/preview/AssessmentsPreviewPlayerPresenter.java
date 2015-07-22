@@ -86,6 +86,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.inject.Inject;
@@ -704,11 +705,20 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		}
 		stopResourceDataLog();
 		resetAnswerLists();
-		stopCollectionDataLog();
-		setUserAttemptedQuestionTypeAndStatus(false,0);
-		updateSession(sessionId);
-		metadataPresenter.setPreviewEndPresenter();
-		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
+		Timer timer = new Timer() {
+
+			@Override
+			public void run() {
+				AppClientFactory.printInfoLogger("restarted after 1500 milliseconds : "+System.currentTimeMillis());
+				stopCollectionDataLog();
+				setUserAttemptedQuestionTypeAndStatus(false,0);
+				updateSession(sessionId);
+				metadataPresenter.setPreviewEndPresenter();
+				setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
+			}
+		};
+		AppClientFactory.printInfoLogger("stoped for 1500 milliseconds : "+System.currentTimeMillis());
+		timer.schedule(1500);
 	}
 
 	public void makeButtonActive(String tabView){
@@ -1075,6 +1085,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(),
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
 				startPlayerActivityEvent(collectionActivityEventId, "", PlayerConstants.COLLECTION_EVENT_NAME, collectionDo.getGooruOid(), collectionDo.getGooruOid(), PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid(), getUserAgent());
+				AppClientFactory.printInfoLogger("Assessments Preview Presenter sessionIdCreationCount : "+sessionIdCreationCount);
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
@@ -1208,7 +1219,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		
+
 		sessionId = GwtUUIDGenerator.uuid();
 		AssessmentsPreviewPlayerPresenter.this.sessionId=sessionId;
 		triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
@@ -1216,7 +1227,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		if(collectionItemDo!=null){
 			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
 		}
-		
+
 	}
 
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid,String questionType, String status){

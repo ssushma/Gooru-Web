@@ -32,8 +32,8 @@ public class ClassListWidget extends Composite {
 	interface ClassListWidgetUiBinder extends UiBinder<Widget, ClassListWidget> {
 	}
 
-	@UiField Anchor classNameAnch,editClassAnch;
-	
+	@UiField Anchor classNameAnch/*,editClassAnch*/;
+	String courseId;
 	/**
 	 * Because this class has a default constructor, it can
 	 * be used as a binder template. In other words, it can be used in other
@@ -46,12 +46,14 @@ public class ClassListWidget extends Composite {
 	 * implement HasHTML instead of HasText.
 	 * @param classId 
 	 * @param name 
+	 * @param courseId 
 	 */
-	public ClassListWidget(String name, String classId) {
+	public ClassListWidget(String name, String classId, String courseId) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.courseId=courseId;
 		classNameAnch.setText(name);
 		classNameAnch.addClickHandler(new ClassNameClickHandler(classId));
-		editClassAnch.addClickHandler(new ClassNameClickHandler(classId));
+		//editClassAnch.addClickHandler(new ClassNameClickHandler(classId));
 	}
 	
 	private class ClassNameClickHandler implements ClickHandler{
@@ -64,8 +66,9 @@ public class ClassListWidget extends Composite {
 		public void onClick(ClickEvent event) {
 			Map<String, String> params= new HashMap<String, String>();
 			params.put("classpageId", classId);
-			params.put("pageSize","5");
-			params.put("pageNum", "0");
+			params.put("c-id", courseId);
+			params.put("page-view", "class-setting");
+			params.put("subpage-view", "class-info");
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);
 		}
 		

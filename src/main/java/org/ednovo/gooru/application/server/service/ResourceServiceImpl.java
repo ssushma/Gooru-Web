@@ -57,6 +57,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemD
 import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.NewResourceDo;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
@@ -218,8 +219,32 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public void deleteCollectionItem(String collectionItemId) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_ITEM, collectionItemId);
+	public CollectionItemDo createNewCollectionItem(String collectionId, String resourceId,String resoruceType) {
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url;
+		try{
+			if("Question".equalsIgnoreCase(resoruceType)){
+				url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_ADDQUESTION_COLLECTION,collectionId,resourceId);
+			}else{
+				url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+			}
+			getLogger().info("--- createNewCollectionItem -- "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			getLogger().info("--- jsonRep -- "+jsonRep.getJsonObject());
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+			getLogger().info("--- getURL -- "+getURL);
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
+		}catch(Exception e){
+			logger.error("Exception::", e);
+		}
+		return deserializeCollectionItem(jsonResponseRepget);
+	}
+	@Override
+	public void deleteCollectionItem(String collectionId,String collectionItemId) {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_ITEM,collectionId,collectionItemId);
+		getLogger().info("--- deleteCollectionItem -- "+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
@@ -348,6 +373,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
+				obj.setCollaborator(jsonRep.getJsonObject().isNull("isCollaborator")?false:jsonRep.getJsonObject().getBoolean("isCollaborator"));
 				UserDo user=new UserDo();
 				user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user").toString(), UserDo.class);
 				obj.setUser(user);
@@ -2359,6 +2385,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo addCollectionItem(String collectionId,String resourceId) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
 		CollectionItemDo collectionItemDo= new CollectionItemDo();
+		getLogger().info("addCollectionItem collectionId::::::"+collectionId);
+		getLogger().info("addCollectionItem resourceId::::::"+resourceId);
 		String url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
 		getLogger().info("addCollectionItem post API call::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
@@ -2420,6 +2448,40 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		getLogger().info("response:::::"+jsonResponseRep.getStatusCode());
 		return deserializeCollectionItem(jsonRep);
+	}
+	@Override
+	public List<ListValuesDo> getEducationalUseList() throws GwtException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_EDUCATIONAL_USE,getLoggedInSessionToken());
+		getLogger().info("-- get Educatioal -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
+		return listValues;
+	}
+	
+	public List<ListValuesDo> deserializeListValues(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<ListValuesDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return new ArrayList<ListValuesDo>();
+	}
+	
+	@Override
+	public List<ListValuesDo> getMomentOfLearning()throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_MOMENT_OF_LEARERNING,getLoggedInSessionToken());
+		getLogger().info("-- get Moment  of Learning -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
+		return listValues;
 	}
 	
 }

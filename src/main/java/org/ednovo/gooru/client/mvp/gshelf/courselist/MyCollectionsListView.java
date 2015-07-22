@@ -34,17 +34,19 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentWidgetWithMove;
 import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -57,6 +59,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -92,6 +95,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	private static final String ID = "id";
 
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
+	
+	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
 	
 	public MyCollectionsListView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -160,8 +165,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
-			lblTitle.setVisible(true);
-			lblTitle.setText(StringUtil.capitalizeFirstLetter(folderDo.getType())+": "+folderDo.getTitle());
+			//lblTitle.setVisible(true);
+			//lblTitle.setText(StringUtil.capitalizeFirstLetter(folderDo.getType())+": "+folderDo.getTitle());
 			String view=AppClientFactory.getPlaceManager().getRequestParameter(VIEW);
 			if(view!=null && (view.equalsIgnoreCase(FOLDER) || view.equalsIgnoreCase(COLLECTION))){
 				btnCreate.setVisible(false);
@@ -175,7 +180,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 			if(COURSE.equalsIgnoreCase(type)){
 				enableCreateButtons(false);
+				pnlAddContainer.setVisible(true);
 				h2Title.setText(i18n.GL1180());
+				lblAddNew.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 				lblAddNew.setText(i18n.GL0326());
 			}else if(FOLDER.equalsIgnoreCase(type)){
 				enableCreateButtons(true);
@@ -242,6 +249,16 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
 								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(tempGooruOid,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
 							}
+						}else{
+							int index=Integer.parseInt(currentWidgetPosition);
+							Element widget=(Element) pnlCourseList.getWidget(index).getElement().getLastChild();
+							toolTipPopupPanel.clear();
+							toolTipPopupPanel.setWidget(new GlobalToolTip(StringUtil.generateMessage(i18n.GL3004(),movingIndex+"")));
+							toolTipPopupPanel.setStyleName("");
+							toolTipPopupPanel.setPopupPosition(widget.getAbsoluteLeft(), widget.getAbsoluteTop()+40);
+							toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+							toolTipPopupPanel.show();
+							new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
 						}
 					}
 				};

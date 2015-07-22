@@ -29,9 +29,12 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
+
+import com.google.gwt.user.client.ui.TreeItem;
 
 /**
  * @author Search Team
@@ -49,16 +52,18 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	 * To Create Course
 	 * @param createObj {@link String} 
 	 * @param isCreateUnit {@link boolean} 
+	 * @param currentShelfTreeWidget 
 	 */
-	void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit);
+	void createAndSaveCourseDetails(CreateDo createObj,final boolean isCreateUnit, TreeItem currentShelfTreeWidget);
 	/**
 	 * To update the course details
+	 * @param currentShelfTreeWidget 
 	 * @param courseTitle {@link String} 
 	 */
-	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit,FolderDo courseObj);
+	public void updateCourseDetails(CreateDo createOrUpDate, String id,boolean isCreateUnit,FolderDo courseObj, TreeItem currentShelfTreeWidget);
 
 	public void checkProfanity(String textValue, boolean isCreate, int index,
-			String collectionType);
+			String collectionType, CreateDo createOrUpDate, TreeItem currentShelfTreeWidget); 
 
 	void setCollectionType(String templateType);
 
@@ -71,5 +76,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	public void callCourseInfoTaxonomy();
 
 	CenturySkillsPresenter getCenturySkillsPresenters();
+
+	public TreeItem getSelectedWidget();
 
 }
