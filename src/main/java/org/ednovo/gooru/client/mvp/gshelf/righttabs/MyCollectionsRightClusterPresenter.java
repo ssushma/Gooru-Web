@@ -125,7 +125,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
 		clearSlot(INNER_SLOT);
-		collectionContentPresenter.getView().reset();
 		if(folderObj==null){
 			selectedWidgetsTitleType = null;
 		}

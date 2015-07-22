@@ -68,7 +68,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -91,8 +90,6 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
@@ -413,6 +410,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 //		myDriveButton.setStyleName(res.css().buttonDeSelected());
 	}
 	
+	
 	public class AddWebResourceWidget extends AddWebResourceView{
 
 		public AddWebResourceWidget(CollectionDo parentCollectionDetails,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) {
@@ -567,15 +565,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onLoad(){
 			super.onLoad();
+			AppClientFactory.printInfoLogger("widget onload---");
 			setEditQuestionImage();
-			
-			
-			DeferredCommand.addCommand(new Command() {
 
-				//Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 				@Override
 				public void execute() {
-
 					AppClientFactory.printInfoLogger("onload exe");
 					if(collectionItemDo!=null){
 						int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
@@ -960,6 +955,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			deselectSelectedButton();
 			urlTabButton.setStyleName(res.css().buttonSelected());
 		} else if(clickType.equalsIgnoreCase("Question")){
+			AppClientFactory.printInfoLogger("Question---");
 			try{
 				Window.enableScrolling(false);
 				isEdit=true;
@@ -968,7 +964,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				titleLbl.setText(i18n.GL0893());
 				titleLbl.getElement().setAttribute("alt", i18n.GL0893());
 				titleLbl.getElement().setAttribute("title", i18n.GL0893());
+				AppClientFactory.printInfoLogger("AddQuestionResourceWidget before---");
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
+				AppClientFactory.printInfoLogger("ddQuestionResourceWidget after---");
 				addQuestionResourceWidget.getHideRightsToolTip();
 				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
 //				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1695,4 +1693,22 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	public void setDepthOfKnowledges(List<ListValuesDo> result){
 		this.depthOfKnowledges=result;
 	}
+
+	@Override
+	public void hidePopUpStyle() {
+		appPopUp.setGlassEnabled(false);
+		appPopUp.setAutoHideEnabled(true);
+		popUpMain.setVisible(false);
+		
+	}
+
+	@Override
+	public void clearPopUpStyle() {
+		appPopUp.setGlassEnabled(true);
+		appPopUp.setAutoHideEnabled(false);
+		popUpMain.setVisible(true);
+		
+	}
+	
+	
 }
