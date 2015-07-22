@@ -84,6 +84,9 @@ public interface IsClassHomeView extends IsViewWithHandlers<ClassHomeUiHandlers>
 	
 	void setClassVisiblityData(ClasspageListDo result);
 
+	
+	void setClassesData(Boolean result);
+
 
 //	public Label getErrorLbl();
 //

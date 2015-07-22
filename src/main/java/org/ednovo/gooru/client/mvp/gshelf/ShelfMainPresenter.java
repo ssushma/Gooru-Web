@@ -54,6 +54,7 @@ import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -75,7 +76,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Inject
 	private ResourceServiceAsync resourceService;
 
-	private boolean clrPanel=false;
+	private boolean clrPanel=false; 
 	
 	private String type="Course";
 	
@@ -423,12 +424,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,typeVal,false,getUserCollectionAsyncCallback(clearShelfPanel));		
 	}
 
-	public void createNewUnitItem(String type) {
-		getView().createNewItem(type);
+	public void createNewUnitItem(String type, TreeItem currentShelfTreeWidget) { 
+		getView().createNewItem(type,currentShelfTreeWidget);
 	}
 
-	public void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag) {
-		getView().updateTreeWidget(courseDo, flag);
+	public void updateTitleOfTreeWidget(FolderDo courseDo, boolean flag, TreeItem currentShelfTreeWidget) { 
+		getView().updateTreeWidget(courseDo, flag, currentShelfTreeWidget);
 	}
 	
 	@Override
@@ -520,5 +521,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	public void setTileIcon(String title, String type) {
 		getView().setViewTitleWthIcon(title,type);
+	}
+
+	public TreeItem getEditingWidget() { 
+		return getView().getCurrentEditingWidget();
 	}
 }

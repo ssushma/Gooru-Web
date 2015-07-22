@@ -145,7 +145,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 				
 				@Override
 				public void onSuccess(ClasspageDo result) {
-					getView().setUpdateClassData();
+					getView().setUpdateClassData(result);
 					AppClientFactory.getEventBus().fireEvent(new UpdateClassTitleEvent(title));
 				}
 				

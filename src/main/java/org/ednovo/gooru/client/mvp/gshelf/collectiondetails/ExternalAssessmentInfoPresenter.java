@@ -32,12 +32,13 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -85,19 +86,19 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 	}
 
 	@Override
-	public void checkProfanity(String textValue,final boolean isCreate,final int index,final CreateDo createOrUpDate) {
+	public void checkProfanity(String textValue,final boolean isCreate,final int index,final CreateDo createOrUpDate,final TreeItem currentShelfTreeWidget) {
 		final Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text",textValue);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				getView().callCreateAndUpdate(isCreate,value,index, createOrUpDate);
+				getView().callCreateAndUpdate(isCreate,value,index, createOrUpDate,currentShelfTreeWidget);
 			}
 		});
 	}
 
 	@Override
-	public void createAndSaveAssessmentDetails(CreateDo createObj,boolean isCreateAssessment) {
+	public void createAndSaveAssessmentDetails(CreateDo createObj,boolean isCreateAssessment,final TreeItem currentShelfTreeWidget) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);		
@@ -123,7 +124,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 					getView().resetBtns();
 					params.put("id", result.getGooruOid());
 					params.put("view", FOLDER);
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true,currentShelfTreeWidget);
 					myCollectionsRightClusterPresenter.setTabItems(2, ASSESSMENTURL, result);
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				}
@@ -139,7 +140,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 					params.put(O3_LEVEL, o3);
 					params.put("id", result.getGooruOid());
 					params.put("view", "course");
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true,currentShelfTreeWidget);
 					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,ASSESSMENTURL); 
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 					myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, result);
@@ -151,7 +152,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 	}
 
 	@Override
-	public void updateAssessmentDetails(final CreateDo createOrUpDate, String id,boolean isCreateAssessment,final FolderDo folderObj) {
+	public void updateAssessmentDetails(final CreateDo createOrUpDate, String id,boolean isCreateAssessment,final FolderDo folderObj,final TreeItem currentShelfTreeWidget) {
 		String o1= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
@@ -164,7 +165,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 				@Override
 				public void onSuccess(Void result) {
 					getView().resetBtns();
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false,currentShelfTreeWidget);
 					myCollectionsRightClusterPresenter.setTabItems(2, createOrUpDate.getCollectionType(), folderObj);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
 				}
@@ -182,7 +183,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 					
 					//folderDo.setGooruOid(id);
 					myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, folderObj);
-					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false);
+					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false,currentShelfTreeWidget);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
 				}
 			});
@@ -210,4 +211,10 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
    		String view =AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		return view==null?COURSE:view;
    	}
+   	
+   	@Override
+	public TreeItem getSelectedWidget() {
+   		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget(); 
+		return shelfTreeWidget;
+	}
 }
