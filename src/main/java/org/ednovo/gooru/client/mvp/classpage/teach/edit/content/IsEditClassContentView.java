@@ -60,4 +60,6 @@ public interface IsEditClassContentView extends IsViewWithHandlers<EditClassCont
 
 	void setEmptyUnitListData();
 
+	void clearAllErrorLabel();
+
 }

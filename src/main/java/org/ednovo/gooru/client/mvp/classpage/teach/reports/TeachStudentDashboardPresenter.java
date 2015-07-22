@@ -22,36 +22,49 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit;
+package org.ednovo.gooru.client.mvp.classpage.teach.reports;
 
-import java.util.Map;
-
-import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
 
-/**
- * @fileName : IsEditClassSettingsView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 01-Jul-2015
- *
- * @Author tumbalam
- *
- * @Reviewer: 
- */
-public interface IsEditClassSettingsView extends IsViewWithHandlers<EditClassSettingsViewUiHandler>{
 
-	void setData(ClasspageDo classpageDo);
+public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStudentDashboardView> implements TeachStudentDashboardUiHandler{
+	
+	
+	@Inject
+	public TeachStudentDashboardPresenter(EventBus eventBus,IsTeachStudentDashboardView view){
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
+	
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
 
-	void setShortenUrl(Map<String, String> shortenUrl);
+	@Override
+	public void onReveal() {
+		/*getCourseData();*/
+	}
 
-	void setUpdateClassData(ClasspageDo classpageDo);
+	@Override
+	protected void onHide() {
+		super.onHide();
+	}
+	
+	@Override
+	protected void onReset() {
+		getView().setReportView();
+	}
+	
+	public void  loadNavigationPage(){
+		
+	}
 
-	void clearAllErrorLabel();
-
+	public void setClassDetails(ClasspageDo classpageDo) {
+		
+	}
 }

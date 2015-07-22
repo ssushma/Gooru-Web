@@ -22,36 +22,32 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpage.teach.edit;
-
-import java.util.Map;
+package org.ednovo.gooru.client.mvp.classpage.teach.reports;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 
-/**
- * @fileName : IsEditClassSettingsView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 01-Jul-2015
- *
- * @Author tumbalam
- *
- * @Reviewer: 
- */
-public interface IsEditClassSettingsView extends IsViewWithHandlers<EditClassSettingsViewUiHandler>{
+public interface IsTeachStudentDashboardView extends IsViewWithHandlers<TeachStudentDashboardUiHandler>{
 
-	void setData(ClasspageDo classpageDo);
-
-	void setShortenUrl(Map<String, String> shortenUrl);
-
-	void setUpdateClassData(ClasspageDo classpageDo);
-
-	void clearAllErrorLabel();
-
+	/**
+	 * @function setReportView 
+	 * 
+	 * @created_date : 22-Jul-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void setReportView();
+	
 }
