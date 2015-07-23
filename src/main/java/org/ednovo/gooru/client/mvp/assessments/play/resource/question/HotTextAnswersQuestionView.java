@@ -434,6 +434,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						HTHLChoiceStatus=false;
 						
 					}
+				}else if(!lbl.getStyleName().contains(STYLE_HIGHLIGHT) && lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
+					HTHLChoiceStatus=false;
 				}else {
 					//answerText=answerText+lbl.getText();
 				}
