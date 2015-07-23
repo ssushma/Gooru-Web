@@ -493,18 +493,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 
 	@Override
 	public void setReportView() {
-		reportBox.clear();
-		setReportVisiblity(true);
-		/*reportPanel.setStyleName(CssTokens.ACTIVE);
-		roasterPanel.removeStyleName(CssTokens.ACTIVE);*/
-		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-			reportBox.add(new TeachCourseReportChildView(classpageDo));
-		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-			reportBox.add(new TeachUnitReportChildView());
-		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-			reportBox.add(new TeachLessonReportChildView());
-		}
+		
 	}
 	
 	private void setReportVisiblity(boolean isVisible) {
