@@ -212,13 +212,14 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 
 	@Override
 	public void setData(FolderDo folderObj) {
+		removeSelectedStyle(true);
+		removeSelectedStyle(false);
 		if(folderObj!=null){
 			this.folderObj = folderObj;
 			txtAssessmentTitle.setText(folderObj.getTitle());
 			txtAssessmentURL.setText(folderObj.getUrl());
 			txaAssessmentDescription.setText(folderObj.getDescription());
 			String sharingVal=folderObj.getSharing();
-			removeSelectedStyle(true);
 			if(sharingVal!=null){
 				if(PUBLIC.equalsIgnoreCase(sharingVal)){
 					pnlPublic.addStyleName(SELECTEDSTYLE);
@@ -228,7 +229,6 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 					pnlPrivate.addStyleName(SELECTEDSTYLE);
 				}
 			}
-			removeSelectedStyle(false);
 			String isLoginRequired=folderObj.getIsLoginRequired();
 			if("yes".equalsIgnoreCase(isLoginRequired)){
 				lblRequiresYes.addStyleName(SELECTEDSTYLE);
