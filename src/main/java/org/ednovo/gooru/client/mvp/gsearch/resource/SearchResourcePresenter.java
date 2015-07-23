@@ -202,6 +202,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo,CollectionResourceWidget collectionResourceWidget) {
 		shelfMainPresenter.SetDefaultTypeAndVersion();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"coursebuilder",collectionResourceWidget);
 		searchAddResourceToCollectionPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid(),collectionResourceWidget));
 		addToPopupSlot(searchAddResourceToCollectionPresenter);

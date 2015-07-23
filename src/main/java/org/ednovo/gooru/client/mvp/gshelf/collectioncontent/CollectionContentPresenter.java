@@ -393,6 +393,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		myCollectionsRightClusterPresenter.getShelfMainPresenter().SetDefaultTypeAndVersion();
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		resourceSearchResultDo.setGooruOid(collectionItem.getResource().getGooruOid());
 		resourceSearchResultDo.setResourceFormat(collectionItem.getNewResourceFormat());
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"coursebuilder",null);
