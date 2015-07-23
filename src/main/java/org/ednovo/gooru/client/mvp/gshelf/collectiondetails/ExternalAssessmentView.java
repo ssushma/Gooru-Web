@@ -143,11 +143,13 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblErrorMessage.setVisible(true);
 			lblErrorMessage.setText(i18n.GL1026());
+			enableSubmitButton();
 		}else if(StringUtil.isEmpty(assessmentURL)){
 			lblErrorMessage.setVisible(false);
 			lblErrorMessage.setText("");
 			lblErrorMessageForURL.setVisible(true);
 			lblErrorMessageForURL.setText(i18n.GL3166());
+			enableSubmitButton();
 		}else{
 			assessmentURL = URL.encode(assessmentURL);
 			if(StringUtil.checkUrlContainesGooruUrl(assessmentURL)){
@@ -155,6 +157,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				lblErrorMessage.setText("");
 				lblErrorMessageForURL.setVisible(true);
 				lblErrorMessageForURL.setText(i18n.GL0924());
+				enableSubmitButton();
 				return;
 			}else{
 				boolean isStartWithHttp = assessmentURL.matches("^(http|https)://.*$");
@@ -169,20 +172,28 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				lblErrorMessage.setText("");
 				lblErrorMessageForURL.setVisible(true);
 				lblErrorMessageForURL.setText(i18n.GL0926());
+				enableSubmitButton();
 			}else{
 				getUiHandlers().checkProfanity(txtAssessmentTitle.getText().trim(),true,0,createOrUpDate,currentShelfTreeWidget);
 			}
 		}
 	}
 
+	public void enableSubmitButton(){
+		btnSaveExternalAssessment.removeStyleName("disabled");
+		btnSaveExternalAssessment.setEnabled(true);
+	}
 	@Override
 	public void callCreateAndUpdate(boolean isCreate, boolean result, int index,CreateDo createOrUpDate,TreeItem currentShelfTreeWidget) {
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(txtAssessmentTitle, lblErrorMessage, result);
+			enableSubmitButton();
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(txtAssessmentURL, lblErrorMessageForURL, result);
+			enableSubmitButton();
 		}else if(result && index==2){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaAssessmentDescription, lblErrorMessageForDesc, result);
+			enableSubmitButton();
 		}else{
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getUrl().trim(),isCreate,1,createOrUpDate,currentShelfTreeWidget);
