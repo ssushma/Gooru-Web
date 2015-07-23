@@ -215,7 +215,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}
 			});*/
 			
-			AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
+			String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
+			AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
 				@Override
 				public void onSuccess(CollectionItemDo result) {
 					if(result!=null && result.getStatusCode()==200){
@@ -547,15 +548,15 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		if(val){
 			getView().getMycollectionsLbl().getElement().getStyle().setDisplay(Display.NONE);
 			getView().getMycontentLbl().getElement().getStyle().setDisplay(Display.BLOCK);
-			getView().getMycollectionsLbl().removeStyleName("selected");
-			getView().getMycontentLbl().addStyleName("selected");
+			getView().getMycollectionsLbl().removeStyleName("active");
+			getView().getMycontentLbl().addStyleName("active");
 			getView().setFromMyCourse(true);
 			getView().getMycollectionsDefaultLbl().getElement().getStyle().setDisplay(Display.NONE);
 		}else{
 			getView().getMycollectionsLbl().getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 			getView().getMycontentLbl().getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-			getView().getMycontentLbl().addStyleName("selected");
-			getView().getMycollectionsLbl().removeStyleName("selected");
+			getView().getMycontentLbl().addStyleName("active");
+			getView().getMycollectionsLbl().removeStyleName("active");
 			getView().setFromMyCourse(true);
 			getView().getMycollectionsDefaultLbl().getElement().getStyle().setDisplay(Display.NONE);
 		}

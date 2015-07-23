@@ -437,7 +437,7 @@ public interface ResourceService extends BaseService {
 	
 	public FolderDo getCourseDataById(String courseId) throws GwtException,ServerDownException;
 	
-	public CollectionItemDo addCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
+	public CollectionItemDo addCollectionItem(String collectionId, String resourceId, String type)  throws GwtException, ServerDownException;
 	public CollectionItemDo updateTimeMetadata(String collectionItemId, String start, String stop)  throws GwtException, ServerDownException;
 	public List<ListValuesDo> getEducationalUseList() throws GwtException;
 	public List<ListValuesDo> getMomentOfLearning()throws GwtException ;
