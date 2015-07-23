@@ -225,15 +225,11 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			System.out.println("MasteryReportPlace:"+token);
-			/*roasterPanel.removeStyleName(CssTokens.ACTIVE);
-			reportPanel.removeStyleName(CssTokens.ACTIVE);*/
 			studentAnr.removeStyleName(CssTokens.ACTIVE);
 			classSettingsAnr.removeStyleName(CssTokens.ACTIVE);
 			dashBoardAnr.removeStyleName(CssTokens.ACTIVE);
 			liPanel.addStyleName(CssTokens.ACTIVE);
 			PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
-			Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
 			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
 			request = request.with(UrlNavigationTokens.CLASSPAGEID, id);
@@ -304,24 +300,4 @@ public class TeachClassView extends BaseViewWithHandlers<TeachClassViewUiHandler
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.IsTeachClassView#setReportView()
-	 */
-	@Override
-	public void setReportView() {
-		reportBox.clear();
-		String reportView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-			reportBox.add(new TeachCourseReportChildView(classpageDo));
-		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-			reportBox.add(new TeachUnitReportChildView());
-		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-			reportBox.add(new TeachLessonReportChildView());
-		}
-	}
-	
-	@Override
-	public void setReportVisibility(boolean isVisible) {
-		reportBox.setVisible(isVisible);
-	}
 }

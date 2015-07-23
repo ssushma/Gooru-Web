@@ -116,9 +116,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedId,courseId);
-				}
+				getView().showCourseDetailsBasedOnSubjectd(result,selectedId,courseId);
 			}
 		});
 	}

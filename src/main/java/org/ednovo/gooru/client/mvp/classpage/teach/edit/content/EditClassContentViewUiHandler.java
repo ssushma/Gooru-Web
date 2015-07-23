@@ -55,4 +55,6 @@ public interface EditClassContentViewUiHandler extends BaseUiHandlers{
 	
 	void getUnitList(int offset,int limit);
 
+	void addCourseToClass();
+
 }

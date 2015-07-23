@@ -752,7 +752,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			String urlStr, String titleStr, String descriptionStr,
 			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList) throws GwtException {
 		
-		try {
 			categoryStr = categoryStr.trim();
 			NewResourceDo newResourceDo = new NewResourceDo();
 			newResourceDo.setId(idStr);
@@ -866,16 +865,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
 				getLogger().info("getURlresource --- "+getURL);
 			}catch(Exception e){
-				e.printStackTrace();
+				
 				logger.error("Exception::", e);
 			}
 			return deserializeCollectionItem(jsonResponseRepget);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
 		
-		return null;
 	}
 	
 	@Override
