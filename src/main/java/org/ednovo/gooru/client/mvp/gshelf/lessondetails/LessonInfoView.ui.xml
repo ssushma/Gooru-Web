@@ -67,35 +67,12 @@
 				</div>
 
 
-				<div class="lessonCover">
+				<g:HTMLPanel styleName="lessonCover" ui:field="pnlStandards">
 					<div class="panel panel-default">
-						<g:HTMLPanel ui:field="standardsUI" styleName="panel-body">
-
-
-
-
-
-
-						</g:HTMLPanel>
+						<g:HTMLPanel ui:field="standardsUI" styleName="panel-body"/>
 					</div>
-
-
-
-
-
-
-
-				</div>
-
-
+				</g:HTMLPanel>
 			</div>
-
-
-
-
-
-
-
 		</div>
 
 

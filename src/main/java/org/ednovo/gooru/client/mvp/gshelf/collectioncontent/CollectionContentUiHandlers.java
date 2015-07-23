@@ -330,5 +330,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	public void updateWidgetCount(CollectionItemDo collectionItem);
 	public void showResourcePopup(CollectionItemDo collectionItem);
 	public void disableCollabaratorOptions(boolean b);
-
+	
+	void loadAddResourcePopup();
+	
 }

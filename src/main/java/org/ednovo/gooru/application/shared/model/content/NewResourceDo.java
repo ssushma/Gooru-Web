@@ -25,6 +25,7 @@
 package org.ednovo.gooru.application.shared.model.content;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -49,9 +50,58 @@ public class NewResourceDo extends ResourceDo {
 	private ResourceFormatDo resourceFormat;
 	private ArrayList<checkboxSelectedDo> educationalUse;
 	private ArrayList<checkboxSelectedDo> momentsOfLearning;
+	private List<Integer> momentsOfLearningIds;
+	private List<Integer> depthOfKnowledgeIds;
+	private List<Integer> skillIds;
+	private List<Integer> standardIds;
+	private List<Integer> educationalUseIds; 
+
+
 	private ArrayList<String> host;
 	private String thumbnail;
 	
+	
+	
+	public List<Integer> getMomentsOfLearningIds() {
+		return momentsOfLearningIds;
+	}
+
+	public void setMomentsOfLearningIds(List<Integer> momentsOfLearningIds) {
+		this.momentsOfLearningIds = momentsOfLearningIds;
+	}
+
+	public List<Integer> getDepthOfKnowledgeIds() {
+		return depthOfKnowledgeIds;
+	}
+
+	public void setDepthOfKnowledgeIds(List<Integer> depthOfKnowledgeIds) {
+		this.depthOfKnowledgeIds = depthOfKnowledgeIds;
+	}
+
+	public List<Integer> getSkillIds() {
+		return skillIds;
+	}
+
+	public void setSkillIds(List<Integer> skillIds) {
+		this.skillIds = skillIds;
+	}
+
+	public List<Integer> getStandardIds() {
+		return standardIds;
+	}
+
+	public void setStandardIds(List<Integer> standardIds) {
+		this.standardIds = standardIds;
+	}
+
+	public List<Integer> getEducationalUseIds() {
+		return educationalUseIds;
+	}
+
+	public void setEducationalUseIds(List<Integer> educationalUseIds) {
+		this.educationalUseIds = educationalUseIds;
+	}
+
 	/** 
 	 * This method is to get the resourceFormat
 	 */

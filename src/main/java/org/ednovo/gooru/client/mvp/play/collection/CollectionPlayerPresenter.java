@@ -662,7 +662,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 							setPageTitle(collectionDo);
 							showCollectionView(collectionDo,collectionId,resourceId,tabView,view);
 							setCollectionDetails(collectionDo);
-							AppClientFactory.printInfoLogger("getQuestionsCount(collectionDo.getCollectionItems()) : "+getQuestionsCount(collectionDo.getCollectionItems()));
 						}
 					}
 				});
@@ -2094,13 +2093,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			String playerMode=getPlayerMode();
 			String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 			String path="";
-			int totalQuestionsCount = "start".equalsIgnoreCase(eventType) ? 0 : getQuestionsCount(collectionDo.getCollectionItems());
+			int totalQuestionsCount =0;
 			if(classpageId!=null&&!classpageId.equals("")){
 				path=classpageId+"/"+collectionDo.getGooruOid();
 				if(classpageEventId==null||classpageEventId.equals("")){
 					classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
 				}
-
+				totalQuestionsCount = "start".equalsIgnoreCase(eventType) ? 0 : getQuestionsCount(collectionDo.getCollectionItems());
 				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null, totalQuestionsCount));
 			}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 				classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
@@ -2109,10 +2108,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				}
 				String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
 				path=libraryId+"/"+collectionDo.getGooruOid();
+				totalQuestionsCount = "start".equalsIgnoreCase(eventType) ? 0 : getQuestionsCount(collectionDo.getCollectionItems());
 				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), libraryId, classpageEventId, eventType, playerMode,"",null,path,null,totalQuestionsCount));
 			}else{
 				String parentGooruOid=AppClientFactory.getPlaceManager().getShelfParentGooruOid();
 				path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
+				totalQuestionsCount = "start".equalsIgnoreCase(eventType) ? 0 : (collectionDo != null ? getQuestionsCount(collectionDo.getCollectionItems()) : 0 );
 				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), parentGooruOid, classpageEventId, eventType, playerMode,"",null,path,null,totalQuestionsCount));
 			}
 			collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
@@ -2128,10 +2129,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 			collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(playLoad.toString()));
 			PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
-			AppClientFactory.printInfoLogger("--- Triggering collection start/stop event --- ");
 			if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
 				updateResourceViewCount(collectionDo.getGooruOid(),collectionDo.getViews(),RESOURCE);
 			}
+			AppClientFactory.printInfoLogger("--- Triggering collection start/stop event --- ");
 		}
 		catch(Exception ex)
 		{
@@ -2717,10 +2718,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		int questionCount = 0;
 		if(lstCollectionItemDo!=null && lstCollectionItemDo.size()>0){
 			for(int i=0;i<lstCollectionItemDo.size();i++){
-				if(collectionDo.getCollectionItems().get(i).getResource()!=null&&collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
-					if (QUESTION.equalsIgnoreCase(collectionDo
-							.getCollectionItems().get(i).getResource()
-							.getResourceFormat().getDisplayName()) && collectionDo.getCollectionItems().get(i).getResource().getType() != 6) {
+				if(lstCollectionItemDo.get(i).getResource()!=null&&lstCollectionItemDo.get(i).getResource().getResourceFormat()!=null){
+					if (QUESTION.equalsIgnoreCase(lstCollectionItemDo.get(i).getResource()
+							.getResourceFormat().getDisplayName()) && lstCollectionItemDo.get(i).getResource().getType() != null && lstCollectionItemDo.get(i).getResource().getType() != 6) {
 						questionCount++;
 					}
 				}

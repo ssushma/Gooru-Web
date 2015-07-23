@@ -30,9 +30,9 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TreeItem;
 
 /**
@@ -53,5 +53,6 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 	void resetBtns(); 
 	
+	HTMLPanel getStadardsPanel();
 
 }

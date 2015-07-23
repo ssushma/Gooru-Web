@@ -125,7 +125,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
 		clearSlot(INNER_SLOT);
-		collectionContentPresenter.getView().reset();
 		if(folderObj==null){
 			selectedWidgetsTitleType = null;
 		}
@@ -261,7 +260,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				setUnitTemplate(UNIT,null);
 				//courseInfoPresenter.createAndSaveCourseDetails(courseInfoPresenter.getView().getCourseTitle(), false);
 			}else if(type.contains(LESSON)){
-				System.out.println("in lesson right cluster");
 				setTabItems(1, LESSON, null);
 				setUnitTemplate(LESSON,null);
 			}else if(type.toLowerCase().contains(FOLDER.toLowerCase())){

@@ -48,9 +48,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiConstructor;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
@@ -178,24 +176,14 @@ public class TinyMCE extends Composite{
      */
     protected void onLoad() {
         super.onLoad();
-
-        DeferredCommand.addCommand(new Command() {
-            public void execute() {
-                    setWidth("100%");
-                    setTextAreaToTinyMCE(id);
-                    focusMCE(id);
-                    setMarkAsBlankLabel();
-            }
-    });
-
-      /*  Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+        Scheduler.get().scheduleDeferred(new ScheduledCommand(){
 			@Override
 			public void execute() {
 				setWidth("100%");
                 setTextAreaToTinyMCE(id);
                 setMarkAsBlankLabel();
 			}
-        });*/
+        });
     }
 
 

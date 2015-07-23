@@ -76,7 +76,7 @@ import com.google.inject.Inject;
  */
 public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShareTabUiHandlers> implements IsCollectionShareTabView {
 
-	private static CollectionShareTabViewUiBinder uiBinder = GWT.create(CollectionShareTabViewUiBinder.class);
+	private static final CollectionShareTabViewUiBinder uiBinder = GWT.create(CollectionShareTabViewUiBinder.class);
 
 	@UiTemplate("CollectionShareTabView.ui.xml")
 	interface CollectionShareTabViewUiBinder extends UiBinder<Widget, CollectionShareTabView> {
@@ -93,7 +93,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	
 	FolderDo folderDo;
 
-	public static MessageProperties i18n = GWT.create(MessageProperties.class);
+	public static final MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private String shareUrl="";
 
@@ -108,7 +108,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	private static final String SHARABLE="anyonewithlink";
 	private static final String PUBLIC="public";
 	
-	private static String CONFIRM_MESSAGE = i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
+	private static final String CONFIRM_MESSAGE = i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
 
 	private Map<String, String> collectionShareMap=null;
 	private CollectionShareAlertPopup collectionShareAlertPopup;
@@ -231,11 +231,11 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 
 	@Override
 	public void setCollectionShareData(Map<String, String> shareUrlsList){
-		collectionShareMap=new HashMap<String,String>();
+		collectionShareMap=new HashMap<>();
 		if(shareUrlsList!=null){
-			shareBitlyUrl = shareUrlsList.get(ClientConstants.SHORTENURL).toString();
+			shareBitlyUrl = shareUrlsList.get(ClientConstants.SHORTENURL);
 			//shareUrl= shareUrlsList.get(ClientConstants.DECODERAWURL).toString();
-			embedurl=shareUrlsList.get(ClientConstants.EMBEDURLRAWURL).toString();
+			embedurl=shareUrlsList.get(ClientConstants.EMBEDURLRAWURL);
 			setIframeUrl(embedurl);		
 		}
 		collectionShareMap.put(i18n.GL0643_1(), shareUrl);
@@ -291,8 +291,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	public void onClickBitlyLink(ClickEvent clickEvent){
 		String shareTxt=shareTextArea.getText();
 		String linkUrl=bitlyLink.getText();
-		Iterator<String> keyIterator =null;
-		keyIterator=collectionShareMap.keySet().iterator();
+		Iterator<String> keyIterator = collectionShareMap.keySet().iterator();
 		while(keyIterator.hasNext()){
 			String key = keyIterator.next();
 			String value= collectionShareMap.get(key);
@@ -327,26 +326,26 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				@Override
 				public void onSuccess(List<ClassPageCollectionDo> result) {
 
-					if(result.size()!=0){
+					if(!result.isEmpty()){
 
-						StringBuffer sb = new StringBuffer();
+						StringBuilder sb = new StringBuilder();
 						for(int i=0;i<result.size();i++){
 							if (result.size() >1){
 								if(i==result.size()-1){
-									sb.append(" "+i18n.GL_GRR_AND()+" ");
+									sb.append(" ").append(i18n.GL_GRR_AND()).append(" ");
 								}else{
 									if (i==0){
 									}else{
-										sb.append(i18n.GL_GRR_COMMA()+" ");
+										sb.append(i18n.GL_GRR_COMMA()).append(" ");
 									}
 								}
 							}
 							sb.append(result.get(i).getTitle());
 						}
 						if(result.size()>1){
-							sb.append(" "+i18n.GL1154()+".");
+							sb.append(" ").append(i18n.GL1154()).append(".");
 						}else{
-							sb.append(" "+i18n.GL0102()+".");
+							sb.append(" ").append(i18n.GL0102()).append(".");
 						}
 						
 						 String titles=sb.toString();
