@@ -113,16 +113,12 @@ public class HomeBannerView extends BaseViewWithHandlers<HomeBannerUiHandlers> i
 		int num = 1;
 		int max = 4;
 		int min = 1;
-
 		// NOTE: Usually this should be a field rather than a method
 	    // variable so that it is not re-seeded every call.
 	    Random rand = new Random();
-
 	    // nextInt is normally exclusive of the top value,
 	    // so add 1 to make it inclusive
 	    num = rand.nextInt((max - min) + 1) + min;
-
-	    AppClientFactory.printInfoLogger("Random Nu : "+num);
 		return num;
 	}
 
