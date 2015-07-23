@@ -122,7 +122,6 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	public EditClassContentView() {
 		System.out.println("EditClassContentView");
 		setWidget(uiBinder.createAndBindUi(this));
-		scoreTextBox.setMaxLength(3);
 		setId();
 		saveBtn.setEnabled(false);
 		coursePanel.setVisible(false);
@@ -155,6 +154,8 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 				}
 			}
 		});
+		scoreTextBox.setMaxLength(3);
+		scoreTextBox.getElement().setAttribute("maxlength", "3");
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
 		createCourseBtn.addClickHandler(new AddCourseHandler());
 	}
