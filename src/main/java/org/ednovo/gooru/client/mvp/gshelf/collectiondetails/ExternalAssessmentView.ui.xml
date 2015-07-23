@@ -9,7 +9,7 @@
 		<uc:Paragraph>Assessment Title</uc:Paragraph>
 		<p>
 			<g:TextBox styleName="form-control"  ui:field="txtAssessmentTitle" maxLength="50"/>
-			<g:Label ui:field="lblErrorMessage"/>
+			<g:Label ui:field="lblErrorMessage" styleName="errorMessage"/>
 		 </p>
 		</div>
 		
@@ -17,7 +17,7 @@
 		<div class="assessmentURL">
 		<uc:Paragraph>Assessment URL</uc:Paragraph>
 		<p><g:TextBox styleName="form-control"  ui:field="txtAssessmentURL"/> 
-		<g:Label ui:field="lblErrorMessageForURL"/>
+		<g:Label ui:field="lblErrorMessageForURL" styleName="errorMessage"/>
 		</p>
 		</div>
 		

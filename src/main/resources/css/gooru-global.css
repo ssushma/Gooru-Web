@@ -66,6 +66,7 @@ a img {
 .errorMessage {
 	font-style:italic;
 	color:#FBB03B;
+	text-align: right;
 }
 
 button.primary, a.primary {
