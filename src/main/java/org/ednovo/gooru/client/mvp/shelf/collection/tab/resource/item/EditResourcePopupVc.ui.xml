@@ -268,9 +268,7 @@
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshMainContainer}">
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshContainer}">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshInnerContainer}">
-						<g:Label
-							styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionRefreshIcon}"
-							ui:field="refreshLbl"></g:Label>
+						<g:Label styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionRefreshIcon}"	ui:field="refreshLbl"></g:Label>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshText}" ui:field="refreshLblPanel"></g:HTMLPanel>
 				</g:HTMLPanel>
@@ -287,12 +285,10 @@
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="educationalTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 			<tinyMce:HTMLEventPanel styleName="{res.css.myEducationPanelInputDiv}" ui:field="educatioNalUseDropContainer">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
-						<g:HTMLPanel>
-							<g:HTMLPanel styleName="" ui:field="educationalpanel"></g:HTMLPanel>
-							<g:Label styleName="{res.css.resourceCategoryLabel}"  ui:field="resourceEducationalLabel"></g:Label>
+				<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText} dropdown">
+							<g:Anchor ui:field="resourceEducationalLabel" styleName="dropdown-toggle dropdownBorder"></g:Anchor>
+							<uc:UlPanel styleName=" dropdown-menu dropdownScroll"	ui:field="educationalUsePanel"></uc:UlPanel>
 						</g:HTMLPanel>
-					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.myEducationArrowleftContainer}">
 						<g:Label ui:field="educationalDropDownLbl"	styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
@@ -302,7 +298,7 @@
           </g:HTMLPanel>
         </g:HTMLPanel>
        
-		 <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="educationalUsePanel">
+		 <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="educationalUsePanelOld">
 			<g:HTMLPanel styleName="{res.css.myEducationEditDropdown}">
 				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="activityPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
@@ -393,12 +389,10 @@
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="momentsOfLearningTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 			<tinyMce:HTMLEventPanel ui:field="momentsOfLearningDropDownContianer" styleName="{res.css.myEducationPanelInputDiv}">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
-						<g:HTMLPanel>
-							<g:HTMLPanel styleName="" ui:field="momentsOfLearningpanel"></g:HTMLPanel>
-							<g:Label styleName="{res.css.resourceCategoryLabel}"  ui:field="resourcemomentsOfLearningLabel"></g:Label>
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}  dropdown">
+								<g:Anchor styleName="dropdown-toggle dropdownBorder"	ui:field="resourcemomentsOfLearningLabel"></g:Anchor>
+								<uc:UlPanel styleName=" dropdown-menu dropdownScroll"	ui:field="momentsOfLearningPanel"></uc:UlPanel>
 						</g:HTMLPanel>
-					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.myEducationArrowleftContainer}">
 						<g:Label ui:field="momentsOfLearningDropDownLbl" styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
@@ -408,7 +402,7 @@
           </g:HTMLPanel>
         </g:HTMLPanel>
        
-		 <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="momentsOfLearningPanel">
+		 <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="momentsOfLearningPanelOld">
 			<g:HTMLPanel styleName="{res.css.myEducationEditDropdown}">
 				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="preparingTheLearningPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
@@ -484,9 +478,8 @@
       	<g:HTMLPanel ui:field="accessHazardContainer">
       	 	 <tinyMce:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconAccessHazard"></tinyMce:HTMLEventPanel>
 		      <g:Label styleName="{res.css.accessHazard}" ui:field="accessHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="soundHazard"></g:Label>
+		    <g:HTMLPanel ui:field="hazardContainer"></g:HTMLPanel>
+		    
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
 		 </g:HTMLPanel>
       	 <!-- accessHazard End -->
@@ -510,6 +503,7 @@
 			      </g:HTMLPanel>
 		      </g:HTMLPanel>
       	 <!-- mediaLabel End -->
+      	 <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
       	  <!--moblieFriendly -->
       	   <g:HTMLPanel ui:field="mobileFriendlyContainer">
       	   <tinyMce:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMobileFriendly"></tinyMce:HTMLEventPanel>

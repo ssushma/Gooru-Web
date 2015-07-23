@@ -1359,7 +1359,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		for(int i=0;i<size;i++){
 			Label label=(Label)hazardContainer.getWidget(i);
 			if(label.getStyleName().contains("select")){
-				AppClientFactory.printInfoLogger("..................."+label.getElement().getId()+".................");
 				accessHazardsSelected.add(Integer.parseInt(label.getElement().getId()));
 			}
 			

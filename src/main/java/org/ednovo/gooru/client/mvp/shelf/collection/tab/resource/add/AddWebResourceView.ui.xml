@@ -262,8 +262,7 @@ s
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 					<tinyMce:HTMLEventPanel styleName="{res.css.myEducationPanelInputDiv}"
 						ui:field="educatioNalUseDropContainer">
-						<g:HTMLPanel
-							styleName="{res.css.myFolderCollectionCategoryDivText} dropdown">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText} dropdown">
 							<g:Anchor ui:field="resourceEducationalLabel" styleName="dropdown-toggle dropdownBorder"></g:Anchor>
 							<uc:UlPanel styleName=" dropdown-menu dropdownScroll"
 								ui:field="educationalUseOptionsContainer"></uc:UlPanel>
@@ -379,8 +378,7 @@ s
 
 					<g:ScrollPanel ui:field="spanelMediaFeaturePanel"
 						styleName="{res.css.scrollPanelContainerInstructional}">
-						<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"
-							styleName=""></g:HTMLPanel>
+						<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"></g:HTMLPanel>
 					</g:ScrollPanel>
 				</tinyMce:HTMLEventPanel>
 			</g:HTMLPanel>
