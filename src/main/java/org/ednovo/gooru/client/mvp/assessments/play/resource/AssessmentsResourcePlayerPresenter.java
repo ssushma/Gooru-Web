@@ -540,6 +540,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 			searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 			resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);
 			shelfMainPresenter.SetDefaultTypeAndVersion();
+			searchAddResourceToCollectionPresenter.getLoadingImage();
 			searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
