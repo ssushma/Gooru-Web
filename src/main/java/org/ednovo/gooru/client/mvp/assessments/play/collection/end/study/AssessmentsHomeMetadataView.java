@@ -118,13 +118,13 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
-		customizeCollectionBtn.setVisible(false);
+		customizeCollectionBtn.setVisible(true);
 
 		shareCollectionBtn.setText(i18n.GL0536());
 		shareCollectionBtn.getElement().setId("btnShareCollectionBtn");
 		shareCollectionBtn.getElement().setAttribute("alt",i18n.GL0536());
 		shareCollectionBtn.getElement().setAttribute("title",i18n.GL0536());
-		shareCollectionBtn.setVisible(false);
+		shareCollectionBtn.setVisible(true);
 
 		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
 		collectionGoal.getElement().setId("htmlCollectionGoal");
@@ -284,6 +284,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 								
 								getUiHandlers().setDefultVersionAndType();
 								remixPresenterWidget.DisableMyCollectionsPanelData(false);
+								remixPresenterWidget.getLoadingImage();
 								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
@@ -299,6 +300,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 						
 						getUiHandlers().setDefultVersionAndType();
 						remixPresenterWidget.DisableMyCollectionsPanelData(false);
+						remixPresenterWidget.getLoadingImage();
 						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
@@ -399,6 +401,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 			
 			getUiHandlers().setDefultVersionAndType();
 			remixPresenterWidget.DisableMyCollectionsPanelData(false);
+			remixPresenterWidget.getLoadingImage();
 			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 			remixPresenterWidget.getView().getAppPopUp().show();
 			isCustomizePopup = false;
