@@ -576,4 +576,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		getView().isFromCopyResource(isFromCopyResource);
 	}
 
+	@Override
+	public void getLoadingImage() {
+		getView().loadingImage();
+	}
+
 }

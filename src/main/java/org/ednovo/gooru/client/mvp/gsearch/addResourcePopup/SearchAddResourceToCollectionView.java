@@ -757,7 +757,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public Label getMycollectionsDefaultLbl() {
 		return myCollDefault;
 	}
-	
+	@Override
 	public Image loadingImage(){
 		Image loadingImage =  new Image();
 		loadingImage.setUrl(LOADER_IMAGE);
