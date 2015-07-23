@@ -750,15 +750,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         @Override
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> hazardsAndMediaMap) throws GwtException {
 		
 			categoryStr = categoryStr.trim();
 			NewResourceDo newResourceDo = new NewResourceDo();
 			newResourceDo.setId(idStr);
 			newResourceDo.setUrl(URLDecoder.decode(urlStr));
-
 			newResourceDo.setTitle(titleStr);
-
+			newResourceDo.setAccessHazardIds(hazardsAndMediaMap.get("hazard"));
+			newResourceDo.setMediaFeatureIds(hazardsAndMediaMap.get("media"));
 			if(standards!=null && standards.size()>0 ){
 			Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 			List<Integer> standardIds=new ArrayList<Integer>();
