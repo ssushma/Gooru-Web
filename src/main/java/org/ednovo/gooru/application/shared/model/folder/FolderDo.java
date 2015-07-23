@@ -75,6 +75,7 @@ public class FolderDo implements IsSerializable{
 	private List<CourseSubjectDo> standards;
 	private String languageObjective;
 	private String parentGooruOid;
+	private String isLoginRequired;
 	
 	public FolderDo(){}
 	
@@ -389,5 +390,13 @@ public class FolderDo implements IsSerializable{
 
 	public void setParentGooruOid(String parentGooruOid) {
 		this.parentGooruOid = parentGooruOid;
+	}
+
+	public String getIsLoginRequired() {
+		return isLoginRequired;
+	}
+
+	public void setIsLoginRequired(String isLoginRequired) {
+		this.isLoginRequired = isLoginRequired;
 	}
 }
