@@ -159,6 +159,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 		folderObj.setTitle(createOrUpDate.getTitle());
 		folderObj.setCollectionType(ASSESSMENTURL);
 		folderObj.setDescription(createOrUpDate.getDescription());
+		folderObj.setUrl(createOrUpDate.getUrl());
 		
 		if(getViewType().equalsIgnoreCase(FOLDER)){
 			AppClientFactory.getInjector().getfolderService().updateCollectionDetails(createOrUpDate,id, null,null, null, null, new AsyncCallback<Void>() {
