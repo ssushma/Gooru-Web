@@ -55,7 +55,8 @@ public class NewResourceDo extends ResourceDo {
 	private List<Integer> skillIds;
 	private List<Integer> standardIds;
 	private List<Integer> educationalUseIds; 
-
+	private List<Integer> accessHazardIds;
+	private List<Integer> mediaFeatureIds;
 
 	private ArrayList<String> host;
 	private String thumbnail;
@@ -198,6 +199,22 @@ public class NewResourceDo extends ResourceDo {
 
 	public void setHost(ArrayList<String> host) {
 		this.host = host;
+	}
+
+	public List<Integer> getAccessHazardIds() {
+		return accessHazardIds;
+	}
+
+	public void setAccessHazardIds(List<Integer> accessHazardIds) {
+		this.accessHazardIds = accessHazardIds;
+	}
+
+	public List<Integer> getMediaFeatureIds() {
+		return mediaFeatureIds;
+	}
+
+	public void setMediaFeatureIds(List<Integer> mediaFeatureIds) {
+		this.mediaFeatureIds = mediaFeatureIds;
 	}
 
 	

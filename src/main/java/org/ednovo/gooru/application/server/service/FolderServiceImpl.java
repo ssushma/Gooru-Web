@@ -600,7 +600,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
                 } else if (courseId != null && unitId == null) {
                     //Reorder units
                     url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA, courseId, collectionItemId);
-                } else if (courseId != null) {
+                } else if (courseId == null) {
                     //Reorder courses
                     url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA, collectionItemId);
                 }

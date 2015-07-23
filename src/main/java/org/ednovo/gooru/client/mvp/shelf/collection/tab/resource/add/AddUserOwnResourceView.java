@@ -130,7 +130,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel momentsOfLearningPanelOld,centuryBrowseContainer,loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+	@UiField HTMLPanel hazardContainer, momentsOfLearningPanelOld,centuryBrowseContainer,loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText,educationalContainer,
 	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaDropdownArrowConatainer,panelCategoryInputDiv,educationalUsePanelOld;
 	
@@ -1259,7 +1259,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 										
 										}
 										
-										String hazardArr[] = setAccessHazards();
+								/*		String hazardArr[] = setAccessHazards();
 										
 										if(hazardArr != null)
 										{
@@ -1267,7 +1267,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											{
 												tagList.add(hazardArr[i].toString());
 											}
-										}
+										}*/
 										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
 										{
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
@@ -2123,33 +2123,37 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	/*
 	 * method for select access hazards
 	 */
-	public String[] setAccessHazards()
+	public List<Integer> setAccessHazards()
 	{
 		String[] accessHazardsArr = null;
-		List<String> accessHazardsSelected = new ArrayList<String>();
-		
-		if(flashingHazard.getElement().getClassName().contains("select"))
-		{
+		List<Integer> accessHazardsSelected = new ArrayList<Integer>();
+		int size=hazardContainer.getWidgetCount();
+		for(int i=0;i<size;i++){
+			Label label=(Label)hazardContainer.getWidget(i);
+			if(label.getElement().getClassName().contains("select")){
+				accessHazardsSelected.add(Integer.parseInt(label.getElement().getId()));
+			}
+			
+		}
+
+/*		if(flashingHazard.getElement().getClassName().contains("select")){
 			String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
-			//String hazardsStr = flashingHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
 		if(motionSimulationHazard.getElement().getClassName().contains("select"))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
-			//String hazardsStr = motionSimulationHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
 		if(soundHazard.getElement().getClassName().contains("select"))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
-			//String hazardsStr = soundHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
-		
-		accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
-		setAdvancedAccessHazardStyles(accessHazardsArr.length);
-		return accessHazardsArr;
+*/
+		//accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
+		setAdvancedAccessHazardStyles(accessHazardsSelected.size());
+		return accessHazardsSelected;
 	}
 	
 	@UiHandler("flashingHazard")
@@ -2405,6 +2409,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	public void setData(List<ListValuesDo> listValuesDos,String type){
 	
+		if(type.equalsIgnoreCase("education")){
+			educationalUsePanel.clear();
+		}else if(type.equalsIgnoreCase("mLearning")){
+			momentsOfLearningPanel.clear();
+		}
+		
 		for(ListValuesDo listValuesDo:listValuesDos){
 			LiPanel liPanel=new LiPanel();
 			Anchor anchor=new Anchor();
@@ -2413,7 +2423,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			anchor.getElement().setId(listValuesDo.getId()+"");
 			liPanel.add(anchor);
 			if(type.equalsIgnoreCase("education")){
-				
 				educationalUsePanel.add(liPanel);
 				liPanel.addDomHandler(new EducationClickHandler(liPanel, anchor), ClickEvent.getType());
 			}else if(type.equalsIgnoreCase("mLearning")){
@@ -2536,4 +2545,51 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			}
 		});
 	}
+	public void setHazardData(List<ListValuesDo> hazards){
+		if(hazards!=null){
+			hazardContainer.clear();
+			for(ListValuesDo do1:hazards){
+				final Label label=new Label();
+				label.setText(do1.getName());
+				label.getElement().setId(do1.getId()+"");
+				label.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+						if(label.getStyleName().toString().contains("select"))
+						{
+							label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+						}
+						else
+						{
+							label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+						}
+						setAccessHazards();
+					}
+				});
+				hazardContainer.add(label);
+			}
+		}
+		
+	}
+	public void setHazard(){
+		AppClientFactory.getInjector().getResourceService().getAccessHazards(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				 setHazardData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+			}
+		});
+	}
+
+
+
 }
+
