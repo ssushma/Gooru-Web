@@ -150,7 +150,6 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final int selectedId,int resultscourseId) {
 		pnlGradeContainer.clear();
 		domainPaginationCourseId = resultscourseId;
-
 		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedId),"domain") {
 			@Override
 			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd) {
