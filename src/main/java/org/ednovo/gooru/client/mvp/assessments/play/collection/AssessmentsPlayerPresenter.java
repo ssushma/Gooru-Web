@@ -1257,9 +1257,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void setAddResourcesView(String collectionId,String resourceId){
-		addResourceContainerPresenter.setplayerStyle();
-		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(resourceId));
-		/*setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourceContainerPresenter,false);*/
+		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
