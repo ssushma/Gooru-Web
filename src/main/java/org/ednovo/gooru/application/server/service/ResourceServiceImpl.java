@@ -67,6 +67,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.application.shared.model.content.SearchRatingsDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.drive.ErrorDo;
@@ -297,6 +298,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_COLLECTION_RESOURCES, collectionGooruOid);
 		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.INCLUDU_ITEMS,GooruConstants.TRUE);
+		//Get last modified user details when collaborate
+		if(!skipCollectionItem){
+			params.put(GooruConstants.INCLUDE_LASTMODIFIED_USER,GooruConstants.TRUE);
+		}
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("get coll res url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -745,100 +750,126 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         @Override
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName, List<String> tagList) throws GwtException {
-		categoryStr = categoryStr.trim();
-		NewResourceDo newResourceDo = new NewResourceDo();
-		newResourceDo.setId(idStr);
-		newResourceDo.setUrl(URLDecoder.decode(urlStr));
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList) throws GwtException {
+		
+			categoryStr = categoryStr.trim();
+			NewResourceDo newResourceDo = new NewResourceDo();
+			newResourceDo.setId(idStr);
+			newResourceDo.setUrl(URLDecoder.decode(urlStr));
 
-		newResourceDo.setTitle(titleStr);
+			newResourceDo.setTitle(titleStr);
 
-		if(standards!=null && standards.size()>0 ){
-		Set<CodeDo> standardsDo=new HashSet<>();
-		for(CodeDo item:standards)
-		{
-			 CodeDo codeObj=new CodeDo();
-			 codeObj.setCode(item.getCode());
-			 codeObj.setCodeId(item.getCodeId());
-			 standardsDo.add(codeObj);
-		}
-		newResourceDo.setTaxonomySet(standardsDo);
-		}
+			if(standards!=null && standards.size()>0 ){
+			Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+			List<Integer> standardIds=new ArrayList<Integer>();
+			for(CodeDo item:standards)
+			{
+				/* CodeDo codeObj=new CodeDo();
+				 codeObj.setCode(item.getCode());
+				 codeObj.setCodeId(item.getCodeId());
+				 standardsDo.add(codeObj);*/
+				standardIds.add(item.getCodeId());
+			}
+			//newResourceDo.setTaxonomySet(standardsDo);
+			newResourceDo.setStandardIds(standardIds);
+			}
+			newResourceDo.setDescription(descriptionStr);
+			newResourceDo.setCategory(categoryStr);
+			newResourceDo.setStop(endTime);
 
-		newResourceDo.setDescription(descriptionStr);
-		newResourceDo.setCategory(categoryStr);
-		newResourceDo.setStop(endTime);
+			/*ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
+			checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
+			educationalOfObj.setSelected(true);
+			educationalOfObj.setValue(edcuationalUse);
+			arrayOfEducational.add(educationalOfObj);
+			if(!edcuationalUse.equalsIgnoreCase(CHOOSE))
+			newResourceDo.setEducationalUse(arrayOfEducational);*/
+			
+			List<Integer> educationalUseList=new ArrayList<Integer>();
+			if(edcuationalUse!=null&&!edcuationalUse.equalsIgnoreCase("")){
+				educationalUseList.add(Integer.parseInt(edcuationalUse));
+			}
+			
+			newResourceDo.setEducationalUseIds(educationalUseList);
+			
+			/*ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
+			checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
+			momentsOfObj.setSelected(true);
+			momentsOfObj.setValue(momentsOfLearning);
+			arrayOfMoments.add(momentsOfObj);
+			if(!momentsOfLearning.equalsIgnoreCase(CHOOSE))
+			newResourceDo.setMomentsOfLearning(arrayOfMoments);*/
+			List<Integer> momentoflearningList=new ArrayList<Integer>();
+			if(momentsOfLearning!=null&&!momentsOfLearning.equalsIgnoreCase("")){
+				momentoflearningList.add(Integer.parseInt(momentsOfLearning));
+				newResourceDo.setMomentsOfLearningIds(momentoflearningList);
+			}
+						
+			List<Integer> centurySkillsList=new ArrayList<Integer>();
+			if(centurySkills!=null){
+				for(StandardFo fo:centurySkills){
+					centurySkillsList.add(fo.getCodeId());
+				}
+			}
+			
+			
+			newResourceDo.setSkillIds(centurySkillsList);
+			
+			ResourceFormatDo resourceFormat = new ResourceFormatDo();
+			resourceFormat.setValue(categoryStr);
 
-		ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<>();
-		checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
-		educationalOfObj.setSelected(true);
-		educationalOfObj.setValue(edcuationalUse);
-		arrayOfEducational.add(educationalOfObj);
-		if(!edcuationalUse.equalsIgnoreCase(CHOOSE))
-		newResourceDo.setEducationalUse(arrayOfEducational);
+			newResourceDo.setResourceFormat(resourceFormat);
 
-		ArrayList<checkboxSelectedDo> arrayOfMoments = new ArrayList<>();
-		checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
-		momentsOfObj.setSelected(true);
-		momentsOfObj.setValue(momentsOfLearning);
-		arrayOfMoments.add(momentsOfObj);
-		if(!momentsOfLearning.equalsIgnoreCase(CHOOSE))
-		newResourceDo.setMomentsOfLearning(arrayOfMoments);
+			if (thumbnailImgSrcStr==null){
+				thumbnailImgSrcStr="";
+			}
 
+			if (urlStr!=null&&urlStr.indexOf("youtube") > 0){
+				newResourceDo.setThumbnail("");
+			}else{
+				newResourceDo.setThumbnail(thumbnailImgSrcStr);
+			}
+			if(hostName!=null){
+				ArrayList<String> hostArray= new ArrayList<String>();
+				hostArray.add(GOOGLE_DRIVE);
+				newResourceDo.setHost(hostArray);
+			}
+			Map<String,Object> resourceMap=new HashMap<String,Object>();
+			resourceMap.put(RESOURCE, newResourceDo);
 
-		ResourceFormatDo resourceFormat = new ResourceFormatDo();
-		resourceFormat.setValue(categoryStr);
+			if(tagList!=null && tagList.size()!=0 ){
+				resourceMap.put(RESOURCE_TAGS, tagList);
+			}
+			JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr);
+			Map<String, String> params = new LinkedHashMap<String, String>();
+			params.put(GooruConstants.TITLE, URLEncoder.encode(titleStr).toString());
+			params.put(GooruConstants.URL, urlStr);
+			params.put(GooruConstants.CATEGORY, categoryStr);
+			params.put(GooruConstants.DESCRIPTION, URLEncoder.encode(descriptionStr).toString());
+			params.put(GooruConstants.THUMBNAILIMGSRC, thumbnailImgSrcStr);
+			params.put(GooruConstants.STOP, String.valueOf(endTime));
+			String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 
-		newResourceDo.setResourceFormat(resourceFormat);
+			String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
 
-		if (thumbnailImgSrcStr==null){
-			thumbnailImgSrcStr="";
-		}
+			getLogger().info("Add new Web resource --- "+url);
+			getLogger().info("Pay load --- "+form);
 
-		if (urlStr!=null && urlStr.contains("youtube")){
-			newResourceDo.setThumbnail("");
-		}else{
-			newResourceDo.setThumbnail(thumbnailImgSrcStr);
-		}
-		if(hostName!=null){
-			ArrayList<String> hostArray= new ArrayList<>();
-			hostArray.add(GOOGLE_DRIVE);
-			newResourceDo.setHost(hostArray);
-		}
-		Map<String,Object> resourceMap=new HashMap<>();
-		resourceMap.put(RESOURCE, newResourceDo);
-
-		if(tagList!=null && !tagList.isEmpty() ){
-			resourceMap.put(RESOURCE_TAGS, tagList);
-		}
-		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr);
-		Map<String, String> params = new LinkedHashMap<>();
-		params.put(GooruConstants.TITLE, URLEncoder.encode(titleStr));
-		params.put(GooruConstants.URL, urlStr);
-		params.put(GooruConstants.CATEGORY, categoryStr);
-		params.put(GooruConstants.DESCRIPTION, URLEncoder.encode(descriptionStr));
-		params.put(GooruConstants.THUMBNAILIMGSRC, thumbnailImgSrcStr);
-		params.put(GooruConstants.STOP, String.valueOf(endTime));
-		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
-
-		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
-
-		getLogger().info("Add new Web resource --- "+url);
-		getLogger().info("Pay load --- "+form);
-
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try{
-			getLogger().info("response --- "+ jsonRep.getJsonObject().getString("uri"));
-			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
-			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
-			jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
-			getLogger().info("getURlresource --- "+getURL);
-		}catch(Exception e){
-			logger.error("Exception::", e);
-		}
-		return deserializeCollectionItem(jsonResponseRepget);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			try{
+				getLogger().info("response --- "+ jsonRep.getJsonObject().getString("uri").toString());
+				String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri").toString();
+				JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+				jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
+				getLogger().info("getURlresource --- "+getURL);
+			}catch(Exception e){
+				
+				logger.error("Exception::", e);
+			}
+			return deserializeCollectionItem(jsonResponseRepget);
+		
 	}
 	
 	@Override
@@ -2477,6 +2508,29 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_MOMENT_OF_LEARERNING,getLoggedInSessionToken());
 		getLogger().info("-- get Moment  of Learning -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
+		return listValues;
+	}
+	
+	@Override
+	public List<ListValuesDo> getMediaFeature()throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_MEDIA_FEATURES,getLoggedInSessionToken());
+		getLogger().info("-- get Media features -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		List<ListValuesDo> listValues = deserializeListValues(jsonRep);
+		return listValues;
+	}
+	
+	
+	@Override
+	public List<ListValuesDo> getAccessHazards()throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_ACCESS_HAZARD,getLoggedInSessionToken());
+		getLogger().info("-- get Access Hazards -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		List<ListValuesDo> listValues = deserializeListValues(jsonRep);

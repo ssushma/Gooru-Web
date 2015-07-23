@@ -48,18 +48,14 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
  */
 public interface IsEditClassContentView extends IsViewWithHandlers<EditClassContentViewUiHandler>{
 
-	void setNavigationTab();
-
 	void setClassData(ClasspageDo classpageDo);
 
 	void setUpdateClass(ClasspageDo result);
 
-	void getUnitListView(List<FolderDo> result);
-
-	void setLessonData(List<ClassLessonDo> result);
-
-	void setEmptyUnitListData();
-
 	void clearAllErrorLabel();
+
+	void setCourseData(FolderDo result);
+
+	void addCourseData();
 
 }

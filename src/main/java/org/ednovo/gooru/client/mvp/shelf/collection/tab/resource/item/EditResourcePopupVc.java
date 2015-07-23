@@ -1571,11 +1571,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			centuryPanel.clear();
 			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
 				 CodeDo codeObj=new CodeDo();
-				 codeObj.setCodeId(standardObj.getCodeId());
+				 codeObj.setCodeId(standardObj.getId());
 				 codeObj.setCode(standardObj.getLabel());
 				 standardsDo.add(codeObj);
-				 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
-				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
+				 centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
+				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"",""));
 			}
             updateCenturyAdvancedSetupStyle();
 		}

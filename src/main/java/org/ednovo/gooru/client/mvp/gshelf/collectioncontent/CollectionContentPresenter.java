@@ -122,19 +122,21 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	protected void onReveal(){
 		super.onReveal();
 		getView().onLoad();
-		getView().reset();
-	}
-
-	@Override
-	protected void onHide() {
-		super.onHide();
-		getView().onUnload();
 	}
 	
 	@Override
+	public void loadAddResourcePopup(){
+		AppClientFactory.printInfoLogger("loadAddResourcePopup");
+		addResourcePresenter.setCollectionDo(new CollectionDo());
+    	addResourcePresenter.setCollectionDoAndType(new CollectionDo(), "Question");
+    	addToPopupSlot(addResourcePresenter);
+    	addResourcePresenter.getView().hidePopUpStyle();
+	}
+
+	@Override
 	public void setData(final FolderDo folderDo) {
 		if(folderDo!=null){
-			AppClientFactory.getInjector().getResourceService().getCollection(folderDo.getGooruOid(),true, new SimpleAsyncCallback<CollectionDo>() {
+			AppClientFactory.getInjector().getResourceService().getCollection(folderDo.getGooruOid(),false, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					getView().setData(result,folderDo, RefreshType.INSERT);
@@ -208,6 +210,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
     public void addResourcePopup(CollectionDo collectionDo, String clickType) {
+		addResourcePresenter.getView().clearPopUpStyle();
     	addResourcePresenter.setCollectionDo(collectionDo);
     	addResourcePresenter.setCollectionDoAndType(collectionDo, clickType);
         addToPopupSlot(addResourcePresenter);
@@ -367,6 +370,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 	@Override
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo) {
+		 addResourcePresenter.getView().clearPopUpStyle();
 		 addResourcePresenter.setCollectionItemDo(collectionItemDo);
 		 addResourcePresenter.setCollectionDoAndType(null, "QuestionEdit");
 		 addToPopupSlot(addResourcePresenter);

@@ -52,6 +52,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemD
 import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
@@ -330,8 +331,9 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             $wnd.location.reload();
     }-*/;
 	
-	public void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards, String hostName,List<String> tagList) {
-		getResourceService().addNewResource("", collectionDo.getGooruOid(), urlStr, titleStr, descriptionStr, categoryStr, thumbnailImgSrcStr, endTime,edcuationalUse,momentsOfLearning,standards,hostName,tagList, getCollectionItemAsyncCallback());
+	public void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills, String hostName,List<String> tagList) {
+		AppClientFactory.printInfoLogger("addResource...................");
+		getResourceService().addNewResource("", collectionDo.getGooruOid(), urlStr, titleStr, descriptionStr, categoryStr, thumbnailImgSrcStr, endTime,edcuationalUse,momentsOfLearning,standards,centurySkills,hostName,tagList, getCollectionItemAsyncCallback());
 
 	}
 	
