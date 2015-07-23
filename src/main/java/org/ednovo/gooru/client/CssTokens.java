@@ -44,6 +44,8 @@ public interface CssTokens {
 	
 	String DISABLED="disabled";
 	
+	String GREYSTYLE="grey";
+	
 	String GREEN_STYLE = "green";
 	
 	String LIGHT_GREEN_STYLE = "lightgreen";

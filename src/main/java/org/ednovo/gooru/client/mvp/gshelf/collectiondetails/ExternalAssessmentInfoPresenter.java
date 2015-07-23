@@ -32,7 +32,6 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -159,7 +158,9 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 		folderObj.setTitle(createOrUpDate.getTitle());
 		folderObj.setCollectionType(ASSESSMENTURL);
-;
+		folderObj.setDescription(createOrUpDate.getDescription());
+		folderObj.setUrl(createOrUpDate.getUrl());
+		
 		if(getViewType().equalsIgnoreCase(FOLDER)){
 			AppClientFactory.getInjector().getfolderService().updateCollectionDetails(createOrUpDate,id, null,null, null, null, new AsyncCallback<Void>() {
 				@Override

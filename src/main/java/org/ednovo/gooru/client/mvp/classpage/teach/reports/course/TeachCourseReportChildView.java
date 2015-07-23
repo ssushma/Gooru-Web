@@ -37,18 +37,15 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -59,20 +56,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class TeachCourseReportChildView extends ChildView<TeachCourseReportChildPresenter> implements IsTeachCourseReportView {
 
-	@UiField HTMLPanel courseTable, reportContainer, noDataPanel, reportPanel;
+	@UiField HTMLPanel courseTable;
 	
-	@UiField Anchor studentAnr;
-	
-	@UiField Label notePanel;
-	
-	@UiField Image studentImage;
-
-	@UiField Button connectCourseBtn,addStudentBtn;
-	
-	@UiField InlineLabel courseHeaderLbl, courseTitleLbl;
-	
-	private static final String STUDENTIMAGE = "images/Classpage/studentsIco.png";
-
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static TeachCourseReportChildViewUiBinder uiBinder = GWT.create(TeachCourseReportChildViewUiBinder.class);
@@ -93,49 +78,6 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 	}
 	
 	private void setIds() {
-		reportContainer.setVisible(false);
-		noDataPanel.setVisible(false);
-		studentImage.setUrl(STUDENTIMAGE);
-		notePanel.setText(i18n.GL3422());
-		notePanel.getElement().setId("notePanelId");
-		connectCourseBtn.setText(i18n.GL3424());
-		connectCourseBtn.getElement().setId("connectCourseBtnId");
-		addStudentBtn.setText(i18n.GL3423());
-		addStudentBtn.getElement().setId("addStudentBtnId");
-		courseHeaderLbl.setText(i18n.GL0574());
-		courseHeaderLbl.getElement().setId("courseHeaderLblId");
-
-	}
-	
-	private void setMetaData(ClasspageDo classpageDo) {
-		String memberCountStr = classpageDo.getMemberCount();
-		int memberCount = 0;
-		if(memberCountStr!=null) {
-			memberCount = Integer.parseInt(memberCountStr);
-		}
-		if(memberCount>0&&classpageDo.getCourseGooruOid()!=null) {
-			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
-			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
-			if(classId!=null&&courseId!=null) {
-				getPresenter().getCourseMasteryData(classId, courseId);
-			}
-		} else {
-			if(memberCount==0&&classpageDo.getCourseGooruOid()==null) {
-				setVisibility(false, true, true, false, false);
-			} else if(memberCount>0&&classpageDo.getCourseGooruOid()==null){
-				setVisibility(true, false, true, false, false);
-			} else if(memberCount==0&&classpageDo.getCourseGooruOid()!=null){
-				setVisibility(false, true, false, true, true);
-			}
-		}
-	}
-	
-	private void setVisibility(boolean isStudentAnrVisible, boolean isAddStudentBtnVisible, boolean isConnectCourseBtnVisible, boolean isCourseHeaderLblVisible, boolean isCourseTitleLblVisible) {
-		studentAnr.setVisible(isStudentAnrVisible);
-		addStudentBtn.setVisible(isAddStudentBtnVisible);
-		connectCourseBtn.setVisible(isConnectCourseBtnVisible);
-		courseHeaderLbl.setVisible(isCourseHeaderLblVisible);
-		courseTitleLbl.setVisible(isCourseTitleLblVisible);
 	}
 	
 	@Override
@@ -184,16 +126,18 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 		
 		Label studentNameLbl = new Label("Student");
 		studentNameLbl.setStyleName("");
+		studentNameLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 		studentNameLbl.setWidth("150px");
 		courseTableWidget.setHeaderWidget(0, studentNameLbl);
 		
 		int columnCount = usageData.size();
 		
 		for(int headerColumnCount=0;headerColumnCount<columnCount;headerColumnCount++) {
-			HTML unitName = new HTML(usageData.get(headerColumnCount).getTitle());
+			String unitNameLbl = usageData.get(headerColumnCount).getTitle();
+			HTML unitName = new HTML(unitNameLbl);
 			unitName.setStyleName("myclasses-mastery-unit-cell-style");
 			unitName.setWidth("150px");
-			unitName.addClickHandler(new ClickUnitName(usageData.get(headerColumnCount).getGooruOId()));
+			unitName.addClickHandler(new ClickUnitName(usageData.get(headerColumnCount).getGooruOId(),"Unit "+(headerColumnCount+1)+" "+unitNameLbl));
 			courseTableWidget.setHeaderWidget(headerColumnCount+1, unitName);
 		}
 	}
@@ -216,17 +160,11 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 	  	table.destroy();
 	}-*/;
 
-	@Override
-	public void onLoad() {
-		super.onLoad();
-		//sortAndFixed();
-		reportPanel.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-100)+"px");
-	}
-	
 	public class ClickUnitName implements ClickHandler {
-		private String unitId = null;
-		public ClickUnitName(String unitId) {
+		private String unitId = null, unitName = null;
+		public ClickUnitName(String unitId, String unitName) {
 			this.unitId = unitId;
+			this.unitName = unitName;
 		}
 		
 		@Override
@@ -254,6 +192,12 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 		public void onClick(ClickEvent event) {
 			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(courseName, userName,gooruUId);
 		}
+	}
+
+	@Override
+	public void onLoad() {
+		super.onLoad();
+		courseTable.getElement().getParentElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-100)+"px");
 	}
 
 }

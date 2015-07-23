@@ -240,8 +240,8 @@ public class AssessmentsPlayerTocView extends BaseViewWithHandlers<AssessmentsPl
 			int widgetCount=navgationTocContainer.getWidgetCount();
 			for(int i=0;i<widgetCount;i++){
 				Widget widget=navgationTocContainer.getWidget(i);
-				if(widget instanceof TocResourceView){
-					TocResourceView resourceView=(TocResourceView)widget;
+				if(widget instanceof TocAssessmentsResourceView){
+					TocAssessmentsResourceView resourceView=(TocAssessmentsResourceView)widget;
 					if(collectionItemid.equals(resourceView.getCollectionItemId())){
 						selectedWidgetIndex=i;
 						resourceView.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().tocResourceSelected());

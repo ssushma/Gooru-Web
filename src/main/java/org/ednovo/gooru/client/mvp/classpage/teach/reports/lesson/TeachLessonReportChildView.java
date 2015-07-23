@@ -25,19 +25,13 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
-import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
-import org.ednovo.gooru.client.uc.SpanPanel;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
@@ -45,15 +39,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Gooru Team
@@ -61,13 +52,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class TeachLessonReportChildView extends ChildView<TeachLessonReportChildPresenter> implements IsTeachLessonReportView {
 
-	@UiField HTMLPanel lessonTablePanel, dashboardContainer;
-	
-	@UiField HTMLEventPanel allContentPanel;
-	
-	@UiField SpanPanel textLbl, collectionTitle;
-	
-	@UiField Button downloadLink, previewLink;
+	@UiField HTMLPanel lessonTablePanel;
 	
 	final AdvancedFlexTable lessonTablePanelWidget = new AdvancedFlexTable();
 	
@@ -75,12 +60,16 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	
 	private static final String RESOURCE = "resource";
 
-	private final String GREEN = "#3FC380 !important";
+	private final String COLLECTION_GREEN = "#bbd1b8 !important";
 	
-	private final String RED = "#EAB4B3 !important";
+	private final String COLLECTION_RED = "#EAB4B3 !important";
 	
-	private final String ORANGE = "#FEC956 !important";
+	private final String COLLECTION_ORANGE = "#ebb4b2 !important";
 	
+	private final String ASSESSMENT_GREEN = "#3fc380 !important";
+	
+	private final String ASSESSMENT_ORANGE = "#f1aa44 !important";
+
 	private final String WHITE = "#FFF";
 
 	private static final String VIEWRESPONSE = "View Answer";
@@ -103,26 +92,13 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
 		assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
 		collectionType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT,UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-		
-		if(collectionType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
-			previewLink.setText("Preview Collection");
-		} else {
-			previewLink.setText("Preview Assessment");
-		}
 		getPresenter().getLessonMasteryData(classId, courseId, unitId, lessonId, assessmentId, collectionType);
 	}
 	
 	@Override
 	public void setCollectionMasterytData(ArrayList<MasterReportDo> result) {
 		String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-		String title = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CONTENT_NAME, "My Content");
 		lessonTablePanel.clear();
-		collectionTitle.setText(title);
-		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
-			textLbl.setText("All Assessments");
-		} else {
-			textLbl.setText("All Collections");
-		}
 		setDataTable(result, contentView);
 	}
 	
@@ -144,15 +120,14 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	  	table.destroy();
 	}-*/;
 
-	@Override
-	public void onLoad() {
-		super.onLoad();
-		//sortAndFixed();
-		dashboardContainer.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-120)+"px");
-	}
-	
 	public void setDataTable(ArrayList<MasterReportDo> collectionProgressData, String contentView) {
 		try{
+			boolean isCollection = false;
+			String contentName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+			if(contentName.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+				isCollection = true;
+			}
+			
 			lessonTablePanel.clear();
 			final AdvancedFlexTable adTable=new AdvancedFlexTable();
 			adTable.getElement().setId("example");
@@ -162,7 +137,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			adTable.setHeaderWidget(0, title);
 			adTable.setHeaderWidget(1, new Label(i18n.GL2288()));
 			
-			int questionColumnIndex=0,resourceColumnIndex=0;
 			int noOfQuestions=0;
 
 			MasterReportDo defaultUserDataForUsers=null;
@@ -176,11 +150,9 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 					 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
 						 noOfQuestions++;
 					 }
-					 questionColumnIndex++;
 				}else{
-						HTML resourcePnl=new HTML(collectionProgressDataDo.getSequence()+":&nbsp;Resource");
-						adTable.setHeaderWidget(rowCount+1,resourcePnl);
-						resourceColumnIndex++;
+					HTML resourcePnl=new HTML(collectionProgressDataDo.getSequence()+":&nbsp;Resource");
+					adTable.setHeaderWidget(rowCount+1,resourcePnl);
 				}
 			}
 			if(defaultUserDataForUsers!=null){
@@ -197,11 +169,19 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			        			  int attemptCount=collectionProgressData.get(j).getUsageData().get(i).getAttempts();
 			        			  int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
 			        			  if(scoreValue>=1){
-									  color=GREEN;
+			        				  if(isCollection) {
+			        					  color = COLLECTION_GREEN;
+			        				  } else {
+			        					  color = ASSESSMENT_GREEN;
+			        				  }
 									  score++;
 			        			  }else{
 			        				  if(attemptCount>=1){
-										  color=ORANGE;
+				        				  if(isCollection) {
+				        					  color = COLLECTION_ORANGE;
+				        				  } else {
+				        					  color = ASSESSMENT_ORANGE;
+				        				  }
 									  } else {
 										  color=WHITE;
 										  Label answerlbl=new Label("--");
@@ -281,29 +261,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
 
-	@UiHandler("allContentPanel")
-	public void backToUnitView(ClickEvent event) {
-		Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
-		params.put(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW);
-		params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
-		params.remove(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS, params);
-	}
-	
-	@UiHandler("previewLink")
-	public void accessPlayer(ClickEvent event) {
-		Map<String,String> params = new LinkedHashMap<String,String>();
-		String token = PlaceTokens.ASSESSMENT_PLAY;
-		String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
-		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT,UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-		if(collectionType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
-			token = PlaceTokens.COLLECTION_PLAY;
-		}
-		params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, id);
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
-		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-	}
-	
 	public class StudentPlaySummary implements ClickHandler {
 		String userId = null, userName = null;
 		
@@ -314,7 +271,15 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(collectionTitle.getText(),userName,userId);
+			String contentName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CONTENT_NAME, "");
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(contentName,userName,userId);
 		}
 	}
+	
+	@Override
+	public void onLoad() {
+		super.onLoad();
+		lessonTablePanel.getElement().getParentElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-100)+"px");
+	}
+
 }

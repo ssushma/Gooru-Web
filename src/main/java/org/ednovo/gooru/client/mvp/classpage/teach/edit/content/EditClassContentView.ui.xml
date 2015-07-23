@@ -115,7 +115,7 @@
                <div class="textBoxDiv">
                   <g:TextBox styleName="form-control" ui:field="scoreTextBox"></g:TextBox><span>%</span>
                </div>
-               <g:Button styleName="grey" ui:field="saveBtn"></g:Button>
+               <g:Button styleName="primary" ui:field="saveBtn"></g:Button>
 			   <g:Label ui:field="saveLblText"></g:Label>
 			   <g:Label ui:field="errorLabel"></g:Label>
             </div>
