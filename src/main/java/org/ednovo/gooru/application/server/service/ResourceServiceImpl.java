@@ -988,10 +988,29 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 
 		newResourceDo.setResourceFormat(resourceFormat);
-		newResourceDo.setEducationalUse(collectionItemDo.getResource().getEducationalUse());
+		List<Integer> educationListId=new ArrayList<>();
+		for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
+			educationListId.add(checkboxSelectedDo.getId());
+		}
+		newResourceDo.setEducationalUseIds(educationListId);
+		//	newResourceDo.setEducationalUse(collectionItemDo.getEducationalUse());
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
-		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
-
+		List<Integer> momentOfLearningIdList=new ArrayList<>();
+		for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
+			momentOfLearningIdList.add(checkboxSelectedDo.getId());
+		}
+		newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
+		//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());
+		List<Integer> accessHardList=new ArrayList<>();
+		for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
+			accessHardList.add(selectedDo.getId());	
+		}
+		newResourceDo.setAccessHazardIds(accessHardList);
+		List<Integer> mediaFeaturesList=new ArrayList<>();
+		for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
+			mediaFeaturesList.add(do1.getId());
+		}
+		newResourceDo.setMediaFeatureIds(mediaFeaturesList);
 		Map<String,Object> resourceMap=new HashMap<String,Object>();
 		resourceMap.put(RESOURCE, newResourceDo);
 

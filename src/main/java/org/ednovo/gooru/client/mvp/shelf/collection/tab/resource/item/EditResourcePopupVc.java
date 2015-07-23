@@ -1689,12 +1689,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												
 											}
 											if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
-											{
-												
-												tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
-											
+											{	List<ListValuesDo> listValuesDos=new ArrayList<>();
+												ListValuesDo listValuesDo=new ListValuesDo();
+												String id=lblMediaPlaceHolder.getElement().getId();
+												if(id!=null&&!id.equalsIgnoreCase("")){
+													listValuesDo.setId(Integer.parseInt(id));
+												}
+												listValuesDo.setName(lblMediaPlaceHolder.getText());
+												listValuesDos.add(listValuesDo);
+												collectionItemDo.setMediaFeature(listValuesDos);
 											}
-										/*	String hazardArr[] = setAccessHazards();
+											
+											collectionItemDo.setAccessHazard(setAccessHazards());
+											/*	String hazardArr[] = setAccessHazards();
 											
 											if(hazardArr != null)
 											{
@@ -1704,9 +1711,18 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												}
 											}*/
 											if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
-											{
+											{	
+												ArrayList<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
+												
 												if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
-													tagList.add("Educational Use : "+resourceEducationalLabel.getText());
+													checkboxSelectedDo checkboxSelectedDo=new checkboxSelectedDo();
+													String id=resourceEducationalLabel.getElement().getId();
+													if(id!=null&&!id.equalsIgnoreCase("")){
+														checkboxSelectedDo.setId(Integer.parseInt(id));
+														checkboxSelectedDo.setName(resourceEducationalLabel.getText());
+													}
+													collectionItemDo.setEducationalUse(checkboxSelectedDos);
+													//tagList.add("Educational Use : "+resourceEducationalLabel.getText());
 												}
 											}
 											if (isValidate) {
@@ -2496,35 +2512,26 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		updateMobileFriendlyAdvancedStyles();
 	}
-	public List<Integer> setAccessHazards()
-	{int size=hazardContainer.getWidgetCount();
-	List<Integer> accessHazardsSelected = new ArrayList<Integer>();
+	public List<checkboxSelectedDo> setAccessHazards()
+	{
+		int size=hazardContainer.getWidgetCount();
+	List<checkboxSelectedDo> accessHazardsSelected = new ArrayList<checkboxSelectedDo>();
 
 	AppClientFactory.printInfoLogger("..........."+size);
 	for(int i=0;i<size;i++){
 		Label label=(Label)hazardContainer.getWidget(i);
 		if(label.getStyleName().contains("select")){
-			accessHazardsSelected.add(Integer.parseInt(label.getElement().getId()));
+			String id=label.getElement().getId();
+			if(id!=null&&!id.equalsIgnoreCase("")){
+				int idInt=Integer.parseInt(id);
+				checkboxSelectedDo checkboxSelectedDo=new checkboxSelectedDo();
+				checkboxSelectedDo.setId(idInt);
+				checkboxSelectedDo.setName(label.getText());
+				accessHazardsSelected.add(checkboxSelectedDo);
+			}
 		}
 		
 	}
-
-/*		if(flashingHazard.getElement().getClassName().contains("select")){
-		String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
-		accessHazardsSelected.add(hazardsStr);
-	}
-	if(motionSimulationHazard.getElement().getClassName().contains("select"))
-	{
-		String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
-		accessHazardsSelected.add(hazardsStr);
-	}
-	if(soundHazard.getElement().getClassName().contains("select"))
-	{
-		String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
-		accessHazardsSelected.add(hazardsStr);
-	}
-*/
-	//accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
 	setAdvancedAccessHazardStyles(accessHazardsSelected.size());
 	return accessHazardsSelected;
 	}
