@@ -645,6 +645,10 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}
 	}
 	
+	@Override
+	public void onLoad() {
+		getUiHandlers().loadAddResourcePopup();
+	}
 	/**
 	 * @function getCreatedTime 
 	 * 
