@@ -22,36 +22,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.classpage.teach.reports.unit;
+package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
-import java.util.ArrayList;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
-import org.ednovo.gooru.application.client.child.ChildPresenter;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-/**
- * @author Search Team
- * 
- */
-public class TeachUnitReportChildPresenter extends ChildPresenter<TeachUnitReportChildPresenter, IsTeachUnitReportView> implements TeachUnitReportPresenterUiHandlers{
+public class EmptyCollectionView extends Composite {
 
-	public TeachUnitReportChildPresenter(IsTeachUnitReportView childView) {
-		super(childView);
+	private static MyCollectionsListViewUiBinder uiBinder = GWT.create(MyCollectionsListViewUiBinder.class);
+
+	interface MyCollectionsListViewUiBinder extends UiBinder<Widget, EmptyCollectionView> {
+	}
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiField HTMLPanel pnlMainButtonsContainer;
+	@UiField Button addResourceBtn,addQuestionBtn;
+	
+
+	public EmptyCollectionView() {
+		initWidget(uiBinder.createAndBindUi(this));
+		pnlMainButtonsContainer.getElement().setId("GettingStartedBuildingCollection");
 	}
 
-	@Override
-	public void getUnitMasteryData(String classId, String courseId, String unitId, String collectionType) {
-		AppClientFactory.getInjector().getClasspageService().getUnitMasteryReport(classId, courseId, unitId, collectionType, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
-			@Override
-			public void onSuccess(ArrayList<PlanProgressDo> result) {
-				getView().setTableData(result);
-			}
-		});
+
+	public Button getAddResourceBtn() {
+		return addResourceBtn;
+	}
+
+
+	public void setAddResourceBtn(Button addResourceBtn) {
+		this.addResourceBtn = addResourceBtn;
+	}
+
+
+	public Button getAddQuestionBtn() {
+		return addQuestionBtn;
+	}
+
+
+	public void setAddQuestionBtn(Button addQuestionBtn) {
+		this.addQuestionBtn = addQuestionBtn;
 	}
 	
+	
+
 }

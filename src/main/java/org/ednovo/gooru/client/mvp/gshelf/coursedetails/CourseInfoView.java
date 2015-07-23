@@ -334,6 +334,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		this.courseObj=courseObj;
 		ulSelectedItems.clear();
 		selectedValues.clear();
+		removeGradeButtonStyleName();
 		btnK12.addStyleName(ACTIVE);
 		courseTitle.setText(courseObj==null?"":!courseObj.getTitle().equalsIgnoreCase(i18n.GL3347())?courseObj.getTitle():"");
 		audienceContainer.setFolderDetails(courseObj);

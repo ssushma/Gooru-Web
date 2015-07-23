@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -375,9 +376,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
+				long time = jsonRep.getJsonObject().isNull("lastModified")?0:jsonRep.getJsonObject().getLong("lastModified");
+				Date lastModifiedTime= new Date(time);
+				obj.setLastModified(lastModifiedTime);
 				obj.setCollaborator(jsonRep.getJsonObject().isNull("isCollaborator")?false:jsonRep.getJsonObject().getBoolean("isCollaborator"));
 				UserDo user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user"), UserDo.class);
 				obj.setUser(user);
+				UserDo lastUserModified=JsonDeserializer.deserialize(jsonRep.getJsonObject().isNull("lastUserModified")?"":jsonRep.getJsonObject().getString("lastUserModified"), UserDo.class);
+				obj.setLastModifiedUser(lastUserModified);
 				if(!jsonRep.getJsonObject().isNull("collectionItems")){
 				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
 				List<CollectionItemDo> collectionItems=new ArrayList<>();
@@ -2432,12 +2438,18 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public CollectionItemDo addCollectionItem(String collectionId,String resourceId) throws GwtException, ServerDownException {
+	public CollectionItemDo addCollectionItem(String collectionId,String resourceId,String type) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url="";
 		CollectionItemDo collectionItemDo= new CollectionItemDo();
 		getLogger().info("addCollectionItem collectionId::::::"+collectionId);
 		getLogger().info("addCollectionItem resourceId::::::"+resourceId);
-		String url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		getLogger().info("addCollectionItem type::::::"+type);
+		if("question".equalsIgnoreCase(type)){
+			 url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDQUESTION_COLLECTION,collectionId,resourceId);
+		}else{
+			 url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		}
 		getLogger().info("addCollectionItem post API call::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();

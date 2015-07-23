@@ -326,6 +326,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					getUiHandlers().setBreadCrumbs(null);
 					getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(), widgetType, null);
 				}
+				showLastEditCollaborater("", false);
 				//collectionListScrollpanel.getElement().setScrollTop(shelfTreeWidget.getAbsoluteTop()+shelfTreeWidget.getOffsetHeight());
 			}
 		});
@@ -1368,5 +1369,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	public TreeItem getCurrentEditingWidget() {
 //		TreeItem shelfTreeWidget = treeChildSelectedItem;
 		return treeChildSelectedItem;
+	}
+
+	@Override
+	public void showLastEditCollaborater(String lastEditedBy,
+			boolean hasLastModifiedUser) {
+		lblLastEditedBy.setText(lastEditedBy);	
+		lblLastEditedBy.setVisible(hasLastModifiedUser);	
 	}
 } 

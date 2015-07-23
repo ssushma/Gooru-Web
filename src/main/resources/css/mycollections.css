@@ -491,63 +491,63 @@ button.btn-disabled{
 }
 
 #gShelfMainContainer .folderLevel { /* grandparent level - default */
-    padding-left:80px;
+    padding-left:70px;
 }
 
 #gShelfMainContainer .folderLevel.parent {
-    padding-left:108px;
+    padding-left:98px;
 }
 
 #gShelfMainContainer .folderLevel.child {
-    padding-left:136px;
+    padding-left:126px;
 }
 
 #gShelfMainContainer .folderLevel.collectionChild {
-    padding-left:164px;
+    padding-left:154px;
 }
 #gShelfMainContainer .folderLevel.course{ /* grandparent level - default */
-    padding-left:80px;
+    padding-left:70px;
 }
 
 #gShelfMainContainer .folderLevel.unit {
-    padding-left:108px;
+    padding-left:98px;
 }
 
 #gShelfMainContainer .folderLevel.lesson {
-    padding-left:136px;
+    padding-left:126px;
 }
 
 #gShelfMainContainer .folderLevel.collectionChild {
-    padding-left:164px;
+    padding-left:154px;
 }
 
 /*////////////////////// positioning with folder icon ///////////////////*/
 
 
 #gShelfMainContainer .folderLevel { /* grandparent level - default */
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 23px 13px;
 }
 
 #gShelfMainContainer .folderLevel.course {
-    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 23px 13px;
 }
 #gShelfMainContainer .folderLevel.unit {
-    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 61px 13px;
+    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 51px 13px;
 }
 #gShelfMainContainer .folderLevel.lesson {
-    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 89px 13px;
+    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 79px 13px;
 }
 
 #gShelfMainContainer .folderLevel.parent {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 61px 13px;
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 51px 13px;
 }
 
 #gShelfMainContainer .folderLevel.child {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 89px 13px;
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 79px 13px;
 }
 
 #gShelfMainContainer .folderLevel.collectionChild {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 117px 13px;
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 107px 13px;
 }
 
 /*////////////////////// other images ///////////////////*/
@@ -978,6 +978,7 @@ button.btn-disabled{
 	font-weight:bold;
 	color:#515151;
 	margin-left: 26%;
+	word-break: break-all;
 }
 #gShelfCousesList .tableMainHeader p{
 	margin:0 0;
@@ -1413,9 +1414,9 @@ button.btn-disabled {
 }
 #gShelfMainContainer .lastEditedBy {
 	text-align: right;
-	margin: 7px 26px 0px 0px;
 	background: #ffffff;
 	font-size: 12px;
+	margin-top: -33px;
 }
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;
@@ -4597,3 +4598,162 @@ right:1px;
     background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
 }
 
+/* getting started for collection empty*/
+
+
+
+#GettingStartedBuildingCollection h2 {
+    color: #515151;
+    font-family: "Arvo",serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 30px 0 40px;
+    text-align: center;
+}
+#GettingStartedBuildingCollection .buildingCollectionSteps .stepsBlockInner {
+    display: inline-block;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+#GettingStartedBuildingCollection .buildingCollectionSteps .stepsBlockInner .numaricCircle::before {
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    content: "";
+    height: 35px;
+    left: 2px;
+    position: absolute;
+    top: 2px;
+    width: 35px;
+}
+#GettingStartedBuildingCollection .buildingCollectionSteps .stepsBlockInner .numaricCircle {
+    background: #4e9746 none repeat scroll 0 0;
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 20px;
+    height: 39px;
+    line-height: 40px;
+    margin-right: 12px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 39px;
+}
+
+#GettingStartedBuildingCollection .buildingCollectionSteps .stepsBlockInner .StepsContent {
+    display: inline-block;
+    vertical-align: middle;
+    width: 76%;
+}
+#GettingStartedBuildingCollection .buildingCollectionSteps .stepsBlockInner .StepsContent h3 {
+    color: #4e9746;
+    font-family: "Arvo",serif;
+    font-size: 20px;
+    margin: 0 0 5px;
+}
+#GettingStartedBuildingCollection .buildingCollectionSteps{
+	margin-left:12px;
+}
+#GettingStartedBuildingCollection .buildingCollectionSteps .resoursesbuttonGroup{
+	text-align:center;
+}
+#GettingStartedBuildingCollection .buildingCollectionSteps .resoursesbuttonGroup p{
+	margin-top:15px;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+ .folderBlockSitemap a {
+    display: table-cell;
+    padding: 16px 8px;
+    width: 1%;
+	text-align:center;
+}
+
+
+.folderBlockSitemap .AcItem {
+    text-align: center;
+}
+.deleteButton{
+	vertical-align:middle;
+}
+.menuLinks {
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+}
+.folderBlockSitemap .AcItem{
+	text-align:center !important;
+}
+.actionItems .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+/* Not Required Above CSS */
+
+
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 .folderBlockSitemap a {
+    display: table-cell;
+    padding: 16px 8px;
+    width: 1%;
+	text-align:center;
+}
+
+
+.folderBlockSitemap .AcItem {
+    text-align: center;
+}
+.deleteButton{
+	vertical-align:middle;
+}
+.menuLinks {
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+}
+.folderBlockSitemap .AcItem{
+	text-align:center !important;
+}
+.actionItems .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+/* Not Required Above CSS */
+
+
+
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+.folderBlockSitemap .menuLinks {
+    float: left;
+    width: 60%;
+}
+.folderBlockSitemap .AcItem {
+    float: left;
+    text-align: right;
+    width: 40%;
+}
+.folderBlockSitemap a{
+	padding:16px 14px;
+}
+.actionItems .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+/* Not Required Above CSS */
+
+
+
+.imgAlign{
+	text-align:center;
+}
+.imgAlign .img-responsive{
+	display:inline-block !important;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+	
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}

@@ -241,7 +241,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 		String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, "");
 		PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
 		request = request.with(UrlNavigationTokens.CLASSPAGEID, classpageId);
-		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
+		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_DASHBOARD);
 		request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS);
 		request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, cId);

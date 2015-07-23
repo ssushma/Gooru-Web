@@ -200,7 +200,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     
     void getCourseDataById(String courseID,AsyncCallback<FolderDo> callback) throws GwtException,ServerDownException;
     
-    void addCollectionItem(String collectionId, String resourceId,AsyncCallback<CollectionItemDo> callback)  throws GwtException, ServerDownException;
+    void addCollectionItem(String collectionId, String resourceId,String type,AsyncCallback<CollectionItemDo> callback)  throws GwtException, ServerDownException;
     
 	void updateTimeMetadata(String collectionItemId, String start, String stop, AsyncCallback<CollectionItemDo> callback);
 	void getEducationalUseList(AsyncCallback<List<ListValuesDo>> asyncCallback) throws  GwtException;

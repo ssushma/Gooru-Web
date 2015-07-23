@@ -89,8 +89,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	
 	private FolderDo collectionDo;
 	
-	@UiField HTML htmlToolTipContent;
-	
 	private List<FolderDo> folderListDoChild;
 
 	private ResourceDropController dropController;
@@ -166,10 +164,6 @@ public class ShelfTreeWidget extends FocusPanel {
 		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
 		titleLbl.getElement().setId("htmlTitleLbl");
 		panelToolTip.getElement().setId("pnlPanelToolTip");
-		htmlToolTipContent.getElement().setId("htmlHtmlToolTipContent");
-		htmlToolTipContent.setHTML(i18n.GL1395());
-		htmlToolTipContent.getElement().setAttribute("alt", i18n.GL1395());
-		htmlToolTipContent.getElement().setAttribute("title", i18n.GL1395());
 		titleFocPanel.addClickHandler(new ClickOnFolderItem());
 		titleFocPanel.addMouseOutHandler(new MouseOutHandler() {
 			@Override
@@ -252,12 +246,10 @@ public class ShelfTreeWidget extends FocusPanel {
 			if(nextLevel == 1) {
 				titleLbl.setWidth("138px");
 				titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-				htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 			} else if(nextLevel == 2) {
 				titleLbl.setWidth("111px");
 				titleFocPanel.addStyleName("parent");
 				titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-				htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 			} else if(nextLevel == 3) {
 				titleLbl.setWidth("82px");
 				titleFocPanel.addStyleName("child");
@@ -294,11 +286,9 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(nextLevel == 1) {
 			titleLbl.setWidth("138px");
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 2) {
 			titleLbl.setWidth("111px");
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
-			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 3) {
 			titleLbl.setWidth("82px");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
