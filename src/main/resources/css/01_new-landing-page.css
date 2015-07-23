@@ -360,9 +360,9 @@ body{
 
 .focusBlock{
 	position:relative;
-	margin-top:-300px;
+	margin-top:-169px;
 	z-index:89;
-	min-height: 255px;
+	min-height: 230px;
 }
 .focusBlock .panel-default{
 	border-color:#b1d2e7;
@@ -465,7 +465,7 @@ body{
 
 
 .categoriesBlock{
-	padding:30px 0 50px 0;
+	padding:0 0 50px 0;
 }
 
 
