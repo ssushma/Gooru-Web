@@ -71,6 +71,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	private boolean isCAAvailable =false;
 	private boolean isQuestionResource=false;
 	private boolean isUserOwnResource = false;
+	
+	private Integer courseList;
 
 	AddResourcePresenter addResourcePresenter=null;
 	ImageUploadPresenter imgUploadPresenter=null;
@@ -391,7 +393,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		myCollectionsRightClusterPresenter.getShelfMainPresenter().SetDefaultTypeAndVersion();
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
-		System.out.println("resource id-----"+collectionItem.getResource().getGooruOid());
 		resourceSearchResultDo.setGooruOid(collectionItem.getResource().getGooruOid());
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"coursebuilder",null);
 		searchAddResourceToCollectionPresenter.setCollectionsData(true);
