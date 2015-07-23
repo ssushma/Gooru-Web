@@ -95,10 +95,10 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	}
 
 	public void setIds(){
-		minmumScoreAnr.setText(i18n.GL3403());
-		minmumScoreAnr.getElement().setId("minmumAnrId");
-		minmumScoreAnr.getElement().setAttribute("alt",i18n.GL3403());
-		minmumScoreAnr.getElement().setAttribute("title",i18n.GL3403());
+		minmumScoreAnr.setText(i18n.GL3435());
+		minmumScoreAnr.getElement().setId("contentPacingId");
+		minmumScoreAnr.getElement().setAttribute("alt",i18n.GL3435());
+		minmumScoreAnr.getElement().setAttribute("title",i18n.GL3435());
 		
 		studentsAnr.setText("Students");
 		studentsAnr.getElement().setId("studentsAnrId");

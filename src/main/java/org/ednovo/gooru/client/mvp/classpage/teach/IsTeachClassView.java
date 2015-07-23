@@ -49,9 +49,4 @@ public interface IsTeachClassView extends IsViewWithHandlers<TeachClassViewUiHan
 		
 	void setNavaigationTab();
 
-	void setReportView();
-
-	void setReportVisibility(boolean isVisible);
-
-	
 }

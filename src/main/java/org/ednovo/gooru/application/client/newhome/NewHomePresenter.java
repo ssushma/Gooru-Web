@@ -308,7 +308,6 @@ public class NewHomePresenter extends BasePlacePresenter<IsNewHomeView, IsEditCl
 				if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
 					AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 				}
-				AppClientFactory.printInfoLogger("getPlaceManager().getRequestParameter(CALLBACK) : "+getPlaceManager().getRequestParameter(CALLBACK));
 				if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registration")) {
 					getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
 					parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
