@@ -71,6 +71,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	private boolean isCAAvailable =false;
 	private boolean isQuestionResource=false;
 	private boolean isUserOwnResource = false;
+	
+	private Integer courseList;
 
 	AddResourcePresenter addResourcePresenter=null;
 	ImageUploadPresenter imgUploadPresenter=null;
@@ -401,6 +403,11 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	public void disableCollabaratorOptions(boolean isHide) {
 		myCollectionsRightClusterPresenter.disableCollabaratorOptions(isHide);
+	}
+
+	@Override
+	public void showLastEditCollaborater(String lastEditedBy,boolean hasLastModifiedUser) {
+		myCollectionsRightClusterPresenter.getShelfMainPresenter().showLastEditCollaborater(lastEditedBy,hasLastModifiedUser);
 	}
 }
 

@@ -107,8 +107,7 @@
 						<g:HTMLPanel
 							styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
 							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
-								<g:HTMLPanel
-									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteImage}"
+								<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteImage}"
 									ui:field="image">
 								</g:HTMLPanel>
 							</g:HTMLPanel>
@@ -121,8 +120,7 @@
 					styleName="{res.css.myFolderCollectionFolderVideoOuterContainerRFormat}"
 					ui:field="textsResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
-						<g:HTMLPanel
-							styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
 							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
 								<g:HTMLPanel
 									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteText}"
@@ -451,6 +449,7 @@
 		<g:HTMLPanel ui:field="accessHazardContainer">
 			<panel:HTMLEventPanel styleName="{res.css.eHeader}"
 				ui:field="eHearderIconAccessHazard"></panel:HTMLEventPanel>
+				<g:HTMLPanel ui:field="hazardContainer"></g:HTMLPanel>
 			<g:Label styleName="{res.css.accessHazard}" ui:field="accessHazard"></g:Label>
 			<g:Label styleName="{res.css.li}" ui:field="flashingHazard"></g:Label>
 			<g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"></g:Label>

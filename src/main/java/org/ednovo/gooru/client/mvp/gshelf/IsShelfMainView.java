@@ -98,5 +98,8 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 
 	HTMLPanel getTitleIconContainer();
 
-	TreeItem getCurrentEditingWidget();  
+	TreeItem getCurrentEditingWidget();
+
+	void showLastEditCollaborater(String lastEditedBy,
+			boolean hasLastModifiedUser);  
 }

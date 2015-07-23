@@ -1413,9 +1413,9 @@ button.btn-disabled {
 }
 #gShelfMainContainer .lastEditedBy {
 	text-align: right;
-	margin: 7px 26px 0px 0px;
 	background: #ffffff;
 	font-size: 12px;
+	margin-top: -33px;
 }
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;

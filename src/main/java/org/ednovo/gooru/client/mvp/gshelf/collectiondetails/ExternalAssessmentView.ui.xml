@@ -22,7 +22,7 @@
 		</div>
 		
 		<div class="assessmentDescription">
-		<uc:Paragraph>Descrption</uc:Paragraph>
+		<uc:Paragraph>Description</uc:Paragraph>
 		<p><g:TextArea styleName="form-control" ui:field="txaAssessmentDescription"/>
 		<g:Label ui:field="lblErrorMessageForDesc"/></p>
 		</div>

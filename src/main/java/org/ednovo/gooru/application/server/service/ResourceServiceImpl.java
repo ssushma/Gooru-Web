@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -375,9 +376,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
+				long time = jsonRep.getJsonObject().isNull("lastModified")?0:jsonRep.getJsonObject().getLong("lastModified");
+				Date lastModifiedTime= new Date(time);
+				obj.setLastModified(lastModifiedTime);
 				obj.setCollaborator(jsonRep.getJsonObject().isNull("isCollaborator")?false:jsonRep.getJsonObject().getBoolean("isCollaborator"));
 				UserDo user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user"), UserDo.class);
 				obj.setUser(user);
+				UserDo lastUserModified=JsonDeserializer.deserialize(jsonRep.getJsonObject().isNull("lastUserModified")?"":jsonRep.getJsonObject().getString("lastUserModified"), UserDo.class);
+				obj.setLastModifiedUser(lastUserModified);
 				if(!jsonRep.getJsonObject().isNull("collectionItems")){
 				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
 				List<CollectionItemDo> collectionItems=new ArrayList<>();
@@ -750,16 +756,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         @Override
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> hazardsAndMediaMap) throws GwtException {
 		
-		try {
 			categoryStr = categoryStr.trim();
 			NewResourceDo newResourceDo = new NewResourceDo();
 			newResourceDo.setId(idStr);
 			newResourceDo.setUrl(URLDecoder.decode(urlStr));
-
 			newResourceDo.setTitle(titleStr);
-
+			newResourceDo.setAccessHazardIds(hazardsAndMediaMap.get("hazard"));
+			newResourceDo.setMediaFeatureIds(hazardsAndMediaMap.get("media"));
 			if(standards!=null && standards.size()>0 ){
 			Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 			List<Integer> standardIds=new ArrayList<Integer>();
@@ -866,16 +871,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
 				getLogger().info("getURlresource --- "+getURL);
 			}catch(Exception e){
-				e.printStackTrace();
+				
 				logger.error("Exception::", e);
 			}
 			return deserializeCollectionItem(jsonResponseRepget);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
 		
-		return null;
 	}
 	
 	@Override

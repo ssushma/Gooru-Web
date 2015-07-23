@@ -46,18 +46,6 @@ public class TeachUnitReportChildPresenter extends ChildPresenter<TeachUnitRepor
 
 	@Override
 	public void getUnitMasteryData(String classId, String courseId, String unitId, String collectionType) {
-		if(courseId!=null) {
-			AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classId, courseId, null, null, "plan", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
-				@Override
-				public void onSuccess(ArrayList<PlanProgressDo> dataList) {
-					getView().setMetadataContent(dataList);
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-					
-				}
-			});
-		}
 		AppClientFactory.getInjector().getClasspageService().getUnitMasteryReport(classId, courseId, unitId, collectionType, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
 			@Override
 			public void onSuccess(ArrayList<PlanProgressDo> result) {
