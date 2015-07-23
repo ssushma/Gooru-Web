@@ -404,5 +404,9 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		myCollectionsRightClusterPresenter.disableCollabaratorOptions(isHide);
 	}
 
+	@Override
+	public void showLastEditCollaborater(String lastEditedBy,boolean hasLastModifiedUser) {
+		myCollectionsRightClusterPresenter.getShelfMainPresenter().showLastEditCollaborater(lastEditedBy,hasLastModifiedUser);
+	}
 }
 

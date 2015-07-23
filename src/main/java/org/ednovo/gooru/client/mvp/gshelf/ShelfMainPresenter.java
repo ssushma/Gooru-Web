@@ -526,4 +526,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public TreeItem getEditingWidget() { 
 		return getView().getCurrentEditingWidget();
 	}
+
+	public void showLastEditCollaborater(String lastEditedBy,
+			boolean hasLastModifiedUser) {
+		getView().showLastEditCollaborater(lastEditedBy,hasLastModifiedUser);
+	}
 }

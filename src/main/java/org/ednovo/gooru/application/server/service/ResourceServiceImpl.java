@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -375,9 +376,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
+				long time = jsonRep.getJsonObject().isNull("lastModified")?0:jsonRep.getJsonObject().getLong("lastModified");
+				Date lastModifiedTime= new Date(time);
+				obj.setLastModified(lastModifiedTime);
 				obj.setCollaborator(jsonRep.getJsonObject().isNull("isCollaborator")?false:jsonRep.getJsonObject().getBoolean("isCollaborator"));
 				UserDo user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user"), UserDo.class);
 				obj.setUser(user);
+				UserDo lastUserModified=JsonDeserializer.deserialize(jsonRep.getJsonObject().isNull("lastUserModified")?"":jsonRep.getJsonObject().getString("lastUserModified"), UserDo.class);
+				obj.setLastModifiedUser(lastUserModified);
 				if(!jsonRep.getJsonObject().isNull("collectionItems")){
 				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
 				List<CollectionItemDo> collectionItems=new ArrayList<>();
