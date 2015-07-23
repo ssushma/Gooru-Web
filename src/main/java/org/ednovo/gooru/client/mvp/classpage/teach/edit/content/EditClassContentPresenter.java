@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
@@ -56,14 +57,13 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  */
 public class EditClassContentPresenter extends PresenterWidget<IsEditClassContentView> implements EditClassContentViewUiHandler {
 	
-	int offset=0;
-	
-	int limit=25;
+	AddCourseToClassPresenter addCourseToClassPresenter;
 	
 	@Inject
-	public EditClassContentPresenter(EventBus eventBus,IsEditClassContentView view){
+	public EditClassContentPresenter(EventBus eventBus,IsEditClassContentView view,AddCourseToClassPresenter addCourseToClassPresenter){
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.addCourseToClassPresenter=addCourseToClassPresenter;
 	}
 	
 	@Override
@@ -111,7 +111,7 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 	
 	@Override
 	protected void onReset() {
-		getView().setNavigationTab();
+		//getView().setNavigationTab();
 	}
 
 	public void setClassData(ClasspageDo classpageDo) {
@@ -157,7 +157,6 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 
 				@Override
 				public void onSuccess(List<ClassLessonDo> result) {
-					getView().setLessonData(result);
 				}
 			});
 		}else{
@@ -204,12 +203,23 @@ public class EditClassContentPresenter extends PresenterWidget<IsEditClassConten
 
 				@Override
 				public void onSuccess(List<FolderDo> result) {
-					getView().getUnitListView(result);
 				}
 			});
 		}else{
-			getView().setEmptyUnitListData();
 		}
-	} 
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassContentViewUiHandler#addCourseToClass()
+	 */
+	@Override
+	public void addCourseToClass() {
+		addCourseToClassPresenter.getUserShelfCourseData("", "class");
+		addCourseToClassPresenter.getView().getAppPopUp().show();
+		addCourseToClassPresenter.getView().getAppPopUp().center();
+		addCourseToClassPresenter.getView().getAppPopUp().setGlassEnabled(true);
+	}
+
+	 
 
 }

@@ -96,47 +96,19 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	@UiField InlineLabel titleLbl;
 	
-	/*@UiField InlineLabel markAllLbl,visiblLbl,hiddenLbl;
-	
-	
-	
-	@UiField HTMLPanel scoreContainer,contentSeetingsContainer;
-	
-	@UiField PPanel scorePanel,helpPanel,unitPanel,choseTxtPanel,noteTxtPanel;
-	
-	@UiField TextBox scoreTextBox;
-	
-	@UiField HTMLEventPanel unitList;
-	
-	@UiField PPanel lessonPanel,collectionTitlePanel,visiblePanel;
-	
-	@UiField HTMLPanel tableConatiner,unitsPanel;*/
-	
 	ClasspageDo classpageDo;
 	
-	//@UiField ListBox unitListBox;
-	
 	int miniScore;
-	/*
-	@UiField Label errorLabel,saveLblText,selectedLbl;
-	
-	@UiField ScrollPanel unitScrollPanel;*/
-	
+
 	String unitId;
 	
 	boolean hasClickedOnDropDwn = false;
-	
-	//@UiField CheckBox hiddenBox,makeAllVisChkBox;
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	List<Long> collectionIds = new ArrayList<Long>();
 	
 	List<ClassLessonDo> classLessonDos = new ArrayList<ClassLessonDo>();
-	
-	private int pageNum=1;
-	
-	private int pageSize=25;
 	
 	boolean visiblity;
 	
@@ -148,13 +120,14 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	}
 
 	public EditClassContentView() {
+		System.out.println("EditClassContentView");
 		setWidget(uiBinder.createAndBindUi(this));
-		//scoreTextBox.setMaxLength(3);
+		scoreTextBox.setMaxLength(3);
 		setId();
 		saveBtn.setEnabled(false);
 		coursePanel.setVisible(false);
 		saveBtn.addStyleName(CssTokens.DISABLED);
-	//	AppClientFactory.getEventBus().addHandler(SetCollectionTypeVisibilityEvent.TYPE, updateVisiblity);
+		errorLabel.setVisible(false);
 		scoreTextBox.addBlurHandler(new BlurHandler() {
 			
 			@Override
@@ -183,56 +156,11 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 			}
 		});
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
-		/*unitList.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				hasClickedOnDropDwn=true;
-				if (unitScrollPanel.isVisible()){
-					unitScrollPanel.setVisible(false);
-				}else{
-					unitScrollPanel.setVisible(true);
-				}
-			}
-		});
-		
-		ClickHandler rootHandler= new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				if(!hasClickedOnDropDwn){
-					unitScrollPanel.setVisible(false);
-				}else{
-					hasClickedOnDropDwn=false;
-					
-				}
-			}
-		};
-		
-		
-		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
-		
-		makeAllVisChkBox.addClickHandler(new UpdateAllVisiblityHandler());
-		unitScrollPanel.addScrollHandler(new ScrollDropdownListContainer());*/
-		
+		createCourseBtn.addClickHandler(new AddCourseHandler());
 	}
-	
-	/*SetCollectionTypeVisibilityHandler updateVisiblity = new SetCollectionTypeVisibilityHandler() {
-		
-		@Override
-		public void setCollectionTypeVisibility(long collectionId) {
-			ClassLessonDo classLessonDo = new ClassLessonDo();
-			classLessonDo.setCollectionId(collectionId);
-			classLessonDo.setVisibility(true);
-			List<ClassLessonDo> classLessonDos = new ArrayList<ClassLessonDo>();
-			classLessonDos.add(classLessonDo);
-			unitId=selectedLbl.getElement().getId();
-			getUiHandlers().updateCollectionOrAssignmentVisiblity(classLessonDos,unitId);
-		}
-	};*/
 	
 	@UiHandler("saveBtn")
 	public void saveClass(ClickEvent event){
-		ClasspageDo classpageDo = new ClasspageDo();
 		String score = Long.toString(miniScore);
 		saveLblText.setVisible(true);
 		saveBtn.setVisible(false);
@@ -254,13 +182,14 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
                     && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
                     && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
                 ((TextBox) event.getSource()).cancelKey();
-            }
-			if(event.getNativeEvent().getKeyCode() == 46){
+                
+            }else if(event.getNativeEvent().getKeyCode() == 46){
 				((TextBox) event.getSource()).cancelKey();
-			}
-			saveEnabled(true);
-			saveBtn.removeStyleName(CssTokens.DISABLED);
-			errorLabel.setVisible(false);
+			}else{
+            	saveEnabled(true);
+    			saveBtn.removeStyleName(CssTokens.DISABLED);
+    			errorLabel.setVisible(false);
+            }
 		}
 	}
 	
@@ -268,255 +197,88 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		saveBtn.setEnabled(isEnabled);
 	}
 	
-	public void setTabVisible(boolean visible){
-		//scoreContainer.setVisible(visible);
-		//contentSeetingsContainer.setVisible(!visible);
-	}
-	
-	@Override
-	public void setNavigationTab(){
-		String tabView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
-		if(tabView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE)){
-			setTabVisible(true);
-		}else if(tabView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS)){
-			setTabVisible(false);
-		}else{
-			setTabVisible(true);
-		}
-	}
-	
 	public void setId(){
-
-		/*scorePanel.setText(i18n.GL3407());
-		scorePanel.getElement().setId("scorePnlId");
-		scorePanel.getElement().setAttribute("alt",i18n.GL3407());
-		scorePanel.getElement().setAttribute("title",i18n.GL3407());*/
-		
-		/*helpPanel.setText(i18n.GL3408());
-		helpPanel.getElement().setId("helpPnlId");
-		helpPanel.getElement().setAttribute("alt",i18n.GL3408());
-		helpPanel.getElement().setAttribute("title",i18n.GL3408());*/
 		
 		saveBtn.setText(i18n.GL0141());
 		saveBtn.getElement().setId("saveBtnId");
 		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
 		saveBtn.getElement().setAttribute("title",i18n.GL0141());
 		
-		/*unitPanel.setText(i18n.GL3281());
-		unitPanel.getElement().setId("unitPanelId");
-		
-		scoreContainer.getElement().setId("scoreContainerId");
-		
-		choseTxtPanel.setText(i18n.GL3409());
-		choseTxtPanel.getElement().setId("choseTxtpanelId");
-		
-		noteTxtPanel.setText(i18n.GL3410());
-		noteTxtPanel.getElement().setId("notetxtPanelId");
-		
-		markAllLbl.setText(i18n.GL3411());
-		markAllLbl.getElement().setId("marlAllLblId");
-		
-		visiblLbl.setText(i18n.GL3412());
-		visiblLbl.getElement().setId("visibleLblId");
-		
-		hiddenLbl.setText(i18n.GL3413());
-		hiddenLbl.getElement().setId("hiddenLblId");
-		
-		lessonPanel.setText(i18n.GL0910());
-		lessonPanel.getElement().setId("lessonPanelId");
-		
-		collectionTitlePanel.setText(i18n.GL3414());
-		collectionTitlePanel.getElement().setId("collectionTitlePanelId");
-		
-		visiblePanel.setText(i18n.GL3415());
-		visiblePanel.getElement().setId("visibliePanelId");*/
-		
 		errorLabel.getElement().setId("errorLblId");
 		saveLblText.setText(i18n.GL3426());
 		saveLblText.getElement().setId("saveLblTxtId");
-		
 		saveLblText.setVisible(false);
-		/*unitScrollPanel.setVisible(false);
 		
-		hiddenBox.setEnabled(false);
-		hiddenBox.getElement().getStyle().setCursor(Cursor.DEFAULT);*/
 	}
 	@Override
 	public void setClassData(ClasspageDo classpageDo) {
 		this.classpageDo=classpageDo;
 		this.visiblity=classpageDo.isVisibility();
 		if(classpageDo.getMinimumScore() >0){
-			//scoreTextBox.setText(classpageDo.getMinimumScore()+"");
+			scoreTextBox.setText(classpageDo.getMinimumScore()+"");
 		}else{
-			//scoreTextBox.setText("");
+			scoreTextBox.setText("0");
 		}
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setUpdateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
-	 */
-	@Override
-	public void setUpdateClass(ClasspageDo result) {
-		throw new RuntimeException("Not implemented");
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#getUnitListView(java.util.List)
-	 */
-	@Override
-	public void getUnitListView(List<FolderDo> result) {
-		throw new RuntimeException("Not implemented");
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setLessonData(java.util.List)
-	 */
-	@Override
-	public void setLessonData(List<ClassLessonDo> result) {
-		throw new RuntimeException("Not implemented");
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setEmptyUnitListData()
-	 */
-	@Override
-	public void setEmptyUnitListData() {
-		throw new RuntimeException("Not implemented");
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#clearAllErrorLabel()
-	 */
-	@Override
-	public void clearAllErrorLabel() {
-		throw new RuntimeException("Not implemented");
-	}
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setUpdateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
-	/*@Override
+	@Override
 	public void setUpdateClass(ClasspageDo result) {
 		classpageDo=result;
 		saveLblText.setVisible(false);
 		saveBtn.setVisible(true);
 	}
 
-	 (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#getUnitListView(java.util.List)
-	 
-	@Override
-	public void getUnitListView(List<FolderDo> result) {
-		if(result.size() > 0){
-			unitId = result.get(0).getGooruOid();
-			unitsPanel.clear();
-			for(int i=0;i<result.size();i++){
-				Label label = new Label();
-				
-				final String unitId = result.get(i).getGooruOid();
-				final String unitName = result.get(i).getTitle();
-				
-				label.setText(unitName);
-				label.getElement().setId(unitId);
-				label.addStyleName("unitStyle");
-				label.addClickHandler(new ClickHandler() {
-					
-					@Override
-					public void onClick(ClickEvent event) {
-						hasClickedOnDropDwn=false;
-						selectedLbl.setText(unitName);
-						selectedLbl.getElement().setId(unitId);
-						getUiHandlers().getLessonList(unitId);
-					}
-				});
-				unitsPanel.add(label);
-				unitListBox.addItem(unitName, unitId);
-			}
-			selectedLbl.setText(result.get(0).getTitle());
-			selectedLbl.getElement().setId(unitId);
-		}
-		getUiHandlers().getLessonList(unitId);
-	}
-
-	 (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setLessonData(java.util.List)
-	 
-	@Override
-	public void setLessonData(List<ClassLessonDo> result) {
-		tableConatiner.clear();
-		if (result.size()>0) {
-			for(int i=0; i<result.size() ;i++){
-				ClassLessonDo classLessonDo = result.get(i);
-				EditClassLessonView editClassLessonView = new EditClassLessonView(classLessonDo,i+1);
-				tableConatiner.add(editClassLessonView);
-			}
-		}else{
-			Label label = new Label();
-			label.setText("No Lessons Found");
-			label.addStyleName("errorMessage");
-			label.getElement().getStyle().setPadding(50, Unit.PX);
-			label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-			
-			tableConatiner.add(label);
-		}
-	}
-	
-	private class UpdateAllVisiblityHandler implements ClickHandler{
-		 (non-Javadoc)
-		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 
-		@Override
-		public void onClick(ClickEvent event) {
-			int widgetCount = tableConatiner.getWidgetCount();
-			for(int i=0;i<widgetCount;i++){
-				final EditClassLessonView panelContainer = (EditClassLessonView) tableConatiner.getWidget(i);
-				int checkBoxCount = panelContainer.getRowContainer().getWidgetCount();
-				for(int k =0;k<checkBoxCount;k++){
-					ClassLessonDo classLessonDo = new ClassLessonDo();
-					final EditClassCollectionWidget checkBoxContainer = (EditClassCollectionWidget) panelContainer.getRowContainer().getWidget(k);
-					checkBoxContainer.setChecked();
-					classLessonDo.setCollectionId(checkBoxContainer.getCollectionId());
-					classLessonDo.setVisibility(true);
-					classLessonDos.add(classLessonDo);
-				}
-			}
-			getUiHandlers().updateCollectionOrAssignmentVisiblity(classLessonDos, unitId);
-		}
-		
-	}
-	
-	private class ScrollDropdownListContainer implements ScrollHandler{
-		@Override
-		public void onScroll(ScrollEvent event) {
-			if((unitScrollPanel.getVerticalScrollPosition() == unitScrollPanel.getMaximumVerticalScrollPosition())){
-					//getUiHandlers().getUnitList((pageNum*pageSize)-1, pageSize);
-				}
-			}
-	}
-
-	 (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setEmptyUnitListData()
-	 
-	@Override
-	public void setEmptyUnitListData() {
-		selectedLbl.setText("Unit");
-		unitScrollPanel.clear();
-		Label label = new Label();
-		label.setText("No Lessons Found");
-		label.addStyleName("errorMessage");
-		label.getElement().getStyle().setPadding(50, Unit.PX);
-		label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-		tableConatiner.clear();
-		tableConatiner.add(label);
-	}
-
-	 (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#clearAllErrorLabel()
-	 
 	@Override
 	public void clearAllErrorLabel() {
 		errorLabel.setVisible(false);
 		setClassData(classpageDo);
-	}*/
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#setCourseData(org.ednovo.gooru.application.shared.model.folder.FolderDo)
+	 */
+	@Override
+	public void setCourseData(FolderDo result) {
+		coursePanelVisiblity(true);
+		if(result != null){
+			titleLbl.setText(result.getTitle());
+			titleLbl.getElement().setId(result.getGooruOid());
+			titleLbl.getElement().setAttribute("alt",result.getTitle());
+			titleLbl.getElement().setAttribute("title",result.getTitle());
+		}
+	}
+
+		
+	private void coursePanelVisiblity(boolean isVisible) {
+		createCourseBtn.setVisible(!isVisible);
+		scoreTextBox.setReadOnly(!isVisible);
+		coursePanel.setVisible(isVisible);
+		saveEnabled(false);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.content.IsEditClassContentView#addCourseData()
+	 */
+	@Override
+	public void addCourseData() {
+		coursePanelVisiblity(false);
+	}
+	
+	private class AddCourseHandler implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			getUiHandlers().addCourseToClass();
+		}
+		
+	}
+	
 }

@@ -443,12 +443,8 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
-		/*params.put("pageNum", "0");
-		params.put("pageSize", "10");
-		params.put("pos", "1");
-		if (!token.equalsIgnoreCase(PlaceTokens.EDIT_CLASS)){
-			params.put("tab","classList");
-		}*/
+		params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_SETTINGS);
+		params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE);
 		AppClientFactory.getPlaceManager().revealPlace(token, params);
 	}
 	/**
@@ -491,7 +487,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 											//final String classpageId = result.getUri();
 											String[] uri=result.getUri().split("/");
 											final String classpageId =  uri[uri.length-1];
-											String title = result.getName();
 											OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
 											newPopup.ClosePopup();
 												}

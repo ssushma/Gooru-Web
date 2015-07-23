@@ -66,8 +66,6 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	String classpageId="";
 	
-	private boolean isApiCalled = false;
-	
 	ClasspageDo classpageDo;
 	
 	boolean isReveal = false;
@@ -106,6 +104,10 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	protected void onReset() {
        loadNavigationPage();
        getView().setNavaigationTab();
+       String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+       if(courseId !=null && classpageDo != null && classpageDo.getCourseGooruOid() == null){
+    	   getClassDetails();
+       }
 	}
 	
 	public void getClassDetails(){
@@ -118,7 +120,6 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 				public void onSuccess(ClasspageDo result) {
 					classpageDo=result;
 					getView().setClassHeaderView(result);
-					//editClassStudentPresenter.setClassDetails(result);
 					editClassSettingsNavigationPresenter.setClassDetails(result); 
 					editClassSettingsNavigationPresenter.getCourseData();
 				}

@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddWebResourceView.EducationClickHandler;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -125,6 +126,7 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 				@Override
 				public void onSuccess(FolderDo result) {
 					getView().setCourseData(result);
+					editClassContentPresenter.getView().setCourseData(result);
 				}
 				
 				@Override
@@ -134,6 +136,7 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 			});
 		}else{
 			getView().setAddCourseData();
+			editClassContentPresenter.getView().addCourseData();
 		}
 		editClassStudentPresenter.getMembersDetails();
 		
