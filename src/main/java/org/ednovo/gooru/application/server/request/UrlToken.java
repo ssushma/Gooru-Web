@@ -518,6 +518,8 @@ public enum UrlToken {
 	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?"),
 
 	V1_GETCOLLECTIONMETADATA("/v1/collection/{1}/session/{0}/status?"),
+	
+	V1_OLDGETCOLLECTIONMETADATA("/v1/classpage/{0}.json?"),
 
 	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?"),
 
