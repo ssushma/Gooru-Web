@@ -394,6 +394,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		resourceSearchResultDo.setGooruOid(collectionItem.getResource().getGooruOid());
+		resourceSearchResultDo.setResourceFormat(collectionItem.getNewResourceFormat());
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"coursebuilder",null);
 		searchAddResourceToCollectionPresenter.setCollectionsData(true);
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
