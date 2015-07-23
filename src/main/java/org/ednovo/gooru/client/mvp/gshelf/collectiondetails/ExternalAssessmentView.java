@@ -1,11 +1,9 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -137,7 +135,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		CreateDo createOrUpDate=new CreateDo();
 		createOrUpDate.setTitle(txtAssessmentTitle.getText());
 		createOrUpDate.setUrl(txtAssessmentURL.getText());
-		createOrUpDate.setGoals(txaAssessmentDescription.getText());
+		createOrUpDate.setDescription(txaAssessmentDescription.getText());
 		createOrUpDate.setCollectionType(ASSESSMENTURL);
 		createOrUpDate.setSharing(selectedSharing);
 		createOrUpDate.setIsLoginRequired(isLoginRequired);
@@ -189,12 +187,11 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getUrl().trim(),isCreate,1,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==1){
-				if(createOrUpDate.getGoals()!=null)
-				getUiHandlers().checkProfanity(createOrUpDate.getGoals().trim(),isCreate,2,createOrUpDate,currentShelfTreeWidget);
+				if(createOrUpDate.getDescription()!=null)
+				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),isCreate,2,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==2){
-				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-				if(id!=null){
-					getUiHandlers().updateAssessmentDetails(createOrUpDate,id,isCreate,folderObj,currentShelfTreeWidget);
+				if(folderObj!=null && folderObj.getGooruOid()!=null){
+					getUiHandlers().updateAssessmentDetails(createOrUpDate,folderObj.getGooruOid(),isCreate,folderObj,currentShelfTreeWidget);
 				}else{
 					getUiHandlers().createAndSaveAssessmentDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
 				}
@@ -208,7 +205,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			this.folderObj = folderObj;
 			txtAssessmentTitle.setText(folderObj.getTitle());
 			txtAssessmentURL.setText(folderObj.getUrl());
-			txaAssessmentDescription.setText(folderObj.getGoals());
+			txaAssessmentDescription.setText(folderObj.getDescription());
 			String sharingVal=folderObj.getSharing();
 			if(sharingVal!=null){
 				if(PUBLIC.equalsIgnoreCase(sharingVal)){
