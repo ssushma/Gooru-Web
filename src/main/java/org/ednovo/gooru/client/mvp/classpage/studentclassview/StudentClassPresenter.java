@@ -159,6 +159,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			update.show();
 			update.center();
 		}
+		loadNavigationPage();
 	}
 
 	private void loadNavigationPage() {
@@ -225,7 +226,6 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 				} else {
 					getView().setProgressBarVisibility(true);
 				}
-				loadNavigationPage();
 			}
 			
 			@Override
