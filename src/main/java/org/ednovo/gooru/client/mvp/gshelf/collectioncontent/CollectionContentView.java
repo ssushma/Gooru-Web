@@ -118,6 +118,9 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	private String clickType;
 	String title,description,category,thumbnailUrl;
 	
+	String lastEditedBy;
+	public boolean hasLastModifiedUser=false;
+	
 	FolderDo folderDo;
 
 	Map<String, ContentResourceWidgetWithMove> moveWidgets=new HashMap<String, ContentResourceWidgetWithMove>();
@@ -149,29 +152,21 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		if (AppClientFactory.isContentAdmin() || listOfContent
 				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
 						.getGooruUId())){
-		    getUiHandlers().disableCollabaratorOptions(true);
+			getUiHandlers().disableCollabaratorOptions(true);
 		}else if(listOfContent.isIsCollaborator()){
-			 getUiHandlers().disableCollabaratorOptions(false);
+			getUiHandlers().disableCollabaratorOptions(false);
 		}
-		
-			if (listOfContent.getMeta()!=null /*&& listOfContent.getMeta().getCollaboratorCount() > 0 */&& listOfContent.getLastModifiedUser() != null){
-				String lastModifiedDate = listOfContent.getLastModified().toString() != null ? getTimeStamp(listOfContent.getLastModified().getTime()+"") : "";
-				String lastModifiedUser = listOfContent.getLastModifiedUser().getUsername() != null ?  listOfContent.getLastModifiedUser().getUsername() : "";
-				System.out.println("lastModifiedDate:"+lastModifiedDate);
-				System.out.println("lastModifiedUser:"+lastModifiedUser);
-				//lblLastEditedBy.setText(StringUtil.generateMessage(i18n.GL1112(), lastModifiedDate, lastModifiedUser));
-				//lblLastEditedBy.setVisible(lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("") ? true : false);
-				if (lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("")){
-					//panelActionItems.getElement().getStyle().setTop(111, Unit.PX);
-				}else{
-					//panelActionItems.getElement().getStyle().clearTop();
-				}
-			}
-			else{
-				//lblLastEditedBy.setVisible(false);
-				//panelActionItems.getElement().getStyle().clearTop();
-			}
-		
+		if (listOfContent!=null && listOfContent.getLastModifiedUser() != null){
+			String lastModifiedDate = listOfContent.getLastModified().toString() != null ? getTimeStamp(listOfContent.getLastModified().getTime()+"") : "";
+			String lastModifiedUser = listOfContent.getLastModifiedUser().getUsername() != null ?  listOfContent.getLastModifiedUser().getUsername() : "";
+			lastEditedBy = StringUtil.generateMessage(i18n.GL1112(), lastModifiedDate, lastModifiedUser);
+			hasLastModifiedUser = lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("") ? true : false;
+		}
+		else{
+			lastEditedBy="";
+			hasLastModifiedUser=false;
+		}
+		getUiHandlers().showLastEditCollaborater(lastEditedBy,hasLastModifiedUser);
 		lblTitle.setVisible(false);
 		if(folderDo.getType().equalsIgnoreCase("assessment") || folderDo.getType().equalsIgnoreCase("assessment/url")){
 			btnAddResources.setVisible(false);		
