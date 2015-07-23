@@ -1833,9 +1833,9 @@ th.headcol.whitebg {
 
 .myclasses-mastery-unit-cell-style {
 	width: 100px;
-	color: #4897ce;
+	color: #4897ce !important;
 	font-weight: bold;
-	text-decoration: underline;
+	text-decoration: underline !important;
 	cursor: pointer;
 	word-wrap: break-word;
 }
@@ -1885,6 +1885,9 @@ th.headcol.whitebg {
 }
 .margin-left-5 {
 	margin-left: 5px;
+}
+.padding-bottom-0 {
+	padding-bottom: 0px !important;
 }
 .font-style-normal {
 	font-style: normal;
@@ -2187,9 +2190,109 @@ svg.dotted.round {
 	top: 0px;
 	width: 32px;
 }
+.my-classes-assessment-menu {
+	display:inline-block;
+	background:#ffffff;
+}
+ .my-classes-attempt-menu{
+	display:inline-block;
+	background:#ffffff;
+	margin-top: 15px;
+}
+.my-classes-assessment-menu div{
+	display:inline-block;
+}
+.my-classes-assessment-menu div .iconImage{
+	font-size:12px;
+	color:#515151;
+	display:block;
+	padding:10px 12px 10px 45px;
+	line-height:10px;
+	position:relative;
+}
+.my-classes-assessment-menu div .iconImage .text:hover, .my-classes-assessment-menu div .iconImage .text:focus{
+	text-decoration:none;
+	opacity:1;
+}
+.my-classes-assessment-menu div .iconImage .text{
+	display:block;
+	font-size:85%;
+}
+.my-classes-assessment-menu div.assessmentIcon .iconImage{
+	background:url(../images/floderIcon-org.png) no-repeat 10px 8px;
+}
+.my-classes-assessment-menu  div.assessmentIcon .iconImage:hover{
+	color:#f1aa44;
+}
+.my-classes-assessment-menu div.collectionIcon .iconImage{
+	background:url(../images/floderIcon-blue.png) no-repeat 10px 8px;
+}
+.my-classes-assessment-menu  div.collectionIcon .iconImage:hover{
+	color:#85b9df;
+}
+.my-classes-assessment-menu div.assessmentIcon .iconImage.active:after, .my-classes-assessment-menu div.collectionIcon .iconImage.active:after{
+	border:2px solid #85b9df;
+	position:absolute;
+	content:"";
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	border-radius:4px 4px;
+}
+
+.my-classes-attempt-menu div{
+	display:inline-block;
+	margin-right:15px;
+}
+
+.my-classes-attempt-menu div span{
+	width:30px;
+	height:27px;
+	display:inline-block;
+	border-radius:3px 3px;
+	vertical-align:middle;
+	margin-right:5px;
+}
 
 
-/* for Webkit's CSS-only solution */
+.my-classes-attempt-menu div span.greenSqaure{
+	background:#bbd1b8;
+}
+
+.my-classes-attempt-menu div span.orgSqaure{
+	background:#ffe7c0;
+}
+
+.my-classes-attempt-menu div span.redSqaure{
+	background:#ebb4b2;
+}
+
+.my-classes-attempt-menu div span.orangeSquare{
+	background:#f1aa44;
+}
+
+.my-classes-attempt-menu div span.thinkGreenSquare{
+	background:#3fc380;
+}
+
+.my-classes-attempt-menu div strong{
+	display: inline-block;
+    font-weight: normal;
+    line-height: 14px;
+    vertical-align: middle;
+    width: 65px;
+	font-size:11px;
+}
+
+button.secondary.downloadBtnIcon {
+  background: #ddd url("../images/downloadIcon.png") no-repeat 7px 7px;
+  padding: 10px 14px 10px 48px;
+  position: relative;
+}
+button.primary.previewBtnIcon {
+	padding: 10px 14px 10px 15px;
+}
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     .custom-select select {
