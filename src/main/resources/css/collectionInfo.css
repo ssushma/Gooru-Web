@@ -71,3 +71,7 @@
   line-height: 120%;
   color: #999;
 }
+.accessHazardLbl{
+	display: inline-block;
+   margin-right: 5px;
+}

@@ -170,7 +170,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 
 	@UiField
-	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,contentPanel,textsText,audioText,urlContianer;//otherText
+	public HTMLPanel hazardContainer,addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,contentPanel,textsText,audioText,urlContianer;//otherText
 
 	@UiField
 	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent,errorContainer,errorContainerForCentury;//other
@@ -195,7 +195,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiField Button cancelResourcePopupBtnLbl,mobileYes,mobileNo,generateFromUrlBtn,uploadImageLbl;
 	
-	@UiField Label accessHazard,flashingHazard,motionSimulationHazard,soundHazard;
+	@UiField Label accessHazard;
 	
 	@UiField Label mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
 	
@@ -438,7 +438,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			public void showAndHideContainers() {
 			}
 		};
-		
+		setHazard();
 		advancedSetupContainer.add(addSetupAdvancedView);
 		generateFromUrlBtn.setText(i18n.GL3092());
 		disableGenerateBtn();
@@ -711,22 +711,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		//accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
-		flashingHazard.setText(i18n.GL3110());
-		flashingHazard.getElement().setId("lblFlashingHazard");
-		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
-		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
-		
-		motionSimulationHazard.setText(i18n.GL3111());
-		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
-		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL3111());
-		motionSimulationHazard.getElement().setAttribute("title",i18n.GL3111());
-		
-		soundHazard.setText(i18n.GL3112());
-		soundHazard.getElement().setId("lblSoundHazard");
-		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
-		soundHazard.getElement().setAttribute("title",i18n.GL3112());
-		
-
 		mediaLabel.setText(i18n.GL3094());
 		mediaLabel.getElement().setId("lblMediaFeature");
 		mediaLabel.getElement().setAttribute("alt","Media Feature");
@@ -1367,11 +1351,21 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	/*
 	 * method for select access hazards
 	 */
-	public String[] setAccessHazards(){
-		String[] accessHazardsArr = null;
-		List<String> accessHazardsSelected = new ArrayList<String>();
+	public List<Integer> setAccessHazards(){
+		int size=hazardContainer.getWidgetCount();
+		List<Integer> accessHazardsSelected = new ArrayList<Integer>();
 
-		if(flashingHazard.getElement().getClassName().contains("select")){
+		AppClientFactory.printInfoLogger("..........."+size);
+		for(int i=0;i<size;i++){
+			Label label=(Label)hazardContainer.getWidget(i);
+			if(label.getStyleName().contains("select")){
+				AppClientFactory.printInfoLogger("..................."+label.getElement().getId()+".................");
+				accessHazardsSelected.add(Integer.parseInt(label.getElement().getId()));
+			}
+			
+		}
+
+/*		if(flashingHazard.getElement().getClassName().contains("select")){
 			String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
@@ -1385,50 +1379,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
-
-		accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
-		setAdvancedAccessHazardStyles(accessHazardsArr.length);
-		return accessHazardsArr;
+*/
+		//accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
+		setAdvancedAccessHazardStyles(accessHazardsSelected.size());
+		return accessHazardsSelected;
 	}
 
-	@UiHandler("flashingHazard")
-	public void onflashingHazardClick(ClickEvent click){
-		if(flashingHazard.getStyleName().toString().contains("select"))
-		{
-			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
-	}
-
-	@UiHandler("motionSimulationHazard")
-	public void onmotionSimulationHazardClick(ClickEvent click){
-		if(motionSimulationHazard.getStyleName().toString().contains("select"))
-		{
-			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
-	}
-
-	@UiHandler("soundHazard")
-	public void onsoundHazardClick(ClickEvent click){
-		if(soundHazard.getStyleName().toString().contains("select"))
-		{
-			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
-	}	
+	
 	public abstract void resourceImageUpload();
 
 	public abstract void browseStandardsInfo();
@@ -1463,6 +1420,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 									if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
 
 										String urlStr = urlTextBox.getText();
+										Map<String,List<Integer>> hazardsAndMediaFeatures=new HashMap<>();
 										urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
 										urlStr = urlStr.replaceAll("feature=player_embedded&", "");
 										urlStr = URL.encode(urlStr);
@@ -1571,14 +1529,19 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											tagList.add("Mobile Friendly : "+mobileNo.getText());
 
 										}
+										List<Integer> mediaFeaturesList=new ArrayList<>();
 										if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
 										{
-
+											mediaFeaturesList.add(Integer.parseInt(lblMediaPlaceHolder.getElement().getId()));
 											tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
 
 										}
-
-										String hazardArr[] = setAccessHazards();
+										hazardsAndMediaFeatures.put("media",mediaFeaturesList);
+										hazardsAndMediaFeatures.put("hazard", setAccessHazards());
+										
+										
+										
+									/*//	String hazardArr[] = setAccessHazards();
 
 										if(hazardArr != null)
 										{
@@ -1590,7 +1553,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 												tagList.add(hazardArr[i].toString());
 											}
-										}
+										}*/
 										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
 										{
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
@@ -1613,10 +1576,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												hostName=GOOGLE_DRIVE;
 											}
 											if(collectionDo.getSharing()!=null && collectionDo.getSharing().equalsIgnoreCase("public")){
-												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,centuryDo,hostName,tagList);
+												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,centuryDo,hostName,tagList,hazardsAndMediaFeatures);
 											}
 											else{
-												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,centuryDo,hostName,tagList);
+												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,centuryDo,hostName,tagList,hazardsAndMediaFeatures);
 											}
 											}
 										}
@@ -1661,7 +1624,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *
 	 *
 	 */
-	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkill,String hostName,List<String> tagList);
+	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkill,String hostName,List<String> tagList,Map<String, List<Integer>> hazardAndMediaMap);
 	private class UrlBlurHandler implements BlurHandler {
 
 		@Override
@@ -1673,7 +1636,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			rightArrowLbl.setVisible(false);
 			leftArrowLbl.setVisible(false);
 			generateImageLbl.setVisible(true);
-
 			videoResourcePanel.removeStyleName("active");
 			resourceCategoryLabel.setText(i18n.GL0360());
 
@@ -3007,6 +2969,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	public void setData(List<ListValuesDo> listValuesDos,String type){
 	
+		if(type.equalsIgnoreCase("education")){
+			educationalUseOptionsContainer.clear();
+		}else if(type.equalsIgnoreCase("mLearning")){
+			momentsOfLearningPanel.clear();
+		}
 		for(ListValuesDo listValuesDo:listValuesDos){
 			LiPanel liPanel=new LiPanel();
 			Anchor anchor=new Anchor();
@@ -3139,5 +3106,49 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		});
 	}
 	
+	public void setHazardData(List<ListValuesDo> hazards){
+		if(hazards!=null){
+			hazardContainer.clear();
+			for(ListValuesDo do1:hazards){
+				final Label label=new Label();
+				label.setText(do1.getName());
+				label.setStyleName("accessHazardLbl");
+				label.getElement().setId(do1.getId()+"");
+				label.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+						if(label.getStyleName().toString().contains("select"))
+						{
+							label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+						}
+						else
+						{
+							label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+						}
+						
+					}
+				});
+				hazardContainer.add(label);
+			}
+		}
+		
+	}
+	public void setHazard(){
+		AppClientFactory.getInjector().getResourceService().getAccessHazards(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				 setHazardData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+			}
+		});
+	}
 }
 
