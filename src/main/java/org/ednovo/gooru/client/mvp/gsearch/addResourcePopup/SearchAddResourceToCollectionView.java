@@ -132,11 +132,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		remixPopupTabPnl.getElement().setId("gShelfMainContainer");
 		mycollectionsLbl.setText("My Collections");
 		mycontentLbl.setText("My Courses");
-		/*mycollectionsLbl.addStyleName("selected");
-		mycontentLbl.removeStyleName("selected");*/
 		urlparams= new HashMap<String, String>();
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		 String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+		if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+				|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+				|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3214());
 		}else{
@@ -757,7 +758,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public Label getMycollectionsDefaultLbl() {
 		return myCollDefault;
 	}
-	
+	@Override
 	public Image loadingImage(){
 		Image loadingImage =  new Image();
 		loadingImage.setUrl(LOADER_IMAGE);

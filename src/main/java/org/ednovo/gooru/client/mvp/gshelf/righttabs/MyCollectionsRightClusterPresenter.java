@@ -456,7 +456,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle) {
-		// TODO Auto-generated method stub
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
@@ -465,6 +465,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle) {
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(true);

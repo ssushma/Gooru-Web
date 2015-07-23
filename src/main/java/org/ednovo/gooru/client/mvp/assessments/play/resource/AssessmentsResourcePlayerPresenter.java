@@ -532,6 +532,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 			clearSlot(TAB_PRESENTER_SLOT);
 			showLoginPopupWidget(i18n.GL0590().toUpperCase());
 		}else{
+			clearSlot(TAB_PRESENTER_SLOT);
 			searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 			String resourcePlayId =AppClientFactory.getPlaceManager().getRequestParameter("id");
 			ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
@@ -540,26 +541,13 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 			searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 			resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);
 			shelfMainPresenter.SetDefaultTypeAndVersion();
+			searchAddResourceToCollectionPresenter.getLoadingImage();
 			searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
-			/*
-			if(collectionItemDo!=null){
-			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
-			}
-			addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
-			if(BrowserAgent.isDevice()){
-				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
-			}else{
-				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
-			}
-			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
-			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
-			new CustomAnimation(getView().getNavigationContainer()).run(400);
-			addResourceCollectionPresnter.getWidget().getElement().getStyle().clearPosition();
-		*/}
+		}
 	}
 	public void setResourceInfoView(String resourceId){
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);

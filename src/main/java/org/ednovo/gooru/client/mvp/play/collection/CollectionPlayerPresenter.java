@@ -1211,12 +1211,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	public void setAddResourcesView(String collectionId,String resourceId){
-		addResourceContainerPresenter.setplayerStyle();
-		//Window.alert("inside");
-		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(resourceId));
-		//setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourceContainerPresenter,false);
-
-		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
+		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
 		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
 		SearchResourceFormatDO searchResourceFormatDO = new SearchResourceFormatDO();
@@ -1224,6 +1219,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);
 		shelfMainPresenter.SetDefaultTypeAndVersion();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();

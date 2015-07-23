@@ -71,7 +71,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate,collectionLevelPnl;
+	@UiField HTMLPanel emptyContainerDiv,pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate,collectionLevelPnl;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion,createCollectionBtn,createAssessmentBtn;
@@ -102,6 +102,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
 		collectionLevelPnl.getElement().getStyle().setFloat(Float.RIGHT);
+
 		
 	}
 	/**
@@ -162,6 +163,23 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlCreateContainer.setVisible(false);
 		lblTitle.setVisible(false);
 		collectionLevelPnl.setVisible(false);
+		
+		if(folderDo!=null)
+		{
+		System.out.println("folder tye::"+folderDo.getType());
+		System.out.println("folder tye11::"+folderDo.getCollectionType());
+		}
+		
+		if(listOfContent.size()==0)
+		{
+			emptyContainerDiv.setVisible(true);
+			
+		}
+		else
+		{
+			emptyContainerDiv.setVisible(false);
+		}
+		
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
