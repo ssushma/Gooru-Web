@@ -24,7 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.reports;
 
+import java.util.ArrayList;
+
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -47,7 +53,7 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 
 	@Override
 	public void onReveal() {
-		/*getCourseData();*/
+		
 	}
 
 	@Override
@@ -56,8 +62,26 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 	}
 	
 	@Override
-	protected void onReset() {
-		getView().setReportView();
+	public void onReset() {
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
+		String assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
+		if(courseId!=null&&unitId!=null&&assessmentId==null) {
+			AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classId, courseId, null, null, "plan", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+				@Override
+				public void onSuccess(ArrayList<PlanProgressDo> dataList) {
+					getView().setMetadataContent(dataList);
+					getView().setReportView();
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+		} else {
+			getView().setReportView();
+		}
 	}
 	
 	public void  loadNavigationPage(){

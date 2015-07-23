@@ -255,7 +255,7 @@ public interface ResourceService extends BaseService {
 	 * @return CollectionDO
 	 * @throws GwtException
 	 */
-	public CollectionItemDo addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList) throws GwtException, ServerDownException;
+	public CollectionItemDo addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> hazardsAndMediaMap) throws GwtException, ServerDownException;
 	
 	
 	/**
@@ -437,7 +437,7 @@ public interface ResourceService extends BaseService {
 	
 	public FolderDo getCourseDataById(String courseId) throws GwtException,ServerDownException;
 	
-	public CollectionItemDo addCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
+	public CollectionItemDo addCollectionItem(String collectionId, String resourceId, String type)  throws GwtException, ServerDownException;
 	public CollectionItemDo updateTimeMetadata(String collectionItemId, String start, String stop)  throws GwtException, ServerDownException;
 	public List<ListValuesDo> getEducationalUseList() throws GwtException;
 	public List<ListValuesDo> getMomentOfLearning()throws GwtException ;
