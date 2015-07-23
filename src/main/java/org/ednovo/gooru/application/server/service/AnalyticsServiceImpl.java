@@ -382,7 +382,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		JsonRepresentation jsonRep = null;
 		CollectionSummaryMetaDataDo collectionSummaryMetaDataDo=null;
 		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",FIELDS_ASSIGNMENT_AVERAGE_DATA);
-		String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId);
+		String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_OLDGETCOLLECTIONMETADATA, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, urlDataParameterValue);
 		logger.info("getAssignmentAverageData url==>"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);

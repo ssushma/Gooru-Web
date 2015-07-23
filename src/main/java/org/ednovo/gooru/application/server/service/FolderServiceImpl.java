@@ -320,7 +320,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			params.put(GooruConstants.SHARING, sharingType);
 		}
 		if(collectionType!=null){
+			if(courseId!=null && unitId!=null && lessonId!=null){
 			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
+			}
 		}
 		if(isExcludeAssessment){
 			params.put(GooruConstants.EXCLUDE_TYPE, "assessment/url");
@@ -600,7 +602,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
                 } else if (courseId != null && unitId == null) {
                     //Reorder units
                     url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_UNIT_METADATA, courseId, collectionItemId);
-                } else if (courseId != null) {
+                } else if (courseId == null) {
                     //Reorder courses
                     url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COURSE_METADATA, collectionItemId);
                 }

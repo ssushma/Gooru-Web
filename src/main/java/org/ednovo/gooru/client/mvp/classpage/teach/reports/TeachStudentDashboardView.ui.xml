@@ -1,7 +1,81 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+    xmlns:span="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src=""></ui:style>
-	<g:HTMLPanel ui:field="bodyView"></g:HTMLPanel>
+	<g:HTMLPanel styleName="dashboardContainer geryBackgroundBody">
+		<g:HTMLPanel styleName="container" ui:field="topContainer">
+		   <div class="row">
+		      <div class="classProgressIndications teachReportUnitNavigationView no-gutter">
+		         <div class="col-md-6 col-sm-6">
+		            <panel:HTMLEventPanel ui:field="allContentPanel" styleName="studentCourseReportProgressHeader cursorPointer">
+		               <span:SpanPanel styleName="left-arrow" ui:field="headerLeftArrow"></span:SpanPanel> 
+		               <span:SpanPanel ui:field="textLbl"></span:SpanPanel>
+		            </panel:HTMLEventPanel>
+		         </div>
+				 <g:HTMLPanel styleName="col-md-6 col-sm-6" ui:field="unitLinks">
+				     <div class="scoreStatus">
+				         <div class="red">Below 60%</div>
+				         <div class="org">60%- 69%</div>
+				         <div class="yellowgreen">70%- 79%</div>
+				         <div class="lightgreen">80%- 89%</div>
+						 <div class="green">90%- 100%</div>
+					 </div>
+				 </g:HTMLPanel>
+		         <g:HTMLPanel styleName="col-md-6 col-sm-6" ui:field="scoreLinks">
+					<g:HTMLPanel styleName="my-classes-attempt-menu pull-right">
+						<g:HTMLPanel><span class="thinkGreenSquare"></span> <strong>Correct</strong></g:HTMLPanel>
+						<g:HTMLPanel><span class="orangeSquare"></span> <strong>InCorrect</strong></g:HTMLPanel>
+					</g:HTMLPanel>
+				 </g:HTMLPanel>
+				 <g:HTMLPanel styleName="col-md-6 col-sm-6" ui:field="collectionLinks">
+					<g:HTMLPanel styleName="my-classes-attempt-menu pull-right">
+					<g:HTMLPanel><span class="greenSqaure"></span> <strong>Correct on 1st attempt</strong></g:HTMLPanel>
+					<g:HTMLPanel><span class="orgSqaure"></span> <strong>Correct on next attempt</strong></g:HTMLPanel>
+					<g:HTMLPanel><span class="redSqaure"></span> <strong>Incorrect on last attempt</strong></g:HTMLPanel>
+					</g:HTMLPanel>
+				 </g:HTMLPanel>
+				 <div class="clearfix"></div>
+		      </div>
+		   </div>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="LearningMapContainer padding-bottom-0" ui:field="learningMapContainer">
+		   <div class="container">
+		      <g:HTMLPanel styleName="row" ui:field="heightPanel">
+				<g:HTMLPanel styleName="headerLinksContainer teachReportUnitNavigationView" ui:field="headerLinksContainer">
+				   <g:HTMLPanel styleName="col-md-7 col-xs-7 col-sm-6">
+				      <g:HTMLPanel styleName="headerBackLinkBox">
+				         <panel:HTMLEventPanel ui:field="currentContentPanel">
+				             <span:SpanPanel ui:field="currentContentName"></span:SpanPanel>
+				         </panel:HTMLEventPanel>
+				      </g:HTMLPanel>
+				   </g:HTMLPanel>
+					<g:HTMLPanel styleName="col-md-5 col-xs-5 col-sm-6" ui:field="assessmentLinks">
+						<g:HTMLPanel styleName="my-classes-assessment-menu pull-right">
+							<panel:HTMLEventPanel styleName="assessmentIcon cursorPointer" ui:field="assessmentIcon">
+							    <g:HTMLPanel styleName="iconImage" ui:field="assStylePanel">
+							        <g:InlineLabel>Assessments</g:InlineLabel>
+									<g:InlineLabel styleName="text">Score</g:InlineLabel>
+								</g:HTMLPanel>
+							</panel:HTMLEventPanel>
+							<panel:HTMLEventPanel styleName="collectionIcon cursorPointer" ui:field="collectionIcon">
+							    <g:HTMLPanel styleName="iconImage" ui:field="collStylePanel">
+							        <g:InlineLabel>Collections</g:InlineLabel>
+									<g:InlineLabel styleName="text">Time on Task</g:InlineLabel>
+							    </g:HTMLPanel>
+							</panel:HTMLEventPanel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="col-md-5 col-xs-5 col-sm-6" ui:field="previewLinks">
+						<g:HTMLPanel styleName="pull-right">
+							<g:Button styleName="secondary downloadBtnIcon" ui:field="btnDownload">Download Report</g:Button>
+							<g:Button styleName="primary previewBtnIcon" ui:field="btnPreview"></g:Button>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+				   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+				</g:HTMLPanel>
+		      </g:HTMLPanel>
+		   </div>
+		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="bodyView"></g:HTMLPanel>
+	</g:HTMLPanel>
 </ui:UiBinder>

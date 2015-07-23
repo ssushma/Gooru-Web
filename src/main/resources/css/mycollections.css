@@ -491,63 +491,63 @@ button.btn-disabled{
 }
 
 #gShelfMainContainer .folderLevel { /* grandparent level - default */
-    padding-left:80px;
+    padding-left:70px;
 }
 
 #gShelfMainContainer .folderLevel.parent {
-    padding-left:108px;
+    padding-left:98px;
 }
 
 #gShelfMainContainer .folderLevel.child {
-    padding-left:136px;
+    padding-left:126px;
 }
 
 #gShelfMainContainer .folderLevel.collectionChild {
-    padding-left:164px;
+    padding-left:154px;
 }
 #gShelfMainContainer .folderLevel.course{ /* grandparent level - default */
-    padding-left:80px;
+    padding-left:70px;
 }
 
 #gShelfMainContainer .folderLevel.unit {
-    padding-left:108px;
+    padding-left:98px;
 }
 
 #gShelfMainContainer .folderLevel.lesson {
-    padding-left:136px;
+    padding-left:126px;
 }
 
 #gShelfMainContainer .folderLevel.collectionChild {
-    padding-left:164px;
+    padding-left:154px;
 }
 
 /*////////////////////// positioning with folder icon ///////////////////*/
 
 
 #gShelfMainContainer .folderLevel { /* grandparent level - default */
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 23px 13px;
 }
 
 #gShelfMainContainer .folderLevel.course {
-    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 23px 13px;
 }
 #gShelfMainContainer .folderLevel.unit {
-    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 61px 13px;
+    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 51px 13px;
 }
 #gShelfMainContainer .folderLevel.lesson {
-    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 89px 13px;
+    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 79px 13px;
 }
 
 #gShelfMainContainer .folderLevel.parent {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 61px 13px;
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 51px 13px;
 }
 
 #gShelfMainContainer .folderLevel.child {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 89px 13px;
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 79px 13px;
 }
 
 #gShelfMainContainer .folderLevel.collectionChild {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 117px 13px;
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 107px 13px;
 }
 
 /*////////////////////// other images ///////////////////*/
@@ -978,6 +978,7 @@ button.btn-disabled{
 	font-weight:bold;
 	color:#515151;
 	margin-left: 26%;
+	word-break: break-all;
 }
 #gShelfCousesList .tableMainHeader p{
 	margin:0 0;
@@ -1413,9 +1414,9 @@ button.btn-disabled {
 }
 #gShelfMainContainer .lastEditedBy {
 	text-align: right;
-	margin: 7px 26px 0px 0px;
 	background: #ffffff;
 	font-size: 12px;
+	margin-top: -33px;
 }
 #gShelfCourseInfo .folderBlockSitemap {
 	background: #f6f6f6;
