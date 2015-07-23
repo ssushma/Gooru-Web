@@ -2419,12 +2419,18 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public CollectionItemDo addCollectionItem(String collectionId,String resourceId) throws GwtException, ServerDownException {
+	public CollectionItemDo addCollectionItem(String collectionId,String resourceId,String type) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url="";
 		CollectionItemDo collectionItemDo= new CollectionItemDo();
 		getLogger().info("addCollectionItem collectionId::::::"+collectionId);
 		getLogger().info("addCollectionItem resourceId::::::"+resourceId);
-		String url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		getLogger().info("addCollectionItem type::::::"+type);
+		if("question".equalsIgnoreCase(type)){
+			 url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDQUESTION_COLLECTION,collectionId,resourceId);
+		}else{
+			 url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		}
 		getLogger().info("addCollectionItem post API call::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();

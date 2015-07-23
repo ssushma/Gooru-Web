@@ -58,11 +58,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	
 	@UiField HTMLPanel floderTreeContainer,remixPopupTabPnl;
-	@UiField Anchor cancelResourcePopupBtnLbl;
+	@UiField Anchor cancelResourcePopupBtnLbl,mycollectionsLbl,mycontentLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
 	@UiField Label addtocollHeaderText,addingTextLbl,lblEmptyErrorMessage,lblError;
-	@UiField public Label mycollectionsLbl,mycontentLbl,myCollDefault;
+	@UiField public Label myCollDefault;
 	
 	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
@@ -152,8 +152,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			public void onClick(ClickEvent event) {
 				
 				urlparams.clear();
-				mycollectionsLbl.addStyleName("selected");
-				mycontentLbl.removeStyleName("selected");
+				mycollectionsLbl.addStyleName("active");
+				mycontentLbl.removeStyleName("active");
 				myCollDefault.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTreePanel.clear();
 				folderTreePanel.add(loadingImage());
@@ -179,8 +179,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			public void onClick(ClickEvent event) {
 				
 				urlparams.clear();
-				mycontentLbl.addStyleName("selected");
-				mycollectionsLbl.removeStyleName("selected");
+				mycontentLbl.addStyleName("active");
+				mycollectionsLbl.removeStyleName("active");
 				btnAddExisting.setEnabled(true);
 				btnAddExisting.setStyleName("primary");
 				myCollDefault.getElement().getStyle().setDisplay(Display.NONE);
@@ -730,8 +730,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			boolean isMoveSelected) {
 		this.isCopySelected=isCopySelected;
 		this.isMoveSelected=isMoveSelected;
-		mycollectionsLbl.removeStyleName("selected");
-		mycontentLbl.addStyleName("selected");
+		mycollectionsLbl.removeStyleName("active");
+		mycontentLbl.addStyleName("active");
 		isFromMyCourse=true;
 	}
 
@@ -766,12 +766,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 
 	@Override
-	public Label getMycollectionsLbl() {
+	public Anchor getMycollectionsLbl() {
 		return mycollectionsLbl;
 	}
 
 	@Override
-	public Label getMycontentLbl() {
+	public Anchor getMycontentLbl() {
 		return mycontentLbl;
 	}
 

@@ -596,3 +596,43 @@
 #gooruSearchMainContainer .btn-group:hover .dropdown-menu {
 	display: block;
 }
+ .myCourseContainer .myCousesTabMenu{
+	background:#ffffff;
+}
+ .myCourseContainer .myCousesTabMenu a{
+	color:#999999;
+	font-weight:bold;
+	display:table-cell;
+	width:49%;
+	overflow:hidden;
+	padding:15px 15px;
+	text-align:center;
+	border-right:1px solid #dddddd;
+	position:relative;
+	background: white;
+	box-shadow: none;
+}
+ .myCourseContainer .myCousesTabMenu a:hover, .myCourseContainer .myCousesTabMenu a:focus{
+	text-decoration:none;
+	color:#4e9746;
+	opacity:1;
+}
+ .myCourseContainer .myCousesTabMenu a.mycollectionMenu:hover, .myCourseContainer .myCousesTabMenu a.mycollectionMenu:focus{
+	text-decoration:none;
+	color:#1076bb;
+	opacity:1;
+}
+ .myCourseContainer .myCousesTabMenu a.mycourseMenu.active {
+  color: #4e9746;
+  border-bottom: 8px solid #4e9746;
+}
+ .myCourseContainer .myCousesTabMenu a.mycollectionMenu.active {
+  color: #1076bb;
+  border-bottom: 8px solid #1076bb;
+}
+
+
+
+
+
+
