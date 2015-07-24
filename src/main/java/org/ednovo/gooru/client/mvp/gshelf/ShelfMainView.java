@@ -1070,7 +1070,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
 
 			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) currentShelfTreeWidget.getParentItem().getWidget();
-			unitShelfTreeWidget.getCollectionDo().getSummary().setLessonCount(unitShelfTreeWidget.getElement().getChildCount());
+			unitShelfTreeWidget.getCollectionDo().getSummary().setLessonCount(unitShelfTreeWidget.getCollectionDo().getSummary().getLessonCount()+1);
 			
 			urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
 			urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get(O2_LEVEL));
