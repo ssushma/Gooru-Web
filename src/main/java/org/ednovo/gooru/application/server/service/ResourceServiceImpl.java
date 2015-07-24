@@ -1011,27 +1011,39 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 		newResourceDo.setResourceFormat(resourceFormat);
 		List<Integer> educationListId=new ArrayList<>();
-		for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
-			educationListId.add(checkboxSelectedDo.getId());
+		if(collectionItemDo.getEducationalUse()!=null){
+			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
+				educationListId.add(checkboxSelectedDo.getId());
+			}
 		}
+		
 		newResourceDo.setEducationalUseIds(educationListId);
 		//	newResourceDo.setEducationalUse(collectionItemDo.getEducationalUse());
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
 		List<Integer> momentOfLearningIdList=new ArrayList<>();
-		for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
-			momentOfLearningIdList.add(checkboxSelectedDo.getId());
+		if(collectionItemDo.getMomentsOfLearning()!=null){
+			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
+				momentOfLearningIdList.add(checkboxSelectedDo.getId());
+			}
 		}
+		
 		newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
 		//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());
 		List<Integer> accessHardList=new ArrayList<>();
-		for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
-			accessHardList.add(selectedDo.getId());	
+		if(collectionItemDo.getAccessHazard()!=null){
+			for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
+				accessHardList.add(selectedDo.getId());	
+			}
 		}
+	
 		newResourceDo.setAccessHazardIds(accessHardList);
 		List<Integer> mediaFeaturesList=new ArrayList<>();
-		for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
-			mediaFeaturesList.add(do1.getId());
+		if(collectionItemDo.getMediaFeature()!=null){
+			for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
+				mediaFeaturesList.add(do1.getId());
+			}
 		}
+		
 		newResourceDo.setMediaFeatureIds(mediaFeaturesList);
 		Map<String,Object> resourceMap=new HashMap<String,Object>();
 		resourceMap.put(RESOURCE, newResourceDo);

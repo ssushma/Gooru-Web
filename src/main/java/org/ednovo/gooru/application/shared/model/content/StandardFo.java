@@ -37,7 +37,21 @@ public class StandardFo implements Serializable {
 	private String label;
 	private String description;
 	private Integer id;
+	private String rootNodeId;
 	public StandardFo(){}
+
+
+	
+	public String getRootNodeId() {
+		return rootNodeId;
+	}
+
+
+
+	public void setRootNodeId(String rootNodeId) {
+		this.rootNodeId = rootNodeId;
+	}
+
 
 
 	public void setCodeId(Integer codeId) {
