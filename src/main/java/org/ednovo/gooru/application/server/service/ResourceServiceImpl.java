@@ -59,6 +59,7 @@ import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.NewResourceDo;
+import org.ednovo.gooru.application.shared.model.content.PermissionsDO;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
@@ -356,6 +357,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
+
+				if(jsonRep.getJsonObject().has("settings")){
+					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionSettingsDo.class);
+					obj.setSettings(settings);
+				}
+
+				List<String> lstPermission = new ArrayList<>();
+				if(jsonRep.getJsonObject().has("permissions")){
+					JSONArray permissionsArray=jsonRep.getJsonObject().getJSONArray("permissions");
+					for (int i=0;i<permissionsArray.length();i++){
+						lstPermission.add(permissionsArray.getString(i));
+					}
+					obj.setPermissions(lstPermission);
+				}
+
 				if(jsonRep.getJsonObject().has("audience")){
 					JSONArray array=jsonRep.getJsonObject().getJSONArray("audience");
 					for(int i=0;i<array.length();i++){
