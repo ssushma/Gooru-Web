@@ -461,71 +461,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param deletePopup {@link DeletePopupViewVc}
 	 */
 	public void invokeDeletePopup(final String currentTypeView,final String o1CourseId,final String o2UnitId,final String o3LessonId, final String assessmentCollectionId) {
-		/*deletePopup = new DeletePopupViewVc() {
-			@Override
-			public void onClickPositiveButton(ClickEvent event) {
-				if(!StringUtil.isEmpty(o2UnitId) && UNIT.equalsIgnoreCase(currentTypeView)){
-					getUiHandlers().deleteUnitContent(o1CourseId,o2UnitId);
-				}else if(!StringUtil.isEmpty(o1CourseId) && COURSE.equalsIgnoreCase(currentTypeView)){
-					getUiHandlers().deleteCourseContent(o1CourseId);
-				}else if(!StringUtil.isEmpty(o3LessonId) && LESSON.equalsIgnoreCase(currentTypeView)){ 
-					getUiHandlers().deleteLessonContent(o1CourseId,o2UnitId,o3LessonId);
-				}else if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){ 
-					if((AppClientFactory.getPlaceManager().getRequestParameter("id",null)!=null)){
-						getUiHandlers().deleteMyCollectionContent((AppClientFactory.getPlaceManager().getRequestParameter("id",null)),"folderCollection");
-					}else{
-						if(AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL)!=null){
-							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-							getUiHandlers().deleteMyCollectionContent(parentId,LESSON);
-						} else if(AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL)!=null){
-							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-							getUiHandlers().deleteMyCollectionContent(parentId,UNIT);
-						} else {
-							String parentId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-							getUiHandlers().deleteMyCollectionContent(parentId,COURSE);
-						}
-					}
-				}else{
-					getUiHandlers().deleteCollectionContent(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
-				}
-			}
-			
-			@Override
-			public void onClickNegitiveButton(ClickEvent event) {
-				hide(); 
-			}
-		};
-		deletePopup.setPopupTitle(i18n.GL0748());
-		if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){
-			String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-			String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-			String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-			if(o1!=null || o2!=null || o3!=null){
-				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), "folder"));
-				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), "folder"));
-			}
-		}else{
-			if(currentTypeView.equalsIgnoreCase(COURSE)){
-				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COURSE));
-				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COURSE));
-			}else if(UNIT.equalsIgnoreCase(currentTypeView)){
-				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), UNIT));
-				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), UNIT));
-			}else if(LESSON.equalsIgnoreCase(currentTypeView)){
-				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), LESSON));
-				deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), LESSON));
-			}
-		}
-		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3455(), folderObj.getTitle(), COLLECTION.equalsIgnoreCase(currentTypeView)?COLLECTION:ASSESSMENT));
-			deletePopup.setDescText(StringUtil.generateMessage(i18n.GL3456(), COLLECTION));
-		}
-		deletePopup.setDeleteValidate("delete");
-		deletePopup.setPositiveButtonText(i18n.GL0190());
-		deletePopup.setNegitiveButtonText(i18n.GL0142());
-		deletePopup.setPleaseWaitText(i18n.GL0339());
-		deletePopup.show();
-		deletePopup.center();*/
 		
 		deleteContentPopup = new DeleteContentPopup() {
 			
@@ -560,6 +495,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			@Override
 			public void onClickNegitiveButton(ClickEvent event) {
 				hide();
+				Window.enableScrolling(true);
 			}
 		};
 		deleteContentPopup.setPopupTitle(i18n.GL0748());
@@ -621,6 +557,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private void hideDeletePopup() {
 		if(deleteContentPopup!=null){
 			deleteContentPopup.hide();
+			Window.enableScrolling(true);
 		}
 	}
 	private class openDropDownFilters implements ClickHandler{

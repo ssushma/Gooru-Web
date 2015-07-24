@@ -16,15 +16,3 @@ $(window).load(
 			hidePreloader();
 
 		});
-
-$(window).load(function() {
-
-	jQuery('.animate').waypoint(function() {
-		var animation = jQuery(this).attr("data-animate");
-		jQuery(this).addClass(animation);
-		jQuery(this).addClass('animated');
-
-	}, {
-		offset : '80%'
-	});
-});

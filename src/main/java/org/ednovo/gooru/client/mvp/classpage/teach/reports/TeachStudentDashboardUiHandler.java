@@ -27,6 +27,8 @@ package org.ednovo.gooru.client.mvp.classpage.teach.reports;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 
-public interface TeachStudentDashboardUiHandler extends BaseUiHandlers{	
+public interface TeachStudentDashboardUiHandler extends BaseUiHandlers{
+
+	void openAddPopup();	
 	
 }

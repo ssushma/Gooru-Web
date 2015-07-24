@@ -35,5 +35,6 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
+	<g:HTMLPanel ui:field="emptyContainerDiv"></g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
