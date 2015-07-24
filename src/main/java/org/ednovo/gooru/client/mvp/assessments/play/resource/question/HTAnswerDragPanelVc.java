@@ -62,7 +62,9 @@ public class HTAnswerDragPanelVc extends AppRepositionDragContainer {
 		 * Enabled drag and drop again in hotfix release for resources at m\My collections.
 		 */
 		HTAnswerChoiceOptionView resourceVc = (HTAnswerChoiceOptionView) draggable.getDraggableUc();
-		resourceVc.reorderCollectionItem(getWidgetIndex(draggable));
+		if(resourceVc!=null){
+			resourceVc.reorderCollectionItem(1);
+		}
 	}
 
 	/* (non-Javadoc)

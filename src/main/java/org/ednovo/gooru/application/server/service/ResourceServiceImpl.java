@@ -61,6 +61,7 @@ import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.NewResourceDo;
+import org.ednovo.gooru.application.shared.model.content.PermissionsDO;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
@@ -363,6 +364,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
+
+				if(jsonRep.getJsonObject().has("settings")){
+					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionSettingsDo.class);
+					obj.setSettings(settings);
+				}
+
+				List<String> lstPermission = new ArrayList<>();
+				if(jsonRep.getJsonObject().has("permissions")){
+					JSONArray permissionsArray=jsonRep.getJsonObject().getJSONArray("permissions");
+					for (int i=0;i<permissionsArray.length();i++){
+						lstPermission.add(permissionsArray.getString(i));
+					}
+					obj.setPermissions(lstPermission);
+				}
+
 				if(jsonRep.getJsonObject().has("audience")){
 					JSONArray array=jsonRep.getJsonObject().getJSONArray("audience");
 					for(int i=0;i<array.length();i++){
@@ -1000,10 +1016,41 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 
 		newResourceDo.setResourceFormat(resourceFormat);
-		newResourceDo.setEducationalUse(collectionItemDo.getResource().getEducationalUse());
+		List<Integer> educationListId=new ArrayList<>();
+		if(collectionItemDo.getEducationalUse()!=null){
+			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
+				educationListId.add(checkboxSelectedDo.getId());
+			}
+		}
+		
+		newResourceDo.setEducationalUseIds(educationListId);
+		//	newResourceDo.setEducationalUse(collectionItemDo.getEducationalUse());
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
-		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
-
+		List<Integer> momentOfLearningIdList=new ArrayList<>();
+		if(collectionItemDo.getMomentsOfLearning()!=null){
+			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
+				momentOfLearningIdList.add(checkboxSelectedDo.getId());
+			}
+		}
+		
+		newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
+		//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());
+		List<Integer> accessHardList=new ArrayList<>();
+		if(collectionItemDo.getAccessHazard()!=null){
+			for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
+				accessHardList.add(selectedDo.getId());	
+			}
+		}
+	
+		newResourceDo.setAccessHazardIds(accessHardList);
+		List<Integer> mediaFeaturesList=new ArrayList<>();
+		if(collectionItemDo.getMediaFeature()!=null){
+			for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
+				mediaFeaturesList.add(do1.getId());
+			}
+		}
+		
+		newResourceDo.setMediaFeatureIds(mediaFeaturesList);
 		Map<String,Object> resourceMap=new HashMap<String,Object>();
 		resourceMap.put(RESOURCE, newResourceDo);
 

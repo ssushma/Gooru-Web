@@ -39,6 +39,8 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.EmptyAssessmentView;
+import org.ednovo.gooru.client.mvp.gshelf.courselist.EmptyCollectionView;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentResourceWidgetWithMove;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.EditQuestionPopupVc;
@@ -87,7 +89,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			UiBinder<Widget, CollectionContentView> {
 	}
 
-	@UiField HTMLPanel pnlContentContainer;
+	@UiField HTMLPanel pnlContentContainer,emptyContainerdiv;
 	@UiField VerticalPanel pnlReosurceList;
 	@UiField Button btnAddResources, btnAddQuestions;
 	@UiField Anchor ancAddResource, ancAddQuestion;
@@ -149,6 +151,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	public void setData(CollectionDo listOfContent,FolderDo folderDo, RefreshType type){
 		this.listOfContent = listOfContent;
 		this.folderDo = folderDo;
+		emptyContainerdiv.clear();
 		if (AppClientFactory.isContentAdmin() || listOfContent
 				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
 						.getGooruUId())){
@@ -167,6 +170,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			hasLastModifiedUser=false;
 		}
 		getUiHandlers().showLastEditCollaborater(lastEditedBy,hasLastModifiedUser);
+
 		lblTitle.setVisible(false);
 		if(folderDo.getType().equalsIgnoreCase("assessment") || folderDo.getType().equalsIgnoreCase("assessment/url")){
 			btnAddResources.setVisible(false);		
@@ -188,6 +192,26 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			setLastWidgetArrowVisiblity(false);
 		}else{
 			pnlReosurceList.clear();
+			if(folderDo!=null && folderDo.getType()!=null)
+			{
+			if(folderDo.getType().equalsIgnoreCase("collection")){
+			EmptyCollectionView emptyColl = new EmptyCollectionView();
+			emptyColl.getAddResourceBtn().addClickHandler(new NewResourceClickEvent());
+			emptyColl.getAddQuestionBtn().addClickHandler(new NewQuestionClickEvent());
+			emptyContainerdiv.add(emptyColl);
+			}
+			else if(folderDo.getType().equalsIgnoreCase("assessment"))
+			{
+				EmptyAssessmentView emptyAssessment = new EmptyAssessmentView();
+				emptyAssessment.getAddQuestionBtn().addClickHandler(new NewQuestionClickEvent());
+				emptyContainerdiv.add(emptyAssessment);
+			}
+			}
+			else
+			{
+				emptyContainerdiv.clear();
+			}
+			Window.enableScrolling(true);
 		}
 	}
 

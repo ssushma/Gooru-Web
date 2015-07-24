@@ -25,7 +25,6 @@
 package org.ednovo.gooru.application.shared.model.content;
 
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
@@ -59,11 +58,6 @@ public class CollectionItemDo extends ResourceSearchResultDo implements IsSerial
 	private Integer statusCode;
 	private ResourceDo questionInfo;
 	private String parentGooruOid;
-	
-
-	
-	private List<Map<String, String>> standards;
-
 	private RatingDo rating;
 
 	public CollectionItemDo(){
@@ -173,13 +167,11 @@ public class CollectionItemDo extends ResourceSearchResultDo implements IsSerial
 		this.collectionQuestionItemDo = collectionQuestionItemDo;
 	}
 
-	public List<Map<String, String>> getStandards() {
-		return standards;
-	}
+	
+	
 
-	public void setStandards(List<Map<String, String>> standards) {
-		this.standards = standards;
-	}
+
+
 	@Override
 	public String getGooruOid() {
 		return getResource().getGooruOid();
