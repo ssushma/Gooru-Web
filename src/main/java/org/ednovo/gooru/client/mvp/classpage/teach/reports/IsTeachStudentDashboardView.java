@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 
 public interface IsTeachStudentDashboardView extends IsViewWithHandlers<TeachStudentDashboardUiHandler>{
@@ -54,5 +55,9 @@ public interface IsTeachStudentDashboardView extends IsViewWithHandlers<TeachStu
 	void setReportView();
 
 	void setMetadataContent(ArrayList<PlanProgressDo> dataList);
+	
+	void enableEmptyContainer(boolean isVisible, ClasspageDo classpageDo);
+	
+	void setContainerVisibility(boolean isVisible);
 	
 }
