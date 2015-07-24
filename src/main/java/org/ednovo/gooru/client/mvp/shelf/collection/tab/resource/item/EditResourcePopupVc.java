@@ -1720,6 +1720,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													if(id!=null&&!id.equalsIgnoreCase("")){
 														checkboxSelectedDo.setId(Integer.parseInt(id));
 														checkboxSelectedDo.setName(resourceEducationalLabel.getText());
+														checkboxSelectedDos.add(checkboxSelectedDo);
 													}
 													collectionItemDo.setEducationalUse(checkboxSelectedDos);
 													//tagList.add("Educational Use : "+resourceEducationalLabel.getText());
