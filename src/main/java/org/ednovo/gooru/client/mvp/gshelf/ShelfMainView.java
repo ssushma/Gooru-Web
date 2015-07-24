@@ -750,6 +750,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			
 			shelfTreeWidget.getTitleLbl().setText(UNTITLEDCOURSE);
 			shelfTreeWidget.getTitleFocPanel().addStyleName("course");
+			getUiHandlers().setBreadCrumbs(shelfTreeWidget.getUrlParams());
 			getUiHandlers().setRightPanelData(getFolderDo(COURSE,UNTITLEDCOURSE), COURSE,null);
 			
 			shelfTreeWidget.setFolderOpenedStatus(true);

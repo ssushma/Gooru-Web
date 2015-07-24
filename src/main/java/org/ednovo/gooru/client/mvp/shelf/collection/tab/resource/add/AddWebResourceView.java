@@ -3108,28 +3108,31 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public void setHazardData(List<ListValuesDo> hazards){
 		if(hazards!=null){
 			hazardContainer.clear();
-			for(ListValuesDo do1:hazards){
-				final Label label=new Label();
-				label.setText(do1.getName());
-				label.setStyleName("accessHazardLbl");
-				label.getElement().setId(do1.getId()+"");
-				label.addClickHandler(new ClickHandler() {
-					
-					@Override
-					public void onClick(ClickEvent event) {
-						// TODO Auto-generated method stub
-						if(label.getStyleName().toString().contains("select"))
-						{
-							label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-						}
-						else
-						{
-							label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-						}
+			if(hazards!=null){
+				for(ListValuesDo do1:hazards){
+					final Label label=new Label();
+					label.setText(do1.getName());
+					label.setStyleName("accessHazardLbl");
+					label.getElement().setId(do1.getId()+"");
+					label.addClickHandler(new ClickHandler() {
 						
-					}
-				});
-				hazardContainer.add(label);
+						@Override
+						public void onClick(ClickEvent event) {
+							// TODO Auto-generated method stub
+							if(label.getStyleName().toString().contains("select"))
+							{
+								label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+							}
+							else
+							{
+								label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+							}
+							
+						}
+					});
+					hazardContainer.add(label);
+			}
+			
 			}
 		}
 		
@@ -3140,7 +3143,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
 				// TODO Auto-generated method stub
-				 setHazardData(result);
+				if(result!=null){
+					setHazardData(result);
+				}
+				
 			}
 			
 			@Override

@@ -1028,10 +1028,11 @@ button.btn-disabled{
 	border:1px dashed #dddddd;
 	margin:1px 1px;
 	position:relative;
-	cursor:pointer;
+	/* cursor:pointer; */
 }
 #gShelfCousesList .addCourse .courseTextAdd{
 	display:inline-block;
+	cursor:pointer;
 }
 #gShelfCousesList .addCourse .pnlCreate{
 	display: inline-block;
