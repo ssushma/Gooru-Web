@@ -2579,7 +2579,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
 				// TODO Auto-generated method stub
-				 setHazardData(result);
+				if(result!=null){
+					setHazardData(result);
+				}
+				
 			}
 			
 			@Override

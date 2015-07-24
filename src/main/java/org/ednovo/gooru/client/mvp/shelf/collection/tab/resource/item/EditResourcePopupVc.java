@@ -1573,7 +1573,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					 }
 					}
 				 standardsDo.add(codeObj);
-				 standardsPanel.add(createStandardLabel(code, codeID,label));
+				 DownToolTipWidgetUc  downToolTipWidgetUc=createStandardLabel(code, codeID,label);
+				 downToolTipWidgetUc.getElement().setId(codeID);
+			     standardsPanel.add(downToolTipWidgetUc);
 			}
 			updateStandardsAdvancedSetupStyle();
 		}
@@ -1583,7 +1585,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				 CodeDo codeObj=new CodeDo();
 				 codeObj.setCodeId(standardObj.getId());
 				 codeObj.setCode(standardObj.getLabel());
-				 standardsDo.add(codeObj);
+		//		 standardsDo.add(codeObj);
 				 centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
 				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"",""));
 			}
@@ -2399,7 +2401,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				codeObj.setCodeId(Integer.parseInt(id));
 				codeObj.setCode(standard);
 				standardsDo.add(codeObj);
-				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
+				DownToolTipWidgetUc  downToolTipWidgetUc=createStandardLabel(standard, id, standardCodesMap.get(id));
+				downToolTipWidgetUc.getElement().setId(id);
+				standardsPanel.add(downToolTipWidgetUc);
 			}
 		} else {
 			standardMaxShow();
@@ -2418,7 +2422,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			CodeDo codeObjStandard=new CodeDo();
 			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
 			codeObjStandard.setCode(centurySgstBox.getValue());
-			standardsDo.add(codeObjStandard);
+		//	standardsDo.add(codeObjStandard);
 			
 			centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
 			centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
@@ -2451,7 +2455,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 								CodeDo deletedObj=new CodeDo();
 								deletedObj.setCodeId(codeObj.getCodeId());
 								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);								
+								//standardsDo.remove(codeObj);								
 							}
 						});
 						
@@ -2598,7 +2602,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				codeObj.setCodeId(codeId);
 				codeObj.setCode(setStandardsVal);
 				standardsDo.add(codeObj);
-				standardsPanel.add(createStandardLabel(setStandardsVal, Integer.toString(codeId), setStandardDesc));
+				DownToolTipWidgetUc downToolTipWidgetUc=createStandardLabel(setStandardsVal, Integer.toString(codeId), setStandardDesc);
+				downToolTipWidgetUc.getElement().setId(codeId+"");
+				standardsPanel.add(downToolTipWidgetUc);
+				
 			}
 		} else {
 			standardMaxShow();
@@ -3022,7 +3029,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 							}
 						});
 						htmlMediaFeatureListContainer.add(titleLabel);
-						setMediaFeatureObjectVal(collectionItemDo.getMediaFeature());
+						if(collectionItemDo!=null&&collectionItemDo.getMediaFeature()!=null){
+							setMediaFeatureObjectVal(collectionItemDo.getMediaFeature());
+
+						}
 				}
 			}
 			
@@ -3059,7 +3069,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					}
 				});
 				hazardContainer.add(label);
-				 setAccessHazardObjectVal(collectionItemDo.getAccessHazard());
+				if(collectionItemDo!=null&&collectionItemDo.getAccessHazard()!=null){
+					 setAccessHazardObjectVal(collectionItemDo.getAccessHazard());
+				}
 			}
 		}
 		
@@ -3069,8 +3081,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
 				// TODO Auto-generated method stub
-				 setHazardData(result);
-				
+				if(result!=null){
+					setHazardData(result);
+					
+				}
+					
 			}
 			@Override
 			public void onFailure(Throwable caught) {
