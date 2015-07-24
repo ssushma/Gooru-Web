@@ -32,7 +32,7 @@
 				</g:ScrollPanel>
 			  <g:Label ui:field="lblEmptyErrorMessage" styleName="noTextMessage"/>
               <g:HTMLPanel styleName="assignCourseBlock" ui:field="assignCourseBlockContainer">
-                  <h3>Once you assig this Course,</h3>
+                  <h3>Once you assign this Course,</h3>
                   <ul>
                      <li><span class="bluedot"></span> <em>You will no longer b able to delete questions in assignments, so that scores for your students are accurately represented in reports.</em></li>
                      <li><span class="greendot"></span> <em>Any edits you make to the content after assigning to a class may affect the reports that you see for your students.</em></li>
@@ -42,7 +42,7 @@
             </div>
             <g:HTMLPanel styleName="modal-footer" ui:field="footerPanel">
                <g:Label styleName="addNewCollectionErrorStyle" ui:field="lblError" text="{i18n.GL3429}" title="{i18n.GL3429}"/>
-              <!--  <g:Anchor styleName="addNewCollectionStyle" ui:field="btnAddNew" text="{i18n.GL3430}" title="{i18n.GL3430}"/> -->
+               <g:Anchor styleName="addNewCollectionStyle" ui:field="btnAddNew" text="{i18n.GL3430}" title="{i18n.GL3430}"/>
                <g:Button styleName="primary" ui:field="btnAddExisting" text="{i18n.GL3438}" title="{i18n.GL3438}"/>
                <g:Button styleName="secondary" ui:field="cancel" text="{i18n.GL0142}" title="{i18n.GL0142}"></g:Button>
                <g:Button styleName="primary" ui:field="assignBtn" text="{i18n.GL0104}" title="{i18n.GL0104}"/>
