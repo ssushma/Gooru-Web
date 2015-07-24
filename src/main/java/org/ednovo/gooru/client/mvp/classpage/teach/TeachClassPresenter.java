@@ -32,9 +32,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentDashboardPresenter;
 
 import com.google.gwt.user.client.Window;
@@ -66,7 +64,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	String classpageId="";
 	
-	ClasspageDo classpageDo;
+	ClasspageDo classpageDo = null;
 	
 	boolean isReveal = false;
 	
@@ -102,12 +100,15 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	
 	@Override
 	protected void onReset() {
-       loadNavigationPage();
-       getView().setNavaigationTab();
        String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
        if(courseId !=null && classpageDo != null && classpageDo.getCourseGooruOid() == null){
     	   getClassDetails();
+       } else {
+    	   if(classpageDo!=null) {
+    	       loadNavigationPage();
+    	   }
        }
+       getView().setNavaigationTab();
 	}
 	
 	public void getClassDetails(){
@@ -122,6 +123,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 					getView().setClassHeaderView(result);
 					editClassSettingsNavigationPresenter.setClassDetails(result); 
 					editClassSettingsNavigationPresenter.getCourseData();
+					loadNavigationPage();
 				}
 				
 			});
@@ -154,6 +156,8 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 				editClassSettingsNavigationPresenter.loadNavigationPage();
 			}else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASS_DASHBOARD)){
 				addToSlot(CLASS_DASHBOARD_TAB, teachStudentDashboardPresenter);
+				teachStudentDashboardPresenter.setClassDetails(classpageDo);
+				teachStudentDashboardPresenter.loadNavigationPage();
 			}
 		}catch(Exception e){
 			e.printStackTrace();
