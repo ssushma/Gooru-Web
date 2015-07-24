@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.gshelf.util.EmptyCourseBuilderWidget;
+import org.ednovo.gooru.client.mvp.gshelf.util.EmptyNoCollectionsWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderHandler;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
@@ -435,12 +436,32 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}
 		}else{
 			 if(slot==ShelfMainPresenter.RIGHT_SLOT){
+				 if(COURSE.equalsIgnoreCase(getViewType()))
+				 {
 				 pnlSlot.add(new EmptyCourseBuilderWidget() {
 					@Override
 					public void onClick() {
 						createTopLevelTemplate(COURSE);
 					}
 				});
+				 }
+				 else
+				 {
+					 pnlSlot.add(new EmptyNoCollectionsWidget() {
+						
+						@Override
+						public void onCollectionClick() {
+							getUiHandlers().addNewContent("collection");
+							
+						}
+						
+						@Override
+						public void onAssessmentClick() {
+							getUiHandlers().addNewContent("assessment");
+							
+						}
+					 }); 
+				 }
 			 }
 		}
 	}
