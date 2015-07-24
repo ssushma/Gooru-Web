@@ -226,6 +226,9 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}
 		if (index == 0){
 			pnlReosurceList.clear();
+			emptyContainerdiv.setVisible(true);
+		}else{
+			emptyContainerdiv.setVisible(false);
 		}
 		if (type.equals(RefreshType.INSERT)){
 			final ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem,folderDo.getType()) {
