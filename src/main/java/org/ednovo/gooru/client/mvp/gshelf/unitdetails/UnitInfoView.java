@@ -36,7 +36,6 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -147,7 +146,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	 * This method will display the Grades according to the subject
 	 */
 	@Override
-	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final int selectedId,int resultscourseId) {
+	public void showCourseDetailsBasedOnSubjectd(final List<CourseSubjectDo> libraryCodeDo,final int selectedId,int resultscourseId,final CourseSubjectDo courseObj) {
 		pnlGradeContainer.clear();
 		if(libraryCodeDo.size()>0){
 			domainPaginationCourseId = resultscourseId;
@@ -180,6 +179,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 						liPanelWithClose.setName(courseObj.getName());
 						liPanelWithClose.setRelatedId(courseObj.getCourseId());
 						liPanelWithClose.setRelatedSubjectId(courseObj.getSubjectId());
+						liPanelWithClose.setDifferenceId(2); //for adding the domains
 						ulSelectedItems.add(liPanelWithClose);
 					}else{
 						if(selectedValues.get(selectedId).contains(courseObj.getName())){
@@ -201,6 +201,30 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 						domainPagination = domainPagination+20;
 					}
 				});
+			}
+		}else{
+			//display course as tag if there is no sub domains
+			if(!selectedValues.get(selectedId).contains(courseObj.getName())){
+				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseObj.getName());
+				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						//This will remove the selected value when we are trying by close button
+						for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+						     Map.Entry<Integer, ArrayList<String>> entry = it.next();
+						     if(entry.getValue().contains(courseObj.getName())){
+						    	 entry.getValue().remove(courseObj.getName());
+						     }
+						 }
+						liPanelWithClose.removeFromParent();
+					}
+				});
+				selectedValues.get(selectedId).add(courseObj.getName());
+				liPanelWithClose.setId(courseObj.getCourseId());
+				liPanelWithClose.setName(courseObj.getName());
+				liPanelWithClose.setRelatedId(courseObj.getCourseId());
+				liPanelWithClose.setDifferenceId(1);  //for adding the course
+				ulSelectedItems.add(liPanelWithClose);
 			}
 		}
 	}
@@ -239,6 +263,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 					liPanelWithClose.setName(courseObj.getName());
 					liPanelWithClose.setRelatedId(courseObj.getCourseId());
 					liPanelWithClose.setRelatedSubjectId(courseObj.getSubjectId());
+					liPanelWithClose.setDifferenceId(1);
 					ulSelectedItems.add(liPanelWithClose);
 				}else{
 					if(selectedValues.get(selectedId).contains(courseObj.getName())){
@@ -286,12 +311,12 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				}
 				LiPanel liPanel=new LiPanel();
 				Anchor title=new Anchor(titleText);
-				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId()));
+				title.addClickHandler(new ClickOnSubject(titleText,liPanel,libraryCodeDo.getCourseId(),libraryCodeDo));
 				liPanel.add(title);
 				if(selectedId==libraryCodeDo.getCourseId()){
 					liPanel.addStyleName(ACTIVE);
 					tempLiPanel=liPanel;
-					getUiHandlers().getDomainsBasedOnCourseId(libraryCodeDo.getCourseId(), libraryCodeDo.getCourseId());
+					getUiHandlers().getDomainsBasedOnCourseId(libraryCodeDo.getCourseId(), libraryCodeDo.getCourseId(),libraryCodeDo);
 				}
 				ulMainGradePanel.add(liPanel);
 			}
@@ -304,10 +329,12 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		String selectedText;
 		LiPanel liPanel;
 		int courseId;
-		ClickOnSubject(String selectedText,LiPanel liPanel,int courseId){
+		CourseSubjectDo libraryCodeDo;
+		ClickOnSubject(String selectedText,LiPanel liPanel,int courseId,CourseSubjectDo libraryCodeDo){
 			this.selectedText=selectedText;
 			this.liPanel=liPanel;
 			this.courseId=courseId;
+			this.libraryCodeDo=libraryCodeDo;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
@@ -319,13 +346,13 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			}
 			if(liPanel.getStyleName().contains(ACTIVE)){
 				if(selectedValues.get(courseId).size()>0){
-					getUiHandlers().getDomainsBasedOnCourseId(courseId, courseId);
+					getUiHandlers().getDomainsBasedOnCourseId(courseId, courseId,libraryCodeDo);
 				}else{
 					liPanel.removeStyleName(ACTIVE);
 				}
 			}else{
 				liPanel.addStyleName(ACTIVE);
-				getUiHandlers().getDomainsBasedOnCourseId(courseId, courseId);
+				getUiHandlers().getDomainsBasedOnCourseId(courseId, courseId,libraryCodeDo);
 			}
 		}
 	}
@@ -341,6 +368,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		createOrUpDate.setIdeas(txaBigIdeas.getText());
 		createOrUpDate.setQuestions(txaEssentialQuestions.getText());
 		createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
+		createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
@@ -365,6 +393,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		createOrUpDate.setIdeas(txaBigIdeas.getText());
 		createOrUpDate.setQuestions(txaEssentialQuestions.getText());
 		createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
+		createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
 		if(validateInputs()){
 			lblErrorMessage.setVisible(false);
 			unitTitle.removeStyleName("textAreaErrorMessage");
@@ -419,14 +448,16 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			Widget widget=widgets.next();
 			if(widget instanceof LiPanelWithClose){
 				LiPanelWithClose obj=(LiPanelWithClose) widget;
-				Integer intVal = (int)obj.getId();
-				taxonomyCourseIds.add(intVal);
-				CourseSubjectDo courseObj=new CourseSubjectDo();
-				courseObj.setId((int)obj.getId());
-				courseObj.setName(obj.getName());
-				courseObj.setSubjectId(obj.getRelatedSubjectId());
-				courseObj.setCourseId(obj.getRelatedId());
-				courseList.add(courseObj);
+				if(obj.getDifferenceId()==2){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					courseObj.setId((int)obj.getId());
+					courseObj.setName(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedSubjectId());
+					courseObj.setCourseId(obj.getRelatedId());
+					courseList.add(courseObj);
+				}
 			}
 		}
 		if(courseObj!=null){
@@ -434,7 +465,34 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 		return taxonomyCourseIds;
 	}
-
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedCourseIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getDifferenceId()==1){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					courseObj.setId((int)obj.getId());
+					courseObj.setName(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedId());
+					courseList.add(courseObj);
+				}
+			}
+		}
+		if(courseObj!=null){
+			courseObj.setTaxonomyCourse(courseList);
+		}
+		return taxonomyCourseIds;
+	}
 	@Override
 	public void setCouseData(FolderDo courseObj) {
 		this.courseObj=courseObj;
@@ -444,6 +502,36 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		
 		ulSelectedItems.clear();
 		selectedValues.clear();
+		//This will push the previous selected values to map
+		if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
+			//To set default selection if the user is already selected any subject
+			for (final CourseSubjectDo courseSubjectDo : courseObj.getTaxonomyCourse()) {
+				if(selectedValues.containsKey(courseSubjectDo.getSubjectId())){
+					selectedValues.get(courseSubjectDo.getSubjectId()).add(courseSubjectDo.getName());
+				}else{
+					selectedValues.put(courseSubjectDo.getSubjectId(), new ArrayList<String>());
+					selectedValues.get(courseSubjectDo.getSubjectId()).add(courseSubjectDo.getName());
+				}
+				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
+				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+							Map.Entry<Integer, ArrayList<String>> entry = it.next();
+							if(entry.getValue().contains(courseSubjectDo.getName())){
+								entry.getValue().remove(courseSubjectDo.getName());
+							}
+						}
+						removeGradeWidget(courseGradeWidget.getGradePanel(),courseSubjectDo.getId());
+						liPanelWithClose.removeFromParent();
+					}
+				});
+				liPanelWithClose.setId(courseSubjectDo.getId());
+				liPanelWithClose.setName(courseSubjectDo.getName());
+				liPanelWithClose.setRelatedId(courseSubjectDo.getSubjectId());
+				ulSelectedItems.add(liPanelWithClose);
+			}
+		}
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getSubdomain()!=null){
 			//To set default selection if the user is already selected any subject
