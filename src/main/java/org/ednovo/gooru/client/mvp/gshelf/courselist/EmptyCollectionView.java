@@ -22,76 +22,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.application.shared.model.content;
+package org.ednovo.gooru.client.mvp.gshelf.courselist;
 
-import java.io.Serializable;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-@JsonInclude(Include.NON_NULL)
-public class StandardFo implements Serializable {
-	private static final long serialVersionUID = 161874649372844127L;
-	private Integer codeId;
-	private String code;
-	private String label;
-	private String description;
-	private Integer id;
-	private String rootNodeId;
-	public StandardFo(){}
+public class EmptyCollectionView extends Composite {
 
+	private static MyCollectionsListViewUiBinder uiBinder = GWT.create(MyCollectionsListViewUiBinder.class);
 
+	interface MyCollectionsListViewUiBinder extends UiBinder<Widget, EmptyCollectionView> {
+	}
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public String getRootNodeId() {
-		return rootNodeId;
+	@UiField HTMLPanel pnlMainButtonsContainer;
+	@UiField Button addResourceBtn,addQuestionBtn;
+	
+
+	public EmptyCollectionView() {
+		initWidget(uiBinder.createAndBindUi(this));
+		pnlMainButtonsContainer.getElement().setId("GettingStartedBuildingCollection");
 	}
 
 
-
-	public void setRootNodeId(String rootNodeId) {
-		this.rootNodeId = rootNodeId;
+	public Button getAddResourceBtn() {
+		return addResourceBtn;
 	}
 
 
-
-	public void setCodeId(Integer codeId) {
-		this.codeId = codeId;
-	}
-
-	public Integer getCodeId() {
-		return codeId;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setAddResourceBtn(Button addResourceBtn) {
+		this.addResourceBtn = addResourceBtn;
 	}
 
 
-	public Integer getId() {
-		return id;
+	public Button getAddQuestionBtn() {
+		return addQuestionBtn;
 	}
 
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setAddQuestionBtn(Button addQuestionBtn) {
+		this.addQuestionBtn = addQuestionBtn;
 	}
 	
+	
+
 }

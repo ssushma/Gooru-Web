@@ -35,7 +35,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.UIObject;
 
 /**
  * @author Search Team
@@ -43,7 +42,7 @@ import com.google.gwt.user.client.ui.UIObject;
  */
 public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers> {
 
-	void getChildFolderItems(List<FolderDo> folderListDo);
+	void getChildFolderItems(TreeItem currentTreeItem, List<FolderDo> folderListDo);
 
 	void setChildPageNumber(Integer pageNumber);
 
@@ -98,5 +97,8 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 
 	HTMLPanel getTitleIconContainer();
 
-	TreeItem getCurrentEditingWidget();  
+	TreeItem getCurrentEditingWidget();
+
+	void showLastEditCollaborater(String lastEditedBy,
+			boolean hasLastModifiedUser);  
 }

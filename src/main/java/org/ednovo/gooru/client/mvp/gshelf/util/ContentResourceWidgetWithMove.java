@@ -14,6 +14,7 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -766,17 +767,15 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	 */
 	@UiHandler("confirmDeleteLbl")
 	public void deleteCollectionItem(ClickEvent clickEvent) {
-		Window.enableScrolling(false);
-        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
-		deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT) {
-			@Override
-			public void onDelete(ClickEvent clickEvent) {
-				collectionContentPresenter.deleteCollectionItem(collectionItem.getParentGooruOid(),collectionItem.getCollectionItemId(), collectionItem.getItemSequence());
-				deleteConfirmationPopupVc.hide();
-				ContentResourceWidgetWithMove.this.removeFromParent();
-			}
-		};
+		if(ASSESSMENT.equalsIgnoreCase(collectionType)){
+			String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+			isAssignedToClassPage(courseId); 
+		}else{
+			invokeDelete();
+		}
 	}
+	
+	
 	/**
 	 * This will handle the click event on the add tags for resoruce
 	 * @param clickEvent
@@ -956,7 +955,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				params.put("folderId", selectedFolderId);
 			}
 			String	placeToken=COLLECTION.equalsIgnoreCase(collectionType)?PlaceTokens.COLLECTION_PLAY:PlaceTokens.ASSESSMENT_PLAY;
-			System.out.println("clickevent:::"+placeToken);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(placeToken, params);
 			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 		}
@@ -983,5 +981,33 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		public void onClick(ClickEvent event) {
 			dispalyNewResourcePopup(collectionItem);
 		}
+	}
+	
+	private void invokeDelete() {
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
+		deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT) {
+			@Override
+			public void onDelete(ClickEvent clickEvent) {
+				collectionContentPresenter.deleteCollectionItem(collectionItem.getParentGooruOid(),collectionItem.getCollectionItemId(), collectionItem.getItemSequence());
+				deleteConfirmationPopupVc.hide();
+				ContentResourceWidgetWithMove.this.removeFromParent();
+			}
+		};
+	}
+	
+	public void isAssignedToClassPage(String o1CourseId) {
+
+		AppClientFactory.getInjector().getfolderService().getClassesAssociatedWithCourse(o1CourseId, new SimpleAsyncCallback<Integer>() { 
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result>0){
+					new AlertContentUc("Oops", "This course is associated with the class.");
+				}else{
+					invokeDelete();
+				}
+			} 
+		});
 	}
 }

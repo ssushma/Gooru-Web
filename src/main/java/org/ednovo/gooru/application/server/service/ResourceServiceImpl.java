@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -59,6 +60,7 @@ import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.NewResourceDo;
+import org.ednovo.gooru.application.shared.model.content.PermissionsDO;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
@@ -356,6 +358,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
+
+				if(jsonRep.getJsonObject().has("settings")){
+					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionSettingsDo.class);
+					obj.setSettings(settings);
+				}
+
+				List<String> lstPermission = new ArrayList<>();
+				if(jsonRep.getJsonObject().has("permissions")){
+					JSONArray permissionsArray=jsonRep.getJsonObject().getJSONArray("permissions");
+					for (int i=0;i<permissionsArray.length();i++){
+						lstPermission.add(permissionsArray.getString(i));
+					}
+					obj.setPermissions(lstPermission);
+				}
+
 				if(jsonRep.getJsonObject().has("audience")){
 					JSONArray array=jsonRep.getJsonObject().getJSONArray("audience");
 					for(int i=0;i<array.length();i++){
@@ -375,9 +392,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
+				long time = jsonRep.getJsonObject().isNull("lastModified")?0:jsonRep.getJsonObject().getLong("lastModified");
+				Date lastModifiedTime= new Date(time);
+				obj.setLastModified(lastModifiedTime);
 				obj.setCollaborator(jsonRep.getJsonObject().isNull("isCollaborator")?false:jsonRep.getJsonObject().getBoolean("isCollaborator"));
 				UserDo user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user"), UserDo.class);
 				obj.setUser(user);
+				UserDo lastUserModified=JsonDeserializer.deserialize(jsonRep.getJsonObject().isNull("lastUserModified")?"":jsonRep.getJsonObject().getString("lastUserModified"), UserDo.class);
+				obj.setLastModifiedUser(lastUserModified);
 				if(!jsonRep.getJsonObject().isNull("collectionItems")){
 				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
 				List<CollectionItemDo> collectionItems=new ArrayList<>();
@@ -988,10 +1010,41 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 
 		newResourceDo.setResourceFormat(resourceFormat);
-		newResourceDo.setEducationalUse(collectionItemDo.getResource().getEducationalUse());
+		List<Integer> educationListId=new ArrayList<>();
+		if(collectionItemDo.getEducationalUse()!=null){
+			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
+				educationListId.add(checkboxSelectedDo.getId());
+			}
+		}
+		
+		newResourceDo.setEducationalUseIds(educationListId);
+		//	newResourceDo.setEducationalUse(collectionItemDo.getEducationalUse());
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
-		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
-
+		List<Integer> momentOfLearningIdList=new ArrayList<>();
+		if(collectionItemDo.getMomentsOfLearning()!=null){
+			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
+				momentOfLearningIdList.add(checkboxSelectedDo.getId());
+			}
+		}
+		
+		newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
+		//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());
+		List<Integer> accessHardList=new ArrayList<>();
+		if(collectionItemDo.getAccessHazard()!=null){
+			for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
+				accessHardList.add(selectedDo.getId());	
+			}
+		}
+	
+		newResourceDo.setAccessHazardIds(accessHardList);
+		List<Integer> mediaFeaturesList=new ArrayList<>();
+		if(collectionItemDo.getMediaFeature()!=null){
+			for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
+				mediaFeaturesList.add(do1.getId());
+			}
+		}
+		
+		newResourceDo.setMediaFeatureIds(mediaFeaturesList);
 		Map<String,Object> resourceMap=new HashMap<String,Object>();
 		resourceMap.put(RESOURCE, newResourceDo);
 
@@ -2413,12 +2466,18 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public CollectionItemDo addCollectionItem(String collectionId,String resourceId) throws GwtException, ServerDownException {
+	public CollectionItemDo addCollectionItem(String collectionId,String resourceId,String type) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url="";
 		CollectionItemDo collectionItemDo= new CollectionItemDo();
 		getLogger().info("addCollectionItem collectionId::::::"+collectionId);
 		getLogger().info("addCollectionItem resourceId::::::"+resourceId);
-		String url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		getLogger().info("addCollectionItem type::::::"+type);
+		if("question".equalsIgnoreCase(type)){
+			 url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDQUESTION_COLLECTION,collectionId,resourceId);
+		}else{
+			 url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		}
 		getLogger().info("addCollectionItem post API call::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();

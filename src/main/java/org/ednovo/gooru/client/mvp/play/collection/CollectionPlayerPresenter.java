@@ -43,6 +43,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.application.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -1210,16 +1211,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	public void setAddResourcesView(String collectionId,String resourceId){
-		addResourceContainerPresenter.setplayerStyle();
-		//Window.alert("inside");
-		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(resourceId));
-		//setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourceContainerPresenter,false);
-
-		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
+		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
 		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
+		SearchResourceFormatDO searchResourceFormatDO = new SearchResourceFormatDO();
+		searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
+		resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);
 		shelfMainPresenter.SetDefaultTypeAndVersion();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();

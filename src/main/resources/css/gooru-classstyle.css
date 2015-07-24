@@ -1085,7 +1085,7 @@ select option {
     padding: 30px 0;
 	font-size:24px;
     text-align: center;
-	font-family:"Arvo",serif;
+	font-family:"Arvo",serif !important;
 }
 
 #getStartedContainer .gettingStartedMain .emptyClass{
@@ -1720,6 +1720,120 @@ font-style:normal;
 	padding: 0 0 50px;
 }
 
+
+
+
+/** Get Started File Css Style **/
+.gettingStartedStep2 {
+    margin: 0 200px;
+    margin-top: -90px;
+}
+.gettingStartedStep2 hr {
+    border-color: #515151;
+}
+.gettingStartedStep2 .mainHeader h3 {
+    margin: 0 0;
+    text-align: center;
+    padding: 60px 0 20px 0;
+    font-size: 24px;
+    color: #0074be;
+    font-family: "Arvo", serif !important;
+}
+.gettingStartedStep2 .mainHeader p {
+    font-size: 12px;
+    font-family: "Arvo", serif !important;
+    text-align: center;
+}
+.gettingStartedStep2 .stepsBlockStep2 {
+    width: 350px;
+    margin: 50px auto;
+}
+.gettingStartedStep2 .stepsBlockStep2 .stepsBlockInner {
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 100%;
+}
+.gettingStartedStep2 .stepsBlockStep2 .stepsBlockInner .numaricCircle {
+    background: #999999;
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 20px;
+    height: 39px;
+    line-height: 40px;
+    margin-right: 12px;
+    position: relative;
+    text-align: center;
+    width: 39px;
+    vertical-align: middle;
+}
+.gettingStartedStep2 .stepsBlockStep2 .stepsBlockInner .numaricCircle.greenCircle {
+    background: #4b9841;
+}
+.gettingStartedStep2 .stepsBlockStep2 .stepsBlockInner .numaricCircle::before {
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    content: "";
+    height: 35px;
+    left: 2px;
+    position: absolute;
+    top: 2px;
+    width: 35px;
+}
+.gettingStartedStep2 .stepsBlockStep2 .stepsBlockInner .StepsContent {
+    display: inline-block;
+    width: 76%;
+    vertical-align: middle;
+}
+.gettingStartedStep2 .stepsBlockStep2 .stepsBlockInner .StepsContent h3 {
+    color: #515151;
+    font-family: "Arvo", serif !important;
+    font-size: 20px;
+    margin: 0 0 5px;
+}
+.gettingStartedStep2 .stepsBlockStep2 .stepsBlockInner .StepsContent.greenText h3 {
+    color: #4b9841;
+}
+.gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup {
+    margin-bottom: 25px;
+    margin-left: 30px;
+}
+.gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup img {
+    margin-right: 10px;
+}
+.gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup button.primary {
+    vertical-align: bottom;
+    padding: 8px 12px;
+}
+.gettingStartedStep2 .gettingStartedFooter {
+    text-align: center;
+    margin-bottom: 100px;
+    display: inline-block;
+    width: 100%;
+}
+.gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup .indicationText {
+    display: inline-block;
+    vertical-align: middle;
+    width: 60%;
+}
+.gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup .indicationText p {
+    margin: 0 0;
+    line-height: 14px;
+}
+.gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup button.primary.alinMiddle {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.gettingStartedStep2 .gettingStartedFooter a {
+    color: #0074be;
+}
+.gettingStartedStep2 .gettingStartedFooter a:hover,
+.gettingStartedStep2 .gettingStartedFooter a:focus {
+    text-decoration: none;
+}
+.gettingStartedStep2 .gettingStartedFooter div {
+    margin-bottom: 10px;
+}
 
 
 /** Media Scripts starts Here **/
@@ -2656,7 +2770,6 @@ font-style:normal;
 }
 @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
 
-
 /** Add course to class popup meadia scripts **/
 
 @media (min-width: 320px) and (max-width: 479px) {
@@ -2680,3 +2793,43 @@ font-style:normal;
 }
 @media (min-width: 1200px) {
 }
+
+/** Media Script Files for Get Started Page **/
+@media (min-width: 240px) and (max-width: 319px) {
+    .gettingStartedStep2 {
+        margin: 0 30px;
+    }
+    .gettingStartedStep2 .stepsBlockStep2 {
+        width: auto;
+    }
+    .gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup {
+        margin-left: 0;
+        text-align: center;
+    }
+    .gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup .indicationText {
+        width: 100%;
+        margin-top: 15px;
+    }
+}
+@media (min-width: 320px) and (max-width: 479px) {
+    .gettingStartedStep2 {
+        margin: 0 30px;
+    }
+    .gettingStartedStep2 .stepsBlockStep2 {
+        width: auto;
+    }
+    .gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup {
+        margin-left: 0;
+        text-align: center;
+    }
+    .gettingStartedStep2 .stepsBlockStep2 .contenFolderbuttonGroup .indicationText {
+        width: 100%;
+        margin-top: 15px;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+    .gettingStartedStep2 {
+        margin: 0 50px;
+    }
+}
+
