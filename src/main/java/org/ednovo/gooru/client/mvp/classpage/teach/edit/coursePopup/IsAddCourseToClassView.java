@@ -51,7 +51,6 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.gwtplatform.mvp.client.PopupView;
 
 public interface IsAddCourseToClassView extends PopupView, IsViewWithHandlers<AddCourseToClassUiHandlers>{
-	public void displayNoCollectionsMsg(String searchType);
 	public Anchor getAddButton();
 	public void hidePopup();
 	void setDefaultPanelVisibility(Boolean blnVal);
