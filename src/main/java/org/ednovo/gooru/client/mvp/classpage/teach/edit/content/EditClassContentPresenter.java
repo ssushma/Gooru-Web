@@ -27,13 +27,11 @@ package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;

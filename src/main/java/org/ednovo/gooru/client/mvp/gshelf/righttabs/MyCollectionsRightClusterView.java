@@ -177,11 +177,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 	@Override	
 	public void setBreadCrumbSlot(FolderDo folderObj, String type, HashMap<String, String> selectedWidgetsTitleType){
-		if(folderObj!=null){
-			this.folderObj=folderObj;
-		}
+		this.folderObj=folderObj;
 		
 		/*if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
+		this.folderObj=folderObj;
+		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
 			if(selectedWidgetsTitleType.containsKey(COURSE)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
 			}

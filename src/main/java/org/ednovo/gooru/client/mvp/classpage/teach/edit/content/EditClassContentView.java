@@ -27,25 +27,14 @@ package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.CssTokens;
-import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpage.event.SetCollectionTypeVisibilityEvent;
-import org.ednovo.gooru.client.mvp.classpage.event.SetCollectionTypeVisibilityHandler;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget.EditClassCollectionWidget;
-import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.widget.EditClassLessonView;
-import org.ednovo.gooru.client.uc.PPanel;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.TextAlign;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,18 +42,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
-import com.google.gwt.event.dom.client.ScrollEvent;
-import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -120,7 +104,6 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	}
 
 	public EditClassContentView() {
-		System.out.println("EditClassContentView");
 		setWidget(uiBinder.createAndBindUi(this));
 		setId();
 		saveBtn.setEnabled(false);

@@ -46,7 +46,7 @@
 
 <g:Button ui:field="addQuestionBtn" styleName="primary">Add Question</g:Button>
 
-<p><a href="">More information in the Support Center.</a></p>
+<p><g:Anchor href="http://support.goorulearning.org/hc/en-us" target="_blank">More information in the Support Center.</g:Anchor></p>
 
 </div>
 

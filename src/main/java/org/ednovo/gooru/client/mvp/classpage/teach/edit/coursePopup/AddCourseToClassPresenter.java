@@ -26,20 +26,11 @@ package org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup;
 
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.application.shared.model.content.CollectionDo;
-import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
-import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -53,7 +44,6 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -116,33 +106,6 @@ public class AddCourseToClassPresenter extends PresenterWidget<IsAddCourseToClas
 		});
 	}
 	
-	public FolderDo getFolderDo(CollectionDo collectionDo) {
-		FolderDo folderDo = new FolderDo();
-		folderDo.setGooruOid(collectionDo.getGooruOid());
-		folderDo.setTitle(collectionDo.getTitle());
-		folderDo.setType(collectionDo.getCollectionType());
-		folderDo.setSharing(collectionDo.getSharing());
-		folderDo.setCollectionType(collectionDo.getCollectionType());
-		ThumbnailDo thumbnailDo = new ThumbnailDo();
-		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
-		folderDo.setThumbnails(thumbnailDo);
-		List<FolderItemDo> folderItems = new ArrayList<FolderItemDo>();
-		if(collectionDo.getCollectionItems()!=null) {
-			for(int i=0;i<collectionDo.getCollectionItems().size();i++) {
-				CollectionItemDo collectionItemDo = collectionDo.getCollectionItems().get(i);
-				FolderItemDo folderItemDo = new FolderItemDo();
-				folderItemDo.setGooruOid(collectionItemDo.getGooruOid());
-				folderItemDo.setTitle(collectionItemDo.getResourceTitle());
-				folderItemDo.setType(collectionItemDo.getItemType());
-				ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
-				resourceFormatDo.setValue(collectionItemDo.getCategory());
-				folderItems.add(folderItemDo);
-			}
-			folderDo.setCollectionItems(folderItems);
-		}
-		return folderDo;
-	}
-
 	@Override
 	public Anchor getAddButton() {
 		return getView().getAddButton();

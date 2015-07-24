@@ -504,6 +504,4 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public TreeItem getCurrentTreeItem() {
 		return shelfMainPresenter.getEditingWidget();
 	}
-	
-	
 }

@@ -4588,7 +4588,8 @@ right:1px;
 }
 
 #gShelfMainContainer .courseLevel { /* grandparent level - default */
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px;
+    /* background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px; */
+    background:#f0f0f0 url('${cdn.endpoint}/g-folder-small.png') no-repeat 33px 13px; ;
 }
 
 #gShelfMainContainer .courseLevel.course{ /* grandparent level - default */
@@ -4596,7 +4597,7 @@ right:1px;
 }
 
 #gShelfMainContainer .courseLevel.course {
-    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/course-folder-closed.png') no-repeat 33px 13px; ;
 }
 
 /* getting started for collection empty*/
@@ -4755,6 +4756,266 @@ right:1px;
 	
 }
  @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+
+/* collection course add*/
+#gettingstartedmycollections{
+	padding-left:70px;
+	padding-right:70px;
+}
+#gettingstartedmycollections .gettingStartedHeader{
+	margin-bottom:45px;
+}
+#gettingstartedmycollections .gettingStartedHeader h2{
+	font-size:24px;
+	font-weight:bold;
+	font-family:"Arvo",serif;
+	margin:30px 0 10px 0;
+	text-align:center;
+	color:#515151;
+}
+#gettingstartedmycollections .gettingStartedHeader h4{
+	color:#4e9746;
+	font-size:18px;
+		font-family:"Arvo",serif;
+	text-align:center;
+	margin-bottom:40px;
+}
+#gettingstartedmycollections .gettingStartedHeader p.lead{
+	font-size:16px;
+	color:#515151;
+		font-family:"Arvo",serif;
+		margin:0 62px;
+		text-align:center;
+}
+
+#gettingstartedmycollections .learningCollectionsFormativeAssessments{
+	text-align:center;
+}
+
+#gettingstartedmycollections .learningCollectionsFormativeAssessments h3{
+	font-size:18px;
+	font-family:"Arvo",serif;
+	color:#515151;
+	margin:15px 0;
+}
+#gettingstartedmycollections .learningCollectionsFormativeAssessments .img-responsive{
+	display:inline-block;
+}
+#gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText{
+	margin:20px 8px;
+	min-height:85px;
+	font-family:"Arvo",serif;
+	color:#515151;
+
+}
+#gettingstartedmycollections .bottomLink{
+	margin-top:40px;
+	text-align:center;
+}
+#gettingstartedmycollections .bottomLink a{
+	color:#0074be;
+}
+#gettingstartedmycollections .bottomLink a:hover, #gettingstartedmycollections .bottomLink a:focus {
+	text-decoration:none;
+}
+#gettingstartedmycollections .LearningCollections{
+	border-right:1px solid #979797;
+}
+
+#myAllCorsesNullCase{
+	padding-left:15px;
+	padding-right:15px;
+}
+.myAllCoursesBackground {
+	background: #ffffff url("../images/myclassesGettingStarted-bg.png") no-repeat center bottom;
+	padding-bottom:50px;
+	border-bottom:1px solid #dddddd;
+}
+#myAllCorsesNullCase  h2{
+	text-align:center;
+	margin:30px 0 40px 0;
+	color:#515151;
+	font-family:"Arvo",serif;
+	font-weight:bold;
+	font-size:24px;
+
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps{
+	border-right:1px solid #979797;
+	margin-left:10px;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .stepsBlockInner {
+    display: inline-block;
+    margin-bottom: 30px;
+    width: 100%;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .stepsBlockInner .numaricCircle:before {
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    content: "";
+    height: 35px;
+    left: 2px;
+    position: absolute;
+    top: 2px;
+    width: 35px;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .stepsBlockInner .StepsContent {
+    display: inline-block;
+    vertical-align: middle;
+    width: 76%;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .stepsBlockInner .numaricCircle {
+    background: #4e9746;
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 20px;
+    height: 39px;
+    line-height: 40px;
+    margin-right: 12px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 39px;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .stepsBlockInner .StepsContent h3 {
+    color: #4e9746;
+    font-family: "Arvo",serif;
+    font-size: 20px;
+    margin: 0 0 5px;
+}
+
+#myAllCorsesNullCase .CorsesNullCaseSteps .coursesbuttonGroup{
+	text-align:center;
+	margin:20px 0;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .coursesbuttonGroup button.primary{
+	padding:9px 20px;
+	margin-bottom:15px;
+}
+@media (min-width: 240px) and (max-width: 319px) {
+	#myAllCorsesNullCase .CorsesNullCaseSteps {
+    border-right:none;
+	border-bottom:1px solid #dddddd;
+    margin-left: 0px;
+	margin-bottom:20px;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .coursesbuttonGroup {
+    margin: 0 0 20px;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 #myAllCorsesNullCase .CorsesNullCaseSteps {
+    border-right:none;
+	border-bottom:1px solid #dddddd;
+    margin-left: 0px;
+	margin-bottom:20px;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .coursesbuttonGroup {
+    margin: 0 0 20px;
+}
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	  #myAllCorsesNullCase .CorsesNullCaseSteps {
+    border-right:none;
+	border-bottom:1px solid #dddddd;
+    margin-left: 0px;
+	margin-bottom:20px;
+}
+#myAllCorsesNullCase .CorsesNullCaseSteps .coursesbuttonGroup {
+    margin: 0 0 20px;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+	 #myAllCorsesNullCase .CorsesNullCaseSteps{
+		 margin-left:0;
+	 }
+	 #myAllCorsesNullCase .CorsesNullCaseSteps .stepsBlockInner{
+		 margin-bottom:15px;
+	 }
+	 #myAllCorsesNullCase .CorsesNullCaseSteps .stepsBlockInner .StepsContent h3{
+		 font-size:18px;
+	 }
+	 #myAllCorsesNullCase .CorsesNullCaseSteps .coursesbuttonGroup {
+    margin: 10px 0;
+    text-align: center;
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+}
+ @media (min-width: 1200px) {
+}
+
+/* empty my collections screen*/
+
+
+@media (min-width: 240px) and (max-width: 319px) {
+	 #gettingstartedmycollections {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+#gettingstartedmycollections .gettingStartedHeader p.lead{
+	margin:0 20px;
+}
+
+#gettingstartedmycollections .LearningCollections{
+	border-right:none;
+		border-bottom:1px solid #979797;
+		margin-bottom:15px;
+		padding-bottom:15px;
+}
+}
+ @media (min-width: 320px) and (max-width: 479px) {
+	 #gettingstartedmycollections {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+#gettingstartedmycollections .gettingStartedHeader p.lead{
+	margin:0 20px;
+}
+
+#gettingstartedmycollections .LearningCollections{
+	border-right:none;
+		border-bottom:1px solid #979797;
+		margin-bottom:15px;
+		padding-bottom:15px;
+}
+
+}
+ @media (min-width: 480px) and (max-width: 767px) {
+	  #gettingstartedmycollections {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+#gettingstartedmycollections .gettingStartedHeader p.lead{
+	margin:0 20px;
+}
+
+#gettingstartedmycollections .LearningCollections{
+	border-right:none;
+		border-bottom:1px solid #979797;
+		margin-bottom:15px;
+		padding-bottom:15px;
+}
+#gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText{
+	min-height:inherit;
+}
+}
+ @media (min-width: 768px) and (max-width: 991px) {
+	 #gettingstartedmycollections {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText {
+    min-height: 105px;
+}
+ @media (min-width: 992px) and (max-width: 1199px) {
+	#gettingstartedmycollections {
+    padding-left: 50px;
+    padding-right: 50px;
+}
 }
  @media (min-width: 1200px) {
 }

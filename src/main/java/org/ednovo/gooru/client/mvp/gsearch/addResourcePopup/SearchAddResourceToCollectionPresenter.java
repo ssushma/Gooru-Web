@@ -53,6 +53,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
@@ -186,47 +187,45 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			}else{
 				urlparams.put("view", "Folder");
 			}
-			/*//This will check the resource count
-			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
+			AppClientFactory.getInjector().getResourceService().getCollection(selectedFolderOrCollectionid, true, new AsyncCallback<CollectionDo>() {
 				@Override
-				public void onSuccess(FolderListDo result) {
-					if (result.getCount()<25){
-						//If the resource length is less than 25 then we need to create the collection item
-						AppClientFactory.getInjector().getResourceService().createCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
-							@Override
-							public void onSuccess(CollectionItemDo result) {
-								successparams.put("id", selectedFolderOrCollectionid);
-								if(collectionResourceWidget!=null){
-									AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(searchResultDo.getGooruOid(), searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
-										@Override
-										public void onSuccess(HashMap<String, String> result) {
-											collectionResourceWidget.getLbladdCount().setText(result.get("resourceAdded"));
-										}
-									});
+				public void onSuccess(CollectionDo result) {
+					int resourceCount=0,questionCount=0;
+					if(result!=null && result.getSummary()!=null){
+						if(result.getSummary().getResourceCount()!=null){
+							 resourceCount= result.getSummary().getResourceCount();
+						}
+						if(result.getSummary().getQuestionCount()!=null){
+							questionCount = result.getSummary().getQuestionCount();
+						}
+						int totalCount = resourceCount+questionCount;
+						if(totalCount<=25){
+							String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
+							AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
+								@Override
+								public void onSuccess(CollectionItemDo result) {
+									if(result!=null && result.getStatusCode()==200){
+										successparams.put("id", selectedFolderOrCollectionid);
+										getView().displaySuccessPopup(title,selectedFolderOrCollectionid,urlparams,searchType,null);
+									}else{
+										getView().hidePopup();
+										Window.enableScrolling(false);
+										AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't add this resource to a Collection");
+									}
 								}
-								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,urlparams,searchType,null);
-							}
-						});
-					}else{
-						getView().hidePopup();
-						Window.enableScrolling(false);
-						AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),i18n.GL0302());
+							});
+						}else{
+							getView().hidePopup();
+							Window.enableScrolling(false);
+							AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't add more than 25 resources/questions");
+						}
 					}
+				
 				}
-			});*/
-			
-			String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
-			AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
 				@Override
-				public void onSuccess(CollectionItemDo result) {
-					if(result!=null && result.getStatusCode()==200){
-						successparams.put("id", selectedFolderOrCollectionid);
-						getView().displaySuccessPopup(title,selectedFolderOrCollectionid,urlparams,searchType,null);
-					}else{
-						getView().hidePopup();
-						Window.enableScrolling(false);
-						AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't add this resource to a Collection");
-					}
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
 				}
 			});
 		}
@@ -289,6 +288,15 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			gooruOid =  collectionId;
 		}
 		return gooruOid;
+	}
+	private String getCategory(){
+		String category="";
+		if(AppClientFactory.getCurrentPlaceToken().contains("search")){
+			category = searchResultDo.getCategory();
+		}else{
+			category =  searchResultDo.getNewResourceFormat().getValue();
+		}
+		return category;
 	}
 
 	public FolderDo getFolderDo(CollectionDo collectionDo) {
@@ -363,7 +371,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public boolean validateIsAssessments(String collectionType) {
 		boolean flag=false;
 		if(ASSESSMENT.equalsIgnoreCase(collectionType)){
-			if(QUESTION.equalsIgnoreCase(searchResultDo.getCategory()) && (searchResultDo.getQuestionType()!=null && !(searchResultDo.getQuestionType().equalsIgnoreCase("OE")))){
+			if(QUESTION.equalsIgnoreCase(getCategory()) && (searchResultDo.getQuestionType()!=null && !(searchResultDo.getQuestionType().equalsIgnoreCase("OE")))){
 				flag=true;
 			}else{
 				flag=false;
