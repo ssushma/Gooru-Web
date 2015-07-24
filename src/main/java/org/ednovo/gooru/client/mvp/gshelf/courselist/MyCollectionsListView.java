@@ -163,17 +163,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlCreateContainer.setVisible(false);
 		lblTitle.setVisible(false);
 		collectionLevelPnl.setVisible(false);
-		
-		if(folderDo!=null)
-		{
-		System.out.println("folder tye::"+folderDo.getType());
-		System.out.println("folder tye11::"+folderDo.getCollectionType());
-		}
-		
 		if(listOfContent.size()==0)
 		{
-			emptyContainerDiv.setVisible(true);
-			
+			emptyContainerDiv.setVisible(true);			
 		}
 		else
 		{
