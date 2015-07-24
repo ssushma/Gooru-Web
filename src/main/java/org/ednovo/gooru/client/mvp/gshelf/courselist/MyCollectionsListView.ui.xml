@@ -26,10 +26,11 @@
 						<span class="courseTextAdd">+ Add New</span>
 						<g:Label styleName="courseTextAdd" ui:field="lblAddNew" />
 					</event:HTMLEventPanel>
-					<g:HTMLPanel ui:field="pnlCreate" styleName="pnlCreate courseTextAdd">
-						<g:Label ui:field="lblAddNewForResource" styleName="pnlCreate courseTextAdd" />
+					<g:HTMLPanel ui:field="pnlCreate" styleName="pnlCreate">
+					    <span class="pnlCreate">+ Add New</span>
+						<g:Anchor ui:field="lblAddNewForResource" styleName="courseTextAdd" />
 						or
-						<g:Label ui:field="lblAddNewForQuestion" styleName="pnlCreate courseTextAdd" />
+						<g:Anchor ui:field="lblAddNewForQuestion" styleName="courseTextAdd" />
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
