@@ -4312,7 +4312,7 @@ right:1px;
 	outline: none; /* remove focus ring from Webkit */
 	line-height: 1.2;
 	background: #ffffff;
-	width: 36%;
+	width: 73%;
 	-webkit-appearance: none; /* remove the strong OSX influence from Webkit */
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -4355,7 +4355,9 @@ right:1px;
 
 .shareMainContainer .selectClassBlock{
 	padding:15px 15px;
-	border-bottom:1px solid #dddddd;
+	width: 50%;
+	border-right: 1px solid #ddd;
+	/* border-bottom:1px solid #dddddd; */
 }
 
 .shareMainContainer .courseDetailsContainer{

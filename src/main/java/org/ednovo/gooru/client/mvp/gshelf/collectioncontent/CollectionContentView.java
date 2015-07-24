@@ -152,9 +152,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		this.listOfContent = listOfContent;
 		this.folderDo = folderDo;
 		emptyContainerdiv.clear();
-		if (AppClientFactory.isContentAdmin() || listOfContent
-				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
-						.getGooruUId())){
+		if (AppClientFactory.isContentAdmin() || (listOfContent.getUser()!=null && listOfContent.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
+						.getGooruUId()))){
 			getUiHandlers().disableCollabaratorOptions(true);
 		}else if(listOfContent.isIsCollaborator()){
 			getUiHandlers().disableCollabaratorOptions(false);
@@ -164,8 +163,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			String lastModifiedUser = listOfContent.getLastModifiedUser().getUsername() != null ?  listOfContent.getLastModifiedUser().getUsername() : "";
 			lastEditedBy = StringUtil.generateMessage(i18n.GL1112(), lastModifiedDate, lastModifiedUser);
 			hasLastModifiedUser = lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("") ? true : false;
-		}
-		else{
+		}else{
 			lastEditedBy="";
 			hasLastModifiedUser=false;
 		}
