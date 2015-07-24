@@ -519,7 +519,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
-		AppClientFactory.printInfoLogger("edit cons--");
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		isEditResource=true;
 		questionTypeHeader.getElement().setId("lblQuestionTypeHeader");
@@ -2437,7 +2436,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     				String[] temp;
     				String errorMsg;
     				String errorMsg2;
-
+    				
     				if(htType.equalsIgnoreCase(i18n.GL3219_1())){
     					temp = text.split(" ");
     					errorMsg=ERROR_MSG_HTHL_SYNTAX;
@@ -2460,6 +2459,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     							}
     						}
     					}
+    					
     					if(isCorrect){
         						isAnswerChoiceSelected=false;
         						profanitymodel.setQuestionID(Integer.toString(i));
@@ -2761,8 +2761,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 		List<QuestionAnswerDo> questionAnswerDoList = new ArrayList<QuestionAnswerDo>();
 
-		AppClientFactory.printInfoLogger(".show edit...");
-
 		try{
 			/**
 			 *  If type = 4 from API, treated as FIB.
@@ -2912,9 +2910,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addHotTextAnsChoice.setHeadLabelFields(true);
 				addHotTextAnsChoice.highlightRDButtonClick();
 				setHotTextAnswers(addHotTextAnsChoice);
-				String HtHighlightType=	collectionItemDo.getResource().getHlType();
+				htType=	collectionItemDo.getResource().getHlType();
 
-				if(HtHighlightType.equalsIgnoreCase(i18n.GL3219_1())){
+				if(htType.equalsIgnoreCase(i18n.GL3219_1())){
 					addHotTextAnsChoice.wordRDButtonClick();
 				}else{
 					addHotTextAnsChoice.sentenceRDButtonClick();
