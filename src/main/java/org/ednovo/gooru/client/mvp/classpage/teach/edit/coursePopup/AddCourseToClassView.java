@@ -59,7 +59,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	
 	@UiField HTMLPanel floderTreeContainer,emptyCourseBlockContainer,footerPanel;
 	@UiField Button cancelResourcePopupBtnLbl,gotoMyContent;
-	//@UiField Anchor btnAddNew;
+	@UiField Anchor btnAddNew;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddExisting,assignBtn,cancel;
 	@UiField H4Panel addtocollHeaderText;
@@ -295,6 +295,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			assignBtn.setVisible(true);
 			cancel.setVisible(true);
 			btnAddExisting.setVisible(false);
+			btnAddNew.setVisible(false);
 		}else{
 			lblError.setVisible(true);
 		}
@@ -314,12 +315,12 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		Window.enableScrolling(true);
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 	}
-/*	@UiHandler("btnAddNew")
+	@UiHandler("btnAddNew")
 	public void createNewCourse(ClickEvent event){
 		AppClientFactory.printInfoLogger("clicked in create new course");
 		AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.MYCONTENT);
 		hide();
-	}*/
+	}
 	
 	@Override
 	public Anchor getAddButton(){
@@ -340,7 +341,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 
 	@Override
 	public void setDefaultPanelVisibility(Boolean blnVal){
-		//btnAddNew.setVisible(!blnVal);
+		btnAddNew.setVisible(!blnVal);
 		pageNum=1;
 	}
 
@@ -367,6 +368,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		assignCourseBlockContainer.setVisible(false);
 		assignBtn.setVisible(false);
 		addingTextLbl.setHTML(i18n.GL3436());
+		btnAddNew.setVisible(true);
 		emptyCourseBlockContainer.setVisible(false);
 		currectCourseSelectedTreeItem=null;
 		cancel.setVisible(false);

@@ -185,12 +185,24 @@ public abstract class ContentWidgetWithMove extends Composite {
 	 * @param courseSummaryDo 
 	 */
 	public void setData(CourseSummaryDo courseSummaryDo,String typeVal){
-		spnUnitsCount.setText(i18n.GL3279()+" ("+(courseSummaryDo.getUnitCount()!=null?courseSummaryDo.getUnitCount():0)+")");
-		spnLessonsCount.setText(i18n.GL3280()+" ("+(courseSummaryDo.getLessonCount()!=null?courseSummaryDo.getLessonCount():0)+")");
-		spnCollectionsCount.setText(i18n.GL1754()+" ("+(courseSummaryDo.getCollectionCount()!=null?courseSummaryDo.getCollectionCount():0)+")");
-		spnAssessmentsCount.setText(i18n.GL1325()+" ("+(courseSummaryDo.getAssessmentCount()!=null?courseSummaryDo.getAssessmentCount():0)+")");
-		spnResourcesCount.setText(i18n.GL1755()+" ("+(courseSummaryDo.getResourceCount()!=null?courseSummaryDo.getResourceCount():0)+")");
-		spnQuestionsCount.setText(i18n.GL2290()+" ("+(courseSummaryDo.getQuestionCount()!=null?courseSummaryDo.getQuestionCount():0)+")");
+		if(courseSummaryDo.getUnitCount()!=null && courseSummaryDo.getUnitCount()>0){
+			spnUnitsCount.setText(i18n.GL3279()+" ("+courseSummaryDo.getUnitCount()+")");
+		}
+		if(courseSummaryDo.getLessonCount()!=null && courseSummaryDo.getLessonCount()>0){
+			spnLessonsCount.setText(i18n.GL3280()+" ("+courseSummaryDo.getLessonCount()+")");
+		}
+		if(courseSummaryDo.getCollectionCount()!=null && courseSummaryDo.getCollectionCount()>0){
+			spnCollectionsCount.setText(i18n.GL1754()+" ("+courseSummaryDo.getCollectionCount()+")");
+		}
+		if(courseSummaryDo.getAssessmentCount()!=null && courseSummaryDo.getAssessmentCount()>0){
+			spnAssessmentsCount.setText(i18n.GL1325()+" ("+courseSummaryDo.getAssessmentCount()+")");
+		}
+		if(courseSummaryDo.getResourceCount()!=null && courseSummaryDo.getResourceCount()>0){
+			spnResourcesCount.setText(i18n.GL1755()+" ("+courseSummaryDo.getResourceCount()+")");
+		}
+		if(courseSummaryDo.getResourceCount()!=null && courseSummaryDo.getQuestionCount()>0){
+			spnQuestionsCount.setText(i18n.GL2290()+" ("+courseSummaryDo.getQuestionCount()+")");
+		}
 	}
 	/**
 	 * This method is used for enabling and disabling the counts

@@ -1070,7 +1070,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(O1_LEVEL,courseShelfTreeWidget.getUrlParams().get(O1_LEVEL));
 
 			ShelfTreeWidget unitShelfTreeWidget = (ShelfTreeWidget) currentShelfTreeWidget.getParentItem().getWidget();
-			unitShelfTreeWidget.getCollectionDo().getSummary().setLessonCount(unitShelfTreeWidget.getElement().getChildCount());
+			unitShelfTreeWidget.getCollectionDo().getSummary().setLessonCount(unitShelfTreeWidget.getCollectionDo().getSummary().getLessonCount()+1);
 			
 			urlParams.put(UNIT, unitShelfTreeWidget.getUrlParams().get(UNIT));
 			urlParams.put(O2_LEVEL,unitShelfTreeWidget.getUrlParams().get(O2_LEVEL));
@@ -1352,9 +1352,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			setTitleWithIcon((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
 					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():
 					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type.contains(ASSESSMENT)?"breadcrumbsAssessmentIcon":"breadcrumbsCollectionIcon");
-		}else{
+		}/*else{
 			setTitleWithIcon(StringUtil.isEmpty(title)?i18n.GL3364():title, "");
-		}
+		}*/
 	}
 
 	
