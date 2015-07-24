@@ -168,7 +168,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 			emptyContainerDiv.setVisible(false);
 		}
-		
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
