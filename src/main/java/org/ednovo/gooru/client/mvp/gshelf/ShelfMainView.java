@@ -1352,9 +1352,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			setTitleWithIcon((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
 					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():
 					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type.contains(ASSESSMENT)?"breadcrumbsAssessmentIcon":"breadcrumbsCollectionIcon");
-		}else{
+		}/*else{
 			setTitleWithIcon(StringUtil.isEmpty(title)?i18n.GL3364():title, "");
-		}
+		}*/
 	}
 
 	
