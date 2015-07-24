@@ -27,6 +27,8 @@ package org.ednovo.gooru.application.shared.model.content;
 import java.util.Date;
 import java.util.List;
 
+
+import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -85,8 +87,17 @@ public class CollectionDo extends ResourceDo implements IsSerializable{
 	private List<String> permissions;
 	
 	private String type;
+	
+	private CourseSummaryDo summary;
 
 	public CollectionDo(){}
+	
+	public CourseSummaryDo getSummary() {
+		return summary;
+	}
+	public void setSummary(CourseSummaryDo summary) {
+		this.summary = summary;
+	}
 	public String getStringTypeValue() {
 		return type;
 	}
