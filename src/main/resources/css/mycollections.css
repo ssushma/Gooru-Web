@@ -908,7 +908,7 @@ button.btn-disabled{
 #gShelfCousesList .tableColumn:nth-child(2){
 	background:#f9fcfe;
 	padding:10px 15px;
-	width:30%;
+	width:40%;
 	cursor:pointer;
 }
 #gShelfCousesList .tableColumn:last-child{
@@ -978,7 +978,7 @@ button.btn-disabled{
 	font-weight:bold;
 	color:#515151;
 	margin-left: 26%;
-	word-break: break-all;
+	word-break: break-word;
 }
 #gShelfCousesList .tableMainHeader p{
 	margin:0 0;
