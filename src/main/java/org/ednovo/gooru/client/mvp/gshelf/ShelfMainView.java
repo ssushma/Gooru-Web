@@ -1130,6 +1130,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			urlParams.put(O2_LEVEL,parentShelfTreeWidget.getUrlParams().get(O2_LEVEL));
 			urlParams.put("id",courseDo.getGooruOid());
 		}else if(o1!=null){
+			//if(treeChildSelectedItem.getParentItem()!=null){
 			parentShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
 			urlParams.put(O1_LEVEL,parentShelfTreeWidget.getUrlParams().get(O1_LEVEL));
 			urlParams.put("id",courseDo.getGooruOid());
