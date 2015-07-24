@@ -147,6 +147,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 					myCollectionsRightClusterPresenter.setTabItems(1, LESSON, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(LESSON,currentShelfTreeWidget);
 				}else{
+					myCollectionsRightClusterPresenter.setFolderListDoChild(null);
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
 				}
 				Window.scrollTo(0, 0);
