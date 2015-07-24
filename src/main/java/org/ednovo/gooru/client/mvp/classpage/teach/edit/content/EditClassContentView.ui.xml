@@ -129,8 +129,9 @@
          <p>Content pacing applies to assessments in this course. Students must meet the minimum score for all assessments in a lesson to see a trophy on the lesson level.</p>
          <hr/>
          <div class="AssessmentandCollections">
-            <span><em>Assessment</em> <img src="images/floderIcon-org.png"/> For assessments, students must meet the minimum score to get a trophy. </span>
-            <span class="leftMargin"><em>Collection</em> <img src="images/floderIcon-blue.png"/> Please note that collections in the lesson are not scored. </span>
+            <span><img src="images/floderIcon-org.png"/> Assessments are scored </span>
+            <span class="leftMargin"><img src="images/floderIcon-blue.png"/> Collection are not scored</span>
+           <!--  <span class="leftMargin"></span> -->
          </div>
       </div>
       <div class="CourseandUnitViewContainer">

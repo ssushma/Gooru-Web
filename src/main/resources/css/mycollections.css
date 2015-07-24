@@ -4586,7 +4586,8 @@ right:1px;
 }
 
 #gShelfMainContainer .courseLevel { /* grandparent level - default */
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px;
+    /* background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px; */
+    background:#f0f0f0 url('${cdn.endpoint}/g-folder-small.png') no-repeat 33px 13px; ;
 }
 
 #gShelfMainContainer .courseLevel.course{ /* grandparent level - default */
@@ -4594,6 +4595,6 @@ right:1px;
 }
 
 #gShelfMainContainer .courseLevel.course {
-    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 33px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/course-folder-closed.png') no-repeat 33px 13px; ;
 }
 
