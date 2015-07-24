@@ -163,15 +163,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlCreateContainer.setVisible(false);
 		lblTitle.setVisible(false);
 		collectionLevelPnl.setVisible(false);
-		if(listOfContent.size()==0)
-		{
-			emptyContainerDiv.setVisible(true);			
-		}
-		else
-		{
+		if(listOfContent ==null || listOfContent.size()==0){
+			emptyContainerDiv.setVisible(true);
+		}else{
 			emptyContainerDiv.setVisible(false);
 		}
-		
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);

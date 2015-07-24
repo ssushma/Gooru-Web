@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.gshelf.unitdetails;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
@@ -76,7 +77,7 @@ public interface UnitInfoUiHandlers extends BaseUiHandlers {
 	
 	MyCollectionsRightClusterPresenter getMyCollectionsRightClusterPresenter();
 	
-	public void getDomainsBasedOnCourseId(int courseId,int selectedId);
+	public void getDomainsBasedOnCourseId(int courseId,int selectedId, CourseSubjectDo libraryCodeDo);
 	
 	public void callCourseInfoTaxonomy();
 
