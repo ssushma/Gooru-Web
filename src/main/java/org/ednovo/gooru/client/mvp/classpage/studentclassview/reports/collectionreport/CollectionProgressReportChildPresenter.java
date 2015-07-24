@@ -230,8 +230,8 @@ public class CollectionProgressReportChildPresenter extends ChildPresenter<Colle
 				collectionProgressCount=0;
 				Collections.sort(result,new Comparator<UserDataDo>() {
 		        	public int compare(UserDataDo o1, UserDataDo o2) {
-		        		 Integer obj1 = new Integer(o1.getItemSequence());
-						 Integer obj2 = new Integer(o2.getItemSequence());
+		        		 Integer obj1 = new Integer(o1.getSequence());
+						 Integer obj2 = new Integer(o2.getSequence());
 		        	     return obj1.compareTo(obj2);
 		        	}
 		        });

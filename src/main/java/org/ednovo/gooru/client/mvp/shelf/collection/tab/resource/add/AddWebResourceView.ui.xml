@@ -132,7 +132,6 @@
 								ui:field="interactiveText"></g:HTMLPanel>
 						</g:HTMLPanel>
 					</tinyMce:HTMLEventPanel>
-s
 					<tinyMce:HTMLEventPanel
 						styleName="{res.css.myFolderCollectionFolderVideoOuterContainerRFormat}"
 						ui:field="imageResourcePanel">
