@@ -364,7 +364,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void deleteCollectionContent(final String o1CourseId, final String o2UnitId,	final String o3LessonId, final String assessmentCollectionId) {
 		AppClientFactory.getInjector().getfolderService().deleteCollectionAssessment(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId, new SimpleAsyncCallback<Integer>() {
-
 			@Override
 			public void onSuccess(Integer result) {
 				if(result==200){
@@ -457,7 +456,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle) {
-		// TODO Auto-generated method stub
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
@@ -466,6 +465,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle) {
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(true);

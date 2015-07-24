@@ -291,9 +291,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	
 	@Override
-	public void getChildFolderItems(final String folderId,final String typeVal,final boolean isDataCalled) {
+	public void getChildFolderItems(final String folderId,final String typeVal,final boolean isDataCalled,final TreeItem currentTreeItem) {
 		if(isDataCalled) {
-			getView().getChildFolderItems(null);
+			getView().getChildFolderItems(currentTreeItem,null); 
 		}else{
 			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 				@Override
@@ -301,10 +301,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					searchResult.addAll(result.getSearchResult());
 					if(result.getSearchResult().size()==20) {
 						getView().setChildPageNumber(getView().getChildPageNumber()+1);
-						setPaginatedChildFolders(folderId,typeVal,isDataCalled);
+						setPaginatedChildFolders(folderId,typeVal,isDataCalled,currentTreeItem);
 					} else {
 						getView().setChildPageNumber(1);
-						getView().getChildFolderItems(searchResult);
+						getView().getChildFolderItems(currentTreeItem,searchResult);
 						searchResult.clear();
 					}
 				}
@@ -312,9 +312,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 	}
 	@Override
-	public void getChildFolderItemsForCourse(final String courseId,final String unitId,final String lessonId,final String typeVal,final boolean isDataCalled) {
+	public void getChildFolderItemsForCourse(final String courseId,final String unitId,final String lessonId,final String typeVal,final boolean isDataCalled,final TreeItem currentTreeItem) {
 		if(isDataCalled) {
-			getView().getChildFolderItems(null);
+			getView().getChildFolderItems(currentTreeItem,null);
 		}else{
 			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse((getView().getChildPageNumber()-1)*20, 20,courseId, unitId, lessonId, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
 				@Override
@@ -322,10 +322,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					searchResult.addAll(result.getSearchResult());
 					if(result.getSearchResult().size()==20) {
 						getView().setChildPageNumber(getView().getChildPageNumber()+1);
-						setPaginatedChilds(courseId,unitId,lessonId,typeVal,isDataCalled);
+						setPaginatedChilds(courseId,unitId,lessonId,typeVal,isDataCalled,currentTreeItem);
 					} else {
 						getView().setChildPageNumber(1);
-						getView().getChildFolderItems(searchResult);
+						getView().getChildFolderItems(currentTreeItem,searchResult);
 						searchResult.clear();
 					}
 				}
@@ -372,11 +372,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 	}
 
-	private void setPaginatedChildFolders(String folderId,String typeVal, boolean isDataCalled) {
-		getChildFolderItems(folderId,typeVal, isDataCalled);
+	private void setPaginatedChildFolders(String folderId,String typeVal, boolean isDataCalled, TreeItem currentTreeItem) {
+		getChildFolderItems(folderId,typeVal, isDataCalled,currentTreeItem);
 	}
-	private void setPaginatedChilds(String courseId,String unitId,String lessonId,String typeVal, boolean isDataCalled) {
-		getChildFolderItemsForCourse(courseId,unitId,lessonId,typeVal,isDataCalled);
+	private void setPaginatedChilds(String courseId,String unitId,String lessonId,String typeVal, boolean isDataCalled,TreeItem currentTreeItem) {
+		getChildFolderItemsForCourse(courseId,unitId,lessonId,typeVal,isDataCalled,currentTreeItem);
 	}
 	@Override
 	public void refreshUserShelfCollections() {
@@ -525,5 +525,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 
 	public TreeItem getEditingWidget() { 
 		return getView().getCurrentEditingWidget();
+	}
+
+	public void showLastEditCollaborater(String lastEditedBy,
+			boolean hasLastModifiedUser) {
+		getView().showLastEditCollaborater(lastEditedBy,hasLastModifiedUser);
 	}
 }

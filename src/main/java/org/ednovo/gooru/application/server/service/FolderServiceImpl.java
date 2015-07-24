@@ -320,7 +320,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			params.put(GooruConstants.SHARING, sharingType);
 		}
 		if(collectionType!=null){
+			if(courseId!=null && unitId!=null && lessonId!=null){
 			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
+			}
 		}
 		if(isExcludeAssessment){
 			params.put(GooruConstants.EXCLUDE_TYPE, "assessment/url");

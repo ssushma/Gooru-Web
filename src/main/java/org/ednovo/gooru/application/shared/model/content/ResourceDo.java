@@ -110,7 +110,7 @@ public class ResourceDo extends ContentDo {
 
 	private List<String> acessmode;
 
-	private List<String> mediaFeatures;
+	private List<ListValuesDo> mediaFeature;
 
 	private List<String> accessibilityAPI;
 
@@ -128,6 +128,10 @@ public class ResourceDo extends ContentDo {
 
 	private String hlType;
 	private boolean singleCorrectAnswer;
+	private ArrayList<checkboxSelectedDo> momentsOfLearning;
+	private ArrayList<checkboxSelectedDo> educationalUse;
+	private List<checkboxSelectedDo> depthOfKnowledge;
+	private List<checkboxSelectedDo> accessHazard;
 
 	public List<String> getPublisher() {
 		return publisher;
@@ -172,11 +176,12 @@ public class ResourceDo extends ContentDo {
 
 	private String isadaptation;
 
-	public List<String> getMediaFeatures() {
-		return mediaFeatures;
+	
+	public List<ListValuesDo> getMediaFeature() {
+		return mediaFeature;
 	}
-	public void setMediaFeatures(List<String> mediaFeatures) {
-		this.mediaFeatures = mediaFeatures;
+	public void setMediaFeature(List<ListValuesDo> mediaFeature) {
+		this.mediaFeature = mediaFeature;
 	}
 	public List<String> getAcessmode() {
 		return acessmode;
@@ -237,10 +242,15 @@ public class ResourceDo extends ContentDo {
 	/** need to change the above **/
 
 
-	private ArrayList<checkboxSelectedDo> momentsOfLearning;
-	private ArrayList<checkboxSelectedDo> educationalUse;
-	private List<checkboxSelectedDo> depthOfKnowledge;
+	
 
+	
+	public List<checkboxSelectedDo> getAccessHazard() {
+		return accessHazard;
+	}
+	public void setAccessHazard(List<checkboxSelectedDo> accessHazard) {
+		this.accessHazard = accessHazard;
+	}
 	/**
 	 * This method is to get the encodedUrl
 	 */

@@ -1656,6 +1656,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					public	void onLoginSuccess(){
 						Window.enableScrolling(false);
 						remixPresenterWidget.DisableMyCollectionsPanelData(false);
+						remixPresenterWidget.getLoadingImage();
 						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
@@ -1667,6 +1668,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				loginPopupUc.setGlassEnabled(true);
 			}else{
 				remixPresenterWidget.DisableMyCollectionsPanelData(false);
+				remixPresenterWidget.getLoadingImage();
 				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 				remixPresenterWidget.getView().getAppPopUp().show();
 				isCustomizePopup = false;
@@ -1710,6 +1712,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				isVisible=false;
 				Window.scrollTo(0, 0);
 				remixPresenterWidget.DisableMyCollectionsPanelData(false);
+				remixPresenterWidget.getLoadingImage();
 				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
 				remixPresenterWidget.getView().getAppPopUp().show();
 				isCustomizePopup = false;

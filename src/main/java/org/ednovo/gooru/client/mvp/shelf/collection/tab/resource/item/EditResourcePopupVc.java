@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
@@ -53,6 +54,8 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddSetupAdvancedView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddWebResourceView.EducationClickHandler;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddWebResourceView.MomentOfLearingClickHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppPopUp;
@@ -60,7 +63,9 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -101,6 +106,7 @@ import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -131,7 +137,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public Label resoureDropDownLbl;
 
 	@UiField
-	Label resourcemomentsOfLearningLabel,standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,educationalDropDownLbl;
+	Label standardMaxMsg,mandatoryEducationalLbl,mandatoryUrlLbl, mandatoryTitleLbl,educationalDropDownLbl;
 
 	@UiField
 	Label mandatoryCategoryLbl, urlTextLbl,refreshLbl;
@@ -154,13 +160,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel momentsOfLearningPanel,momentsOfLearningTitle,extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,educationalUsePanel,educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+	HTMLPanel momentsOfLearningTitle,extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,saveButtonContainer,panelContentRights,rightsContainer,videoPanel,interactivePanel,websitePanel,imagePanel,textsPanel,audioPanel,
-	educationalpanel,rightsContent,educationalContainer,momentsOfLearningContainer,accessHazardContainer,standardsBrowseContainer,centuryBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,defaultMomentsOfLearningText,defaultText;//otherPanel
+	rightsContent,educationalContainer,momentsOfLearningContainer,accessHazardContainer,standardsBrowseContainer,centuryBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,defaultMomentsOfLearningText,defaultText;//otherPanel
 	
 	@UiField Label mandatorymomentsOfLearninglLbl,standardsDefaultText,centuryDefaultText,resourceCategoryLabel,loadingTextLbl,rightsLbl;
 	
-	 @UiField HTMLPanel categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel,errorContainer;//other,
+	 @UiField HTMLPanel hazardContainer,educationalUsePanelOld,categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel,errorContainer;//other,
 	 @UiField CheckBox rightsChkBox;
 	
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr,moblieFriendly,advancedText;
@@ -172,17 +178,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	AddTagesCBundle res2;
 	@UiField FlowPanel standardContainer,standardsPanel,centuryPanel,centuryContainer;
 	
-	@UiField Label accessHazard,flashingHazard,motionSimulationHazard,soundHazard;
+	@UiField Label accessHazard;
 	
 	@UiField Label mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
 	
 	@UiField ScrollPanel spanelMediaFeaturePanel;
 	
-	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer,mediaDropdownArrowConatainer;
+	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer,mediaDropdownArrowConatainer,momentsOfLearningPanelOld;
 	
 	@UiField HTMLEventPanel AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,eHearderIconCentury,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl,defaultPanel;
 	
+	@UiField Anchor resourceEducationalLabel,resourcemomentsOfLearningLabel;
+	@UiField UlPanel educationalUsePanel,momentsOfLearningPanel;
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	ResourceMetaInfoDo resMetaInfoDo = null;
 	private CopyRightPolicyVc copyRightPolicy;
@@ -219,6 +227,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
+	private ArrayList<checkboxSelectedDo> momentsOfLearning;
+	private ArrayList<checkboxSelectedDo> educationalUse;
+	private List<checkboxSelectedDo> accessHazardList;
+	private List<ListValuesDo> mediaFeature;
+	
 	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
 	StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private boolean isBrowseTooltip =false;
@@ -324,6 +337,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				}
 			}
 		};
+		mediaFeature=collectionItemDo.getMediaFeature();
+		momentsOfLearning=collectionItemDo.getMomentsOfLearning();
+		educationalUse=collectionItemDo.getEducationalUse();
+		accessHazardList=collectionItemDo.getAccessHazard();
+		
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 		standardSgstBox.addSelectionHandler(this);
 		centurySgstBox=new AppSuggestBox(centurySuggestOracle) {
@@ -400,6 +418,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			public void showAndHideContainers() {
 			}
 		};
+		resourceEducationalLabel.getElement().setAttribute("data-toggle", "dropdown");
+		resourcemomentsOfLearningLabel.getElement().setAttribute("data-toggle", "dropdown");
+		setMomentOfLeaning();
+		setEducationUse();
+		setHazard();
 		AdvancedSetupContainer.add(addSetupAdvancedView);
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
@@ -479,7 +502,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
         interactivePanel.getElement().setId("pnlInteractivePanel");
         interactivePanel.getElement().setAttribute("alt", i18n.GL0919());
         interactivePanel.getElement().setAttribute("title", i18n.GL0919());
-        
+        momentsOfLearningPanelOld.setVisible(false);
 		websitePanel.getElement().setInnerHTML(i18n.GL1396());
 		websitePanel.getElement().setId("pnlWebsitePanel");
 		websitePanel.getElement().setAttribute("alt", i18n.GL1396());
@@ -577,8 +600,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0916());
 		mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0916());
 		
-		momentsOfLearningPanel.setVisible(false);
-		momentsOfLearningPanel.getElement().setId("pnlMomentsOfLearningPanel");
 		educationalTitle.getElement().setInnerHTML(i18n.GL1664());
 		educationalTitle.getElement().setId("lblEducationalTitle");
 		educationalTitle.getElement().setAttribute("alt", i18n.GL1664());
@@ -643,8 +664,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		bookText.getElement().setId("pnlBookText");
 		bookText.getElement().setAttribute("alt", i18n.GL1677());
 		bookText.getElement().setAttribute("title", i18n.GL1677());
-		educationalUsePanel.getElement().setId("pnlEducationalUsePanel");
-		educationalUsePanel.setVisible(false);
+		educationalUsePanelOld.setVisible(false);	
 		
 		standardsDefaultText.setText(i18n.GL1682());
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
@@ -697,7 +717,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		image.getElement().setId("pnlImage");
 		texts.getElement().setId("pnlTexts");
 		audio.getElement().setId("pnlAudio");
-		educationalpanel.getElement().setId("pnlEducationalpanel");
 		educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
 		mandatoryEducationalLbl.getElement().setId("lblMandatoryEducationalLbl");
 		activityPanel.getElement().setId("epnlActivityPanel");
@@ -855,20 +874,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
-		flashingHazard.setText(i18n.GL3110());
-		flashingHazard.getElement().setId("lblFlashingHazard");
-		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
-		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
 		
-		motionSimulationHazard.setText(i18n.GL3111());
-		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
-		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL3111());
-		motionSimulationHazard.getElement().setAttribute("title",i18n.GL3111());
-		
-		soundHazard.setText(i18n.GL3112());
-		soundHazard.getElement().setId("lblSoundHazard");
-		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
-		soundHazard.getElement().setAttribute("title",i18n.GL3112());
 		
 
 		mediaLabel.setText("Media Feature");
@@ -905,7 +911,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				OpenMediaFeatureDropdown();
 			}
 		});
-		List<String> mediaFeatureList = Arrays.asList(mediaFeatureStr.split(","));
+		/*List<String> mediaFeatureList = Arrays.asList(mediaFeatureStr.split(","));
 		for(int n=0; n<mediaFeatureList.size(); n++)
 		{
 				String mediaTitleVal = mediaFeatureList.get(n);
@@ -926,7 +932,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					}
 				});
 				htmlMediaFeatureListContainer.add(titleLabel);
-		}
+		}*/
+		getMediaFeatures();
 		HTMLEventPanel defaultMediaFeaturePnl = new HTMLEventPanel("");
 		defaultMediaFeaturePnl.getElement().setClassName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFolderVideoOuterContainer());
 		HTMLPanel defaultMediaFeatureText = new HTMLPanel("");
@@ -1336,18 +1343,22 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		if(collectionItemDo.getResource().getResourceTags()!=null){
 			for(int i=0;i<collectionItemDo.getResource().getResourceTags().size();i++){
 				tagListGlobal.add("\""+collectionItemDo.getResource().getResourceTags().get(i).getLabel()+"\"");
-				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Media Feature"))
+				AppClientFactory.printInfoLogger("collectionItemDo.getMediaFeature().size()........."+collectionItemDo.getMediaFeature());
+
+				if(collectionItemDo.getMediaFeature()!=null&&collectionItemDo.getMediaFeature().size()>0)
 				{
-					setMediaFeatureObjectVal(collectionItemDo.getResource().getResourceTags().get(i).getLabel());
+					setMediaFeatureObjectVal(collectionItemDo.getMediaFeature());
 				}
+
 				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Mobile Friendly"))
 				{
 					setMobileFriendlyObjectVal(collectionItemDo.getResource().getResourceTags().get(i).getLabel());
 				}
 				
-				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Access Hazard"))
+				AppClientFactory.printInfoLogger("collectionItemDo.getAccessHazard().size()........."+collectionItemDo.getAccessHazard());
+				if(collectionItemDo.getAccessHazard()!=null&&collectionItemDo.getAccessHazard().size()>0)
 				{
-					setAccessHazardObjectVal(collectionItemDo.getResource().getResourceTags().get(i).getLabel());
+					setAccessHazardObjectVal(collectionItemDo.getAccessHazard());
 				}
 			}
 		}
@@ -1515,30 +1526,29 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
 		setImage(thumbnailUrlStr, category);
-		if( collectionItemDo.getResource().getEducationalUse()!=null){
-			for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
-				
-				   if(item.isSelected()){
-					    resourceEducationalLabel.setText(item.getValue());
+		if( collectionItemDo.getEducationalUse()!=null){
+			for (checkboxSelectedDo item : collectionItemDo.getEducationalUse()) {
+					    resourceEducationalLabel.setText(item.getName());
+					    resourceEducationalLabel.getElement().setId(item.getId()+"");
 						educationalUsePanel.setVisible(false);
 						educationalDropDownLblOpen = false;
 						mandatoryEducationalLbl.setVisible(false);
 						setAdvancedOptionsStyles();
-				   }
+				 
 				}
 		}
-		if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
-			for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {	
-				   if(item.isSelected()){
-					   resourcemomentsOfLearningLabel.setText(item.getValue());
-					   resourcemomentsOfLearningLabel.getElement().setAttribute("alt", item.getValue());
-						resourcemomentsOfLearningLabel.getElement().setAttribute("title", item.getValue());
+		if(collectionItemDo.getMomentsOfLearning()!=null){
+			for (checkboxSelectedDo item : collectionItemDo.getMomentsOfLearning()) {	
+					   resourcemomentsOfLearningLabel.setText(item.getName());
+					   resourcemomentsOfLearningLabel.getElement().setId(item.getId()+"");
+					   resourcemomentsOfLearningLabel.getElement().setAttribute("alt", item.getName());
+		               resourcemomentsOfLearningLabel.getElement().setAttribute("title", item.getName());
 					   momentsOfLearningPanel.setVisible(false);
 					   momentsOfLearningOpen = false;
 					   mandatorymomentsOfLearninglLbl.setVisible(false);
 					   setAdvancedOptionsStyles();
-				   }
-				}
+				 
+			}
 		}
 		if(collectionItemDo.getStandards()!=null){
 			standardsPanel.clear();
@@ -1567,7 +1577,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}
 			updateStandardsAdvancedSetupStyle();
 		}
-		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
+		if(collectionItemDo.getSkills()!= null && collectionItemDo.getSkills().size()>0){
 			centuryPanel.clear();
 			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
 				 CodeDo codeObj=new CodeDo();
@@ -1679,12 +1689,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												
 											}
 											if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
-											{
-												
-												tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
-											
+											{	List<ListValuesDo> listValuesDos=new ArrayList<>();
+												ListValuesDo listValuesDo=new ListValuesDo();
+												String id=lblMediaPlaceHolder.getElement().getId();
+												if(id!=null&&!id.equalsIgnoreCase("")){
+													listValuesDo.setId(Integer.parseInt(id));
+												}
+												listValuesDo.setName(lblMediaPlaceHolder.getText());
+												listValuesDos.add(listValuesDo);
+												collectionItemDo.setMediaFeature(listValuesDos);
 											}
-											String hazardArr[] = setAccessHazards();
+											
+											collectionItemDo.setAccessHazard(setAccessHazards());
+											/*	String hazardArr[] = setAccessHazards();
 											
 											if(hazardArr != null)
 											{
@@ -1692,11 +1709,20 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												{
 													tagList.add(hazardArr[i].toString());
 												}
-											}
+											}*/
 											if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
-											{
+											{	
+												ArrayList<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
+												
 												if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
-													tagList.add("Educational Use : "+resourceEducationalLabel.getText());
+													checkboxSelectedDo checkboxSelectedDo=new checkboxSelectedDo();
+													String id=resourceEducationalLabel.getElement().getId();
+													if(id!=null&&!id.equalsIgnoreCase("")){
+														checkboxSelectedDo.setId(Integer.parseInt(id));
+														checkboxSelectedDo.setName(resourceEducationalLabel.getText());
+													}
+													collectionItemDo.setEducationalUse(checkboxSelectedDos);
+													//tagList.add("Educational Use : "+resourceEducationalLabel.getText());
 												}
 											}
 											if (isValidate) {
@@ -2486,76 +2512,36 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		updateMobileFriendlyAdvancedStyles();
 	}
-	public String[] setAccessHazards()
+	public List<checkboxSelectedDo> setAccessHazards()
 	{
-		String[] accessHazardsArr = null;
-		List<String> accessHazardsSelected = new ArrayList<String>();
-		
-		if(flashingHazard.getElement().getClassName().contains("select"))
-		{
-			String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-			
-		}
-		if(motionSimulationHazard.getElement().getClassName().contains("select"))
-		{
-			String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
-		if(soundHazard.getElement().getClassName().contains("select"))
-		{
-			String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
+		int size=hazardContainer.getWidgetCount();
+	List<checkboxSelectedDo> accessHazardsSelected = new ArrayList<checkboxSelectedDo>();
+
+	AppClientFactory.printInfoLogger("..........."+size);
+	for(int i=0;i<size;i++){
+		Label label=(Label)hazardContainer.getWidget(i);
+		if(label.getStyleName().contains("select")){
+			String id=label.getElement().getId();
+			if(id!=null&&!id.equalsIgnoreCase("")){
+				int idInt=Integer.parseInt(id);
+				checkboxSelectedDo checkboxSelectedDo=new checkboxSelectedDo();
+				checkboxSelectedDo.setId(idInt);
+				checkboxSelectedDo.setName(label.getText());
+				accessHazardsSelected.add(checkboxSelectedDo);
+			}
 		}
 		
-		accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
-		setAdvancedAccessHazardStyles(accessHazardsArr.length);
-		return accessHazardsArr;
 	}
-	@UiHandler("flashingHazard")
-	public void onflashingHazardClick(ClickEvent click){
-		if(flashingHazard.getStyleName().toString().contains("select"))
-		{
-			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
+	setAdvancedAccessHazardStyles(accessHazardsSelected.size());
+	return accessHazardsSelected;
 	}
-
-	@UiHandler("motionSimulationHazard")
-	public void onmotionSimulationHazardClick(ClickEvent click){
-		if(motionSimulationHazard.getStyleName().toString().contains("select"))
-		{
-			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
-	}
-
-	@UiHandler("soundHazard")
-	public void onsoundHazardClick(ClickEvent click){
-		if(soundHazard.getStyleName().toString().contains("select"))
-		{
-			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
-	}	
-	public void setMediaFeatureObjectVal(String mediaFeatureVal)
+	
+	public void setMediaFeatureObjectVal(List<ListValuesDo> mediaFeatureVal)
 	{
 		
 		try
 		{
-		if(mediaFeatureVal != null)
+		/*if(mediaFeatureVal != null)
 		{
 			String[] stringArry=mediaFeatureVal.split(" : ");
 			if(stringArry.length!=0){
@@ -2567,33 +2553,43 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				setAdvancedOptionsStyles();
 			}
 			
-		}
+		}*/
+			for(ListValuesDo listValuesDo:mediaFeatureVal){
+				mobileFeature =listValuesDo.getName();
+				lblMediaPlaceHolder.setText(listValuesDo.getName());
+				spanelMediaFeaturePanel.setVisible(false);
+				lblMediaPlaceHolder.getElement().setId(listValuesDo.getId()+"");
+				lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
+				setAdvancedOptionsStyles();
+			}
 		}
 		catch(Exception ex)
 		{
 			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
-	public void setAccessHazardObjectVal(String accessHazardStr)
-	{
-		
-		String[] stringArry=accessHazardStr.split(" : ");
-		if(stringArry.length!=0){
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3110()))
-			{
-					flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			}
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3111()))
-			{
-				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			}
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3112()))
-			{
-				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			}
-			setAdvancedAccessHazardStyles(stringArry.length);
+	
+	public void setAccessHazardObjectVal(List<checkboxSelectedDo> valuesDos){
+		Map<Integer, String> accessHazards=new HashMap<>();
+		for(checkboxSelectedDo listValuesDo:valuesDos){
+			accessHazards.put(listValuesDo.getId(), listValuesDo.getName());
 		}
+		int size=hazardContainer.getWidgetCount();
+		for(int i=0;i<size;i++){
+			Label label=(Label)hazardContainer.getWidget(i);
+			String id=label.getElement().getId();
+			
+			if(id!=null&&!id.equalsIgnoreCase("")){
+				int idInt=Integer.parseInt(id);
+				if(accessHazards.containsKey(idInt)){
+					label.addStyleName(res2.INSTANCE.css().select());
+				}
+			}
+			
+		}
+		setAdvancedAccessHazardStyles(valuesDos.size());
 	}
+	
 	public void setUpdatedBrowseStandardsVal(String setStandardsVal,Integer codeId, String setStandardDesc) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (setStandardsVal != null && !setStandardsVal.isEmpty()) {
@@ -2875,5 +2871,210 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		centuryPopup.show();
 		centuryPopup.center();
 		centuryPopup.getElement().getStyle().setZIndex(999999);
+	}
+
+	public void setEducationUse(){
+		AppClientFactory.getInjector().getResourceService().getEducationalUseList(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				setData(result,"education");
+				displayResourceInfo();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
+	public void setData(List<ListValuesDo> listValuesDos,String type){
+	
+		if(type.equalsIgnoreCase("education")){
+			educationalUsePanel.clear();
+		}else if(type.equalsIgnoreCase("mLearning")){
+			momentsOfLearningPanel.clear();
+		}
+		for(ListValuesDo listValuesDo:listValuesDos){
+			LiPanel liPanel=new LiPanel();
+			Anchor anchor=new Anchor();
+			anchor.setStyleName("educationUseText");
+			anchor.setText(listValuesDo.getName());
+			anchor.getElement().setId(listValuesDo.getId()+"");
+			liPanel.add(anchor);
+			if(type.equalsIgnoreCase("education")){
+				
+				educationalUsePanel.add(liPanel);
+				liPanel.addDomHandler(new EducationClickHandler(liPanel, anchor), ClickEvent.getType());
+			}else if(type.equalsIgnoreCase("mLearning")){
+				liPanel.addDomHandler(new MomentOfLearingClickHandler(liPanel, anchor), ClickEvent.getType());
+				momentsOfLearningPanel.add(liPanel);
+			}
+			
+		}
+	}
+	public void setMomentOfLeaning(){
+		AppClientFactory.getInjector().getResourceService().getMomentOfLearning(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				setData(result, "mLearning");
+				displayResourceInfo();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
+	public class EducationClickHandler implements ClickHandler{
+		Anchor anchor;
+		LiPanel liPanel;
+		public EducationClickHandler(LiPanel liPanel,Anchor anchor) {
+			// TODO Auto-generated constructor stub
+			this.anchor=anchor;
+			this.liPanel=liPanel;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			//resetSelection(educationalUseOptionsContainer);
+			liPanel.setStyleName("active");
+			resourceEducationalLabel.setText(anchor.getText());
+			resourceEducationalLabel.getElement().setId(anchor.getElement().getId());
+			resourceEducationalLabel.getElement().setAttribute("alt", anchor.getText());
+			resourceEducationalLabel.getElement().setAttribute("title", anchor.getText());
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+			mandatoryEducationalLbl.setVisible(false);
+			setAdvancedOptionsStyles();
+		}
+		
+	}
+	public class MomentOfLearingClickHandler implements ClickHandler{
+		Anchor anchor;
+		LiPanel liPanel;
+		public MomentOfLearingClickHandler(LiPanel liPanel,Anchor anchor) {
+			// TODO Auto-generated constructor stub
+			this.anchor=anchor;
+			this.liPanel=liPanel;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			resetSelection(momentsOfLearningPanel);
+			liPanel.setStyleName("active");
+			resourcemomentsOfLearningLabel.setText(anchor.getText());
+			resourcemomentsOfLearningLabel.getElement().setId(anchor.getElement().getId());
+			resourcemomentsOfLearningLabel.getElement().setAttribute("alt", anchor.getText());
+			resourcemomentsOfLearningLabel.getElement().setAttribute("title", anchor.getText());
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen = false;
+			mandatorymomentsOfLearninglLbl.setVisible(false);
+			setAdvancedOptionsStyles();
+		
+		}
+		
+	}
+	
+	public void resetSelection(UlPanel ulPanel){
+		int count=ulPanel.getWidgetCount();
+		for(int i=0;i<count;i++){
+			LiPanel liPanel=(LiPanel)ulPanel.getWidget(i);
+			liPanel.removeStyleName("active");
+		}
+	}
+
+	public void getMediaFeatures(){
+		AppClientFactory.getInjector().getResourceService().getMediaFeature(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+			
+				for(ListValuesDo listValuesDo:result){
+						String mediaTitleVal = listValuesDo.getName();
+						final Label titleLabel = new Label(mediaTitleVal);
+						titleLabel.setStyleName(CollectionAssignCBundle.INSTANCE.css().classpageTitleText());
+						titleLabel.getElement().setAttribute("id", listValuesDo.getId()+"");
+						titleLabel.setText(listValuesDo.getName());
+						//Set Click event for title
+						titleLabel.addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {		
+								String optionSelected = titleLabel.getText();
+								lblMediaPlaceHolder.setText(optionSelected);
+								spanelMediaFeaturePanel.setVisible(false);
+								lblMediaPlaceHolder.getElement().setId(titleLabel.getElement().getId());
+								lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
+								lblMediaPlaceHolder.setText(optionSelected);
+								setAdvancedOptionsStyles();
+							}
+						});
+						htmlMediaFeatureListContainer.add(titleLabel);
+						setMediaFeatureObjectVal(collectionItemDo.getMediaFeature());
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	public void setHazardData(List<ListValuesDo> hazards){
+		if(hazards!=null){
+			hazardContainer.clear();
+			for(ListValuesDo do1:hazards){
+				final Label label=new Label();
+				label.setText(do1.getName());
+				label.setStyleName("accessHazardLbl");
+				label.getElement().setId(do1.getId()+"");
+				label.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+						if(label.getStyleName().toString().contains("select"))
+						{
+							label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+						}
+						else
+						{
+							label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+						}
+						
+					}
+				});
+				hazardContainer.add(label);
+				 setAccessHazardObjectVal(collectionItemDo.getAccessHazard());
+			}
+		}
+		
+	}
+	public void setHazard(){
+		AppClientFactory.getInjector().getResourceService().getAccessHazards(new AsyncCallback<List<ListValuesDo>>() {
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				 setHazardData(result);
+				
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 }

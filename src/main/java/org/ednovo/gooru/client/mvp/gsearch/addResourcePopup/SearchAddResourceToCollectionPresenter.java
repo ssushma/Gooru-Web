@@ -215,7 +215,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}
 			});*/
 			
-			AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
+			String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
+			AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
 				@Override
 				public void onSuccess(CollectionItemDo result) {
 					if(result!=null && result.getStatusCode()==200){
@@ -376,7 +377,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	@Override
 	public void getCourseItems(final TreeItem item,String courseId, String UnitId,
 			String lessionId, String typeValue) {
-		AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,courseId, UnitId, lessionId, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
+		final String COLLECTION_ASSESMENT="collection,assessment";
+		AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,courseId, UnitId, lessionId, null, COLLECTION_ASSESMENT, false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
 				getView().setFolderItems(item,result);
@@ -546,15 +548,15 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		if(val){
 			getView().getMycollectionsLbl().getElement().getStyle().setDisplay(Display.NONE);
 			getView().getMycontentLbl().getElement().getStyle().setDisplay(Display.BLOCK);
-			getView().getMycollectionsLbl().removeStyleName("selected");
-			getView().getMycontentLbl().addStyleName("selected");
+			getView().getMycollectionsLbl().removeStyleName("active");
+			getView().getMycontentLbl().addStyleName("active");
 			getView().setFromMyCourse(true);
 			getView().getMycollectionsDefaultLbl().getElement().getStyle().setDisplay(Display.NONE);
 		}else{
 			getView().getMycollectionsLbl().getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 			getView().getMycontentLbl().getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-			getView().getMycontentLbl().addStyleName("selected");
-			getView().getMycollectionsLbl().removeStyleName("selected");
+			getView().getMycontentLbl().addStyleName("active");
+			getView().getMycollectionsLbl().removeStyleName("active");
 			getView().setFromMyCourse(true);
 			getView().getMycollectionsDefaultLbl().getElement().getStyle().setDisplay(Display.NONE);
 		}
@@ -572,6 +574,11 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public void setCollectionsData(boolean value) {
 		isFromCopyResource=value;
 		getView().isFromCopyResource(isFromCopyResource);
+	}
+
+	@Override
+	public void getLoadingImage() {
+		getView().loadingImage();
 	}
 
 }

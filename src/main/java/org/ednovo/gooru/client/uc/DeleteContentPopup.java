@@ -305,6 +305,7 @@ public abstract class DeleteContentPopup extends PopupPanel {
 	@UiHandler("closeBtn")
 	public void onColseButtonClicked(ClickEvent event){
 		hide();
+		Window.enableScrolling(true);
 	}
 	
 	

@@ -332,5 +332,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers {
 	public void disableCollabaratorOptions(boolean b);
 	
 	void loadAddResourcePopup();
+	public void showLastEditCollaborater(String lblLastEditedBy,
+			boolean hasLastModifiedUser);
 	
 }
