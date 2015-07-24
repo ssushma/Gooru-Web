@@ -200,9 +200,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 				if(folderDo!=null){
-					h2Title.setText(folderDo.getTitle()+" "+i18n.GL3336());
+					h2Title.setText(folderDo.getTitle());
 				}else{
-					h2Title.setText(i18n.GL0994());
+					h2Title.setText(i18n.GL0180());
 				}
 			}else if(COLLECTION.equalsIgnoreCase(type)){
 				btnCreate.setVisible(false);
