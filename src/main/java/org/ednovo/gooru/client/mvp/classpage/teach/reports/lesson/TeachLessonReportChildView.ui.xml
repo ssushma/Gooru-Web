@@ -2,31 +2,5 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc"
     xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
-	<g:HTMLPanel styleName="dashboardContainer" ui:field="dashboardContainer">
-		<g:HTMLPanel styleName="container" ui:field="topContainer">
-		   <div class="row">
-		      <div class="classProgressIndications teachReportUnitNavigationView no-gutter">
-		         <div class="col-md-4 col-sm-4">
-		            <panel:HTMLEventPanel ui:field="allContentPanel" styleName="studentCourseReportProgressHeader cursorPointer">
-		               <span:SpanPanel styleName="left-arrow" ui:field="headerLeftArrow"></span:SpanPanel>
-		               <span:SpanPanel ui:field="textLbl"></span:SpanPanel>
-		            </panel:HTMLEventPanel>
-		         </div>
-		         <div class="col-md-4 col-sm-4">
-		            <panel:HTMLEventPanel styleName="studentCourseReportProgressHeader">
-		               <span:SpanPanel ui:field="collectionTitle"></span:SpanPanel>
-		            </panel:HTMLEventPanel>
-		         </div>
-		         <div class="col-md-4 col-sm-4">
-		            <g:HTMLPanel styleName="download-button-container">
-		               <g:Button styleName="secondary downloadIcon" ui:field="downloadLink">Download Report</g:Button>
-		               <g:Button styleName="primary" ui:field="previewLink"></g:Button>
-		            </g:HTMLPanel>
-		         </div>
-		         <div class="clearfix"></div>
-		      </div>
-		   </div>
-		</g:HTMLPanel>
-		<g:HTMLPanel styleName="scrollTBL" ui:field="lessonTablePanel"></g:HTMLPanel>
-	</g:HTMLPanel>
+	<g:HTMLPanel styleName="scrollTBL" ui:field="lessonTablePanel"></g:HTMLPanel>
 </ui:UiBinder>

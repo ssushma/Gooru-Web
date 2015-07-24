@@ -1,11 +1,9 @@
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -137,7 +135,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		CreateDo createOrUpDate=new CreateDo();
 		createOrUpDate.setTitle(txtAssessmentTitle.getText());
 		createOrUpDate.setUrl(txtAssessmentURL.getText());
-		createOrUpDate.setGoals(txaAssessmentDescription.getText());
+		createOrUpDate.setDescription(txaAssessmentDescription.getText());
 		createOrUpDate.setCollectionType(ASSESSMENTURL);
 		createOrUpDate.setSharing(selectedSharing);
 		createOrUpDate.setIsLoginRequired(isLoginRequired);
@@ -145,11 +143,13 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblErrorMessage.setVisible(true);
 			lblErrorMessage.setText(i18n.GL1026());
+			enableSubmitButton();
 		}else if(StringUtil.isEmpty(assessmentURL)){
 			lblErrorMessage.setVisible(false);
 			lblErrorMessage.setText("");
 			lblErrorMessageForURL.setVisible(true);
 			lblErrorMessageForURL.setText(i18n.GL3166());
+			enableSubmitButton();
 		}else{
 			assessmentURL = URL.encode(assessmentURL);
 			if(StringUtil.checkUrlContainesGooruUrl(assessmentURL)){
@@ -157,6 +157,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				lblErrorMessage.setText("");
 				lblErrorMessageForURL.setVisible(true);
 				lblErrorMessageForURL.setText(i18n.GL0924());
+				enableSubmitButton();
 				return;
 			}else{
 				boolean isStartWithHttp = assessmentURL.matches("^(http|https)://.*$");
@@ -171,30 +172,37 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				lblErrorMessage.setText("");
 				lblErrorMessageForURL.setVisible(true);
 				lblErrorMessageForURL.setText(i18n.GL0926());
+				enableSubmitButton();
 			}else{
 				getUiHandlers().checkProfanity(txtAssessmentTitle.getText().trim(),true,0,createOrUpDate,currentShelfTreeWidget);
 			}
 		}
 	}
 
+	public void enableSubmitButton(){
+		btnSaveExternalAssessment.removeStyleName("disabled");
+		btnSaveExternalAssessment.setEnabled(true);
+	}
 	@Override
 	public void callCreateAndUpdate(boolean isCreate, boolean result, int index,CreateDo createOrUpDate,TreeItem currentShelfTreeWidget) {
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(txtAssessmentTitle, lblErrorMessage, result);
+			enableSubmitButton();
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(txtAssessmentURL, lblErrorMessageForURL, result);
+			enableSubmitButton();
 		}else if(result && index==2){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaAssessmentDescription, lblErrorMessageForDesc, result);
+			enableSubmitButton();
 		}else{
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getUrl().trim(),isCreate,1,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==1){
-				if(createOrUpDate.getGoals()!=null)
-				getUiHandlers().checkProfanity(createOrUpDate.getGoals().trim(),isCreate,2,createOrUpDate,currentShelfTreeWidget);
+				if(createOrUpDate.getDescription()!=null)
+				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),isCreate,2,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==2){
-				String id= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-				if(id!=null){
-					getUiHandlers().updateAssessmentDetails(createOrUpDate,id,isCreate,folderObj,currentShelfTreeWidget);
+				if(folderObj!=null && folderObj.getGooruOid()!=null){
+					getUiHandlers().updateAssessmentDetails(createOrUpDate,folderObj.getGooruOid(),isCreate,folderObj,currentShelfTreeWidget);
 				}else{
 					getUiHandlers().createAndSaveAssessmentDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
 				}
@@ -204,11 +212,13 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 
 	@Override
 	public void setData(FolderDo folderObj) {
+		removeSelectedStyle(true);
+		removeSelectedStyle(false);
 		if(folderObj!=null){
 			this.folderObj = folderObj;
 			txtAssessmentTitle.setText(folderObj.getTitle());
 			txtAssessmentURL.setText(folderObj.getUrl());
-			txaAssessmentDescription.setText(folderObj.getGoals());
+			txaAssessmentDescription.setText(folderObj.getDescription());
 			String sharingVal=folderObj.getSharing();
 			if(sharingVal!=null){
 				if(PUBLIC.equalsIgnoreCase(sharingVal)){
@@ -218,6 +228,12 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				}else if(PRIVATE.equalsIgnoreCase(sharingVal)){
 					pnlPrivate.addStyleName(SELECTEDSTYLE);
 				}
+			}
+			String isLoginRequired=folderObj.getIsLoginRequired();
+			if("yes".equalsIgnoreCase(isLoginRequired)){
+				lblRequiresYes.addStyleName(SELECTEDSTYLE);
+			}else{
+				lblRequiresNo.addStyleName(SELECTEDSTYLE);
 			}
 		}else{
 			txtAssessmentTitle.setText("UntitledExternalAssessment");

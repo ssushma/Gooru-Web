@@ -504,6 +504,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 							answerText=answerText+START_DELIMITER+inLblTxt;*/
 						}
 					}
+				}else if(!lbl.getStyleName().contains(STYLE_HIGHLIGHT) && lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
+					HTHLChoiceStatus=false;
 				}else {
 					//answerText=answerText+lbl.getText();
 				}

@@ -39,5 +39,4 @@ import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 public interface IsTeachUnitReportView extends IsChildView<TeachUnitReportChildPresenter> {
 	public void setTableData(ArrayList<PlanProgressDo> result);
 	void setAssessmentTableData(ArrayList<PlanProgressDo> result);
-	void setMetadataContent(ArrayList<PlanProgressDo> dataList);
 }

@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEventHandler;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
@@ -67,8 +68,9 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	 * To get the child folders items
 	 * @param folderId {@link String}
 	 * @param isDataCalled
+	 * @param treeChildSelectedItem 
 	 */
-	void getChildFolderItems(String folderId,String type ,boolean isDataCalled);   
+	void getChildFolderItems(String folderId,String type ,boolean isDataCalled, TreeItem treeChildSelectedItem);   
 	/**
 	 * This method is used to get the child units,lessons and collections
 	 * @param courseId
@@ -76,8 +78,9 @@ public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEve
 	 * @param lessonId
 	 * @param typeVal
 	 * @param isDataCalled
+	 * @param treeChildSelectedItem 
 	 */
-	void getChildFolderItemsForCourse(final String courseId,final String unitId,final String lessonId,final String typeVal,final boolean isDataCalled);
+	void getChildFolderItemsForCourse(final String courseId,final String unitId,final String lessonId,final String typeVal,final boolean isDataCalled, TreeItem treeChildSelectedItem);
 	
 	/**
 	 * This is used to display all the courses,Units, Lessons and collections list with move functionality.

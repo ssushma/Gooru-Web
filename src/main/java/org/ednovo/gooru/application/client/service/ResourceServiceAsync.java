@@ -94,7 +94,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 //	void getMyUserCollections(AsyncCallback<List<CollectionItemsListDo>> callback) throws GwtException;
 
-	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<CodeDo> standards,List<StandardFo> centurySklills,String hostName,List<String> tagList, AsyncCallback<CollectionItemDo> callback);
+	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<CodeDo> standards,List<StandardFo> centurySklills,String hostName,List<String> tagList,Map<String,List<Integer>> hazardsAndMediaMap, AsyncCallback<CollectionItemDo> callback);
 	
 	void getResourceMetaInfo(String url, AsyncCallback<ResourceMetaInfoDo> callback);
 	
@@ -200,7 +200,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     
     void getCourseDataById(String courseID,AsyncCallback<FolderDo> callback) throws GwtException,ServerDownException;
     
-    void addCollectionItem(String collectionId, String resourceId,AsyncCallback<CollectionItemDo> callback)  throws GwtException, ServerDownException;
+    void addCollectionItem(String collectionId, String resourceId,String type,AsyncCallback<CollectionItemDo> callback)  throws GwtException, ServerDownException;
     
 	void updateTimeMetadata(String collectionItemId, String start, String stop, AsyncCallback<CollectionItemDo> callback);
 	void getEducationalUseList(AsyncCallback<List<ListValuesDo>> asyncCallback) throws  GwtException;

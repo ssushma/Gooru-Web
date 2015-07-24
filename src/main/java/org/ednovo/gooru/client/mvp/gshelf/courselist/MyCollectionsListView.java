@@ -55,6 +55,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -71,11 +72,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate,collectionLevelPnl;
+	@UiField HTMLPanel emptyContainerDiv,pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate,collectionLevelPnl;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion,createCollectionBtn,createAssessmentBtn;
-	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion,lblTitle;
+	@UiField Label lblAddNew,lblTitle;
+	@UiField Anchor lblAddNewForResource,lblAddNewForQuestion;
 	@UiField HTMLEventPanel createPanel;
 	
 	int index=0;
@@ -102,6 +104,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
 		collectionLevelPnl.getElement().getStyle().setFloat(Float.RIGHT);
+
 		
 	}
 	/**
@@ -162,6 +165,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlCreateContainer.setVisible(false);
 		lblTitle.setVisible(false);
 		collectionLevelPnl.setVisible(false);
+		if(listOfContent ==null || listOfContent.size()==0){
+			emptyContainerDiv.setVisible(true);
+		}else{
+			emptyContainerDiv.setVisible(false);
+		}
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
@@ -311,6 +319,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		btnCreateResource.setVisible(isEnabled);
 		btnCreateQuestion.setVisible(isEnabled);
 		pnlCreate.setVisible(isEnabled);
+		createPanel.setVisible(!isEnabled);
 	}
 	@UiHandler("createPanel")
 	public void clickOnCreatePanel(ClickEvent clickEvent){
@@ -373,7 +382,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3372());
 			
 			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
+			//lblAddNew.setVisible(false);
+			//createPanel.setVisible(false);
 		}else if(FOLDER.equalsIgnoreCase(type)){
 			enableCreateButtons(true);
 			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
@@ -382,9 +392,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
 			lblAddNewForResource.setText(i18n.GL1451());
 			lblAddNewForQuestion.setText(i18n.GL3024());
+			//Showing buttons for folder creation 
 			/*if(o3!=null){
 				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
@@ -425,7 +435,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3218(), i18n.GL3218());
 			
 			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
 		}
 		
 	}

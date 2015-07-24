@@ -24,7 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.reports;
 
+import java.util.ArrayList;
+
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -33,11 +40,15 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 
 public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStudentDashboardView> implements TeachStudentDashboardUiHandler{
 	
+	private ClasspageDo classpageDo;
+	
+	AddCourseToClassPresenter addCourseToClassPresenter;
 	
 	@Inject
-	public TeachStudentDashboardPresenter(EventBus eventBus,IsTeachStudentDashboardView view){
+	public TeachStudentDashboardPresenter(EventBus eventBus,IsTeachStudentDashboardView view,AddCourseToClassPresenter addCourseToClassPresenter){
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.addCourseToClassPresenter = addCourseToClassPresenter;
 	}
 	
 	@Override
@@ -47,7 +58,7 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 
 	@Override
 	public void onReveal() {
-		/*getCourseData();*/
+		
 	}
 
 	@Override
@@ -56,15 +67,61 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 	}
 	
 	@Override
-	protected void onReset() {
-		getView().setReportView();
+	public void onReset() {
+		
 	}
 	
 	public void  loadNavigationPage(){
-		
+		getView().setContainerVisibility(false);
+		boolean isNoCourse = false, isNoStudent = false;
+		if(getClassDetails().getCourseGooruOid()==null) {
+			isNoCourse = true;
+		} else if(getClassDetails().getMemberCount()!=null&&getClassDetails().getMemberCount().equalsIgnoreCase("0")) {
+			isNoStudent = true;
+		}
+		if(isNoCourse||isNoStudent) {
+			getView().enableEmptyContainer(true, getClassDetails());
+			getView().setContainerVisibility(true);
+		} else {
+			getView().enableEmptyContainer(false, null);
+			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
+			String assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
+			if(courseId!=null&&unitId!=null&&assessmentId==null) {
+				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classId, courseId, null, null, "plan", null, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+					@Override
+					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
+						getView().setMetadataContent(dataList);
+						getView().setReportView();
+						getView().setContainerVisibility(true);
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						getView().enableEmptyContainer(true, getClassDetails());
+						getView().setContainerVisibility(true);
+					}
+				});
+			} else {
+				getView().setReportView();
+				getView().setContainerVisibility(true);
+			}
+		}
 	}
 
 	public void setClassDetails(ClasspageDo classpageDo) {
-		
+		this.classpageDo = classpageDo;
+	}
+	
+	public ClasspageDo getClassDetails() {
+		return classpageDo;
+	}
+
+	@Override
+	public void openAddPopup() {
+		addCourseToClassPresenter.getUserShelfCourseData("", "class");
+        addCourseToClassPresenter.getView().getAppPopUp().show();
+        addCourseToClassPresenter.getView().getAppPopUp().center();
+        addCourseToClassPresenter.getView().getAppPopUp().setGlassEnabled(true);
 	}
 }

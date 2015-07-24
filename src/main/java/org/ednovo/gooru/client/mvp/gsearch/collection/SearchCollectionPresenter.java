@@ -193,6 +193,7 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	@Override
 	public void displayRemixForCollectionsPoup(CollectionSearchResultDo collectionsearchResultDo,CollectionSearchWidget collectionSearchWidget) {
 		shelfMainPresenter.SetDefaultTypeAndVersion();
+		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionsearchResultDo, "coursebuilder",collectionSearchWidget);
 		addToPopupSlot(searchAddResourceToCollectionPresenter);

@@ -432,7 +432,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 
-		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final List<StandardFo> centurySkill,final String hostname,final List<String> tagList) {
+		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final List<StandardFo> centurySkill,final String hostname,final List<String> tagList,final Map<String,List<Integer>> hazardsAndMediaFeatures) {
 
 			this.setVisible(false);
 			
@@ -469,7 +469,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 					@Override
 					public void addWebResource() {
-						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList);
+						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures);
 						webResourcePreview.hide();
 						webResourcePreview.setGlassEnabled(false);
 						appPopUp.hide();
@@ -498,7 +498,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				webResourcePreview.show();
 
 			}else{
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList);
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures);
 			}
 		}
 
@@ -565,13 +565,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void onLoad(){
 			super.onLoad();
-			AppClientFactory.printInfoLogger("widget onload---");
 			setEditQuestionImage();
 
 			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 				@Override
 				public void execute() {
-					AppClientFactory.printInfoLogger("onload exe");
 					if(collectionItemDo!=null){
 						int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 						if(type==10 || type==11){
@@ -592,9 +590,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 		public void createQuestionResource(String mediaFileName, CollectionQuestionItemDo collectionQuestionItemDo) {
-			AppClientFactory.printInfoLogger("I am in createQuestionResource");
 			if(getQuestionEditMode()){
-				AppClientFactory.printInfoLogger("Edit Mode");
 
 				String thumbnailUrl=null;
 				if(addQuestionResourceWidget.addQuestImgContainer.getWidgetCount()>0){
@@ -603,7 +599,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				getUiHandlers().v2UpdateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
 			}else{
-				AppClientFactory.printInfoLogger("Create Mode");
 				getUiHandlers().addQeustionResource(mediaFileName,collectionQuestionItemDo);
 			}
 
@@ -955,7 +950,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			deselectSelectedButton();
 			urlTabButton.setStyleName(res.css().buttonSelected());
 		} else if(clickType.equalsIgnoreCase("Question")){
-			AppClientFactory.printInfoLogger("Question---");
 			try{
 				Window.enableScrolling(false);
 				isEdit=true;
@@ -964,9 +958,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				titleLbl.setText(i18n.GL0893());
 				titleLbl.getElement().setAttribute("alt", i18n.GL0893());
 				titleLbl.getElement().setAttribute("title", i18n.GL0893());
-				AppClientFactory.printInfoLogger("AddQuestionResourceWidget before---");
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
-				AppClientFactory.printInfoLogger("ddQuestionResourceWidget after---");
 				addQuestionResourceWidget.getHideRightsToolTip();
 				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
 //				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1001,7 +993,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
                 hotTextHLTabButton.setStyleName(res.css().buttonDeSelected());
             	questionTypePresenter.getView().editQuestion(null);
 			}catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+			//	AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
 			try{

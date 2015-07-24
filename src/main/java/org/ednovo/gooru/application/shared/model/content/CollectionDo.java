@@ -62,7 +62,7 @@ public class CollectionDo extends ResourceDo implements IsSerializable{
 	private Integer itemCount;
 	private String classpageCode;
 	private Date lastModified;
-	private UserDo lastModifiedUser;
+	private UserDo lastUserModified;
 	private UserDo user;
 	private Integer memberCount;
 	private TrackActivityDo trackActivity;
@@ -313,14 +313,14 @@ public class CollectionDo extends ResourceDo implements IsSerializable{
 	 * This method is to get the lastModifiedUser
 	 */
 	public UserDo getLastModifiedUser() {
-		return lastModifiedUser;
+		return lastUserModified;
 	}
 
 	/**
 	 * This method is to set the lastModifiedUser
 	 */
 	public void setLastModifiedUser(UserDo lastModifiedUser) {
-		this.lastModifiedUser = lastModifiedUser;
+		this.lastUserModified = lastModifiedUser;
 	}
 
 	public String getSharing() {

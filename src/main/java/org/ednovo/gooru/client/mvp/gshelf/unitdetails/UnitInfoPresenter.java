@@ -35,7 +35,6 @@ import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -112,13 +111,11 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 		});
 	}
 	@Override
-	public void getDomainsBasedOnCourseId(final int courseId,final int selectedId) {
+	public void getDomainsBasedOnCourseId(final int courseId,final int selectedId,final CourseSubjectDo libraryCodeDo) {
 		getTaxonomyService().getSubjectsList(courseId,"domain", 0, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 			@Override
 			public void onSuccess(List<CourseSubjectDo> result) {
-				if(result.size()>0){
-					getView().showCourseDetailsBasedOnSubjectd(result,selectedId,courseId);
-				}
+				getView().showCourseDetailsBasedOnSubjectd(result,selectedId,courseId,libraryCodeDo);
 			}
 		});
 	}

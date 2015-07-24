@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -391,9 +392,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
+				long time = jsonRep.getJsonObject().isNull("lastModified")?0:jsonRep.getJsonObject().getLong("lastModified");
+				Date lastModifiedTime= new Date(time);
+				obj.setLastModified(lastModifiedTime);
 				obj.setCollaborator(jsonRep.getJsonObject().isNull("isCollaborator")?false:jsonRep.getJsonObject().getBoolean("isCollaborator"));
 				UserDo user=JsonDeserializer.deserialize(jsonRep.getJsonObject().getString("user"), UserDo.class);
 				obj.setUser(user);
+				UserDo lastUserModified=JsonDeserializer.deserialize(jsonRep.getJsonObject().isNull("lastUserModified")?"":jsonRep.getJsonObject().getString("lastUserModified"), UserDo.class);
+				obj.setLastModifiedUser(lastUserModified);
 				if(!jsonRep.getJsonObject().isNull("collectionItems")){
 				JSONArray array=jsonRep.getJsonObject().getJSONArray("collectionItems");
 				List<CollectionItemDo> collectionItems=new ArrayList<>();
@@ -766,15 +772,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         @Override
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> hazardsAndMediaMap) throws GwtException {
 		
 			categoryStr = categoryStr.trim();
 			NewResourceDo newResourceDo = new NewResourceDo();
 			newResourceDo.setId(idStr);
 			newResourceDo.setUrl(URLDecoder.decode(urlStr));
-
 			newResourceDo.setTitle(titleStr);
-
+			newResourceDo.setAccessHazardIds(hazardsAndMediaMap.get("hazard"));
+			newResourceDo.setMediaFeatureIds(hazardsAndMediaMap.get("media"));
 			if(standards!=null && standards.size()>0 ){
 			Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 			List<Integer> standardIds=new ArrayList<Integer>();
@@ -1004,10 +1010,29 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 
 		newResourceDo.setResourceFormat(resourceFormat);
-		newResourceDo.setEducationalUse(collectionItemDo.getResource().getEducationalUse());
+		List<Integer> educationListId=new ArrayList<>();
+		for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
+			educationListId.add(checkboxSelectedDo.getId());
+		}
+		newResourceDo.setEducationalUseIds(educationListId);
+		//	newResourceDo.setEducationalUse(collectionItemDo.getEducationalUse());
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
-		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
-
+		List<Integer> momentOfLearningIdList=new ArrayList<>();
+		for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
+			momentOfLearningIdList.add(checkboxSelectedDo.getId());
+		}
+		newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
+		//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());
+		List<Integer> accessHardList=new ArrayList<>();
+		for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
+			accessHardList.add(selectedDo.getId());	
+		}
+		newResourceDo.setAccessHazardIds(accessHardList);
+		List<Integer> mediaFeaturesList=new ArrayList<>();
+		for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
+			mediaFeaturesList.add(do1.getId());
+		}
+		newResourceDo.setMediaFeatureIds(mediaFeaturesList);
 		Map<String,Object> resourceMap=new HashMap<String,Object>();
 		resourceMap.put(RESOURCE, newResourceDo);
 
@@ -2429,12 +2454,18 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public CollectionItemDo addCollectionItem(String collectionId,String resourceId) throws GwtException, ServerDownException {
+	public CollectionItemDo addCollectionItem(String collectionId,String resourceId,String type) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url="";
 		CollectionItemDo collectionItemDo= new CollectionItemDo();
 		getLogger().info("addCollectionItem collectionId::::::"+collectionId);
 		getLogger().info("addCollectionItem resourceId::::::"+resourceId);
-		String url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		getLogger().info("addCollectionItem type::::::"+type);
+		if("question".equalsIgnoreCase(type)){
+			 url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDQUESTION_COLLECTION,collectionId,resourceId);
+		}else{
+			 url=UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
+		}
 		getLogger().info("addCollectionItem post API call::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
