@@ -495,16 +495,10 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	}
 	@Override
 	public void setCouseData(FolderDo courseObj) {
-		if(courseObj!=null){
-			this.courseObj=courseObj;
-			unitTitle.setText(courseObj.getTitle()==null?"":!courseObj.getTitle().equalsIgnoreCase(i18n.GL3364())?courseObj.getTitle():"");
-			txaBigIdeas.setText(courseObj.getIdeas()!=null?courseObj.getIdeas():"");
-			txaEssentialQuestions.setText(courseObj.getQuestions()!=null?courseObj.getQuestions():"");
-		}else{
-			unitTitle.setText("");
-			txaBigIdeas.setText("");
-			txaEssentialQuestions.setText("");
-		}
+		this.courseObj=courseObj;
+		unitTitle.setText(courseObj==null?"":!courseObj.getTitle().equalsIgnoreCase(i18n.GL3364())?courseObj.getTitle():"");
+		txaBigIdeas.setText(courseObj!=null?(courseObj.getIdeas()!=null?courseObj.getIdeas():""):"");
+		txaEssentialQuestions.setText(courseObj!=null?(courseObj.getQuestions()!=null?courseObj.getQuestions():""):"");
 		
 		ulSelectedItems.clear();
 		selectedValues.clear();

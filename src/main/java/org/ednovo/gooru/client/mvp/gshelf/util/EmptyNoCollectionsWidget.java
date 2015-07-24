@@ -15,35 +15,39 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class EmptyCourseBuilderWidget extends Composite {
+public abstract class EmptyNoCollectionsWidget extends Composite {
 
 	private static EmptyCourseBuilderWidgetUiBinder uiBinder = GWT
 			.create(EmptyCourseBuilderWidgetUiBinder.class);
 
 	interface EmptyCourseBuilderWidgetUiBinder extends
-			UiBinder<Widget, EmptyCourseBuilderWidget> {
+			UiBinder<Widget, EmptyNoCollectionsWidget> {
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel courseEmptyContainer;
-	@UiField Button btnCreateCourse;
+	@UiField HTMLPanel emptynoColl;
+	@UiField Button btnCollectionCreate,btnAssessmentCreate;
 
 
-	public EmptyCourseBuilderWidget() {
+	public EmptyNoCollectionsWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		courseEmptyContainer.getElement().setId("myAllCorsesNullCase");
+		emptynoColl.getElement().setId("gettingstartedmycollections");
 		Window.addResizeHandler(new ResizeHandler() {
 			@Override
 			public void onResize(ResizeEvent event) {
-				courseEmptyContainer.setHeight(Window.getClientHeight()+"px");
+				emptynoColl.setHeight(Window.getClientHeight()+"px");
 			}
 		});
 	}
-	@UiHandler("btnCreateCourse")
-	public void createCourseClick(ClickEvent e){
-		onClick();
+	@UiHandler("btnCollectionCreate")
+	public void createCollectionClick(ClickEvent e){
+		onCollectionClick();
 	}
-	public abstract void onClick();
-	
+	@UiHandler("btnAssessmentCreate")
+	public void createAssessmentClick(ClickEvent e){
+		onAssessmentClick();
+	}
+	public abstract void onCollectionClick();
+	public abstract void onAssessmentClick();
 }
