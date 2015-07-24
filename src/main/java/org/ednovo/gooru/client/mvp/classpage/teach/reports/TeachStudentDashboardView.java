@@ -33,11 +33,13 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.course.TeachCourseReportChildView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson.TeachLessonReportChildView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildView;
+import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -56,11 +58,11 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudentDashboardUiHandler> implements IsTeachStudentDashboardView{
 
-	@UiField HTMLPanel bodyView, heightPanel, unitLinks, scoreLinks, assessmentLinks, collectionLinks, previewLinks, assStylePanel, collStylePanel;
-	@UiField HTMLEventPanel assessmentIcon, collectionIcon;
+	@UiField LoadingUc cropImageLoading;
+	@UiField HTMLPanel bodyView, heightPanel, unitLinks, scoreLinks, assessmentLinks, collectionLinks, previewLinks, assStylePanel, collStylePanel, emptyDataContainer;
+	@UiField HTMLEventPanel assessmentIcon, collectionIcon,currentContentPanel, allContentPanel;
 	@UiField SpanPanel textLbl, currentContentName;
-	@UiField HTMLPanel topContainer, learningMapContainer, headerLinksContainer;
-	@UiField HTMLEventPanel currentContentPanel, allContentPanel;
+	@UiField HTMLPanel topContainer, learningMapContainer, headerLinksContainer,mainContainer;
 	@UiField Button btnDownload, btnPreview;
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -73,10 +75,17 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 	public TeachStudentDashboardView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setContainerVisibility(false, false, false, false, false, false, false, false);
+		setDebugIds();
 		assessmentIcon.addClickHandler(new ContentClickHandler(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT));
 		collectionIcon.addClickHandler(new ContentClickHandler(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION));
 	}
 	
+	private void setDebugIds() {
+		cropImageLoading.setVisible(false);
+		cropImageLoading.setLoadingText(i18n.GL1234());
+		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
+	}
+
 	@Override
 	public void setReportView() {
 		bodyView.clear();
@@ -205,5 +214,36 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
-	
+
+	@Override
+	public void enableEmptyContainer(boolean isVisible, ClasspageDo classpageDo) {
+		emptyDataContainer.setVisible(isVisible);
+		topContainer.setVisible(!isVisible);
+		learningMapContainer.setVisible(!isVisible);
+		bodyView.setVisible(!isVisible);
+		emptyDataContainer.clear();
+		if(classpageDo!=null) {
+			boolean isNoCourse = false, isNoStudent = false;
+			if(classpageDo.getCourseGooruOid()==null) {
+				isNoCourse = true;
+			} else if(classpageDo.getMemberCount().equalsIgnoreCase("0")) {
+				isNoStudent = true;
+			}
+			
+			TeachStudentEmptyDashboardView teachStudentEmpty = new TeachStudentEmptyDashboardView(isNoCourse, isNoStudent) {
+				@Override
+				public void clickBtnCourse() {
+					getUiHandlers().openAddPopup();
+				}
+			};
+			
+			emptyDataContainer.add(teachStudentEmpty);
+		}
+	}
+
+	@Override
+	public void setContainerVisibility(boolean isVisible) {
+		mainContainer.setVisible(isVisible);
+		cropImageLoading.setVisible(!isVisible);
+	}
 }
