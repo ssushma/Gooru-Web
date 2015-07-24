@@ -98,7 +98,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";
 	
 	
-	boolean isTopMostSelected =true,isAddingInProgress=true;
+	boolean isTopMostSelected =false,isAddingInProgress=true;
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -144,18 +144,15 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			addtocollHeaderText.setText(i18n.GL3223());
 			addingTextLbl.setText(i18n.GL3213());
 		}		
-		myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 		myCollDefault.setVisible(false);
 		btnAddExisting.setEnabled(true);
 		btnAddExisting.setStyleName("primary");
 		mycollectionsLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				
 				urlparams.clear();
 				mycollectionsLbl.addStyleName("active");
 				mycontentLbl.removeStyleName("active");
-				myCollDefault.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTreePanel.clear();
 				folderTreePanel.add(loadingImage());
 				isFromMyCourse=false;
@@ -167,10 +164,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
 						|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
 						|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
-						myCollDefault.setVisible(false);
+						isTopMostSelected=false;
+						removePreviousSelectedItem();
 						getUiHandlers().getWorkspaceData(0, 20, true, "resource");
 					}else{
-						myCollDefault.setVisible(true);
+						isTopMostSelected=true;
 						getUiHandlers().getWorkspaceData(0, 20, true, "collection");
 					}
 			}
@@ -184,7 +182,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				mycollectionsLbl.removeStyleName("active");
 				btnAddExisting.setEnabled(true);
 				btnAddExisting.setStyleName("primary");
-				myCollDefault.getElement().getStyle().setDisplay(Display.NONE);
+				isTopMostSelected=false;
 				folderTreePanel.clear();
 				folderTreePanel.add(loadingImage());
 				isFromMyCourse=true;
@@ -218,7 +216,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						folderTreeItemWidget.setOpen(true);
 					}
 					removePreviousSelectedItem();
-					highlightStyles();
 					currentFolderSelectedTreeItem = folderTreeItemWidget;
 					previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
 					currentFolderSelectedTreeItem
@@ -259,8 +256,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						item.setState(!item.getState(), false);
 					}else if(folderWidget instanceof CollectionTreeItem){
 				    	removePreviousSelectedItem();
-				    	highlightStyles();
-				    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
+						cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
 				    	previousSelectedItem = cureentcollectionTreeItem;																			
 				    	cureentcollectionTreeItem.addStyleName("selected");
 				    	previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
@@ -364,7 +360,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		lblError.setVisible(false);
 		if(searchType.equals("collection")){
 			isTopMostSelected =true;
-			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 			currentFolderSelectedTreeItem=null;
 		}else{
 			isAddingInProgress=true;
@@ -672,8 +667,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void setDefaultPanelVisibility(Boolean blnVal){
-		myCollDefault.setVisible(blnVal);
-		/*btnAddNew.setVisible(!blnVal);*/
 		pageNum=1;
 	}
 
@@ -702,24 +695,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		lblError.setVisible(true);
 	}
 	
-	@UiHandler("myCollDefault")
-	public void clickOnMyCollection(ClickEvent clickEvent){
-		urlparams.clear();
-		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
-			myCollDefault.getElement().getStyle().clearBackgroundColor();
-		}else{
-			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
-			isTopMostSelected=true;
-			removePreviousSelectedItem();
-		}
-		
-	}
-	
-	protected void highlightStyles(){
-		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
-			myCollDefault.getElement().getStyle().clearBackgroundColor();
-		}
-	}
+
 
 	@Override
 	public void clearUrlParams() {

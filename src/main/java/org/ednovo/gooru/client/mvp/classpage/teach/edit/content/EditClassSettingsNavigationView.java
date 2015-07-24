@@ -71,16 +71,8 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 
 	@UiField Anchor classInfoAnr,minmumScoreAnr,studentsAnr/*,contentSettingsAnr*/;
 
-	@UiField InlineLabel courseLbl,titleLbl;
-
-	@UiField Button /*studentPreviewbtn,*/editCourseBtn;
-
 	@UiField SimplePanel bodyView;
 	
-	@UiField HTMLPanel coursePanel,previewBtn;
-	
-	
-
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static EditClassSettingsNavigationViewUiBinder uiBinder = GWT.create(EditClassSettingsNavigationViewUiBinder.class);
@@ -116,27 +108,12 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		classInfoAnr.getElement().setAttribute("alt",i18n.GL3420());
 		classInfoAnr.getElement().setAttribute("title",i18n.GL3420());
 
-		courseLbl.setText(i18n.GL0326());
-		courseLbl.getElement().setId("courseLblId");
-		courseLbl.getElement().setAttribute("alt",i18n.GL0326());
-		courseLbl.getElement().setAttribute("title",i18n.GL0326());
-
-		/*studentPreviewbtn.setText(i18n.GL3406());
-		studentPreviewbtn.getElement().setId("previwBtnId");
-		studentPreviewbtn.getElement().setAttribute("alt",i18n.GL3406());
-		studentPreviewbtn.getElement().setAttribute("title",i18n.GL3406());*/
 
 		classInfoAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classInfo));
 		minmumScoreAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
 		studentsAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,studentsPnl));
 		//settLiPanel.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
 		
-		previewBtn.setVisible(false);
-		editCourseBtn.setText(i18n.GL3424());
-		editCourseBtn.getElement().setId("connectCourseId");
-		editCourseBtn.getElement().setAttribute("alt",i18n.GL3424());
-		editCourseBtn.getElement().setAttribute("title",i18n.GL3424());
-		editCourseBtn.addClickHandler(new AddCourseClickhandler());
 	}
 
 	@Override
@@ -219,17 +196,10 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	@Override
 	public void setCourseData(FolderDo result) {
 		coursePanelVisiblity(true);
-		if (result != null) {
-			titleLbl.setText(result.getTitle());
-			titleLbl.getElement().setId(result.getGooruOid());
-			titleLbl.getElement().setAttribute("alt",result.getTitle());
-			titleLbl.getElement().setAttribute("title",result.getTitle());
-		}
 	}
 	
 	public void coursePanelVisiblity(boolean visiblity){
-		coursePanel.setVisible(visiblity);
-		previewBtn.setVisible(!visiblity);
+		
 	}
 
 	/* (non-Javadoc)

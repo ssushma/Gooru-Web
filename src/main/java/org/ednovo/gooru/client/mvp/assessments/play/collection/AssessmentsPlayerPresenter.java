@@ -1261,6 +1261,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
+		resourceSearchResultDo.setQuestionType(collectionItemDo.getResource().getTypeName());
 		SearchResourceFormatDO searchResourceFormatDO = new SearchResourceFormatDO();
 		searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 		resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);

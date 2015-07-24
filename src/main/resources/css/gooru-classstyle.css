@@ -633,7 +633,8 @@ select option {
 	text-decoration:none;
 }
 .classMenuBlock .classMenuRight .coureEditActions .folderIcon{
-	background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px;
+	/* background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px; */
+	background:url(${cdn.endpoint}/images/g-folder-small.png) no-repeat -226px -371px;
 	width:35px;
 	height:30px;
 	display:inline-block;
@@ -1007,7 +1008,8 @@ select option {
 	text-decoration:none;
 }
 .classReportMenuBlock .classMenuRight .coureEditActions .folderIcon{
-	background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px;
+	/* background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px; */
+	background:url(${cdn.endpoint}/images/g-folder-small.png) no-repeat -226px -371px;
 	width:35px;
 	height:30px;
 	display:inline-block;
@@ -1477,17 +1479,18 @@ button.grey:hover {
     margin: 0 0 10px 0;
 }
 .howItWorks p {
-    font-size: 12px;
+    font-size: 16px;
     font-family: "Arvo", serif !important;
     margin: 0 225px;
     text-align: center;
 }
 .howItWorks .AssessmentandCollections {
-    margin: 63px 195px 0 195px;
+    margin: 0 auto;
+	width: 500px;
 }
 .howItWorks .AssessmentandCollections span {
-    display: block;
-    font-size: 12px;
+    display: inline-block;
+    font-size: 14px;
     font-family: "Arvo", serif !important;
     margin: 0 0 15px 0;
 }
@@ -1499,7 +1502,8 @@ button.grey:hover {
     margin: 0 8px;
 }
 .howItWorks .AssessmentandCollections span.leftMargin {
-    margin-left: 15px;
+    margin-left: 50px;
+    display: inline-block;
 }
 .CourseandUnitViewContainer {
     padding: 0 90px 90px;
@@ -1585,7 +1589,8 @@ button.grey:hover {
 }
 
 .setScoreContainer .selectCourseButton .coureEditActions .folderIcon{
-	background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px;
+	/* background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -371px; */
+	background:url(${cdn.endpoint}/images/g-folder-small.png) no-repeat;
 	width:35px;
 	height:30px;
 	display:inline-block;
@@ -1603,6 +1608,116 @@ button.grey:hover {
 	display: inline-block;
 	vertical-align: middle;
 	text-align: left;
+}
+
+/** Add course to class popup css changes **/
+
+#addCourseToClasPopup{
+	padding:25px 0;
+}
+#addCourseToClasPopup .modal-dialog{
+	width:438px;
+	margin:0 auto;
+}
+#addCourseToClasPopup .modal-header{
+	background-color:#515151;
+	color:#ffffff;
+	border-radius:6px 6px 0 0;
+	margin-top:-2px;
+	
+}
+#addCourseToClasPopup .close{
+	font-size:35px;
+	color:#ffffff;
+	opacity:1;
+}
+#addCourseToClasPopup .modal-footer button.primary{
+	padding:7px 20px;
+}
+
+#addCourseToClasPopup .modal-body{
+	padding:0 0;
+}
+#addCourseToClasPopup .indications{
+	background:#dddddd;
+	padding:6px 15px;
+}
+
+#addCourseToClasPopup .assignCourseBlock{
+	padding:15px 40px;
+}
+#addCourseToClasPopup .assignCourseBlock h3{
+	font-size:18px;
+	text-align:center;
+	font-weight:bold;
+	margin:18px 0;
+	color:#515151;
+}
+#addCourseToClasPopup .assignCourseBlock ul{
+	margin:0 0;
+	padding:0 0;
+}
+#addCourseToClasPopup .assignCourseBlock ul li{
+	margin:0 0 10px 0;
+	padding:0 0;
+	list-style:none;
+	font-size:14px;
+	
+}
+#addCourseToClasPopup .assignCourseBlock ul li span{
+	width:15px;
+	height:15px;
+	border-radius:50% 50%;
+	display:inline-block;
+	vertical-align:top;
+	margin-right:10px;
+	margin-top:3px;
+}
+#addCourseToClasPopup .assignCourseBlock ul li em{
+display:inline-block;
+width:90%;
+font-style:normal;
+}
+#addCourseToClasPopup .assignCourseBlock ul li span.bluedot{
+	background:#87badd;
+}
+#addCourseToClasPopup .assignCourseBlock ul li span.greendot{
+	background:#a6cba2;
+}
+#addCourseToClasPopup .assignCourseBlock ul li span.orgdot{
+	background:#fdd79d;
+}
+#addCourseToClasPopup .dropdownListClassContainerScrollPanel{
+	/* border: 1px solid #ddd; */
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 9999;
+	height: 275px;
+	overflow-x:hidden !important;
+}
+
+#addCourseToClasPopup .addNewCollectionStyle{
+	color: #1076bb;
+	margin-left: 10px;
+}
+#addCourseToClasPopup .addNewCollectionErrorStyle{
+	font-weight: bold;
+	height: 10px;
+	color: #fab03a;
+	font: 12px arial;
+	text-align: left;
+}
+.createCourseImage{
+	 background: url('${cdn.endpoint}/images/course-folder-closed.png') no-repeat 33px 13px; 
+	 margin-left: 115px;
+	 height: 60px;
+}
+
+.mycontent{
+	margin-top: 35px;
+	text-align: center;
+	padding: 0 0 50px;
 }
 
 
@@ -2655,6 +2770,30 @@ button.grey:hover {
 }
 @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
 
+/** Add course to class popup meadia scripts **/
+
+@media (min-width: 320px) and (max-width: 479px) {
+#addCourseToClasPopup .modal-dialog{
+	width:auto;
+	margin-left:10px;
+	margin-right:10px;
+}
+#addCourseToClasPopup .assignCourseBlock {
+	padding: 15px 30px;
+}
+#addCourseToClasPopup .assignCourseBlock ul li em {
+	width: 80%;
+}
+}
+@media (min-width: 480px) and (max-width: 767px)  {
+}
+@media (min-width: 768px) and (max-width: 991px) {
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+}
+@media (min-width: 1200px) {
+}
+
 /** Media Script Files for Get Started Page **/
 @media (min-width: 240px) and (max-width: 319px) {
     .gettingStartedStep2 {
@@ -2693,3 +2832,4 @@ button.grey:hover {
         margin: 0 50px;
     }
 }
+
