@@ -177,10 +177,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 	@Override	
 	public void setBreadCrumbSlot(FolderDo folderObj, String type, HashMap<String, String> selectedWidgetsTitleType){
-		if(folderObj!=null){
-			this.folderObj=folderObj;
-		}
+		this.folderObj=folderObj;
 		
+		/*if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
+		this.folderObj=folderObj;
 		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
 			if(selectedWidgetsTitleType.containsKey(COURSE)){
 				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
@@ -203,7 +203,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}else{
 			String title=folderObj!=null?folderObj.getTitle():"";
 			setBreadCrumbs(title,type);
-		}
+		}*/
 	}
 	
 	
@@ -213,7 +213,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * @param type
 	 */
 	public void setBreadCrumbs(String title, String type) {
-		
 		getUiHandlers().setViewTitleWthicon(title,type);
 
 		/*if(COURSE.equalsIgnoreCase(type)){
@@ -498,6 +497,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				Window.enableScrolling(true);
 			}
 		};
+		deleteContentPopup.getElement().getStyle().setZIndex(9999999);
 		deleteContentPopup.setPopupTitle(i18n.GL0748());
 		String title=folderObj.getTitle().trim();
 		if(title.length()>50){

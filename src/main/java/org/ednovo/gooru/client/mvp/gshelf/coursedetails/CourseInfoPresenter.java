@@ -136,6 +136,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 					myCollectionsRightClusterPresenter.setTabItems(1,UNIT , null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(UNIT,currentShelfTreeWidget);
 				}else{
+					myCollectionsRightClusterPresenter.setFolderListDoChild(null);
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
 				Window.scrollTo(0, 0);

@@ -1214,6 +1214,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
 		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 		resourceSearchResultDo.setGooruOid(collectionItemDo.getResource().getGooruOid());
+		resourceSearchResultDo.setQuestionType(collectionItemDo.getResource().getTypeName());
 		SearchResourceFormatDO searchResourceFormatDO = new SearchResourceFormatDO();
 		searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 		resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);

@@ -337,9 +337,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
 		if(!FOLDER.equalsIgnoreCase(getView().getViewType())){
 			getView().getCollectionLabel().setVisible(false);
+			setTileIcon(folderObj.getTitle(),clickedItemType);
 		}else{
 			getView().getCollectionLabel().setVisible(true);
 			getView().getCollectionLabel().setText(folderObj.getTitle());
+			
 		}
 		if(folderObj!=null && folderObj.getGooruOid()!=null){
 			//when displaying the existing data at that time we are opening the content tab.
