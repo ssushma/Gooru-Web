@@ -152,12 +152,17 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		this.listOfContent = listOfContent;
 		this.folderDo = folderDo;
 		emptyContainerdiv.clear();
+		if(listOfContent!=null)
+		{
+		if(listOfContent.getUser()!=null){
 		if (AppClientFactory.isContentAdmin() || listOfContent
 				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
 						.getGooruUId())){
 			getUiHandlers().disableCollabaratorOptions(true);
 		}else if(listOfContent.isIsCollaborator()){
 			getUiHandlers().disableCollabaratorOptions(false);
+		}
+		}
 		}
 		if (listOfContent!=null && listOfContent.getLastModifiedUser() != null){
 			String lastModifiedDate = listOfContent.getLastModified().toString() != null ? getTimeStamp(listOfContent.getLastModified().getTime()+"") : "";
@@ -226,8 +231,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}
 		if (index == 0){
 			pnlReosurceList.clear();
-			emptyContainerdiv.setVisible(true);
-		}else{
 			emptyContainerdiv.setVisible(false);
 		}
 		if (type.equals(RefreshType.INSERT)){
@@ -464,7 +467,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 					displayNewResourcePopup();
 				}
 			}catch(Exception e){
-				AppClientFactory.printInfoLogger(e.getMessage());
+				//AppClientFactory.printInfoLogger(e.getMessage());
 			}
 		}
 
