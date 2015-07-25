@@ -40,12 +40,12 @@
 			</ul>
 		</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="courseDetailsContainer no-gutter" ui:field="associatedClassesPnl">
-
+		<g:HTMLPanel styleName="courseDetailsContainer no-gutter" >
+            <g:HTMLPanel ui:field="associatedClassesPnl">
 			<h3>This course is assigned to students in these classes:</h3>
 
 			<g:VerticalPanel styleName="classListStyle" ui:field="classListPnl"></g:VerticalPanel>
-
+			</g:HTMLPanel>
 
 		</g:HTMLPanel>
 
