@@ -983,81 +983,103 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	@Override
 	public CollectionItemDo updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList)
 			throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url =null;
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO,collectionItemDo.getParentGooruOid(), collectionItemDo.getCollectionItemId());
+		try{
+			
+			JsonRepresentation jsonRep = null;
+			String url =null;
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO,collectionItemDo.getParentGooruOid(), collectionItemDo.getCollectionItemId());
 
-		NewResourceDo newResourceDo = new NewResourceDo();
+			NewResourceDo newResourceDo = new NewResourceDo();
 
-		String urlStr=collectionItemDo.getResource().getUrl();
+			String urlStr=collectionItemDo.getResource().getUrl();
 
-		newResourceDo.setTitle(collectionItemDo.getResource().getTitle());
-		newResourceDo.setDescription(collectionItemDo.getResource().getDescription());
-		newResourceDo.setCategory(collectionItemDo.getResource().getCategory().trim());
+			newResourceDo.setTitle(collectionItemDo.getResource().getTitle());
+			newResourceDo.setDescription(collectionItemDo.getResource().getDescription());
+			newResourceDo.setCategory(collectionItemDo.getResource().getCategory().trim());
 
-		ResourceFormatDo resourceFormat = new ResourceFormatDo();
-		resourceFormat.setValue(collectionItemDo.getResource().getCategory());
+			ResourceFormatDo resourceFormat = new ResourceFormatDo();
+			resourceFormat.setValue(collectionItemDo.getResource().getCategory());
 
-		String thumbnailImgSrcStr=collectionItemDo.getResource().getThumbnails()!=null?collectionItemDo.getResource().getThumbnails().getUrl():"";
-		if (thumbnailImgSrcStr==null){
-			thumbnailImgSrcStr="";
-		}
-
-		if (urlStr != null && urlStr.contains("youtube")){
-			newResourceDo.setThumbnail("");
-		}else{
-			newResourceDo.setThumbnail(thumbnailImgSrcStr);
-		}
-
-		newResourceDo.setResourceFormat(resourceFormat);
-		List<Integer> educationListId=new ArrayList<>();
-		if(collectionItemDo.getEducationalUse()!=null){
-			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
-				educationListId.add(checkboxSelectedDo.getId());
+			String thumbnailImgSrcStr=collectionItemDo.getResource().getThumbnails()!=null?collectionItemDo.getResource().getThumbnails().getUrl():"";
+			if (thumbnailImgSrcStr==null){
+				thumbnailImgSrcStr="";
 			}
-		}
+
+			if (urlStr != null && urlStr.contains("youtube")){
+				newResourceDo.setThumbnail("");
+			}else{
+				newResourceDo.setThumbnail(thumbnailImgSrcStr);
+			}
+
+			newResourceDo.setResourceFormat(resourceFormat);
+			List<Integer> educationListId=new ArrayList<>();
+			if(collectionItemDo.getEducationalUse()!=null){
+				for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
+					educationListId.add(checkboxSelectedDo.getId());
+				}
+			}
+			
+			newResourceDo.setEducationalUseIds(educationListId);
+			//	newResourceDo.setEducationalUse(collectionItemDo.getEducationalUse());
+			newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
+			List<Integer> momentOfLearningIdList=new ArrayList<>();
+			if(collectionItemDo.getMomentsOfLearning()!=null){
+				for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
+					momentOfLearningIdList.add(checkboxSelectedDo.getId());
+				}
+			}
+			
+			newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
+			//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());
+			List<Integer> accessHardList=new ArrayList<>();
+			if(collectionItemDo.getAccessHazard()!=null){
+				for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
+					accessHardList.add(selectedDo.getId());	
+				}
+			}
 		
-		newResourceDo.setEducationalUseIds(educationListId);
-		//	newResourceDo.setEducationalUse(collectionItemDo.getEducationalUse());
-		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
-		List<Integer> momentOfLearningIdList=new ArrayList<>();
-		if(collectionItemDo.getMomentsOfLearning()!=null){
-			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
-				momentOfLearningIdList.add(checkboxSelectedDo.getId());
+			newResourceDo.setAccessHazardIds(accessHardList);
+			List<Integer> mediaFeaturesList=new ArrayList<>();
+			if(collectionItemDo.getMediaFeature()!=null){
+				for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
+					mediaFeaturesList.add(do1.getId());
+				}
 			}
-		}
-		
-		newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
-		//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());
-		List<Integer> accessHardList=new ArrayList<>();
-		if(collectionItemDo.getAccessHazard()!=null){
-			for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
-				accessHardList.add(selectedDo.getId());	
+			List<Map<String,String>> standards=collectionItemDo.getStandards();
+			List<Integer> standardIds=new ArrayList<>();
+			if(standards!=null){
+				for(Map<String,String> standard:standards){
+					for(Map.Entry<String, String> entry:standard.entrySet()){
+						String id=entry.getKey();
+						
+						if(id!=null&&id.equalsIgnoreCase("id")){
+							int idInt=Integer.parseInt(entry.getValue());
+							standardIds.add(idInt);
+						}
+					}
+					
+				}
 			}
-		}
-	
-		newResourceDo.setAccessHazardIds(accessHardList);
-		List<Integer> mediaFeaturesList=new ArrayList<>();
-		if(collectionItemDo.getMediaFeature()!=null){
-			for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
-				mediaFeaturesList.add(do1.getId());
-			}
-		}
-		
-		newResourceDo.setMediaFeatureIds(mediaFeaturesList);
-		Map<String,Object> resourceMap=new HashMap<String,Object>();
-		resourceMap.put(RESOURCE, newResourceDo);
+			newResourceDo.setStandardIds(standardIds);
+			newResourceDo.setMediaFeatureIds(mediaFeaturesList);
+			Map<String,Object> resourceMap=new HashMap<String,Object>();
+			resourceMap.put(RESOURCE, newResourceDo);
 
-		if(tagList!=null && !tagList.isEmpty() ){
-			resourceMap.put(RESOURCE_TAGS, tagList);
-		}
+			if(tagList!=null && !tagList.isEmpty() ){
+				resourceMap.put(RESOURCE_TAGS, tagList);
+			}
 
-		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
-		getLogger().info("---- Updating Web url --- "+url);
-		getLogger().info("--- pay load -- "+form);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+			String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
+			getLogger().info("---- Updating Web url --- "+url);
+			getLogger().info("--- pay load -- "+form);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			return deserializeCollectionItem(jsonRep);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 	/**
 	 *
@@ -1203,10 +1225,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if (isSharable){
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARABLE_USER_COLLECTION, JSON);
 			params.put(GooruConstants.SHARING, GooruConstants.ACESSTEXT);
-			getLogger().info("SHARABLE_USER_COLLECTION is sherable getUserCollectionList API call::::"+partialUrl);
+			getLogger().info("SHARABLE_USER_COLLECTION is sherable getUserCollectionList API call::::......"+partialUrl);
 		}else{
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_COLLECTION, JSON);
-			getLogger().info("SHARABLE_USER_COLLECTION getUserCollectionList API call::::"+partialUrl);
+			getLogger().info("SHARABLE_USER_COLLECTION getUserCollectionList API call::::...."+partialUrl);
 		}
 		params.put(GooruConstants.PAGE_SIZE, pageSize1);
 		params.put(GooruConstants.PAGE_NUM, pageNum1);
