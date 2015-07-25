@@ -337,7 +337,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
 		if(!FOLDER.equalsIgnoreCase(getView().getViewType())){
 			getView().getCollectionLabel().setVisible(false);
-			setTileIcon(folderObj.getTitle(),clickedItemType);
+			setTileIcon((folderObj!=null&&folderObj.getGooruOid()!=null)?folderObj.getTitle():(clickedItemType.equalsIgnoreCase("collection")?
+					"Untitled Collection":clickedItemType.equalsIgnoreCase("assessment")?
+							"Untitled Assessment":"Untitled External Assessment"),clickedItemType);
 		}else{
 			getView().getCollectionLabel().setVisible(true);
 			getView().getCollectionLabel().setText(folderObj.getTitle());
@@ -435,14 +437,19 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	}
 	
 	@Override
-	public void setCollectionContent(FolderDo collectionDo){
+	public void setCollectionContent(FolderDo folderObj){
 		clearSlot(RIGHT_SLOT);
-		getMyCollectionsRightClusterPresenter().setTabItems(2, collectionDo.getType(),collectionDo);
+		getMyCollectionsRightClusterPresenter().setTabItems(2, folderObj.getType(),folderObj);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		if(FOLDER.equalsIgnoreCase(view)){
 			getView().getCollectionLabel().setVisible(true);
+			getView().getCollectionLabel().setText(folderObj.getTitle());
+		}else{
+			setTileIcon((folderObj!=null&&folderObj.getGooruOid()!=null)?folderObj.getTitle():"",folderObj.getType());
 		}
-		getView().getCollectionLabel().setText(collectionDo.getTitle());
+		
+		
+		
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter(),false);	
 	}
 	/**

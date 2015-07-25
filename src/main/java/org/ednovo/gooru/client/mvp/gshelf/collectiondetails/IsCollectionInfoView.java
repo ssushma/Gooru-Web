@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.TreeItem;
 
 /**
@@ -74,11 +75,14 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 
 	FolderDo getFolderDo(); 
 
-	void setCollectionImage(String url);
+	void setCollectionImage(String url,String mediaFileName);
 
 	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);
 
 	void resetBtns();
 	
 	HTMLPanel getStadardsPanel();
+
+	Image getCollThumbnail();
+
 }

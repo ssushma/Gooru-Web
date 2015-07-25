@@ -79,7 +79,6 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 	@Override
 	public void onReset() {
 		getView().setContentVisiblity(false);
-		setData();
 	}
 	
 	public void setData() {

@@ -136,7 +136,10 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	
 	@UiHandler("allContentPanel")
 	public void ClickAllContentPanel(ClickEvent event) {
-		navigateToPage(allContentStr);
+		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
+		if(!pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			navigateToPage(allContentStr);
+		}
 	}
 	@UiHandler("previousContentPanel")
 	public void ClickPreviousContentPanel(ClickEvent event) {
@@ -238,11 +241,14 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		allContentStr = ALL;
 		
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
+			allContentPanel.removeStyleName("cursorPointer");
 			setNavLinksData("You have "+dataList.size()+" Units to complete", null, null, null);
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
+			allContentPanel.addStyleName("cursorPointer");
 			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
 			setLinksData(unitId, dataList, "All Units", "Unit");
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			allContentPanel.addStyleName("cursorPointer");
 			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
 			setLinksData(lessonId, dataList, "All Lessons", "Lesson");
 		}

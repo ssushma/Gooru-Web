@@ -36,4 +36,5 @@ import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 public interface IsStudentClassReportView extends IsViewWithHandlers<StudentClassReportUiHandlers> {
 	public void setReportData(ArrayList<PlanProgressDo> dataList);
 	public void setMetadataContent(ArrayList<PlanProgressDo> dataList);
+	public void setContentVisibility(boolean isVisible);
 }
