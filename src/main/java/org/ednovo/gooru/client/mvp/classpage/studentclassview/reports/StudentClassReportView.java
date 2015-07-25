@@ -100,11 +100,10 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
 		
-		setContentVisibility(false);
 		reportBodyBlock.clear();
 		
 		int size = dataList.size();
-		
+
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			headerLeftArrow.setVisible(false);
 			allContentPanel.removeStyleName("cursorPointer");
@@ -122,7 +121,6 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 			allContentPanel.addStyleName("cursorPointer");
 			reportBodyBlock.add(new AssessmentProgressReportChildView(aId, cId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId));
 		}
-		setContentVisibility(true);
 	}
 	
 	@UiHandler("allContentPanel")
@@ -190,7 +188,8 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 		nextContentName.setText(nextLinkTxt);
 	}
 	
-	private void setContentVisibility(boolean isVisible) {
+	@Override
+	public void setContentVisibility(boolean isVisible) {
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		cropImageLoading.setVisible(!isVisible);
 		topContainer.setVisible(isVisible);
