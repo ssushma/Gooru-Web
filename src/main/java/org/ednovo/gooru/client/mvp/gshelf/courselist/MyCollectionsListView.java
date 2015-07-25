@@ -55,11 +55,13 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -75,7 +77,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion,createCollectionBtn,createAssessmentBtn;
-	@UiField Label lblAddNew,lblAddNewForResource,lblAddNewForQuestion,lblTitle;
+	@UiField Label lblAddNew,lblTitle;
+	@UiField Anchor lblAddNewForResource,lblAddNewForQuestion;
 	@UiField HTMLEventPanel createPanel;
 	
 	int index=0;
@@ -163,15 +166,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		pnlCreateContainer.setVisible(false);
 		lblTitle.setVisible(false);
 		collectionLevelPnl.setVisible(false);
-		if(listOfContent.size()==0)
-		{
-			emptyContainerDiv.setVisible(true);			
-		}
-		else
-		{
+		if(listOfContent ==null || listOfContent.size()==0){
+			emptyContainerDiv.setVisible(true);
+		}else{
 			emptyContainerDiv.setVisible(false);
 		}
-		
 		if(isInnerSlot){
 			pnlH2TitleContainer.setVisible(false);
 			pnlCreateContainer.setVisible(true);
@@ -202,9 +201,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				btnCreate.setVisible(false);
 				pnlAddContainer.setVisible(false);
 				if(folderDo!=null){
-					h2Title.setText(folderDo.getTitle()+" "+i18n.GL3336());
+					h2Title.setText(folderDo.getTitle());
 				}else{
-					h2Title.setText(i18n.GL0994());
+					h2Title.setText(i18n.GL0180());
 				}
 			}else if(COLLECTION.equalsIgnoreCase(type)){
 				btnCreate.setVisible(false);
@@ -271,10 +270,34 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 							new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
 						}
 					}
+					@Override
+					public void checkKeyUpHandler(int position,ContentWidgetWithMove contentWidget) {
+						if(pnlCourseList.getWidgetCount()<position){
+							contentWidget.getTopArrow().setVisible(false);
+							contentWidget.getDownArrow().setVisible(false);
+							toolTipPopupPanel.clear();
+							toolTipPopupPanel.setWidget(new GlobalToolTip(StringUtil.generateMessage(i18n.GL3004(),position+"")));
+							toolTipPopupPanel.setStyleName("");
+							toolTipPopupPanel.setPopupPosition(contentWidget.getTextBox().getAbsoluteLeft(), contentWidget.getTextBox().getAbsoluteTop()+40);
+							toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+							toolTipPopupPanel.show();
+							new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+						}
+					}
+					@Override
+					public void checkBlurHandler(int position,ContentWidgetWithMove contentWidget) {
+						String currentWidgetString=contentWidget.getTextBox().getElement().getAttribute("index").trim();
+						int enteredVal=Integer.valueOf(currentWidgetString);
+						if(enteredVal<pnlCourseList.getWidgetCount() && enteredVal!=0){
+							contentWidget.getTopArrow().setVisible(true);
+							contentWidget.getDownArrow().setVisible(true);
+						}
+						setLastWidgetArrowVisiblity(false);
+						contentWidget.getTextBox().setText((enteredVal+1)+"");
+					}
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
 				widgetMove.getTitleContainer().addClickHandler(new ClickOnTitleContainer(folderObj,true));
-				//widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
 				widgetMove.enableAndDisableCount(folderObj.getType());
 				pnlCourseList.add(widgetMove);
 				index++;
@@ -321,6 +344,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		btnCreateResource.setVisible(isEnabled);
 		btnCreateQuestion.setVisible(isEnabled);
 		pnlCreate.setVisible(isEnabled);
+		createPanel.setVisible(!isEnabled);
 	}
 	@UiHandler("createPanel")
 	public void clickOnCreatePanel(ClickEvent clickEvent){
@@ -383,7 +407,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3372());
 			
 			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
+			//lblAddNew.setVisible(false);
+			//createPanel.setVisible(false);
 		}else if(FOLDER.equalsIgnoreCase(type)){
 			enableCreateButtons(true);
 			String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
@@ -392,9 +417,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
 			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
 			lblAddNewForResource.setText(i18n.GL1451());
 			lblAddNewForQuestion.setText(i18n.GL3024());
+			//Showing buttons for folder creation 
 			/*if(o3!=null){
 				btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 				btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
@@ -435,7 +460,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3218(), i18n.GL3218());
 			
 			btnCreate.setVisible(false);
-			lblAddNew.setVisible(false);
 		}
 		
 	}

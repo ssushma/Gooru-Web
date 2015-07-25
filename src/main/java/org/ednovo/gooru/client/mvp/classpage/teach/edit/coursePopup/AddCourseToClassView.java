@@ -12,6 +12,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
@@ -34,6 +35,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -55,15 +57,24 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			UiBinder<Widget, AddCourseToClassView> {
 	}
 	
-	@UiField HTMLPanel floderTreeContainer;
-	@UiField Anchor cancelResourcePopupBtnLbl,btnAddNew;
+	@UiField HTMLPanel floderTreeContainer,emptyCourseBlockContainer,footerPanel;
+	@UiField Button cancelResourcePopupBtnLbl,gotoMyContent;
+	@UiField Anchor btnAddNew;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
-	@UiField Button btnAddExisting;
-	@UiField Label addtocollHeaderText,addingTextLbl,lblEmptyErrorMessage,lblError;
+	@UiField Button btnAddExisting,assignBtn,cancel;
+	@UiField H4Panel addtocollHeaderText;
+	
+	@UiField Label lblEmptyErrorMessage,lblError;
+	
+	@UiField HTML addingTextLbl;
+	
+	@UiField HTMLPanel popupContainer,assignCourseBlockContainer;
 	
 	String classId;
 	
 	String currentsearchType="class";
+	
+	
 	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
@@ -94,23 +105,28 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		appPopUp.setGlassEnabled(true);
 		appPopUp.getElement().getStyle().setZIndex(999999);
+		assignCourseBlockContainer.setVisible(false);
+		cancel.setVisible(false);
+		assignBtn.setVisible(false);
+		dropdownListContainerScrollPanel.setVisible(false);
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTreePanel);
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
+		popupContainer.getElement().setId("addCourseToClasPopup");
 		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
 		lblEmptyErrorMessage.setVisible(false);
 		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		lblError.setVisible(false);
 		urlparams= new HashMap<String, String>();
 		addtocollHeaderText.setText(i18n.GL3428());
-		addingTextLbl.setText(i18n.GL3427());
+		addingTextLbl.setHTML(i18n.GL3436());
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
 			   isTopMostSelected = false;
-				lblError.setVisible(false);
-				lblError.setText(i18n.GL1134());
+			    lblError.setVisible(false);
+			    lblError.setText(i18n.GL3429());
 			   final TreeItem item = (TreeItem) event.getSelectedItem();
 			    Widget folderWidget= item.getWidget();
 			     if(folderWidget instanceof CourseTreeItem){
@@ -171,19 +187,6 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		
 	}
 
-	@Override
-	public void displayNoCollectionsMsg(String searchType){
-		if(!COLLECTION.equalsIgnoreCase(searchType)){
-			dropdownListContainerScrollPanel.setVisible(false);
-			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
-			lblEmptyErrorMessage.setVisible(true);
-			lblEmptyErrorMessage.setText("There are no collections to add this resource.");
-			btnAddExisting.setVisible(false);
-		}else if(COLLECTION.equalsIgnoreCase(searchType)){
-			urlparams.clear();
-			folderTreePanel.clear();
-		}
-	}
 	private  void adjustTreeItemStyle(final UIObject uiObject) {
 	      if (uiObject instanceof TreeItem) {
 	         if (uiObject != null && uiObject.getElement() != null) {
@@ -273,14 +276,44 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
 		hide();
+		Window.enableScrolling(true);
+		enableTopFilters();
+	}
+	
+	@UiHandler("cancel")
+	public void cancelEvent(ClickEvent event){
+		hide();
+		Window.enableScrolling(true);
 		enableTopFilters();
 	}
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
+		if(currectCourseSelectedTreeItem != null){
+			dropdownListContainerScrollPanel.setVisible(false);
+			assignCourseBlockContainer.setVisible(true);
+			addingTextLbl.setHTML(i18n.GL3437());
+			assignBtn.setVisible(true);
+			cancel.setVisible(true);
+			btnAddExisting.setVisible(false);
+			btnAddNew.setVisible(false);
+		}else{
+			lblError.setVisible(true);
+		}
+	}
+	
+	@UiHandler("assignBtn")
+	public void addCourseToClass(ClickEvent event){
 		classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		if(classId != null && currectCourseSelectedTreeItem.getGooruOid() != null){
 			getUiHandlers().connectCourseToClass(classId,currectCourseSelectedTreeItem.getGooruOid());
 		}
+	}
+	
+	@UiHandler("gotoMyContent")
+	public void connectToMyContent(ClickEvent event){
+		hide();
+		Window.enableScrolling(true);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 	}
 	@UiHandler("btnAddNew")
 	public void createNewCourse(ClickEvent event){
@@ -291,7 +324,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	
 	@Override
 	public Anchor getAddButton(){
-		return btnAddNew;
+		return null;
 	}
 	@Override
 	public void hidePopup(){
@@ -331,6 +364,14 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	@Override
 	public void clearUrlParams() {
 		urlparams.clear();
+		lblError.setVisible(false);
+		assignCourseBlockContainer.setVisible(false);
+		assignBtn.setVisible(false);
+		addingTextLbl.setHTML(i18n.GL3436());
+		btnAddNew.setVisible(true);
+		emptyCourseBlockContainer.setVisible(false);
+		currectCourseSelectedTreeItem=null;
+		cancel.setVisible(false);
 	}
 
 	/* (non-Javadoc)
@@ -345,19 +386,27 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
-					 FolderDo floderDo=foldersArrayList.get(i);
+					FolderDo floderDo=foldersArrayList.get(i);
 					 if(!floderDo.getType().equals("collection")){
 						 TreeItem folderItem=new TreeItem(new CourseTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
+					 dropdownListContainerScrollPanel.setVisible(true);
+					 footerPanel.setVisible(true);
 				 }
+			 }else{
+				 dropdownListContainerScrollPanel.setVisible(false);
+				 footerPanel.setVisible(false);
+				 addingTextLbl.setText(i18n.GL3439());
+				 emptyCourseBlockContainer.setVisible(true);
+				 assignCourseBlockContainer.setVisible(false);
 			 }
 		}
 		currentsearchType=searchType;
 		/*totalHitCount = folderListDo.getCount();*/
 		btnAddExisting.setVisible(true);
-		dropdownListContainerScrollPanel.setVisible(true);
+		//dropdownListContainerScrollPanel.setVisible(true);
 		lblEmptyErrorMessage.setVisible(false);
 		lblError.setVisible(false);
 		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);

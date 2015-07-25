@@ -586,7 +586,7 @@ public class CollectionProgressReportChildView extends ChildView<CollectionProgr
 			if(result.size()!=0){
 				for(int i=0;i<result.size();i++) {
 					isTickdisplay=false;
-					data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+					data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
 
 					Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 					questionTitle.setStyleName(STYLE_TABLE_CENTER);

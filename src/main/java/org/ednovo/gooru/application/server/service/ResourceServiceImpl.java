@@ -47,6 +47,7 @@ import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -60,6 +61,7 @@ import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.NewResourceDo;
+import org.ednovo.gooru.application.shared.model.content.PermissionsDO;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
@@ -74,6 +76,7 @@ import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.drive.ErrorDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.library.ProfanityDo;
@@ -349,6 +352,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				CollectionDo obj=new CollectionDo();
+				if(!jsonRep.getJsonObject().isNull("summary")){
+					CourseSummaryDo courseSummaryDoObj 	=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("summary").toString(), CourseSummaryDo.class);
+					obj.setSummary(courseSummaryDoObj);
+				}
 				obj.setCollectionType(jsonRep.getJsonObject().isNull("collectionType")?"":jsonRep.getJsonObject().getString("collectionType"));
 				obj.setType(jsonRep.getJsonObject().isNull("type")?"":jsonRep.getJsonObject().getString("type"));
 				obj.setGooruOid(jsonRep.getJsonObject().isNull("gooruOid")?"":jsonRep.getJsonObject().getString("gooruOid"));
@@ -357,6 +364,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
+
+				if(jsonRep.getJsonObject().has("settings")){
+					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionSettingsDo.class);
+					obj.setSettings(settings);
+				}
+
+				List<String> lstPermission = new ArrayList<>();
+				if(jsonRep.getJsonObject().has("permissions")){
+					JSONArray permissionsArray=jsonRep.getJsonObject().getJSONArray("permissions");
+					for (int i=0;i<permissionsArray.length();i++){
+						lstPermission.add(permissionsArray.getString(i));
+					}
+					obj.setPermissions(lstPermission);
+				}
+
 				if(jsonRep.getJsonObject().has("audience")){
 					JSONArray array=jsonRep.getJsonObject().getJSONArray("audience");
 					for(int i=0;i<array.length();i++){
@@ -995,27 +1017,39 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 		newResourceDo.setResourceFormat(resourceFormat);
 		List<Integer> educationListId=new ArrayList<>();
-		for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
-			educationListId.add(checkboxSelectedDo.getId());
+		if(collectionItemDo.getEducationalUse()!=null){
+			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getEducationalUse()){
+				educationListId.add(checkboxSelectedDo.getId());
+			}
 		}
+		
 		newResourceDo.setEducationalUseIds(educationListId);
 		//	newResourceDo.setEducationalUse(collectionItemDo.getEducationalUse());
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
 		List<Integer> momentOfLearningIdList=new ArrayList<>();
-		for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
-			momentOfLearningIdList.add(checkboxSelectedDo.getId());
+		if(collectionItemDo.getMomentsOfLearning()!=null){
+			for(checkboxSelectedDo checkboxSelectedDo:collectionItemDo.getMomentsOfLearning()){
+				momentOfLearningIdList.add(checkboxSelectedDo.getId());
+			}
 		}
+		
 		newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
 		//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());
 		List<Integer> accessHardList=new ArrayList<>();
-		for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
-			accessHardList.add(selectedDo.getId());	
+		if(collectionItemDo.getAccessHazard()!=null){
+			for(checkboxSelectedDo selectedDo:collectionItemDo.getAccessHazard()){
+				accessHardList.add(selectedDo.getId());	
+			}
 		}
+	
 		newResourceDo.setAccessHazardIds(accessHardList);
 		List<Integer> mediaFeaturesList=new ArrayList<>();
-		for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
-			mediaFeaturesList.add(do1.getId());
+		if(collectionItemDo.getMediaFeature()!=null){
+			for(ListValuesDo do1:collectionItemDo.getMediaFeature()){
+				mediaFeaturesList.add(do1.getId());
+			}
 		}
+		
 		newResourceDo.setMediaFeatureIds(mediaFeaturesList);
 		Map<String,Object> resourceMap=new HashMap<String,Object>();
 		resourceMap.put(RESOURCE, newResourceDo);

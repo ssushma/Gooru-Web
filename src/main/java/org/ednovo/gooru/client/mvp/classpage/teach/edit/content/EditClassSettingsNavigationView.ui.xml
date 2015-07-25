@@ -18,12 +18,12 @@
 		
 		<g:HTMLPanel styleName="col-md-5 col-sm-7">
 			<g:HTMLPanel styleName="classMenuRight">
-				<g:HTMLPanel styleName="coureEditActions" ui:field="coursePanel"><g:InlineLabel styleName="courseLblStyle" ui:field="courseLbl"></g:InlineLabel><span class="folderIcon"></span><g:InlineLabel styleName="classTitle" ui:field="titleLbl"></g:InlineLabel> 
+				<!-- <g:HTMLPanel styleName="coureEditActions" ui:field="coursePanel"><g:InlineLabel styleName="courseLblStyle" ui:field="courseLbl"></g:InlineLabel><span class="folderIcon"></span><g:InlineLabel styleName="classTitle" ui:field="titleLbl"></g:InlineLabel> 
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="stPriviewButton" ui:field="previewBtn">
 				    <g:Button styleName="primary" ui:field="editCourseBtn"></g:Button>
-				   <!--  <g:Button styleName="primary" ui:field="studentPreviewbtn"></g:Button> -->
-			    </g:HTMLPanel>
+				    <g:Button styleName="primary" ui:field="studentPreviewbtn"></g:Button>
+			    </g:HTMLPanel> -->
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
