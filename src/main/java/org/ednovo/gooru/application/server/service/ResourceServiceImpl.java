@@ -47,6 +47,7 @@ import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
+
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -75,6 +76,7 @@ import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.drive.ErrorDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.library.ProfanityDo;
@@ -350,6 +352,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				CollectionDo obj=new CollectionDo();
+				if(!jsonRep.getJsonObject().isNull("summary")){
+					CourseSummaryDo courseSummaryDoObj 	=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("summary").toString(), CourseSummaryDo.class);
+					obj.setSummary(courseSummaryDoObj);
+				}
 				obj.setCollectionType(jsonRep.getJsonObject().isNull("collectionType")?"":jsonRep.getJsonObject().getString("collectionType"));
 				obj.setType(jsonRep.getJsonObject().isNull("type")?"":jsonRep.getJsonObject().getString("type"));
 				obj.setGooruOid(jsonRep.getJsonObject().isNull("gooruOid")?"":jsonRep.getJsonObject().getString("gooruOid"));

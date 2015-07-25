@@ -537,6 +537,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 			String resourcePlayId =AppClientFactory.getPlaceManager().getRequestParameter("id");
 			ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
 			resourceSearchResultDo.setGooruOid(resourcePlayId);
+			resourceSearchResultDo.setQuestionType(collectionItemDo.getResource().getTypeName());
 			SearchResourceFormatDO searchResourceFormatDO = new SearchResourceFormatDO();
 			searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 			resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);

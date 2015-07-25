@@ -50,7 +50,7 @@ public class SlnCourseReportView extends Composite {
 	
 	private void setDebugIds() {
 		collectionStudyLbl.setText("Collections Viewed");
-		assessmentStudyLbl.setText("Assessments Attemted");
+		assessmentStudyLbl.setText("Assessments Attempted");
 		studyTimeLbl.setText("Total Study Time");
 		scoreLbl.setText("Avg Score");
 	}

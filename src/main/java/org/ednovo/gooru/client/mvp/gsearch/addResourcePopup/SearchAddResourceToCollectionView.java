@@ -61,9 +61,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl,mycollectionsLbl,mycontentLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText,addingTextLbl,lblEmptyErrorMessage,lblError;
-	@UiField public Label myCollDefault;
-	
+	@UiField Label lblEmptyErrorMessage,lblError;
+	@UiField public Label myCollDefault,addtocollHeaderText,addingTextLbl;;
 	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
@@ -82,7 +81,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private boolean isCopySelected= false;
 	private boolean isMoveSelected= false;
 	
-	
 	HashMap<String,String> urlparams ;
 	private static final String O1_LEVEL = "o1";
 	private static String O2_LEVEL = "o2";
@@ -98,7 +96,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";
 	
 	
-	boolean isTopMostSelected =true,isAddingInProgress=true;
+	boolean isTopMostSelected =false,isAddingInProgress=true;
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -133,29 +131,15 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		mycollectionsLbl.setText("My Collections");
 		mycontentLbl.setText("My Courses");
 		urlparams= new HashMap<String, String>();
-		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		 String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
-		if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
-				|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
-				|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
-			addtocollHeaderText.setText(i18n.GL3224());
-			addingTextLbl.setText(i18n.GL3214());
-		}else{
-			addtocollHeaderText.setText(i18n.GL3223());
-			addingTextLbl.setText(i18n.GL3213());
-		}		
-		myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 		myCollDefault.setVisible(false);
 		btnAddExisting.setEnabled(true);
 		btnAddExisting.setStyleName("primary");
 		mycollectionsLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				
 				urlparams.clear();
 				mycollectionsLbl.addStyleName("active");
 				mycontentLbl.removeStyleName("active");
-				myCollDefault.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTreePanel.clear();
 				folderTreePanel.add(loadingImage());
 				isFromMyCourse=false;
@@ -167,10 +151,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
 						|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
 						|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
-						myCollDefault.setVisible(false);
+						isTopMostSelected=false;
+						removePreviousSelectedItem();
 						getUiHandlers().getWorkspaceData(0, 20, true, "resource");
 					}else{
-						myCollDefault.setVisible(true);
+						isTopMostSelected=true;
 						getUiHandlers().getWorkspaceData(0, 20, true, "collection");
 					}
 			}
@@ -178,13 +163,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		mycontentLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				
 				urlparams.clear();
 				mycontentLbl.addStyleName("active");
 				mycollectionsLbl.removeStyleName("active");
 				btnAddExisting.setEnabled(true);
 				btnAddExisting.setStyleName("primary");
-				myCollDefault.getElement().getStyle().setDisplay(Display.NONE);
+				isTopMostSelected=false;
 				folderTreePanel.clear();
 				folderTreePanel.add(loadingImage());
 				isFromMyCourse=true;
@@ -218,7 +202,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						folderTreeItemWidget.setOpen(true);
 					}
 					removePreviousSelectedItem();
-					highlightStyles();
 					currentFolderSelectedTreeItem = folderTreeItemWidget;
 					previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
 					currentFolderSelectedTreeItem
@@ -259,8 +242,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						item.setState(!item.getState(), false);
 					}else if(folderWidget instanceof CollectionTreeItem){
 				    	removePreviousSelectedItem();
-				    	highlightStyles();
-				    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
+						cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
 				    	previousSelectedItem = cureentcollectionTreeItem;																			
 				    	cureentcollectionTreeItem.addStyleName("selected");
 				    	previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
@@ -326,14 +308,25 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		if(clearShelfPanel){
+			pageNum=1;
 			folderTreePanel.clear();
+			String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+			String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+				|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+				|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
+				addtocollHeaderText.setText(i18n.GL3224());
+				addingTextLbl.setText(i18n.GL3214());
+			}else{
+				addtocollHeaderText.setText(i18n.GL3223());
+				addingTextLbl.setText(i18n.GL3213());
+			}
 		}
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					
 					 if(!floderDo.getType().equals("collection") && !floderDo.getType().equals("scollection") && !floderDo.getType().equals("assessment") &&  !floderDo.getType().equals("assessment/url")){
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo));
 						 folderTreePanel.addItem(folderItem);
@@ -364,7 +357,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		lblError.setVisible(false);
 		if(searchType.equals("collection")){
 			isTopMostSelected =true;
-			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
 			currentFolderSelectedTreeItem=null;
 		}else{
 			isAddingInProgress=true;
@@ -380,7 +372,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					
+
 					 if(!floderDo.getType().equals("collection") && !floderDo.getType().equals("scollection") && !floderDo.getType().equals("assessment") && !floderDo.getType().equals("assessment/url")){
 						 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(folderLevel+"",floderDo.getTitle(),floderDo.getGooruOid(),floderDo);
 						 innerFolderTreeItem.setFolerLevel(folderLevel+1);
@@ -672,8 +664,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void setDefaultPanelVisibility(Boolean blnVal){
-		myCollDefault.setVisible(blnVal);
-		/*btnAddNew.setVisible(!blnVal);*/
 		pageNum=1;
 	}
 
@@ -702,24 +692,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		lblError.setVisible(true);
 	}
 	
-	@UiHandler("myCollDefault")
-	public void clickOnMyCollection(ClickEvent clickEvent){
-		urlparams.clear();
-		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
-			myCollDefault.getElement().getStyle().clearBackgroundColor();
-		}else{
-			myCollDefault.getElement().setAttribute("style", "background-color: #cfe3f1;");
-			isTopMostSelected=true;
-			removePreviousSelectedItem();
-		}
-		
-	}
-	
-	protected void highlightStyles(){
-		if(myCollDefault.getElement().getStyle().getBackgroundColor().equals("rgb(207, 227, 241)")){
-			myCollDefault.getElement().getStyle().clearBackgroundColor();
-		}
-	}
+
 
 	@Override
 	public void clearUrlParams() {
@@ -781,6 +754,4 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		// TODO Auto-generated method stub
 		this.isFromCopyResource=isFromCopyResource;
 	}
-	
-	
 }

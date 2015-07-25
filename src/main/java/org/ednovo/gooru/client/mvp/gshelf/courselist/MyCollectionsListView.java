@@ -61,6 +61,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -269,10 +270,34 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 							new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
 						}
 					}
+					@Override
+					public void checkKeyUpHandler(int position,ContentWidgetWithMove contentWidget) {
+						if(pnlCourseList.getWidgetCount()<position){
+							contentWidget.getTopArrow().setVisible(false);
+							contentWidget.getDownArrow().setVisible(false);
+							toolTipPopupPanel.clear();
+							toolTipPopupPanel.setWidget(new GlobalToolTip(StringUtil.generateMessage(i18n.GL3004(),position+"")));
+							toolTipPopupPanel.setStyleName("");
+							toolTipPopupPanel.setPopupPosition(contentWidget.getTextBox().getAbsoluteLeft(), contentWidget.getTextBox().getAbsoluteTop()+40);
+							toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+							toolTipPopupPanel.show();
+							new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+						}
+					}
+					@Override
+					public void checkBlurHandler(int position,ContentWidgetWithMove contentWidget) {
+						String currentWidgetString=contentWidget.getTextBox().getElement().getAttribute("index").trim();
+						int enteredVal=Integer.valueOf(currentWidgetString);
+						if(enteredVal<pnlCourseList.getWidgetCount() && enteredVal!=0){
+							contentWidget.getTopArrow().setVisible(true);
+							contentWidget.getDownArrow().setVisible(true);
+						}
+						setLastWidgetArrowVisiblity(false);
+						contentWidget.getTextBox().setText((enteredVal+1)+"");
+					}
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
 				widgetMove.getTitleContainer().addClickHandler(new ClickOnTitleContainer(folderObj,true));
-				//widgetMove.getTitleContainer().addDomHandler(new ClickOnTitleContainer(folderObj), ClickEvent.getType());
 				widgetMove.enableAndDisableCount(folderObj.getType());
 				pnlCourseList.add(widgetMove);
 				index++;

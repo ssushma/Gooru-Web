@@ -126,8 +126,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	FolderDo folderDo;
 
 	Map<String, ContentResourceWidgetWithMove> moveWidgets=new HashMap<String, ContentResourceWidgetWithMove>();
-	private static final String MESSAGE_HEADER = i18n.GL0748();
-	private static final String MESSAGE_CONTENT = i18n.GL0891();
 
 	public CollectionContentView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -152,12 +150,17 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		this.listOfContent = listOfContent;
 		this.folderDo = folderDo;
 		emptyContainerdiv.clear();
+		if(listOfContent!=null)
+		{
+		if(listOfContent.getUser()!=null){
 		if (AppClientFactory.isContentAdmin() || listOfContent
 				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
 						.getGooruUId())){
 			getUiHandlers().disableCollabaratorOptions(true);
 		}else if(listOfContent.isIsCollaborator()){
 			getUiHandlers().disableCollabaratorOptions(false);
+		}
+		}
 		}
 		if (listOfContent!=null && listOfContent.getLastModifiedUser() != null){
 			String lastModifiedDate = listOfContent.getLastModified().toString() != null ? getTimeStamp(listOfContent.getLastModified().getTime()+"") : "";
@@ -192,39 +195,37 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			setLastWidgetArrowVisiblity(false);
 		}else{
 			pnlReosurceList.clear();
-			if(folderDo!=null && folderDo.getType()!=null)
-			{
-			if(folderDo.getType().equalsIgnoreCase("collection")){
-			EmptyCollectionView emptyColl = new EmptyCollectionView();
-			emptyColl.getAddResourceBtn().addClickHandler(new NewResourceClickEvent());
-			emptyColl.getAddQuestionBtn().addClickHandler(new NewQuestionClickEvent());
-			emptyContainerdiv.add(emptyColl);
-			}
-			else if(folderDo.getType().equalsIgnoreCase("assessment"))
-			{
-				EmptyAssessmentView emptyAssessment = new EmptyAssessmentView();
-				emptyAssessment.getAddQuestionBtn().addClickHandler(new NewQuestionClickEvent());
-				emptyContainerdiv.add(emptyAssessment);
-			}
-			}
-			else
-			{
+			if(folderDo!=null && folderDo.getType()!=null){
+				if(folderDo.getType().equalsIgnoreCase("collection")){
+					EmptyCollectionView emptyColl = new EmptyCollectionView();
+					emptyColl.getAddResourceBtn().addClickHandler(new NewResourceClickEvent());
+					emptyColl.getAddQuestionBtn().addClickHandler(new NewQuestionClickEvent());
+					emptyContainerdiv.add(emptyColl);
+				}else if(folderDo.getType().equalsIgnoreCase("assessment")){
+					EmptyAssessmentView emptyAssessment = new EmptyAssessmentView();
+					emptyAssessment.getAddQuestionBtn().addClickHandler(new NewQuestionClickEvent());
+					emptyContainerdiv.add(emptyAssessment);
+				}
+			}else{
 				emptyContainerdiv.clear();
 			}
 			Window.enableScrolling(true);
+		}
+		if(pnlReosurceList.getWidgetCount()>0){
+			emptyContainerdiv.setVisible(false);
+		}else{
+			emptyContainerdiv.setVisible(true);
 		}
 	}
 
 	@Override
 	public void setDisplayResourceItem(CollectionItemDo collectionItem,RefreshType type, int index){
-		
-		
 		int tmpIndex = index;
 		Window.enableScrolling(true);
 		if (tmpIndex ==-1){
 			index = pnlReosurceList.getWidgetCount()>0 ? pnlReosurceList.getWidgetCount() : 0;
 		}
-		if (index == 0){
+		if(index == 0){
 			pnlReosurceList.clear();
 		}
 		if (type.equals(RefreshType.INSERT)){
@@ -255,6 +256,31 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 						toolTipPopupPanel.show();
 						new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
 					}
+				}
+				@Override
+				public void checkKeyUpHandler(int position,ContentResourceWidgetWithMove contentWidget) {
+					if(pnlReosurceList.getWidgetCount()<position){
+						contentWidget.getTopArrow().setVisible(false);
+						contentWidget.getDownArrow().setVisible(false);
+						toolTipPopupPanel.clear();
+						toolTipPopupPanel.setWidget(new GlobalToolTip(StringUtil.generateMessage(i18n.GL3004(),position+"")));
+						toolTipPopupPanel.setStyleName("");
+						toolTipPopupPanel.setPopupPosition(contentWidget.getTextBox().getAbsoluteLeft(), contentWidget.getTextBox().getAbsoluteTop()+40);
+						toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+						toolTipPopupPanel.show();
+						new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+					}
+				}
+				@Override
+				public void checkBlurHandler(int position,ContentResourceWidgetWithMove contentWidget) {
+					String currentWidgetString=contentWidget.getTextBox().getElement().getAttribute("index").trim();
+					int enteredVal=Integer.valueOf(currentWidgetString);
+					if(enteredVal<pnlReosurceList.getWidgetCount() && enteredVal!=0){
+						contentWidget.getTopArrow().setVisible(true);
+						contentWidget.getDownArrow().setVisible(true);
+					}
+					setLastWidgetArrowVisiblity(false);
+					contentWidget.getTextBox().setText((enteredVal+1)+"");
 				}
 				@Override
 				public void updateNarration(CollectionItemDo collectionItem,String narration) {
@@ -343,13 +369,11 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				}
 				@Override
 				public void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop) {
-					// TODO Auto-generated method stub
 					getUiHandlers().updateVideoTimeUpdate(collectionItemDo);
 				}
 				@Override
 				public void dispalyNewResourcePopup(
 						CollectionItemDo collectionItemDo) {
-					// TODO Auto-generated method stub
 					getUiHandlers().showResourcePopup(collectionItemDo);
 				}
 			};
@@ -366,11 +390,15 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				//listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
 				setDisplayResourceItem(collectionItem, RefreshType.INSERT, (collectionItem.getItemSequence()-1));
 			}
-		
 		}
 		if (tmpIndex ==-1){
 			setLastWidgetArrowVisiblity(false);
 			resetWidgetPositions();
+		}
+		if(pnlReosurceList.getWidgetCount()>0){
+			emptyContainerdiv.setVisible(false);
+		}else{
+			emptyContainerdiv.setVisible(true);
 		}
 	}
 
@@ -461,7 +489,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 					displayNewResourcePopup();
 				}
 			}catch(Exception e){
-				AppClientFactory.printInfoLogger(e.getMessage());
+				//AppClientFactory.printInfoLogger(e.getMessage());
 			}
 		}
 
@@ -475,7 +503,14 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@Override
 	public void updateDeleteItem(String collectionItemId, int itemSequence) {
 		//This method will delete the collectionItemId and reset the widget orders.
-		listOfContent.getCollectionItems().remove(itemSequence);
+		if(pnlReosurceList.getWidgetCount()>0){
+			emptyContainerdiv.setVisible(false);
+		}else{
+			emptyContainerdiv.setVisible(true);
+		}
+		if(listOfContent.getCollectionItems().size()>0){
+			listOfContent.getCollectionItems().remove(itemSequence);
+		}
 		resetWidgetPositions();
 	}
 
@@ -495,7 +530,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 	@Override
 	public void OnBrowseStandardsClickEvent(Button addStandardsBtn) {
-		// TODO Auto-generated method stub
 		if(handlerRegistration!=null){
 			handlerRegistration.removeHandler();
 		}
@@ -593,18 +627,15 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 	public class EditQuestionPopupWidget extends EditQuestionPopupVc {
 		private String collectionItemId;
-
 		public EditQuestionPopupWidget(CollectionItemDo collectionItemDo) {
 			super(collectionItemDo);
 			this.collectionItemId = collectionItemDo.getCollectionItemId();
 			AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, false));
 		}
-
 		public void show() {
 			super.show();
 			this.center();
 		}
-
 		@Override
 		public void updateQuestionResource(String collectionItemId,
 				CollectionQuestionItemDo collectionQuestionItemDo) {

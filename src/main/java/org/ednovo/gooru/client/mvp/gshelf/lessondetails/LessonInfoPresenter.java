@@ -127,6 +127,7 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 					myCollectionsRightClusterPresenter.setTabItems(1, creationType, null);
 					myCollectionsRightClusterPresenter.setUnitTemplate(creationType,currentShelfTreeWidget);
 				}else{
+					myCollectionsRightClusterPresenter.setFolderListDoChild(null);
 					myCollectionsRightClusterPresenter.setTabItems(2, LESSON, result);
 				}
 				Window.scrollTo(0, 0);
