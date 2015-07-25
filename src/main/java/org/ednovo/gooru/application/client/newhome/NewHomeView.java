@@ -70,6 +70,16 @@ public class NewHomeView extends
 	}
 
 	/* UI Handlers */
+	
+	@Override
+	public void onLoad() {
+		animate();
+	}
+	
+	public static native void animate() /*-{
+		new $wnd.WOW().init();
+	}-*/;
+
 
 }
 
