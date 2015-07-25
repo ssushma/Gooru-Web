@@ -227,9 +227,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		if (tmpIndex ==-1){
 			index = pnlReosurceList.getWidgetCount()>0 ? pnlReosurceList.getWidgetCount() : 0;
 		}
-		if (index == 0){
+		if(index == 0){
 			pnlReosurceList.clear();
-			emptyContainerdiv.setVisible(false);
 		}
 		if (type.equals(RefreshType.INSERT)){
 			final ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem,folderDo.getType()) {
@@ -395,7 +394,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				//listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
 				setDisplayResourceItem(collectionItem, RefreshType.INSERT, (collectionItem.getItemSequence()-1));
 			}
-		
 		}
 		if (tmpIndex ==-1){
 			setLastWidgetArrowVisiblity(false);
@@ -506,6 +504,11 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		//This method will delete the collectionItemId and reset the widget orders.
 		listOfContent.getCollectionItems().remove(itemSequence);
 		resetWidgetPositions();
+		if(pnlReosurceList.getWidgetCount()>0){
+			emptyContainerdiv.setVisible(false);
+		}else{
+			emptyContainerdiv.setVisible(true);
+		}
 	}
 
 	@Override
