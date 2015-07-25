@@ -32,6 +32,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
@@ -503,6 +504,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		this.courseObjG=courseObj;
 		standardsUI.clear();
 		resetDOK_Century_Lang();
+
 		depthOfKnowledgeContainer.setFolderDo(courseObj);
 		audienceContainer.setFolderDetails(courseObj);
 		getUiHandlers().getCenturySkillsPresenters().getView().setFolderDo(courseObj);
@@ -515,6 +517,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+				System.out.println("courseObj.getThumbnails().getUrl()::"+courseObj.getThumbnails().getUrl());
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
@@ -596,6 +599,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
 			createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
 			createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
+			ThumbnailDo thumbnailObj = new ThumbnailDo();
+			thumbnailObj.setUrl(collThumbnail.getUrl());
+			createOrUpDate.setThumbnails(thumbnailObj);
 			Element element=Document.get().getElementById("mycollectionUploadImage");
 			if(element.getAttribute("filename")!=null)
 			{
