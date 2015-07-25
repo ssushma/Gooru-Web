@@ -600,7 +600,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
 			createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
 			createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
-			
+			Element element=Document.get().getElementById("mycollectionUploadImage");
+			if(element.getAttribute("filename")!=null)
+			{
+				createOrUpDate.setMediaFilename(element.getAttribute("filename"));
+			}			
 			lblErrorMessage.setVisible(false);
 			collectionTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type,createOrUpDate,currentShelfTreeWidget);
@@ -796,10 +800,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}*/
 	
 	@Override
-	public void setCollectionImage(String url) {
+	public void setCollectionImage(String url, String mediaFileName) {
 		Element element=Document.get().getElementById("mycollectionUploadImage");
 		element.removeAttribute("src");
 		element.setAttribute("src", url);
+		element.setAttribute("filename", mediaFileName);
 	}
 	
 	@Override
@@ -914,5 +919,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public HTMLPanel getStadardsPanel(){
 		return pnlStandards;
 	}
+	@Override
+	public Image getCollThumbnail() {
+		return collThumbnail;
+	}
+	public void setCollThumbnail(Image collThumbnail) {
+		this.collThumbnail = collThumbnail;
+	}
+	
+	
 }
 

@@ -1700,6 +1700,7 @@ font-style:normal;
 #addCourseToClasPopup .addNewCollectionStyle{
 	color: #1076bb;
 	margin-left: 10px;
+	float: left;
 }
 #addCourseToClasPopup .addNewCollectionErrorStyle{
 	font-weight: bold;
@@ -1707,6 +1708,7 @@ font-style:normal;
 	color: #fab03a;
 	font: 12px arial;
 	text-align: left;
+	margin-bottom: 15px;
 }
 .createCourseImage{
 	 background: url('${cdn.endpoint}/images/course-folder-closed.png') no-repeat 33px 13px; 
