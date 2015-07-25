@@ -46,7 +46,7 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+
 
 public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<SearchAddResourceToCollectionUiHandlers> implements IsSearchAddResourceToCollectionView,ClientConstants {
 
@@ -61,9 +61,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl,mycollectionsLbl,mycontentLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
-	@UiField Label addtocollHeaderText,addingTextLbl,lblEmptyErrorMessage,lblError;
-	@UiField public Label myCollDefault;
-	
+	@UiField Label lblEmptyErrorMessage,lblError;
+	@UiField public Label myCollDefault,addtocollHeaderText,addingTextLbl;;
 	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
@@ -81,7 +80,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	boolean isFromCopyResource= false;
 	private boolean isCopySelected= false;
 	private boolean isMoveSelected= false;
-	
 	
 	HashMap<String,String> urlparams ;
 	private static final String O1_LEVEL = "o1";
@@ -133,17 +131,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		mycollectionsLbl.setText("My Collections");
 		mycontentLbl.setText("My Courses");
 		urlparams= new HashMap<String, String>();
-		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		 String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
-		if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
-				|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
-				|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
-			addtocollHeaderText.setText(i18n.GL3224());
-			addingTextLbl.setText(i18n.GL3214());
-		}else{
-			addtocollHeaderText.setText(i18n.GL3223());
-			addingTextLbl.setText(i18n.GL3213());
-		}		
 		myCollDefault.setVisible(false);
 		btnAddExisting.setEnabled(true);
 		btnAddExisting.setStyleName("primary");
@@ -176,7 +163,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		mycontentLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				
 				urlparams.clear();
 				mycontentLbl.addStyleName("active");
 				mycollectionsLbl.removeStyleName("active");
@@ -322,14 +308,33 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		if(clearShelfPanel){
+			pageNum=1;
 			folderTreePanel.clear();
+			String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+			String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+				|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+				|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
+				addtocollHeaderText.setText(i18n.GL3224());
+				addingTextLbl.setText(i18n.GL3214());
+			}else{
+				if(isCopySelected){
+					addtocollHeaderText.setText(i18n.GL3462_13());
+					addingTextLbl.setText(i18n.GL3462_14());
+				}else if(isMoveSelected){
+					addtocollHeaderText.setText(i18n.GL3462_15());
+					addingTextLbl.setText(i18n.GL3462_16());
+				}else{
+				addtocollHeaderText.setText(i18n.GL3223());
+				addingTextLbl.setText(i18n.GL3213());
+				}
+			}
 		}
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					
 					 if(!floderDo.getType().equals("collection") && !floderDo.getType().equals("scollection") && !floderDo.getType().equals("assessment") &&  !floderDo.getType().equals("assessment/url")){
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo));
 						 folderTreePanel.addItem(folderItem);
@@ -375,7 +380,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					
+
 					 if(!floderDo.getType().equals("collection") && !floderDo.getType().equals("scollection") && !floderDo.getType().equals("assessment") && !floderDo.getType().equals("assessment/url")){
 						 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(folderLevel+"",floderDo.getTitle(),floderDo.getGooruOid(),floderDo);
 						 innerFolderTreeItem.setFolerLevel(folderLevel+1);
@@ -757,6 +762,4 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		// TODO Auto-generated method stub
 		this.isFromCopyResource=isFromCopyResource;
 	}
-	
-	
 }

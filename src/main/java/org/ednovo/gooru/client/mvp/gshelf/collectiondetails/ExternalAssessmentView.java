@@ -214,8 +214,8 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 	public void setData(FolderDo folderObj) {
 		removeSelectedStyle(true);
 		removeSelectedStyle(false);
+		this.folderObj = folderObj;
 		if(folderObj!=null){
-			this.folderObj = folderObj;
 			txtAssessmentTitle.setText(folderObj.getTitle());
 			txtAssessmentURL.setText(folderObj.getUrl());
 			txaAssessmentDescription.setText(folderObj.getDescription());
