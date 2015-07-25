@@ -217,8 +217,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 	@Override
 	public void setDisplayResourceItem(CollectionItemDo collectionItem,RefreshType type, int index){
-		
-		
 		int tmpIndex = index;
 		Window.enableScrolling(true);
 		if (tmpIndex ==-1){
@@ -258,6 +256,31 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 						toolTipPopupPanel.show();
 						new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
 					}
+				}
+				@Override
+				public void checkKeyUpHandler(int position,ContentResourceWidgetWithMove contentWidget) {
+					if(pnlReosurceList.getWidgetCount()<position){
+						contentWidget.getTopArrow().setVisible(false);
+						contentWidget.getDownArrow().setVisible(false);
+						toolTipPopupPanel.clear();
+						toolTipPopupPanel.setWidget(new GlobalToolTip(StringUtil.generateMessage(i18n.GL3004(),position+"")));
+						toolTipPopupPanel.setStyleName("");
+						toolTipPopupPanel.setPopupPosition(contentWidget.getTextBox().getAbsoluteLeft(), contentWidget.getTextBox().getAbsoluteTop()+40);
+						toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+						toolTipPopupPanel.show();
+						new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+					}
+				}
+				@Override
+				public void checkBlurHandler(int position,ContentResourceWidgetWithMove contentWidget) {
+					String currentWidgetString=contentWidget.getTextBox().getElement().getAttribute("index").trim();
+					int enteredVal=Integer.valueOf(currentWidgetString);
+					if(enteredVal<pnlReosurceList.getWidgetCount() && enteredVal!=0){
+						contentWidget.getTopArrow().setVisible(true);
+						contentWidget.getDownArrow().setVisible(true);
+					}
+					setLastWidgetArrowVisiblity(false);
+					contentWidget.getTextBox().setText((enteredVal+1)+"");
 				}
 				@Override
 				public void updateNarration(CollectionItemDo collectionItem,String narration) {

@@ -9,6 +9,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
@@ -17,6 +18,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.Success
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -55,6 +57,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -87,7 +90,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiField InlineLabel spnResourceType;
 	@UiField HTMLEventPanel titleBlockPnl;
 	
-
+	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
 	//final strings
 	private static final String VIDEO_TIME =i18n.GL0974();
 	private static final String START_PAGE=i18n.GL0961();
@@ -206,7 +209,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		if(indexVal==1){
 			lblTopArrow.setVisible(false);
 		}
-
 		lblItemSequence.setText(indexVal+"");
 		lblResourceTitle.getElement().setInnerHTML(collectionItem.getTitle()!=null? StringUtil.removeAllHtmlCss(collectionItem.getTitle()):"");
 		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
@@ -229,9 +231,18 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			public void onBlur(BlurEvent event) {
 				String enteredString=txtMoveTextBox.getText().trim();
 				String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index").trim();
-				if(enteredString.isEmpty()){
-					txtMoveTextBox.setText((Integer.parseInt(currentWidgetString)+1)+"");
+				int enteredVal=Integer.valueOf(enteredString);
+				if(enteredString.isEmpty() || enteredVal==0 || Integer.parseInt(currentWidgetString)==0){
+					int currentIndex=(Integer.parseInt(currentWidgetString)+1);
+					if(currentIndex==1 || Integer.parseInt(currentWidgetString)==0){
+						lblDownArrow.setVisible(true);
+					}else{
+						lblTopArrow.setVisible(true);
+						lblDownArrow.setVisible(true);
+					}
+					txtMoveTextBox.setText(currentIndex+"");
 				}
+				checkBlurHandler(enteredVal,ContentResourceWidgetWithMove.this);
 			}
 		});
 	}
@@ -293,6 +304,19 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					lblTopArrow.setVisible(false);
 					lblDownArrow.setVisible(true);
 				}
+				if(enteredValue<=0){
+					//if moving position is zero hiding the values
+					lblTopArrow.setVisible(false);
+					lblDownArrow.setVisible(false);
+					toolTipPopupPanel.clear();
+					toolTipPopupPanel.setWidget(new GlobalToolTip(StringUtil.generateMessage(i18n.GL3004(),enteredValue+"")));
+					toolTipPopupPanel.setStyleName("");
+					toolTipPopupPanel.setPopupPosition(ContentResourceWidgetWithMove.this.getTextBox().getAbsoluteLeft(), ContentResourceWidgetWithMove.this.getTextBox().getAbsoluteTop()+10);
+					toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+					toolTipPopupPanel.show();
+					new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+				}
+				checkKeyUpHandler(enteredValue,ContentResourceWidgetWithMove.this);
 			}
 		}
 	}
@@ -1010,4 +1034,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			} 
 		});
 	}
+	public abstract void checkKeyUpHandler(int position,ContentResourceWidgetWithMove contentWidgetWithMove);
+	public abstract void checkBlurHandler(int position,ContentResourceWidgetWithMove contentWidgetWithMove);
 }
