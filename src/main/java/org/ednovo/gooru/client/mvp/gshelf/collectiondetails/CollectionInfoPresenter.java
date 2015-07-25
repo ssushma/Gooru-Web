@@ -278,6 +278,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		folderDo.setDepthOfKnowledge(StringUtil.getCheckBoxSelectedDo(getView().getDepthOfKnowledgeContainer().getSelectedValue()));
 		folderDo.setSkills(StringUtil.getStandardFos(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest()));
 		folderDo.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
+		folderDo.setThumbnails(createDo.getThumbnails());
 		if(getViewType().equalsIgnoreCase(FOLDER)){
 			getFolderServiceAsync().updateCollectionDetails(createDo,id, getView().getAudienceContainer().getSelectedValues(),getView().getDepthOfKnowledgeContainer().getSelectedValue(), centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest(), getView().getLanguageObjectiveContainer().getLanguageObjective(), new AsyncCallback<Void>() {
 				@Override
