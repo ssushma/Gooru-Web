@@ -1034,6 +1034,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					momentOfLearningIdList.add(checkboxSelectedDo.getId());
 				}
 			}
+			List<Integer> skills=new ArrayList<Integer>();
+			List<StandardFo> standardFos=collectionItemDo.getSkills();
+			if(standardFos!=null){
+				for(StandardFo standardFo:standardFos){
+					skills.add(standardFo.getId());
+				}
+			}
+			newResourceDo.setSkillIds(skills);
 			
 			newResourceDo.setMomentsOfLearningIds(momentOfLearningIdList);
 			//newResourceDo.setMomentsOfLearning(collectionItemDo.getMomentsOfLearning());

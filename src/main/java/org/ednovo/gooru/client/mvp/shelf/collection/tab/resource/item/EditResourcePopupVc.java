@@ -1028,7 +1028,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObjStandard.setCode(entry.getValue());
 						standardsDo.add(codeObjStandard);
-						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+						DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(entry.getValue(),entry.getKey()+"","");
+						downToolTipWidgetUc.getElement().setId(entry.getKey()+"");
+						downToolTipWidgetUc.getElement().setTitle(entry.getValue()+"");
+						centuryPanel.add(downToolTipWidgetUc);
 					}
 				}
 				hideCenturyPopup();
@@ -1585,7 +1588,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				codeObj.setCode(standardObj.getLabel());
 				standardsDo.add(codeObj);
 				centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
-				centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"",""));
+				DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"","");
+				downToolTipWidgetUc.getElement().setId(standardObj.getId()+"");
+				downToolTipWidgetUc.getElement().setTitle(standardObj.getLabel());
+				
+				centuryPanel.add(downToolTipWidgetUc);
 			}
 			updateCenturyAdvancedSetupStyle();
 		}
@@ -1839,7 +1846,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												}
 											}
 											collectionItemDo.setStandards(getStandards());
-
+											collectionItemDo.setSkills(getCenturySkills());
 											if(tagListGlobal!=null&&tagListGlobal.size()!=0){
 												AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(collectionItemDo.getResource().getGooruOid(), tagListGlobal.toString(), new AsyncCallback<Void>() {
 
@@ -1946,7 +1953,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		activeImageIndex++;
 		setImageThumbnail();
 	}
-
 	void setVideoCategory(){
 		resourceCategoryLabel.setText(i18n.GL0918());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0918());
@@ -2440,7 +2446,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				standardsDo.add(codeObjStandard);
 
 			centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
-			centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
+			DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id));
+			downToolTipWidgetUc.getElement().setId(id);
+			downToolTipWidgetUc.getElement().setTitle(centuryTag);
+			centuryPanel.add(downToolTipWidgetUc);
 		}
 	}
 	public void standardMaxShow() {
@@ -3117,7 +3126,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		for(int i=0;i<size;i++){
 			Map<String, String> map=new HashMap<String, String>();
 			DownToolTipWidgetUc downToolTipWidgetUc=(DownToolTipWidgetUc)standardsPanel.getWidget(i);
-			AppClientFactory.printInfoLogger(downToolTipWidgetUc.getElement().getId()+"downToolTipWidgetUc.getElement().getTitle()"+downToolTipWidgetUc.getElement().getTitle());
 			map.put("id",downToolTipWidgetUc.getElement().getId());
 			map.put("code", downToolTipWidgetUc.getElement().getTitle());
 			standardsList.add(map);
@@ -3125,4 +3133,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		
 		return standardsList;
 	}
+	
+	
+	public List<StandardFo> getCenturySkills(){
+		List<StandardFo> standardsList=new ArrayList<>();
+		int size=centuryPanel.getWidgetCount();
+		for(int i=0;i<size;i++){
+			StandardFo checkboxSelectedDo=new StandardFo();
+			DownToolTipWidgetUc downToolTipWidgetUc=(DownToolTipWidgetUc)centuryPanel.getWidget(i);
+			checkboxSelectedDo.setId(Integer.parseInt(downToolTipWidgetUc.getElement().getId()));
+			checkboxSelectedDo.setLabel(downToolTipWidgetUc.getElement().getTitle());
+			standardsList.add(checkboxSelectedDo);
+		}
+		return standardsList;
+	}
+	
 }
