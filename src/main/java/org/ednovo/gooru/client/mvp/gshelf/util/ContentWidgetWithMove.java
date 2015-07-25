@@ -29,8 +29,10 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -50,6 +52,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -72,6 +75,8 @@ public abstract class ContentWidgetWithMove extends Composite {
 	@UiField HTMLEventPanel pnlTitleContainer;
 	
 	final String COURSE="Course",UNIT="Unit",LESSON="Lesson",FOLDER="Folder",COLLECTION="Collection",ASSESSMENTURL="Assessment/url",ASSESSMENT="Assessment";
+	
+	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
 	
 	String type;
 	/**
@@ -126,9 +131,18 @@ public abstract class ContentWidgetWithMove extends Composite {
 			public void onBlur(BlurEvent event) {
 				String enteredString=txtMoveTextBox.getText().toString().trim();
 				String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index").trim();
-				if(enteredString.isEmpty()){
-					txtMoveTextBox.setText((Integer.parseInt(currentWidgetString)+1)+"");
+				int enteredVal=Integer.valueOf(enteredString);
+				if(enteredString.isEmpty() || enteredVal==0 || Integer.parseInt(currentWidgetString)==0){
+					int currentIndex=(Integer.parseInt(currentWidgetString)+1);
+					if(currentIndex==1 || Integer.parseInt(currentWidgetString)==0){
+						lblDownArrow.setVisible(true);
+					}else{
+						lblTopArrow.setVisible(true);
+						lblDownArrow.setVisible(true);
+					}
+					txtMoveTextBox.setText(currentIndex+"");
 				}
+				checkBlurHandler(enteredVal,ContentWidgetWithMove.this);
 			}
 		});
 	}
@@ -177,6 +191,19 @@ public abstract class ContentWidgetWithMove extends Composite {
 					lblTopArrow.setVisible(false);
 					lblDownArrow.setVisible(true);
 				}
+				if(enteredValue<=0){
+					//if moving position is zero hiding the values
+					lblTopArrow.setVisible(false);
+					lblDownArrow.setVisible(false);
+					toolTipPopupPanel.clear();
+					toolTipPopupPanel.setWidget(new GlobalToolTip(StringUtil.generateMessage(i18n.GL3004(),enteredValue+"")));
+					toolTipPopupPanel.setStyleName("");
+					toolTipPopupPanel.setPopupPosition(ContentWidgetWithMove.this.getTextBox().getAbsoluteLeft(), ContentWidgetWithMove.this.getTextBox().getAbsoluteTop()+10);
+					toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+					toolTipPopupPanel.show();
+					new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+				}
+				checkKeyUpHandler(enteredValue,ContentWidgetWithMove.this);
 			}
 		}
 	}
@@ -268,19 +295,24 @@ public abstract class ContentWidgetWithMove extends Composite {
 					String moveId=txtMoveTextBox.getElement().getAttribute("moveId");
 					String moveGooruOId=txtMoveTextBox.getElement().getAttribute("moveGooruOId");
 					String moveParentGooruOid=txtMoveTextBox.getElement().getAttribute("moveParentGooruOId");
-							
 					if(!movingPosition.isEmpty()){
 						int movingValue=Integer.parseInt(movingPosition);
-						int currentWidgetValue=Integer.parseInt(currentWidgetPosition);
-						//This one will execute when user enter a number in text field and click on either up and down arrow.
-						if(movingValue!=(currentWidgetValue+1)){
-							moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId,moveGooruOId,moveParentGooruOid);
-						}else if(movingValue==(currentWidgetValue+1)){
-							//This one will execute when user directly clicks on either up and down arrow.
-							if(isDownArrow){
-								moveWidgetPosition((movingValue+1)+"",currentWidgetPosition,isDownArrow,moveId,moveGooruOId,moveParentGooruOid);
-							}else{
-								moveWidgetPosition((movingValue-1)+"",currentWidgetPosition,isDownArrow,moveId,moveGooruOId,moveParentGooruOid);
+						if(movingValue<=0){
+							//if moving position is zero hiding the values
+							lblTopArrow.setVisible(false);
+							lblDownArrow.setVisible(false);
+						}else{
+							int currentWidgetValue=Integer.parseInt(currentWidgetPosition);
+							//This one will execute when user enter a number in text field and click on either up and down arrow.
+							if(movingValue!=(currentWidgetValue+1)){
+								moveWidgetPosition(movingPosition,currentWidgetPosition,isDownArrow,moveId,moveGooruOId,moveParentGooruOid);
+							}else if(movingValue==(currentWidgetValue+1)){
+								//This one will execute when user directly clicks on either up and down arrow.
+								if(isDownArrow){
+									moveWidgetPosition((movingValue+1)+"",currentWidgetPosition,isDownArrow,moveId,moveGooruOId,moveParentGooruOid);
+								}else{
+									moveWidgetPosition((movingValue-1)+"",currentWidgetPosition,isDownArrow,moveId,moveGooruOId,moveParentGooruOid);
+								}
 							}
 						}
 					}
@@ -307,5 +339,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public Label getIndexLabel(){
 		return lblIndex;
 	}
+	public abstract void checkKeyUpHandler(int position,ContentWidgetWithMove contentWidgetWithMove);
+	public abstract void checkBlurHandler(int position,ContentWidgetWithMove contentWidgetWithMove);
 	public abstract void moveWidgetPosition(String movingPosition,String currentWidgetPosition,boolean isDownArrow,String moveId,String moveGooruOId,String moveParentGooruOid);
 }
