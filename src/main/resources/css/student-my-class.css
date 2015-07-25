@@ -66,7 +66,7 @@
 	width: 23px;
 	height: 23px;
 	border-radius: 50% 50%;
-	background: #a5cba1 url("//127.0.0.1:8888/images/Classpage/student/checkmark-small.png") no-repeat 4px 7px;
+	background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-small.png") no-repeat 4px 7px;
     display: inline-block;
 }
 
