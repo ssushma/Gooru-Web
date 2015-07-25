@@ -148,8 +148,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
 		lblErrorMessage.setVisible(false);
-		collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
-
 		collectionTitle.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -550,13 +548,13 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         }
 		setStaticData(type);
-                if (courseObj == null ) {
-                    if (COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type)) {
-                        collectionTitle.setText("");
-                    }
-                } else {
-                    collectionTitle.setText(courseObj.getTitle());
-                }
+        if (courseObj == null ) {
+            if (COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type)) {
+                collectionTitle.setText("");
+            }
+        } else {
+            collectionTitle.setText(courseObj.getTitle());
+        }
 		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
@@ -566,18 +564,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		});
 		getUiHandlers().callCourseInfoTaxonomy();
 	}
-	public void setStaticData(String type)
-	{   
-		if(type.equalsIgnoreCase(ASSESSMENT))
-		{
+	public void setStaticData(String type){   
+		if(type.equalsIgnoreCase(ASSESSMENT)){
 			colltitle.setText(i18n.GL3381());
 			collimagetitle.setText(i18n.GL3382());
 			thumbnailImageContainer.setStyleName("assessmentThumbnail");
 			tagcollectiontitle.setText(i18n.GL3385());
 			saveCollectionBtn.setText(i18n.GL3386());
-		}
-		else
-		{
+			collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3396());
+		}else{
+			collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
 			colltitle.setText(i18n.GL3380());
 			collimagetitle.setText(i18n.GL3383());
 			thumbnailImageContainer.setStyleName("collectionThumbnail");	
