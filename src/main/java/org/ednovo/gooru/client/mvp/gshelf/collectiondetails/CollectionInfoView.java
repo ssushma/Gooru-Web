@@ -148,8 +148,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		collectionInfo.getElement().setId("pnlCollectionInfo");
 		lblErrorMessage.setVisible(false);
-		collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
-
 		collectionTitle.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -550,13 +548,13 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         }
 		setStaticData(type);
-                if (courseObj == null ) {
-                    if (COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type)) {
-                        collectionTitle.setText("");
-                    }
-                } else {
-                    collectionTitle.setText(courseObj.getTitle());
-                }
+        if (courseObj == null ) {
+            if (COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type)) {
+                collectionTitle.setText("");
+            }
+        } else {
+            collectionTitle.setText(courseObj.getTitle());
+        }
 		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
@@ -566,18 +564,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		});
 		getUiHandlers().callCourseInfoTaxonomy();
 	}
-	public void setStaticData(String type)
-	{   
-		if(type.equalsIgnoreCase(ASSESSMENT))
-		{
+	public void setStaticData(String type){   
+		if(type.equalsIgnoreCase(ASSESSMENT)){
 			colltitle.setText(i18n.GL3381());
 			collimagetitle.setText(i18n.GL3382());
 			thumbnailImageContainer.setStyleName("assessmentThumbnail");
 			tagcollectiontitle.setText(i18n.GL3385());
 			saveCollectionBtn.setText(i18n.GL3386());
-		}
-		else
-		{
+			collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3396());
+		}else{
+			collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
 			colltitle.setText(i18n.GL3380());
 			collimagetitle.setText(i18n.GL3383());
 			thumbnailImageContainer.setStyleName("collectionThumbnail");	
@@ -600,7 +596,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
 			createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));
 			createOrUpDate.setLanguageObjective(getLanguageObjectiveContainer().getLanguageObjective());
-			
+			Element element=Document.get().getElementById("mycollectionUploadImage");
+			if(element.getAttribute("filename")!=null)
+			{
+				createOrUpDate.setMediaFilename(element.getAttribute("filename"));
+			}			
 			lblErrorMessage.setVisible(false);
 			collectionTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type,createOrUpDate,currentShelfTreeWidget);
@@ -796,10 +796,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}*/
 	
 	@Override
-	public void setCollectionImage(String url) {
+	public void setCollectionImage(String url, String mediaFileName) {
 		Element element=Document.get().getElementById("mycollectionUploadImage");
 		element.removeAttribute("src");
 		element.setAttribute("src", url);
+		element.setAttribute("filename", mediaFileName);
 	}
 	
 	@Override
@@ -914,5 +915,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public HTMLPanel getStadardsPanel(){
 		return pnlStandards;
 	}
+	@Override
+	public Image getCollThumbnail() {
+		return collThumbnail;
+	}
+	public void setCollThumbnail(Image collThumbnail) {
+		this.collThumbnail = collThumbnail;
+	}
+	
+	
 }
 

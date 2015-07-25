@@ -152,7 +152,11 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			public void onSuccess(String filename) {
 
 				if(isCollectionImage){
-					saveImageCollection(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
+					//saveImageCollection(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
+					getShelfView().setCollectionImage(fileNameWithRepository,fileNameWithoutRepository);
+					getView().closeImageUploadWidget();
+					getView().resetImageUploadWidget();
+					
 
 				}else if(isClassPageImage){
 					saveImageClass(getClasspageId(), filename);
@@ -234,7 +238,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					}else{
 						MixpanelUtil.AddImageFromMyComputer();
 					}
-					getShelfView().setCollectionImage(url);
+
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
@@ -328,7 +332,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-		this.getMediaUploadService().saveImageCollection(o1,o2,o3,o4,createDoObj, fileName, getSaveImageCollectionAsyncCallback());
+		//this.getMediaUploadService().saveImageCollection(o1,o2,o3,o4,createDoObj, fileName, getSaveImageCollectionAsyncCallback());
 	}
 	
 	public void saveImageClass(String gooruOid,String fileName){
