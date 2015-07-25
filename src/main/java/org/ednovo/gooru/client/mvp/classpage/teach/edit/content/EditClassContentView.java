@@ -110,29 +110,32 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		coursePanel.setVisible(false);
 		saveBtn.addStyleName(CssTokens.DISABLED);
 		errorLabel.setVisible(false);
+		
 		scoreTextBox.addBlurHandler(new BlurHandler() {
 			
 			@Override
 			public void onBlur(BlurEvent event) {
 				String score = scoreTextBox.getText();
-				if(score.isEmpty()){
-					errorLabel.setText("Please enter the minimum score");
-					errorLabel.getElement().getStyle().setColor("orange");
-					errorLabel.setVisible(true);
-					saveEnabled(false);
-					saveBtn.addStyleName(CssTokens.DISABLED);
-				}else if(score != null || score != ""){
-					if(Integer.parseInt(score) >100 || Integer.parseInt(score) <=0){
-						errorLabel.setText(i18n.GL3425());
+				if(!scoreTextBox.isReadOnly()){
+					if(score.isEmpty()){
+						errorLabel.setText("Please enter the minimum score");
 						errorLabel.getElement().getStyle().setColor("orange");
 						errorLabel.setVisible(true);
 						saveEnabled(false);
 						saveBtn.addStyleName(CssTokens.DISABLED);
-					}else{
-						miniScore=Integer.valueOf(score);
-						saveEnabled(true);
-						saveBtn.removeStyleName(CssTokens.DISABLED);
-						errorLabel.setVisible(false);
+					}else if(score != null || score != ""){
+						if(Integer.parseInt(score) >100 || Integer.parseInt(score) <0){
+							errorLabel.setText(i18n.GL3425());
+							errorLabel.getElement().getStyle().setColor("orange");
+							errorLabel.setVisible(true);
+							saveEnabled(false);
+							saveBtn.addStyleName(CssTokens.DISABLED);
+						}else{
+							miniScore=Integer.valueOf(score);
+							saveEnabled(true);
+							saveBtn.removeStyleName(CssTokens.DISABLED);
+							errorLabel.setVisible(false);
+						}
 					}
 				}
 			}
