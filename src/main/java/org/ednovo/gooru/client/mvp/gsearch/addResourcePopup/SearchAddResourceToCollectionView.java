@@ -46,7 +46,7 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+
 
 public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<SearchAddResourceToCollectionUiHandlers> implements IsSearchAddResourceToCollectionView,ClientConstants {
 
@@ -318,8 +318,16 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				addtocollHeaderText.setText(i18n.GL3224());
 				addingTextLbl.setText(i18n.GL3214());
 			}else{
+				if(isCopySelected){
+					addtocollHeaderText.setText(i18n.GL3462_13());
+					addingTextLbl.setText(i18n.GL3462_14());
+				}else if(isMoveSelected){
+					addtocollHeaderText.setText(i18n.GL3462_15());
+					addingTextLbl.setText(i18n.GL3462_16());
+				}else{
 				addtocollHeaderText.setText(i18n.GL3223());
 				addingTextLbl.setText(i18n.GL3213());
+				}
 			}
 		}
 		if(folderListDo!=null){
