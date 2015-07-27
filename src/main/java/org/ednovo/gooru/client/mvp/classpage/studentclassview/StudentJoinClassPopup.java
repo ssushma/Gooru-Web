@@ -206,7 +206,6 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 		joinIntoClass();
 		joinBtnPanel.setVisible(false);
 		lblJoining.setVisible(true);
-		StudentAssignmentView.setPrivatePageActive();
 		/*if(AppClientFactory.isAnonymous()){
 			LoginPopupUc loginPopupUc=new LoginPopupUc();
 		}else{

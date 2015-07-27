@@ -306,6 +306,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 					Window.enableScrolling(true);
 				}
 				this.hide();
+				getUiHandlers().setClassPageDo();
 				setPreviewClassMode(false);
 			}
 		};

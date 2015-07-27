@@ -57,5 +57,7 @@ public interface StudentClassUiHandlers extends BaseUiHandlers {
 	public void studentJoinClassPoup(String classUid);
 	
 	public void getClasspageDetails();
+
+	public void setClassPageDo();
 	
 }

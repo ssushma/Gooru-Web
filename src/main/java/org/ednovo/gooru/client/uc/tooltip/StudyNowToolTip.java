@@ -344,7 +344,7 @@ public class StudyNowToolTip extends PopupPanel {
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
 							
-							StudentAssignmentView.setPrivatePageActive();
+							//StudentAssignmentView.setPrivatePageActive();
 
 						}
 						else if(result.getStatus().equalsIgnoreCase("pending")) 

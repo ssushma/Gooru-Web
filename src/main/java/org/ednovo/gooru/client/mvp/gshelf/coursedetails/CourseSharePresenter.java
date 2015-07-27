@@ -108,7 +108,7 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 					if(result!=null && result.size()>0){
 						getView().showClassesInList(result,courseId);
 					}else{
-						//getView().getAssociatedClassesPnl().setVisible(false);
+						getView().getAssociatedClassesPnl().setVisible(false);
 					}
 					
 				}
