@@ -465,6 +465,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		}
 		return taxonomyCourseIds;
 	}
+	
 	/**
 	 * This method is used to get the selected course id's
 	 * @return
@@ -529,6 +530,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				liPanelWithClose.setId(courseSubjectDo.getId());
 				liPanelWithClose.setName(courseSubjectDo.getName());
 				liPanelWithClose.setRelatedId(courseSubjectDo.getSubjectId());
+				liPanelWithClose.setDifferenceId(1);
 				ulSelectedItems.add(liPanelWithClose);
 			}
 		}
@@ -560,6 +562,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 				liPanelWithClose.setName(courseSubjectDo.getName());
 				liPanelWithClose.setRelatedId(courseSubjectDo.getCourseId());
 				liPanelWithClose.setRelatedSubjectId(courseSubjectDo.getSubjectId());
+				liPanelWithClose.setDifferenceId(2);
 				ulSelectedItems.add(liPanelWithClose);
 			}
 		}
