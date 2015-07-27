@@ -108,8 +108,9 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 			int columnCount = usageData.size();
 			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
 				int score = usageData.get(columnWidgetCount).getScoreInPercentage();
+				int views = usageData.get(columnWidgetCount).getViews();
 				String scoreStr = "--";
-				if(score>0) {
+				if(views>0&&score>=0) {
 					scoreStr = score+"%";
 				}
 				Label scoreLbl = new Label(scoreStr);
@@ -118,7 +119,9 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 				if(highlightStyle!=null&&highlightStyle.equalsIgnoreCase("grey")) {
 					courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setBackgroundColor(color);
 				} else {
-					courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(highlightStyle);
+					if(views>0) {
+						courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(highlightStyle);
+					}
 				}
 				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
 			}

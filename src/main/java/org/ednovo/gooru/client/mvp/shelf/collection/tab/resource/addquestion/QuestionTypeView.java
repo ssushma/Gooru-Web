@@ -1790,10 +1790,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			if(questionType.equalsIgnoreCase("HS_TXT") || questionType.equalsIgnoreCase("HS_IMG")){
 
 				AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
-
 				if(questionType.equalsIgnoreCase("HS_IMG")){
 					hsType=i18n.GL3228_1();
-
 					for(int i=0;i<addQuestionAnswerChoice.ansImageContainer.getWidgetCount();i++)
 					{
 						QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
@@ -2181,7 +2179,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					while (it.hasNext()) {
 						QuestionAnswerDo answer = it.next();
 						//hard code Image url for 1.5 QA
-						addHotSpotQuestion.setAnswerImageUrl(collectionItemDo.getAssetURI()+"uploaded-media/"+answer.getAnswerText(), null, true,answer.isIsCorrect());
+						addHotSpotQuestion.setAnswerImageUrl(collectionItemDo.getAssetURI()+"uploaded-media/"+answer.getAnswerText(), answer.getAnswerText(), true,answer.isIsCorrect());
 						
 					}
 				}

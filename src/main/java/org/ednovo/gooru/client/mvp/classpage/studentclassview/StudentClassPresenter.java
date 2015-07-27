@@ -134,7 +134,6 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		super.onReset();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
-
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -274,6 +273,16 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			}
 			
 		});
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassUiHandlers#setClassPageDo()
+	 */
+	@Override
+	public void setClassPageDo() {
+		classpageDo.setStatus("active");
+		PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		AppClientFactory.getPlaceManager().revealPlace(request);
 	}
 	
 }

@@ -1219,15 +1219,18 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-
+		AppClientFactory.printInfoLogger("createSession 1 ");
 		sessionId = GwtUUIDGenerator.uuid();
+		AppClientFactory.printInfoLogger("createSession 2 :"+sessionId);
 		AssessmentsPreviewPlayerPresenter.this.sessionId=sessionId;
 		triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+		AppClientFactory.printInfoLogger("createSession 3 :"+sessionId);
 		createResourceDataLog();
+		AppClientFactory.printInfoLogger("createSession 4 :"+sessionId);
 		if(collectionItemDo!=null){
 			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
 		}
-
+		AppClientFactory.printInfoLogger("createSession 5 :"+sessionId);
 	}
 
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid,String questionType, String status){

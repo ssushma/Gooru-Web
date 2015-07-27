@@ -755,6 +755,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		createOrUpDate.setTitle(collectionTitle.getText());
 		createOrUpDate.setDescription(learningObjective.getText());
 		createOrUpDate.setCollectionType(type);
+		createOrUpDate.setDescription(learningObjective.getText());
 		getUiHandlers().uploadCollectionImage(createOrUpDate);
 	}
 
@@ -774,7 +775,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),true,1,collectionType,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==1){
-
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG,currentShelfTreeWidget);
 				}else{
@@ -1086,6 +1086,5 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		liPanelWithClose.getElement().setAttribute("tag", tagValue);
 		return liPanelWithClose;
 	}
-
 }
 
