@@ -111,6 +111,7 @@ import com.google.gwt.user.client.Window.ClosingEvent;
 import com.google.gwt.user.client.Window.ClosingHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -1273,6 +1274,13 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().addCloseHandler(new CloseHandler<PopupPanel>() {
+			@Override
+			public void onClose(CloseEvent<PopupPanel> event) {
+				Window.enableScrolling(false);
+				searchAddResourceToCollectionPresenter.getView().closeTabView();
+			}
+		});
 	}
 	public void setAddCollectionView(String collectionId){
 		addCollectionPresenter.setCollectionDo(collectionDo);
