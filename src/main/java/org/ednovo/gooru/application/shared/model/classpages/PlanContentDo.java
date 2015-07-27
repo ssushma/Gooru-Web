@@ -55,7 +55,7 @@ public class PlanContentDo implements IsSerializable{
 	private String sharing;
 	private String url;
 	private SummaryDo summary;
-	private ThumbnailDo thumbnail;
+	private ThumbnailDo thumbnails;
 	private ResourceFormatDo resourceFormat;
 	private ResourceTypeDo resourceType;
 	private ArrayList<PlanContentDo> items;
@@ -121,11 +121,11 @@ public class PlanContentDo implements IsSerializable{
 	public void setSummary(SummaryDo summary) {
 		this.summary = summary;
 	}
-	public ThumbnailDo getThumbnail() {
-		return thumbnail;
+	public ThumbnailDo getThumbnails() {
+		return thumbnails;
 	}
-	public void setThumbnail(ThumbnailDo thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setThumbnails(ThumbnailDo thumbnails) {
+		this.thumbnails = thumbnails;
 	}
 	public ResourceFormatDo getResourceFormat() {
 		return resourceFormat;

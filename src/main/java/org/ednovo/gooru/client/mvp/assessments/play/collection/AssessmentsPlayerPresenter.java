@@ -1381,9 +1381,11 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(),
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
 				AppClientFactory.printInfoLogger("Assessments Player Presenter sessionIdCreationCount : "+sessionIdCreationCount);
+				PlayerDataLogEvents.printLogs("createPlayerDataLogs 1",sessionId, null);
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
+				PlayerDataLogEvents.printLogs("createPlayerDataLogs 2",sessionId, null);
 				String parentGooruOid=null,mode="collection";
 				if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
 					parentGooruOid=classpageId;
@@ -1564,7 +1566,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 				}
 			}else{
 				sessionId = Cookies.getCookie("sessionId") != null ? Cookies.getCookie("sessionId") : GwtUUIDGenerator.uuid();
-				AssessmentsPlayerPresenter.this.sessionId=sessionId;
 				collectionEndPresenter.setSessionId(sessionId);
 				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
 				escalateToTriggerEvents(sessionId);
@@ -1587,31 +1588,31 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			if(!StringUtil.isEmpty(resourceGooruOid)){
 				this.contentResourceGooruOId = resourceGooruOid;
 			}
-			this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType,status, new SimpleAsyncCallback<String>() {
-				@Override
-				public void onSuccess(String sessionItemId) {
-					AssessmentsPlayerPresenter.this.sessionItemId=sessionItemId;
-				}
-			});
+//			this.playerAppService.createSessionItemInCollection(sessionTrackerId, collectionItemId, resourceGooruOid,questionType,status, new SimpleAsyncCallback<String>() {
+//				@Override
+//				public void onSuccess(String sessionItemId) {
+//					AssessmentsPlayerPresenter.this.sessionItemId=sessionItemId;
+//				}
+//			});
 		}
 	}
 
 	public void createSessionItemAttempt(String contentGooruOid,int answerId, String attemptResult){
-		this.playerAppService.createSessionItemAttemptTry(contentGooruOid,sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionItemId) {
-
-			}
-		});
+//		this.playerAppService.createSessionItemAttemptTry(contentGooruOid,sessionId, sessionItemId, answerId, attemptResult, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String sessionItemId) {
+//
+//			}
+//		});
 	}
 
 	public void createSessionItemAttemptOe(String contentGooruOid,String answerId,String attemptStatus,String attemptAnswerResult){
-		this.playerAppService.createSessionItemAttemptTryForOe(contentGooruOid,sessionId, sessionItemId,answerId, attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String sessionItemId) {
-
-			}
-		});
+//		this.playerAppService.createSessionItemAttemptTryForOe(contentGooruOid,sessionId, sessionItemId,answerId, attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String sessionItemId) {
+//
+//			}
+//		});
 	}
 
 
@@ -2145,6 +2146,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(collectionNewDataLogEventId));
 			collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_PLAY));
 			collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+			PlayerDataLogEvents.printLogs("triggerCollectionNewDataLogStartStopEvent",sessionId, collectionNewDataLogEventId);
 			collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(collectionStartTime));
 			collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(collectionEndTime));
 			collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
@@ -2208,6 +2210,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(resourceNewDataLogEventId));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_RESOURCE_PLAY));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		PlayerDataLogEvents.printLogs("triggerCollectionItemNewDataLogStartStopEvent", sessionId, resourceNewDataLogEventId);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(resourceStartTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(resourceEndTime));
 		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
@@ -2246,6 +2249,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(eventId));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_RESOURCE_SAVE));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		PlayerDataLogEvents.printLogs("triggerSaveOeAnswerTextDataEvent", sessionId, eventId);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(oeStartTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(oeEndTime));
 		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
@@ -2271,6 +2275,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(eventName));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		PlayerDataLogEvents.printLogs("triggerReactiontDataLogEvent", sessionId, "Generating newly for reactions");
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(reactionStartTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(reactionEndTime));
 		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
@@ -2298,6 +2303,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_LOAD));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		PlayerDataLogEvents.printLogs("triggerItemLoadDataLogEvent", sessionId, "Generation Newly for item load");
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -2336,6 +2342,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_FLAG));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		PlayerDataLogEvents.printLogs("triggerItemFlagDataLogEvent", sessionId, "Generating newly for flag");
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -2390,6 +2397,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceGooruOid;
 		}
 		String playerMode=getPlayerMode();
+		PlayerDataLogEvents.printLogs("triggerShareDatalogEvent", sessionId, "");
 		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, collectionItemId,null,collectionDo.getGooruOid(), "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
 	}
 
@@ -2416,6 +2424,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
 		}
 		String playerMode=getPlayerMode();
+		PlayerDataLogEvents.printLogs("triggerCollectionShareDataEvent", sessionId, "");
 		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionDo.getGooruOid(), "", classpageEventId,classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
 	}
 
@@ -2447,6 +2456,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			classpageId=AppClientFactory.getPlaceManager().getShelfParentGooruOid();
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
 		}
+		PlayerDataLogEvents.printLogs("triggerCommentDataLogEvent", sessionId, "");
 		PlayerDataLogEvents.triggerCommentDataLogEvent(collectionDo.getGooruOid(), commentId, classpageEventId,classpageId, sessionId, path, null, commentText, eventName);
 	}
 
@@ -2467,6 +2477,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
+		PlayerDataLogEvents.printLogs("triggerRatingDataLogEvent", sessionId, "");
 		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId,sessionId, path, null,currentRate,previousRate);
 	}
 
@@ -2486,6 +2497,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
+		PlayerDataLogEvents.printLogs("triggerReviewDataLogEvent", sessionId, "");
 		PlayerDataLogEvents.triggerReviewDataLogEvent(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId,sessionId, path, null,reviewText);
 	}
 
@@ -2728,7 +2740,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	protected void escalateToTriggerEvents(String sessionId) {
 		createResourceDataLog();
 		if(collectionItemDo!=null){
-			createSessionItem(AssessmentsPlayerPresenter.this.sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
+			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
 		}
 	}
 

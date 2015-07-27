@@ -382,7 +382,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			pnlReosurceList.insert(widgetMove, index);
 			index++;
 		}else{
-			AppClientFactory.printInfoLogger("collectionItem.getItemSequence() : "+collectionItem.getItemSequence());
+			AppClientFactory.printInfoLogger("collectionItem.getItemSequence11() : "+collectionItem.getItemSequence());
 			if(collectionItem.getItemSequence()!=null){
 				pnlReosurceList.remove(collectionItem.getItemSequence() - 1);
 				//listOfContent.getCollectionItems().remove(collectionItem.getItemSequence()-1);

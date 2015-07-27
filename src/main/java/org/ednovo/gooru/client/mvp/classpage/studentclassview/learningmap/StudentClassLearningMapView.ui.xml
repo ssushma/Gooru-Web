@@ -51,12 +51,8 @@
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="lessonMetaDataContainer col-md-12" ui:field="standardsBlock">
 				<g:HTMLPanel styleName="standardsBlock">
-				   <g:Label styleName="lessonStandard">
-				      CCSS.Math.Content.4.NF.A.1
-				   </g:Label>
-				   <g:Label styleName="lessonStandard">
-				      CCSS.Math.Content.4.NF.A.2
-				   </g:Label>
+				   <g:Label styleName="lessonStandard"></g:Label>
+				   <g:Label styleName="lessonStandard"></g:Label>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 	    	<g:HTMLPanel styleName="learningBodyBlock" ui:field="learningMapContainer"/>

@@ -120,8 +120,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			reportView.setVisible(true);
 		}
 		
-		if(planContentDo.getThumbnail()!=null&&planContentDo.getThumbnail().getUrl()!=null) {
-			contentImage.setUrl(planContentDo.getThumbnail().getUrl());
+		if(planContentDo.getThumbnails()!=null&&planContentDo.getThumbnails().getUrl()!=null) {
+			contentImage.setUrl(planContentDo.getThumbnails().getUrl());
 		} else {
 			setDefaultThumbnail(collectionType);
 		}
@@ -333,8 +333,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 						}
 					});
 					try {
-						if(resourceDo.getThumbnail()!=null&&resourceDo.getThumbnail().getUrl()!=null&&resourceDo.getThumbnail().getUrl().isEmpty()) {
-							resourceImage.setUrl(resourceDo.getThumbnail().getUrl());
+						if(resourceDo.getThumbnails()!=null&&resourceDo.getThumbnails().getUrl()!=null&&!resourceDo.getThumbnails().getUrl().isEmpty()) {
+							resourceImage.setUrl(resourceDo.getThumbnails().getUrl());
 						} else {
 							resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
 						}
@@ -346,6 +346,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 							}
 						});
 					} catch (Exception e){
+						e.printStackTrace();
 						resourceImage.setUrl(DEFULT_IMAGE_PREFIX + getDetaultResourceImage(category.toLowerCase()) + PNG);
 						resourceImage.setAltText(resourceDo.getTitle());
 						resourceImage.setTitle(resourceDo.getTitle());

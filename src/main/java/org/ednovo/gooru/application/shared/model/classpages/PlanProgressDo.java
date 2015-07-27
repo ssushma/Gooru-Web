@@ -60,6 +60,7 @@ public class PlanProgressDo implements IsSerializable {
 	private String userName;
 	private String userUId;
 	private String url;
+	private String thumbnail;
 	private ArrayList<PlanProgressDo> item;
 	private ArrayList<PlanProgressDo> usageData;
 	
@@ -188,5 +189,11 @@ public class PlanProgressDo implements IsSerializable {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 }
