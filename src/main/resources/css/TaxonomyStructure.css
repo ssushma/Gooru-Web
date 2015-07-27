@@ -150,6 +150,7 @@
     list-style: outside none none;
     margin-left: 5px;
     margin-right: 5px;
+    margin-bottom: 3px;
     padding: 8px 10px;
 }
 #taxonomyStructureSelectionPopup .filterTags ul li a {
