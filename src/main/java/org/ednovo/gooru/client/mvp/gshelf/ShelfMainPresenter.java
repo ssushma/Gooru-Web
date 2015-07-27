@@ -342,7 +342,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 							"Untitled Assessment":"Untitled External Assessment"),clickedItemType);
 		}else{
 			getView().getCollectionLabel().setVisible(true);
+			if(folderObj!=null)
+			{
 			getView().getCollectionLabel().setText(folderObj.getTitle());
+			}
 			
 		}
 		if(folderObj!=null && folderObj.getGooruOid()!=null){

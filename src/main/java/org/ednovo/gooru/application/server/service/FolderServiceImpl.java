@@ -784,10 +784,13 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		try {
 			logger.info("getCourseDetails : "+url);
+			if(url!=null)
+			{
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRep);
 			logger.info("folderDo obj : "+folderDo);
+			}
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}
