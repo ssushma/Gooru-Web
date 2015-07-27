@@ -50,7 +50,7 @@
 			   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="lessonMetaDataContainer col-md-12" ui:field="standardsBlock">
-				<g:HTMLPanel styleName="standardsBlock">
+				<g:HTMLPanel styleName="standardsBlock" ui:field="standardsBlockList">
 				   <g:Label styleName="lessonStandard"></g:Label>
 				   <g:Label styleName="lessonStandard"></g:Label>
 				</g:HTMLPanel>
