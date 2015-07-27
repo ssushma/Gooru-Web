@@ -108,7 +108,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			@Override
 			public void insertCollectionItemInAddResource(CollectionItemDo collectionItem, RefreshType refreshType) {
 				getView().setDisplayResourceItem(collectionItem, refreshType, -1);
-				updateWidgetCount(collectionItem);
+				updateWidgetCount(collectionItem,false);
 			}
 		});
 	}
@@ -178,7 +178,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -379,8 +378,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 	
 	@Override
-	public void updateWidgetCount(CollectionItemDo collectionItem){
-		myCollectionsRightClusterPresenter.getShelfMainPresenter().updateWidgetsCount(collectionItem);
+	public void updateWidgetCount(CollectionItemDo collectionItem,boolean isDelete){
+		myCollectionsRightClusterPresenter.getShelfMainPresenter().updateWidgetsCount(collectionItem,isDelete);
 	}
 
 	@Override
