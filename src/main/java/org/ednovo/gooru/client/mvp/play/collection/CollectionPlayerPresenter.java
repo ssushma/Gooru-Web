@@ -881,11 +881,22 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		clearSlot(COLLECTION_PLAYER_NAVIGATION_SLOT);
 		stopResourceDataLog();
 		resetAnswerLists();
-		stopCollectionDataLog();
-		setClassCollectionDataInsightsUrl(false);
-		updateSession(sessionId);
-		setUserAttemptedQuestionTypeAndStatus(false,0);
-		setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
+
+		Timer timer = new Timer() {
+
+			@Override
+			public void run() {
+				AppClientFactory.printInfoLogger("CPP - restarted after 1500 milliseconds : "+System.currentTimeMillis());
+				stopCollectionDataLog();
+				setClassCollectionDataInsightsUrl(false);
+				updateSession(sessionId);
+				setUserAttemptedQuestionTypeAndStatus(false,0);
+				setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
+			}
+		};
+		AppClientFactory.printInfoLogger("CPP - stoped for 1500 milliseconds : "+System.currentTimeMillis());
+		timer.schedule(1500);
+
 	}
 	public void clearDashBoardIframe(){
 		metadataPresenter.clearDashBoardIframe();
