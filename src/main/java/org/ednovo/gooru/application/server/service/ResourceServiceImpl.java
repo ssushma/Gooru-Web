@@ -2203,21 +2203,39 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	@Override
 	public CollectionItemDo v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException {
 		CollectionItemDo collItemDo = collectionItemDo;
-		JsonRepresentation jsonRep = null;
-		CollectionItemDo collectionItemDoNew;
+		JsonRepresentation jsonRep ,jsonRep2= null;
+		CollectionItemDo collectionItemDoNew=null;
 
 
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collItemDo.getCollectionItemId());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_QUESTION_ITEM,collectionItemDo.getParentGooruOid(), collItemDo.getCollectionItemId());
+		
+		getLogger().info("edit--"+url);
+		getLogger().info("edit form--"+ResourceFormFactory.generateStringDataForm(collectionQuestionItemDo, "question"));
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateStringDataForm(collectionQuestionItemDo, "question"));
 
-
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		collectionItemDoNew=deserializeCollectionItem(jsonRep);
-		if(collectionItemDoNew.getQuestionInfo()!=null){
-		collItemDo.setResource(collectionItemDoNew.getQuestionInfo());
+		try{
+			if(jsonResponseRep.getStatusCode()==200){
+				getLogger().info("edit-success-");
+				String getUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_QUESTION_ITEM,collectionItemDo.getParentGooruOid(), collItemDo.getCollectionItemId());
+				getLogger().info("get-Question-"+getUrl);
+				JsonResponseRepresentation jsonResponseRep2 = ServiceProcessor.get(getUrl, getRestUsername(), getRestPassword());
+				jsonRep2 = jsonResponseRep2.getJsonRepresentation();
+				
+				collectionItemDoNew=deserializeCollectionItem(jsonRep2);
+				if(collectionItemDoNew.getQuestionInfo()!=null){
+				collItemDo.setResource(collectionItemDoNew.getQuestionInfo());
+				}
+				if(collectionItemDoNew.getStandards()!=null){
+				collItemDo.setStandards(collectionItemDoNew.getStandards());
+				}
+				
+			}else{
+				collectionItemDoNew=new CollectionItemDo();
+			}
 		}
-		if(collectionItemDoNew.getStandards()!=null){
-		collItemDo.setStandards(collectionItemDoNew.getStandards());
+		catch(Exception e){
+			logger.info("Exception:::::::"+e);
 		}
 		return collectionItemDoNew;
 	}

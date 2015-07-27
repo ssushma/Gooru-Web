@@ -126,7 +126,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	
 	@Override
 	public void loadAddResourcePopup(){
-		AppClientFactory.printInfoLogger("loadAddResourcePopup");
 		addResourcePresenter.setCollectionDo(new CollectionDo());
     	addResourcePresenter.setCollectionDoAndType(new CollectionDo(), "Question");
     	addToPopupSlot(addResourcePresenter);
@@ -196,7 +195,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	};
 	@Override
 	public void updateCollectionItem(final CollectionItemDo collectionItem, String narration, String start, String stop) {
-		AppClientFactory.printInfoLogger("Id............."+collectionItem.getCollectionItemId());
 		AppClientFactory.getInjector().getResourceService().updateCollectionItemMetadata(collectionItem.getCollectionItemId(), narration, null, start, stop,new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo result) {

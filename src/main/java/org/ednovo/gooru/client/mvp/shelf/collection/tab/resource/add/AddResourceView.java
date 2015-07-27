@@ -993,7 +993,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
                 hotTextHLTabButton.setStyleName(res.css().buttonDeSelected());
             	questionTypePresenter.getView().editQuestion(null);
 			}catch(Exception e) {
-			//	AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
 			try{

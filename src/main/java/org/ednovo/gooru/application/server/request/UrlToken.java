@@ -506,6 +506,10 @@ public enum UrlToken {
 	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?"),
 
 	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?"),
+	
+	V3_UPDATE_QUESTION_ITEM("/v3/collection/{0}/question/{1}?"),
+	
+	V3_GET_QUESTION_ITEM("/v3/collection/{0}/question/{1}?"),
 
 	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?"),
 
