@@ -53,20 +53,31 @@ public class StudentClassContentWidget extends Composite {
 		}
 		contentPanel.addClickHandler(new PlayClassContent(lessonId, planDo.getGooruOId(), planDo.getType(), status, userId, planDo.getUrl()));
 		
+		setDefaultThumbnail(planDo.getType());
+		
 		String url = "";
-		imagePanel.setUrl(url);
+		
+		if(planDo.getThumbnail()!=null) {
+			url = planDo.getThumbnail();
+			imagePanel.setUrl(url);
+		}
+		
 		imagePanel.setHeight("55px");
 		imagePanel.setWidth("75px");
 		imagePanel.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
-				if(planDo.getType()!=null&&(planDo.getType().equalsIgnoreCase("assessment")||planDo.getType().equalsIgnoreCase("assessment/url"))) {
-					imagePanel.setUrl(DEFAULT_ASSESSMENT_IMAGE);
-				} else {
-					imagePanel.setUrl(DEFAULT_COLLECTION_IMAGE);
-				}
+				setDefaultThumbnail(planDo.getType());
 			}
 		});
+	}
+	
+	private void setDefaultThumbnail(String collectionType) {
+		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment")||collectionType.equalsIgnoreCase("assessment/url"))) {
+			imagePanel.setUrl(DEFAULT_ASSESSMENT_IMAGE);
+		} else {
+			imagePanel.setUrl(DEFAULT_COLLECTION_IMAGE);
+		}
 	}
 	
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{

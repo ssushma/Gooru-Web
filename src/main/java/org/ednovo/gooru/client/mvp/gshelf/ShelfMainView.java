@@ -933,6 +933,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
    		if(isAnonymous){
    			pnlMainContainer.setVisible(false);
    			pnlNoDataContainer.setVisible(true);
+   			pnlNoDataContainer.clear();
    			pnlNoDataContainer.add(new FoldersWelcomePage());
    			Window.enableScrolling(true);
    		}else{

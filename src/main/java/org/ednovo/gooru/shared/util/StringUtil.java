@@ -843,7 +843,7 @@ public class StringUtil implements ClientConstants {
 
 	public static String getHighlightStyle(int score) {
 		String scoreStyle = "grey";
-		if(score>0&&score<60) {
+		if(score>=0&&score<60) {
 			scoreStyle = CssTokens.RED_STYLE;
 		} else if(score>=60&&score<=69) {
 			scoreStyle = CssTokens.ORANGE_STYLE;
