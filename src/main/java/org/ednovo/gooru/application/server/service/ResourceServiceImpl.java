@@ -2222,12 +2222,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				JsonResponseRepresentation jsonResponseRep2 = ServiceProcessor.get(getUrl, getRestUsername(), getRestPassword());
 				jsonRep2 = jsonResponseRep2.getJsonRepresentation();
 				
+				if(jsonRep2!=null){
+				
 				collectionItemDoNew=deserializeCollectionItem(jsonRep2);
 				if(collectionItemDoNew.getQuestionInfo()!=null){
 				collItemDo.setResource(collectionItemDoNew.getQuestionInfo());
 				}
 				if(collectionItemDoNew.getStandards()!=null){
 				collItemDo.setStandards(collectionItemDoNew.getStandards());
+				}
 				}
 				
 			}else{

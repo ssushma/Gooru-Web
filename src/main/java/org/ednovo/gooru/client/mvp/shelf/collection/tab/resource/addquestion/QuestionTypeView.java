@@ -435,6 +435,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		 * Add
 		 */
 		loadingTextLbl.setVisible(false);
+		loadingTextLbl.setText(i18n.GL0591().toLowerCase());
 	}
 
 
@@ -2072,6 +2073,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	public void setEditData(){
 		try{
+			loadingTextLbl.setText(i18n.GL0808());
 			setAncTabs();
 			setEditQuestionImage();
 
