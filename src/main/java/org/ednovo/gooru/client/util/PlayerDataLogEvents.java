@@ -484,7 +484,7 @@ public class PlayerDataLogEvents {
 			eventJsonObject.put("eventId", new JSONString(eventId));
 			eventJsonObject.put("eventName", new JSONString(eventName));
 			eventJsonObject.put("sessionId", new JSONString(sessionId));
-			AppClientFactory.printInfoLogger("sessionId is null @ collectionPlayStartEvent ");
+			AppClientFactory.printInfoLogger("sessionId is @ collectionPlayStartEvent : "+sessionId);
 			eventJsonObject.put("sessionStatus", new JSONString(sessionStaus));
 			eventJsonObject.put("contentGooruId", new JSONString(contentGooruId));
 			eventJsonObject.put("type", new JSONString(type));
@@ -713,7 +713,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(eventName));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
-		AppClientFactory.printInfoLogger("sessionId is null @ triggerCommentDataLogEvent ");
+		AppClientFactory.printInfoLogger("sessionId is @ triggerCommentDataLogEvent : "+sessionId);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -741,7 +741,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_RATE));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
-		AppClientFactory.printInfoLogger("sessionId is null @ triggerRatingDataLogEvent ");
+		AppClientFactory.printInfoLogger("sessionId is @ triggerRatingDataLogEvent : "+sessionId);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -768,7 +768,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_REVIEW));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
-		AppClientFactory.printInfoLogger("sessionId is null @ triggerReviewDataLogEvent ");
+		AppClientFactory.printInfoLogger("sessionId is @ triggerReviewDataLogEvent :"+sessionId);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
