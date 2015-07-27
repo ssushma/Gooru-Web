@@ -300,8 +300,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                 displaySubStandardsList(standardsListItem.getNode());
             }
 	}
+        
+        
+        
+        
 	/**
-	 * This method is used to get the selected course id's
+	 * This method is used to get the selected Std id's
 	 * @return
 	 */
 	public List<Integer> getSelectedStandards(){
@@ -312,20 +316,83 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			Widget widget=widgets.next();
 			if(widget instanceof LiPanelWithClose){
 				LiPanelWithClose obj=(LiPanelWithClose) widget;
-				Integer intVal = (int)obj.getId();
-				taxonomyCourseIds.add(intVal);
-				CourseSubjectDo courseObj=new CourseSubjectDo();
-				selectedValues.add((int)obj.getId());
-				courseObj.setId((int)obj.getId());
-				courseObj.setCode(obj.getName());
-				courseObj.setSubjectId(obj.getRelatedId());
-				courseList.add(courseObj);
+				if(obj.getDifferenceId()==3){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					selectedValues.add((int)obj.getId());
+					courseObj.setId((int)obj.getId());
+					courseObj.setCode(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedId());
+					courseList.add(courseObj);
+				}
 			}
 		}
 		if(courseObjG!=null){
 			courseObjG.setStandards(courseList);
 		}
 
+		return taxonomyCourseIds;
+	}
+	
+	
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedCourseIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getDifferenceId()==1){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					courseObj.setId((int)obj.getId());
+					courseObj.setName(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedId());
+					courseList.add(courseObj);
+				}
+			}
+		}
+		if(courseObjG!=null){
+			courseObjG.setTaxonomyCourse(courseList);
+		}
+		return taxonomyCourseIds;
+	}
+	
+	
+	/**
+	 * This method is used to get the selected Domain id's
+	 * @return
+	 */
+	public List<Integer> getSelectedSubDomainIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getDifferenceId()==2){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					courseObj.setId((int)obj.getId());
+					courseObj.setName(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedSubjectId());
+					courseObj.setCourseId(obj.getRelatedId());
+					courseList.add(courseObj);
+				}
+			}
+		}
+		if(courseObjG!=null){
+			courseObjG.setSubdomain(courseList);
+		}
 		return taxonomyCourseIds;
 	}
 
@@ -528,7 +595,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
-				System.out.println("courseObj.getThumbnails().getUrl()::"+courseObj.getThumbnails().getUrl());
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
@@ -557,10 +623,52 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
 					liPanelWithClose.setName(courseSubjectDo.getCode());
+					liPanelWithClose.setDifferenceId(3);
 					liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
 					ulSelectedItems.add(liPanelWithClose);
 				}
             }
+            
+			if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
+				for (final CourseSubjectDo courseSubjectDo : courseObj.getTaxonomyCourse()) {
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							liPanelWithClose.removeFromParent();
+						}
+						
+					});
+					liPanelWithClose.setId(courseSubjectDo.getId());
+					liPanelWithClose.setName(courseSubjectDo.getName());
+					liPanelWithClose.setRelatedId(courseSubjectDo.getSubjectId());
+					liPanelWithClose.setDifferenceId(1);
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			}
+			
+			if(courseObj!=null && courseObj.getSubdomain()!=null){
+				for (final CourseSubjectDo courseSubjectDo : courseObj.getSubdomain()) {
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							liPanelWithClose.removeFromParent();
+						}
+						
+					});
+					liPanelWithClose.setId(courseSubjectDo.getId());
+					liPanelWithClose.setName(courseSubjectDo.getName());
+					liPanelWithClose.setRelatedId(courseSubjectDo.getCourseId());
+					liPanelWithClose.setRelatedSubjectId(courseSubjectDo.getSubjectId());
+					liPanelWithClose.setDifferenceId(2);
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			}
+            
+            
         }
 		setStaticData(type);
 
@@ -612,6 +720,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			createOrUpDate.setDescription(learningObjective.getText());
 			createOrUpDate.setCollectionType(type);
 			createOrUpDate.setStandardIds(getSelectedStandards());
+			createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
+			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
 			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
 			createOrUpDate.setDepthOfKnowledgeIds(StringUtil.getKeys(getDepthOfKnowledgeContainer().getSelectedValue().keySet()));
 			createOrUpDate.setSkillIds(StringUtil.getKeysLong(getUiHandlers().getCenturySkillsPresenters().getView().getSelectedValuesFromAutoSuggest().keySet()));

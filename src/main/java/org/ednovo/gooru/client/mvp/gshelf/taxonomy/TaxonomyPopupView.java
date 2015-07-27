@@ -260,9 +260,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 					
 					@Override
 					public void onScroll(ScrollEvent event) {						
-						if(coursePagination<=60)
-						{
-						getUiHandlers().getCoursespaginatedData(coursePaginationSubjectId,coursePagination);
+						if(coursePagination<=60){
+							getUiHandlers().getCoursespaginatedData(coursePaginationSubjectId,coursePagination);
 						}
 						coursePagination = coursePagination+20;
 						
@@ -480,7 +479,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			setSubCouDomainActiveStyle(liPanel,previousSelectedLiPanel);
+			setSubCouDomainActiveStyle(liPanel,previousSelectedLiPanel,false);
 			previousSelectedLiPanel = liPanel;
 			courseUlContainer.clear();
 			domainUlContainer.clear();
@@ -502,11 +501,11 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			setSubCouDomainActiveStyle(liPanel,previousSelectedCourseLiPanel);
+			setSubCouDomainActiveStyle(liPanel,previousSelectedCourseLiPanel,false);
 			previousSelectedCourseLiPanel = liPanel;
 			domainUlContainer.clear();
 			standardsUlContainer.clear();
-			getUiHandlers().getDomainsBasedOnSelectedCourse(courseId,"domain",0,20);
+			getUiHandlers().getDomainsBasedOnSelectedCourse(courseId,"domain",0,20,title,courseId,liPanel,previousSelectedCourseLiPanel);
 		}
 	}
 
@@ -525,23 +524,16 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 				setStandardsActiveStyle(liPanel,previousSelectedDomainLiPanel);
 				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
 				liPanelWithClose.setId(subDomainId);
+				liPanelWithClose.setDifferenceId(2);
 				liPanelWithClose.setName(title.getText());
 				liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
-				
-				/*liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
-						removeSelectedDomainStyle(liPanelWithClose,viewType);
-						liPanelWithClose.removeFromParent();
-					}
-				});*/
 				addOrRemoveContent(liPanel,previousSelectedDomainLiPanel,liPanelWithClose);
 			}else{
-				setSubCouDomainActiveStyle(liPanel,previousSelectedDomainLiPanel);
+				setSubCouDomainActiveStyle(liPanel,previousSelectedDomainLiPanel,false);
 			}
 			previousSelectedDomainLiPanel = liPanel;
 			standardsUlContainer.clear();
-			getUiHandlers().getStdBasedOnSelectedDomain(subDomainId);
+			getUiHandlers().getStdBasedOnSelectedDomain(subDomainId,title,liPanel,previousSelectedDomainLiPanel);
 		}
 	}
 	
@@ -561,6 +553,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
 			liPanelWithClose.setId(id);
 			liPanelWithClose.setName(title.getText());
+			liPanelWithClose.setDifferenceId(3);
 			liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
 			addOrRemoveContent(liPanel,previousSelectedDomainLiPanel,liPanelWithClose);
 			previousSelectedStdLiPanel = liPanel;
@@ -576,9 +569,14 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 	}
 	
-	private void setSubCouDomainActiveStyle(LiPanel selectedLiPanel,LiPanel previousSelectedLiPanel) {
-		selectedLiPanel.addStyleName("active");
-		previousSelectedLiPanel.removeStyleName("active");
+	private void setSubCouDomainActiveStyle(LiPanel selectedLiPanel,LiPanel previousSelectedLiPanel,boolean flag) {
+		if(flag){
+//			previousSelectedLiPanel.addStyleName("active");
+			selectedLiPanel.addStyleName("active");
+		}else{
+			selectedLiPanel.addStyleName("active");
+			previousSelectedLiPanel.removeStyleName("active");
+		}
 	}
 	
 	
@@ -662,12 +660,12 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 
 	@Override
 	public void displaySelectedTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArrayData) {
-		
 		for(int i=0;i<liPanelWithCloseArrayData.size();i++){
 			setActiveStyle(liPanelWithCloseArrayData.get(i).getId()); 
 			LiPanelWithClose closeLiPanel = new LiPanelWithClose("Unit".equalsIgnoreCase(viewType)?liPanelWithCloseArrayData.get(i).getName():liPanelWithCloseArrayData.get(i).getStdTitle());
 			closeLiPanel.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(closeLiPanel));
 			closeLiPanel.setId(liPanelWithCloseArrayData.get(i).getId());
+			closeLiPanel.setDifferenceId(liPanelWithCloseArrayData.get(i).getDifferenceId());
 			selectedUlContainer.add(closeLiPanel);
 		}
 	}
@@ -688,6 +686,35 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 			closeLiPanel.removeFromParent();
 		}
 		
+	}
+
+	
+	/**
+	 * If any empty courses found, it will get add into the container.
+	 */
+	@Override
+	public void addEmptyCourses(Anchor title, int courseId, LiPanel liPanel, LiPanel previousSelLiPanel) {
+		setSubCouDomainActiveStyle(liPanel,previousSelLiPanel,true);
+		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
+		liPanelWithClose.setId(courseId);
+		liPanelWithClose.setName(title.getText());
+		liPanelWithClose.setDifferenceId(1);
+		liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
+		addOrRemoveContent(liPanel,previousSelLiPanel,liPanelWithClose); 
+	}
+
+	/**
+	 * If any empty domains found, it will get add into the container.
+	 */
+	@Override
+	public void addEmptyDomains(int subDomainId, Anchor title, LiPanel liPanel,LiPanel previousSelDomainLiPanel) {
+		setSubCouDomainActiveStyle(liPanel,previousSelDomainLiPanel,true);
+		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
+		liPanelWithClose.setId(subDomainId);
+		liPanelWithClose.setName(title.getText());
+		liPanelWithClose.setDifferenceId(2);
+		liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
+		addOrRemoveContent(liPanel,previousSelDomainLiPanel,liPanelWithClose); 
 	}
 
 }
