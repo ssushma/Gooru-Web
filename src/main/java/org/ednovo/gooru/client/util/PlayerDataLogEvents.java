@@ -191,6 +191,7 @@ public class PlayerDataLogEvents {
 			eventJsonObject.put(APIKEY, new JSONString(AppClientFactory.getLoggedInUser().getSettings().getApiKeyPoint()));
 			eventJsonObject.put(ORGANIZATIONUID, new JSONString(""));
 			eventJsonObject.put(SESSIONTOKEN, new JSONString(AppClientFactory.getLoggedInUser().getToken()));
+			AppClientFactory.printInfoLogger("getDataLogSessionObject -- session id : "+sessionId);
 			if(sessionId!=null){
 				eventJsonObject.put(SESSIONID, new JSONString(sessionId));
 			}else{
