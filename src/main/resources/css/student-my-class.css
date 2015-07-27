@@ -46,7 +46,7 @@
 }
 .learningHeaderBlock .indicationBox {
 	text-align: right;
-	padding: 12px 0px;
+	padding: 10px 0px;
 	height: 45px;
 }
 .learningHeaderBlock .indicationBox div {
@@ -63,10 +63,10 @@
     margin-right: 5px;
 }
 .learningHeaderBlock .green-circle {
-	width: 23px;
-	height: 23px;
+	width: 25px;
+	height: 25px;
 	border-radius: 50% 50%;
-	background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-small.png") no-repeat 4px 7px;
+	background: #78B172 url("${cdn.endpoint}/images/Classpage/student/checkmark-small.png") no-repeat 4px 5px;
     display: inline-block;
 }
 
@@ -84,15 +84,15 @@
 }
 
 .learningHeaderBlock .blue-circle {
-    width: 23px;
-    height: 23px;
+    width: 25px;
+    height: 25px;
     border-radius: 50% 50%;
-    background: #85b9df;
+    background: #FDC564;
     display: inline-block;
 }
 .learningHeaderBlock .grey-circle {
-    width: 23px;
-    height: 23px;
+    width: 30px;
+    height: 30px;
     border-radius: 50% 50%;
     background: #d1cfcf;
     display: inline-block;
@@ -169,7 +169,7 @@
     text-decoration: none;
 }
 .rowContainer .progressBlock .circle-main-container div.green-circle span {
-    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat 11px 15px;
+    background: #78B173 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat 12px 13px;
 }
 .rowContainer .progressBlock .circle-main-container div.green-text span {
     background: #a5cba1;
@@ -180,10 +180,10 @@
 	font-weight: 100;
 }
 .rowContainer .progressBlock .circle-main-container div.blue-circle span {
-    background: #85b9df;
+    background: #fdc564;
 }
 .rowContainer .progressBlock .circle-main-container div.grey-circle span {
-    background: #d1cfcf;
+    background: #78b172;
 }
 .LearningMapContainer {
     padding-bottom: 50px;
@@ -266,10 +266,10 @@
     vertical-align: middle;
 }
 .rowContainer .progressBlockLeft div.green-circle span {
-    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 7px 9px;
+    background: #78b172 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 7px 9px;
 }
 .rowContainer .progressBlockLeft div.blue-circle span {
-    background: #85b9df none repeat scroll 0 0;
+    background: #fdc564 none repeat scroll 0 0;
 }
 .rowContainer .progressBlockLeft div span {
     background: #dddddd none repeat scroll 0 0;
@@ -289,7 +289,7 @@
 }
 .LearningMapContainer .lessonDescription.divTable {
 	margin: 13px 0;
-	display: table;
+	display: block;
 }
 .LearningMapContainer .lessonDescription .divcontainer.blueBorder img {
     border-left: 5px solid #0074be;
@@ -298,33 +298,34 @@
     border-left: 5px solid #fdb128;
 }
 .LearningMapContainer .lessonDescription .divcontainer.selected:before {
-    left: 10px;
+    left: 15px;
     right: 10px;
     bottom: 11px;
     top: 11px;
     position: absolute;
-    background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
+    background: #a5cba1 no-repeat center center;
+    opacity: 0.8;
     content: "";
 }
 .LearningMapContainer .lessonDescription .divcontainer.blueselected:before {
-    left: 10px;
+    left: 15px;
     right: 10px;
     bottom: 11px;
     top: 11px;
     position: absolute;
-    background: #85b9df;
-    content: "";
+    background: #F7CD71;
+    opacity: 0.8;
+	content: "";
 }
 .LearningMapContainer .lessonDescription .divcontainer.emptyselected:before {
-    left: 10px;
+    left: 15px;
     right: 10px;
     bottom: 11px;
     top: 11px;
     position: absolute;
-    background: url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat center center;
-    content: "";
+    opacity: 0.4;
+	content: "";
 }
-
 .LearningMapContainer .lessonDescription .scoreWidget {
 	color: #fff;
 	height: 55px;
@@ -1819,7 +1820,7 @@ th.headcol.whitebg {
     background: #a5cba1 url(../images/checkMark-big.png) no-repeat 10px 12px;
 }
 .rowContainer .progressBlock ul li.blueCircle span {
-    background: #85b9df;
+    background: #fdc564;
 }
 .rowContainer .progressBlock ul li.greyCircle span {
     background: #d1cfcf;
