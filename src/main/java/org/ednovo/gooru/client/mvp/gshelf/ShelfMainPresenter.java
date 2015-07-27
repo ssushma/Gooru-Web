@@ -246,8 +246,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		
 	}
 	@Override
-	public void updateWidgetsCount(CollectionItemDo collectionItem){
-		getView().updateWidgetsCount(collectionItem);
+	public void updateWidgetsCount(CollectionItemDo collectionItem,boolean isDelete){
+		getView().updateWidgetsCount(collectionItem,isDelete);
 	}
 	public void getUserSheldId(){
 		if(!AppClientFactory.isAnonymous()){

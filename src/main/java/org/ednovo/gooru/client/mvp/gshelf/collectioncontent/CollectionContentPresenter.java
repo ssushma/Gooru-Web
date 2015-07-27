@@ -108,7 +108,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			@Override
 			public void insertCollectionItemInAddResource(CollectionItemDo collectionItem, RefreshType refreshType) {
 				getView().setDisplayResourceItem(collectionItem, refreshType, -1);
-				updateWidgetCount(collectionItem);
+				updateWidgetCount(collectionItem,false);
 			}
 		});
 	}
@@ -126,7 +126,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	
 	@Override
 	public void loadAddResourcePopup(){
-		AppClientFactory.printInfoLogger("loadAddResourcePopup");
 		addResourcePresenter.setCollectionDo(new CollectionDo());
     	addResourcePresenter.setCollectionDoAndType(new CollectionDo(), "Question");
     	addToPopupSlot(addResourcePresenter);
@@ -179,7 +178,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -197,7 +195,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	};
 	@Override
 	public void updateCollectionItem(final CollectionItemDo collectionItem, String narration, String start, String stop) {
-		AppClientFactory.printInfoLogger("Id............."+collectionItem.getCollectionItemId());
 		AppClientFactory.getInjector().getResourceService().updateCollectionItemMetadata(collectionItem.getCollectionItemId(), narration, null, start, stop,new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo result) {
@@ -381,8 +378,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 	
 	@Override
-	public void updateWidgetCount(CollectionItemDo collectionItem){
-		myCollectionsRightClusterPresenter.getShelfMainPresenter().updateWidgetsCount(collectionItem);
+	public void updateWidgetCount(CollectionItemDo collectionItem,boolean isDelete){
+		myCollectionsRightClusterPresenter.getShelfMainPresenter().updateWidgetsCount(collectionItem,isDelete);
 	}
 
 	@Override

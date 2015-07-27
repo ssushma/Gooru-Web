@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
@@ -38,6 +39,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -45,6 +50,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
@@ -60,6 +66,8 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 	
 	final AdvancedFlexTable assessmentTableWidget = new AdvancedFlexTable();
 	
+	private PopupPanel toolTipPopupPanel = new PopupPanel();
+
 	private static TeachUnitReportChildViewViewUiBinder uiBinder = GWT.create(TeachUnitReportChildViewViewUiBinder.class);
 
 	interface TeachUnitReportChildViewViewUiBinder extends UiBinder<Widget, TeachUnitReportChildView> {
@@ -143,8 +151,14 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						}
 						Label scoreLblTitle = new Label(A_STRING+(collectionWidgetCount+1));
 						scoreLblTitle.setWidth("80px");
-						scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
-						scoreLblTitle.addClickHandler(new CollectionAssessmentView(lessonList.get(lessonWidgetCount).getGooruOId(),collectionList.get(collectionWidgetCount).getGooruOId(),contentView,A_STRING+" "+(collectionWidgetCount+1)+" "+collectionList.get(collectionWidgetCount).getTitle()));
+						String type = collectionList.get(collectionWidgetCount).getType();
+						if(type!=null&&type.equalsIgnoreCase("assessment/url")) {
+							scoreLblTitle.addMouseOverHandler(new MouseOverShowClassCodeToolTip("External Assessment"));
+							scoreLblTitle.addMouseOutHandler(new MouseOutHideToolTip());
+						} else {
+							scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
+							scoreLblTitle.addClickHandler(new CollectionAssessmentView(lessonList.get(lessonWidgetCount).getGooruOId(),collectionList.get(collectionWidgetCount).getGooruOId(),contentView,A_STRING+" "+(collectionWidgetCount+1)+" "+collectionList.get(collectionWidgetCount).getTitle()));
+						}
 						assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,scoreLblTitle);
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
@@ -156,15 +170,18 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 					} else {
 						int score = collectionList.get(collectionWidgetCount).getScoreInPercentage();
+						int views = collectionList.get(collectionWidgetCount).getViews();
 						String scoreStr = "--";
-						if(score>0) {
+						if(views>0&&score>=0) {
 							scoreStr = score+"%";
 						}
 						contentLabel.setText(scoreStr);
 						contentLabel.setWidth("80px");
 						assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
-						if(score>0&&score<=100) {
-							assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+						if(score>=0&&score<=100) {
+							if(views>0) {
+								assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+							}
 						} else {
 							assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 						}
@@ -262,5 +279,27 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 		unitTablePanel.getElement().getParentElement().setAttribute("style", "min-height:"+(Window.getClientHeight()+Window.getScrollTop()-100)+"px");
 	}
 
-
+	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
+		private String label = null;
+		public MouseOverShowClassCodeToolTip(String label) {
+			this.label = label;
+		}
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopupPanel.clear();
+			toolTipPopupPanel.setWidget(new GlobalToolTip(label));
+			toolTipPopupPanel.setStyleName("");
+			toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-15, event.getRelativeElement().getAbsoluteTop());
+			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanel.show();
+		}
+	}
+	
+	public class MouseOutHideToolTip implements MouseOutHandler{
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanel.hide();
+		}
+	}
+	
 }

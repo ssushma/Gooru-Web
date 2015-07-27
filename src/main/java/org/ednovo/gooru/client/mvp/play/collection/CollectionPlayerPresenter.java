@@ -107,6 +107,7 @@ import com.google.gwt.user.client.Timer;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -996,6 +997,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getView().clearActiveButton(true,true, true, true, true,false,true);
 				getView().makeButtonActive(false,false, false, false, false,true,false);
 			}
+		}else{
+			System.out.println("---else loop-----");
 		}
 	}
 
@@ -1252,6 +1255,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().addCloseHandler(new CloseHandler<PopupPanel>() {
+			@Override
+			public void onClose(CloseEvent<PopupPanel> event) {
+				Window.enableScrolling(false);
+				searchAddResourceToCollectionPresenter.getView().closeTabView();
+			}
+		});
 	}
 	public void setAddCollectionView(String collectionId){
 		addCollectionPresenter.setCollectionDo(collectionDo);

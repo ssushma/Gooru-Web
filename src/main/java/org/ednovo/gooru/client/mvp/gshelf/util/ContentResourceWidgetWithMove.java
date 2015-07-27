@@ -1013,6 +1013,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT) {
 			@Override
 			public void onDelete(ClickEvent clickEvent) {
+				collectionContentPresenter.updateWidgetCount(collectionItem,true);
 				collectionContentPresenter.deleteCollectionItem(collectionItem.getParentGooruOid(),collectionItem.getCollectionItemId(), collectionItem.getItemSequence());
 				deleteConfirmationPopupVc.hide();
 				ContentResourceWidgetWithMove.this.removeFromParent();

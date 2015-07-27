@@ -72,8 +72,10 @@ public class SuccessPopupForResource extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		if(AppClientFactory.getCurrentPlaceToken().contains("search")){
 			btnContinueSearching.setText(i18n.GL3191());
+			btnContinueSearching.setTitle(i18n.GL3191());
 		}else{
 			btnContinueSearching.setText(i18n.GL0460());
+			btnContinueSearching.setTitle(i18n.GL0460());
 		}
 		btnViewInMyCollections.addClickHandler(new ViewinMyCollection());
 	}
@@ -133,6 +135,14 @@ public class SuccessPopupForResource extends PopupPanel {
 		this.hide();
 		enableTopFilters();
 		AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
+		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )|| nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)
+			|| nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
+		
 	}
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void clickOnCloseBtn (ClickEvent clickevent){

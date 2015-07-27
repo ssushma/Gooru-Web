@@ -15,6 +15,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -23,11 +24,17 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class StudentClassLearningMapContainer extends Composite {
 
-	@UiField HTMLEventPanel unitBlock;
+	@UiField HTMLEventPanel unitBlock, leftArrow, rightArrow;
 	@UiField HTMLPanel circleContainer;
 	@UiField H3Panel unitCountName;
 	@UiField PPanel unitName;
 	@UiField Label numericOrder;
+	
+	ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+	
+	int start = 0, end = 0;
+
+	private final static int CAROUSEL_LIMIT = 11;
 	
 	private static StudentClassLearningMapContainerUiBinder uiBinder = GWT
 			.create(StudentClassLearningMapContainerUiBinder.class);
@@ -47,12 +54,17 @@ public class StudentClassLearningMapContainer extends Composite {
 		unitCountName.setText(planProgressDo.getTitle());
 		unitName.setText("Unit");
 		int size = planProgressDo.getItem().size();
-		ArrayList<PlanProgressDo> dataList = planProgressDo.getItem();
 		if(size>0) {
-			for(int i=0;i<size;i++) {
-				circleContainer.add(new StudentClassLearningMapCircle(dataList.get(i), dataList.get(i).getGooruOId()));
+			dataList = planProgressDo.getItem();
+			start = 0;
+			if(size < CAROUSEL_LIMIT+1) {
+				end = size;
+			} else {
+				end = CAROUSEL_LIMIT;
 			}
+			setData(start,end);
 		} else {
+			setArrowVisibility(false,false);
 			circleContainer.add(StringUtil.getStudentPlanErrorLbl("Your teacher has not assigned any lessons yet!", "error-lbl-student-course-plan"));
 		}
 	}
@@ -74,4 +86,50 @@ public class StudentClassLearningMapContainer extends Composite {
 		
 	}
 	
+	private void setData(int startPoint, int endPoint) {
+		circleContainer.clear();
+		for(int z=startPoint;z<endPoint;z++) {
+			circleContainer.add(new StudentClassLearningMapCircle(dataList.get(z), dataList.get(z).getGooruOId()));
+		}
+		setArrows();
+	}
+	
+	private void setArrows() {
+		boolean leftArrowVisibile = false, rightArrowVisible = false;
+		if(end>CAROUSEL_LIMIT) {
+			leftArrowVisibile = true;
+		}
+		if(end<dataList.size()) {
+			rightArrowVisible = true;
+		}
+		setArrowVisibility(leftArrowVisibile,rightArrowVisible);
+	}
+	
+	private void setArrowVisibility(boolean leftArrowVisibile, boolean rightArrowVisible) {
+		leftArrow.setVisible(leftArrowVisibile);
+		rightArrow.setVisible(rightArrowVisible);
+	}
+	
+	@UiHandler("leftArrow")
+	public void clickLeftArrow(ClickEvent event) {
+		end = start;
+		if(start-CAROUSEL_LIMIT<0) {
+			start = 0;
+		} else {
+			start = start - CAROUSEL_LIMIT;
+		}
+		setData(start, end);
+	}
+	
+	@UiHandler("rightArrow")
+	public void clickRightArrow(ClickEvent event) {
+		start = end;
+		if((dataList.size())-end > CAROUSEL_LIMIT) {
+			end = end + CAROUSEL_LIMIT;
+		} else {
+			end = (dataList.size());
+		}
+		setData(start, end);
+	}
+
 }

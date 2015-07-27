@@ -1,7 +1,9 @@
 package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -9,6 +11,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
@@ -21,6 +24,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -46,6 +51,7 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<SearchAddResourceToCollectionUiHandlers> implements IsSearchAddResourceToCollectionView,ClientConstants {
@@ -776,5 +782,24 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void isFromCopyResource(boolean isFromCopyResource) {
 		// TODO Auto-generated method stub
 		this.isFromCopyResource=isFromCopyResource;
+	}
+
+	@Override
+	public void closeTabView() {
+		hide();
+		hideResourceAddPopup();
+	}
+	public void hideResourceAddPopup(){
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("folderId", null);
+		Map<String,String> params = new LinkedHashMap<String,String>();
+		params.put("id", collectionId);
+		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+		params.put("rid", resourceId);	
+		params.put("folderId", folderId);	
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 }
