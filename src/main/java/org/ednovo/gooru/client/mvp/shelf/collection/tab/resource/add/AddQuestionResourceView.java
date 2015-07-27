@@ -3496,7 +3496,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				depthOfKnowledgeContainer.setVisible(false);
 				addDepthOfKnowledgeLabel.setVisible(true);
 				addDepthOfKnowledgeLabel.setText(i18n.GL3209_1());
-				//setDepthOfKnowledgeContainer();
+				setDepthOfKnowledgeContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconStandards")){
 				standardContainer.setVisible(false);
 				addStandardsLabel.setVisible(true);
@@ -3602,6 +3602,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 
 	public boolean isDepthofKnowledge(){
+		AppClientFactory.printInfoLogger("Size of depthofknowledge Container"+pnlDepthOfKnowledges.getWidgetCount());
 		Iterator<Widget> widgets=pnlDepthOfKnowledges.iterator();
 		boolean depthOfKnowledge=false;
 		while(widgets.hasNext()){
