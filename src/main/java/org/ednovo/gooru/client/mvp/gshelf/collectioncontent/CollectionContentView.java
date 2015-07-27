@@ -167,8 +167,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			String lastModifiedUser = listOfContent.getLastModifiedUser().getUsername() != null ?  listOfContent.getLastModifiedUser().getUsername() : "";
 			lastEditedBy = StringUtil.generateMessage(i18n.GL1112(), lastModifiedDate, lastModifiedUser);
 			hasLastModifiedUser = lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("") ? true : false;
-		}
-		else{
+		}else{
 			lastEditedBy="";
 			hasLastModifiedUser=false;
 		}

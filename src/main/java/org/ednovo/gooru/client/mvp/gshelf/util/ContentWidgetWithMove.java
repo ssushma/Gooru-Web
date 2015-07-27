@@ -238,6 +238,7 @@ public abstract class ContentWidgetWithMove extends Composite {
 	public void enableAndDisableCount(String typeVal){
 		lblImage.setStyleName("courseImage");
 		hideAllCounts();
+		spnUnitsCount.setVisible(true);
 		if(UNIT.equalsIgnoreCase(typeVal)){
 			spnLessonsCount.setVisible(true);
 			lblImage.setStyleName("unitImage");
