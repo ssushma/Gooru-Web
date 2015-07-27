@@ -30,8 +30,6 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapCircle.MouseOutHideToolTip;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapCircle.MouseOverShowClassCodeToolTip;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -154,12 +152,12 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						Label scoreLblTitle = new Label(A_STRING+(collectionWidgetCount+1));
 						scoreLblTitle.setWidth("80px");
 						String type = collectionList.get(collectionWidgetCount).getType();
-						if(type!=null&&!type.equalsIgnoreCase("assessment/url")) {
-							scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
-							scoreLblTitle.addClickHandler(new CollectionAssessmentView(lessonList.get(lessonWidgetCount).getGooruOId(),collectionList.get(collectionWidgetCount).getGooruOId(),contentView,A_STRING+" "+(collectionWidgetCount+1)+" "+collectionList.get(collectionWidgetCount).getTitle()));
-						} else {
+						if(type!=null&&type.equalsIgnoreCase("assessment/url")) {
 							scoreLblTitle.addMouseOverHandler(new MouseOverShowClassCodeToolTip("External Assessment"));
 							scoreLblTitle.addMouseOutHandler(new MouseOutHideToolTip());
+						} else {
+							scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
+							scoreLblTitle.addClickHandler(new CollectionAssessmentView(lessonList.get(lessonWidgetCount).getGooruOId(),collectionList.get(collectionWidgetCount).getGooruOId(),contentView,A_STRING+" "+(collectionWidgetCount+1)+" "+collectionList.get(collectionWidgetCount).getTitle()));
 						}
 						assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,scoreLblTitle);
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
