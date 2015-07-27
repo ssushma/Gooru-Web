@@ -342,8 +342,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 							"Untitled Assessment":"Untitled External Assessment"),clickedItemType);
 		}else{
 			getView().getCollectionLabel().setVisible(true);
-			getView().getCollectionLabel().setText(folderObj.getTitle());
-			
+			getView().getCollectionLabel().setText((folderObj!=null&&folderObj.getGooruOid()!=null)?folderObj.getTitle():(clickedItemType.equalsIgnoreCase("collection")?
+					"Untitled Collection":clickedItemType.equalsIgnoreCase("assessment")?
+							"Untitled Assessment":"Untitled External Assessment"));
 		}
 		if(folderObj!=null && folderObj.getGooruOid()!=null){
 			//when displaying the existing data at that time we are opening the content tab.
