@@ -75,12 +75,15 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -548,6 +551,13 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
 			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().addCloseHandler(new CloseHandler<PopupPanel>() {
+				@Override
+				public void onClose(CloseEvent<PopupPanel> event) {
+					Window.enableScrolling(false);
+					searchAddResourceToCollectionPresenter.getView().closeTabView();
+				}
+			});
 		}
 	}
 	public void setResourceInfoView(String resourceId){
