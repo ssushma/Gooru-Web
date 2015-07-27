@@ -4,15 +4,18 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+
+import com.google.gwt.user.client.ui.Anchor;
 
 public interface TaxonomyPopupUiHandlers extends BaseUiHandlers {
 
 	void getCoursesBasedOnSelectedSub(int classification, String taxonomyType, int offset, int limit);
+ 
+	void getDomainsBasedOnSelectedCourse(int classification, String taxonomyType, int offset, int limit, Anchor title, int courseId, LiPanel liPanel, LiPanel previousSelectedCourseLiPanel);
 
-	void getDomainsBasedOnSelectedCourse(int classification, String taxonomyType, int offset, int limit);
-
-	void getStdBasedOnSelectedDomain(int subDomainId);
+	void getStdBasedOnSelectedDomain(int subDomainId, Anchor title, LiPanel liPanel, LiPanel previousSelectedDomainLiPanel);
 
 //	void getTaxonomySubjects();
 

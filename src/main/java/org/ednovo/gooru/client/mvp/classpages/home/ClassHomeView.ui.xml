@@ -69,7 +69,7 @@
 	      <g:HTMLPanel styleName="col-md-6 col-sm-6 classcodeBox" ui:field="classCodePanel">
 	               <txt:TextBoxWithPlaceholder name="" styleName="form-control" ui:field="txtCode"></txt:TextBoxWithPlaceholder>
 				   <g:Button styleName="primary"  ui:field="btnEnter"></g:Button>
-				   <g:Button styleName="primary"  ui:field="disabledBtn"></g:Button>
+				   <g:Button styleName="primary disabled"  ui:field="disabledBtn"></g:Button>
 		  </g:HTMLPanel>
 	      <div class="clearfix"></div>
 	   </div>
