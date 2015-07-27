@@ -441,6 +441,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		clearSlot(RIGHT_SLOT);
 		getMyCollectionsRightClusterPresenter().setTabItems(2, folderObj.getType(),folderObj);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		getView().getTitleIconContainer().setVisible(true);
 		if(FOLDER.equalsIgnoreCase(view)){
 			getView().getCollectionLabel().setVisible(true);
 			getView().getCollectionLabel().setText(folderObj.getTitle());

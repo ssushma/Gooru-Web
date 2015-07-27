@@ -2019,7 +2019,12 @@ padding-bottom: 10px;
  display: inline-block;
 }
 #standardsDetails .filterTags ul li a{
-padding-left:7px;
+	padding-left:7px;
+	color: #ffffff;
+}
+
+#standardsDetails .filterTags ul li a:visited, #standardsDetails .filterTags ul li a:active {
+	color: #ffffff;
 }
 
 #standardsDetails  .standerdTxt{
@@ -4773,7 +4778,7 @@ right:1px;
 }
 }
  @media (min-width: 768px) and (max-width: 991px) {
-	
+
 }
  @media (min-width: 992px) and (max-width: 1199px) {
 }

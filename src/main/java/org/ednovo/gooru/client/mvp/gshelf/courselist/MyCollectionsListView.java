@@ -61,7 +61,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -226,7 +225,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			setLastWidgetArrowVisiblity(true);
 		}
 		//setCreateText();
-		
 		if(listOfContent!=null && listOfContent.size()>0){
 			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
@@ -291,9 +289,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 						if(enteredVal<pnlCourseList.getWidgetCount() && enteredVal!=0){
 							contentWidget.getTopArrow().setVisible(true);
 							contentWidget.getDownArrow().setVisible(true);
+							contentWidget.getTextBox().setText((enteredVal+1)+"");
 						}
 						setLastWidgetArrowVisiblity(false);
-						contentWidget.getTextBox().setText((enteredVal+1)+"");
 					}
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");
