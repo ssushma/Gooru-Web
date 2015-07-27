@@ -65,7 +65,6 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.collection.share.CollectionSharePresenter;
 import org.ednovo.gooru.client.mvp.play.collection.toc.CollectionPlayerTocPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.toc.CollectionPlayerTocView.ResourceRequest;
 import org.ednovo.gooru.client.mvp.play.error.CollectionNonExistView;
 import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
@@ -82,7 +81,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresente
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
-import org.ednovo.gooru.client.uc.TocResourceView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
@@ -106,6 +104,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
+
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.inject.Inject;
@@ -615,10 +614,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		final String apiKey=getPlaceManager().getRequestParameter("key", null);
 		final String view=getPlaceManager().getRequestParameter("view", null);
 		final String rootNodeId=getPlaceManager().getRequestParameter("rootNodeId", null);
-
 		if(this.collectionDo!=null&&this.collectionDo.getGooruOid().equals(collectionId)){
 			getView().restFullScreenChanges();
-
 			if(!StringUtil.isEmpty(resourceId)){
 				showResourceView(resourceId,tabView,view);
 				showTabWidget(tabView,collectionId,resourceId,false,false, view);
@@ -640,10 +637,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						getClassPageDetails(AppClientFactory.getPlaceManager().getRequestParameter("cid"));
 					}
 				}else{
+//					sessionId=GwtUUIDGenerator.uuid();
 					if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
 						getClassPageDetails(AppClientFactory.getPlaceManager().getRequestParameter("cid"));
 					}else{
-						//						sessionId=GwtUUIDGenerator.uuid();
+
 						if(GooruConstants.TRUE.equals(isItem_lodRefreshed)){
 							isItem_lodRefreshed = null;
 						}else{
@@ -651,7 +649,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						}
 					}
 				}
-				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
+				AppClientFactory.getInjector().getResourceService().getCollection(collectionId, false, new SimpleAsyncCallback<CollectionDo>() {
+
 					@Override
 					public void onSuccess(CollectionDo collectionDo) {
 						getOldValuesOnRefresh();
@@ -666,6 +665,22 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						}
 					}
 				});
+
+//				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
+//					@Override
+//					public void onSuccess(CollectionDo collectionDo) {
+//						getOldValuesOnRefresh();
+//						updateHeaderView();
+//						hideAuthorInHeader(true);
+//						if(collectionDo.getStatusCode()!=200){
+//							showCollectionErrorMessage();
+//						}else{
+//							setPageTitle(collectionDo);
+//							showCollectionView(collectionDo,collectionId,resourceId,tabView,view);
+//							setCollectionDetails(collectionDo);
+//						}
+//					}
+//				});
 
 			}
 		}
