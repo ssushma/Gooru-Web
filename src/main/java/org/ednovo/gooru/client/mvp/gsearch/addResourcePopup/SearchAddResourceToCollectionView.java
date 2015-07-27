@@ -138,6 +138,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			@Override
 			public void onClick(ClickEvent event) {
 				urlparams.clear();
+				pageNum=1;
 				mycollectionsLbl.addStyleName("active");
 				mycontentLbl.removeStyleName("active");
 				folderTreePanel.clear();
@@ -145,7 +146,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				isFromMyCourse=false;
 				btnAddExisting.setEnabled(true);
 				btnAddExisting.setStyleName("primary");
-				
 					String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					 String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
 					if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
@@ -163,6 +163,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		mycontentLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				pageNum=1;
 				urlparams.clear();
 				mycontentLbl.addStyleName("active");
 				mycollectionsLbl.removeStyleName("active");
@@ -271,6 +272,19 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		@Override
 		public void onScroll(ScrollEvent event) {
 			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())&&(totalHitCount>pageNum*limit)){
+				if(isFromMyCourse){
+					currentsearchType="coursebuilder";
+				}else{
+					String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+					String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+					if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+						|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+						|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
+						currentsearchType="resource";
+					}else{
+						currentsearchType="collection";
+					}
+				}
 				getUiHandlers().getWorkspaceData(pageNum*limit, limit,false,currentsearchType);
 				pageNum++;
 			}
@@ -308,6 +322,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		if(clearShelfPanel){
+			folderTreePanel.add(loadingImage());
 			pageNum=1;
 			folderTreePanel.clear();
 			String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
