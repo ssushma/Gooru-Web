@@ -7,6 +7,7 @@ import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -70,8 +71,10 @@ public class StudentClassLessonContainer extends Composite {
 					styleName = "orgBorder ";
 				}
 				if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-					if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
-						styleName = styleName + "cursorPointer";
+					if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotViewed")||planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
+						styleName = styleName + " cursorPointer";
+					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("Viewed")) {
+						styleName = styleName + "emptyselected cursorPointer";
 					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
 						styleName = styleName + "blueselected cursorPointer";
 					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
@@ -81,7 +84,9 @@ public class StudentClassLessonContainer extends Composite {
 				lessonContainer.add(new StudentClassContentWidget(planDo, styleName, planProgressDo.getGooruOId(), status, userId));
 			}
 		} else {
-			lessonContainer.add(StringUtil.getStudentPlanErrorLbl("Your teacher has not assigned any assessments or collections yet!", "error-lbl-student-course-plan"));
+			SpanPanel errorPanel = StringUtil.getStudentPlanErrorLbl("Your teacher has not assigned any assessments or collections yet!", "error-lbl-student-course-plan");
+			errorPanel.addStyleName("line-height-70");
+			lessonContainer.add(errorPanel);
 		}
 	}
 	

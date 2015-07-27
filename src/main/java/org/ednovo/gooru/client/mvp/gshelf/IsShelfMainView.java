@@ -89,7 +89,7 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 
 	String getViewType();
 
-	void updateWidgetsCount(CollectionItemDo collectionItem);
+	void updateWidgetsCount(CollectionItemDo collectionItem,boolean isDelete);
 
 	InlineLabel getImgInlineLbl();
 

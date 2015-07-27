@@ -190,8 +190,8 @@ public class ExistsResourceView extends AppPopUp {
 					hide();
 					Window.enableScrolling(true);
 			        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			        AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 					AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(result, RefreshType.INSERT));
-					AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 				}
 			});
 		}

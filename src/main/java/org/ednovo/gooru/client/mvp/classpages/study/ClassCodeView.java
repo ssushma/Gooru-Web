@@ -407,8 +407,6 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
 							
-							StudentAssignmentView.setPrivatePageActive();
-
 						}
 						else if(result.getStatus().equalsIgnoreCase("pending")) 
 						{
