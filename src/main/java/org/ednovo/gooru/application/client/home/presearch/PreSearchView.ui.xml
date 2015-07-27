@@ -118,7 +118,7 @@
 				</div>
 			</section>
 			<section class="gettingStarted no-gutter">
-				<div class="col-md-5 col-sm-6 gettingStartedBanner">
+				<div class="col-md-5 col-sm-6 gettingStartedBanner wow fadeInLeft">
 					<img src="images/newlandingpage/getting-started-banner.png" class="img-responsive" />
 				</div>
 				<div class="col-md-7 col-sm-6 wow fadeInRight">
