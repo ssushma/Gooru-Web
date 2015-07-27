@@ -1939,6 +1939,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 	public void resetCollectionPlayer(){
 		if(collectionDo!=null){
+			AppClientFactory.printInfoLogger("in resetCollectionPlayer");
 			stopCollectionDataLogs();
 			getView().hidePlayerButtons(true,null);
 			AppClientFactory.getPlaceManager().setDataLogClasspageId(null);
