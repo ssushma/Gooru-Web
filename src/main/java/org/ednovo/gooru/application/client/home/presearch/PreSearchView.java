@@ -1063,13 +1063,4 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	public void setUlSubjectPanel(UlPanel ulSubjectPanel) {
 		this.ulSubjectPanel = ulSubjectPanel;
 	}
-	
-	@Override
-	public void onLoad() {
-		animate();
-	}
-	
-	public static native void animate() /*-{
-		new $wnd.WOW().init();
-	}-*/;
 }

@@ -2019,7 +2019,12 @@ padding-bottom: 10px;
  display: inline-block;
 }
 #standardsDetails .filterTags ul li a{
-padding-left:7px;
+	padding-left:7px;
+	color: #ffffff;
+}
+
+#standardsDetails .filterTags ul li a:visited, #standardsDetails .filterTags ul li a:active {
+	color: #ffffff;
 }
 
 #standardsDetails  .standerdTxt{
@@ -4312,7 +4317,7 @@ right:1px;
 	outline: none; /* remove focus ring from Webkit */
 	line-height: 1.2;
 	background: #ffffff;
-	width: 36%;
+	width: 73%;
 	-webkit-appearance: none; /* remove the strong OSX influence from Webkit */
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -4332,7 +4337,7 @@ right:1px;
 	content:"";
 	position: relative;
 	top: 0;
-	right: 80px;
+	right: 82px;
 	bottom: 0;
 	font-size: 60%;
 	line-height: 30px;
@@ -4354,12 +4359,26 @@ right:1px;
 .custom-select select option {color:#6666;font-weight:bold; padding:8px 10px}
 
 .shareMainContainer .selectClassBlock{
-	padding:15px 15px;
-	border-bottom:1px solid #dddddd;
+	padding: 20px;
+	width: 100%;
+	display: inline-block;
+	margin-top: 70px;
+	/* width: 47%; */
+	/* border-right: 1px solid #ddd; */
+	/* border-bottom:1px solid #dddddd; */
 }
 
 .shareMainContainer .courseDetailsContainer{
-		padding:15px 15px;
+	padding:15px 15px;
+}
+.shareMainContainer .assign2Class .assignCourseBlock{
+	border-left: 1px solid #ddd; 
+	padding: 15px 15px !important;
+}
+
+.shareMainContainer .createClassStyle{
+	display: inline-block;
+	margin-top: 4px;
 }
 
 .shareMainContainer .errorMsgStyle{
@@ -4371,7 +4390,13 @@ right:1px;
 }
 .shareMainContainer .marginBottom{
 	margin-bottom: 10px;
+	margin-top: 10px;
 }
+ .shareMainContainer .classListStyle{
+	 width: 100%;
+	border-top: 2px solid #ddd;
+	margin-top: 5px;
+ }
 
 .shareMainContainer  button.primary{
 	margin-left: 5px;
@@ -4753,7 +4778,7 @@ right:1px;
 }
 }
  @media (min-width: 768px) and (max-width: 991px) {
-	
+
 }
  @media (min-width: 992px) and (max-width: 1199px) {
 }

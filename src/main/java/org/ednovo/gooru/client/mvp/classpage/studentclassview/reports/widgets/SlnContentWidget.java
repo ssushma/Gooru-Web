@@ -44,15 +44,21 @@ public class SlnContentWidget extends Composite {
 		}
 		
 		setContentIcon(type);
+		int views = planProgressDo.getViews();
 		if(type.equalsIgnoreCase("assessment")||type.equalsIgnoreCase("assessment/url")) {
+			assessmentViews.setText(views+"");
+			String scoreValue = "--";
 			int scoreLbl = planProgressDo.getScoreInPercentage();
-			assessmentViews.setText(planProgressDo.getViews()+"");
-			score.setText(scoreLbl+"%");
+			if(views>0&&scoreLbl>=0) {
+				scoreValue = scoreLbl+"%";
+			}
+			score.setText(scoreValue);
+			
 			assessmentRadial.addStyleName(StringUtil.getHighlightStyle(scoreLbl)+ASSESSMENT_RADIAL+scoreLbl);
 			collectionCountData.setVisible(false);
 			collectionRadial.setVisible(false);
 		} else if(type.equalsIgnoreCase("collection")){
-			collectionViews.setText(planProgressDo.getViews()+"");
+			collectionViews.setText(views+"");
 			String timeSpentData = "--";
 			if(planProgressDo.getTimeSpent()>0) {
 				timeSpentData = StringUtil.getFormattedDate(planProgressDo.getTimeSpent(), "");

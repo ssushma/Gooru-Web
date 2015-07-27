@@ -18,7 +18,12 @@
 		   </g:HTMLPanel>
 		</span:HTMLEventPanel>
 	   <g:HTMLPanel styleName="col-md-8 col-sm-8">
-			<g:HTMLPanel styleName="lessonDescription divTable" ui:field="lessonContainer"/>
+	       <g:HTMLPanel styleName="progressBlock">
+				<span:HTMLEventPanel styleName="scrollLeftArrow cursorArrows cursorPointer" ui:field="leftArrow"></span:HTMLEventPanel>
+		       	<g:HTMLPanel styleName="lessonDescription divTable" ui:field="lessonContainer"/>
+				<div class="clearfix"></div>
+				<span:HTMLEventPanel styleName="scrollRightArrow cursorArrows cursorPointer" ui:field="rightArrow"></span:HTMLEventPanel>
+	       </g:HTMLPanel>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel>

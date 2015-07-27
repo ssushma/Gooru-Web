@@ -61,7 +61,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -226,7 +225,6 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			setLastWidgetArrowVisiblity(true);
 		}
 		//setCreateText();
-		
 		if(listOfContent!=null && listOfContent.size()>0){
 			for (final FolderDo folderObj : listOfContent) {
 				final ContentWidgetWithMove widgetMove=new ContentWidgetWithMove(index,type,folderObj) {
@@ -287,13 +285,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 					@Override
 					public void checkBlurHandler(int position,ContentWidgetWithMove contentWidget) {
 						String currentWidgetString=contentWidget.getTextBox().getElement().getAttribute("index").trim();
-						int enteredVal=Integer.valueOf(currentWidgetString);
-						if(enteredVal<pnlCourseList.getWidgetCount() && enteredVal!=0){
+						int currentIndex=Integer.valueOf(currentWidgetString);
+						int enterdVal=Integer.valueOf(contentWidget.getTextBox().getText());
+						if(enterdVal>pnlCourseList.getWidgetCount() && currentIndex!=0){
 							contentWidget.getTopArrow().setVisible(true);
 							contentWidget.getDownArrow().setVisible(true);
+							contentWidget.getTextBox().setText((currentIndex+1)+"");
 						}
 						setLastWidgetArrowVisiblity(false);
-						contentWidget.getTextBox().setText((enteredVal+1)+"");
 					}
 				};
 				widgetMove.getElement().setAttribute("itemSequence", folderObj.getItemSequence()+"");

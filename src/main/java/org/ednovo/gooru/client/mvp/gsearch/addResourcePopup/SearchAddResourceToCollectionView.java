@@ -1,7 +1,9 @@
 package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -9,6 +11,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
@@ -21,6 +24,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -46,6 +51,7 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<SearchAddResourceToCollectionUiHandlers> implements IsSearchAddResourceToCollectionView,ClientConstants {
@@ -138,6 +144,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			@Override
 			public void onClick(ClickEvent event) {
 				urlparams.clear();
+				pageNum=1;
 				mycollectionsLbl.addStyleName("active");
 				mycontentLbl.removeStyleName("active");
 				folderTreePanel.clear();
@@ -145,7 +152,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				isFromMyCourse=false;
 				btnAddExisting.setEnabled(true);
 				btnAddExisting.setStyleName("primary");
-				
 					String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					 String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
 					if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
@@ -163,6 +169,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		mycontentLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				pageNum=1;
 				urlparams.clear();
 				mycontentLbl.addStyleName("active");
 				mycollectionsLbl.removeStyleName("active");
@@ -271,6 +278,19 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		@Override
 		public void onScroll(ScrollEvent event) {
 			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())&&(totalHitCount>pageNum*limit)){
+				if(isFromMyCourse){
+					currentsearchType="coursebuilder";
+				}else{
+					String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+					String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+					if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+						|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+						|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
+						currentsearchType="resource";
+					}else{
+						currentsearchType="collection";
+					}
+				}
 				getUiHandlers().getWorkspaceData(pageNum*limit, limit,false,currentsearchType);
 				pageNum++;
 			}
@@ -308,6 +328,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		if(clearShelfPanel){
+			folderTreePanel.add(loadingImage());
 			pageNum=1;
 			folderTreePanel.clear();
 			String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
@@ -761,5 +782,24 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void isFromCopyResource(boolean isFromCopyResource) {
 		// TODO Auto-generated method stub
 		this.isFromCopyResource=isFromCopyResource;
+	}
+
+	@Override
+	public void closeTabView() {
+		hide();
+		hideResourceAddPopup();
+	}
+	public void hideResourceAddPopup(){
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("folderId", null);
+		Map<String,String> params = new LinkedHashMap<String,String>();
+		params.put("id", collectionId);
+		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+		params.put("rid", resourceId);	
+		params.put("folderId", folderId);	
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 }

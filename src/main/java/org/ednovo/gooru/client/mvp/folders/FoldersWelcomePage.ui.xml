@@ -1,77 +1,89 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
-	
-	<g:HTMLPanel ui:field="tutorialsMainContainer">
-		<g:HTMLPanel styleName="container clearfix">
-			<g:HTMLPanel styleName="startsection">
-				<g:Label styleName="title" ui:field="lblStartCreateingCollection"></g:Label>
-				<g:Label styleName="subtitle" ui:field="lblCollectionDesc"></g:Label>
-				<br />
-				<g:Button styleName="primary" ui:field="btnCreateCollection"></g:Button>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="startsection fright">
-				<g:HTMLPanel styleName="codeBg">
-						<g:HTMLPanel styleName="desc-emphasis">
-							<g:Label styleName="resourceImg" ui:field="lblViewWalkthrough"></g:Label>
-							<g:HTML styleName="sampleCollection" ui:field="htmlWalkSampleCollection"></g:HTML>
-							<g:HTMLPanel styleName="arrowContainer">
-								<g:Image url="images/EmptyPages/arrow.png" width="40"
-									height="20" />
-							</g:HTMLPanel>
-						</g:HTMLPanel>	
-						<g:HTMLPanel styleName="collectionContainer">
-						<g:Anchor ui:field="imgSampleCollection">
-						
-								</g:Anchor>
-							
-						</g:HTMLPanel>
-				</g:HTMLPanel>
-				
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-			<g:HTMLPanel styleName="leftPanel">
-				<g:HTMLPanel styleName="navBox">
-					<g:Label styleName="h3" ui:field="lblCollaborate"></g:Label>
-					<g:Label styleName="desc" ui:field="lblFurther"></g:Label>
-					<g:HTMLPanel styleName="hoverCircle">
-						<g:Label styleName="circleTitle" ui:field="lblOne"></g:Label>
-					</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="navBox">
-					<g:Label styleName="h3" ui:field="lblUpload"></g:Label>
-					<g:Label styleName="desc" ui:field="lblCustomizeCollections"></g:Label>
-					<g:HTMLPanel styleName="hoverCircle">
-						<g:Label styleName="circleTitle" ui:field="lblTwo"></g:Label>
-					</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="navBox">
-					<g:Label styleName="h3" ui:field="lblAssess"></g:Label>
-					<g:Label styleName="desc" ui:field="lblAddQuestion"></g:Label>
-					<g:HTMLPanel styleName="hoverCircle">
-						<g:Label styleName="circleTitle" ui:field="lblThree"></g:Label>
-					</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="navBox">
-					<g:Label styleName="h3" ui:field="lblGuideWith"></g:Label>
-					<g:Label styleName="desc" ui:field="lblGuideNarration"></g:Label>
-					<g:HTMLPanel styleName="hoverCircle">
-						<g:Label styleName="circleTitle" ui:field="lblFour"></g:Label>
-					</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="navBox">
-					<g:Label styleName="h3" ui:field="lblCustomizeResource"></g:Label>
-					<g:Label styleName="desc" ui:field="lblEditStart"></g:Label>
-					<g:HTMLPanel styleName="hoverCircle">
-						<g:Label styleName="circleTitle" ui:field="lblFive"></g:Label>
-					</g:HTMLPanel>
-				</g:HTMLPanel>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="rightPanel">
-				<g:Image url="images/EmptyPages/view-img.png" width="667"
-					height="941" />
-			</g:HTMLPanel>
-		</g:HTMLPanel>
-		<sg:FooterUc />
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+
+<g:HTMLPanel>
+	<g:HTMLPanel ui:field="myContentLoggedout">
+	   <section class="myContentBanner">
+	      <div class="contentBannerImage"> </div>
+	      <div class="container">
+	         <div class="row">
+	            <div class="contentBannerCaptions">
+	               <h1>Educate. Innovate. Create. </h1>        
+	               <h3>Create collections with engaging multimedia resources and assessments for personalized learning. </h3>
+	            </div>
+	            <div class="contentBannerButtonBlock">
+	               <g:Button styleName="primary" ui:field="createCourseBtn">Create your course</g:Button>
+	            </div>
+	         </div>
+	      </div>
+	   </section>
+	   <section class="resourcesCount">
+	      <div class="container">
+	         <div class="row">
+	            <div class="col-md-5 col-sm-5 wow fadeInLeft">
+	               <h3>182,859 resources added by teachers</h3>
+	               <p class="lead">Teachers upload their own materials as well as videos, games, and other resources from their favorite websites.</p>
+	            </div>
+	            <div class="col-md-7 col-sm-7 resourcesCountScreen wow fadeInRight">
+	               <h4>Resource Formats</h4>
+	               <img src="../images/logout-page/ResourceCount.png" class="img-responsive"/> 
+	            </div>
+	            <div class="clearfix"></div>
+	         </div>
+	      </div>
+	   </section>
+	   <section class="collectionsCreated">
+	      <div class="container">
+	         <div class="row">
+	            <div class="col-md-7 col-sm-7 wow fadeInLeft"> <img src="../images/logout-page/CollectionsCreated.png" class="img-responsive"/> </div>
+	            <div class="col-md-5 col-sm-5 wow fadeInRight">
+	               <h3>Diverse collections in all K-12 subjects</h3>
+	               <p class="lead">Teachers remix resources with quiz questions to create classroom-ready collections for courses in core K-12 subject areas.</p>
+	            </div>
+	            <div class="clearfix"></div>
+	         </div>
+	      </div>
+	   </section>
+	   <section class="studentsBannerContainer">
+	      <div class="studentBannerImage">
+	         <img src="../images/logout-page/myclassesstudent21b.jpg" class="img-responsive"/>
+	      </div>
+	      <div class="studentBannerCaptions">
+	         <h2 class="wow fadeInLeft">Share Gooru collections with students so they can learn at their own pace.</h2>
+	      </div>
+	   </section>
+	   <section class="studentsPreferences">
+	      <div class="container">
+	         <div class="row">
+	            <div class="preferencesInnerBlock">
+	               <h2>Every student has different preferences across subject areas and resource formats.</h2>
+	               <div class="col-md-5 col-sm-5 borderRight wow fadeInLeft">
+	                  <h3>610,038+</h3>
+	                  <p class="lead">Collections views by subject</p>
+	                  <img src="../images/logout-page/CollectionViews.png" class="img-responsive"/> 
+	               </div>
+	               <div class="col-md-7 col-sm-7 wow fadeInRight">
+	                  <div class="resourcesViewed">
+	                     <h3>3,029,835+</h3>
+	                     <p class="lead">Resources studied by students</p>
+	                     <p class="lead"><img src="../images/logout-page/ResourceViews.png" class="img-responsive"/></p>
+	                  </div>
+	               </div>
+	               <div class="clearfix"></div>
+	            </div>
+	         </div>
+	      </div>
+	   </section>
+	   <section class="joinCommunity">
+	      <div class="container">
+	         <div class="row">
+	            <h2>Join a community of K-12 educators</h2>
+	            <p class="lead">		   sharing their expertise to support personalized learning for all.</p>
+	            <p><g:Button styleName="primary" ui:field="loginBtn">Create your course</g:Button></p>
+	         </div>
+	      </div>
+	   </section>
 	</g:HTMLPanel>
+	<sg:LogoutFooter />
+</g:HTMLPanel>
 </ui:UiBinder> 
