@@ -12,7 +12,7 @@
 					<g:Button styleName="primary" ui:field="assignCourseBtn"
 						text="{i18n.GL0104}"></g:Button>
 				</g:FlowPanel>
-				<g:Anchor ui:field="createClassAchr">Create new class in My Classes</g:Anchor>
+				<g:Anchor ui:field="createClassAchr" styleName="createClassStyle">Create new class in My Classes</g:Anchor>
 				<g:Label styleName="errorMsgStyle" ui:field="errorMsgLbl">Please select
 					class</g:Label>
 			</div>
@@ -40,6 +40,7 @@
 			</ul>
 		</g:HTMLPanel>
 		</g:HTMLPanel>
+		<div class="clearfix"></div>
 		<g:HTMLPanel styleName="courseDetailsContainer no-gutter" >
             <g:HTMLPanel ui:field="associatedClassesPnl">
 			<h3>This course is assigned to students in these classes:</h3>

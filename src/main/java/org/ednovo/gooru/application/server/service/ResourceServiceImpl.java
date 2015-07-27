@@ -202,24 +202,22 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	@Override
 	public CollectionItemDo createCollectionItem(String collectionId, String resourceId) {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_ITEM,collectionId);
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_ADDRESOURCE_COLLECTION,collectionId,resourceId);
 		try{
-		JSONObject createCollectionJsonObject=new JSONObject();
-		JSONObject itemTypeJsonObject=new JSONObject();
-		itemTypeJsonObject.put("itemType", ADDED);
-		createCollectionJsonObject.put("collectionItem", itemTypeJsonObject);
-		if (resourceId != null) {
-			createCollectionJsonObject.put("resourceId", resourceId);
-		}
 		getLogger().info("---createCollectionItem--  "+url);
-		getLogger().info("---createCollectionItem paylod - --  "+createCollectionJsonObject.toString());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),"");
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+		getLogger().info("--- getURL -- "+getURL);
+		
+		JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+		jsonResponseRepget=jsonResponseRep1.getJsonRepresentation();
 		}catch(Exception e){
 			logger.error("Exception::", e);
 		}
-		return deserializeCollectionItem(jsonRep);
+		return deserializeCollectionItem(jsonResponseRepget);
 	}
 
 	@Override
