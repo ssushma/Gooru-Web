@@ -308,7 +308,7 @@ public abstract class CollaboratorViewVc extends Composite {
 						AppClientFactory.fireEvent(new RemoveCollaboratorObjectEvent(toRemove));
 						if (collaboratorsDo.getStatus().equalsIgnoreCase("active")){
 							AppClientFactory.fireEvent(new SetCollabCountEvent("decrementBy", 1));
-							collectionDo.getMeta().setCollaboratorCount(collectionDo.getMeta().getCollaboratorCount() -1);
+							//collectionDo.getMeta().setCollaboratorCount(collectionDo.getMeta().getCollaboratorCount() -1);
 						}
 						setCollabCount(1, "decrementBy");
 						btnRemoveCollab.setEnabled(true);
