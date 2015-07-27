@@ -36,9 +36,6 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter.IsStudentClassProxy;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportPresenter;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport.AssessmentProgressReportChildView;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnCourseReportView;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets.SlnUnitReportView;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -79,7 +76,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 
 	StudentClassReportPresenter studentClassReportPresenter = null;
 
-	ClasspageDo classpageDo = new ClasspageDo();
+	ClasspageDo classpageDo = null;
 
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT_VIEW)
@@ -113,7 +110,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
-
+		classpageDo = null;
 		getClasspageDetails();
 
 		//Call Event for Setting Confirm popup
@@ -137,7 +134,6 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		super.onReset();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
-
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -159,7 +155,9 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			update.show();
 			update.center();
 		}
-		loadNavigationPage();
+		if(classpageDo!=null) {
+ 	       loadNavigationPage();
+ 	   }
 	}
 
 	private void loadNavigationPage() {
@@ -170,8 +168,10 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		clearSlot(CLASSPAGE_REPORT_TAB);
 		if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LEARNING_MAP_ITEM)) {
 			addToSlot(LEARNING_MAP_TAB, studentClassLearningMapPresenter);
+			studentClassLearningMapPresenter.setData();
 		} else if(loadPage.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_REPORT_ITEM)) {
 			addToSlot(CLASSPAGE_REPORT_TAB, studentClassReportPresenter);
+			studentClassReportPresenter.setData();
 		}
 
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
@@ -226,6 +226,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 				} else {
 					getView().setProgressBarVisibility(true);
 				}
+				loadNavigationPage();
 			}
 			
 			@Override
@@ -272,6 +273,16 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			}
 			
 		});
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassUiHandlers#setClassPageDo()
+	 */
+	@Override
+	public void setClassPageDo() {
+		classpageDo.setStatus("active");
+		PlaceRequest request = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		AppClientFactory.getPlaceManager().revealPlace(request);
 	}
 	
 }

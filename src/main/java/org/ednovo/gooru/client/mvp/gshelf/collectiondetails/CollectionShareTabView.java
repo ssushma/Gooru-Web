@@ -88,9 +88,9 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel;
 	@UiField Button rbPublic;
 	@UiField Label lblPublishPending,lblPublish;
-     
+
 	CollectionDo collectionDo;
-	
+
 	FolderDo folderDo;
 
 	public static final MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -101,20 +101,20 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 
 	private String embedurl="";
 	private String embedBitlyUrl="";
-	
+
 	private static final String FOLDER="Folder";
 	private static final String VIEW="view";
 	private static final String PRIVATE="private";
 	private static final String SHARABLE="anyonewithlink";
 	private static final String PUBLIC="public";
-	
+
 	private static final String CONFIRM_MESSAGE = i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
 
 	private Map<String, String> collectionShareMap=null;
 	private CollectionShareAlertPopup collectionShareAlertPopup;
-	
+
 	private CollectionConfirmationPopup collectionConfirmationPopup;
-	
+
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 
 	/**
@@ -131,7 +131,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			rbPublic.addClickHandler(new OnPublicClick());
 		}else{
 			publicShareFloPanel.addMouseOverHandler(new MouseOverHandler() {
-				
+
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
 					toolTipPopupPanel.clear();
@@ -141,12 +141,12 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 					toolTipPopupPanel.show();
 				}
 			});
-			
+
 			publicShareFloPanel.addMouseOutHandler(new MouseOutHandler() {
-				
+
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
-				toolTipPopupPanel.hide();
+					toolTipPopupPanel.hide();
 				}
 			});
 		}
@@ -154,13 +154,14 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		publishedPanel.setVisible(false);
 		lblPublishPending.setVisible(false);
 	}
-	
-	
+
+
 	@Override
 	public void setCollectionData(CollectionDo collectionDo, FolderDo folderDo) {
 		this.collectionDo = collectionDo;
 		this.folderDo = folderDo;
 		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
+		AppClientFactory.printInfoLogger("folder-publish:"+folderDo.getPublishStatus());
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		AppClientFactory.printInfoLogger("view:"+view);
 		// Hiding private functionality in 1.6
@@ -173,9 +174,9 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		if (AppClientFactory.isContentAdmin() || collectionDo
 				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
 						.getGooruUId())){
-		    getUiHandlers().disableCollabaratorOptions(true);
+			getUiHandlers().disableCollabaratorOptions(true);
 		}else if(collectionDo.isIsCollaborator()){
-			 getUiHandlers().disableCollabaratorOptions(false);
+			getUiHandlers().disableCollabaratorOptions(false);
 		}
 		if(collectionDo.getSharing()!=null){
 			if(collectionDo.getSharing().equals(PUBLIC)) {
@@ -183,36 +184,36 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				privateShareFloPanel.addStyleName("inActive");
 				linkShareFloPanel.addStyleName("inActive");
 				//isSharable = true;
-					if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equalsIgnoreCase("reviewed")){
-							rbPublic.setVisible(false);
-							lblPublishPending.setVisible(false);
-							publishedPanel.setVisible(true);
-					}
+				if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equalsIgnoreCase("reviewed")){
+					rbPublic.setVisible(false);
+					lblPublishPending.setVisible(false);
+					publishedPanel.setVisible(true);
+				}
 			}else if(collectionDo.getSharing()!=null && collectionDo.getSharing().equals(PRIVATE)) {
 				privateShareFloPanel.removeStyleName("inActive");
 				publicShareFloPanel.addStyleName("inActive");
 				linkShareFloPanel.addStyleName("inActive");
 				//isSharable = false;
-					if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equalsIgnoreCase("pending")){
-							//selectPrivateResource("pending");
-							rbPublic.setVisible(false);
-							lblPublishPending.setVisible(true);
-							publishedPanel.setVisible(false);
-					}else{
-						rbPublic.setVisible(true);
-						lblPublishPending.setVisible(false);
-						publishedPanel.setVisible(false);
-					}
+				if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equalsIgnoreCase("pending")){
+					//selectPrivateResource("pending");
+					rbPublic.setVisible(false);
+					lblPublishPending.setVisible(true);
+					publishedPanel.setVisible(false);
+				}else{
+					rbPublic.setVisible(true);
+					lblPublishPending.setVisible(false);
+					publishedPanel.setVisible(false);
+				}
 			}else {
 				linkShareFloPanel.removeStyleName("inActive");
 				privateShareFloPanel.addStyleName("inActive");
 				publicShareFloPanel.addStyleName("inActive");
 				//isSharable = true;
 				if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equalsIgnoreCase("pending")){
-						//selectPrivateResource("pending");
-						rbPublic.setVisible(false);
-						lblPublishPending.setVisible(true);
-						publishedPanel.setVisible(false);
+					//selectPrivateResource("pending");
+					rbPublic.setVisible(false);
+					lblPublishPending.setVisible(true);
+					publishedPanel.setVisible(false);
 				}else{
 					rbPublic.setVisible(true);
 					lblPublishPending.setVisible(false);
@@ -220,9 +221,9 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public void showPublishBtn(){
 		rbPublic.setVisible(true);
 		lblPublishPending.setVisible(false);
@@ -310,7 +311,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	public void setShareUrl(String shareUrl) {
 		this.shareUrl=shareUrl;
 	}
-	
+
 	/**
 	 * @author Search Team Updated sharing type , change the collection as
 	 *         private
@@ -321,82 +322,82 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			MixpanelUtil.Organize_Visibility_Private();
 			final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id");
 			if(privateShareFloPanel.getStyleName().contains("inActive")) {
-			AppClientFactory.getInjector().getClasspageService().getCollectionClasspageAssoc(collectionId, new SimpleAsyncCallback<List<ClassPageCollectionDo>>() {
+				AppClientFactory.getInjector().getClasspageService().getCollectionClasspageAssoc(collectionId, new SimpleAsyncCallback<List<ClassPageCollectionDo>>() {
 
-				@Override
-				public void onSuccess(List<ClassPageCollectionDo> result) {
+					@Override
+					public void onSuccess(List<ClassPageCollectionDo> result) {
 
-					if(!result.isEmpty()){
+						if(!result.isEmpty()){
 
-						StringBuilder sb = new StringBuilder();
-						for(int i=0;i<result.size();i++){
-							if (result.size() >1){
-								if(i==result.size()-1){
-									sb.append(" ").append(i18n.GL_GRR_AND()).append(" ");
-								}else{
-									if (i==0){
+							StringBuilder sb = new StringBuilder();
+							for(int i=0;i<result.size();i++){
+								if (result.size() >1){
+									if(i==result.size()-1){
+										sb.append(" ").append(i18n.GL_GRR_AND()).append(" ");
 									}else{
-										sb.append(i18n.GL_GRR_COMMA()).append(" ");
+										if (i==0){
+										}else{
+											sb.append(i18n.GL_GRR_COMMA()).append(" ");
+										}
 									}
 								}
+								sb.append(result.get(i).getTitle());
 							}
-							sb.append(result.get(i).getTitle());
-						}
-						if(result.size()>1){
-							sb.append(" ").append(i18n.GL1154()).append(".");
-						}else{
-							sb.append(" ").append(i18n.GL0102()).append(".");
-						}
-						
-						 String titles=sb.toString();
-						 collectionConfirmationPopup=new CollectionConfirmationPopup();
-						 collectionConfirmationPopup.getClassPageNames().setText(titles);
-						 collectionConfirmationPopup.getOkButtonMethod().addClickHandler(new ClickHandler() {
-							 
-							@Override
-							public void onClick(ClickEvent event) {
-										collectionConfirmationPopup.hide();
-										privateShareFloPanel.removeStyleName("inActive");
-										publicShareFloPanel.addStyleName("inActive");
-										linkShareFloPanel.addStyleName("inActive");
-										updateShare(PRIVATE);
-									//	selectPrivateResource(PRIVATE);
+							if(result.size()>1){
+								sb.append(" ").append(i18n.GL1154()).append(".");
+							}else{
+								sb.append(" ").append(i18n.GL0102()).append(".");
 							}
-						});
-						 
-						 
-					}else{
-						
-						collectionShareAlertPopup = new CollectionShareAlertPopup() {
-							@Override
-							public void setPublicFromAlert() {
-								if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
+
+							String titles=sb.toString();
+							collectionConfirmationPopup=new CollectionConfirmationPopup();
+							collectionConfirmationPopup.getClassPageNames().setText(titles);
+							collectionConfirmationPopup.getOkButtonMethod().addClickHandler(new ClickHandler() {
+
+								@Override
+								public void onClick(ClickEvent event) {
+									collectionConfirmationPopup.hide();
 									privateShareFloPanel.removeStyleName("inActive");
 									publicShareFloPanel.addStyleName("inActive");
 									linkShareFloPanel.addStyleName("inActive");
 									updateShare(PRIVATE);
-									//selectPrivateResource(PRIVATE);
+									//	selectPrivateResource(PRIVATE);
 								}
-								
-							}
-						};
-						if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
-							 collectionShareAlertPopup.confirmPopup();
+							});
+
+
 						}else{
-							privateShareFloPanel.removeStyleName("inActive");
-							publicShareFloPanel.addStyleName("inActive");
-							linkShareFloPanel.addStyleName("inActive");
-							updateShare(PRIVATE);
-							//selectPrivateResource(PRIVATE);
+
+							collectionShareAlertPopup = new CollectionShareAlertPopup() {
+								@Override
+								public void setPublicFromAlert() {
+									if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
+										privateShareFloPanel.removeStyleName("inActive");
+										publicShareFloPanel.addStyleName("inActive");
+										linkShareFloPanel.addStyleName("inActive");
+										updateShare(PRIVATE);
+										//selectPrivateResource(PRIVATE);
+									}
+
+								}
+							};
+							if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
+								collectionShareAlertPopup.confirmPopup();
+							}else{
+								privateShareFloPanel.removeStyleName("inActive");
+								publicShareFloPanel.addStyleName("inActive");
+								linkShareFloPanel.addStyleName("inActive");
+								updateShare(PRIVATE);
+								//selectPrivateResource(PRIVATE);
+							}
 						}
 					}
-				}
-			});
-			
+				});
+
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Search Team Updated sharing type , change the collection as
 	 *         anyonewithlink
@@ -418,14 +419,14 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 					}
 				};
 				if(collectionDo.getSharing().equalsIgnoreCase(PUBLIC)){
-					 collectionShareAlertPopup.confirmPopup();
+					collectionShareAlertPopup.confirmPopup();
 				}else{
 					linkShareFloPanel.removeStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					publicShareFloPanel.addStyleName("inActive");
 					updateShare(SHARABLE);
 				}
-				
+
 			}
 		}
 	}
@@ -435,7 +436,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	 * @param share
 	 */
 	private void updateShare(final String share) {
-		
+
 		AppClientFactory.getInjector().getResourceService().updateCollection(collectionDo.getCollectionType(), collectionDo.getGooruOid(), null, share, null, null, null, null, null, new org.ednovo.gooru.application.client.SimpleAsyncCallback<Void>() {
 
 			@Override
@@ -472,19 +473,19 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 						privateShareFloPanel.addStyleName("inActive");
 						linkShareFloPanel.addStyleName("inActive");
 						AppClientFactory.fireEvent(new CollectionAssignShareEvent(share,"",false,null));
-						
+
 					}else{
 						publishedPanel.setVisible(false);
 						rbPublic.setVisible(false);
 						lblPublishPending.setVisible(true);
 					}
-					
+
 				}
-					
-				
+
+
 			}
 		});
-		
+
 	}
 
 	/**
@@ -522,8 +523,8 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 							}
 						};
 						success.setPopupTitle(i18n.GL0501());
-	                    success.setDescText(i18n.GL1917()+"<br>"+i18n.GL1918());
-	                    success.setPositiveButtonText(i18n.GL0190());
+						success.setDescText(i18n.GL1917()+"<br>"+i18n.GL1918());
+						success.setPositiveButtonText(i18n.GL0190());
 					}
 				};
 				collectionShareAlertPopup.setPublicMsgData(collectionDo);
@@ -539,6 +540,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	public HTMLPanel getCollaboratorPanel() {
 		return collaboratorPanel;
 	}
-	
-	
+
+
 }

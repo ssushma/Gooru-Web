@@ -342,8 +342,9 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 							"Untitled Assessment":"Untitled External Assessment"),clickedItemType);
 		}else{
 			getView().getCollectionLabel().setVisible(true);
-			getView().getCollectionLabel().setText(folderObj.getTitle());
-			
+			getView().getCollectionLabel().setText((folderObj!=null&&folderObj.getGooruOid()!=null)?folderObj.getTitle():(clickedItemType.equalsIgnoreCase("collection")?
+					"Untitled Collection":clickedItemType.equalsIgnoreCase("assessment")?
+							"Untitled Assessment":"Untitled External Assessment"));
 		}
 		if(folderObj!=null && folderObj.getGooruOid()!=null){
 			//when displaying the existing data at that time we are opening the content tab.
@@ -441,6 +442,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		clearSlot(RIGHT_SLOT);
 		getMyCollectionsRightClusterPresenter().setTabItems(2, folderObj.getType(),folderObj);
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
+		getView().getTitleIconContainer().setVisible(true);
 		if(FOLDER.equalsIgnoreCase(view)){
 			getView().getCollectionLabel().setVisible(true);
 			getView().getCollectionLabel().setText(folderObj.getTitle());

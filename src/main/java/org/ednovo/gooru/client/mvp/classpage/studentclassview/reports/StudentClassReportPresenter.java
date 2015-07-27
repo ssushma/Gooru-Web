@@ -65,15 +65,15 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		getView().onLoad();
 	}
 
 	@Override
 	public void onReset() {
-		setData();
+		
 	}
 	
 	public void setData() {
+		getView().setContentVisibility(false);
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
 		String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
@@ -85,6 +85,7 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
 						getView().setMetadataContent(dataList);
 						getView().setReportData(dataList);
+						getView().setContentVisibility(true);
 					}
 					@Override
 					public void onFailure(Throwable caught) {
@@ -110,6 +111,7 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 					@Override
 					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
 						getView().setReportData(dataList);
+						getView().setContentVisibility(true);
 					}
 					@Override
 					public void onFailure(Throwable caught) {
@@ -120,6 +122,7 @@ public class StudentClassReportPresenter extends PresenterWidget<IsStudentClassR
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 			getView().setMetadataContent(null);
 			getView().setReportData(new ArrayList<PlanProgressDo>());
+			getView().setContentVisibility(true);
 		}
 	}
 	

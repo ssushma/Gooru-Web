@@ -102,10 +102,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		this.addResourcePresenter = addResourcePresenter;
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
-
 		this.searchAddResourceToCollectionPresenter = searchAddResourceToCollectionPresenter;
 		getView().setCollectionContentPresenter(this);
-	
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
 			@Override
 			public void insertCollectionItemInAddResource(CollectionItemDo collectionItem, RefreshType refreshType) {

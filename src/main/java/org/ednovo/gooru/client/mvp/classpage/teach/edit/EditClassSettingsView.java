@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -94,7 +95,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 
 	@UiField SpanPanel classCodeTxtPanel;
 
-	@UiField TextBox classTitleTextLbl,shareUrlTxtLbl;
+	@UiField TextBox classTitleTextLbl,shareUrlTxtLbl,fullTxtBox;
 
 	@UiField Button saveBtn,uploadImagePanel;
 
@@ -115,6 +116,8 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	boolean sharing;
 
 	private static final String SHORTEN_URL = "shortenUrl";
+	
+	private static final String DECODERAWURL="decodeRawUrl";
 	
 	ClasspageDo classpageDo;
 
@@ -292,8 +295,12 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 
 		classImage.getElement().setId("thumbnailImage");
 		classImage.setVisible(false);
-		shareUrlTxtLbl.setEnabled(false);
+		shareUrlTxtLbl.setReadOnly(false);
 		shareUrlTxtLbl.getElement().getStyle().setBackgroundColor("#FFF");
+
+		fullTxtBox.setReadOnly(true);
+		fullTxtBox.getElement().setAttribute("style", "background-color: #FFF");
+		StringUtil.setAttributes(fullTxtBox, true);
 
 
 		classCodePanel.add(image);
@@ -491,6 +498,9 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	public void setShortenUrl(Map<String, String> shortenUrl) {
 		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
 			shareUrlTxtLbl.setText(shortenUrl.get(SHORTEN_URL));
+		}
+		if(shortenUrl != null && shortenUrl.containsKey(DECODERAWURL)){
+			fullTxtBox.setText(shortenUrl.get(DECODERAWURL));
 		}
 	}
 
