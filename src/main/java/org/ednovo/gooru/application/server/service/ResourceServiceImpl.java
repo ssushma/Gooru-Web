@@ -778,7 +778,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         @Override
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> hazardsAndMediaMap) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> hazardsAndMediaMap,String mediaType) throws GwtException {
 		
 			categoryStr = categoryStr.trim();
 			NewResourceDo newResourceDo = new NewResourceDo();
@@ -792,41 +792,20 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			List<Integer> standardIds=new ArrayList<Integer>();
 			for(CodeDo item:standards)
 			{
-				/* CodeDo codeObj=new CodeDo();
-				 codeObj.setCode(item.getCode());
-				 codeObj.setCodeId(item.getCodeId());
-				 standardsDo.add(codeObj);*/
 				standardIds.add(item.getCodeId());
 			}
-			//newResourceDo.setTaxonomySet(standardsDo);
 			newResourceDo.setStandardIds(standardIds);
 			}
 			newResourceDo.setDescription(descriptionStr);
 			newResourceDo.setCategory(categoryStr);
 			newResourceDo.setStop(endTime);
 
-			/*ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
-			checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
-			educationalOfObj.setSelected(true);
-			educationalOfObj.setValue(edcuationalUse);
-			arrayOfEducational.add(educationalOfObj);
-			if(!edcuationalUse.equalsIgnoreCase(CHOOSE))
-			newResourceDo.setEducationalUse(arrayOfEducational);*/
-			
 			List<Integer> educationalUseList=new ArrayList<Integer>();
 			if(edcuationalUse!=null&&!edcuationalUse.equalsIgnoreCase("")){
 				educationalUseList.add(Integer.parseInt(edcuationalUse));
 			}
 			
 			newResourceDo.setEducationalUseIds(educationalUseList);
-			
-			/*ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
-			checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
-			momentsOfObj.setSelected(true);
-			momentsOfObj.setValue(momentsOfLearning);
-			arrayOfMoments.add(momentsOfObj);
-			if(!momentsOfLearning.equalsIgnoreCase(CHOOSE))
-			newResourceDo.setMomentsOfLearning(arrayOfMoments);*/
 			List<Integer> momentoflearningList=new ArrayList<Integer>();
 			if(momentsOfLearning!=null&&!momentsOfLearning.equalsIgnoreCase("")){
 				momentoflearningList.add(Integer.parseInt(momentsOfLearning));
@@ -842,7 +821,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			
 			
 			newResourceDo.setSkillIds(centurySkillsList);
-			
+			newResourceDo.setMediaType(mediaType);
 			ResourceFormatDo resourceFormat = new ResourceFormatDo();
 			resourceFormat.setValue(categoryStr);
 
@@ -865,9 +844,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			Map<String,Object> resourceMap=new HashMap<String,Object>();
 			resourceMap.put(RESOURCE, newResourceDo);
 
-			if(tagList!=null && tagList.size()!=0 ){
-				resourceMap.put(RESOURCE_TAGS, tagList);
-			}
+			
 			JsonRepresentation jsonRep = null,jsonResponseRepget=null;
 			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr);
 			Map<String, String> params = new LinkedHashMap<String, String>();
@@ -1076,6 +1053,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			newResourceDo.setStandardIds(standardIds);
 			newResourceDo.setMediaFeatureIds(mediaFeaturesList);
+			newResourceDo.setMediaType(collectionItemDo.getMediaType());
 			Map<String,Object> resourceMap=new HashMap<String,Object>();
 			resourceMap.put(RESOURCE, newResourceDo);
 
