@@ -4337,7 +4337,7 @@ right:1px;
 	content:"";
 	position: relative;
 	top: 0;
-	right: 80px;
+	right: 82px;
 	bottom: 0;
 	font-size: 60%;
 	line-height: 30px;
@@ -4373,6 +4373,12 @@ right:1px;
 }
 .shareMainContainer .assign2Class .assignCourseBlock{
 	border-left: 1px solid #ddd; 
+	padding: 15px 15px !important;
+}
+
+.shareMainContainer .createClassStyle{
+	display: inline-block;
+	margin-top: 4px;
 }
 
 .shareMainContainer .errorMsgStyle{

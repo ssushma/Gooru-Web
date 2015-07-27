@@ -58,8 +58,6 @@ public class InsertCollectionItemInAddResourceEvent extends GwtEvent<InsertColle
 
 	@Override
 	protected void dispatch(InsertCollectionItemInAddResourceHandler handler) {
-
 		handler.insertCollectionItemInAddResource(collectionItem, refreshType);
 	}
-
 }
