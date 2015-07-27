@@ -276,6 +276,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 		folderDo.setTitle(createDo.getTitle());
 		folderDo.setCollectionType(createDo.getCollectionType());
+		folderDo.setDescription(createDo.getDescription());
 		folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
 		folderDo.setDepthOfKnowledge(StringUtil.getCheckBoxSelectedDo(getView().getDepthOfKnowledgeContainer().getSelectedValue()));
 		folderDo.setSkills(StringUtil.getStandardFos(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest()));
