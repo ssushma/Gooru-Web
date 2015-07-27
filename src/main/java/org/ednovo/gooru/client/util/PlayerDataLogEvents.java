@@ -195,7 +195,7 @@ public class PlayerDataLogEvents {
 			if(sessionId!=null){
 				eventJsonObject.put(SESSIONID, new JSONString(sessionId));
 			}else{
-				AppClientFactory.printInfoLogger("sessionId is null @ getDataLogSessionObject ");
+				printLogs("getDataLogSessionObject",sessionId,null);
 			}
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
@@ -484,7 +484,7 @@ public class PlayerDataLogEvents {
 			eventJsonObject.put("eventId", new JSONString(eventId));
 			eventJsonObject.put("eventName", new JSONString(eventName));
 			eventJsonObject.put("sessionId", new JSONString(sessionId));
-			AppClientFactory.printInfoLogger("sessionId is @ collectionPlayStartEvent : "+sessionId);
+			printLogs("collectionPlayStartEvent", sessionId,eventId);
 			eventJsonObject.put("sessionStatus", new JSONString(sessionStaus));
 			eventJsonObject.put("contentGooruId", new JSONString(contentGooruId));
 			eventJsonObject.put("type", new JSONString(type));
@@ -713,7 +713,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(eventName));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
-		AppClientFactory.printInfoLogger("sessionId is @ triggerCommentDataLogEvent : "+sessionId);
+		printLogs("triggerCommentDataLogEvent", sessionId, null);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -741,7 +741,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_RATE));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
-		AppClientFactory.printInfoLogger("sessionId is @ triggerRatingDataLogEvent : "+sessionId);
+		printLogs("triggerRatingDataLogEvent",sessionId, null);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -768,7 +768,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_REVIEW));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
-		AppClientFactory.printInfoLogger("sessionId is @ triggerReviewDataLogEvent :"+sessionId);
+		printLogs("triggerReviewDataLogEvent",sessionId, null);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -875,5 +875,17 @@ public class PlayerDataLogEvents {
 		return ""+unixTimeStamp;
 	}-*/;
 
+	public static void printLogs(String from, String sessionId, String eventId){
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
+		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
+
+		AppClientFactory.printInfoLogger("@ : "+from+"courseId : " + courseId
+				+ "-- unitId : " + unitId + "-- Lesson Id : " + lessonId
+				+ "--cid : " + cid + "-- isStudent:" + isStudent
+				+ "-- sessionId : " + sessionId + "-- eventId : " + eventId+"-- userId : "+AppClientFactory.getLoggedInUser().getGooruUId());
+	}
 
 }
