@@ -27,11 +27,13 @@ package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.ClassListWidget;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -44,6 +46,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -68,6 +71,9 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	@UiField Button assignCourseBtn;
 	@UiField VerticalPanel classListPnl;
 	@UiField Label errorMsgLbl;
+	@UiField HTMLPanel assinPnl,associatedClassesPnl;
+	@UiField PPanel titlePanel;
+	@UiField Anchor createClassAchr;
 	
 	/**
 	 * Class constructor
@@ -78,6 +84,9 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 		setWidget(uiBinder.createAndBindUi(this));
 		classListBox.addChangeHandler(new SelectClassHandler());
 		errorMsgLbl.setVisible(false);
+		assinPnl.getElement().setId("addCourseToClasPopup");
+		titlePanel.getElement().getStyle().setFontSize(18, Unit.PX);
+		titlePanel.setText("Select classes that will use this course");
 		classListPnl.getElement().getStyle().setWidth(100, Unit.PCT);
 	}
 	
@@ -123,6 +132,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 
 	@Override
 	public void showClassesInList(ArrayList<ClasspageDo> classPageDo, String courseId) {
+		associatedClassesPnl.setVisible(true);
 		if(classPageDo!=null){
 			classListPnl.clear();
 			for(ClasspageDo classObj:classPageDo){
@@ -143,4 +153,19 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 		classListPnl.clear();
 		errorMsgLbl.setVisible(false);
 	}
+	
+	@UiHandler("createClassAchr")
+	public void createNewClass(ClickEvent clickEvent){
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,new String[] { "view", "myclass"});
+	}
+
+	/**
+	 * @return the associatedClassesPnl
+	 */
+	@Override
+	public HTMLPanel getAssociatedClassesPnl() {
+		return associatedClassesPnl;
+	}
+	
+	
 }
