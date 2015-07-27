@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -71,7 +71,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	@Inject
 	private FolderServiceAsync folderServiceAsync;
 
-	@ContentSlot public static final Type<RevealContentHandler<?>> CENTURYSKILLS = new Type<RevealContentHandler<?>>();  
+	@ContentSlot public static final Type<RevealContentHandler<?>> CENTURYSKILLS = new Type<RevealContentHandler<?>>();
 
 	CenturySkillsPresenter centurySkillsPresenter;
 
@@ -86,9 +86,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	final String COURSE="Course";
 
 	private String UNIT = "Unit";
-	
+
 	private String VIEW ="view";
-	
+
 	private static final String FOLDER = "Folder";
 
 	private String type;
@@ -128,9 +128,9 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		// TODO Auto-generated method stub
 		super.onReset();
 		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);
-		
+
 			getCollectionDo();
-	
+
 	}
 	@Override
 	protected void onReveal(){
@@ -190,7 +190,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void createAndSaveCourseDetails(final CreateDo createObj,final boolean isCreateUnit,final TreeItem currentShelfTreeWidget) {
 		final String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		final String o2=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);	
+		final String o3=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 		String parentId = null;
 		if(getViewType().equalsIgnoreCase(FOLDER)){
 			final Map<String, String> params= new HashMap<String, String>();
@@ -234,7 +234,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					result.setSkills(StringUtil.getStandardFos(centurySkillsPresenter.getView().getSelectedValuesFromAutoSuggest()));
 					result.setLanguageObjective(getView().getLanguageObjectiveContainer().getLanguageObjective());
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(result, true,currentShelfTreeWidget);
-					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType()); 
+					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(result,createObj.getCollectionType());
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().enableCreateCourseButton(true); // To enable Create course button passing true value.
 					myCollectionsRightClusterPresenter.setTabItems(2, createObj.getCollectionType(), result);
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
@@ -260,9 +260,11 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		}
 	}
 	@Override
-	public void showStandardsPopup(String standardVal, String standardsDesc) {
+	public void showStandardsPopup(String standardVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
 		Window.enableScrolling(false);
 		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setCollectionInfoPresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
 		addToPopupSlot(standardsPopupPresenter);
 	}
 	@Override
@@ -271,7 +273,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		String o2= AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3= AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-	
+
 		folderDo.setTitle(createDo.getTitle());
 		folderDo.setCollectionType(createDo.getCollectionType());
 		folderDo.setAudience(StringUtil.getCheckBoxSelectedDo(getView().getAudienceContainer().getSelectedValues()));
@@ -299,7 +301,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				public void onSuccess(Void result) {
 					getView().resetBtns();
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderDo,false,currentShelfTreeWidget);
-					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType()); 
+					myCollectionsRightClusterPresenter.updateBreadCrumbsTitle(folderDo,createDo.getCollectionType());
 					myCollectionsRightClusterPresenter.setTabItems(2, createDo.getCollectionType(), folderDo);
 					AppClientFactory.getPlaceManager().revealCurrentPlace();
 				}
@@ -380,12 +382,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	@Override
-	public void invokeTaxonomyPopup(String viewType,List<LiPanelWithClose> collectionLiPanelWithCloseArray) { 
+	public void invokeTaxonomyPopup(String viewType,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
 		taxonomyPopupPresenter.setSelectedUlContainer(collectionLiPanelWithCloseArray);
 		taxonomyPopupPresenter.getTaxonomySubjects(viewType, 1, "subject", 0, 20);
 		addToPopupSlot(taxonomyPopupPresenter);
 	}
-	
+
 	public void callCourseInfoTaxonomy(){
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
@@ -402,11 +404,11 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			}
 		});
 	}
-	/*public void addTaxonomyData(UlPanel selectedUlContainer) { 
+	/*public void addTaxonomyData(UlPanel selectedUlContainer) {
 		getView().addTaxonomyData(selectedUlContainer);
 	}*/
-	
-	@Override 
+
+	@Override
 	public CenturySkillsPresenter getCenturySkillsPresenters(){
 		return centurySkillsPresenter;
 	}
@@ -421,10 +423,16 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
    		String view =AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		return view==null?COURSE:view;
    	}
-   	
+
    	@Override
 	public TreeItem getSelectedWidget() {
-		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget(); 
+		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget();
 		return shelfTreeWidget;
 	}
+
+
+   	public void setSelectedStandards(List<Map<String,String>> standListArray){
+   		getView().displaySelectedStandards(standListArray);
+   	}
+
 }
