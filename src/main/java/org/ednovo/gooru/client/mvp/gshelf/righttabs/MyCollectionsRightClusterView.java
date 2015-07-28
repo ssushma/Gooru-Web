@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.FolderInfoWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
@@ -84,6 +85,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	DeletePopupViewVc deletePopup = null;
 	
 	DeleteContentPopup deleteContentPopup = null;
+	
+	ArrayList<ClasspageDo> classesList = new ArrayList<>();
 	
 	final String ACTIVE="active";
 	private static final String O1_LEVEL = "o1";
@@ -695,11 +698,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * Invokes the delete functionality if the course is not associated with class.
 	 */
 	@Override
-	public void invokeContentDeletePopup(String o1CourseId, String o2UnitId,String o3LessonId,Integer classpageList) {
-		if(classpageList>0){
-			new AlertContentUc("Oops", "This course is associated with the class.");
+	public void invokeContentDeletePopup(String o1CourseId, String o2UnitId,String o3LessonId,String assessmentCollectionId,ArrayList<ClasspageDo> classesList) {
+		this.classesList = classesList;
+		if(classesList.size()>0){
+			invokeMyCollDeletePopUp(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId,true);
 		}else{
-			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,"");
+			invokeMyCollDeletePopUp(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId,false);
 		}
 	}
 	/**
@@ -721,22 +725,31 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 		String assessmentCollectionId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		String view = AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 		if(currentTypeView.equalsIgnoreCase(COLLECTION) || currentTypeView.contains(ASSESSMENT)){ 
-			invokeMyCollDeletePopUp(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId); 
+			if(FOLDER.equalsIgnoreCase(view)){
+				invokeMyCollDeletePopUp(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId,false);
+			}else{
+				getUiHandlers().isAssignedToClassPage(currentTypeView,o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
+			}
 		}else{
 			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
 		}
-		/*if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
-			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
-		}else{
-			getUiHandlers().isAssignedToClassPage(o1CourseId,o2UnitId,o3LessonId); 
-		}*/
 	}
 	
 
-	private void invokeMyCollDeletePopUp(String currentTypeView, final String o1CourseId, final String o2UnitId, final String o3LessonId, final String assessmentCollectionId) {
+	/**
+	 * This method invokes for Collection/assessment delete at my collections/ my content.
+	 * @param currentTypeView
+	 * @param o1CourseId
+	 * @param o2UnitId
+	 * @param o3LessonId
+	 * @param assessmentCollectionId
+	 * @param isTiedWithClasses
+	 */
+	private void invokeMyCollDeletePopUp(String currentTypeView, final String o1CourseId, final String o2UnitId, final String o3LessonId, final String assessmentCollectionId, boolean isTiedWithClasses) {
 		deletePopup = new DeletePopupViewVc() {
-			
+
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 				if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){
@@ -754,13 +767,41 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		};
 		
 		deletePopup.setPopupTitle(i18n.GL0748());
-
-		if(currentTypeView.contains(ASSESSMENT)){
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle().trim()));
-			deletePopup.setDescText(i18n.GL3039());
+		if(isTiedWithClasses && (currentTypeView.equalsIgnoreCase(COLLECTION) || currentTypeView.equalsIgnoreCase(ASSESSMENT))){
+			StringBuffer sb = new StringBuffer();
+			String anchString = "<a href=\"{0}\" target=\"_blank\">{1}</a>";
+			String classpageUrl = "#newteach&c-id={0}&report-type=course-view&classpageId={1}&subpage-view=reports&page-view=teach-dashboard";
+			int count = classesList.size(); 
+			for (int i=0; i<count;i++){
+				String url = StringUtil.generateMessage(classpageUrl,o1CourseId, classesList.get(i).getClassUid());
+				if (count==1){
+					sb.append(StringUtil.generateMessage(anchString, url,classesList.get(i).getName()));
+				}else{
+					if (i == (count-1)){
+						sb.append(i18n.GL_GRR_AND()+" "+StringUtil.generateMessage(anchString, url,classesList.get(i).getName()));
+					}else{
+						sb.append(StringUtil.generateMessage(anchString, url,classesList.get(i).getName()) + ", ");
+					}
+				}
+			}
+			
+			String remaining = count==1?(" "+i18n.GL1155()):(" "+i18n.GL1154()+i18n.GL_SPL_EXCLAMATION());
+			if(currentTypeView.contains(ASSESSMENT)){
+				deletePopup.setNotes("This assessment is currently being used in your"+" "+sb.toString()+" "+remaining);
+				deletePopup.setDescText(i18n.GL3039());
+			}else{
+				deletePopup.setNotes(i18n.GL1156()+" "+sb.toString()+" "+remaining);
+				deletePopup.setDescText(i18n.GL1238());
+			}
+			
 		}else{
-			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL1020(), folderObj.getTitle().trim()));
-			deletePopup.setDescText(i18n.GL1238());
+			if(currentTypeView.contains(ASSESSMENT)){
+				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(), folderObj.getTitle().trim()));
+				deletePopup.setDescText(i18n.GL3039());
+			}else{
+				deletePopup.setNotes(StringUtil.generateMessage(i18n.GL1020(), folderObj.getTitle().trim()));
+				deletePopup.setDescText(i18n.GL1238());
+			}
 		}
 		deletePopup.setDeleteValidate("delete");
 		deletePopup.setPositiveButtonText(i18n.GL0190());
@@ -768,9 +809,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		deletePopup.setPleaseWaitText(i18n.GL0339());
 		deletePopup.show();
 		deletePopup.center();
-
-		
 	}
+	
+	
 	public void hideDropDown(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
