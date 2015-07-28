@@ -472,8 +472,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 						publicShareFloPanel.removeStyleName("inActive");
 						privateShareFloPanel.addStyleName("inActive");
 						linkShareFloPanel.addStyleName("inActive");
-						AppClientFactory.fireEvent(new CollectionAssignShareEvent(share,"",false,null));
-
 					}else{
 						publishedPanel.setVisible(false);
 						rbPublic.setVisible(false);
@@ -481,6 +479,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 					}
 
 				}
+				AppClientFactory.fireEvent(new CollectionAssignShareEvent(share,"",false,null));
 
 
 			}
