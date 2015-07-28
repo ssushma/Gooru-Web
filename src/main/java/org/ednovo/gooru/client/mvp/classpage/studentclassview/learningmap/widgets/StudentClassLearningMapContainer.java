@@ -30,6 +30,8 @@ public class StudentClassLearningMapContainer extends Composite {
 	@UiField PPanel unitName;
 	@UiField Label numericOrder;
 	
+	private String unitId = null;
+	
 	ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
 	
 	int start = 0, end = 0;
@@ -45,8 +47,9 @@ public class StudentClassLearningMapContainer extends Composite {
 
 	public StudentClassLearningMapContainer(PlanProgressDo planProgressDo, int count) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.unitId = planProgressDo.getGooruOId();
 		setCircleContainerItems(planProgressDo, count);
-		unitBlock.addClickHandler(new LessonPageRedirection(planProgressDo.getGooruOId()));
+		unitBlock.addClickHandler(new LessonPageRedirection(unitId));
 	}
 	
 	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count) {
@@ -89,7 +92,7 @@ public class StudentClassLearningMapContainer extends Composite {
 	private void setData(int startPoint, int endPoint) {
 		circleContainer.clear();
 		for(int z=startPoint;z<endPoint;z++) {
-			circleContainer.add(new StudentClassLearningMapCircle(dataList.get(z), dataList.get(z).getGooruOId()));
+			circleContainer.add(new StudentClassLearningMapCircle(dataList.get(z), unitId));
 		}
 		setArrows();
 	}
