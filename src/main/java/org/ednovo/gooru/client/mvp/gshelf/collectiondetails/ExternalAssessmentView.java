@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -139,7 +140,9 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		createOrUpDate.setDescription(txaAssessmentDescription.getText());
 		createOrUpDate.setCollectionType(ASSESSMENTURL);
 		createOrUpDate.setSharing(selectedSharing);
-		createOrUpDate.setIsLoginRequired(isLoginRequired);
+		CollectionSettingsDo settings=new CollectionSettingsDo();
+		settings.setIsLoginRequired(isLoginRequired);
+		createOrUpDate.setSettings(settings);
 		
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblErrorMessage.setVisible(true);
@@ -235,11 +238,11 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			}else{
 				pnlSharable.addStyleName(SELECTEDSTYLE);
 			}
-			String isLoginRequired=folderObj.getIsLoginRequired();
-			if("yes".equalsIgnoreCase(isLoginRequired)){
-				lblRequiresYes.addStyleName(SELECTEDSTYLE);
-			}else{
+			String isLoginRequired=folderObj.getSettings().getIsLoginRequired();
+			if("no".equalsIgnoreCase(isLoginRequired)){
 				lblRequiresNo.addStyleName(SELECTEDSTYLE);
+			}else{
+				lblRequiresYes.addStyleName(SELECTEDSTYLE);
 			}
 		}else{
 			txtAssessmentTitle.getElement().setAttribute("placeHolder", "UntitledExternalAssessment");
