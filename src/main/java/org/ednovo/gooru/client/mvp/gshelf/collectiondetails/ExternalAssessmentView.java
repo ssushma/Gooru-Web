@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.gshelf.collectiondetails;
 
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -43,6 +44,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 	
 	final String SELECTEDSTYLE="setSelected",ASSESSMENTURL="assessment/url";
 	final String PUBLIC="public",PRIVATE="private",ANYONEWITHLINK="anyonewithlink";
+	final String UNTITLEDASSESSMENTURLTITLE="UntitledExternalAssessment";
 	
 	String selectedSharing,isLoginRequired;
 	
@@ -138,7 +140,9 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		createOrUpDate.setDescription(txaAssessmentDescription.getText());
 		createOrUpDate.setCollectionType(ASSESSMENTURL);
 		createOrUpDate.setSharing(selectedSharing);
-		createOrUpDate.setIsLoginRequired(isLoginRequired);
+		CollectionSettingsDo settings=new CollectionSettingsDo();
+		settings.setIsLoginRequired(isLoginRequired);
+		createOrUpDate.setSettings(settings);
 		
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblErrorMessage.setVisible(true);
@@ -216,8 +220,15 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		removeSelectedStyle(false);
 		this.folderObj = folderObj;
 		if(folderObj!=null){
-			txtAssessmentTitle.setText(folderObj.getTitle());
-			txtAssessmentURL.setText(folderObj.getUrl());
+			if(folderObj.getTitle().equalsIgnoreCase(UNTITLEDASSESSMENTURLTITLE)){
+				txtAssessmentTitle.getElement().setAttribute("placeHolder",UNTITLEDASSESSMENTURLTITLE);
+				txtAssessmentURL.getElement().setAttribute("placeHolder", "Paste URL here");
+				txtAssessmentTitle.setText("");
+				txtAssessmentURL.setText("");
+			}else{
+				txtAssessmentTitle.setText(folderObj.getTitle());
+				txtAssessmentURL.setText(folderObj.getUrl());
+			}
 			txaAssessmentDescription.setText(folderObj.getDescription());
 			String sharingVal=folderObj.getSharing()!=null?folderObj.getSharing():"";
 			if(PUBLIC.equalsIgnoreCase(sharingVal)){
@@ -227,15 +238,17 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			}else{
 				pnlSharable.addStyleName(SELECTEDSTYLE);
 			}
-			String isLoginRequired=folderObj.getIsLoginRequired();
-			if("yes".equalsIgnoreCase(isLoginRequired)){
-				lblRequiresYes.addStyleName(SELECTEDSTYLE);
-			}else{
+			String isLoginRequired=folderObj.getSettings().getIsLoginRequired();
+			if("no".equalsIgnoreCase(isLoginRequired)){
 				lblRequiresNo.addStyleName(SELECTEDSTYLE);
+			}else{
+				lblRequiresYes.addStyleName(SELECTEDSTYLE);
 			}
 		}else{
-			txtAssessmentTitle.setText("UntitledExternalAssessment");
-			txtAssessmentURL.setText("Paste URL here");
+			txtAssessmentTitle.getElement().setAttribute("placeHolder", "UntitledExternalAssessment");
+			txtAssessmentURL.getElement().setAttribute("placeHolder", "Paste URL here");
+			txtAssessmentTitle.setText("");
+			txtAssessmentURL.setText("");
 			txaAssessmentDescription.setText("");
 			pnlSharable.addStyleName(SELECTEDSTYLE);
 			lblRequiresNo.addStyleName(SELECTEDSTYLE);

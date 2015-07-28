@@ -134,8 +134,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
 		lblError.setVisible(false);
 		remixPopupTabPnl.getElement().setId("gShelfMainContainer");
-		mycollectionsLbl.setText("My Collections");
-		mycontentLbl.setText("My Courses");
+		mycollectionsLbl.setText(i18n.GL0180());
+		mycontentLbl.setText(i18n.GL3285());
 		urlparams= new HashMap<String, String>();
 		myCollDefault.setVisible(false);
 		btnAddExisting.setEnabled(true);
@@ -331,13 +331,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			folderTreePanel.add(loadingImage());
 			pageNum=1;
 			folderTreePanel.clear();
-			String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+			setPopupTitle();
+			/*String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
 			String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
 				|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
 				|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
 				addtocollHeaderText.setText(i18n.GL3224());
-				addingTextLbl.setText(i18n.GL3214());
+				addingTextLbl.setText(i18n.GL3462_18());
 			}else{
 				if(isCopySelected){
 					addtocollHeaderText.setText(i18n.GL3462_13());
@@ -347,9 +348,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					addingTextLbl.setText(i18n.GL3462_16());
 				}else{
 				addtocollHeaderText.setText(i18n.GL3223());
-				addingTextLbl.setText(i18n.GL3213());
+				addingTextLbl.setText(i18n.GL3462_17());
 				}
-			}
+			}*/
 		}
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
@@ -434,13 +435,26 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void displayNoCollectionsMsg(String searchType){
-		if(!COLLECTION.equalsIgnoreCase(searchType)){
+		setPopupTitle();
+		if(searchType == null){
+			disableAddButton();
 			dropdownListContainerScrollPanel.setVisible(false);
 			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
 			lblEmptyErrorMessage.setVisible(true);
-			lblEmptyErrorMessage.setText("There are no collections to add this resource.");
-			btnAddExisting.setVisible(false);
-		}else if(COLLECTION.equalsIgnoreCase(searchType)){
+			lblEmptyErrorMessage.setText(i18n.GL3462_21());
+		}
+		else if(FOLDER.equalsIgnoreCase(searchType)){
+			enableAddButton();
+			dropdownListContainerScrollPanel.setVisible(false);
+			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
+			lblEmptyErrorMessage.setVisible(true);
+			/*lblEmptyErrorMessage.setText(i18n.GL3462_20());*/
+		}else if(COURSE.equalsIgnoreCase(searchType)){
+			disableAddButton();
+			dropdownListContainerScrollPanel.setVisible(false);
+			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
+			lblEmptyErrorMessage.setVisible(true);
+			lblEmptyErrorMessage.setText(i18n.GL3462_22());
 			urlparams.clear();
 			folderTreePanel.clear();
 		}
@@ -627,7 +641,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName(),this.urlparams,isFromMyCourse);
 					}else{
 						lblError.setVisible(true);
-						lblError.setText("Oops! can copy only questions for Assessments.");
+						lblError.setText(i18n.GL3462_19());
 						isAddingInProgress=true;
 					}
 				}else{
@@ -748,6 +762,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		// TODO Auto-generated method stub
 		this.isFromMyCourse = value;
 	}
+	
+	public void disableAddButton(){
+		btnAddExisting.setEnabled(false);
+		btnAddExisting.getElement().addClassName("disabled");
+	}
 
 	@Override
 	public void enableAddButton() {
@@ -801,5 +820,26 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		params.put("folderId", folderId);	
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	}
+	public void setPopupTitle(){
+		String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+			|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+			|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
+			addtocollHeaderText.setText(i18n.GL3224());
+			addingTextLbl.setText(i18n.GL3462_18());
+		}else{
+			if(isCopySelected){
+				addtocollHeaderText.setText(i18n.GL3462_13());
+				addingTextLbl.setText(i18n.GL3462_14());
+			}else if(isMoveSelected){
+				addtocollHeaderText.setText(i18n.GL3462_15());
+				addingTextLbl.setText(i18n.GL3462_16());
+			}else{
+			addtocollHeaderText.setText(i18n.GL3223());
+			addingTextLbl.setText(i18n.GL3462_17());
+			}
+		}
 	}
 }
