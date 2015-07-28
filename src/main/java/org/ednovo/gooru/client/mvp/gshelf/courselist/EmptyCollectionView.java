@@ -70,7 +70,4 @@ public class EmptyCollectionView extends Composite {
 	public void setAddQuestionBtn(Button addQuestionBtn) {
 		this.addQuestionBtn = addQuestionBtn;
 	}
-	
-	
-
 }
