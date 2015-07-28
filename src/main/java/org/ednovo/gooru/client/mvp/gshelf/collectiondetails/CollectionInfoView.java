@@ -285,6 +285,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
                             ulSelectedItems.add(liPanelWithClose);
 
@@ -438,6 +439,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
                             ulSelectedItems.add(liPanelWithClose);
@@ -496,6 +498,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
                             ulSelectedItems.add(liPanelWithClose);
                         }
