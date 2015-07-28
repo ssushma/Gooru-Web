@@ -57,7 +57,7 @@
 	         <div class="row">
 	            <div class="preferencesInnerBlock">
 	               <h2>Every student has different preferences across subject areas and resource formats.</h2>
-	               <div class="col-md-5 col-sm-5 borderRight wow fadeInLeft">
+	               <div class="col-md-5 col-sm-5 border-right-line wow fadeInLeft">
 	                  <h3>610,038+</h3>
 	                  <p class="lead">Collections views by subject</p>
 	                  <img src="../images/logout-page/CollectionViews.png" class="img-responsive"/> 

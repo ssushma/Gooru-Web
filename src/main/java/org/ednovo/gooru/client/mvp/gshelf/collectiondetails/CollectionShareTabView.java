@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionConfirmationPopup;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionShareAlertPopup;
@@ -48,6 +49,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -98,6 +100,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	private String shareUrl="";
 
 	private String shareBitlyUrl="";
+	private static final String GOORU_UID = "gooruuid";
 
 	private String embedurl="";
 	private String embedBitlyUrl="";
@@ -163,7 +166,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
 		AppClientFactory.printInfoLogger("folder-publish:"+folderDo.getPublishStatus());
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
-		AppClientFactory.printInfoLogger("view:"+view);
+		getUserType();
 		// Hiding private functionality in 1.6
 		if(view!=null && FOLDER.equalsIgnoreCase(view)){
 			privateShareFloPanel.setVisible(false);
@@ -310,6 +313,36 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	@Override
 	public void setShareUrl(String shareUrl) {
 		this.shareUrl=shareUrl;
+	}
+
+	/**
+	 * To get the User Type and Hiding public panel for Child user
+	 */
+	public void getUserType() {
+		AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
+			@Override
+			public void onSuccess(V2UserDo result) {
+				if(result.getUser().getAccountTypeId()!=null) {
+					//hiding public panel for child user 
+					if(result.getUser().getAccountTypeId()==2) {
+						rbPublicPanel.setVisible(false);
+						publicShareFloPanel.setVisible(false);
+						linkShareFloPanel.setVisible(true);
+						//privateShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+					} else {
+						displayAllVisiblePanels();	
+						}
+				} else {
+					displayAllVisiblePanels();
+				}
+			}			
+		});
+	}
+
+	private void displayAllVisiblePanels() {
+		rbPublicPanel.setVisible(true);
+		publicShareFloPanel.setVisible(true);
+		linkShareFloPanel.setVisible(true);
 	}
 
 	/**

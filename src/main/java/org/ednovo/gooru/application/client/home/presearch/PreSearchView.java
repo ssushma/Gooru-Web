@@ -1,3 +1,4 @@
+
 package org.ednovo.gooru.application.client.home.presearch;
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
@@ -110,7 +111,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private HandlerRegistration handlerRegistration=null;
 
 	@UiField Button  btnGrades, btnSubjects, btnBrowseContent, btnBrowseStandard, btnGradesCaret, btnSubjectCaret;
-	@UiField Anchor ancLogin, lblSampleReports,btnLearnAboutApproach;
+	@UiField Anchor ancLogin, btnLearnAboutApproach;
 	@UiField HTMLPanel panelAlreadyHave, panelGrades, buttonGroup, panelGradeGroup, panelSubjectGroup, flexTable;
 	@UiField UlPanel ulSubjectPanel;
 	@UiField Label lblErrorMessage;
@@ -283,17 +284,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		if (panelGrades.isVisible()){
 			setGradeVisibility();
 		}
-	}
-
-	@UiHandler("lblSampleReports")
-	public void onClickSampleReports(ClickEvent event){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-			@Override
-			public void onSuccess() {
-				Window.scrollTo(0, 0);
-				SampleReportView sampleReportView= new SampleReportView();
-			}
-		});
 	}
 
 	@UiHandler("ancLogin")
