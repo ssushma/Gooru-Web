@@ -36,7 +36,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClassPopupView;
-import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -60,11 +60,14 @@ import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  * 
  * @fileName : ClassCodeView.java
@@ -100,6 +103,8 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	@UiField H4Panel txtClassCodeH4;
 	
 	@UiField PPanel txtStudyP, txtQuizP, txtTeachP;
+	
+	@UiField Anchor signupAcr;
 	
 	AlertMessageUc alertMessageUc;
 	
@@ -146,11 +151,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	 *
 	 */
 	private void setCreateClassVisibility() {
-		if (AppClientFactory.isAnonymous()){
-			btnCreateClass.setVisible(false);
-		}else{
-			btnCreateClass.setVisible(true);
-		}
+		btnCreateClass.setVisible(true);
 	}
 	/**
 	 * @function setText 
@@ -263,25 +264,37 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			MixpanelUtil.ClickOnNewClassPage();
-			newPopup = new NewClassPopupView()  {
-				@Override
-				public void createNewClasspage(String title, String grade, boolean sharing) {
-					MixpanelUtil.Create_NewClasspage();
-					CollectionDo collectionDo = new CollectionDo();
-					collectionDo.setTitle(title);
-					collectionDo.setCollectionType("classpage");
-					AppClientFactory.getInjector().getClasspageService().createClass(title,grade,sharing,new SimpleAsyncCallback<ClasspageDo>() {
-						@Override
-						public void onSuccess(ClasspageDo result) {
-							String[] uri=result.getUri().split("/");
-							final String classpageId =  uri[uri.length-1];
-							String title = result.getName();
-							OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
-							newPopup.ClosePopup();
-						}
-					});
-				}
-			};
+			if(AppClientFactory.isAnonymous()) {
+				LoginPopupUc loginPopupUc=new LoginPopupUc() {
+					@Override
+					public	void onLoginSuccess(){
+						
+					}
+				};
+				Window.enableScrolling(false);
+				loginPopupUc.show();
+				loginPopupUc.setGlassEnabled(true);
+			} else {
+				newPopup = new NewClassPopupView()  {
+					@Override
+					public void createNewClasspage(String title, String grade, boolean sharing) {
+						MixpanelUtil.Create_NewClasspage();
+						CollectionDo collectionDo = new CollectionDo();
+						collectionDo.setTitle(title);
+						collectionDo.setCollectionType("classpage");
+						AppClientFactory.getInjector().getClasspageService().createClass(title,grade,sharing,new SimpleAsyncCallback<ClasspageDo>() {
+							@Override
+							public void onSuccess(ClasspageDo result) {
+								String[] uri=result.getUri().split("/");
+								final String classpageId =  uri[uri.length-1];
+								String title = result.getName();
+								OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
+								newPopup.ClosePopup();
+							}
+						});
+					}
+				};
+			}
 		}
 	}
 	/**
@@ -485,4 +498,13 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	public static native void animate() /*-{
 		new $wnd.WOW().init();
 	}-*/;
+	
+	@UiHandler("signupAcr")
+	public void clickSignupAcr(ClickEvent event) {
+		Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
+		map.put("callback", "signup");
+		map.put("type", "1");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+	}
 }
