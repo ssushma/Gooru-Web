@@ -1086,6 +1086,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		liPanelWithClose.setId(Long.parseLong(standard.get("selectedCodeId")));
 		liPanelWithClose.setName(standard.get("selectedCodeVal"));
 		liPanelWithClose.setRelatedId(Integer.parseInt(standard.get("selectedCodeId")));
+		liPanelWithClose.setDifferenceId(Integer.parseInt(standard.get("selectedDifferenceId")));
 		liPanelWithClose.getElement().setAttribute("tag", tagValue);
 		return liPanelWithClose;
 	}

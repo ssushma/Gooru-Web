@@ -420,6 +420,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			lessonId=AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
 		}
 		getUiHandlers().getChildFolderItemsForCourse(courseId, unitId, lessonId, typeVal, shelfTreeWidget.getFolderOpenedStatus(),treeChildSelectedItem);
+		shelfTreeWidget.setFolderOpenedStatus(true);
 	}
 	/* (non-Javadoc)
 	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
