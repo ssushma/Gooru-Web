@@ -420,8 +420,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 			}
 		}
-		getLogger().info("before-homeendpoint"+getPropertyByKey(HOME_ENDPOINT));
-		getLogger().info("after-homeEndPoint"+getHomeEndPoint());
 		/*String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid);
 		getLogger().info("getShortenShareUrl :::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());*/
@@ -431,8 +429,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		} catch (JSONException e1) {
 			logger.error("Exception-----"+e1);
 		}
-		getLogger().info("-------getShortenShareUrl url-------------"+url);
-		getLogger().info("---------getShortenShareUrl payload----------"+fullUrlObject.toString());
+		getLogger().info("--getShortenShareUrl url--"+url);
+		getLogger().info("--getShortenShareUrl payload--"+fullUrlObject.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestUsername(), fullUrlObject.toString());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
