@@ -50,6 +50,7 @@ import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -74,7 +75,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> implements IsStudyClassCodeView{
 	
 	
-	@UiField Anchor moreLinkAnr;
+	@UiField Anchor moreLinkAnr,courseAnr;
 	
 	@UiField TextBoxWithPlaceholder txtClassCode;
 	
@@ -111,6 +112,11 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 		btnCreateClass.getElement().setId("btnCreateClass");
 		btnCreateClass.getElement().setAttribute("alt",i18n.GL1771());
 		btnCreateClass.getElement().setAttribute("title",i18n.GL1771());
+		
+		moreLinkAnr.setText(i18n.GL3462_12());
+		moreLinkAnr.setHref("http://support.goorulearning.org/hc/en-us");
+		moreLinkAnr.setTarget("_blank");
+		
 		
 		
 		txtClassCode.setPlaceholder(i18n.GL1785());
@@ -346,6 +352,15 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 			alertMessageUc.hide();
 		}
 		setEnterBtnVisiblity(goBtn,false);
+	}
+	
+	@UiHandler("moreLinkAnr")
+	public void onClickSupport(ClickEvent event){
+	}
+	
+	@UiHandler("courseAnr")
+	public void onCourseCreate(ClickEvent event){
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 	}
 
 }
