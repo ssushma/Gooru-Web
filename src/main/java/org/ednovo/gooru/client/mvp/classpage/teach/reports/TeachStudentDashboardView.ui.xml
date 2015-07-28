@@ -27,7 +27,7 @@
 			         <g:HTMLPanel styleName="col-md-6 col-sm-6" ui:field="scoreLinks">
 						<g:HTMLPanel styleName="my-classes-attempt-menu pull-right">
 							<g:HTMLPanel><span class="thinkGreenSquare"></span> <strong>Correct</strong></g:HTMLPanel>
-							<g:HTMLPanel><span class="orangeSquare"></span> <strong>InCorrect</strong></g:HTMLPanel>
+							<g:HTMLPanel><span class="orangeSquare"></span> <strong>Incorrect</strong></g:HTMLPanel>
 						</g:HTMLPanel>
 					 </g:HTMLPanel>
 					 <g:HTMLPanel styleName="col-md-6 col-sm-6" ui:field="collectionLinks">

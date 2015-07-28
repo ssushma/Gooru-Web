@@ -622,7 +622,7 @@
 	margin:0 0 44px 0;
 	color: #4a4a4a;
 }
-#myContentLoggedout section.studentsPreferences .borderRight{
+#myContentLoggedout section.studentsPreferences .border-right-line{
 	border-right:1px solid #d8d8d8;
 }
 #myContentLoggedout section.studentsPreferences .resourcesViewed{
@@ -732,7 +732,7 @@
 #myContentLoggedout section.studentsPreferences {
     padding: 30px 40px;
 }
-#myContentLoggedout section.studentsPreferences .borderRight {
+#myContentLoggedout section.studentsPreferences .border-right-line {
     border-right:none;
 	border-bottom:1px solid #d8d8d8;
 	padding-bottom:50px;
@@ -816,7 +816,7 @@
 #myContentLoggedout section.studentsPreferences {
     padding: 30px 40px;
 }
-#myContentLoggedout section.studentsPreferences .borderRight {
+#myContentLoggedout section.studentsPreferences .border-right-line {
     border-right:none;
 	border-bottom:1px solid #d8d8d8;
 	padding-bottom:50px;
@@ -878,7 +878,7 @@
 #myContentLoggedout section.studentsPreferences {
     padding: 30px 40px;
 }
-#myContentLoggedout section.studentsPreferences .borderRight {
+#myContentLoggedout section.studentsPreferences .border-right-line {
     border-right:none;
 	border-bottom:1px solid #d8d8d8;
 	padding-bottom:50px;

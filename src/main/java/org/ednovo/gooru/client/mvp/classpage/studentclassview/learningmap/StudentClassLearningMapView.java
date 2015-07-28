@@ -361,4 +361,9 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	public void setEmptyContainerText(String userName) {
 		emptyContainer.setUserName(userName);
 	}
+
+	@Override
+	public void showProgressMapBar(boolean isVisible) {
+		colorPanel.setVisible(isVisible);
+	}
 }

@@ -42,4 +42,5 @@ public interface IsStudentClassLearningMapView extends IsViewWithHandlers<Studen
 	public void setContentVisiblity(boolean isVisible);
 	public void setEmptyContainerVisiblity(boolean isVisible);
 	public void setEmptyContainerText(String userName);
+	public void showProgressMapBar(boolean isVisible);
 }
