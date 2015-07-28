@@ -77,8 +77,6 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		initWidget(uiBinder.createAndBindUi(this));
 		labelChoice.getElement().setId("lblLabelChoice");
 		labelChoice.setText(labelName);
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
@@ -96,8 +94,6 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		this.richTextData=richTextData;
 		labelChoice.getElement().setId("lblLabelChoice");
 		labelChoice.setText(labelName);
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
@@ -156,15 +152,11 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		 errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		   if(richTextData!=null){
 			   answerTextBox.setText(richTextData);
-			   answerTextBox.getElement().setAttribute("alt", richTextData);
-			   answerTextBox.getElement().setAttribute("title", richTextData); 
 		   }	   
 	   }
 	public void setLabelName(String labelName){
 		labelChoice.setText(labelName);
 		labelChoice.getElement().setId("lblLabelChoice");
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");

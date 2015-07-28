@@ -306,7 +306,6 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 					Window.enableScrolling(true);
 				}
 				this.hide();
-				getUiHandlers().setClassPageDo();
 				setPreviewClassMode(false);
 			}
 		};
@@ -326,5 +325,10 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@Override
 	public void disableSwitchBtn(boolean isDisable) {
 		planProgressPanel.setVisible(!isDisable);
+	}
+
+	@Override
+	public void closeJoinPopup(boolean isVisible) {
+		joinClassPopup.setVisible(isVisible);
 	}
 }

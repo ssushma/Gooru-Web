@@ -77,4 +77,6 @@ public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHan
 	
 	void setEmptyContainerVisiblity(boolean isVisible);
 	
+	void closeJoinPopup(boolean isVisible);
+	
 }
