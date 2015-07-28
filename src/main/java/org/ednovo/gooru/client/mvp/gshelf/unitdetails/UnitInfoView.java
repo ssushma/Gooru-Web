@@ -506,12 +506,12 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		//This will push the previous selected values to map
 		if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
 			//To set default selection if the user is already selected any subject
-			for (final CourseSubjectDo courseSubjectDo : courseObj.getTaxonomyCourse()) {
-				if(selectedValues.containsKey(courseSubjectDo.getSubjectId())){
-					selectedValues.get(courseSubjectDo.getSubjectId()).add(courseSubjectDo.getName());
+			for (final CourseSubjectDo courseSubjectDo : courseObj.getTaxonomyCourse()){
+				if(selectedValues.containsKey(courseSubjectDo.getId())){
+					selectedValues.get(courseSubjectDo.getId()).add(courseSubjectDo.getName());
 				}else{
-					selectedValues.put(courseSubjectDo.getSubjectId(), new ArrayList<String>());
-					selectedValues.get(courseSubjectDo.getSubjectId()).add(courseSubjectDo.getName());
+					selectedValues.put(courseSubjectDo.getId(), new ArrayList<String>());
+					selectedValues.get(courseSubjectDo.getId()).add(courseSubjectDo.getName());
 				}
 				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
 				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
