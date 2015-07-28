@@ -82,7 +82,7 @@ public interface ClasspageService extends BaseService {
 	
 	public void removeActiveStudentFromClass(String classId,boolean visiblity,String gooruUid) throws GwtException,ServerDownException;
 	
-	public void v3StudentJoinIntoClass(String classCode) throws GwtException, ServerDownException;
+	public Boolean v3StudentJoinIntoClass(String classCode) throws GwtException, ServerDownException;
 	
 	public ClasspageDo v3UpdateClass(String classId,String title,String grade,String fileName,String sharing,String score,String courseId) throws GwtException,ServerDownException;
 	

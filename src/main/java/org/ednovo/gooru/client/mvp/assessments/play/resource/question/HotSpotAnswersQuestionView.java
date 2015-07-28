@@ -164,11 +164,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 
 		if(answerOptionCount.containsKey(answerId) && answerOptionCount.get(answerId)!=null){
 			questionAnswerOptionView.isChecked=true;
-			if(isCorrect){
-				questionAnswerOptionView.answerChoiceResult.addStyleName(SELECTED_RADIO);
-			}else{
-				questionAnswerOptionView.answerChoiceResult.addStyleName(SELECTED_RADIO);
-			}
+			questionAnswerOptionView.answerChoiceResult.addStyleName(SELECTED_RADIO);
 		}
 	}
 

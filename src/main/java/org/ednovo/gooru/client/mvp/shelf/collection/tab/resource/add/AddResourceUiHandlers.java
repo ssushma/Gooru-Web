@@ -56,7 +56,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageHandler, EventHandler{
 
-	void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr,Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> mediafeaturesAndHazards);
+	void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr,Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> mediafeaturesAndHazards, String mediaType);
 	
 	void getResourceMetaInfo(String url);
 	
@@ -107,5 +107,7 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	public static final Type<RevealContentHandler<?>> SLOT_QUESTION_TYPE = new Type<RevealContentHandler<?>>();
 	
 	public void getDepthOfKnowledges();
+
+	
 
 }

@@ -192,31 +192,18 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		tabViewContainer.clear();
 		fromweb.setText(i18n.GL0887());
-		fromweb.getElement().setAttribute("alt", i18n.GL0887());
-		fromweb.getElement().setAttribute("title", i18n.GL0887());
 		fromfile.setText(i18n.GL0888());
-		fromfile.getElement().setAttribute("alt", i18n.GL0888());
-		fromfile.getElement().setAttribute("title", i18n.GL0888());
 		googleDrive.setText(i18n.GL2009());
-		googleDrive.getElement().setAttribute("alt", i18n.GL2009());
-		googleDrive.getElement().setAttribute("title", i18n.GL2009());
 		fromwsearch.setText(i18n.GL1916());
-		fromwsearch.getElement().setAttribute("alt", i18n.GL1916());
-		fromwsearch.getElement().setAttribute("title", i18n.GL1916());
 		multiplechoice.setText(i18n.GL0305());
-		multiplechoice.getElement().setAttribute("alt", i18n.GL0305());
 		multiplechoice.getElement().setAttribute("title", i18n.GL0305());
 		truefalase.setText(i18n.GL0306());
-		truefalase.getElement().setAttribute("alt", i18n.GL0306());
 		truefalase.getElement().setAttribute("title", i18n.GL0306());
 		truefalseText.setText(i18n.GL0890());
-		truefalseText.getElement().setAttribute("alt", i18n.GL0890());
 		truefalseText.getElement().setAttribute("title", i18n.GL0890());
 		openended.setText(i18n.GL0307());
-		openended.getElement().setAttribute("alt", i18n.GL0307());
 		openended.getElement().setAttribute("title", i18n.GL0307());
 		multipleAnswerAnc.setText(StringUtil.generateMessage(i18n.GL2017()));
-		multipleAnswerAnc.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL2017()));
 		multipleAnswerAnc.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL2017()));
 		fromweb.getElement().setId("lnkFromWeb");
 		fromfile.getElement().setId("lnkFromFile");
@@ -256,23 +243,16 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		hotTextRORadioButton.getElement().setId("rdhotTextRORadioButton");
 		hotTextHLRadioButton.getElement().setId("rdhotTextHLRadioButton");
 		hotSpotImg.setText(i18n.GL3231_1());
-		hotSpotImg.getElement().setAttribute("alt", i18n.GL3231_1());
 		hotSpotImg.getElement().setAttribute("title", i18n.GL3231_1());
 		hotSpotWord.setText(i18n.GL4002());
-		hotSpotWord.getElement().setAttribute("alt", i18n.GL4002());
-		hotSpotWord.getElement().setAttribute("title", i18n.GL4002());
 		hotSpotImageTabButton.getElement().setId("hotSpotImageTabButton");
 		hotSpotImageTabButton.addClickHandler(new ShowHotSpotWidget());
 		hotSpotWordTabButton.getElement().setId("hotSpotWordTabButton");
 		hotSpotWordTabButton.addClickHandler(new ShowHotSpotWordWidget());
 		hotTextRO.setText(i18n.GL3212_1());
-		hotTextRO.getElement().setAttribute("alt", i18n.GL3212_1());
-		hotTextRO.getElement().setAttribute("title", i18n.GL3212_1());
 		hotTextRO.getElement().setId("lnkHotText");
 		
 		hotTextHL.setText(i18n.GL4003());
-		hotTextHL.getElement().setAttribute("alt", i18n.GL4003());
-		hotTextHL.getElement().setAttribute("title", i18n.GL4003());
 		hotTextHL.getElement().setId("lnkHotText");
 		
 		//assessments tabs
@@ -432,7 +412,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 
-		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final List<StandardFo> centurySkill,final String hostname,final List<String> tagList,final Map<String,List<Integer>> hazardsAndMediaFeatures) {
+		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final List<StandardFo> centurySkill,final String hostname,final List<String> tagList,final Map<String,List<Integer>> hazardsAndMediaFeatures,final String mediaType) {
 
 			this.setVisible(false);
 			
@@ -469,7 +449,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 					@Override
 					public void addWebResource() {
-						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures);
+						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures,mediaType);
 						webResourcePreview.hide();
 						webResourcePreview.setGlassEnabled(false);
 						appPopUp.hide();
@@ -498,7 +478,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				webResourcePreview.show();
 
 			}else{
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures);
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures,mediaType);
 			}
 		}
 
@@ -575,7 +555,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 						if(type==10 || type==11){
 							getUiHandlers().setHSEditData();
 						}
-
 						showEditQuestionResourceView();
 
 					}
@@ -940,8 +919,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		if(clickType.equalsIgnoreCase("Url")){
 			tabViewContainer.clear();
 			Window.enableScrolling(false);
-			titleLbl.getElement().setAttribute("alt", i18n.GL0886());
-			titleLbl.getElement().setAttribute("title", i18n.GL0886());
 			titleLbl.setText(i18n.GL0886());
 			hideTabButtons(true, false, false);
 			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),false,null);
@@ -956,8 +933,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				disableEditMode(Cursor.POINTER);
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0893());
-				titleLbl.getElement().setAttribute("alt", i18n.GL0893());
-				titleLbl.getElement().setAttribute("title", i18n.GL0893());
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
 				addQuestionResourceWidget.getHideRightsToolTip();
 				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
@@ -1002,8 +977,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				disableEditMode(Cursor.DEFAULT);
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0304());
-				titleLbl.getElement().setAttribute("alt", i18n.GL0304());
-				titleLbl.getElement().setAttribute("title", i18n.GL0304());
 				int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 				if(type==10){
 					getUiHandlers().addSelectedQuestionType("HS_TXT",getAddResourceMetadata());
@@ -1060,8 +1033,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);
 			titleLbl.setText(i18n.GL0886());
-			titleLbl.getElement().setAttribute("alt", i18n.GL0886());
-			titleLbl.getElement().setAttribute("title", i18n.GL0886());
 			tabViewContainer.clear();
 			addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails(),appPopUp);
 			tabViewContainer.add(addSearchResourceWidget);
@@ -1559,11 +1530,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			@Override
 			public void run() {
 				addQuestionResourceWidget.questionNameTextArea.setText(collectionQuestionItemDo.getQuestionText());
-				addQuestionResourceWidget.questionNameTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getQuestionText());
-				addQuestionResourceWidget.questionNameTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getQuestionText());
 				addQuestionResourceWidget.explainationTextArea.setText(collectionQuestionItemDo.getExplanation());
-				addQuestionResourceWidget.explainationTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getExplanation());
-				addQuestionResourceWidget.explainationTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getExplanation());
 
 				if(addQuestionResourceWidget.addExplanationLabel.isVisible()){addQuestionResourceWidget.setExplanationContainer();}
 			}

@@ -169,6 +169,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 		studyButtonClickHandler=studyButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				AppClientFactory.printInfoLogger("On Take Assessment : Click");
 				Map<String,String> params = new LinkedHashMap<String,String>();
 				params.put("id", collectionDo.getGooruOid());
 				params = AssessmentsPreviewPlayerPresenter.setConceptPlayerParameters(params);

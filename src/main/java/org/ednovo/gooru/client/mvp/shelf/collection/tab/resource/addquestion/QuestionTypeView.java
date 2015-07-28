@@ -193,8 +193,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		questionTypeText.getElement().setId("lblQuestionTypeText");
 		questionText.getElement().setId("pnlQuestionText");
 		questionText.getElement().setInnerHTML(" "+i18n.GL0863());
-		questionText.getElement().setAttribute("alt", i18n.GL0863());
-		questionText.getElement().setAttribute("title", i18n.GL0863());
 		/*questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		questionNameTextArea.getElement().setAttribute("maxlength", "500");
 		questionNameTextArea.markAsBlankPanel.setVisible(false);*/
@@ -203,8 +201,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
 		errorMessageForQuestion.getElement().setId("errlblErrorMessageForQuestion");
 		addQuestionImg.setText(i18n.GL0860());
-		addQuestionImg.getElement().setAttribute("alt", i18n.GL0860());
-		addQuestionImg.getElement().setAttribute("title", i18n.GL0860());
 		addQuestionImg.getElement().setId("lnkAddQuestionImg");
 		addQuestImgContainer.getElement().setId("pnlAddQuestImgContainer");
 		questionHotSpotAnswerChoiceContainer.getElement().setId("pnlQuestionHotSpotAnswerChoiceContainer");
@@ -212,23 +208,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 		advancedContainer.getElement().setId("pnladvancedContainer");
 		addHintsAnc.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
-		addHintsAnc.getElement().setAttribute("alt", i18n.GL3210_1());
-		addHintsAnc.getElement().setAttribute("title", i18n.GL3210_1());
 		addExplanationAnc.setText( i18n.GL3208_1());
-		addExplanationAnc.getElement().setAttribute("alt",  i18n.GL3208_1());
-		addExplanationAnc.getElement().setAttribute("title", i18n.GL3208_1());
 		addDepthOfKnowledgeAnc.setText(i18n.GL3209_1());
-		addDepthOfKnowledgeAnc.getElement().setAttribute("alt", i18n.GL3209_1());
-		addDepthOfKnowledgeAnc.getElement().setAttribute("title", i18n.GL3209_1());
 		addStandardsAnc.setText(i18n.GL0575());
-		addStandardsAnc.getElement().setAttribute("alt", i18n.GL0575());
-		addStandardsAnc.getElement().setAttribute("title", i18n.GL0575());
 		addCenturyAnc.setText(i18n.GL3199());
-		addCenturyAnc.getElement().setAttribute("alt", i18n.GL3199());
-		addCenturyAnc.getElement().setAttribute("title", i18n.GL3199());
 		advancedLbl.setText(i18n.GL3096());
-		advancedLbl.getElement().setAttribute("alt", i18n.GL3096());
-		advancedLbl.getElement().setAttribute("title", i18n.GL3096());
 
 		/**
 		 * Explanation
@@ -242,8 +226,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 		explanationLabel.setText(" "+i18n.GL0867());
 		explanationLabel.getElement().setId("lblExplanationLabel");
-		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
-		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
 		explainationErrorLbl.getElement().setId("errlblExplainationErrorLbl");
 		/**
 		 * hints
@@ -263,8 +245,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 		depthOfKnowledgeHeader.setText(i18n.GL1693());
-		depthOfKnowledgeHeader.getElement().setAttribute("alt", i18n.GL1693());
-		depthOfKnowledgeHeader.getElement().setAttribute("title", i18n.GL1693());
 
 		chkLevelRecall.getElement().setId("chkChkLevelRecall");
 		chkLevelSkillConcept.getElement().setId("chkChkLevelSkillConcept");
@@ -272,21 +252,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		chkLevelExtendedThinking.getElement().setId("chkChkLevelExtendedThinking");
 
 		chkLevelRecall.setText(i18n.GL1645());
-		chkLevelRecall.getElement().setAttribute("alt", i18n.GL1645());
-		chkLevelRecall.getElement().setAttribute("title", i18n.GL1645());
 		chkLevelSkillConcept.setText(i18n.GL1646());
-		chkLevelSkillConcept.getElement().setAttribute("alt", i18n.GL1646());
-		chkLevelSkillConcept.getElement().setAttribute("title", i18n.GL1646());
 		chkLevelStrategicThinking.setText(i18n.GL1647());
-		chkLevelStrategicThinking.getElement().setAttribute("alt", i18n.GL1647());
-		chkLevelStrategicThinking.getElement().setAttribute("title", i18n.GL1647());
 		chkLevelExtendedThinking.setText(i18n.GL1648());
-		chkLevelExtendedThinking.getElement().setAttribute("alt", i18n.GL1648());
-		chkLevelExtendedThinking.getElement().setAttribute("title", i18n.GL1648());
 		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
 		depthOfKnoweldgeToolTip.setTitle("Question Mark");
-		depthOfKnoweldgeToolTip.getElement().setAttribute("alt", "Question Mark");
-		depthOfKnoweldgeToolTip.getElement().setAttribute("title", "Question Mark");
 
 		/**
 		 * Standards
@@ -299,8 +269,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		standardSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:85%;height:19px");
 
 		standardsDefaultText.setText(i18n.GL1682());
-		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
-		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
 		browseStandards.addClickHandler(new onBrowseStandardsClick());
 
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
@@ -313,8 +281,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		eHearderIconCentury.getElement().setId("eHearderIconCentury");
 		eHearderIconCentury.addClickHandler(new MinimizePanelsClickHandler());
 		centuryDefaultText.setText(i18n.GL3199());
-		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3199());
-		centuryDefaultText.getElement().setAttribute("title", i18n.GL3199());
 		centurySgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:85%;height:19px");
 
 		setCenturyData();
@@ -326,39 +292,23 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		rightsChkBox.getElement().setId("chkRights");
 		rightsLbl.setText(i18n.GL0869());
 		rightsLbl.getElement().setId("lblRightsLbl");
-		rightsLbl.getElement().setAttribute("alt", i18n.GL0869());
-		rightsLbl.getElement().setAttribute("title", i18n.GL0869());
 		lblContentRights.getElement().setId("epnlLblContentRights");
 		panelContentRights.getElement().setId("pnlPanelContentRights");
 		rightsContent.getElement().setId("pnlRightsContent");
 		agreeText.setText(i18n.GL0870());
 		agreeText.getElement().setId("lblAgreeText");
-		agreeText.getElement().setAttribute("alt", i18n.GL0870());
-		agreeText.getElement().setAttribute("title", i18n.GL0870());
 		commuGuideLinesAnr.setText(i18n.GL0871()+i18n.GL_GRR_COMMA());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
-		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
-		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
 		termsAndPolicyAnr.setText(i18n.GL0872()+i18n.GL_GRR_COMMA());
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
-		termsAndPolicyAnr.getElement().setAttribute("alt", i18n.GL0872());
-		termsAndPolicyAnr.getElement().setAttribute("title", i18n.GL0872());
 		privacyAnr.setText(" "+i18n.GL0873());
 		privacyAnr.getElement().setId("lnkPrivacyAnr");
-		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
-		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
 		andText.setText(" "+i18n.GL_GRR_AND().trim()+" ");
 		andText.getElement().setId("lblAndText");
-		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
-		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());
 		copyRightAnr.setText(" "+i18n.GL0875().trim());
 		copyRightAnr.getElement().setId("lnkCopyRightAnr");
-		copyRightAnr.getElement().setAttribute("alt", i18n.GL0875());
-		copyRightAnr.getElement().setAttribute("title", i18n.GL0875());
 		additionalText.setText(i18n.GL0874());
 		additionalText.getElement().setId("lblAdditionalText");
-		additionalText.getElement().setAttribute("alt", i18n.GL0874());
-		additionalText.getElement().setAttribute("title", i18n.GL0874());
 
 		/**
 		 * add
@@ -367,17 +317,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
 		loadingTextLbl.setText(i18n.GL0591().toLowerCase());
 		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
-		loadingTextLbl.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
-		loadingTextLbl.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 
 		addbutton.setText(i18n.GL0590());
-		addbutton.getElement().setAttribute("alt", i18n.GL0590());
-		addbutton.getElement().setAttribute("title", i18n.GL0590());
 		addbutton.getElement().setId("btnAdd");
 		cancelButton.setText(i18n.GL0142());
-		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
-		cancelButton.getElement().setAttribute("title", i18n.GL0142());
 		cancelButton.getElement().setAttribute("style", "margin-left:10px;float: none;display: inline-block;");
 		cancelButton.getElement().setId("btnCancel");
 
@@ -485,11 +429,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void setHeaderAndBodyText(String tabType){
 		if(tabType.equals("HS_TXT") || tabType.equals("HS_IMG")){
 			questionTypeHeader.setText(i18n.GL3226_1());
-			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3226_1());
-			questionTypeHeader.getElement().setAttribute("title", i18n.GL3226_1());
 			questionTypeText.setText(i18n.GL0350());
-			questionTypeText.getElement().setAttribute("alt", i18n.GL0350());
-			questionTypeText.getElement().setAttribute("title", i18n.GL0350());
 		}
 	}
 
@@ -2229,11 +2169,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			String explanation = collectionItemDo.getResource().getExplanation() != null ? collectionItemDo.getResource().getExplanation() : collectionItemDo.getQuestionInfo().getExplanation();
 
 			questionNameTextArea.setText(collectionItemDo.getResource().getTitle());
-			questionNameTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
-			questionNameTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
 			explainationTextArea.setText(explanation);
-			explainationTextArea.getElement().setAttribute("alt", explanation);
-			explainationTextArea.getElement().setAttribute("title", explanation);
 
 
 			setExplanationContainer();
@@ -2247,11 +2183,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			@Override
 			public void run() {
 				questionNameTextArea.setText(collectionQuestionItemDo.getQuestionText());
-				questionNameTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getQuestionText());
-				questionNameTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getQuestionText());
 				explainationTextArea.setText(collectionQuestionItemDo.getExplanation());
-				explainationTextArea.getElement().setAttribute("alt", collectionQuestionItemDo.getExplanation());
-				explainationTextArea.getElement().setAttribute("title", collectionQuestionItemDo.getExplanation());
 				
 				if(addExplanationAnc.isVisible()){setExplanationContainer();}
 			}
