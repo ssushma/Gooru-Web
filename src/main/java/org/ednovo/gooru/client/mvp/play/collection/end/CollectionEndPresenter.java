@@ -571,9 +571,23 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 						getView().setCollectionMetaDataByUserAndSession(result);
 						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 					}else{
-						getView().hidePanel();
-						 getView().showMessageWhenDataNotFound();
-						collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
+						Timer timer = new Timer() {
+
+							@Override
+							public void run() {
+								if (count < 10){
+									getSessionsDataByUser(collectionId, classId, userId);
+									count++;
+								}else{
+									if (count >= 10){
+										getView().hidePanel();
+										getView().showMessageWhenDataNotFound();
+										collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
+									}
+								}
+							}
+						};
+						timer.schedule(100);
 					}
 				}
 

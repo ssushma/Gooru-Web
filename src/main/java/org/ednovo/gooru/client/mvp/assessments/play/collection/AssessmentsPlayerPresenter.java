@@ -1550,8 +1550,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			if(GooruConstants.TRUE.equals(isRefreshed)){
 				isRefreshed = null;
 			}else{
-				AppClientFactory.printInfoLogger("Cookies.getCookie('sessionId') : "+Cookies.getCookie("sessionId") != null ? Cookies.getCookie("sessionId") : "Session Id in Cookie is Empty");
-				sessionId = Cookies.getCookie("sessionId") != null ? Cookies.getCookie("sessionId") : GwtUUIDGenerator.uuid();
+				sessionId = GwtUUIDGenerator.uuid();
 				/**
 				 * Triggers collection start event.
 				 */
@@ -1559,6 +1558,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			}
 			escalateToTriggerEvents(sessionId);
 		}else{
+			AppClientFactory.printInfoLogger("isRefreshed : "+isRefreshed);
 			if(GooruConstants.TRUE.equals(isRefreshed)){
 				isRefreshed = null;
 				createResourceDataLog();
@@ -1566,8 +1566,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 					createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTypeName(),STATUS_OPEN);
 				}
 			}else{
-				AppClientFactory.printInfoLogger("Cookies.getCookie('sessionId') : "+Cookies.getCookie("sessionId") != null ? Cookies.getCookie("sessionId") : "Session Id in Cookie is Empty");
-				sessionId = Cookies.getCookie("sessionId") != null ? Cookies.getCookie("sessionId") : GwtUUIDGenerator.uuid();
+				sessionId = GwtUUIDGenerator.uuid();
+				AppClientFactory.printInfoLogger("session Id creating for first Time : "+sessionId);
 				collectionEndPresenter.setSessionId(sessionId);
 				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
 				escalateToTriggerEvents(sessionId);
