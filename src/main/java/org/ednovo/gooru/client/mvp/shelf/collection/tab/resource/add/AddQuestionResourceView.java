@@ -3243,7 +3243,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			isSelected=true;
 		 }*/
 		isSelected=isDepthofKnowledge();
-		AppClientFactory.printInfoLogger("=============Depth of Knowledge==============="+isDepthofKnowledge());
 		if(isSelected){
 			addDepthOfKnowledgeLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
 			addDepthOfKnowledgeLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
@@ -3337,7 +3336,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				depthOfKnowledgeContainer.setVisible(false);
 				addDepthOfKnowledgeLabel.setVisible(true);
 				addDepthOfKnowledgeLabel.setText(i18n.GL3209_1());
-				//setDepthOfKnowledgeContainer();
+				setDepthOfKnowledgeContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconStandards")){
 				standardContainer.setVisible(false);
 				addStandardsLabel.setVisible(true);
@@ -3427,16 +3426,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if(depthOfKnowledgeMap.containsKey(pnlWidget.getListValuesDo().getId())){
 					pnlWidget.checkbox.setValue(true);
 				}
-				/*for (checkboxSelectedDo checkboxSelectedDo : depthOfKnowledges) {
-					 AppClientFactory.printInfoLogger(pnlWidget.getListValuesDo().getId()+".................."+checkboxSelectedDo.getId()+".................");
-					 if(pnlWidget.getListValuesDo().getId()==checkboxSelectedDo.getId()){
-						 pnlWidget.checkbox.setValue(true);
-						 depthOfKnowledgesList.add(pnlWidget.getListValuesDo().getId());
-					 }else{
-
-						 pnlWidget.checkbox.setValue(false);
-					 }
-				 }*/
 			}
 		}
 	}
@@ -3453,16 +3442,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 
 	public boolean isDepthofKnowledge(){
+		AppClientFactory.printInfoLogger("Size of depthofknowledge Container"+pnlDepthOfKnowledges.getWidgetCount());
 		Iterator<Widget> widgets=pnlDepthOfKnowledges.iterator();
-		int size=pnlDepthOfKnowledges.getWidgetCount();
 		boolean depthOfKnowledge=false;
 		while(widgets.hasNext()){
 			Widget widget=widgets.next();
+			
 			if(widget instanceof DepthOfKnowledgePanel){
 				DepthOfKnowledgePanel pnlWidget=(DepthOfKnowledgePanel) widget;
-				AppClientFactory.printInfoLogger(".................id............."+pnlWidget.checkbox.isChecked());
-
-				if( pnlWidget.checkbox.isChecked()){
+				if( pnlWidget.checkbox.getValue()==true){
 
 					depthOfKnowledge=true;
 				}

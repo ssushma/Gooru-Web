@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -221,6 +222,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
 					}
@@ -278,6 +280,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
                         }
@@ -334,6 +337,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
                         }
@@ -351,36 +355,42 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 
 	}
 	public final void populateStandardValues(){
-            for (String standardsTypesArray1 : standardsTypesArray) {
-                List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
-                LiPanel liPanel = new LiPanel();
-                for(int j=0; j<standardsDescriptionList.size(); j++){
-                    HTMLPanel headerDiv = new HTMLPanel("");
-                    if(j==0){
-                        if(standardsDescriptionList.get(j).equalsIgnoreCase("CA CCSS")){
-                            liPanel.getElement().setId("CA");
-                        }else{
-                            liPanel.getElement().setId(standardsDescriptionList.get(j));
-                        }
-                        headerDiv.setStyleName("liPanelStyle");
+        for (String standardsTypesArray1 : standardsTypesArray) {
+            List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
+            LiPanel liPanel = new LiPanel();
+            for(int j=0; j<standardsDescriptionList.size(); j++){
+                HTMLPanel headerDiv = new HTMLPanel("");
+                if(j==0){
+                    if(standardsDescriptionList.get(j).equalsIgnoreCase("CA CCSS")){
+                        liPanel.getElement().setId("CA");
                     }else{
-                        headerDiv.setStyleName("liPanelStylenonBold");
-                        liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
+                        liPanel.getElement().setId(standardsDescriptionList.get(j));
                     }
-                    headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
-                    liPanel.add(headerDiv);
+                    headerDiv.setStyleName("liPanelStyle");
+                }else{
+                    headerDiv.setStyleName("liPanelStylenonBold");
+                    liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
                 }
-                liPanel.addClickHandler(new ClickHandler() {
-                    @Override
-                    public void onClick(ClickEvent event) {
-					String standardsVal = event.getRelativeElement().getAttribute("id");
-					String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
-					getUiHandlers().showStandardsPopup(standardsVal,standardsDesc);
-				}
-			});
-                standardsDropListValues.add(liPanel);
+                headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
+                liPanel.add(headerDiv);
             }
-	}
+            liPanel.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+				String standardsVal = event.getRelativeElement().getAttribute("id");
+				String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+
+				lessonLiPanelWithCloseArray.clear();
+				for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
+					lessonLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+				}
+
+				getUiHandlers().showStandardsPopup(standardsVal,standardsDesc, lessonLiPanelWithCloseArray);
+			}
+		});
+            standardsDropListValues.add(liPanel);
+        }
+}
 	@UiHandler("saveLessonBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
@@ -797,4 +807,58 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public HTMLPanel getStadardsPanel(){
 		return pnlStandards;
 	}
+	public void displaySelectedStandards(List<Map<String,String>> standListArray){
+		for (int i=0;i<standListArray.size();i++){
+			final Map<String, String> standard = standListArray.get(i);
+			if (!selectedValues.contains(standard.get("selectedCodeId"))){
+				ulSelectedItems.add(generateLiPanel(standard, "standards"));
+			}
+		}
+	}
+	
+	private LiPanelWithClose generateLiPanel(final Map<String, String> standard, String tagValue) {
+		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(standard.get("selectedCodeVal"));
+		liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				//This will remove the selected value when we are trying by close button
+//				if(selValues.contains(standard.get("selectedCodeId"))){
+//					selectedValues.remove(standard.get("selectedCodeId"));
+//				}
+				removeGradeWidget(ulSelectedItems,Long.parseLong(standard.get("selectedCodeId")));
+				liPanelWithClose.removeFromParent();
+			}
+		});
+		selectedValues.add(Integer.parseInt(standard.get("selectedCodeId")));
+		liPanelWithClose.setId(Long.parseLong(standard.get("selectedCodeId")));
+		liPanelWithClose.setName(standard.get("selectedCodeVal"));
+		liPanelWithClose.setRelatedId(Integer.parseInt(standard.get("selectedCodeId")));
+		liPanelWithClose.setDifferenceId(Integer.parseInt(standard.get("selectedDifferenceId")));
+		liPanelWithClose.getElement().setAttribute("tag", tagValue);
+		return liPanelWithClose;
+	}
+	/**
+	 * This method will remove the widget based on the codeId in the UlPanel
+	 * @param ulPanel
+	 * @param codeId
+	 */
+	public void removeGradeWidget(UlPanel ulPanel,long codeId){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getId()==codeId){
+					obj.removeFromParent();
+				}
+			}
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;
+				if(obj.getCodeId()==codeId){
+					obj.removeStyleName("active");
+				}
+			}
+		}
+	}
+
 }

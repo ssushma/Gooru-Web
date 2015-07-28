@@ -298,90 +298,7 @@
           </g:HTMLPanel>
         </g:HTMLPanel>
        
-		 <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="educationalUsePanelOld">
-			<g:HTMLPanel styleName="{res.css.myEducationEditDropdown}">
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="activityPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="activityText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="handoutPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="handoutText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="homeworkPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="homeworkText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="gamePanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="gameText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="presentationPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="presentationText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="referenceMaterialPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="referenceMaterialText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="quizPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="quizText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="curriculumPlanPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="curriculumPlanText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="lessonPlanPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="lessonPlanText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="unitPlanPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="unitPlanText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="projectPlanPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="projectPlanText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="readingPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="readingText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="textbookPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="textbookText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="articlePanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="articleText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="bookPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="bookText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="defaultPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles} {res.css.setBorder}" ui:field="defaultText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-			</g:HTMLPanel>
-		</g:HTMLPanel>
+		
 		<!-- Educational use End -->
 		        	<!-- Moments of Learning -->
 		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}" ui:field="momentsOfLearningContainer">
@@ -401,32 +318,7 @@
             <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatorymomentsOfLearninglLbl"></g:Label>
           </g:HTMLPanel>
         </g:HTMLPanel>
-       
-		 <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="momentsOfLearningPanelOld">
-			<g:HTMLPanel styleName="{res.css.myEducationEditDropdown}">
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="preparingTheLearningPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="preparingTheLearningText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="interactingWithTheTextPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="interactingWithTheTextText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="extendingUnderstandingPanel">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="extendingUnderstandingText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-				<tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="defaultPanelMomentsOfLearningPnl">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles} {res.css.setBorder}" ui:field="defaultMomentsOfLearningText"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</tinyMce:HTMLEventPanel>
-			</g:HTMLPanel>
-		</g:HTMLPanel>
-		<!-- Moments of Learning  End-->
+       	<!-- Moments of Learning  End-->
 	
 		<!-- Standards Start -->
 		<g:HTMLPanel ui:field="standardsBrowseContainer">

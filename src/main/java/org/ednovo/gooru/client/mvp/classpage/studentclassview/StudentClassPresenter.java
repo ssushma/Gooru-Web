@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 
 import com.google.gwt.core.client.GWT;
@@ -265,13 +266,18 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	@Override
 	public void studentJoinClassPoup(String classUid) {
 		
-		AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classUid,new SimpleAsyncCallback<Void>(){
+		AppClientFactory.getInjector().getClasspageService().v3StudentJoinIntoClass(classUid,new SimpleAsyncCallback<Boolean>(){
 
 			@Override
-			public void onSuccess(Void result) {
-				getView().setSuccesspopup();
+			public void onSuccess(Boolean isJoined) {
+				if(isJoined) {
+					getView().setSuccesspopup();
+					setClassPageDo();
+				} else {
+					getView().closeJoinPopup(false);
+					new ErrorPopup(i18n.GL3464());
+				}
 			}
-			
 		});
 	}
 

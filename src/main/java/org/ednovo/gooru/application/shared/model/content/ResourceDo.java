@@ -132,6 +132,8 @@ public class ResourceDo extends ContentDo {
 	private ArrayList<checkboxSelectedDo> educationalUse;
 	private List<checkboxSelectedDo> depthOfKnowledge;
 	private List<checkboxSelectedDo> accessHazard;
+	
+	
 
 	public List<String> getPublisher() {
 		return publisher;

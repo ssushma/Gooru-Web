@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -60,6 +61,7 @@ public class PlanContentDo implements IsSerializable{
 	private ResourceTypeDo resourceType;
 	private ArrayList<PlanContentDo> items;
 	private PlanProgressDo progress;
+	private ArrayList<StandardFo> standards;
 	
 	public String getTitle() {
 		return title;
@@ -156,5 +158,11 @@ public class PlanContentDo implements IsSerializable{
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public ArrayList<StandardFo> getStandards() {
+		return standards;
+	}
+	public void setStandards(ArrayList<StandardFo> standards) {
+		this.standards = standards;
 	}
 }

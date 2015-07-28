@@ -41,8 +41,6 @@ import com.google.gwt.user.client.ui.TreeItem;
  *
  */
 public interface LessonInfoUiHandlers extends BaseUiHandlers {
-
-	void showStandardsPopup(String standardVal, String titleVal);
 	/**
 	 * This method is used to create lesson
 	 * @param createObj
@@ -83,5 +81,7 @@ public interface LessonInfoUiHandlers extends BaseUiHandlers {
 	void invokeTaxonomyPopup(String type,List<LiPanelWithClose> lessonLiPanelWithCloseArray);
 	
 	TreeItem getSelectedWidget();
+	void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 
 }

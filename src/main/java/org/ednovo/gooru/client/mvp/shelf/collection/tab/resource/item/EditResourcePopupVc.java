@@ -65,7 +65,6 @@ import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -149,21 +148,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public TextArea descriptionTxtAera;
 
 	@UiField HTMLEventPanel videoResourcePanel,lblContentRights,interactiveResourcePanel,websiteResourcePanel,imageResourcePanel,
-	textResourcePanel,audioResourcePanel,activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,
-	referenceMaterialPanel,quizPanel,curriculumPlanPanel,lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,
-	textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
+	textResourcePanel,audioResourcePanel,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 	@UiField
 	Image setThumbnailImage,generateImageLbl;
 
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel momentsOfLearningTitle,extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
-	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,saveButtonContainer,panelContentRights,rightsContainer,videoPanel,interactivePanel,websitePanel,imagePanel,textsPanel,audioPanel,
-	rightsContent,educationalContainer,momentsOfLearningContainer,accessHazardContainer,standardsBrowseContainer,centuryBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,defaultMomentsOfLearningText,defaultText;//otherPanel
+	HTMLPanel momentsOfLearningTitle,educationalTitle,
+	descCharcterLimit,saveButtonContainer,panelContentRights,rightsContainer,videoPanel,interactivePanel,websitePanel,imagePanel,textsPanel,audioPanel,
+	rightsContent,educationalContainer,momentsOfLearningContainer,accessHazardContainer,standardsBrowseContainer,centuryBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer;//otherPanel
 
 	@UiField Label mandatorymomentsOfLearninglLbl,standardsDefaultText,centuryDefaultText,resourceCategoryLabel,loadingTextLbl,rightsLbl;
 
-	@UiField HTMLPanel hazardContainer,educationalUsePanelOld,categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel,errorContainer;//other,
+	@UiField HTMLPanel hazardContainer,categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel,errorContainer;//other,
 	@UiField CheckBox rightsChkBox;
 
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr,moblieFriendly,advancedText;
@@ -181,10 +178,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	@UiField ScrollPanel spanelMediaFeaturePanel;
 
-	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer,mediaDropdownArrowConatainer,momentsOfLearningPanelOld;
+	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer,mediaDropdownArrowConatainer;
 
 	@UiField HTMLEventPanel AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,eHearderIconCentury,
-	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl,defaultPanel;
+	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly;
 
 	@UiField Anchor resourceEducationalLabel,resourcemomentsOfLearningLabel;
 	@UiField UlPanel educationalUsePanel,momentsOfLearningPanel;
@@ -406,8 +403,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				hide();
 			}
 		});
-		defaultText.getElement().setInnerHTML(i18n.GL3093());
-		defaultMomentsOfLearningText.getElement().setInnerHTML(i18n.GL3093());
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		addSetupAdvancedView = new AddSetupAdvancedView() {
@@ -499,7 +494,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		interactivePanel.getElement().setId("pnlInteractivePanel");
 		interactivePanel.getElement().setAttribute("alt", i18n.GL0919());
 		interactivePanel.getElement().setAttribute("title", i18n.GL0919());
-		momentsOfLearningPanelOld.setVisible(false);
+		
 		websitePanel.getElement().setInnerHTML(i18n.GL1396());
 		websitePanel.getElement().setId("pnlWebsitePanel");
 		websitePanel.getElement().setAttribute("alt", i18n.GL1396());
@@ -601,68 +596,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		educationalTitle.getElement().setId("lblEducationalTitle");
 		educationalTitle.getElement().setAttribute("alt", i18n.GL1664());
 		educationalTitle.getElement().setAttribute("title", i18n.GL1664());
-		activityText.getElement().setInnerHTML(i18n.GL1665());
-		activityText.getElement().setId("pnlActivityText");
-		activityText.getElement().setAttribute("alt", i18n.GL1665());
-		activityText.getElement().setAttribute("title", i18n.GL1665());
-		handoutText.getElement().setInnerHTML(i18n.GL0907());
-		handoutText.getElement().setId("pnlHandoutText");
-		handoutText.getElement().setAttribute("alt", i18n.GL0907());
-		handoutText.getElement().setAttribute("title", i18n.GL0907());
-		homeworkText.getElement().setInnerHTML(i18n.GL1666());
-		homeworkText.getElement().setId("pnlHomeworkText");
-		homeworkText.getElement().setAttribute("alt", i18n.GL1666());
-		homeworkText.getElement().setAttribute("title", i18n.GL1666());
-		gameText.getElement().setInnerHTML(i18n.GL1667());
-		gameText.getElement().setId("pnlGameText");
-		gameText.getElement().setAttribute("alt", i18n.GL1667());
-		gameText.getElement().setAttribute("title", i18n.GL1667());
-		presentationText.getElement().setInnerHTML(i18n.GL1668());
-		presentationText.getElement().setId("pnlPresentationText");
-		presentationText.getElement().setAttribute("alt", i18n.GL1668());
-		presentationText.getElement().setAttribute("title", i18n.GL1668());
-		referenceMaterialText.getElement().setInnerHTML(i18n.GL1669());
-		referenceMaterialText.getElement().setId("pnlReferenceMaterialText");
-		referenceMaterialText.getElement().setAttribute("alt", i18n.GL1669());
-		referenceMaterialText.getElement().setAttribute("title", i18n.GL1669());
-		quizText.getElement().setInnerHTML(i18n.GL1670());
-		quizText.getElement().setId("pnlQuizText");
-		quizText.getElement().setAttribute("alt", i18n.GL1670());
-		quizText.getElement().setAttribute("title", i18n.GL1670());
-		curriculumPlanText.getElement().setInnerHTML(i18n.GL1671());
-		curriculumPlanText.getElement().setId("pnlCurriculumPlanText");
-		curriculumPlanText.getElement().setAttribute("alt", i18n.GL1671());
-		curriculumPlanText.getElement().setAttribute("title", i18n.GL1671());
-		lessonPlanText.getElement().setInnerHTML(i18n.GL1672());
-		lessonPlanText.getElement().setId("pnlLessonPlanText");
-		lessonPlanText.getElement().setAttribute("alt", i18n.GL1672());
-		lessonPlanText.getElement().setAttribute("title", i18n.GL1672());
-		unitPlanText.getElement().setInnerHTML(i18n.GL1673());
-		unitPlanText.getElement().setId("pnlUnitPlanText");
-		unitPlanText.getElement().setAttribute("alt", i18n.GL1673());
-		unitPlanText.getElement().setAttribute("title", i18n.GL1673());
-		projectPlanText.getElement().setInnerHTML(i18n.GL1674());
-		projectPlanText.getElement().setId("pnlProjectPlanText");
-		projectPlanText.getElement().setAttribute("alt", i18n.GL1674());
-		projectPlanText.getElement().setAttribute("title", i18n.GL1674());
-		readingText.getElement().setInnerHTML(i18n.GL1675());
-		readingText.getElement().setId("pnlReadingText");
-		readingText.getElement().setAttribute("alt", i18n.GL1675());
-		readingText.getElement().setAttribute("title", i18n.GL1675());
-		textbookText.getElement().setInnerHTML(i18n.GL0909());
-		textbookText.getElement().setId("pnlTextbookText");
-		textbookText.getElement().setAttribute("alt", i18n.GL0909());
-		textbookText.getElement().setAttribute("title", i18n.GL0909());
-		articleText.getElement().setInnerHTML(i18n.GL1676());
-		articleText.getElement().setId("pnlArticleText");
-		articleText.getElement().setAttribute("alt", i18n.GL1676());
-		articleText.getElement().setAttribute("title", i18n.GL1676());
-		bookText.getElement().setInnerHTML(i18n.GL1677());
-		bookText.getElement().setId("pnlBookText");
-		bookText.getElement().setAttribute("alt", i18n.GL1677());
-		bookText.getElement().setAttribute("title", i18n.GL1677());
-		educationalUsePanelOld.setVisible(false);	
-
 		standardsDefaultText.setText(i18n.GL1682());
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
@@ -678,18 +611,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		momentsOfLearningTitle.getElement().setId("pnlMomentsOfLearningTitle");
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
 		momentsOfLearningTitle.getElement().setAttribute("title", i18n.GL1678());
-		preparingTheLearningText.getElement().setInnerHTML(i18n.GL1679());
-		preparingTheLearningText.getElement().setId("pnlPreparingTheLearningText");
-		preparingTheLearningText.getElement().setAttribute("alt", i18n.GL1679());
-		preparingTheLearningText.getElement().setAttribute("title", i18n.GL1679());
-		interactingWithTheTextText.getElement().setInnerHTML(i18n.GL1680());
-		interactingWithTheTextText.getElement().setId("pnlInteractingWithTheTextText");
-		interactingWithTheTextText.getElement().setAttribute("alt", i18n.GL1680());
-		interactingWithTheTextText.getElement().setAttribute("title", i18n.GL1680());
-		extendingUnderstandingText.getElement().setInnerHTML(i18n.GL1681());
-		extendingUnderstandingText.getElement().setId("pnlExtendingUnderstandingText");
-		extendingUnderstandingText.getElement().setAttribute("alt", i18n.GL1681());
-		extendingUnderstandingText.getElement().setAttribute("title", i18n.GL1681());
+		
+		
 		resourceEducationalLabel.setText(i18n.GL1684());
 		resourceEducationalLabel.getElement().setId("lblResourceEducationalLabel");
 		resourceEducationalLabel.getElement().setAttribute("alt", i18n.GL1684());
@@ -716,26 +639,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		audio.getElement().setId("pnlAudio");
 		educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
 		mandatoryEducationalLbl.getElement().setId("lblMandatoryEducationalLbl");
-		activityPanel.getElement().setId("epnlActivityPanel");
-		handoutPanel.getElement().setId("epnlHandoutPanel");
-		homeworkPanel.getElement().setId("epnlHomeworkPanel");
-		gamePanel.getElement().setId("epnlGamePanel");
-		presentationPanel.getElement().setId("epnlPresentationPanel");
-		referenceMaterialPanel.getElement().setId("epnlReferenceMaterialPanel");
-		quizPanel.getElement().setId("epnlQuizPanel");
-		curriculumPlanPanel.getElement().setId("epnlCurriculumPlanPanel");
-		lessonPlanPanel.getElement().setId("epnlLessonPlanPanel");
-		unitPlanPanel.getElement().setId("epnlUnitPlanPanel");
-		projectPlanPanel.getElement().setId("epnlProjectPlanPanel");
-		readingPanel.getElement().setId("epnlReadingPanel");
-		textbookPanel.getElement().setId("epnlTextbookPanel");
-		articlePanel.getElement().setId("epnlArticlePanel");
-		bookPanel.getElement().setId("epnlBookPanel");
+	
 		momentsOfLearningDropDownLbl.getElement().setId("lblMomentsOfLearningDropDownLbl");
 		mandatorymomentsOfLearninglLbl.getElement().setId("lblMandatorymomentsOfLearninglLbl");
-		preparingTheLearningPanel.getElement().setId("epnlPreparingTheLearningPanel");
-		interactingWithTheTextPanel.getElement().setId("epnlInteractingWithTheTextPanel");
-		extendingUnderstandingPanel.getElement().setId("epnlExtendingUnderstandingPanel");
+		
 		standardContainer.getElement().setId("fpnlStandardContainer");
 		standardSgstBox.getElement().setId("StandardSgstBox");
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
@@ -1350,10 +1257,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					setMediaFeatureObjectVal(collectionItemDo.getMediaFeature());
 				}
 
-				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Mobile Friendly"))
-				{
-					setMobileFriendlyObjectVal(collectionItemDo.getResource().getResourceTags().get(i).getLabel());
-				}
+			
 
 				AppClientFactory.printInfoLogger("collectionItemDo.getAccessHazard().size()........."+collectionItemDo.getAccessHazard());
 				if(collectionItemDo.getAccessHazard()!=null&&collectionItemDo.getAccessHazard().size()>0)
@@ -1362,6 +1266,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				}
 			}
 		}
+		
+		
 		urlTextLbl.setText(url);
 		urlTextLbl.getElement().setAttribute("alt", i18n.GL0827());
 		urlTextLbl.getElement().setAttribute("title", i18n.GL0827());
@@ -1524,7 +1430,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
 		}
-		thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
+		thumbnailUrlStr = collectionItemDo.getThumbnails() != null ? collectionItemDo.getThumbnails().getUrl() : null;
 		setImage(thumbnailUrlStr, category);
 		if( collectionItemDo.getEducationalUse()!=null){
 			for (checkboxSelectedDo item : collectionItemDo.getEducationalUse()) {
@@ -1595,6 +1501,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				centuryPanel.add(downToolTipWidgetUc);
 			}
 			updateCenturyAdvancedSetupStyle();
+		}
+		
+		if(collectionItemDo.getMediaType()!=null)
+		{
+			setMobileFriendlyObjectVal(collectionItemDo.getMediaType());
 		}
 	}
 
@@ -1686,13 +1597,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 										if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 										{
 
-											tagList.add("Mobile Friendly : "+i18n.GL_GRR_YES());
+											collectionItemDo.setMediaType("mobile_friendly");
 
 										}
 										else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 										{
 
-											tagList.add("Mobile Friendly : "+i18n.GL1735());
+											collectionItemDo.setMediaType("not_mobile_friendly");
 
 										}
 										if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
@@ -1708,15 +1619,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 										}
 
 										collectionItemDo.setAccessHazard(setAccessHazards());
-										/*	String hazardArr[] = setAccessHazards();
-
-											if(hazardArr != null)
-											{
-												for(int i=0;i<hazardArr.length;i++)
-												{
-													tagList.add(hazardArr[i].toString());
-												}
-											}*/
+									
 										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
 										{	
 											ArrayList<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
@@ -2165,152 +2068,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			});
 		}
 	}
-	@UiHandler("defaultPanel")
-	void defaultPanel(ClickEvent event) {
-		resourceEducationalLabel.setText(i18n.GL1684());
-		resourceEducationalLabel.getElement().setAttribute("alt", i18n.GL1684());
-		resourceEducationalLabel.getElement().setAttribute("title", i18n.GL1684());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("activityPanel")
-	void activityPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
-		resourceEducationalLabel.setText(i18n.GL1665());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("handoutPanel")
-	void handoutPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_handout_selected");
-		resourceEducationalLabel.setText(i18n.GL0907());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("homeworkPanel")
-	void homeworkPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_homework_selected");
-		resourceEducationalLabel.setText(i18n.GL1666());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("gamePanel")
-	void gamePanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_game_selected");
-		resourceEducationalLabel.setText(i18n.GL1667());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("presentationPanel")
-	void presentationPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_presentation_selected");
-		resourceEducationalLabel.setText(i18n.GL1668());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("referenceMaterialPanel")
-	void referenceMaterialPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_reference_material_selected");
-		resourceEducationalLabel.setText(i18n.GL1669());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("quizPanel")
-	void quizPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_quiz_selected");
-		resourceEducationalLabel.setText(i18n.GL1670());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("curriculumPlanPanel")
-	void curriculumPlanPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_curriculum_plan_selected");
-		resourceEducationalLabel.setText(i18n.GL1671());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("lessonPlanPanel")
-	void lessonPlanPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_lesson_plan_selected");
-		resourceEducationalLabel.setText(i18n.GL1672());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("unitPlanPanel")
-	void unitPlanPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_unit_plan_selected");
-		resourceEducationalLabel.setText(i18n.GL1673());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("projectPlanPanel")
-	void projectPlanPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_project_plan_selected");
-		resourceEducationalLabel.setText(i18n.GL1674());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("readingPanel")
-	void readingPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_reading_selected");
-		resourceEducationalLabel.setText(i18n.GL1675());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("textbookPanel")
-	void textbookPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_textbook_selected");
-		resourceEducationalLabel.setText(i18n.GL0909());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("articlePanel")
-	void articlePanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_article_selected");
-		resourceEducationalLabel.setText(i18n.GL1676());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("bookPanel")
-	void bookPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_book_selected");
-		resourceEducationalLabel.setText(i18n.GL1677());
-		educationalUsePanel.setVisible(false);
-		educationalDropDownLblOpen = false;
-		mandatoryEducationalLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-
+	
+	
 	@UiHandler("educationalDropDownLbl")
 	public void educationalDropDownClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
@@ -2344,49 +2103,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			momentsOfLearningOpen1 = false;
 		}
 	}
-	@UiHandler("defaultPanelMomentsOfLearningPnl")
-	void defaultPanelMomentsOfLearningPnl(ClickEvent event) {
-		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
-		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1684());
-		resourcemomentsOfLearningLabel.getElement().setAttribute("title", i18n.GL1684());
-		momentsOfLearningPanel.setVisible(false);
-		momentsOfLearningOpen = false;
-		mandatorymomentsOfLearninglLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("preparingTheLearningPanel")
-	void preparingTheLearningPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_preparing_the_learning_selected");
-		resourcemomentsOfLearningLabel.setText(i18n.GL1679());
-		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1679());
-		resourcemomentsOfLearningLabel.getElement().setAttribute("title", i18n.GL1679());
-		momentsOfLearningPanel.setVisible(false);
-		momentsOfLearningOpen = false;
-		mandatorymomentsOfLearninglLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("interactingWithTheTextPanel")
-	void interactingWithTheTextPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_interacting_with_the_text_selected");
-		resourcemomentsOfLearningLabel.setText(i18n.GL1680());
-		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1680());
-		resourcemomentsOfLearningLabel.getElement().setAttribute("title", i18n.GL1680());
-		momentsOfLearningPanel.setVisible(false);
-		momentsOfLearningOpen = false;
-		mandatorymomentsOfLearninglLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
-	@UiHandler("extendingUnderstandingPanel")
-	void extendingUnderstandingPanel(ClickEvent event) {
-		MixpanelUtil.mixpanelEvent("organize_add_resource_extending_Understanding_selected");
-		resourcemomentsOfLearningLabel.setText(i18n.GL1681());
-		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1681());
-		resourcemomentsOfLearningLabel.getElement().setAttribute("title", i18n.GL1681());
-		momentsOfLearningPanel.setVisible(false);
-		momentsOfLearningOpen = false;
-		mandatorymomentsOfLearninglLbl.setVisible(false);
-		setAdvancedOptionsStyles();
-	}
+
 	@UiHandler("momentsOfLearningDropDownLbl")
 	public void momentsOfLearningDropDownClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
@@ -2512,13 +2229,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		return null;
 	}
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
-	{
-		if(mobileFriendlyVal.contains(i18n.GL_GRR_YES()))
+	{	
+		if(mobileFriendlyVal.equalsIgnoreCase(i18n.GL_GRR_MOBILE_FRIENDLY()))
 		{
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		}
-		else if(mobileFriendlyVal.contains(i18n.GL1735()))
+		else if(mobileFriendlyVal.equalsIgnoreCase(i18n.GL_GRR_NOT_MOBILE_FRIENDLY()))
 		{
 			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
@@ -2865,14 +2582,18 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	 *
 	 */
 	public void updateMobileFriendlyAdvancedStyles(){
-		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		AppClientFactory.printInfoLogger("mobileYes"+AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+		AppClientFactory.printInfoLogger("mobileNo"+AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+
+		if(mobileYes.getStyleName().equalsIgnoreCase(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}
-		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		else if(mobileNo.getStyleName().equalsIgnoreCase(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}	
 	}
 
@@ -3018,7 +2739,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			setAdvancedOptionsStyles();
 
 		}
-
 	}
 
 	public void resetSelection(UlPanel ulPanel){

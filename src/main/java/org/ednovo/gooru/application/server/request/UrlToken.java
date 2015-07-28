@@ -235,7 +235,7 @@ public enum UrlToken {
 
 	V2_GET_USER_BY_SESSIONTOKEN("/v2/user/token/{0}?"),
 
-	V2_ADD_NEW_USER_RESOURCE("/v2/collection/{0}/resource?"),
+	V2_ADD_NEW_USER_RESOURCE("/v3/collection/{0}/resource?"),
 
 	V2_JOIN_CLASS("/v2/class/{0}/member/join?"),
 

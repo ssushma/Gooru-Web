@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -106,7 +106,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Anchor loginUrl, signupUrl;
 
 	@UiField SectionTag commentssection;
-	
+
 	@UiField CollectionPlayerStyleBundle playerStyle;
 
 	@UiField Label lblCharLimitComments;
@@ -114,54 +114,54 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField InlineLabel requiredLabel,optionalLabel;
 
 	private CollectionDo collectionDo=null;
-	
-	
+
+
 	private static final String COLLECTION_COMMENTS="COLLECTION_COMMENTS";
-	
+
 	private static final String INITIAL_COMMENT_LIMIT = "10";
-	
+
 	private static final String CREATE = "CREATE";
-	
+
 	private static final String DELETE = "DELETE";
-	
+
 	private static final String EDIT = "EDIT";
-	
+
 	private static final String PAGINATION = "page";
-	
+
 	private static final String PRIMARY_STYLE = "primary";
-	
+
 	private static final String SECONDARY_STYLE = "secondary";
-	
+
 	private static final String DISABLED_STYLE = "disabled";
-	
+
 	private static final int INCREMENT_BY_ONE = 1;
-	
+
 	private static final int DECREMENT_BY_ONE = -1;
 
 	private static final String EDUCATOR_DEFAULT_IMG = "../images/settings/setting-user-image.png";
 	private Anchor usernameAnchor;
-	
+
 	private int totalCommentCount = 0;
-	
+
 	private int totalHitCount = 0;
-	
+
 	private int paginationCount = 0;
-	
+
 	private boolean isHavingBadWords;
-	
+
 	private MetadataWidget menuMetadataWidget=null;
 
 	@Inject
 	private ResourceServiceAsync resourceService;
 
-	
+
 	private static CollectionPlayerMetadataViewUiBinder uiBinder = GWT.create(CollectionPlayerMetadataViewUiBinder.class);
 
 	interface CollectionPlayerMetadataViewUiBinder extends UiBinder<Widget, CollectionPlayerMetadataView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@Inject
 	public CollectionPlayerMetadataView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -173,17 +173,17 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		loginMessagingText.getElement().setId("lblLoginMessagingText");
 		loginMessagingText.getElement().setAttribute("alt",i18n.GL0568());
 		loginMessagingText.getElement().setAttribute("title",i18n.GL0568());
-		
+
 		orText.setText(i18n.GL0209());
 		orText.getElement().setId("lblOrText");
 		orText.getElement().setAttribute("alt",i18n.GL0209());
 		orText.getElement().setAttribute("title",i18n.GL0209());
-		
+
 		toCommentText.setText(" "+i18n.GL0569());
 		toCommentText.getElement().setId("lblToCommentText");
 		toCommentText.getElement().setAttribute("alt",i18n.GL0569());
 		toCommentText.getElement().setAttribute("title",i18n.GL0569());
-		
+
 		loginMessagingText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		orText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		toCommentText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
@@ -193,11 +193,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		commentField.addClickHandler(new OnCommentsFieldClicked());
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
-		
+
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		lblCharLimitComments.setText(value);
 		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
-		
+
 		seeMoreButton.setVisible(false);
 		Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
@@ -205,10 +205,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
 		}else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
 		  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
-		} 
+		}
 		Window.addResizeHandler(new ResizeLogicEvent());
 	}
-	
+
 	@Override
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
@@ -224,69 +224,62 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		switchContainer.setVisible(true);
 		commentssection.setVisible(true);
 		commentssection.getElement().getStyle().setOpacity(1);
-		if (collectionDo!=null)
-		{
-			
-			if(collectionDo.getPermissions() != null)
-			{				
-			if (StringUtil.toString(collectionDo.getPermissions()).contains(ClientConstants.EDIT) || collectionDo.isIsCollaborator()){
-				switchContainer.setVisible(true);
-				if(collectionDo.getSettings() != null)
-				{					
-					if(collectionDo.getSettings().getComment() != null)
-					{						
-							if(ClientConstants.TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment()))
-							{
-								commentField.setEnabled(true);
-								commentssection.getElement().getStyle().setOpacity(1);
-								changeAssignmentStatusButton.setValue(true);
-								postCommentBtn.setEnabled(true);
-								postCommentBtn.setStyleName(PRIMARY_STYLE);
-							}
-							else
-							{
-								commentField.setEnabled(false);
-								postCommentBtn.setEnabled(false);
-								postCommentBtn.removeStyleName(PRIMARY_STYLE);
-								postCommentBtn.addStyleName(SECONDARY_STYLE);
-								postCommentBtn.addStyleName(DISABLED_STYLE);
-								commentssection.getElement().getStyle().setOpacity(0.5);
-								changeAssignmentStatusButton.setValue(false);
-							}
+			if(collectionDo!=null && collectionDo.getPermissions() != null){
+				if (StringUtil.toString(collectionDo.getPermissions()).contains(ClientConstants.EDIT) || collectionDo.isIsCollaborator()){
+					switchContainer.setVisible(true);
+					if(collectionDo.getSettings() != null)
+					{
+						if(collectionDo.getSettings().getComment() != null)
+						{
+								if(ClientConstants.TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment()))
+								{
+									commentField.setEnabled(true);
+									commentssection.getElement().getStyle().setOpacity(1);
+									changeAssignmentStatusButton.setValue(true);
+									postCommentBtn.setEnabled(true);
+									postCommentBtn.setStyleName(PRIMARY_STYLE);
+								}
+								else
+								{
+									commentField.setEnabled(false);
+									postCommentBtn.setEnabled(false);
+									postCommentBtn.removeStyleName(PRIMARY_STYLE);
+									postCommentBtn.addStyleName(SECONDARY_STYLE);
+									postCommentBtn.addStyleName(DISABLED_STYLE);
+									commentssection.getElement().getStyle().setOpacity(0.5);
+									changeAssignmentStatusButton.setValue(false);
+								}
+						}else{
+							commentField.setEnabled(true);
+							postCommentBtn.removeStyleName(SECONDARY_STYLE);
+							postCommentBtn.removeStyleName(DISABLED_STYLE);
+							postCommentBtn.addStyleName(PRIMARY_STYLE);
+							commentssection.getElement().getStyle().setOpacity(1);
+							changeAssignmentStatusButton.setValue(true);
+						}
 					}else{
 						commentField.setEnabled(true);
-						postCommentBtn.removeStyleName(SECONDARY_STYLE);
-						postCommentBtn.removeStyleName(DISABLED_STYLE);
-						postCommentBtn.addStyleName(PRIMARY_STYLE);
 						commentssection.getElement().getStyle().setOpacity(1);
 						changeAssignmentStatusButton.setValue(true);
 					}
 				}else{
-					commentField.setEnabled(true);
-					commentssection.getElement().getStyle().setOpacity(1);
-					changeAssignmentStatusButton.setValue(true);
+					if(collectionDo.getSettings() != null)
+					{
+							if(ClientConstants.TURNOFF.equalsIgnoreCase(collectionDo.getSettings().getComment()))
+							{
+								commentssection.setVisible(false);
+							}else{
+								commentssection.setVisible(true);
+							}
+					}else{
+						commentssection.setVisible(true);
+					}
+					switchContainer.setVisible(false);
 				}
 			}else{
-				if(collectionDo.getSettings() != null)
-				{
-						if(ClientConstants.TURNOFF.equalsIgnoreCase(collectionDo.getSettings().getComment()))
-						{
-							commentssection.setVisible(false);
-						}else{
-							commentssection.setVisible(true);
-						}
-				}else{
-					commentssection.setVisible(true);
-				}			
-				switchContainer.setVisible(false);	
+				switchContainer.setVisible(false);
 			}
-			}else{
-				switchContainer.setVisible(false);	
-			}
-		}else{
-			switchContainer.setVisible(false);	
-		}
-		
+
 		if(!StringUtil.isEmpty(collectionDo.getViews())){
 			setViewCount(collectionDo.getViews());
 		}
@@ -300,7 +293,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				int height=rightPanelMetadata.getElement().getOffsetHeight();
 				if(height>650){
 					leftPanelContainer.getElement().setAttribute("style", "min-height:"+height+"px;");
-				} 
+				}
 			}
 	      });
 	}
@@ -331,27 +324,27 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		loginUrl.getElement().setId("lnkLoginUrl");
 		loginUrl.getElement().setAttribute("alt",i18n.GL0187().toLowerCase());
 		loginUrl.getElement().setAttribute("title",i18n.GL0187().toLowerCase());
-		
+
 		signupUrl.setText(i18n.GL0186().toLowerCase());
 		signupUrl.getElement().setId("lnkSignupUrl");
 		signupUrl.getElement().setAttribute("alt",i18n.GL0186().toLowerCase());
 		signupUrl.getElement().setAttribute("title",i18n.GL0186().toLowerCase());
-		
+
 		successPostMsg.setText(i18n.GL0570());
 		successPostMsg.getElement().setId("lblSuccessPostMsg");
 		successPostMsg.getElement().setAttribute("alt",i18n.GL0570());
 		successPostMsg.getElement().setAttribute("title",i18n.GL0570());
-		
+
 		postCommentBtn.setText(i18n.GL0571());
 		postCommentBtn.getElement().setId("btnPostCommentBtn");
 		postCommentBtn.getElement().setAttribute("alt",i18n.GL0571());
 		postCommentBtn.getElement().setAttribute("title",i18n.GL0571());
-		
+
 		postCommentCancel.setText(i18n.GL0142());
 		postCommentCancel.getElement().setId("btnPostCommentCancel");
 		postCommentCancel.getElement().setAttribute("alt",i18n.GL0142());
 		postCommentCancel.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		characterLimit.setText(i18n.GL0143());
 		characterLimit.getElement().setId("lblCharacterLimit");
 		characterLimit.getElement().setAttribute("alt",i18n.GL0143());
@@ -363,7 +356,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setCourseTitle(String title){
 	}
 	public void setLikesCount(int likesCount){
-		
+
 	}
 	public void resetMetadataFields(){
 		rightPanelMetadata.resetMetadataFields();
@@ -386,7 +379,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			menuMetadataWidget.setUserProfileName(gooruUid);
 		}
 	}
-	
+
 	public void displayAuthorDetails(boolean isDisplayDetails) {
 		rightPanelMetadata.displayAuthorDetails(isDisplayDetails);
 		if(menuMetadataWidget!=null){
@@ -401,7 +394,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 
 	@Override
 	public void isConceptsContainerVisible(boolean isVisible) {
-		
+
 	}
 	public void setDataInsightsUrl(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
@@ -410,18 +403,18 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		}else{
 		}
 	}
-	
+
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
 		if(sessionId==null) {
 			sessionId = "";
 		}
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 	}
-	
+
 	public void setDataInsightsSummaryUrl(String sessionId){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 	}
-	
+
 	public class DataInsightsIframe extends Composite{
 		private Frame dataInsightsFrame=null;
 		private String insightsUrl="";
@@ -435,20 +428,20 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			dataInsightsFrame.setUrl(insightsUrl);
 		}
 	}
-	
+
 	public void clearDashBoardIframe(){
 	}
-	
-	
+
+
 	/**
-	 * @function setCommentsText 
-	 * 
+	 * @function setCommentsText
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentIncrement
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -460,16 +453,16 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		commentCount.getElement().setAttribute("alt",totalCommentCount+" "+i18n.GL1432());
 		commentCount.getElement().setAttribute("title",totalCommentCount+" "+i18n.GL1432());
 	}
-	
+
 	/**
-	 * @function setCommentsWidget 
-	 * 
+	 * @function setCommentsWidget
+	 *
 	 * @created_date : 02-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -482,16 +475,16 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		commentsContainer.add(new CommentWidgetChildView(commentsDo,collectionDo));
 		showSeeMoreButton();
 	}
-	
+
 	/**
-	 * @function hideorShowEditButtonForAllCommentWidgets 
-	 * 
+	 * @function hideorShowEditButtonForAllCommentWidgets
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentUid
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -509,22 +502,22 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				}
 				else
 				{
-					commentWidgetChildView.getEditButton().setVisible(false);	
+					commentWidgetChildView.getEditButton().setVisible(false);
 				}
-			
+
 			}
 		}
 	}
-	
+
 	/**
-	 * @function deleteComment 
-	 * 
+	 * @function deleteComment
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentUid
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -559,16 +552,16 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			}
 		}
 	}
-	
+
 	/**
-	 * @function editComment 
-	 * 
+	 * @function editComment
+	 *
 	 * @created_date : 04-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentUid
-	 * 
+	 *
 	 * @return : void
 	 *
 	 */
@@ -593,14 +586,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		}
 	}
 	/**
-	 * @function showSeeMoreButton 
-	 * 
+	 * @function showSeeMoreButton
+	 *
 	 * @created_date : 06-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 */
 	public void showSeeMoreButton() {
@@ -610,16 +603,16 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			seeMoreButton.setVisible(false);
 		}
 	}
-	
+
 	/**
-	 * @function clickOnSeeMoreButton 
-	 * 
+	 * @function clickOnSeeMoreButton
+	 *
 	 * @created_date : 06-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 */
 	@UiHandler("seeMoreButton")
@@ -627,14 +620,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		getUiHandlers().getPaginationResults(collectionDo.getGooruOid(), paginationCount+"", INITIAL_COMMENT_LIMIT);
 	}
 	/**
-	 * @function setCommentsData 
-	 * 
+	 * @function setCommentsData
+	 *
 	 * @created_date : 02-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>m
@@ -665,21 +658,21 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			noCommentsLbl.setVisible(false);
 		}
 	}
-	
+
 	/**
-	 * @function updateCommentChildView 
-	 * 
+	 * @function updateCommentChildView
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentUid, @param action
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 */	
+	 */
 	@Override
 	public void updateCommentChildView(String commentUid, String action) {
 		if(!commentUid.isEmpty() && DELETE.equalsIgnoreCase(action)) {
@@ -694,17 +687,17 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			addComment.setVisible(true);
 		}
 	}
-	
+
 
 	/**
-	 * @function clickOnLoginUrl 
-	 * 
+	 * @function clickOnLoginUrl
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -715,7 +708,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		LoginPopupUc popup = new  LoginPopupUc() {
 			@Override
 			public void onLoginSuccess() {
-				
+
 			}
 		};
 		popup.setWidgetMode(COLLECTION_COMMENTS);
@@ -724,16 +717,16 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		popup.center();
 		popup.show();
 	}
-	
+
 	/**
-	 * @function clickOnSignupUrl 
-	 * 
+	 * @function clickOnSignupUrl
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -744,7 +737,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		params.put("callback", "signup");
 		params.put("type", "1");
-		PlaceRequest placeRequest = new PlaceRequest(AppClientFactory.getCurrentPlaceToken()); 
+		PlaceRequest placeRequest = new PlaceRequest(AppClientFactory.getCurrentPlaceToken());
 		if (params != null) {
 			for (String key : params.keySet()) {
 				placeRequest = placeRequest.with(key, params.get(key));
@@ -754,12 +747,12 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	}
 
 	/**
-	 * @function setPlayerLoginStatus 
-	 * 
+	 * @function setPlayerLoginStatus
+	 *
 	 * @created_date : 02-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -789,17 +782,17 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			postCommentBtn.setEnabled(false);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function clickOnPostCommentBtn 
-	 * 
+	 *
+	 * @function clickOnPostCommentBtn
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -807,7 +800,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	 */
 	@UiHandler("postCommentBtn")
 	public void clickOnPostCommentBtn(ClickEvent event) {
-		
+
 		if (commentField.getText().trim().length() > 0){
 			if(postCommentBtn.getStyleName().contains(PRIMARY_STYLE)) {
 				//check for bad words first.
@@ -815,7 +808,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				parms.put("text", removeHtmlTags(commentField.getText()));
 				postCommentBtn.setEnabled(false);
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-	
+
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -830,9 +823,9 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
 							characterLimit.setVisible(false);
-							
+
 							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), removeHtmlTags(commentField.getText()));
-							
+
 							commentField.setText("");
 							commentField.getElement().setAttribute("alt","");
 							commentField.getElement().setAttribute("title","");
@@ -851,7 +844,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			modifyEditControls(false);
 		}
 	}
-	
+
 	@UiHandler("changeAssignmentStatusButton")
 	public void clickOnStatusChangeBtn(ClickEvent event) {
 		if (changeAssignmentStatusButton.getValue()){
@@ -861,7 +854,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		getUiHandlers().updateCommentsStatus("turn-off");
 		}
 	}
-	
+
 	public void changeCommentsButton(CollectionDo result) {
 					if(result.getSettings()!=null)
 					{
@@ -871,8 +864,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 							{
 								hideorShowEditButtonForAllCommentWidgets(true);
 								requiredLabel.removeStyleName(playerStyle.mutedText());
-								optionalLabel.removeStyleName(playerStyle.mutedText());								
-								commentField.setEnabled(true);	
+								optionalLabel.removeStyleName(playerStyle.mutedText());
+								commentField.setEnabled(true);
 								postCommentBtn.setEnabled(true);
 								postCommentBtn.setStyleName(PRIMARY_STYLE);
 								commentssection.getElement().getStyle().setOpacity(1);
@@ -880,7 +873,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 							}else{
 								hideorShowEditButtonForAllCommentWidgets(false);
 								requiredLabel.setStyleName(playerStyle.mutedText());
-								optionalLabel.setStyleName(playerStyle.mutedText());								
+								optionalLabel.setStyleName(playerStyle.mutedText());
 								commentField.setEnabled(false);
 								postCommentBtn.setEnabled(false);
 								postCommentBtn.removeStyleName(PRIMARY_STYLE);
@@ -889,7 +882,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 								commentssection.getElement().getStyle().setOpacity(0.5);
 								changeAssignmentStatusButton.setValue(false);
 							}
-							
+
 						}else{
 							hideorShowEditButtonForAllCommentWidgets(true);
 							requiredLabel.setStyleName(playerStyle.mutedText());
@@ -904,16 +897,16 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 					}
 	}
 	/**
-	 * 
-	 * @function clickOnPostCommentCancel 
-	 * 
+	 *
+	 * @function clickOnPostCommentCancel
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -927,14 +920,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		characterLimit.setVisible(false);
 		modifyEditControls(false);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : PreviewPlayerMetadataView.java
 	 *
 	 * @function : OnCommentsFieldBlur
-	 * 
-	 * @description : 
+	 *
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -948,12 +941,12 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	private class OnCommentsFieldBlur implements BlurHandler{
 		@Override
 		public void onBlur(BlurEvent event) {
-		
+
 			if (commentField.getText().length() > 0){
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", commentField.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-	
+
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -966,14 +959,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 						}else{
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
-							characterLimit.setVisible(false);						
+							characterLimit.setVisible(false);
 						}
 					}
 				});
 			}
-		}		
+		}
 	}
-	
+
 	/**
 	 * @fileName : PreviewPlayerMetadataView.java
 	 *
@@ -1001,7 +994,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			}
 		}
 	}
-	
+
 	/**
 	 * @fileName : PreviewPlayerMetadataView.java
 	 *
@@ -1037,14 +1030,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		}
 	}
 	/**
-	 * @function modifyEditControls 
-	 * 
+	 * @function modifyEditControls
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param isCommentsFieldClicked
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1062,16 +1055,16 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			postCommentBtn.addStyleName(DISABLED_STYLE);
 		}
 	}
-	
+
 	/**
-	 * @function displaySuccessMsg 
-	 * 
+	 * @function displaySuccessMsg
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param isVisible
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1082,23 +1075,23 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		commentField.setVisible(!isVisible);
 		successPostMsg.setVisible(isVisible);
 	}
-	
-	
-	
+
+
+
 	public static void onClosingAndriodorIpaddiv()
 	{
 		studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
 	}
 
 	/**
-	 * @function removeHtmlTags 
-	 * 
+	 * @function removeHtmlTags
+	 *
 	 * @created_date : 16-Oct-2014
-	 * 
+	 *
 	 * @description this method is used to remove the html tags in comment input box
-	 * 
-	 * @parm(s) : @param String 
-	 * 
+	 *
+	 * @parm(s) : @param String
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1152,6 +1145,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-	
-	
+
+
 }

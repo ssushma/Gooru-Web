@@ -412,7 +412,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 
-		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final List<StandardFo> centurySkill,final String hostname,final List<String> tagList,final Map<String,List<Integer>> hazardsAndMediaFeatures) {
+		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final List<StandardFo> centurySkill,final String hostname,final List<String> tagList,final Map<String,List<Integer>> hazardsAndMediaFeatures,final String mediaType) {
 
 			this.setVisible(false);
 			
@@ -449,7 +449,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 					@Override
 					public void addWebResource() {
-						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures);
+						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures,mediaType);
 						webResourcePreview.hide();
 						webResourcePreview.setGlassEnabled(false);
 						appPopUp.hide();
@@ -478,7 +478,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				webResourcePreview.show();
 
 			}else{
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures);
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,centurySkill,hostname,tagList,hazardsAndMediaFeatures,mediaType);
 			}
 		}
 
@@ -555,7 +555,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 						if(type==10 || type==11){
 							getUiHandlers().setHSEditData();
 						}
-
 						showEditQuestionResourceView();
 
 					}
