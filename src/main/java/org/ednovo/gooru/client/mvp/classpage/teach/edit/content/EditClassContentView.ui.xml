@@ -4,112 +4,27 @@
 	xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style src=""></ui:style>
-		<!-- <g:HTMLPanel styleName="geryBackgroundBody paddingBlock">
-			<g:HTMLPanel styleName="setScoreContainer" ui:field="scoreContainer">
-					<g:HTMLPanel styleName="col-md-6 col-sm-6">
-						<g:HTMLPanel styleName="setScoreLeft">
-							<uc:PPanel ui:field="scorePanel"></uc:PPanel>
-							<uc:PPanel styleName="help-block" ui:field="helpPanel"></uc:PPanel>
-							<g:HTMLPanel styleName="scoreBox">
-							 <g:TextBox styleName="form-control" ui:field="scoreTextBox"></g:TextBox>
-							 <g:InlineLabel styleName="scorePercentage">%</g:InlineLabel>
-							 <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-							 <g:Label ui:field="errorLabel"></g:Label>
-							</g:HTMLPanel>
-						</g:HTMLPanel>
-					</g:HTMLPanel>
-				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-				<g:HTMLPanel styleName="actionButtons">
-				<g:Button styleName="primary" ui:field="saveBtn"></g:Button>
-				<g:Label ui:field="saveLblText"></g:Label>
-				</g:HTMLPanel>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="contentSettingsContainer no-gutter" ui:field="contentSeetingsContainer">
-			   <g:HTMLPanel styleName="col-md-5 col-sm-8">
-			      <g:HTMLPanel styleName="unitLeft">
-			         <uc:PPanel ui:field="unitPanel"></uc:PPanel>
-			         <panel:HTMLEventPanel styleName="selctListBox" ui:field="unitList">
-					 <g:Label styleName="listSelecter" ui:field="selectedLbl"></g:Label>
-					 <g:ScrollPanel  styleName="listMenu" ui:field="unitScrollPanel">
-					   <g:HTMLPanel ui:field="unitsPanel"></g:HTMLPanel>
-					 </g:ScrollPanel>
-					 </panel:HTMLEventPanel>
-			         <g:HTMLPanel styleName="labelStyle customs-select" ui:field="unitList">
-			             <g:ListBox ui:field="unitListBox" ></g:ListBox>
-			            <select>
-			               <option>Rates &amp; Ratios</option>
-			               <option>Blue cheese with crackers</option>
-			               <option>Steak</option>
-			               <option>Other</option>
-			            </select>
-			         </g:HTMLPanel>
-			         <uc:PPanel ui:field="choseTxtPanel"></uc:PPanel>
-			         <uc:PPanel ui:field="noteTxtPanel"></uc:PPanel>
-			      </g:HTMLPanel>
-			   </g:HTMLPanel>
-			   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-			   <g:HTMLPanel styleName="contentSettingsTableIndications">
-			      <g:HTMLPanel styleName="makeallVisible">
-			         <g:HTMLPanel styleName="squaredOne">
-			            <g:CheckBox ui:field="makeAllVisChkBox"></g:CheckBox>
-			            <uc:LabelUc></uc:LabelUc>
-			         </g:HTMLPanel>
-			         <g:InlineLabel ui:field="markAllLbl"></g:InlineLabel>
-			      </g:HTMLPanel>
-			      <g:HTMLPanel styleName="visible">
-			         <g:HTMLPanel styleName="squaredOne">
-			            <uc:LabelUc></uc:LabelUc>
-			         </g:HTMLPanel>
-			         <g:InlineLabel ui:field="visiblLbl"></g:InlineLabel>
-			      </g:HTMLPanel>
-			      <g:HTMLPanel styleName="hiddenOpt">
-			         <g:HTMLPanel styleName="squaredOne">
-			            <g:CheckBox ui:field="hiddenBox"></g:CheckBox>
-			            <uc:LabelUc></uc:LabelUc>
-			         </g:HTMLPanel>
-			         <g:InlineLabel ui:field="hiddenLbl"></g:InlineLabel>
-			      </g:HTMLPanel>
-			   </g:HTMLPanel>
-			   <g:HTMLPanel styleName="table-responsive">
-			   <g:HTMLPanel styleName="contentSettingsTable">
-			      <g:HTMLPanel styleName="contentTable">
-			          <g:HTMLPanel styleName="contentTableRow">
-						   <g:HTMLPanel styleName="contentTableCell lessonHeader"><uc:PPanel ui:field="lessonPanel"></uc:PPanel></g:HTMLPanel>
-						   <g:HTMLPanel styleName="contentTableCell">
-						      <g:HTMLPanel styleName="contentTableInner">
-						         <g:HTMLPanel styleName="contentTableCellInner"><uc:PPanel ui:field="collectionTitlePanel"></uc:PPanel></g:HTMLPanel>
-						         <g:HTMLPanel styleName="contentTableCellInner"><uc:PPanel ui:field="visiblePanel"></uc:PPanel></g:HTMLPanel>
-						      </g:HTMLPanel>
-						   </g:HTMLPanel>
-						</g:HTMLPanel>
-			      </g:HTMLPanel>
-			      <g:HTMLPanel styleName="contentTable" ui:field="tableConatiner">
-			      </g:HTMLPanel>
-			   </g:HTMLPanel>
-			</g:HTMLPanel>
-			</g:HTMLPanel>
-		</g:HTMLPanel> -->
 <g:HTMLPanel>
    <div class="setScoreContainer">
       <div class="col-md-6 col-sm-6">
          <div class="AssignedCourseBlock">
-            <h4>Assigned Course</h4>
-            <p>The course assigned to this class can be edited in My Content.</p>
-            <p class="help-block"> Students can see all collections and assessments saved in this Course </p>
+            <uc:H4Panel ui:field="assignedCourse"></uc:H4Panel>
+            <uc:PPanel ui:field="courseAssigned"></uc:PPanel>
+            <uc:PPanel styleName="help-block" ui:field="studentsNotes"></uc:PPanel>
             <div class="selectCourseButton">
-               <g:Button styleName="primary" ui:field="createCourseBtn">Select a Course</g:Button>
+               <g:Button styleName="primary" ui:field="createCourseBtn"></g:Button>
                <g:HTMLPanel styleName="coureEditActions" ui:field="coursePanel">
                    <span class="folderIcon"></span>
-                   <g:InlineLabel styleName="classTitle" ui:field="titleLbl">Sciece Course</g:InlineLabel> 
+                   <g:InlineLabel styleName="classTitle" ui:field="titleLbl"></g:InlineLabel> 
 				</g:HTMLPanel>
             </div>
          </div>
       </div>
       <div class="col-md-6 col-sm-6">
          <div class="AssignedCourse">
-            <h4>Lesson Pacing</h4>
-            <p>Set a minimum required score for all assessments in this class</p>
-            <p class="help-block"> Students must meet the minimum required score for each of their assessments to acheive completion. </p>
+            <uc:H4Panel ui:field="lessonPacingPanel"></uc:H4Panel>
+            <uc:PPanel ui:field="minimumScrPanel"></uc:PPanel>
+            <uc:PPanel styleName="help-block" ui:field="miniNotesPanel"></uc:PPanel>
             <div class="scoreBoxBlock">
                <img src="images/prize.png"/>
                <div class="textBoxDiv">
@@ -125,12 +40,12 @@
    </div>
    <div class="pageContainerBG">
       <div class="howItWorks">
-         <h2>How Pacing Works</h2>
-         <p>Content pacing applies to assessments in this course. Students must meet the minimum score for all assessments in a lesson to see a trophy on the lesson level.</p>
+         <uc:H2Panel ui:field="pacingWorks"></uc:H2Panel>
+         <uc:PPanel ui:field="pacingNotes"></uc:PPanel>
          <hr/>
          <div class="AssessmentandCollections">
-            <span><img src="images/floderIcon-org.png"/> Assessments are scored </span>
-            <span class="leftMargin"><img src="images/floderIcon-blue.png"/> Collection are not scored</span>
+            <span><img src="images/floderIcon-org.png"/><g:InlineLabel ui:field="assessmentsLbl"/></span>
+            <span class="leftMargin"><img src="images/floderIcon-blue.png"/><g:InlineLabel ui:field="collectionLbl"/></span>
            <!--  <span class="leftMargin"></span> -->
          </div>
       </div>

@@ -12,7 +12,7 @@
 		      <div class="classBannerImage"></div>
 		      <div class="container">
 		         <div class="row">
-		            <div class="classBannerCaptions wow fadeInUp">
+		            <div class="classBannerCaptions">
 		               <txt:H1Panel ui:field="txtLearnH1"></txt:H1Panel>
 		               <txt:H3Panel ui:field="txtExploreH3"></txt:H3Panel>
 		            </div>
@@ -68,8 +68,8 @@
 		                  <txt:H3Panel ui:field="txtScoreH3"></txt:H3Panel>
 		               	  <txt:PPanel styleName="lead" ui:field="txtTeachP"></txt:PPanel> 
 		                  <div class="signupGooruAccount">
-		                     <p><a href="">Sign up</a>  for a free Gooru account.</p>
-							 <g:Button styleName="primary" ui:field="btnCreateClass"></g:Button>
+		                     <p><g:Anchor ui:field="signupAcr">Sign up</g:Anchor><g:InlineLabel styleName="margin-left-5">for a free Gooru account.</g:InlineLabel></p>
+							 <g:Button styleName="primary margin-top-20" ui:field="btnCreateClass"></g:Button>
 		                  </div>
 		               </div>
 		            </div>
