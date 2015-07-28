@@ -740,7 +740,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 				if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view",null))){
-					getUiHandlers().deleteMyCollectionContent((AppClientFactory.getPlaceManager().getRequestParameter("id",null)),"folderCollection");
+					getUiHandlers().deleteMyCollectionColl((AppClientFactory.getPlaceManager().getRequestParameter("id",null)));
 				}else{
 					getUiHandlers().deleteCollectionContent(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
 				}
