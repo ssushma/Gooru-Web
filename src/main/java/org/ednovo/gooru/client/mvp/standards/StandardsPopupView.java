@@ -313,6 +313,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 												Map<String,String> selectedStadDetails= new HashMap<String,String>();
 												selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
 												selectedStadDetails.put("selectedCodeVal", codeVal);
+												selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
 												selectedStadDetails.put("selectedCodeDesc", codeDesc);
 												if(standListArray.size()>0)
 												{
@@ -331,6 +332,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 												{
 													LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 													liPanelWithClose.setId(codeIdVal);
+													liPanelWithClose.setDifferenceId(3);
 													ulSelectedItems.add(liPanelWithClose);
 													standListArray.add(selectedStadDetails);
 												}
@@ -340,6 +342,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 													standListArray.add(selectedStadDetails);
 													LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 													liPanelWithClose.setId(codeIdVal);
+													liPanelWithClose.setDifferenceId(3);
 													ulSelectedItems.add(liPanelWithClose);
 												}
 
@@ -505,6 +508,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 								Map<String,String> selectedStadDetails= new HashMap<String,String>();
 								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
 								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
 								selectedStadDetails.put("selectedCodeDesc", codeDesc);
 								if(standListArray.size()>0)
 								{
@@ -523,6 +527,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 								{
 									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 									liPanelWithClose.setId(codeIdVal);
+									liPanelWithClose.setDifferenceId(3);
 									ulSelectedItems.add(liPanelWithClose);
 									standListArray.add(selectedStadDetails);
 								}
@@ -532,6 +537,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 									standListArray.add(selectedStadDetails);
 									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 									liPanelWithClose.setId(codeIdVal);
+									liPanelWithClose.setDifferenceId(3);
 									ulSelectedItems.add(liPanelWithClose);
 								}
 								
@@ -637,6 +643,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 								Map<String,String> selectedStadDetails= new HashMap<String,String>();
 								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
 								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
 								selectedStadDetails.put("selectedCodeDesc", codeDesc);
 								if(standListArray.size()>0)
 								{
@@ -655,6 +662,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 								{
 									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 									liPanelWithClose.setId(codeIdVal);
+									liPanelWithClose.setDifferenceId(3);
 									ulSelectedItems.add(liPanelWithClose);
 									standListArray.add(selectedStadDetails);
 								}
@@ -664,6 +672,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 									standListArray.add(selectedStadDetails);
 									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 									liPanelWithClose.setId(codeIdVal);
+									liPanelWithClose.setDifferenceId(3);
 									ulSelectedItems.add(liPanelWithClose);
 								}
 
@@ -739,6 +748,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 								Map<String,String> selectedStadDetails= new HashMap<String,String>();
 								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
 								selectedStadDetails.put("selectedCodeVal", codeVal);
+								selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
 								selectedStadDetails.put("selectedCodeDesc", codeDesc);
 								if(standListArray.size()>0)
 								{
@@ -757,6 +767,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 								{
 									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 									liPanelWithClose.setId(codeIdVal);
+									liPanelWithClose.setDifferenceId(3);
 									ulSelectedItems.add(liPanelWithClose);
 									standListArray.add(selectedStadDetails);
 								}
@@ -766,6 +777,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 									standListArray.add(selectedStadDetails);
 									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 									liPanelWithClose.setId(codeIdVal);
+									liPanelWithClose.setDifferenceId(3);
 									ulSelectedItems.add(liPanelWithClose);
 								}
 
@@ -853,11 +865,13 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 			LiPanelWithClose liPanelWithClose = new LiPanelWithClose("x");
 			liPanelWithClose = collectionLiPanelWithCloseArray.get(i);
 			liPanelWithClose.setId(liPanelWithClose.getId());
+			liPanelWithClose.setDifferenceId(liPanelWithClose.getDifferenceId());
 			ulSelectedItems.add(liPanelWithClose);
 			
 			Map<String,String> selectedStadDetails= new HashMap<String,String>();
 			selectedStadDetails.put("selectedCodeId", String.valueOf(liPanelWithClose.getId()));
 			selectedStadDetails.put("selectedCodeVal", String.valueOf(liPanelWithClose.getName()));
+			selectedStadDetails.put("selectedDifferenceId", String.valueOf(liPanelWithClose.getDifferenceId()));
 			selectedStadDetails.put("selectedCodeDesc", "");
 			standListArray.add(selectedStadDetails);
 			
