@@ -522,6 +522,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	
 	@Override
 	public ClasspageDo v3GetClassById(String classpageId){
+		ClasspageDo classpageDo = null;
 		JsonRepresentation jsonRep = null;
 		try{
 			String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
@@ -530,11 +531,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 					getRestPassword());
 			jsonRep =jsonResponseRep.getJsonRepresentation();	
+			if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==200) {
+				classpageDo=deserializeV2Class(jsonRep);
+			}else{
+				classpageDo=new ClasspageDo();
+			}
 		}catch(Exception e){
 			getLogger().error("v3GetClassById ......:"+e.getMessage());
 		}
 		
-		return deserializeV2Class(jsonRep);
+		return classpageDo;
 	}
 
 	@Override
