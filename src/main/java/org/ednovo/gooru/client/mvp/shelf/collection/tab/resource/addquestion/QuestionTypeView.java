@@ -2121,7 +2121,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					while (it.hasNext()) {
 						QuestionAnswerDo answer = it.next();
 						//hard code Image url for 1.5 QA
-						addHotSpotQuestion.setAnswerImageUrl(collectionItemDo.getAssetURI()+"uploaded-media/"+answer.getAnswerText(), answer.getAnswerText(), true,answer.isIsCorrect());
+						addHotSpotQuestion.setAnswerImageUrl(collectionItemDo.getAssetURI()+collectionItemDo.getFolder()+answer.getAnswerText(), answer.getAnswerText(), true,answer.isIsCorrect());
 						
 					}
 				}

@@ -48,6 +48,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -148,7 +149,6 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		privatePanel.addClickHandler(new SharingVisiblityClickHandler(privatePanel));
 
 		classTitleTextLbl.setMaxLength(50);
-		//shareUrlTxtLbl.setReadOnly(true);
 
 		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
 
@@ -181,6 +181,9 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		classTitleTextLbl.addKeyUpHandler(new TitleKeyUpHandler());
 		saveBtn.addClickHandler(new UpdateClassDataHandler());
 		AppClientFactory.getEventBus().addHandler(setClassImageEvent.TYPE, imageHandler);
+		
+		shareUrlTxtLbl.addClickHandler(new TextCopyHandler());
+		fullTxtBox.addClickHandler(new FullTextCopyHandler());
 	}
 
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
@@ -295,11 +298,14 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 
 		classImage.getElement().setId("thumbnailImage");
 		classImage.setVisible(false);
-		shareUrlTxtLbl.setReadOnly(false);
+		
+		shareUrlTxtLbl.setReadOnly(true);
 		shareUrlTxtLbl.getElement().getStyle().setBackgroundColor("#FFF");
+		shareUrlTxtLbl.getElement().getStyle().setCursor(Cursor.DEFAULT);
+		StringUtil.setAttributes(shareUrlTxtLbl, true);
 
 		fullTxtBox.setReadOnly(true);
-		fullTxtBox.getElement().setAttribute("style", "background-color: #FFF");
+		fullTxtBox.getElement().setAttribute("style", "background-color: #FFF;cursor: default");
 		StringUtil.setAttributes(fullTxtBox, true);
 
 
@@ -307,6 +313,26 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		sharePanel.add(shareImage);
 		errorLbl.setVisible(false);
 		saveLbl.setVisible(false);
+
+	}
+	
+	public class TextCopyHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			shareUrlTxtLbl.selectAll();
+			shareUrlTxtLbl.setFocus(true);
+		}
+
+	}
+	
+	public class FullTextCopyHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			fullTxtBox.selectAll();
+			fullTxtBox.setFocus(true);
+		}
 
 	}
 
