@@ -14,8 +14,11 @@
 		</uc:HTMLEventPanel>
         <g:HTMLPanel styleName="col-md-9 col-sm-9">
            <g:HTMLPanel styleName="progressBlock">
-              <g:HTMLPanel styleName="circle-main-container line-height-70" ui:field="circleContainer"/>
-           </g:HTMLPanel>
+				<uc:HTMLEventPanel styleName="scrollLeftArrow cursorArrows cursorPointer" ui:field="leftArrow"></uc:HTMLEventPanel> 
+				<g:HTMLPanel styleName="circle-main-container line-height-70" ui:field="circleContainer"/>
+				<div class="clearfix"></div>
+				<uc:HTMLEventPanel styleName="scrollRightArrow cursorArrows cursorPointer" ui:field="rightArrow"></uc:HTMLEventPanel>
+             </g:HTMLPanel>
         </g:HTMLPanel>
         <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
     </g:HTMLPanel>

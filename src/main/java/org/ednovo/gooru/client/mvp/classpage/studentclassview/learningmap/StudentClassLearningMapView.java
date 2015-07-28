@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
@@ -33,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild.SlmAssessmentChildView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapContainer;
@@ -50,6 +52,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -58,7 +61,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentClassLearningMapUiHandlers> implements IsStudentClassLearningMapView {
 
-	@UiField HTMLPanel containerData, learningMapContainer, headerLinksContainer, topBackLinkBox, standardsBlock;
+	@UiField HTMLPanel containerData, learningMapContainer, headerLinksContainer, topBackLinkBox, standardsBlock, standardsBlockList;
 	@UiField SpanPanel allContentTxt, currentContentName, previousContentName, nextContentName, headerLeftArrow;
 	@UiField HTMLEventPanel allContentPanel, previousContentPanel, nextContentPanel;
 	@UiField HTMLPanel learnMapScore, colorPanel, learingHeaderBlock;
@@ -191,6 +194,9 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		containerData.setVisible(isVisible);
 		cropImageLoading.setVisible(!isVisible);
 		emptyContainer.setVisible(false);
+		if(!isVisible) {
+			standardsBlock.setVisible(false);
+		}
 	}
 	
 	private void setScoreMapVisiblity(boolean isVisible) {
@@ -320,7 +326,18 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		if(collectionList!=null&&collectionList.getItems()!=null) {
 			size = collectionList.getItems().size();
 		}
-		setTextPanelsVisiblity(true,true,false,true);
+		boolean isStandards = false;
+		if(collectionList!=null&&collectionList.getStandards()!=null&&collectionList.getStandards().size()>0) {
+			isStandards = true;
+			List<StandardFo> list = collectionList.getStandards();
+			standardsBlockList.clear();
+			for(int i=0;i<list.size();i++) {
+				Label standard = new Label(list.get(i).getCode());
+				standard.addStyleName("lessonStandard");
+				standardsBlockList.add(standard);
+			}
+		}
+		setTextPanelsVisiblity(true,true,isStandards,true);
 		if(size>0) {
 			setScoreMapVisiblity(true);
 			for(int i=0;i<size;i++) {

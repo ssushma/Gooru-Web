@@ -37,8 +37,10 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresen
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import org.ednovo.gooru.client.uc.LiPanel;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -179,6 +181,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							
 						}
 					});
+				}else{
+					
 				}
 			}
 		});
@@ -186,7 +190,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 
 	@Override
-	public void getDomainsBasedOnSelectedCourse(final int classification, String taxonomyType, int offset, int limit) {
+	public void getDomainsBasedOnSelectedCourse(final int classification, String taxonomyType, int offset, int limit, final Anchor title, final int courseId, final LiPanel liPanel, final LiPanel previousSelectedCourseLiPanel) {
 		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offset, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
 
 			@Override
@@ -204,6 +208,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 							}
 						});
 					}
+				}else{
+					getView().addEmptyCourses(title, courseId, liPanel, previousSelectedCourseLiPanel);
 				}
 			}
 		});
@@ -211,7 +217,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 
 	
 	@Override
-	public void getStdBasedOnSelectedDomain(int subDomainId) {
+	public void getStdBasedOnSelectedDomain(final int subDomainId,final Anchor title, final LiPanel liPanel, final LiPanel previousSelDomainLiPanel) {
 		if("Lesson".equalsIgnoreCase(viewType)||"assessment".equalsIgnoreCase(viewType)||"Collection".equalsIgnoreCase(viewType)){
 			AppClientFactory.getInjector().getTaxonomyService().getStandardsList(subDomainId, new SimpleAsyncCallback<List<DomainStandardsDo>>() {
 
@@ -219,6 +225,8 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 				public void onSuccess(List<DomainStandardsDo> result) {
 					if(result.size()>0){
 						getView().addTaxonomyStandards(result);
+					}else{
+						getView().addEmptyDomains(subDomainId, title, liPanel, previousSelDomainLiPanel);
 					}
 				}
 			});

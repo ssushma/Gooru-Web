@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -24,11 +25,19 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class StudentClassLessonContainer extends Composite {
 
-	@UiField HTMLPanel lessonContainer, circleIcon;
+	@UiField HTMLPanel lessonContainer, circleIcon, leftArrow, rightArrow;
 	@UiField H3Panel lessonCountName;
 	@UiField PPanel lessonName;
 	@UiField HTMLEventPanel lessonWidget;
 	@UiField Label numericOrder;
+	
+	ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+	
+	int start = 0, end = 0;
+
+	private final static int CAROUSEL_LIMIT = 6;
+	
+	private String gooruOid = null, status = null, userId = null;
 	
 	private static StudentClassLessonContainerUiBinder uiBinder = GWT.create(StudentClassLessonContainerUiBinder.class);
 
@@ -47,7 +56,7 @@ public class StudentClassLessonContainer extends Composite {
 		lessonCountName.setText(planProgressDo.getTitle());
 		lessonName.setText("Lesson");
 		
-		ArrayList<PlanProgressDo> dataList = planProgressDo.getItem();
+		dataList = planProgressDo.getItem();
 		int size = dataList.size();
 		
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
@@ -62,32 +71,86 @@ public class StudentClassLessonContainer extends Composite {
 			}
 			circleIcon.setStyleName(circleIconStyle);
 		}
-		
 		if(size>0) {
-			for(int i=0;i<size;i++) {
-				PlanProgressDo planDo = dataList.get(i);
-				String styleName = "blueBorder ";
-				if(planDo.getType()!=null&&(planDo.getType().equalsIgnoreCase("assessment")||planDo.getType().equalsIgnoreCase("assessment/url"))) {
-					styleName = "orgBorder ";
-				}
-				if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-					if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotViewed")||planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
-						styleName = styleName + " cursorPointer";
-					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("Viewed")) {
-						styleName = styleName + "emptyselected cursorPointer";
-					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
-						styleName = styleName + "blueselected cursorPointer";
-					} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
-						styleName = styleName + "selected cursorPointer";
-					}
-				}
-				lessonContainer.add(new StudentClassContentWidget(planDo, styleName, planProgressDo.getGooruOId(), status, userId));
+			start = 0;
+			if(size < CAROUSEL_LIMIT+1) {
+				end = size;
+			} else {
+				end = CAROUSEL_LIMIT;
 			}
+			this.gooruOid = planProgressDo.getGooruOId();
+			this.status = status;
+			this.userId = userId;
+			setData(start,end);
 		} else {
+			setArrowVisibility(false,false);
 			SpanPanel errorPanel = StringUtil.getStudentPlanErrorLbl("Your teacher has not assigned any assessments or collections yet!", "error-lbl-student-course-plan");
 			errorPanel.addStyleName("line-height-70");
 			lessonContainer.add(errorPanel);
 		}
+	}
+	
+	private void setData(int startPoint, int endPoint) {
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		lessonContainer.clear();
+		for(int z=startPoint;z<endPoint;z++) {
+			String styleName = "blueBorder ";
+			PlanProgressDo planDo = dataList.get(z);
+			if(planDo.getType()!=null&&(planDo.getType().equalsIgnoreCase("assessment")||planDo.getType().equalsIgnoreCase("assessment/url"))) {
+				styleName = "orgBorder ";
+			}
+			if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+				if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotViewed")||planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
+					styleName = styleName + " cursorPointer";
+				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("Viewed")) {
+					styleName = styleName + "emptyselected cursorPointer";
+				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
+					styleName = styleName + "blueselected cursorPointer";
+				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
+					styleName = styleName + "selected cursorPointer";
+				}
+			}
+			lessonContainer.add(new StudentClassContentWidget(dataList.get(z), styleName,gooruOid, status, userId));
+		}
+		setArrows();
+	}
+	
+	private void setArrows() {
+		boolean leftArrowVisibile = false, rightArrowVisible = false;
+		if(end>CAROUSEL_LIMIT) {
+			leftArrowVisibile = true;
+		}
+		if(end<dataList.size()) {
+			rightArrowVisible = true;
+		}
+		setArrowVisibility(leftArrowVisibile,rightArrowVisible);
+	}
+	
+	private void setArrowVisibility(boolean leftArrowVisibile, boolean rightArrowVisible) {
+		leftArrow.setVisible(leftArrowVisibile);
+		rightArrow.setVisible(rightArrowVisible);
+	}
+	
+	@UiHandler("leftArrow")
+	public void clickLeftArrow(ClickEvent event) {
+		end = start;
+		if(start-CAROUSEL_LIMIT<0) {
+			start = 0;
+		} else {
+			start = start - CAROUSEL_LIMIT;
+		}
+		setData(start, end);
+	}
+	
+	@UiHandler("rightArrow")
+	public void clickRightArrow(ClickEvent event) {
+		start = end;
+		if((dataList.size())-end > CAROUSEL_LIMIT) {
+			end = end + CAROUSEL_LIMIT;
+		} else {
+			end = (dataList.size());
+		}
+		setData(start, end);
 	}
 	
 	public class LessonPageRedirection implements ClickHandler{

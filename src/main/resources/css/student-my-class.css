@@ -132,10 +132,27 @@
 }
 .rowContainer .progressBlock {
     padding: 12px 6px;
+    position: relative;
+}
+.rowContainer .progressBlock .cursorArrows {
+    position: absolute;
+}
+.rowContainer .progressBlock .scrollLeftArrow {
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -324px -326px;
+    height: 25px;
+    width: 25px;
+    left: 0%;
+    top: 38%;
+}
+.rowContainer .progressBlock .scrollRightArrow {
+    background: rgba(0, 0, 0, 0) url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -349px -326px;
+    height: 25px;
+    width: 25px;
+    right: 0%;
+    top: 38%;
 }
 .rowContainer .progressBlock .circle-main-container {
-    margin: 0 0;
-    padding: 5px 13px;
+    margin: 0px 22px;
     display: block;
 }
 .rowContainer .progressBlock .circle-main-container div {
@@ -288,7 +305,7 @@
     float: left;
 }
 .LearningMapContainer .lessonDescription.divTable {
-	margin: 13px 0;
+	margin: 0px 35px;
 	display: block;
 }
 .LearningMapContainer .lessonDescription .divcontainer.blueBorder img {
@@ -304,7 +321,7 @@
     top: 11px;
     position: absolute;
     background: #a5cba1 no-repeat center center;
-    opacity: 0.8;
+    opacity: 0.9;
     content: "";
 }
 .LearningMapContainer .lessonDescription .divcontainer.blueselected:before {
@@ -314,7 +331,7 @@
     top: 11px;
     position: absolute;
     background: #F7CD71;
-    opacity: 0.8;
+    opacity: 0.9;
 	content: "";
 }
 .LearningMapContainer .lessonDescription .divcontainer.emptyselected:before {
@@ -1116,6 +1133,7 @@ th.headcol.whitebg {
 	border-radius: 4px 4px;
 	background: #515151;
 	font-weight: bold;
+	margin: 3px 10px;
 }
 
 .LearningMapContainer .fractionsDetailsContainer{

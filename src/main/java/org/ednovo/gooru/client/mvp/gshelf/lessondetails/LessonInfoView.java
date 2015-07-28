@@ -221,6 +221,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
 					}
@@ -278,6 +279,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
                         }
@@ -334,6 +336,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
                         }
@@ -392,6 +395,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			final CreateDo createOrUpDate=new CreateDo(); 
 			createOrUpDate.setTitle(lessonTitle.getText());
 			createOrUpDate.setStandardIds(getSelectedStandards());
+			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
+			createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
 			
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
@@ -417,6 +422,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			final CreateDo createOrUpDate=new CreateDo(); 
 			createOrUpDate.setTitle(lessonTitle.getText());
 			createOrUpDate.setStandardIds(getSelectedStandards());
+			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
+			createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
 			
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
@@ -431,6 +438,39 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 
 	}
+	
+	
+	/**
+	 * This method is used to get the selected course id's
+	 * @return
+	 */
+	public List<Integer> getSelectedCourseIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getDifferenceId()==1){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					courseObj.setId((int)obj.getId());
+					courseObj.setName(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedId());
+					courseList.add(courseObj);
+				}
+			}
+		}
+		if(courseObj!=null){
+			courseObj.setTaxonomyCourse(courseList);
+		}
+		return taxonomyCourseIds;
+	}
+	
+	
+	
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
 		final TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
@@ -441,6 +481,8 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			final CreateDo createOrUpDate=new CreateDo(); 
 			createOrUpDate.setTitle(lessonTitle.getText());
 			createOrUpDate.setStandardIds(getSelectedStandards());
+			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
+			createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
 			assessmentPopup=new AssessmentPopupWidget() {
 				@Override
 				public void clickOnNoramlAssessmentClick() {
@@ -482,8 +524,10 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		}
 	}
+	
+	
 	/**
-	 * This method is used to get the selected course id's
+	 * This method is used to get the selected Std id's
 	 * @return
 	 */
 	public List<Integer> getSelectedStandards(){
@@ -494,18 +538,50 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			Widget widget=widgets.next();
 			if(widget instanceof LiPanelWithClose){
 				LiPanelWithClose obj=(LiPanelWithClose) widget;
-				Integer intVal = (int)obj.getId();
-				taxonomyCourseIds.add(intVal);
-				CourseSubjectDo courseObjLocal=new CourseSubjectDo();
-				selectedValues.add((int)obj.getId());
-				courseObjLocal.setId((int)obj.getId());
-				courseObjLocal.setCode(obj.getName());
-				courseObjLocal.setSubjectId(obj.getRelatedId());
-				courseList.add(courseObjLocal);
+				if(obj.getDifferenceId()==3){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObjLocal=new CourseSubjectDo();
+					selectedValues.add((int)obj.getId());
+					courseObjLocal.setId((int)obj.getId());
+					courseObjLocal.setCode(obj.getName());
+					courseObjLocal.setSubjectId(obj.getRelatedId());
+					courseList.add(courseObjLocal);
+				}
 			}
 		}
 		if(courseObj!=null){
 			courseObj.setStandards(courseList);
+		}
+		return taxonomyCourseIds;
+	}
+	
+	/**
+	 * This method is used to get the selected Domain id's
+	 * @return
+	 */
+	public List<Integer> getSelectedSubDomainIds(){
+		List<Integer> taxonomyCourseIds=new ArrayList<Integer>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<CourseSubjectDo>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getDifferenceId()==2){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					courseObj.setId((int)obj.getId());
+					courseObj.setName(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedSubjectId());
+					courseObj.setCourseId(obj.getRelatedId());
+					courseList.add(courseObj);
+				}
+			}
+		}
+		if(courseObj!=null){
+			courseObj.setSubdomain(courseList);
 		}
 		return taxonomyCourseIds;
 	}
@@ -541,10 +617,51 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
 					liPanelWithClose.setName(courseSubjectDo.getCode());
+					liPanelWithClose.setDifferenceId(3);
 					ulSelectedItems.add(liPanelWithClose);
 				}
 
 			}
+			
+			if(folderObj!=null && folderObj.getTaxonomyCourse()!=null){
+				for (final CourseSubjectDo courseSubjectDo : folderObj.getTaxonomyCourse()) {
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							liPanelWithClose.removeFromParent();
+						}
+						
+					});
+					liPanelWithClose.setId(courseSubjectDo.getId());
+					liPanelWithClose.setName(courseSubjectDo.getName());
+					liPanelWithClose.setRelatedId(courseSubjectDo.getSubjectId());
+					liPanelWithClose.setDifferenceId(1);
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			}
+			
+			if(folderObj!=null && folderObj.getSubdomain()!=null){
+				for (final CourseSubjectDo courseSubjectDo : folderObj.getSubdomain()) {
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							liPanelWithClose.removeFromParent();
+						}
+						
+					});
+					liPanelWithClose.setId(courseSubjectDo.getId());
+					liPanelWithClose.setName(courseSubjectDo.getName());
+					liPanelWithClose.setRelatedId(courseSubjectDo.getCourseId());
+					liPanelWithClose.setRelatedSubjectId(courseSubjectDo.getSubjectId());
+					liPanelWithClose.setDifferenceId(2);
+					ulSelectedItems.add(liPanelWithClose);
+				}
+			}
+			
 		}
 		getUiHandlers().callCourseInfoTaxonomy();
 	}

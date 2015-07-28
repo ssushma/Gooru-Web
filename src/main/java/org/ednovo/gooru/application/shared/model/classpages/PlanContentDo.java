@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -55,11 +56,12 @@ public class PlanContentDo implements IsSerializable{
 	private String sharing;
 	private String url;
 	private SummaryDo summary;
-	private ThumbnailDo thumbnail;
+	private ThumbnailDo thumbnails;
 	private ResourceFormatDo resourceFormat;
 	private ResourceTypeDo resourceType;
 	private ArrayList<PlanContentDo> items;
 	private PlanProgressDo progress;
+	private ArrayList<StandardFo> standards;
 	
 	public String getTitle() {
 		return title;
@@ -121,11 +123,11 @@ public class PlanContentDo implements IsSerializable{
 	public void setSummary(SummaryDo summary) {
 		this.summary = summary;
 	}
-	public ThumbnailDo getThumbnail() {
-		return thumbnail;
+	public ThumbnailDo getThumbnails() {
+		return thumbnails;
 	}
-	public void setThumbnail(ThumbnailDo thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setThumbnails(ThumbnailDo thumbnails) {
+		this.thumbnails = thumbnails;
 	}
 	public ResourceFormatDo getResourceFormat() {
 		return resourceFormat;
@@ -156,5 +158,11 @@ public class PlanContentDo implements IsSerializable{
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public ArrayList<StandardFo> getStandards() {
+		return standards;
+	}
+	public void setStandards(ArrayList<StandardFo> standards) {
+		this.standards = standards;
 	}
 }
