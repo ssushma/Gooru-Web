@@ -104,9 +104,11 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 	}
 
 	@Override
-	public void showStandardsPopup(String standardVal, String titleVal) {
+	public void showStandardsPopup(String standardVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
 		Window.enableScrolling(false);
-		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,titleVal);
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setLessonInfoPresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
 		addToPopupSlot(standardsPopupPresenter);
 	}
 
@@ -231,5 +233,11 @@ public class LessonInfoPresenter extends PresenterWidget<IsLessonInfoView> imple
 		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget(); 
 		return shelfTreeWidget;
 	}
+
+   	public void setSelectedStandards(List<Map<String,String>> standListArray){
+   		getView().displaySelectedStandards(standListArray);
+   	}
+   	
+   	
 
 }

@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.lessondetails;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
@@ -54,5 +55,7 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 	void resetBtns(); 
 	
 	HTMLPanel getStadardsPanel();
+
+	void displaySelectedStandards(List<Map<String, String>> standListArray);
 
 }
