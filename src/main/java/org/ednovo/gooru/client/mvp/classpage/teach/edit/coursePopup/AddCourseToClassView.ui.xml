@@ -34,7 +34,7 @@
               <g:HTMLPanel styleName="assignCourseBlock" ui:field="assignCourseBlockContainer">
                   <h3>Once you assign this Course,</h3>
                   <ul>
-                     <li><span class="bluedot"></span> <em>You will no longer b able to delete questions in assignments, so that scores for your students are accurately represented in reports.</em></li>
+                     <li><span class="bluedot"></span> <em>You will no longer be able to delete questions in assignments, so that scores for your students are accurately represented in reports.</em></li>
                      <li><span class="greendot"></span> <em>Any edits you make to the content after assigning to a class may affect the reports that you see for your students.</em></li>
                      <li><span class="orgdot"></span> <em>Any new content to you add to that Course after this point will immediately reflect in the Class.</em></li>
                   </ul>
