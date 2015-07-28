@@ -43,6 +43,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 	
 	final String SELECTEDSTYLE="setSelected",ASSESSMENTURL="assessment/url";
 	final String PUBLIC="public",PRIVATE="private",ANYONEWITHLINK="anyonewithlink";
+	final String UNTITLEDASSESSMENTURLTITLE="UntitledExternalAssessment";
 	
 	String selectedSharing,isLoginRequired;
 	
@@ -216,8 +217,15 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		removeSelectedStyle(false);
 		this.folderObj = folderObj;
 		if(folderObj!=null){
-			txtAssessmentTitle.setText(folderObj.getTitle());
-			txtAssessmentURL.setText(folderObj.getUrl());
+			if(folderObj.getTitle().equalsIgnoreCase(UNTITLEDASSESSMENTURLTITLE)){
+				txtAssessmentTitle.getElement().setAttribute("placeHolder",UNTITLEDASSESSMENTURLTITLE);
+				txtAssessmentURL.getElement().setAttribute("placeHolder", "Paste URL here");
+				txtAssessmentTitle.setText("");
+				txtAssessmentURL.setText("");
+			}else{
+				txtAssessmentTitle.setText(folderObj.getTitle());
+				txtAssessmentURL.setText(folderObj.getUrl());
+			}
 			txaAssessmentDescription.setText(folderObj.getDescription());
 			String sharingVal=folderObj.getSharing()!=null?folderObj.getSharing():"";
 			if(PUBLIC.equalsIgnoreCase(sharingVal)){
@@ -234,8 +242,10 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				lblRequiresNo.addStyleName(SELECTEDSTYLE);
 			}
 		}else{
-			txtAssessmentTitle.setText("UntitledExternalAssessment");
-			txtAssessmentURL.setText("Paste URL here");
+			txtAssessmentTitle.getElement().setAttribute("placeHolder", "UntitledExternalAssessment");
+			txtAssessmentURL.getElement().setAttribute("placeHolder", "Paste URL here");
+			txtAssessmentTitle.setText("");
+			txtAssessmentURL.setText("");
 			txaAssessmentDescription.setText("");
 			pnlSharable.addStyleName(SELECTEDSTYLE);
 			lblRequiresNo.addStyleName(SELECTEDSTYLE);

@@ -97,6 +97,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
+	final String PASTEURL="Paste URL here";
 	
 	private String currentTypeView;
 	String o1,o2,o3;
@@ -444,7 +445,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(placeToken, params);
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}else{
-					Window.open(folderObj.getUrl(), "", "");
+					if(!folderObj.getUrl().isEmpty() && !folderObj.getUrl().equalsIgnoreCase(PASTEURL)){
+						Window.open(folderObj.getUrl(), "", "");
+					}
 				}
 			}
 		}
