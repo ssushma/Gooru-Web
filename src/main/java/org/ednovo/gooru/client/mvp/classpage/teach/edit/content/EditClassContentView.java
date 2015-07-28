@@ -33,6 +33,9 @@ import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.H4Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -78,7 +81,13 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	@UiField HTMLPanel coursePanel;
 	
-	@UiField InlineLabel titleLbl;
+	@UiField InlineLabel titleLbl,assessmentsLbl,collectionLbl;
+	
+	@UiField H4Panel assignedCourse,lessonPacingPanel;
+	
+	@UiField H2Panel pacingWorks;
+	
+	@UiField PPanel courseAssigned,studentsNotes,minimumScrPanel,miniNotesPanel,pacingNotes;
 	
 	ClasspageDo classpageDo;
 	
@@ -195,6 +204,18 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		saveLblText.setText(i18n.GL3426());
 		saveLblText.getElement().setId("saveLblTxtId");
 		saveLblText.setVisible(false);
+		
+		assignedCourse.setText(i18n.GL3440());
+		courseAssigned.setText(i18n.GL3441());
+		studentsNotes.setText(i18n.GL3442());
+		createCourseBtn.setText(i18n.GL3443());
+		lessonPacingPanel.setText(i18n.GL3444());
+		minimumScrPanel.setText(i18n.GL3445());
+		miniNotesPanel.setText(i18n.GL3446());
+		pacingWorks.setText(i18n.GL3447());
+		pacingNotes.setText(i18n.GL3448());
+		assessmentsLbl.setText(i18n.GL3449());
+		collectionLbl.setText(i18n.GL3450());
 		
 	}
 	@Override
