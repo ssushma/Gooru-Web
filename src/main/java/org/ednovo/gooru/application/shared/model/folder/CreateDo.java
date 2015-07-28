@@ -2,6 +2,7 @@ package org.ednovo.gooru.application.shared.model.folder;
 
 import java.util.List;
 
+import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -29,7 +30,7 @@ public class CreateDo implements IsSerializable{
 	private String url;
 	private String goals;
 	private String sharing;
-	private String isLoginRequired;
+	private CollectionSettingsDo settings;
 	private String mediaFilename;
 	private ThumbnailDo thumbnails;
 	public String getLanguageObjective() {
@@ -105,12 +106,6 @@ public class CreateDo implements IsSerializable{
 	public void setSharing(String sharing) {
 		this.sharing = sharing;
 	}
-	public String getIsLoginRequired() {
-		return isLoginRequired;
-	}
-	public void setIsLoginRequired(String isLoginRequired) {
-		this.isLoginRequired = isLoginRequired;
-	}
 	public String getMediaFilename() {
 		return mediaFilename;
 	}
@@ -147,5 +142,10 @@ public class CreateDo implements IsSerializable{
 	public void setSkillIds(List<String> skillIds) {
 		this.skillIds = skillIds;
 	}
-	
+	public CollectionSettingsDo getSettings() {
+		return settings;
+	}
+	public void setSettings(CollectionSettingsDo settings) {
+		this.settings = settings;
+	}
 }

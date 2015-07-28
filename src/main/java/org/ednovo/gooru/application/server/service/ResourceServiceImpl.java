@@ -197,6 +197,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	@Override
 	public void deleteCollection(String collectionId) {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_COLLECTION, collectionId);
+		getLogger().info("del coll -- "+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 

@@ -155,16 +155,27 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(type==null){
-					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
+					if(folderListDo!=null && folderListDo.getCount()!=null && folderListDo.getCount()==0){
+						getView().displayNoCollectionsMsg(type);
+					}else{
+						getView().enableAddButton();
+						getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
+					}
 				}
 				else if(type.equalsIgnoreCase(FOLDER)){
-					/*if(folderListDo.getCount()==0){
-						getView().displayNoCollectionsMsg(searchType);
-					}else{*/
+					if(folderListDo!=null && folderListDo.getCount()!=null && folderListDo.getCount()==0){
+						getView().displayNoCollectionsMsg(type);
+					}else{
+						getView().enableAddButton();
 						getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
-					/*}*/
+					}
 				}else if(type.equalsIgnoreCase("course")){
-					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
+					if(folderListDo.getSearchResult().size()==0){
+						getView().displayNoCollectionsMsg(type);
+					}else{
+						getView().enableAddButton();
+						getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
+					}
 				}
 			}
 		});
@@ -190,7 +201,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			AppClientFactory.getInjector().getResourceService().getCollection(selectedFolderOrCollectionid, true, new AsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
-					int resourceCount=0,questionCount=0;
+					int resourceCount=0,questionCount=0,totalCount=0;
 					if(result!=null && result.getSummary()!=null){
 						if(result.getSummary().getResourceCount()!=null){
 							 resourceCount= result.getSummary().getResourceCount();
@@ -198,7 +209,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						if(result.getSummary().getQuestionCount()!=null){
 							questionCount = result.getSummary().getQuestionCount();
 						}
-						int totalCount = resourceCount+questionCount;
+					}
+						 totalCount = resourceCount+questionCount;
+						System.out.println("totalCount-----------"+totalCount);
 						if(totalCount<=25){
 							String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
 							AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
@@ -219,7 +232,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							Window.enableScrolling(false);
 							AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't add more than 25 resources/questions");
 						}
-					}
+					
 				
 				}
 				@Override
