@@ -64,9 +64,10 @@ a img {
 }
 
 .errorMessage {
+	font-size:12px;
 	font-style:italic;
-	color:#FBB03B;
-	text-align: right;
+	font-family:arial;
+	color:#EE1E7B;
 }
 
 button.primary, a.primary {
