@@ -1573,16 +1573,22 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	
 	
 	@Override
-	public void v3StudentJoinIntoClass(String classCode)	throws GwtException {
+	public Boolean v3StudentJoinIntoClass(String classCode)	throws GwtException {
+		boolean isJoined = false;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_MEMBER_LIST_BY_CODE, classCode);
 		getLogger().info("v3 Student Join Class:"+url);
 		try {
 			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword());
-			jsonRep=jsonResponseRep.getJsonRepresentation();
+			if(jsonResponseRep!=null) {
+				if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==200) {
+					isJoined = true;
+				}
+			}
 		} catch (Exception e) {
-			logger.error("Exception::", e);
+			logger.error("v3 Student Join Class Exception ", e);
 		}
+		return isJoined;
 	}
 
 	@Override
