@@ -108,8 +108,8 @@
       <div class="col-md-6 col-sm-6">
          <div class="AssignedCourse">
             <h4>Lesson Pacing</h4>
-            <p>Set a minimum score for all Assessments in this Class</p>
-            <p class="help-block"> Students must meet this score for every assessment in a lesson to recieve a trophy. </p>
+            <p>Set a minimum required score for all assessments in this class</p>
+            <p class="help-block"> Students must meet the minimum required score for each of their assessments to acheive completion. </p>
             <div class="scoreBoxBlock">
                <img src="images/prize.png"/>
                <div class="textBoxDiv">
