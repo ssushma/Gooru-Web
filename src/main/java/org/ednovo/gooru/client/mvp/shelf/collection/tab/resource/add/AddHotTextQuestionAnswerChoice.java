@@ -72,20 +72,12 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		labelChoice.getElement().setId("lblLabelChoice");
 		answerHeadLbl.getElement().setId("lblAnswerHead");
 		answerHeadLbl.setText(i18n.GL3214_1());
-		answerHeadLbl.getElement().setAttribute("alt", i18n.GL3214_1());
-		answerHeadLbl.getElement().setAttribute("title", i18n.GL3214_1());
 		answerHeadingTypeLbl.getElement().setId("lblAnswerHeadintType");
 		answerHeadingTypeLbl.setText(i18n.GL3215_1());
-		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3215_1());
-		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215_1());
 		wordRDButton.getElement().setId("rdWord");
 		wordRDButton.setText(i18n.GL3219_1());
-		wordRDButton.getElement().setAttribute("alt", i18n.GL3219_1());
-		wordRDButton.getElement().setAttribute("title", i18n.GL3219_1());
 		sentenceRDButton.getElement().setId("rdSentence");
 		sentenceRDButton.setText(i18n.GL3220_1());
-		sentenceRDButton.getElement().setAttribute("alt", i18n.GL3220_1());
-		sentenceRDButton.getElement().setAttribute("title", i18n.GL3220_1());
 		highlightTextArea.getElement().setId("pnlTinyOrHighlightTextBoxContainer");
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerHeadContainer.getElement().setId("pnlAnswerHeadConatiner");
@@ -101,24 +93,14 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		labelChoice.getElement().setId("lblLabelChoice");
 		answerHeadLbl.getElement().setId("lblAnswerHead");
 		answerHeadLbl.setText(i18n.GL3214_1());
-		answerHeadLbl.getElement().setAttribute("alt", i18n.GL3214_1());
-		answerHeadLbl.getElement().setAttribute("title", i18n.GL3214_1());
 		answerHeadingTypeLbl.getElement().setId("lblAnswerHeadintType");
 		answerHeadingTypeLbl.setText(i18n.GL3215_1());
-		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3215_1());
-		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215_1());
 		wordRDButton.getElement().setId("rdWord");
 		wordRDButton.setText(i18n.GL3219_1());
-		wordRDButton.getElement().setAttribute("alt", i18n.GL3219_1());
-		wordRDButton.getElement().setAttribute("title", i18n.GL3219_1());
 		sentenceRDButton.getElement().setId("rdSentence");
 		sentenceRDButton.setText(i18n.GL3220_1());
-		sentenceRDButton.getElement().setAttribute("alt", i18n.GL3220_1());
-		sentenceRDButton.getElement().setAttribute("title", i18n.GL3220_1());
 		highlightTextArea.getElement().setId("pnlTinyOrHighlightTextBoxContainer");
 		labelChoice.setText(labelName);
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerHeadContainer.getElement().setId("pnlAnswerHeadConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
@@ -134,24 +116,14 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		labelChoice.getElement().setId("lblLabelChoice");
 		answerHeadLbl.getElement().setId("lblAnswerHead");
 		answerHeadLbl.setText(i18n.GL3214_1());
-		answerHeadLbl.getElement().setAttribute("alt", i18n.GL3214_1());
-		answerHeadLbl.getElement().setAttribute("title", i18n.GL3214_1());
 		answerHeadingTypeLbl.getElement().setId("lblAnswerHeadintType");
 		answerHeadingTypeLbl.setText(i18n.GL3215_1());
-		answerHeadingTypeLbl.getElement().setAttribute("alt", i18n.GL3215_1());
-		answerHeadingTypeLbl.getElement().setAttribute("title", i18n.GL3215_1());
 		wordRDButton.getElement().setId("rdWord");
 		wordRDButton.setText(i18n.GL3219_1());
-		wordRDButton.getElement().setAttribute("alt", i18n.GL3219_1());
-		wordRDButton.getElement().setAttribute("title", i18n.GL3219_1());
 		sentenceRDButton.getElement().setId("rdSentence");
 		sentenceRDButton.setText(i18n.GL3220_1());
-		sentenceRDButton.getElement().setAttribute("alt", i18n.GL3220_1());
-		sentenceRDButton.getElement().setAttribute("title", i18n.GL3220_1());
 		highlightTextArea.getElement().setId("pnlTinyOrHighlightTextBoxContainer");
 		labelChoice.setText(labelName);
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerHeadContainer.getElement().setId("pnlAnswerHeadConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
@@ -180,19 +152,12 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 		 errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		   if(richTextData!=null){
 			   answerTextBox.setText(richTextData);
-			   answerTextBox.getElement().setAttribute("alt", richTextData);
-			   answerTextBox.getElement().setAttribute("title", richTextData);
-
 			   highlightTextArea.setText(richTextData);
-			   highlightTextArea.getElement().setAttribute("alt", richTextData);
-			   highlightTextArea.getElement().setAttribute("title", richTextData);
 		   }
 	   }
 	public void setLabelName(String labelName){
 		labelChoice.setText(labelName);
 		labelChoice.getElement().setId("lblLabelChoice");
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");

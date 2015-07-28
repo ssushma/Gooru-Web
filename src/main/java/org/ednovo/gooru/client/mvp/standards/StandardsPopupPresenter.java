@@ -35,6 +35,7 @@ import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 
 import com.google.gwt.event.shared.EventBus;
@@ -53,6 +54,7 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	private SearchServiceAsync searchService;
 
 	CollectionInfoPresenter collectionInfoPresenter;
+	LessonInfoPresenter lessonInfoPresenter;
 
 	/**
 	 * Class constructor
@@ -145,11 +147,33 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	public void setCollectionInfoPresenter(CollectionInfoPresenter collectionInfoPresenter) {
 		this.collectionInfoPresenter = collectionInfoPresenter;
 	}
+	
+
+	public void setLessonInfoPresenter(LessonInfoPresenter lessonInfoPresenter) {
+		this.lessonInfoPresenter = lessonInfoPresenter;
+	}
 
 	@Override
 	public void setSelectedStandards(List<Map<String,String>> standListArray){
+		try
+		{
 		collectionInfoPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		try
+		{
+		lessonInfoPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
+	
+	
 
 	public void setAlreadySelectedItems(
 			List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
