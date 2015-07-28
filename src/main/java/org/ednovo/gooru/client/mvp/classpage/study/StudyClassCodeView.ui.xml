@@ -50,7 +50,7 @@
 	                     </div>
 	                     <div class="StepsContent">
 	                        <h3>Assign course content</h3>
-	                        <p>Haven’t created a course yet? Do that first <a href="">here.</a></p>
+	                        <p>Haven’t created a course yet? Do that first <g:Anchor ui:field="courseAnr">here.</g:Anchor></p>
 	                     </div>
 	                  </div>
 	                  <div class="stepsBlockInner">
@@ -68,7 +68,7 @@
 	            </div>
 	            <div class="clearfix"></div>
 	            <div class="supportLink">
-	               <p><g:Anchor ui:field="moreLinkAnr">More information in the Support Center</g:Anchor></p>
+	               <p><g:Anchor ui:field="moreLinkAnr"></g:Anchor></p>
 	            </div>
 	         </div>
 	      </g:HTMLPanel>
