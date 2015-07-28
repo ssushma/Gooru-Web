@@ -47,6 +47,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
+import com.googlecode.gwt.crypto.util.Sys;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyCollectionsRightClusterView> implements MyCollectionsRightClusterUiHandlers{
 
@@ -380,7 +381,22 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	@Override
 	public void deleteMyCollectionContent(final String id, final String type) {
-		if("folderCollection".equals(type)){
+		
+		AppClientFactory.getInjector().getfolderService().deleteCollectionsFolder(id, new SimpleAsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				if(COURSE.equalsIgnoreCase(type)){
+					getView().onDeleteCourseSuccess(id);
+				}else if(UNIT.equalsIgnoreCase(type)){
+					getView().onDeleteUnitSuccess("", id);
+				}else{
+					getView().onDeleteLessonSuccess("", "", id);
+				}
+			}
+		});
+		
+		/*if("folderCollection".equals(type)){
 			AppClientFactory.getInjector().getfolderService().deleteCollectionsFolder(id, new SimpleAsyncCallback<Void>() {
 
 				@Override
@@ -389,20 +405,21 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				}
 			});
 		}else{
-			AppClientFactory.getInjector().getResourceService().deleteCollection(id, new SimpleAsyncCallback<Void>() {
-				
-				@Override
-				public void onSuccess(Void result) {
-					if(COURSE.equalsIgnoreCase(type)){
-						getView().onDeleteCourseSuccess(id);
-					}else if(UNIT.equalsIgnoreCase(type)){
-						getView().onDeleteUnitSuccess("", id);
-					}else{
-						getView().onDeleteLessonSuccess("", "", id);
-					}
-				}
-			});
-		}
+			
+		}*/
+	}
+	
+	
+	
+	@Override
+	public void deleteMyCollectionColl(final String id) {
+		AppClientFactory.getInjector().getResourceService().deleteCollection(id, new SimpleAsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				getView().onDeleteCollectionAssessmentSuccess("","","",id);
+			}
+		});
 	}
 	
 	
@@ -504,4 +521,5 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public TreeItem getCurrentTreeItem() {
 		return shelfMainPresenter.getEditingWidget();
 	}
+	
 }
