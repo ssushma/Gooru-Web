@@ -37,9 +37,6 @@ import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpage.teach.reports.course.TeachCourseReportChildView;
-import org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson.TeachLessonReportChildView;
-import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -51,6 +48,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -95,15 +93,12 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentViewUiHandler> implements IsEditClassStudentView {
 	
-	//@UiField LiPanel roasterPanel,reportPanel;
-	
-	//@UiField Anchor roasterAnr,reportPanelAnr,studentAnr;
 	
 	@UiField PPanel classCodePanel,shareLnkPanel,emailAddTxt,analyPanel;
 	
-	@UiField InlineLabel classCodeTxtPanel/*,courseHeaderLbl,courseTitleLbl*/;
+	@UiField InlineLabel classCodeTxtPanel;
 	
-	@UiField TextBox sharTxtBox,fullTxtBox/*,inviteTxtBox*/;
+	@UiField TextBox sharTxtBox,fullTxtBox;
 	
 	@UiField Button inviteBtn;
 	
@@ -117,8 +112,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	private static final String QUESTIONIMAGE = "images/question.png";
 	
-	private static final String STUDENTIMAGE = "images/Classpage/studentsIco.png";
-	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
@@ -127,18 +120,12 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	
 	private PopupPanel toolTipPopupPanelNew2 = new PopupPanel();
 	
-	//@UiField Image pendingImage;
-	
 	@UiField HTMLPanel pendindUserContainer,activeUserConatiner;
 	
-	//@UiField Image studentImage;
-	
-	@UiField Anchor /*notePanel,*/ancPendingListSeeMore,ancActiveListSeeMore;
+	@UiField Anchor ancPendingListSeeMore,ancActiveListSeeMore;
 	
 	@UiField Label lblActivePleaseWait,lblPendingPleaseWait;
 	
-	//@UiField Button connectCourseBtn,addStudentBtn;
-
 	@UiField FlowPanel reportBox;
 	
 	private int  activeListPageNum=0;
@@ -146,8 +133,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	List<CollaboratorsDo> liCollaboratorsDos;
 	
 	private static final String SHORTEN_URL = "shortenUrl";
-	
-	private static final String RAWURL="rawUrl";
 	
 	private static final String DECODERAWURL="decodeRawUrl";
 	
@@ -183,17 +168,11 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		/*reportContainer.setVisible(false);
-		roasterAnr.addClickHandler(new EditClassStudentTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,roasterPanel));
-		reportPanelAnr.addClickHandler(new MasteryReportPlace(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_REPORTS,reportPanel));*/
+		sharTxtBox.addClickHandler(new TextCopyHandler());
+		fullTxtBox.addClickHandler(new FullTextCopyHandler());
 	}
 	
 	public void setIds(){
-		/*roasterAnr.setText(i18n.GL3416());
-		roasterAnr.getElement().setId("roasterAnrId");
-		
-		reportPanelAnr.setText(i18n.GL3421());
-		reportPanelAnr.getElement().setId("reportPanelId");*/
 		
 		classCodePanel.setText(i18n.GL0184());
 		classCodePanel.getElement().setId("classCodePanelId");
@@ -227,21 +206,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		image2.getElement().setId("sharLnkId");
 		image2.addMouseOverHandler(new MouseOverShowClassCodeToolTip2());
 		image2.addMouseOutHandler(new MouseOutHideToolTip2());
-		
-		/*notePanel.setText(i18n.GL3422());
-		notePanel.getElement().setId("notePanelId");*/
-		
-		//studentImage.setUrl(STUDENTIMAGE);
-		
-		/*addStudentBtn.setText(i18n.GL3423());
-		addStudentBtn.getElement().setId("addStudentBtnId");
-		
-		connectCourseBtn.setText(i18n.GL3424());
-		connectCourseBtn.getElement().setId("connectCourseBtnId");*/
-		
-		/*courseHeaderLbl.setText(i18n.GL0574());
-		courseHeaderLbl.getElement().setId("courseHeaderLblId");*/
-		
 		
 		lblPleaseWait.setText(i18n.GL1137());
 		lblPleaseWait.getElement().setId("lblPleaseWait");
@@ -282,15 +246,15 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		studentPendingPanel.getElement().setId("studentPendingPanelId");
 		
 		panelSuggestBox.getElement().setId("pnlSuggestbox");
-		//panelActions.getElement().setId("pnlActions");
-		//panelCode.getElement().setId("pnlCode");
+		
 		
 		sharTxtBox.setReadOnly(true);
 		sharTxtBox.getElement().getStyle().setBackgroundColor("#FFF");
+		sharTxtBox.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		StringUtil.setAttributes(sharTxtBox, true);
 		
 		fullTxtBox.setReadOnly(true);
-		fullTxtBox.getElement().setAttribute("style", "margin:10px 0px;background-color: #FFF");
+		fullTxtBox.getElement().setAttribute("style", "margin:10px 0px;background-color: #FFF;cursor: default");
 		StringUtil.setAttributes(fullTxtBox, true);
 		
 		
@@ -299,9 +263,28 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		
 	}
 	
+	public class TextCopyHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			sharTxtBox.selectAll();
+			sharTxtBox.setFocus(true);
+		}
+
+	}
+	
+	public class FullTextCopyHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			fullTxtBox.selectAll();
+			fullTxtBox.setFocus(true);
+		}
+
+	}
+	
 	public void setTabVisible(boolean isVisible){
 		roasterMainConatiner.setVisible(isVisible);
-		/*reportContainer.setVisible(!isVisible);*/
 	}
 	
 	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{

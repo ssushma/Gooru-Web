@@ -56,4 +56,6 @@ public interface CssTokens {
 	
 	String ORANGE_STYLE = "org";
 
+	String CURSOR_POINTER = "cursorPointer";
+
 }

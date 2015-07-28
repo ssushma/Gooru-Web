@@ -8,7 +8,7 @@
 			</div>
 			<div class="bannerCaption">
 				<g:HTMLPanel styleName="container" ui:field="panelTitleContainer">
-					<h1 class="animate fadeInDown animated" data-animate="fadeInDown">
+					<h1>
 						<g:Label ui:field="lblPageTitle1"></g:Label>
 						<g:Label ui:field="lblPageTitle2"></g:Label>
 						<g:Label ui:field="lblPageTitle3"></g:Label>

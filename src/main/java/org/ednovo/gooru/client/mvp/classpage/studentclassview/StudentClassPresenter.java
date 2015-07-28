@@ -174,13 +174,6 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			addToSlot(CLASSPAGE_REPORT_TAB, studentClassReportPresenter);
 			studentClassReportPresenter.setData();
 		}
-
-		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
-		if(page.equalsIgnoreCase(UrlNavigationTokens.FALSE)) {
-			getView().setPreviewClassMode(false);
-		} else {
-			getView().setPreviewClassMode(true);
-		}
 		
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
@@ -239,24 +232,40 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	
 	public void setCheckClassVisiblity(ClasspageDo classpageDo){
 		String status = classpageDo.getStatus();
-		if(!classpageDo.isVisibility()){
-			if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
-				if(status.equalsIgnoreCase("not-invited")){
-					new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
-				}else if(status.equalsIgnoreCase("pending")){
-					joinStudentClass();
+		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
+		if(page.equalsIgnoreCase(UrlNavigationTokens.FALSE)) {
+			if(!classpageDo.isVisibility()){
+				if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+					if(status.equalsIgnoreCase("not-invited")){
+						new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
+					}else if(status.equalsIgnoreCase("pending")){
+						studentClassLearningMapPresenter.showProgressMapBar(false);
+						joinStudentClass();
+					} else {
+						studentClassLearningMapPresenter.showProgressMapBar(true);
+						getView().setPreviewClassMode(false);
+					}
+				}else{
+					studentClassLearningMapPresenter.showProgressMapBar(false);
+					getView().setPreviewClassMode(true);
 				}
 			}else{
-				getView().setPreviewClassMode(true);
-			}
-		}else{
-			if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
-				if(status.equalsIgnoreCase("not-invited") || status.equalsIgnoreCase("pending")){
-					joinStudentClass();
+				if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+					if(status.equalsIgnoreCase("not-invited") || status.equalsIgnoreCase("pending")){
+						studentClassLearningMapPresenter.showProgressMapBar(false);
+						joinStudentClass();
+					} else {
+						studentClassLearningMapPresenter.showProgressMapBar(true);
+						getView().setPreviewClassMode(false);
+					}
+				}else{
+					studentClassLearningMapPresenter.showProgressMapBar(false);
+					getView().setPreviewClassMode(true);
 				}
-			}else{
-				getView().setPreviewClassMode(true);
 			}
+		} else {
+			studentClassLearningMapPresenter.showProgressMapBar(false);
+			getView().setPreviewClassMode(true);
 		}
 	}
 	

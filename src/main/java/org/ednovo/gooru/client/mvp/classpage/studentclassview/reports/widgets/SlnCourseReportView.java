@@ -1,7 +1,9 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
@@ -45,7 +47,11 @@ public class SlnCourseReportView extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		setDebugIds();
 		setCircleContainerItems(planProgressDo, count);
-		unitBlock.addClickHandler(new LessonPageRedirection(planProgressDo.getGooruOId()));
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.STUDENT_VIEW)) {
+			unitBlock.addClickHandler(new LessonPageRedirection(planProgressDo.getGooruOId()));
+		} else {
+			unitBlock.removeStyleName(CssTokens.CURSOR_POINTER);
+		}
 	}
 	
 	private void setDebugIds() {

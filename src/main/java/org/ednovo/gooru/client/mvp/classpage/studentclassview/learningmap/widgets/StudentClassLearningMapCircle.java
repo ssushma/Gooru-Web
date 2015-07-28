@@ -54,7 +54,7 @@ public class StudentClassLearningMapCircle extends Composite {
 		String lessonName = planProgressDo.getTitle();
 		circleField.addMouseOverHandler(new MouseOverShowClassCodeToolTip(lessonName));
 		circleField.addMouseOutHandler(new MouseOutHideToolTip());
-		//circleField.addClickHandler(new LessonViewNavigation());
+		circleField.addClickHandler(new LessonViewNavigation());
 		if(!circleType.isEmpty()) {
 			circleField.setStyleName(circleType);
 		}

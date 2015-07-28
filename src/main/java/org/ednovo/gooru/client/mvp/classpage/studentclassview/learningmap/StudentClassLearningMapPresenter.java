@@ -199,4 +199,8 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 		getView().setEmptyContainerText(classpageDo.getUser().getUsername());
 	}
 
+	public void showProgressMapBar(boolean isVisible) {
+		getView().showProgressMapBar(isVisible);
+	}
+	
 }

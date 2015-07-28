@@ -264,5 +264,9 @@ public class CollectionItemDo extends ResourceSearchResultDo implements IsSerial
 	public void setQuestionInfo(ResourceDo questionInfo) {
 		this.questionInfo = questionInfo;
 	}
+	
+	public String getFolder() {
+        return getResource().getFolder();
+    }
 
 }

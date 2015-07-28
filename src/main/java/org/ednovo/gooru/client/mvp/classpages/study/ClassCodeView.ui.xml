@@ -12,7 +12,7 @@
 		      <div class="classBannerImage"></div>
 		      <div class="container">
 		         <div class="row">
-		            <div class="classBannerCaptions wow fadeInUp">
+		            <div class="classBannerCaptions">
 		               <txt:H1Panel ui:field="txtLearnH1"></txt:H1Panel>
 		               <txt:H3Panel ui:field="txtExploreH3"></txt:H3Panel>
 		            </div>

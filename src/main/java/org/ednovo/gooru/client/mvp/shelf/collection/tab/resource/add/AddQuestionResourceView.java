@@ -2569,9 +2569,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionNameTextArea.getElement().setAttribute("maxlength", "500");
 			questionCharcterLimit=500;
-		}else if(tabType.equals("HT_HL") || tabType.equals("HT_RO")){
+		}else if(tabType.equals("HT_HL")){
 			questionTypeHeader.setText(i18n.GL3224_1());
 			questionTypeText.setText(i18n.GL3213_1());
+			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			questionCharcterLimit=5000;
+		}else if(tabType.equals("HT_RO")){
+			questionTypeHeader.setText(i18n.GL4009());
+			questionTypeText.setText(i18n.GL4010());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionCharcterLimit=5000;
 		}
