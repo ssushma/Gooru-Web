@@ -232,7 +232,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				String enteredString=txtMoveTextBox.getText().trim();
 				String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index").trim();
 				int enteredVal=Integer.valueOf(enteredString);
-				if(enteredString.isEmpty() || enteredVal==0 || Integer.parseInt(currentWidgetString)==0){
+				if(enteredString.isEmpty() || enteredVal==0){
 					int currentIndex=(Integer.parseInt(currentWidgetString)+1);
 					if(currentIndex==1 || Integer.parseInt(currentWidgetString)==0){
 						lblDownArrow.setVisible(true);
@@ -1028,7 +1028,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			@Override
 			public void onSuccess(Integer result) {
 				if(result>0){
-					new AlertContentUc("Oops", "This course is associated with the class.");
+					new AlertContentUc("Oops", "This question is assigned to a course, so it cannot be deleted. However, you can still add/edit questions within this assessment.");
 				}else{
 					invokeDelete();
 				}

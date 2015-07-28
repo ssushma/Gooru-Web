@@ -69,6 +69,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		getView().setContentVisiblity(false);
 	}
 
 	@Override

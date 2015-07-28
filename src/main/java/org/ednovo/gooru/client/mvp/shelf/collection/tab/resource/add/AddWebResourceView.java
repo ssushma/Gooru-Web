@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1354,8 +1353,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public List<Integer> setAccessHazards(){
 		int size=hazardContainer.getWidgetCount();
 		List<Integer> accessHazardsSelected = new ArrayList<Integer>();
-
-		AppClientFactory.printInfoLogger("..........."+size);
 		for(int i=0;i<size;i++){
 			Label label=(Label)hazardContainer.getWidget(i);
 			if(label.getStyleName().contains("select")){
@@ -1516,16 +1513,19 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											showUrlErrorMessage(i18n.GL1161());
 											isValidate = false;
 										}
+										String mediaType="";
 										if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 										{
-
+											mediaType=i18n.GL_GRR_MOBILE_FRIENDLY();	
 											tagList.add("Mobile Friendly : "+mobileYes.getText());
 
 										}
+										
 										else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 										{
 
 											tagList.add("Mobile Friendly : "+mobileNo.getText());
+											mediaType=i18n.GL_GRR_NOT_MOBILE_FRIENDLY();
 
 										}
 										List<Integer> mediaFeaturesList=new ArrayList<>();
@@ -1533,7 +1533,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 										{
 											mediaFeaturesList.add(Integer.parseInt(lblMediaPlaceHolder.getElement().getId()));
 											tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
-
+											
 										}
 										hazardsAndMediaFeatures.put("media",mediaFeaturesList);
 										hazardsAndMediaFeatures.put("hazard", setAccessHazards());
@@ -1575,10 +1575,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												hostName=GOOGLE_DRIVE;
 											}
 											if(collectionDo.getSharing()!=null && collectionDo.getSharing().equalsIgnoreCase("public")){
-												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,centuryDo,hostName,tagList,hazardsAndMediaFeatures);
+												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,centuryDo,hostName,tagList,hazardsAndMediaFeatures,mediaType);
 											}
 											else{
-												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,centuryDo,hostName,tagList,hazardsAndMediaFeatures);
+												addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,centuryDo,hostName,tagList,hazardsAndMediaFeatures,mediaType);
 											}
 											}
 										}
@@ -1623,7 +1623,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *
 	 *
 	 */
-	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkill,String hostName,List<String> tagList,Map<String, List<Integer>> hazardAndMediaMap);
+	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkill,String hostName,List<String> tagList,Map<String, List<Integer>> hazardAndMediaMap,String mediaType);
 	private class UrlBlurHandler implements BlurHandler {
 
 		@Override
@@ -1879,9 +1879,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		boolean allAdditionalTagInVisisble = false;
 		
 
-		if (!addSetupAdvancedView.educationUseAdvancedPnl.isVisible()
-				&& !addSetupAdvancedView.momentsOfLearningAdvancedPnl.isVisible()
-				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
+		if (!addSetupAdvancedView.educationUseAdvancedPnl.isVisible()&& !addSetupAdvancedView.momentsOfLearningAdvancedPnl.isVisible()&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()

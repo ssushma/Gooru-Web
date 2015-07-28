@@ -208,7 +208,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void removeActiveStudentFromClass(String classUid,boolean visiblity,String gooruUids,AsyncCallback<Void> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
-	public void v3StudentJoinIntoClass(String classCode,AsyncCallback<Void> callback) throws GwtException,ServerDownException;
+	public void v3StudentJoinIntoClass(String classCode,AsyncCallback<Boolean> callback) throws GwtException,ServerDownException;
 	
 	public void v3UpdateClass(String classId,String title,String grade,String fileName,String sharing,String score,String courseId,AsyncCallback<ClasspageDo> callback) throws GwtException,ServerDownException;
 	
