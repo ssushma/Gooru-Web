@@ -60,9 +60,18 @@ public class NewResourceDo extends ResourceDo {
 
 	private ArrayList<String> host;
 	private String thumbnail;
+	private String mediaType;
 	
 	
 	
+	public String getMediaType() {
+		return mediaType;
+	}
+
+	public void setMediaType(String mediaType) {
+		this.mediaType = mediaType;
+	}
+
 	public List<Integer> getMomentsOfLearningIds() {
 		return momentsOfLearningIds;
 	}

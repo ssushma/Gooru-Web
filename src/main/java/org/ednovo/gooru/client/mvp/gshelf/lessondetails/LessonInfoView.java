@@ -221,6 +221,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
 					}
@@ -278,6 +279,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
                         }
@@ -334,6 +336,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                             //selectedValues.add(domainStand.getCodeId());
                             liPanelWithClose.setId(domainStand.getCodeId());
                             liPanelWithClose.setName(domainStand.getCode());
+                            liPanelWithClose.setDifferenceId(3);
                             liPanelWithClose.setRelatedId(domainStand.getCodeId());
                             ulSelectedItems.add(liPanelWithClose);
                         }

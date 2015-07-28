@@ -3342,4 +3342,6 @@ public interface MessageProperties extends Constants {
 	String GL3462_16();
 	
 	String GL3464();
+	String GL_GRR_NOT_MOBILE_FRIENDLY();
+	String	GL_GRR_MOBILE_FRIENDLY();
 }

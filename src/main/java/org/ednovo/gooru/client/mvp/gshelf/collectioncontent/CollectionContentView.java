@@ -273,13 +273,14 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				@Override
 				public void checkBlurHandler(int position,ContentResourceWidgetWithMove contentWidget) {
 					String currentWidgetString=contentWidget.getTextBox().getElement().getAttribute("index").trim();
-					int enteredVal=Integer.valueOf(currentWidgetString);
-					if(enteredVal<pnlReosurceList.getWidgetCount() && enteredVal!=0){
+					int currentIndex=Integer.valueOf(currentWidgetString);
+					int enterdVal=Integer.valueOf(contentWidget.getTextBox().getText());
+					if(enterdVal>pnlReosurceList.getWidgetCount() && currentIndex!=0){
 						contentWidget.getTopArrow().setVisible(true);
 						contentWidget.getDownArrow().setVisible(true);
+						contentWidget.getTextBox().setText((currentIndex+1)+"");
 					}
 					setLastWidgetArrowVisiblity(false);
-					contentWidget.getTextBox().setText((enteredVal+1)+"");
 				}
 				@Override
 				public void updateNarration(CollectionItemDo collectionItem,String narration) {
