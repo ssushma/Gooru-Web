@@ -116,8 +116,8 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		setWidget(uiBinder.createAndBindUi(this));
 		setId();
 		saveBtn.setEnabled(false);
-		coursePanel.setVisible(false);
 		saveBtn.addStyleName(CssTokens.DISABLED);
+		coursePanel.setVisible(false);
 		errorLabel.setVisible(false);
 		
 		scoreTextBox.addBlurHandler(new BlurHandler() {
@@ -169,23 +169,26 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			if (!Character.isDigit(event.getCharCode()) 
-                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
-                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
-                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
-                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
-                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
-                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
-                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
-                ((TextBox) event.getSource()).cancelKey();
-                
-            }else if(event.getNativeEvent().getKeyCode() == 46){
-				((TextBox) event.getSource()).cancelKey();
-			}else{
-            	saveEnabled(true);
-    			saveBtn.removeStyleName(CssTokens.DISABLED);
-    			errorLabel.setVisible(false);
-            }
+			
+			if(!scoreTextBox.isReadOnly()){
+				if (!Character.isDigit(event.getCharCode()) 
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+	                ((TextBox) event.getSource()).cancelKey();
+	                
+	            }else if(event.getNativeEvent().getKeyCode() == 46){
+					((TextBox) event.getSource()).cancelKey();
+				}else{
+	            	saveEnabled(true);
+	    			saveBtn.removeStyleName(CssTokens.DISABLED);
+	    			errorLabel.setVisible(false);
+	            }
+			}
 		}
 	}
 	
@@ -245,6 +248,8 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	public void clearAllErrorLabel() {
 		errorLabel.setVisible(false);
 		setClassData(classpageDo);
+		saveEnabled(false);
+		saveBtn.addStyleName(CssTokens.DISABLED);
 	}
 
 	/* (non-Javadoc)
