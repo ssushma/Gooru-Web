@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel styleName="gradeContainer">
-			<section class="focusBlock wow fadeInUp">
+			<section class="focusBlock">
 				<div class="container">
 					<div class="row">
 						<div class="panel panel-default">
@@ -65,7 +65,7 @@
 			<section class="categoriesBlock">
 				<div class="container">
 					<div class="row">
-						<div class="col-md-3 col-sm-6 wow fadeInLeft">
+						<div class="col-md-3 col-sm-6">
 							<div class="categoryPanel">
 								<g:Label styleName="catHeading colorOpt1" text="{i18n.GL3295}"></g:Label>
 								<div class="catBody">
@@ -76,7 +76,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3 col-sm-6 wow fadeInLeft">
+						<div class="col-md-3 col-sm-6">
 							<div class="categoryPanel">
 								<g:Label styleName="catHeading colorOpt2" text="{i18n.GL3297}">
 								</g:Label>
@@ -91,7 +91,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3 col-sm-6 wow fadeInRight">
+						<div class="col-md-3 col-sm-6">
 							<div class="categoryPanel">
 								<g:Label styleName="catHeading colorOpt3" text="{i18n.GL3299}" />
 								<div class="catBody">
@@ -102,7 +102,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3 col-sm-6 wow fadeInRight">
+						<div class="col-md-3 col-sm-6">
 							<div class="categoryPanel">
 								<g:Label styleName="catHeading colorOpt4" text="{i18n.GL3302}" />
 								<div class="catBody">
@@ -118,10 +118,10 @@
 				</div>
 			</section>
 			<section class="gettingStarted no-gutter">
-				<div class="col-md-5 col-sm-6 gettingStartedBanner wow fadeInLeft">
+				<div class="col-md-5 col-sm-6 gettingStartedBanner">
 					<img src="images/newlandingpage/getting-started-banner.png" class="img-responsive" />
 				</div>
-				<div class="col-md-7 col-sm-6 wow fadeInRight">
+				<div class="col-md-7 col-sm-6">
 					<div class="gettingContentPane">
 						<tbp:H2Panel text="{i18n.GL3305}"/>
 						<div class="blocks">
@@ -154,7 +154,7 @@
 				<div class="container">
 					<div class="row">
 					    <g:Label styleName="empower" text="{i18n.GL3318}"></g:Label>
-						<div class="col-md-3 col-sm-6 wow flipInX">
+						<div class="col-md-3 col-sm-6">
 							<tbp:H2Panel text="{i18n.GL0524}" />
 							<div class="finMainwrapper animation">
 								<div class="newSprite findImage">
@@ -162,7 +162,7 @@
 							</div>
 							<tbp:PPanel text="{i18n.GL2122}" />
 						</div>
-						<div class="col-md-3 col-sm-6  wow flipInX">
+						<div class="col-md-3 col-sm-6">
 							<tbp:H2Panel text="{i18n.GL2037}" />
 							<div class="finMainwrapper animation">
 								<div class="newSprite remixImage">
@@ -170,7 +170,7 @@
 							</div>
 							<tbp:PPanel text="{i18n.GL2123}" />
 						</div>
-						<div class="col-md-3 col-sm-6 wow flipInX">
+						<div class="col-md-3 col-sm-6">
 							<tbp:H2Panel text="{i18n.GL0526}" />
 
 							<div class="finMainwrapper animation">
@@ -179,14 +179,13 @@
 							</div>
 							<tbp:PPanel text="{i18n.GL2124}" />
 						</div>
-						<div class="col-md-3 col-sm-6 wow flipInX">
+						<div class="col-md-3 col-sm-6">
 							<tbp:H2Panel text="{i18n.GL2126}" />
 							<div class="finMainwrapper animation">
 								<div class="newSprite monitorImage">
 								</div>
 							</div>
 							<tbp:PPanel text="{i18n.GL2127}" />
-							<g:Anchor styleName="sampleReport" text="{i18n.GL3319}" ui:field="lblSampleReports"></g:Anchor>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -198,13 +197,13 @@
 				</div>
 				<div class="focusTextAlwys">
 					<div class="container">
-						<div class="col-md-5 col-sm-6 wow fadeInLeft">
+						<div class="col-md-5 col-sm-6">
 							<h2>
 								<g:InlineLabel text="{i18n.GL3312}"></g:InlineLabel>
 								<g:InlineLabel text="{i18n.GL3313}"></g:InlineLabel>
 							</h2>
 						</div>
-						<div class="col-md-7 col-sm-6 wow fadeInRight">
+						<div class="col-md-7 col-sm-6">
 							<div class="BlueBg">
 							    <tbp:PPanel text="{i18n.GL3314}"></tbp:PPanel>
 							</div>
