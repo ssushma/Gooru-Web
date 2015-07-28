@@ -100,18 +100,12 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 	public void showHintsMessage(int widgetsCount){
 		if(widgetsCount==1){
 			hintNumLbl.setText(""+widgetsCount);
-			hintNumLbl.getElement().setAttribute("alt", ""+widgetsCount);
-			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);
 			eHearderIconHint.setVisible(true);
 			hintsTextLblVal.setText(i18n.GL0859());
-			hintsTextLblVal.getElement().setAttribute("alt", i18n.GL0859());
-			hintsTextLblVal.getElement().setAttribute("title", i18n.GL0859());
 		}
 		else{
 			hintNumLbl.setText(""+widgetsCount);
 			eHearderIconHint.setVisible(false);
-			hintNumLbl.getElement().setAttribute("alt", ""+widgetsCount);
-			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);
 		}
 		hintDelLbl.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		hintDelLbl.getElement().getStyle().setDisplay(Display.NONE);
@@ -135,8 +129,6 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		 errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
 		  if(hintText!=null){
 			  hintTextBox.setText(hintText);
-			  hintTextBox.getElement().setAttribute("alt", hintText);
-			  hintTextBox.getElement().setAttribute("title", hintText);
 		  }
 	  }
 	public interface Binder extends UiBinder<Widget, AddHintsView>

@@ -535,6 +535,7 @@
 	position: relative;
 	display: inline-block;
 	margin: 8px;
+	border:1px solid #fff;
 }
 .ansImageBlock .changeImageLbl, .ansImageBlock .removeImageLbl{
 	display:none;
@@ -1116,7 +1117,11 @@
 	margin: 18px;
 }
 .htQanswerContainer .ansImageBlock {
-	margin: 8px 3px;
+	margin: 8px 2px;
+}
+table.imgAnsContainer tbody, table.imgAnsContainer tbody tr {
+	display: inline-block;
+	width:100%;
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {
