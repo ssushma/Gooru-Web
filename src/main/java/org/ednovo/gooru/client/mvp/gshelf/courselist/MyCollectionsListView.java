@@ -246,14 +246,17 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 							if(!isDownArrow){
 								movingIndex= (movingIndex-1);
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								resetWidgetItemSequencePositions(movingIndex,itemSequence,true,currentWidgetPosition);
 								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
-								resetWidgetItemSequencePositions(movingIndex,itemSequence,true);
+								resetWidgetPositions();
 								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(tempGooruOid,movingIndex, "MoveUp", updatePrams(), folderObj,currentWidgetPosition);
 							}else{
 								int currentIndex= Integer.parseInt(currentWidgetPosition);
+								resetWidgetItemSequencePositions(movingIndex,itemSequence,false,currentWidgetPosition);
+								pnlCourseList.getWidget(currentIndex).getElement().setAttribute("itemSequence",itemSequence);
 								pnlCourseList.insert(pnlCourseList.getWidget(currentIndex), movingIndex);
-								resetWidgetItemSequencePositions(movingIndex,itemSequence,false);
+								resetWidgetPositions();
 								getUiHandlers().getShelfMainPresenter().getView().reorderShelfItems(tempGooruOid,movingIndex, "MoveDown", updatePrams(), folderObj,currentWidgetPosition);
 							}
 						}else{
@@ -323,21 +326,20 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}
 		return params;
 	}
-	public void resetWidgetItemSequencePositions(int selectedIndex,String itemSequence,boolean isdown){
+	public void resetWidgetItemSequencePositions(int selectedIndex,String itemSequence,boolean isdown,String currentWidgetPosition){
 		if(isdown){
-			int itemNewSequence=Integer.parseInt(itemSequence);
-			for (int i = selectedIndex; i < pnlCourseList.getWidgetCount(); i++){
-				pnlCourseList.getWidget(i).getElement().setAttribute("itemSequence",itemNewSequence+"");
-				itemNewSequence++;
+			for (int i = selectedIndex; i < Integer.parseInt(currentWidgetPosition); i++){
+				String sequence=pnlCourseList.getWidget(i).getElement().getAttribute("itemSequence");
+				int sequenceVal=Integer.valueOf(sequence)+1;
+				pnlCourseList.getWidget(i).getElement().setAttribute("itemSequence",sequenceVal+"");
 			}
 		}else{
-			int itemNewSequence=Integer.parseInt(itemSequence);
-			for (int i=(selectedIndex-1);i>=0;i--){
-				pnlCourseList.getWidget(i).getElement().setAttribute("itemSequence",itemNewSequence+"");
-				itemNewSequence--;
+			for (int i=(selectedIndex-1);i>Integer.parseInt(currentWidgetPosition);i--){
+				String sequence=pnlCourseList.getWidget(i).getElement().getAttribute("itemSequence");
+				int sequenceVal=Integer.valueOf(sequence)-1;
+				pnlCourseList.getWidget(i).getElement().setAttribute("itemSequence",sequenceVal+"");
 			}
 		}
-		resetWidgetPositions();
 	}
 	public void enableCreateButtons(boolean isEnabled){
 		btnCreateResource.setVisible(isEnabled);
