@@ -145,6 +145,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		landingPagePanel.setVisible(false);
 		emptyClassesPanel.add(new StudyClassCodeView());
 		emptyClassesPanel.setVisible(false);
+		mainPanel.setVisible(false);
 
 	}
 	/**
