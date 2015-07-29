@@ -84,7 +84,6 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler{
 
-	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 
 	private String  RESOURCE_SEARCH="resource-search";
 	private String COLLECTION_SEARCH="collection-search";
@@ -103,7 +102,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	@Inject
 	public WrapPresenter(IsWrapView view, IsWrapProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenter) {
 		super(view, proxy);
-		this.addStandardsPresenter = addStandardsPresenter;
 		addRegisteredHandler(InvokeLoginEvent.TYPE, this);
 		addRegisteredHandler(ActivateSearchBarEvent.TYPE, this);
 		addRegisteredHandler(InvokeGooruGuideBubbleEvent.TYPE, this);
@@ -193,14 +191,9 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 
 		}
 	}
-	//This method using for pre-filter popup
-	private void showPrefilterPopup() {
-		getView().showPrefilter(addStandardsPresenter);
-	}
 
 	@Override
 	public void openPreFilterPopup() {
-		getView().openPreFilter();
 	}
 
 	@Override

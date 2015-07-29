@@ -164,7 +164,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.isCollResourceTabView = isCollResourceTabView;
 		this.drivePresenter=drivePresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
-		getDepthOfKnowledges();
 	}
 
 	@Override
@@ -421,6 +420,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.clickType=clickType;
 		getView().setCollectionDo(collectionDo);
 		getView().setPopup(clickType);
+		getDepthOfKnowledges();
 	}
 
 	@Override
