@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 
-	<g:HTMLPanel>
+	<g:FlowPanel styleName="LearningMapContainer" ui:field="PrintPnl">
 		<g:FlowPanel styleName="studentAssessmentReportViewContainer">
 			<g:FlowPanel styleName="container">
 				<g:FlowPanel styleName="row">
-
 					<g:FlowPanel styleName="headerLinksContainer" ui:field="headerLinksContainer">
-
 						<g:FlowPanel styleName="col-md-6 col-xs-8 col-sm-6 titleContainer">
-
 							<g:FlowPanel styleName="headerBackLinkBox">
 								<g:HTMLPanel ui:field="collectionSummaryText"></g:HTMLPanel>
 							</g:FlowPanel>
 						</g:FlowPanel>
 						<g:FlowPanel styleName="col-md-6 col-sm-6">
-							<g:FlowPanel styleName="printOptions">
-
-								<g:Button ui:field="printButton" styleName="secondary printIcon">
-								</g:Button>
-								<g:Button ui:field="downloadButton " styleName="secondary downloadIcon">
-								</g:Button>
-
+							<g:FlowPanel styleName="printOptions" ui:field="printOptions">
+								<g:Button ui:field="printButton" styleName="secondary printIcon"></g:Button>
+								<g:Button ui:field="downloadButton" styleName="secondary downloadIcon"></g:Button>
 							</g:FlowPanel>
 						</g:FlowPanel>
-
 						<g:FlowPanel styleName="clearfix" />
 					</g:FlowPanel>
-
-					<g:FlowPanel styleName="studentAssessmentBodyBlock"
-						ui:field="PrintPnl">
-
-
+					<g:FlowPanel styleName="studentAssessmentBodyBlock">
 						<g:FlowPanel styleName="scoreBrief no-gutter">
-
 							<g:FlowPanel styleName="col-md-5 col-sm-4">
 								<g:FlowPanel styleName="lessonDetails">
 									<g:FlowPanel styleName="thumbnailImage" ui:field="thumbnailImage">
@@ -51,7 +37,6 @@
 											<g:InlineLabel ui:field="collectionResourcesCount"></g:InlineLabel>
 										</uc:PPanel>
 									</g:FlowPanel>
-
 								</g:FlowPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="col-md-2 col-sm-2" ui:field="timeSpentPanel">
@@ -62,7 +47,6 @@
 								</g:FlowPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="col-md-3 col-sm-3 colmd3-reset" ui:field="scoreRoundPanel">
-
 								<g:FlowPanel styleName="infoGraphic">
 									<g:FlowPanel styleName="wrapCircles">
 										<g:FlowPanel ui:field="progressRadial" styleName="progress-radial">
@@ -72,11 +56,8 @@
 										</g:FlowPanel>
 									</g:FlowPanel>
 								</g:FlowPanel>
-
 							</g:FlowPanel>
-
 							<g:FlowPanel styleName="col-md-2 colmd2-reset" ui:field="attemptPanel">
-
 								<g:FlowPanel styleName="attemptsBlock">
 									<g:FlowPanel styleName="custom-select">
 										<g:ListBox ui:field="sessionsDropDown">
@@ -84,9 +65,7 @@
 									</g:FlowPanel>
 									<uc:PPanel ui:field="lastModifiedTime"></uc:PPanel>
 								</g:FlowPanel>
-
 							</g:FlowPanel>
-
 							<g:FlowPanel styleName="col-md-4 colmd4-reset totalIndividualScore no-border" ui:field="selfReportPanel">
 								<g:HTMLPanel styleName="external-assessment">
 									<uc:H4Panel text="{i18n.GL3465_2}"></uc:H4Panel>
@@ -94,7 +73,6 @@
 								</g:HTMLPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="clearfix" />
-
 						</g:FlowPanel>
 						<g:HTMLPanel styleName="displayCollectionIcons" ui:field="collectionOverviewPanel">
 						    <g:Label styleName="element active" ui:field="collectionOverviewBtn"></g:Label>
@@ -107,8 +85,6 @@
 				</g:FlowPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>
-		<g:HTMLPanel ui:field="printWidget"></g:HTMLPanel>
 		<g:Frame ui:field="downloadFile"></g:Frame>
-
-	</g:HTMLPanel>
+	</g:FlowPanel>
 </ui:UiBinder>
