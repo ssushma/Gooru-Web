@@ -31,8 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.tools.ant.taskdefs.Sleep;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -45,6 +43,7 @@ import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -98,8 +97,8 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		setCenturySkills();
 		setWidget(uiBinder.createAndBindUi(this));
 		setCentbrowseBtn();
-
-	
+		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
+		centurySgstBox.getElement().getStyle().setMarginLeft(5, Unit.PX);
 		centurySgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
 			@Override
 			public void onSelection(SelectionEvent<Suggestion> event) {
@@ -292,5 +291,5 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 		}
 		return selectedValuesFromContainer;
 	}
-	
+
 }
