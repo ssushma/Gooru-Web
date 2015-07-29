@@ -213,7 +213,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						error.show();
 					}
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("EditClasspagePresenter : onBind : "+e.getMessage());
 				}
 			}
 		});
@@ -256,7 +256,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
 			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareShortenUrlAsyncCallback());
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("EditeClasspagePresenter : generateShareLink :"+e.getMessage());
 		}
 	}
 

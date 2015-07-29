@@ -69,7 +69,7 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		        	minimumScore[i]=miniscoreVal;
 			    	averageScore[i]= miniscoreVal-(miniscoreVal/2);
 		    		}catch(Exception ex){
-		    			AppClientFactory.printSevereLogger(ex.getMessage());
+		    			AppClientFactory.printSevereLogger("HCLineChart: chart : "+ex.getMessage());
 		    		}
 		    	}else{
 		    		minimumScore[i]=0;

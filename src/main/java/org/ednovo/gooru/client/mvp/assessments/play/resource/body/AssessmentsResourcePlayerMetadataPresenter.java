@@ -256,7 +256,7 @@ public class AssessmentsResourcePlayerMetadataPresenter extends PresenterWidget<
 				ifrmaeElement.setAttribute("src", "");
 			}
 		} catch (Exception exception) {
-			AppClientFactory.printSevereLogger(exception.getMessage());
+			AppClientFactory.printSevereLogger("AssessmentsResourcePlayerMetadataPresenter : clearIfrmaeContent : "+exception.getMessage());
 		}
 	}
 

@@ -127,7 +127,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 						});
 					}
 				} catch (Exception e) {
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("AnalyticsPresenter : getGradeCollectionJson : "+e.getMessage());
 				}
 
 			}
