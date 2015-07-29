@@ -115,7 +115,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField Hidden myHiddenField;
 	
 	final String FOLDER = "folder";
-	final String SCOLLECTION = "scollection";
+	final String COLLECTION = "collection";
+	final String SCOLLECTION="scollection";
 	private static final String USER_ID = "userId";
 	private static final String BACK2TOC = "backToToc";
 	private static final String EMPTY_FOLDER = i18n.GL3198();
@@ -279,7 +280,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
-					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+					 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo,null));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
@@ -393,7 +394,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 							}
 
 						}
-				 }else if(SCOLLECTION.equalsIgnoreCase(itemType)){
+				 }else if(COLLECTION.equalsIgnoreCase(itemType) || SCOLLECTION.equalsIgnoreCase(itemType)){
 					 if(folderLevel>=2){
 						 element.getStyle().setPaddingLeft(69, Unit.PX);
 				            element.getStyle().setMarginLeft(0, Unit.PX);
@@ -547,7 +548,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
 								item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem,floderDo.getType(),folderLevel);
-						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+						 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
 								folderItem.getElement().removeAttribute("style");
 							 	item.addItem(folderItem);
