@@ -150,8 +150,7 @@ public class CollectionResourceWidget extends Composite {
 				}
 			}
 		});
-		String category =  resourceSearchResultDo.getResourceFormat() != null && resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
-
+		String category =  resourceSearchResultDo.getNewResourceFormat() != null && resourceSearchResultDo.getNewResourceFormat().getValue() != null ? resourceSearchResultDo.getNewResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		if(resourceSearchResultDo.getResourceType()!=null&&resourceSearchResultDo.getResourceType().getName().equalsIgnoreCase("video/youtube")) {
 			setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, true);
@@ -186,7 +185,6 @@ public class CollectionResourceWidget extends Composite {
 		usedInSearchDo = new SearchDo<CollectionSearchResultDo>();
 		usedInSearchDo.setQuery(resourceSearchResultDo.getGooruOid());
 		usedInSearchDo.setPageSize(1);
-		AppClientFactory.printInfoLogger("print resource based user details---->"+resourceSearchResultDo.getGooruOid());
 		AppClientFactory.getInjector().getResourceService().getResourceBasedUsersDetails(resourceSearchResultDo.getGooruOid(), 0, 1, new SimpleAsyncCallback<ArrayList<ResourceCollDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ResourceCollDo> userCollectionsList) {
@@ -201,7 +199,9 @@ public class CollectionResourceWidget extends Composite {
 						creatorImage.setUrl(userCollectionsList.get(0).getUser().getProfileImageUrl());
 						final String collectionType=StringUtil.isEmpty(userCollectionsList.get(0).getCollectionType())?null:userCollectionsList.get(0).getCollectionType();
 						setDefaultCollectionImage(collectionType);
-						relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
+						if(userCollectionsList.get(0).getThumbnails()!=null && userCollectionsList.get(0).getThumbnails().getUrl()!=null){
+							relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
+						}
 						relatedCollectionTitle.setStyleName("collectionTitle");
 						relatedCollectionImage.addErrorHandler(new ErrorHandler() {
 							@Override
