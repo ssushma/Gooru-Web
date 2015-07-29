@@ -174,13 +174,13 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 		String userName = classpageDo.getUser().getUsername();
 		htmlAgree.getElement().setInnerHTML(StringUtil.generateMessage(i18n.GL1543(), userName != null ? userName : ""));
 		htmlAgree.getElement().setId("htmlAgree");
-		htmlAgree.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1543(), userName != null ? userName : ""));
-		htmlAgree.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1543(), userName != null ? userName : ""));
+		htmlAgree.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1543_1(), userName != null ? userName : ""));
+		htmlAgree.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1543_1(), userName != null ? userName : ""));
 		
 		htmlInformation.setHTML(StringUtil.generateMessage(i18n.GL1558(), userName != null ? userName : ""));
 		htmlInformation.getElement().setId("htmlInformation");
-		htmlInformation.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1558(), userName != null ? userName : ""));
-		htmlInformation.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1558(), userName != null ? userName : ""));
+		htmlInformation.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1558_1(), userName != null ? userName : ""));
+		htmlInformation.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1558_1(), userName != null ? userName : ""));
 		
 		joinBtnPanel.getElement().setId("pnlJoin");
 		joinClassBtn.setText(i18n.GL1536());

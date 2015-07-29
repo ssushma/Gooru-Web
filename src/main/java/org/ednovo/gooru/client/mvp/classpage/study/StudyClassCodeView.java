@@ -38,6 +38,9 @@ import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClassPopupView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.H3Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
@@ -54,6 +57,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -80,6 +84,14 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 	@UiField TextBoxWithPlaceholder txtClassCode;
 	
 	@UiField Button codeBtnEnter,btnCreateClass;
+	
+	@UiField H3Panel studentHeader,createPanel,courseContentPanel,classCodePanel;
+	
+	@UiField H2Panel teacherHeader;
+	
+	@UiField PPanel hintPanel,courseNotesPanel;
+	
+	@UiField InlineLabel noteOne,noteTwo,noteThree;
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -126,6 +138,50 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 		codeBtnEnter.getElement().setId("codeBtnEnter");
 		codeBtnEnter.getElement().setAttribute("alt",i18n.GL0213());
 		codeBtnEnter.getElement().setAttribute("title",i18n.GL0213());
+	
+		
+		studentHeader.setText(i18n.GL3450_1());
+		studentHeader.getElement().setId("studentHeaderId");
+		
+		
+		teacherHeader.setText(i18n.GL3450_2());
+		teacherHeader.getElement().setId("teacherHeaderId");
+		
+		
+		createPanel.setText(i18n.GL3450_3());
+		createPanel.getElement().setId("createPanelId");
+		
+		
+		hintPanel.setText(i18n.GL3450_4());
+		hintPanel.getElement().setId("hintPanelId");
+		
+		
+		courseContentPanel.setText(i18n.GL3450_5());
+		courseContentPanel.getElement().setId("courseContentPanelId");
+		
+		
+		courseNotesPanel.setText(i18n.GL3450_6());
+		courseNotesPanel.getElement().setId("courseNotesPanelId");
+		
+		
+		classCodePanel.setText(i18n.GL3450_7());
+		classCodePanel.getElement().setId("classCodePanelId");
+		
+		
+		noteOne.setText(i18n.GL_GRR_NUMERIC_ONE());
+		noteOne.getElement().setId("noteOneId");
+		
+		
+		noteTwo.setText(i18n.GL_GRR_NUMERIC_TWO());
+		noteTwo.getElement().setId("noteTwoId");
+	
+		
+		noteThree.setText(i18n.GL_GRR_NUMERIC_THREE());
+		noteThree.getElement().setId("noteThreeId");
+		
+		
+		courseAnr.setText(i18n.GL3450_8());
+		courseAnr.getElement().setId("courseAnrId");
 		
 		
 		txtClassCode.addFocusHandler(new FocusHandler() {
