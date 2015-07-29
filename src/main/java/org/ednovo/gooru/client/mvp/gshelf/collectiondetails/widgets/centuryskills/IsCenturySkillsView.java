@@ -24,19 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills;
 
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.application.shared.model.code.CodeDo;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
 
 /**
  * @author Search Team
