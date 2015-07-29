@@ -23,11 +23,13 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
@@ -452,13 +454,13 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	 * Calls API to check weather Course is assigned to class or not.
 	 */
 	@Override
-	public void isAssignedToClassPage(final String o1CourseId,final String o2UnitId, final String o3LessonId) { 
+	public void isAssignedToClassPage(String type,final String o1CourseId, final String o2UnitId, final String o3LessonId, final String collAssessmentId) { 
 		
-		AppClientFactory.getInjector().getfolderService().getClassesAssociatedWithCourse(o1CourseId, new SimpleAsyncCallback<Integer>() { 
+		AppClientFactory.getInjector().getClasspageService().getClassesAssociatedWithCourse(o1CourseId, new SimpleAsyncCallback<ArrayList<ClasspageDo>>(){ 
 
 			@Override
-			public void onSuccess(Integer result) {
-				getView().invokeContentDeletePopup(o1CourseId,o2UnitId,o3LessonId,result);
+			public void onSuccess(ArrayList<ClasspageDo> result) {
+				getView().invokeContentDeletePopup(o1CourseId,o2UnitId,o3LessonId,collAssessmentId,result); 
 			} 
 		});
 	}

@@ -24,9 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.Anchor;
@@ -68,7 +70,7 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	
 	public void setOnDeleteBreadCrumbs(String title, String type);
 	
-	public void invokeContentDeletePopup(String o1CourseId, String o2UnitId,String o3LessonId, Integer classpageList);
+	public void invokeContentDeletePopup(String o1CourseId, String o2UnitId,String o3LessonId, String collAssessmentId,ArrayList<ClasspageDo> result);
 	
 	public void disableAndEnableBreadCums(boolean isVisible);
 	

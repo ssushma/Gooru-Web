@@ -282,7 +282,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("QuestionResourceView : getQuestionImage : "+e.getMessage());
 		}
 		return thumbnailImage;
 	}
@@ -376,7 +376,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());
+							AppClientFactory.printSevereLogger("QuestionResourceView : createSesstionItemAttemptForMultipleAnswer : "+e.getMessage());
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";
@@ -451,7 +451,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 					try{
 						answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 					}catch(Exception e){
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("QuestionResourceView : createSesstionItemAttemptOe : "+e.getMessage());
 					}
 					if((i+1)!=userAttemptedAnswers.size()){
 						attemptedAnswers=attemptedAnswers+",";
@@ -519,7 +519,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());
+							AppClientFactory.printSevereLogger("QuestionResourceView : createSesstionItemAttemptForHTDragDrop : "+e.getMessage());
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";
@@ -617,7 +617,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());
+							AppClientFactory.printSevereLogger("QuestionResourceView : createSesstionItemAttemptForMultipleAnswer : "+e.getMessage());
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";

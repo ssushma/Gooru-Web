@@ -530,14 +530,16 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
      * This method is used to set cookies values when page is refreshed.
      */
     public void setCookieValues(){
-         Cookies.setCookie("sessionId", sessionId);
+    	if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+			Cookies.setCookie("sessionId", sessionId);
 
-         Cookies.setCookie("collectionActivityEventId",collectionActivityEventId);
-         Cookies.setCookie("collectionDataLogEventId",collectionDataLogEventId);
-         Cookies.setCookie("collectionNewDataLogEventId",collectionNewDataLogEventId);
-         Cookies.setCookie("collectionStartTime",String.valueOf(collectionStartTime));
-         Cookies.setCookie("isRefreshed","true");
-         Cookies.setCookie("resourceStartTime",String.valueOf(resourceStartTime));
+			Cookies.setCookie("collectionActivityEventId",collectionActivityEventId);
+			Cookies.setCookie("collectionDataLogEventId",collectionDataLogEventId);
+			Cookies.setCookie("collectionNewDataLogEventId",collectionNewDataLogEventId);
+			Cookies.setCookie("collectionStartTime",String.valueOf(collectionStartTime));
+			Cookies.setCookie("isRefreshed","true");
+			Cookies.setCookie("resourceStartTime",String.valueOf(resourceStartTime));
+    	}
     }
 
     /**
@@ -548,8 +550,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
         Window.addCloseHandler(new CloseHandler<Window>() {
                @Override
                public void onClose(CloseEvent<Window> event){
-            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null || AppClientFactory.getPlaceManager().getRequestParameter("view", null)!=null){
-            		   setCookieValues();
+            	   if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+	            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null || AppClientFactory.getPlaceManager().getRequestParameter("view", null)!=null){
+	            		   setCookieValues();
+	            	   }
             	   }
              }
         });
@@ -1122,7 +1126,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(collectionDo.getViews(), collectionDo.getGooruOid(), "views"));
 		         }
 				catch(Exception ex){
-					AppClientFactory.printSevereLogger(ex.getMessage());
+					AppClientFactory.printSevereLogger("CollectionPlayerPresenter : updatCollectionViewsCount : "+ex.getMessage());
 				}
 		}
 	}
@@ -1286,7 +1290,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		         }
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("CollectionPlayerPresenter : showNarrationPopup : "+e.getMessage());
 		}
 		addToPopupSlot(resourceNarrationPresenter);
 	}
@@ -2173,7 +2177,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("CollectionPlayerPresenter : triggerCollectionNewDataLogStartStopEvent : "+ex.getMessage());
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
@@ -2211,7 +2215,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("CollectionPlayerPresenter : triggerCollectionItemNewDataLogStartStopEvent : "+ex.getMessage());
 		}
 
 	}

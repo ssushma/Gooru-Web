@@ -506,9 +506,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		pendingListTotalCount=0;
 		pendingOffsetValue=0;
 		
-		String subPageView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW,"");
-		AppClientFactory.printInfoLogger("subPageView:"+subPageView);
-		
 		
 		//getUiHandlers().generateShareLink(classpageDo.getClassUid());
 		//getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),pageSize*activeListPageNum, pageSize, "active",true,true,false);	//this will callback displayActiveMembersList method ....
@@ -700,7 +697,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 					delete.setPositiveButtonText(i18n.GL0190());
 					delete.setNegitiveButtonText(i18n.GL0142());
 					delete.setDeleteValidate("delete");
-					delete.setPixelSize(450, 353);
+					delete.setPixelSize(450, 360);
 					delete.show();
 					delete.center();
 				}
@@ -806,7 +803,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 				delete.setPositiveButtonText(i18n.GL0190());
 				delete.setNegitiveButtonText(i18n.GL0142());
 				delete.setDeleteValidate("delete");
-				delete.setPixelSize(450, 353);
+				delete.setPixelSize(450, 360);
 				delete.show();
 				delete.center();
 			}

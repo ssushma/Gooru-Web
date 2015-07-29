@@ -435,34 +435,33 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				 
 			}
 		}else{
-			 if(slot==ShelfMainPresenter.RIGHT_SLOT){
-				 if(COURSE.equalsIgnoreCase(getViewType()))
-				 {
-				 pnlSlot.add(new EmptyCourseBuilderWidget() {
-					@Override
-					public void onClick() {
-						createTopLevelTemplate(COURSE);
-					}
-				});
-				 }
-				 else
-				 {
-					 pnlSlot.add(new EmptyNoCollectionsWidget() {
-						
+			if(slot==ShelfMainPresenter.RIGHT_SLOT){
+				if(COURSE.equalsIgnoreCase(getViewType())){
+					getImgInlineLbl().setStyleName("");
+					getCollectionLabel().setText("");
+					pnlSlot.add(new EmptyCourseBuilderWidget() {
+						@Override
+						public void onClick() {
+							createTopLevelTemplate(COURSE);
+						}
+					});
+				}else{
+					pnlSlot.add(new EmptyNoCollectionsWidget() {
+
 						@Override
 						public void onCollectionClick() {
 							getUiHandlers().addNewContent("collection");
-							
+
 						}
-						
+
 						@Override
 						public void onAssessmentClick() {
 							getUiHandlers().addNewContent("assessment");
-							
+
 						}
-					 }); 
-				 }
-			 }
+					}); 
+				}
+			}
 		}
 	}
 	/**

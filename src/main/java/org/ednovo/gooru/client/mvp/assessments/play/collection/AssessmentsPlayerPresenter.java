@@ -588,8 +588,10 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
         Window.addCloseHandler(new CloseHandler<Window>() {
                @Override
                public void onClose(CloseEvent<Window> event){
-            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null || AppClientFactory.getPlaceManager().getRequestParameter("view", null)!=null){
-            		   setCookieValues();
+            	   if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+	            	   if(AppClientFactory.getPlaceManager().getRequestParameter("rid", null)!=null || AppClientFactory.getPlaceManager().getRequestParameter("view", null)!=null){
+	            		   setCookieValues();
+	            	   }
             	   }
              }
         });
@@ -1140,7 +1142,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(collectionDo.getViews(), collectionDo.getGooruOid(), "views"));
 		         }
 				catch(Exception ex){
-					AppClientFactory.printSevereLogger(ex.getMessage());
+					AppClientFactory.printSevereLogger("AssessmentsPlayerPersenter : updateCollectionViewsCount : "+ex.getMessage());
 				}
 		}
 	}
@@ -1305,7 +1307,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		         }
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("AssessmentsPlayerPersenter : showNarrationPopup : "+e.getMessage());
 		}
 		addToPopupSlot(resourceNarrationPresenter);
 	}
@@ -2200,8 +2202,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();
-//			AppClientFactory.printSevereLogger(ex.getMessage());
+//			ex.printStackTrace();
+			AppClientFactory.printSevereLogger("AssessmentsPlayerPersenter : triggerCollectionNewDataLogStartStopEvent :" +ex.getMessage());
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
@@ -2241,7 +2243,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("AssessmentsPlayerPresenter : triggerCollectionItemNewDataLogStartStopEvent : "+ex.getMessage());
 		}
 
 	}
