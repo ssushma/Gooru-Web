@@ -12,7 +12,7 @@
 			<g:FlowPanel styleName="container">
 				<g:FlowPanel styleName="row">
 
-					<g:FlowPanel styleName="headerLinksContainer">
+					<g:FlowPanel styleName="headerLinksContainer" ui:field="headerLinksContainer">
 
 						<g:FlowPanel styleName="col-md-6 col-xs-8 col-sm-6 titleContainer">
 
@@ -75,7 +75,7 @@
 
 							</g:FlowPanel>
 
-							<g:FlowPanel styleName="col-md-2 colmd2-reset">
+							<g:FlowPanel styleName="col-md-2 colmd2-reset" ui:field="attemptPanel">
 
 								<g:FlowPanel styleName="attemptsBlock">
 									<g:FlowPanel styleName="custom-select">
@@ -87,6 +87,12 @@
 
 							</g:FlowPanel>
 
+							<g:FlowPanel styleName="col-md-4 colmd4-reset totalIndividualScore no-border" ui:field="selfReportPanel">
+								<g:HTMLPanel styleName="external-assessment">
+									<uc:H4Panel text="{i18n.GL3465_2}"></uc:H4Panel>
+									<g:Label text="{i18n.GL3465_3}"></g:Label><g:Anchor styleName="anchor" ui:field="externalAssessmentUrl"></g:Anchor>
+								</g:HTMLPanel>
+							</g:FlowPanel>
 							<g:FlowPanel styleName="clearfix" />
 
 						</g:FlowPanel>

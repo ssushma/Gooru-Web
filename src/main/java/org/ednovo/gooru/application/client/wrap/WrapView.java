@@ -243,20 +243,6 @@ public class WrapView extends BaseView implements IsWrapView {
 		return collectionSearchFilters;
 	}
 
-	@Override
-	public void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter) {
-		this.addStandardsPresenter=addStandardsPresenter;
-		//headerUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
-
-		//This is used for handle the mouse left click event to display the search prefilter popup.
-		MouseDownHandler hanlder=new MouseDownHandler() {
-			@Override
-			public void onMouseDown(MouseDownEvent event) {
-				//displayPreFilterpopup();
-			}
-		};
-		headerUc.getEditSearchTxtBox().addDomHandler(hanlder, MouseDownEvent.getType());
-	}
 
 	/**
 	 * @description This class is used to show the pre-filter search popup
@@ -275,114 +261,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		}
 	}
 
-	@Override
-	public void openPreFilter() {
-		//displayPreFilterpopup();
-	}
 
-	public void displayPreFilterpopup() {
-
-		if(preFilter!=null && preFilter.isShowing()){
-			preFilter.hide();
-			isArrowIcon=true;
-		}else{
-			isArrowIcon=true;
-			//if(preFilter==null){
-				preFilter =	new PreFilterPopup();
-				preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						preFilter.ShowSTandardsPanel().clear();
-						getAddStandards();
-						preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
-
-					//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
-						addStandardsPresenter.getAddBtn().setVisible(false);
-						headerUc.setAddStandardsPresenter(addStandardsPresenter,true);
-
-					}
-				});
-			//}
-			headerUc.setPrefilterObj(preFilter);
-			//preFilter.setStyleName(GooruCBundle.INSTANCE.css().positionStyle());
-			//preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
-
-			preFilter.setFilter();
-			preFilter.show();
-			preFilter.hidePlanels();
-			ClickHandler handler = new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-					preFilter.show();
-					isArrowIcon = true;
-				}
-			};
-			preFilter.addDomHandler(handler, ClickEvent.getType());
-
-		}
-
-
-	}
-
-	/**
-     * To show particular user standards
-     */
-	public void getAddStandards() {
-		if(!AppClientFactory.isAnonymous()){
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
-				USER_META_ACTIVE_FLAG,
-				new SimpleAsyncCallback<ProfileDo>() {
-					@Override
-					public void onSuccess(final ProfileDo profileObj) {
-					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
-					}
-					public void checkStandarsList(List<String> standarsPreferencesList) {
-
-					if(standarsPreferencesList!=null){
-							if(standarsPreferencesList.contains("CCSS")){
-								isCCSSAvailable = true;
-							}else{
-								isCCSSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("NGSS")){
-								isNGSSAvailable = true;
-							}else{
-								isNGSSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("TEKS")){
-								isTEKSAvailable = true;
-							}else{
-								isTEKSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("CA")){
-								isCAAvailable = true;
-							}else{
-								isCAAvailable = false;
-							}
-								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-									addStandardsPresenter.callDefaultStandardsLoad();
-								}
-
-					}
-
-					}
-
-				});
-		}else{
-			isCCSSAvailable = true;
-			isNGSSAvailable = true;
-			isCAAvailable = true;
-			isTEKSAvailable = false;
-			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-				addStandardsPresenter.callDefaultStandardsLoad();
-			}
-		}
-
-	}
 
 	@Override
 	public void updateUserHeaderProfileImage(String imageUrl) {

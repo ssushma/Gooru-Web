@@ -179,8 +179,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	private boolean isEdit =false;
 	
-	List<ListValuesDo> depthOfKnowledges;
-	
 	@Inject
 	QuestionTypePresenter questionTypePresenter;
 	
@@ -935,7 +933,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				titleLbl.setText(i18n.GL0893());
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
 				addQuestionResourceWidget.getHideRightsToolTip();
-				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
 //				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 //				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
 //				openEndedButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -985,7 +982,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				getUiHandlers().setEditQuestionData(collectionItemDo);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
-				addQuestionResourceWidget.setDepthOfKnowledes(depthOfKnowledges);
 				//addQuestionResourceWidget.setCheckedData(collectionItemDo.getDepthOfKnowledges());
 				
 				addQuestionResourceWidget.getHideRightsToolTip();
@@ -1650,7 +1646,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 	@Override
 	public void setDepthOfKnowledges(List<ListValuesDo> result){
-		this.depthOfKnowledges=result;
+		if(addQuestionResourceWidget!=null){
+		addQuestionResourceWidget.setDepthOfKnowledes(result);
+		}
 	}
 
 	@Override
