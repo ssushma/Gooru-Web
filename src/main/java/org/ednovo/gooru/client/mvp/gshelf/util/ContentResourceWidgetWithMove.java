@@ -101,6 +101,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String END_SEC="00";
 	private static final String ADD_NARRATION_FOR_YOUR_VIEWERS =i18n.GL0967();
 	private static final String MESSAGE_CONTENT =i18n.GL0968();
+	private static final String MESSAGE_CONTENT_ASSESSMENT =i18n.GL0968_1();
 	private static final String MESSAGE_HEADER =i18n.GL0748();
 	private static final String VALID_END_PAGE = i18n.GL2025();
 	
@@ -1010,7 +1011,13 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private void invokeDelete() {
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
-		deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT) {
+		String messageContent;
+		if(ASSESSMENT.equalsIgnoreCase(collectionType)){
+			messageContent=MESSAGE_CONTENT_ASSESSMENT;
+		}else{
+			messageContent=MESSAGE_CONTENT;
+		}
+		deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,messageContent) {
 			@Override
 			public void onDelete(ClickEvent clickEvent) {
 				collectionContentPresenter.updateWidgetCount(collectionItem,true);
@@ -1022,9 +1029,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	}
 	
 	public void isAssignedToClassPage(String o1CourseId) {
-
 		AppClientFactory.getInjector().getfolderService().getClassesAssociatedWithCourse(o1CourseId, new SimpleAsyncCallback<Integer>() { 
-
 			@Override
 			public void onSuccess(Integer result) {
 				if(result>0){
