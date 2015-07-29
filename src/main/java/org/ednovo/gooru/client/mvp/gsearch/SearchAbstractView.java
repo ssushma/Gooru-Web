@@ -683,8 +683,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		searchDoGbl = searchDo;
 		pnlBackToTop.setVisible(true);
-		AppClientFactory.printInfoLogger(" post search searchDo.getSearchResults()---->"+ searchDo.getSearchResults().size());
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
+			AppClientFactory.printInfoLogger(" post search searchDo.getSearchResults()---->"+ searchDo.getSearchResults().size());
 			searchResults.setVisible(true);
 			panelBorderBox.getElement().getStyle().clearBackgroundColor();
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
