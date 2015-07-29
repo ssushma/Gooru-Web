@@ -199,7 +199,9 @@ public class CollectionResourceWidget extends Composite {
 						creatorImage.setUrl(userCollectionsList.get(0).getUser().getProfileImageUrl());
 						final String collectionType=StringUtil.isEmpty(userCollectionsList.get(0).getCollectionType())?null:userCollectionsList.get(0).getCollectionType();
 						setDefaultCollectionImage(collectionType);
-						relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
+						if(userCollectionsList.get(0).getThumbnails()!=null && userCollectionsList.get(0).getThumbnails().getUrl()!=null){
+							relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
+						}
 						relatedCollectionTitle.setStyleName("collectionTitle");
 						relatedCollectionImage.addErrorHandler(new ErrorHandler() {
 							@Override
