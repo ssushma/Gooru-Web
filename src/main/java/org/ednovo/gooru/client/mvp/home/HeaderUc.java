@@ -1132,10 +1132,9 @@ public class HeaderUc extends Composite
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					if (userDo != null && !userDo.getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
 						Map<String, String> params = new HashMap<String, String>();
-						params.put("view", "myclass");
+						params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS);
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
 					} else {
-						AppClientFactory.printInfoLogger("elssssssssssss");
 						name = "teach";
 						Window.enableScrolling(true);
 						// onLinkPopupClicked(null);

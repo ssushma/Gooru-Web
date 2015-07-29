@@ -157,7 +157,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
-	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	AddCenturyPresenter centuryPresenterWidget=null;
 
 	ArrayList<Integer> depthOfKnowledges= new ArrayList<Integer>();
 	private HandlerRegistration handlerRegistration=null;
@@ -204,7 +204,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addQuestionImg.getElement().setId("lnkAddQuestionImg");
 		addQuestImgContainer.getElement().setId("pnlAddQuestImgContainer");
 		questionHotSpotAnswerChoiceContainer.getElement().setId("pnlQuestionHotSpotAnswerChoiceContainer");
-		setTextForTheFields();
 
 		advancedContainer.getElement().setId("pnladvancedContainer");
 		addHintsAnc.setText(i18n.GL3210_1() +i18n.GL_SPL_OPEN_SMALL_BRACKET()+5+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
@@ -283,7 +282,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		centuryDefaultText.setText(i18n.GL3199());
 		centurySgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:85%;height:19px");
 
-		setCenturyData();
 
 		/**
 		 * Terms Policy
@@ -473,6 +471,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	@Override
 	public void getRevealType() {
 		getHideRightsToolTip();
+		centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		setCenturyData();
+		setTextForTheFields();
 	}
 
 	public void clearTinyMce(){

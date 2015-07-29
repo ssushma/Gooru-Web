@@ -90,4 +90,7 @@ public interface UrlNavigationTokens{
 	String FALSE = "false";
 	String CLASSPAGEID="classpageId";
 	String CONTENT_NAME = "content-name";
+	
+	String MYCLASS="myclass";
+	String OLDCLASS="oldclass";
 }
