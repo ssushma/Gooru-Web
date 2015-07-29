@@ -22,13 +22,13 @@
 		      		</div>
 				</div>
 				<div class="col-md-6 col-sm-6">
-				   <div class="scoreStatus padding-top-10">
+				   <g:HTMLPanel styleName="scoreStatus padding-top-10" ui:field="scoreWidget">
 				      <div class="red">Below 60%</div>
 				      <div class="org">60%- 69%</div>
 				      <div class="yellowgreen">70%- 79%</div>
 				      <div class="lightgreen">80%- 89%</div>
 				      <div class="green">90%- 100%</div>
-				   </div>
+				   </g:HTMLPanel>
 				</div>
 				<div class="clearfix"></div>
 			</div>

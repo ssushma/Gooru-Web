@@ -1890,6 +1890,9 @@ th.headcol.whitebg {
 .margin-top-20 {
 	margin-top: 20px;
 }
+.col-md-20p {
+	width: 20% !important;
+}
 .modal-widget-1000 {
 	width: 98%;
 	margin: 0 auto;
