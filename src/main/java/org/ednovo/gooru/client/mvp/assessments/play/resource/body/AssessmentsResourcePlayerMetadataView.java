@@ -1608,7 +1608,7 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("AssessmentsResourcePlayerMetadataView : setFullScreen : "+ex.getMessage());
 		}
 	}
 	public void getdata(){

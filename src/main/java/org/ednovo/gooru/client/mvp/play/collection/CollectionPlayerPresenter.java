@@ -1122,7 +1122,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(collectionDo.getViews(), collectionDo.getGooruOid(), "views"));
 		         }
 				catch(Exception ex){
-					AppClientFactory.printSevereLogger(ex.getMessage());
+					AppClientFactory.printSevereLogger("CollectionPlayerPresenter : updatCollectionViewsCount : "+ex.getMessage());
 				}
 		}
 	}
@@ -1286,7 +1286,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		         }
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("CollectionPlayerPresenter : showNarrationPopup : "+e.getMessage());
 		}
 		addToPopupSlot(resourceNarrationPresenter);
 	}
@@ -2173,7 +2173,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("CollectionPlayerPresenter : triggerCollectionNewDataLogStartStopEvent : "+ex.getMessage());
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
@@ -2211,7 +2211,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("CollectionPlayerPresenter : triggerCollectionItemNewDataLogStartStopEvent : "+ex.getMessage());
 		}
 
 	}

@@ -31,19 +31,19 @@ import com.google.gwt.user.client.ui.Widget;
 public class SlmExternalAssessmentForm extends Composite {
 
 	@UiField PPanel scoreLbl, evidenceLbl;
-	
+
 	@UiField HTMLEventPanel submit;
-	
+
 	@UiField TextBox scoreTextBox;
-	
+
 	@UiField TextArea evidence;
-	
+
 	@UiField Anchor submitTxt, inProgressTxt;
-	
+
 	int attemptedScore;
-	
+
 	private PlanProgressDo planProgressDo = null;
-	
+
 	private static SlmExternalAssessmentFormUiBinder uiBinder = GWT
 			.create(SlmExternalAssessmentFormUiBinder.class);
 
@@ -62,7 +62,7 @@ public class SlmExternalAssessmentForm extends Composite {
 		}
 		scoreTextBox.setText(planProgressDo.getScoreInPercentage()+"");
 	}
-	
+
 	private void setIds() {
 		scoreTextBox.setMaxLength(3);
 		setButtonVisibility(true);
@@ -71,7 +71,7 @@ public class SlmExternalAssessmentForm extends Composite {
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
 		submit.addClickHandler(new SaveData());
 	}
-	
+
 	private class SaveData implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -79,12 +79,12 @@ public class SlmExternalAssessmentForm extends Composite {
 			validateScoreEvidence();
 		}
 	}
-	
+
 	private class NumbersOnly implements KeyPressHandler{
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			if (!Character.isDigit(event.getCharCode()) 
-                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+			if (!Character.isDigit(event.getCharCode())
+                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB
                     && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
                     && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
                     && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
@@ -95,7 +95,7 @@ public class SlmExternalAssessmentForm extends Composite {
             }
 		}
 	}
-	
+
 	private void validateScoreEvidence() {
 		boolean isScore = false, isEvidence = false;
 		String score = scoreTextBox.getText();
@@ -110,7 +110,7 @@ public class SlmExternalAssessmentForm extends Composite {
 				isScore = true;
 			}
 		}
-		
+
 		String evidenceStr = evidence.getText();
 		if(evidenceStr.isEmpty()){
 			evidence.getElement().getStyle().setBorderColor("orange");
@@ -124,7 +124,7 @@ public class SlmExternalAssessmentForm extends Composite {
 			setButtonVisibility(true);
 		}
 	}
-	
+
 	private void logDataEvent() {
 			try
 			{
@@ -135,9 +135,9 @@ public class SlmExternalAssessmentForm extends Composite {
 				collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
 				collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
 				collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
-				
+
 				String gooruOid= planProgressDo.getGooruOId();
-				
+
 				String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID,null);
 				String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
 				String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
@@ -166,15 +166,15 @@ public class SlmExternalAssessmentForm extends Composite {
 					 e.printStackTrace();
 				}
 				collectionDataLog.put(PlayerDataLogEvents.CONTEXT, new JSONString(contextMap.toString()));
-				
+
 				JSONObject versionMap=new JSONObject();
 				try{
 					versionMap.put(PlayerDataLogEvents.LOGAPI, new JSONString("0.1"));
 				}catch(Exception e){
-					 AppClientFactory.printSevereLogger(e.getMessage());
+					 AppClientFactory.printSevereLogger("SimExternalAssessmentForm : logDataEvent 1 : "+e.getMessage());
 				}
 				collectionDataLog.put(PlayerDataLogEvents.VERSION, new JSONString(versionMap.toString()));
-				
+
 				JSONObject metricsMap=new JSONObject();
 				try{
 					metricsMap.put(PlayerDataLogEvents.TOTALTIMESPENTINMS, new JSONNumber(0));
@@ -184,9 +184,9 @@ public class SlmExternalAssessmentForm extends Composite {
 					scoreStr = scoreStr.replace(".","");
 					metricsMap.put(PlayerDataLogEvents.SCORE_IN_PERCENTAGE,new JSONNumber(Integer.parseInt(scoreStr)));
 				}catch(Exception e){
-					 AppClientFactory.printSevereLogger(e.getMessage());
+					 AppClientFactory.printSevereLogger("SimExternalAssessmentForm : logDataEvent 2: "+e.getMessage());
 				}
-				
+
 				collectionDataLog.put(PlayerDataLogEvents.METRICS, new JSONString(metricsMap.toString()));
 				JSONObject playLoad=new JSONObject();
 				collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(playLoad.toString()));
@@ -204,7 +204,7 @@ public class SlmExternalAssessmentForm extends Composite {
 				 t.schedule(2000);
 			}
 	}
-	
+
 	public void setButtonVisibility(boolean isVisible) {
 		submitTxt.setVisible(isVisible);
 		inProgressTxt.setVisible(!isVisible);

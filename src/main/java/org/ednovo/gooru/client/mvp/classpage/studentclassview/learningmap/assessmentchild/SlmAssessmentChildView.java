@@ -76,25 +76,25 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	@UiField PPanel contentDescription;
 
 	@UiField Label timeSpent, viewCount, lastSession, timeSpentLbl, lastAccessedLbl;
-	
+
 	@UiField Image contentImage;
-	
+
 	@UiField HTMLEventPanel viewReport;
-	
+
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
-	
+
 	private final String DEFAULT_ASSESSMENT_IMAGE = "../images/default-assessment-image -160x120.png";
 
 	String DEFULT_IMAGE_PREFIX = "images/default-";
-	
+
 	String PNG = ".png";
-	
+
 	String SMALL = "Small";
 
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
-	
+
 	private PlanContentDo planContentDo = null;
-	
+
 	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
 
 	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
@@ -103,29 +103,29 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.planContentDo = planContentDo;
-		
+
 		setData(planContentDo);
 		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
 		contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
 		contentImage.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
 	}
-	
+
 	public void setData(final PlanContentDo planContentDo) {
 		final String collectionType = planContentDo.getCollectionType();
-		
+
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
 		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
 			reportView.setVisible(false);
 		} else {
 			reportView.setVisible(true);
 		}
-		
+
 		if(planContentDo.getThumbnails()!=null&&planContentDo.getThumbnails().getUrl()!=null) {
 			contentImage.setUrl(planContentDo.getThumbnails().getUrl());
 		} else {
 			setDefaultThumbnail(collectionType);
 		}
-		
+
 		contentImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -149,7 +149,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 		contentName.setText(planContentDo.getTitle());
 		contentDescription.setText(planContentDo.getDescription());
-		
+
 		viewCount.setText(planContentDo.getProgress().getViews()+"");
 		String lastAccessed = "--";
 		if(planContentDo.getProgress().getLastAccessed()>0) {
@@ -162,7 +162,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			setResourceData(planContentDo.getItems());
 		}
 	}
-	
+
 	private void setDefaultThumbnail(String collectionType) {
 		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment")||collectionType.equalsIgnoreCase("assessment/url"))) {
 			contentImage.setUrl(DEFAULT_ASSESSMENT_IMAGE);
@@ -170,11 +170,11 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			contentImage.setUrl(DEFAULT_COLLECTION_IMAGE);
 		}
 	}
-	
+
 	public class IndividualReportView implements ClickHandler {
 		private String type = "collection";
 		private String gooruOid = null;
-		
+
 		public IndividualReportView(String gooruOid, String type) {
 			if(type!=null) {
 				this.type = type;
@@ -217,29 +217,29 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			Map<String,String> params = new LinkedHashMap<String,String>();
 
 			String token = PlaceTokens.ASSESSMENT_PLAY;
-			
+
 			if(type.equalsIgnoreCase("assessment")) {
 				token = PlaceTokens.ASSESSMENT_PLAY;
 			} else if(type.equalsIgnoreCase("collection")) {
 				token = PlaceTokens.COLLECTION_PLAY;
 			}
-			
+
 			if(status!=null&&status.equalsIgnoreCase("active")) {
 				params.put("isStudent", "true");	// This should be changed based on; whether user has joined or not.
 			}
-			
+
 			if(status==null) {
 				status = "debug-point";
 			}
 			contentImage.getElement().setAttribute("debug-point", status);
 			contentName.getElement().setAttribute("debug-point", status);
-			
+
 			params.put("id", gooruOid);
 			params.put("cid", classUId);
 			params.put("courseId", courseGooruOid);
 			params.put("unitId", unitId);
 			params.put("lessonId", lessonId);
-			
+
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
 			if(!type.equalsIgnoreCase("assessment/url")) {
 				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
@@ -250,7 +250,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			}
 		}
 	}
-	
+
 	private void setResourceData(ArrayList<PlanContentDo> resourceList) {
 		int size = resourceList.size();
 		if(size>0) {
@@ -267,14 +267,14 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 					final String category = categoryString;
 					final HTMLEventPanel resourcePanel = new HTMLEventPanel("");
 					//resourcePanel.setStyleName(libraryStyle.resourceImage());
-					
+
 					final Image resourceImage = new Image();
 					String resourceTitle = null;
 					try {
 						resourceTitle = resourceDo.getTitle().replaceAll("\\<[^>]*>","");
 						resourceDo.setTitle(resourceTitle);
 					} catch (Exception e){
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 1 : "+e.getMessage());
 					}
 					resourceImage.setAltText(resourceTitle);
 					resourceImage.setTitle(resourceTitle);
@@ -290,7 +290,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 								toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 								toolTipPopupPanel.show();
 							} catch(Exception ex) {
-								AppClientFactory.printSevereLogger(ex.getMessage());
+								AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 2 : "+ex.getMessage());
 							}
 						}
 					});
@@ -304,7 +304,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 					resourceCategoryIcon.addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							
+
 						}
 					});
 
@@ -321,7 +321,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 							}
 							catch(Exception ex)
 							{
-								AppClientFactory.printSevereLogger(ex.getMessage());
+								AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 3 : "+ex.getMessage());
 							}
 						}
 					});
@@ -338,7 +338,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 						} else {
 							resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
 						}
-						
+
 						resourceImage.addErrorHandler(new ErrorHandler() {
 							@Override
 							public void onError(ErrorEvent event) {
@@ -350,16 +350,16 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 						resourceImage.setUrl(DEFULT_IMAGE_PREFIX + getDetaultResourceImage(category.toLowerCase()) + PNG);
 						resourceImage.setAltText(resourceDo.getTitle());
 						resourceImage.setTitle(resourceDo.getTitle());
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 4 : "+e.getMessage());
 					}
 
 					resourcePanel.addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							
+
 						}
 					});
-					
+
 					resourceCategoryIcon.addStyleName("resourceName");
 					resourceCategoryIcon.addStyleName(getDetaultResourceImage(category.toLowerCase()) + SMALL);
 					resourcePanel.add(resourceImage);
@@ -373,10 +373,10 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			resourceImgContainer.add(new Label("No resources!!!"));
 		}
 	}
-	
+
 	public String getDetaultResourceImage(String category){
 		String categoryIcon=StringUtil.getEquivalentCategory(category==null?"":category.toLowerCase());
-		return categoryIcon ; 
+		return categoryIcon ;
 	}
 
 }
