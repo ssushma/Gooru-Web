@@ -216,6 +216,7 @@ public class PickupDragController extends AbstractDragController {
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
 			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(10000); 
 		}
+		AppClientFactory.printInfoLogger("dragEnd--"+movablePanel);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
 			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(10000); 
 		}

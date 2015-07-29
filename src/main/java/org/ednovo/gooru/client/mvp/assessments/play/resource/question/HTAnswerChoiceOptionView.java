@@ -117,6 +117,7 @@ public class HTAnswerChoiceOptionView extends Composite implements IsDraggable{
 		return 40;
 	}
 	public void reorderCollectionItem(int widgetIndex) {
+		AppClientFactory.printInfoLogger("reorderCollectionItem--");
 		AppClientFactory.fireEvent(new ResetDragDropEvent());
 	}
 	public FlowPanel getHtAnsDragFpnl() {
