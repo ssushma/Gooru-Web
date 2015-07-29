@@ -121,6 +121,8 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 				} else {
 					if(views>0) {
 						courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(highlightStyle);
+					} else {
+						courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setBackgroundColor(color);
 					}
 				}
 				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
@@ -193,7 +195,9 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(courseName, userName,gooruUId);
+			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(courseName,userName,gooruUId,classId,courseId,null,null,null,null,UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		}
 	}
 
