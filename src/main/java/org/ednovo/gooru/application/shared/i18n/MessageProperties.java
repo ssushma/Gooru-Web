@@ -1985,6 +1985,7 @@ public interface MessageProperties extends Constants {
 	String GL1541();
 	String GL1542();
 	String GL1543();
+	String GL1543_1();
 	String GL1544();
 	String GL1545();
 	String GL1546();
@@ -2000,6 +2001,7 @@ public interface MessageProperties extends Constants {
 	String GL1556();
 	String GL1557();
 	String GL1558();
+	String GL1558_1();
 	String GL1559();
 	String GL1560();
 	String GL1561();
