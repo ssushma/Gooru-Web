@@ -108,9 +108,9 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
     private AddResourceAssessmentsPresenter addResourceCollectionPresnter;
 
     private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
-    
+
      SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
-     
+
      ShelfMainPresenter shelfMainPresenter;
 
     private CollectionItemDo collectionItemDo;
@@ -632,7 +632,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		
+
 		sessionId = GwtUUIDGenerator.uuid();
 		AssessmentsResourcePlayerPresenter.this.sessionId=sessionId;
 		startResourceInsightDataLog();
@@ -803,7 +803,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(viewsCount, collectionItemDo.getResource().getGooruOid(), "views"));
 		         }
 		      catch(Exception ex){
-		    	  AppClientFactory.printSevereLogger(ex.getMessage());
+		    	  AppClientFactory.printSevereLogger("AssessmentsResourcePlayerPresenter : updateViewCount :"+ex.getMessage());
 		      }
 		}
 	}

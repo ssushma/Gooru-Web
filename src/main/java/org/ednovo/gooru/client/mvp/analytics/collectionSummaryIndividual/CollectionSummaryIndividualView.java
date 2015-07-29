@@ -351,7 +351,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        Table table = new Table(data, options);
 				        printResourceData.add(table);
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("setCollectionBreakDownPrintData :"+e.getMessage());
 				}
 
 			}
@@ -479,7 +479,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					});
 
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("setCollectionBreakDown :"+e.getMessage());
 				}
 			        if(loadingImage!=null)
 			        loadingImage.setVisible(false);
@@ -550,7 +550,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        	printOpendedData.add(erroeMsg);
 			        }
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("setOpenendedQuestionsPrintData : "+e.getMessage());
 				}
 
 			}
@@ -860,7 +860,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        	printScoredData.add(erroeMsg);
 			        }
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("setQuestionsPrintData : "+e.getMessage());
 				}
 
 			}

@@ -278,7 +278,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 						}
 
 					} catch (Exception e) {
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("Analyticsview : ViewAssignmentClickEvent : "+e.getMessage());
 					}
 
 				}
@@ -316,7 +316,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				}
 			}
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("AnalyticsView : setInSlot: "+e.getMessage());
 		}
 	}
 

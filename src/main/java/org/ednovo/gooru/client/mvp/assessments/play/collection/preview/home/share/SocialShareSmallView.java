@@ -144,7 +144,7 @@ IsSocialShareSmallView{
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
 			}
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("SocialShareSmallView : Constructor : "+e.getMessage());
 		}
 		if (socialDo.isOnlyIcon()) {
 			shareTextPanel.setVisible(false);

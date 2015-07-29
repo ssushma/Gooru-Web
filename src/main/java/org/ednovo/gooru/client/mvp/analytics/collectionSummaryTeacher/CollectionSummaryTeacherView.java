@@ -346,7 +346,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        printWidget.add(printOpendedData);
 	    	printOpendedData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
         }catch(Exception e){
-        	AppClientFactory.printSevereLogger(e.getMessage());
+        	AppClientFactory.printSevereLogger("CollectionSummaryTeacherView : setOpenendedQuestionsPrintData : "+e.getMessage());
         }
 	}
 	/**
@@ -548,7 +548,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        printResourceData.add(table);
 	        printWidget.add(printResourceData);
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("CollectionSummaryTeacherView : setCollectionBreakDownPrintData : "+e.getMessage());
 		}
 	}
 	/**
