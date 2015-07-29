@@ -331,7 +331,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 	}
 
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.RESOURCE_PLAY)
+	@NameToken(PlaceTokens.RESOURCE_PLAY_OLD)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsAssessmentsResourcePlayerProxy extends ProxyPlace<AssessmentsResourcePlayerPresenter> {
 	}
