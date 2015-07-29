@@ -94,12 +94,6 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 	public void setReportData(ArrayList<PlanProgressDo> dataList) {
 		headerLinksContainer.setVisible(false);
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
-		String aId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID);
-		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
-		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
-		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
-		
 		reportBodyBlock.clear();
 		
 		int size = dataList.size();
@@ -119,7 +113,13 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 			headerLeftArrow.setVisible(true);
 			allContentPanel.addStyleName("cursorPointer");
-			reportBodyBlock.add(new AssessmentProgressReportChildView(aId, cId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId));
+			String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
+			String aId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
+			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
+			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
+			String contentType=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+			reportBodyBlock.add(new AssessmentProgressReportChildView(aId, cId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId, contentType));
 		}
 	}
 	

@@ -1353,14 +1353,22 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	@Override
 	public CollectionItemDo addNewUserResource(	String jsonString,String gooruOid)throws GwtException {
-		JsonRepresentation jsonRep = null;
+		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_NEW_USER_RESOURCE, gooruOid);
 
 		getLogger().info("Add user own resource -- "+url);
 		getLogger().info("--- Payload -- "+jsonString);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonString);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+		try{
+			logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri"));
+			String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+			JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
+			jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
+		}catch(Exception e){
+			logger.error("Exception-------"+e);
+		}
+		return deserializeCollectionItem(jsonResponseRepget);
 	}
 
 	@Override
