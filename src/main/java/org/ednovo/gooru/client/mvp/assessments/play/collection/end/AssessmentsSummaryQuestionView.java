@@ -189,7 +189,7 @@ public class AssessmentsSummaryQuestionView extends Composite{
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("AssessmentsSummaryQuestionView : getQuestionImage : "+e.getMessage());
 		}
 		return thumbnailImage!=null?thumbnailImage:"images/questiondefault.png";
 	}

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -70,10 +70,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
- * 
+ *
  * @fileName : StudentAssignmentView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -85,22 +85,22 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @Reviewer:
  */
 public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmentUiHandlers> implements IsStudentAssignmentView ,ClickHandler{
-	
-	private static StudentAssignmentViewUiBinder uiBinder = GWT.create(StudentAssignmentViewUiBinder.class);
-	
 
-	interface StudentAssignmentViewUiBinder extends UiBinder<Widget, StudentAssignmentView> {    
+	private static StudentAssignmentViewUiBinder uiBinder = GWT.create(StudentAssignmentViewUiBinder.class);
+
+
+	interface StudentAssignmentViewUiBinder extends UiBinder<Widget, StudentAssignmentView> {
 
 	}
-	
+
 	@UiField Label mainTitleLbl,noAssignmentMsg,lblUserName,lblAssignmentProgress;
-	
+
 	@UiField HTMLPanel contentpanel,panelProgressContainer,panelAssignmentPath;
 	@UiField HTMLEventPanel panelPrevious,panelNext;
-	
+
 	@UiField
 	static HTMLPanel mainContainer,memberContainer;
-	
+
 	@UiField Button backToEditPanel;
 
 	/*@UiField
@@ -109,66 +109,66 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	/*@UiField
 	static
 	Button btnWithDraw;*/
-	
+
 	@UiField FlowPanel paginationFocPanel,paginationFocPanel1,panelAssignmentProgress;
-	
+
 	@UiField Image studentViewImage,imgProfileImage;
 
 //	@UiField
 //	static Image userImage;
-	
+
 	@UiField
 	static Label  lblNext, lblPrevious;
 
 	@UiField
 	static
 	Label LblMember;
-	
+
 	static StudentJoinClassPopup joinPopupPrivate;
-	
+
 	static StudentJoinClassPopup joinPopupPublic;
-	
+
 	static StudentJoinClassPopup joinPopupButtonClick;
-	
+
 	static ClasspageDo classpageDo;
-	
+
 	String defaultProfileImage = "images/settings/setting-user-image.png";
-	
+
 	private static boolean isJoinPopupPublic = false;
-	
+
 	private static boolean isJoinPopupPrivate = false;
-	
+
 	private static boolean isJoinPopupPrivateStatic = false;
-	
+
 	private static boolean isJoinPopupPublicStatic = false;
-	
+
 	private static boolean isJoinPopupButtonclick = false;
-	
+
 	private static final String PREVIOUS = "PREVIOUS";
 
 	private static final String NEXT = "NEXT";
-	
+
 	private String DEFAULT_CLASSPAGE_IMAGE = "images/Classpage/default-classpage.png";
 	private int totalHitCount=0;
 	private int limit=5;
 	private int pageNumber=1;
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
-	
+
 	public static boolean islogin = false;
 	public static boolean isloginPrivate = false;
 	public static boolean isloginButtonClick = false;
-	
+
 	private Map<String,AssignmentProgressVc> assignmentsDotsMap=new HashMap<String,AssignmentProgressVc>();
-	
+
 	List<String> sortingOptionsList=new ArrayList<String>();
-	
+
 	private Integer defaultOffsetForPath=0;
 	private Integer defaultLimitForPath=20;
-	
+
 	private static final String GOORU_UID = "gooruuid";
-	
-	public static final MessageProperties i18n = GWT.create(MessageProperties.class); 
-	
+
+	public static final MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	@Inject
 	public StudentAssignmentView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -176,28 +176,28 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		setStaticData();
 		/*lblWebHelp.addMouseOverHandler(new OnMouseOver());
 		lblWebHelp.addMouseOutHandler(new OnMouseOut());*/
-		
+
 		addSortingOptionsToList();
 		addSortEventToText();
-		
-		
+
+
 		lblAssignmentProgress.setText(i18n.GL1971());
 		lblAssignmentProgress.getElement().setId("lblAssignmentProgress");
 		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1971());
 		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1971());
-		
+
 		lblNext.addClickHandler(new ClickHandler() {
-			
+
 			@Override
-			public void onClick(ClickEvent event) {				
+			public void onClick(ClickEvent event) {
 				defaultOffsetForPath = defaultOffsetForPath +defaultLimitForPath;
-				
+
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("id"), defaultOffsetForPath.toString(), defaultLimitForPath.toString());
 			}
 		});
-	
+
 		lblPrevious.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				if (defaultOffsetForPath <=0){
@@ -205,15 +205,15 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				}else{
 					defaultOffsetForPath = defaultOffsetForPath - defaultLimitForPath;
 				}
-				
+
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("id"), defaultOffsetForPath.toString(), defaultLimitForPath.toString());
-				
+
 			}
 		});
-		
+
 		lblNext.setVisible(false);
 		lblPrevious.setVisible(false);
-		
+
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hideDropDown(event);
@@ -221,21 +221,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	    });
 	}
 	/**
-	 * 
-	 * @function addSortEventToText 
-	 * 
+	 *
+	 * @function addSortEventToText
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -248,13 +248,13 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				sortingLabel.addClickHandler(new SortAssignmentEvents(sortType));
 			}
 		}
-		
+
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : StudentAssignmentView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -288,12 +288,12 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				contentpanel.clear();
 				noAssignmentMsg.setVisible(false);
 				contentpanel.add(setLoadingPanel());
-				
+
 				Map<String,String> params = new HashMap<String,String>();
 				params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("order", sortingStringValue);
 				params.put("pageNum", "1");
-				
+
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 				AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 			}else{
@@ -302,23 +302,23 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function hideDropDown 
-	 * 
+	 *
+	 * @function hideDropDown
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -326,26 +326,26 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
     	if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
-        	
+
     	}
      }
 	/**
-	 * 
-	 * @function eventTargetsPopup 
-	 * 
+	 *
+	 * @function eventTargetsPopup
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param event
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -356,21 +356,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		return false;
 	}
 	/**
-	 * 
-	 * @function setStaticData 
-	 * 
+	 *
+	 * @function setStaticData
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -379,20 +379,20 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		backToEditPanel.getElement().setAttribute("alt",i18n.GL1130());
 		backToEditPanel.getElement().setAttribute("title",i18n.GL1130());
 		backToEditPanel.getElement().setId("btnBackToEdit");
-		
+
 		noAssignmentMsg.setText(i18n.GL1131());
 		noAssignmentMsg.getElement().setId("lblNoAssignmentMsg");
 		noAssignmentMsg.getElement().setAttribute("alt",i18n.GL1131());
 		noAssignmentMsg.getElement().setAttribute("title",i18n.GL1131());
-		
-		
-		
+
+
+
 		LblMember.setText(i18n.GL1549());
 		LblMember.getElement().setId("lblMember");
 		LblMember.getElement().setAttribute("alt",i18n.GL1549());
 		LblMember.getElement().setAttribute("title",i18n.GL1549());
-		
-	
+
+
 		noAssignmentMsg.setVisible(false);
 		LblMember.setVisible(false);
 		mainContainer.getElement().setId("pnlMainFlow");
@@ -421,44 +421,44 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		AppClientFactory.printInfoLogger("classpageDo.getTitle():"+classpageDo.getTitle());
 		studentViewImage.setAltText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		studentViewImage.setTitle(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
-		
+
 		if(classpageDo.getThumbnailUrl() != null){
 			studentViewImage.setUrl(classpageDo.getThumbnailUrl() == "" ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		}else{
 			studentViewImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
 		}
-		
+
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
-		
+
 		AppClientFactory.printInfoLogger("profile imge:"+classpageDo.getCreatorProfileImage());
-		
+
 		if(classpageDo.getCreatorProfileImage() != null){
 			imgProfileImage.setUrl(classpageDo.getCreatorProfileImage());
 		}else{
 			imgProfileImage.setUrl(defaultProfileImage);
 		}
-		
-		
+
+
 		lblUserName.setText(classpageDo.getCreatorUsername() + "'s " + i18n.GL0102().toLowerCase());
 		lblUserName.getElement().setAttribute("alt",classpageDo.getCreatorUsername() + "'s " + i18n.GL0102().toLowerCase());
 		lblUserName.getElement().setAttribute("title",classpageDo.getCreatorUsername() + "'s " + i18n.GL0102().toLowerCase());
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
-			
+
 			@Override
 			public void onError(ErrorEvent event) {
 				imgProfileImage.setUrl(defaultProfileImage);
 			}
 		});
-		
+
 		studentViewImage.addErrorHandler(new ErrorHandler() {
-			
+
 			@Override
 			public void onError(ErrorEvent event) {
 				studentViewImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
 			}
 		});
 
-		
+
 		if(classpageDo.getSharing().equalsIgnoreCase("public"))
 		{
 			if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
@@ -477,12 +477,12 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				LblMember.setText(i18n.GL1549());
 				mainContainer.setVisible(true);
 			}
-			else 
+			else
 			{
 				memberContainer.setStyleName("techerStyle");
 				LblMember.setVisible(false);
 				mainContainer.setVisible(true);
-			}	
+			}
 		}
 		else
 		{
@@ -498,12 +498,12 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					LblMember.setText(StudentAssignmentView.i18n.GL1549());
 					mainContainer.setVisible(true);
 				}
-			else if(classpageDo.getStatus().equalsIgnoreCase("pending")) 
+			else if(classpageDo.getStatus().equalsIgnoreCase("pending"))
 			{
 					memberContainer.setStyleName("techerStyle");
 					LblMember.setVisible(false);
 					mainContainer.setVisible(false);
-			}else 
+			}else
 				{
 					try
 					{
@@ -511,7 +511,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					}
 					catch(Exception ex)
 					{
-						AppClientFactory.printSevereLogger(ex.getMessage());
+						AppClientFactory.printSevereLogger("StudentAssignmentView : setClasspageData : "+ex.getMessage());
 					}
 				       if(AppClientFactory.isAnonymous()){
 				    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
@@ -519,10 +519,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
 				       }
 				}
-			
+
 		}
 	}
-	
+
 	@Override
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1, String sortOrder){
 		removeLoadingPanel();
@@ -530,7 +530,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();
 		classpageItemsList.clear();
 		classpageItemsList.addAll(classpageItemsList1);
-		
+
 		if(classpageItemsList!=null&&classpageItemsList.size()>0){
 			noAssignmentMsg.setVisible(false);
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
@@ -556,7 +556,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 	}
 	/**
-	 * 
+	 *
 	 */
 	public void resetAll(){
 		contentpanel.clear();
@@ -573,21 +573,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		assignmentsDotsMap.clear();
 	}
 	/**
-	 * 
-	 * @function setPagination 
-	 * 
+	 *
+	 * @function setPagination
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -599,21 +599,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 	}
 	/**
-	 * 
-	 * @function showPaginationButton 
-	 * 
+	 *
+	 * @function showPaginationButton
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -625,7 +625,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			pageNumber=Integer.parseInt(pageNum);
 			pageNumber=pageNumber==0?1:pageNumber;
 		}catch(NumberFormatException e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("StudentAssignmentView : showPaginationButton : "+e.getMessage());
 		}
 		int totalPages = (this.totalHitCount / 5)
 				+ ((this.totalHitCount % 5) > 0 ? 1 : 0);
@@ -635,10 +635,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				paginationFocPanel.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
 				paginationFocPanel1.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
 			}
-		
+
 			int page = pageNumber < 5 ? 1 : pageNumber - 3;
 
-			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
+			for (int count = 1; count < 5 && page <= totalPages; page++, ++count)
 			{
 				paginationFocPanel.add(new PaginationButtonUc(page, page == pageNumber, this));
 				paginationFocPanel1.add(new PaginationButtonUc(page, page == pageNumber, this));
@@ -650,21 +650,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 	}
 	/**
-	 * 
-	 * @function clearPaginationButton 
-	 * 
+	 *
+	 * @function clearPaginationButton
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -673,10 +673,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		paginationFocPanel1.clear();
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : StudentAssignmentView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -697,21 +697,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 	}
 	/**
-	 * 
-	 * @function resetEditClasspageView 
-	 * 
+	 *
+	 * @function resetEditClasspageView
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -724,21 +724,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		pageNumber=1;
 	}
 	/**
-	 * 
-	 * @function setLoadingPanel 
-	 * 
+	 *
+	 * @function setLoadingPanel
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : Label
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -748,21 +748,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		return loadingImage;
 	}
 	/**
-	 * 
-	 * @function removeLoadingPanel 
-	 * 
+	 *
+	 * @function removeLoadingPanel
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -774,10 +774,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 		}
 	}
-	
+
 	@Override
 	public void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList) {
-		//TODO 
+		//TODO
 		panelAssignmentProgress.clear();
 		assignmentsDotsMap.clear(); // TODO dont forget to clear when panelAssignmentProgress clear
 		if(classpageItemsList!=null&&classpageItemsList.size()>0){
@@ -787,7 +787,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}else{
 				lblNext.setVisible(false);
 			}
-			
+
 			if (defaultOffsetForPath <= 0){
 				lblPrevious.setVisible(false);
 			}else{
@@ -795,7 +795,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 			if (classpageItemsList.size() > 0)
 				panelAssignmentProgress.clear();
-			
+
 			for(int itemIndex=0; itemIndex<classpageItemsList.size(); itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
 				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc((itemIndex == classpageItemsList.size() - 1) ? true : false, classpageItemDo, classpageItemDo.getSequenceNumber());
@@ -806,22 +806,22 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 	}
 	/**
-	 * 
-	 * @function updateCircleColors 
-	 * 
+	 *
+	 * @function updateCircleColors
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param collectionItemId
 	 * @parm(s) : @param readStatus
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -831,8 +831,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			assignmentProgressVc.updateDotsCircle(readStatus);
 		}
 	}
-	
-	
+
+
 	@UiHandler("backToEditPanel")
 	public void onClickHandler(ClickEvent event){
 		//getPreviousPage();
@@ -840,18 +840,18 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		String classpageid=Cookies.getCookie("classpageId");
 		String pageNum=Cookies.getCookie("pageNum");
 		String pos=Cookies.getCookie("pos");
-		
+
 		if(AppClientFactory.getPlaceManager().getRequestParameter("source").equalsIgnoreCase("T")){
 //			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.TEACH);
 		}
 		else if(AppClientFactory.getPlaceManager().getRequestParameter("source").equalsIgnoreCase("E")){
-			
+
 			Map<String, String> params=new HashMap<String, String>();
 			//params.put("pageSize", pageSize);
 			params.put("classpageId", classpageid);
 			params.put("pageNum", pageNum);
 			//params.put("pos", pos);
-			
+
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE,params,true);
 		}
 		backToEditPanel.setVisible(false);
@@ -883,7 +883,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 		}
 	}
-	
+
 	@Override
 	public void clearAll() {
 		paginationFocPanel.clear();
@@ -899,21 +899,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		return backToEditPanel;
 	}
 	/**
-	 * 
-	 * @function setPrivatePage 
-	 * 
+	 *
+	 * @function setPrivatePage
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -924,49 +924,49 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		mainContainer.setVisible(true);
 	}
 	/**
-	 * 
-	 * @function setPrivatePageActive 
-	 * 
+	 *
+	 * @function setPrivatePageActive
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	public static void setPrivatePageActive()
-	{	
+	{
 	LblMember.setVisible(true);
 	LblMember.setText(i18n.GL1549());
 	mainContainer.setVisible(true);
 	}
-	
-	
-	
+
+
+
 	/**
-	 * 
-	 * @function getMainContainerStatus 
-	 * 
+	 *
+	 * @function getMainContainerStatus
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -975,30 +975,30 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		Boolean mainContainerStatus = false;
 		try
 		{
-			mainContainerStatus = mainContainer.isVisible();		
+			mainContainerStatus = mainContainer.isVisible();
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("StudentAssignmentView : getMainContainerStatus : "+ex.getMessage());
 		}
-		return mainContainerStatus;		
+		return mainContainerStatus;
 	}
 	/**
-	 * 
-	 * @function addSortingOptionsToList 
-	 * 
+	 *
+	 * @function addSortingOptionsToList
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1011,23 +1011,23 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	}
 
 	/**
-	 * 
-	 * @function callAssignmentAPI 
-	 * 
+	 *
+	 * @function callAssignmentAPI
+	 *
 	 * @created_date : Jun 11, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param classpageId
 	 * @param pageSize
 	 * @param pageNum
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1035,9 +1035,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public void callAssignmentAPI(String classpageId, String offsetProgress, String limitProgress){
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call showClasspageItemsForAssignmentPath
 	}
-	
+
 	@Override
 	public void setSortingOrderInDropdown(String sortingOrder) {
 	}
-	
+
 }

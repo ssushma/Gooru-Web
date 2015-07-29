@@ -283,7 +283,7 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("AssessmentsQuestionResourceView : getQuestionImage : "+e.getMessage());
 		}
 		return thumbnailImage;
 	}
@@ -377,7 +377,7 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());
+							AppClientFactory.printSevereLogger("AssessmentsQuestionResourceView : createSesstionItemAttemptForMultipleAnswer :"+e.getMessage());
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";
@@ -452,7 +452,7 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 					try{
 						answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 					}catch(Exception e){
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("AssessmentsQuestionResourceView : createSesstionItemAttemptOe :"+e.getMessage());
 					}
 					if((i+1)!=userAttemptedAnswers.size()){
 						attemptedAnswers=attemptedAnswers+",";
@@ -520,7 +520,7 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());
+							AppClientFactory.printSevereLogger("AssessmentsQuestionResourceView : createSesstionItemAttemptForHTDragDrop : "+e.getMessage());
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";
@@ -618,7 +618,7 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());
+							AppClientFactory.printSevereLogger("AssessmentsQuestionResourceview : createSesstionItemAttemptForMultipleAnswer: "+e.getMessage());
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";

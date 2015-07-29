@@ -185,7 +185,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 					}
 					catch(Exception ex)
 					{
-						AppClientFactory.printSevereLogger(ex.getMessage());
+						AppClientFactory.printSevereLogger("AssessmentsHomeMetadataView : setCollectionMetadata : "+ex.getMessage());
 					}
 				}
 				if(collectionItems!=null&&collectionItems.size()>0){
@@ -282,7 +282,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 							@Override
 							public	void onLoginSuccess(){
 								Window.enableScrolling(false);
-								
+
 								getUiHandlers().setDefultVersionAndType();
 								remixPresenterWidget.DisableMyCollectionsPanelData(false);
 								remixPresenterWidget.getLoadingImage();
@@ -298,7 +298,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 						loginPopupUc.setGlassEnabled(true);
 						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
 					}else{
-						
+
 						getUiHandlers().setDefultVersionAndType();
 						remixPresenterWidget.DisableMyCollectionsPanelData(false);
 						remixPresenterWidget.getLoadingImage();
@@ -399,7 +399,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
 		String collectionTitle=collectionDo.getTitle();
 		if(customize!=null && YES.equals(customize) && emailId!=null){
-			
+
 			getUiHandlers().setDefultVersionAndType();
 			remixPresenterWidget.DisableMyCollectionsPanelData(false);
 			remixPresenterWidget.getLoadingImage();

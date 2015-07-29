@@ -868,7 +868,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionDo.getGooruOid(), "views"));
 		         }
 				catch(Exception ex){
-					AppClientFactory.printSevereLogger(ex.getMessage());
+					AppClientFactory.printSevereLogger("AssessmensPreviewPlayerPresenter : updatCollectionViewsCount : "+ex.getMessage());
 				}
 			}
 		}
@@ -1024,7 +1024,7 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 		         }
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("AssessmensPreviewPlayerPresenter : showNarrationPopup : "+e.getMessage());
 		}
 		addToPopupSlot(resourceNarrationPresenter);
 	}

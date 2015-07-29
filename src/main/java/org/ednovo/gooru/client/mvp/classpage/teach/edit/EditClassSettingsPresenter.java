@@ -44,7 +44,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  * @fileName : EditClassSettingsPresenter.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -53,12 +53,12 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  *
  * @Author tumbalam
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSettingsView> implements EditClassSettingsViewUiHandler{
-	
+
 	private ImageUploadPresenter imageUploadPresenter;
-	
+
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 
 	@Inject
@@ -67,7 +67,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		getView().setUiHandlers(this);
 		this.imageUploadPresenter=imageUploadPresenter;
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -77,7 +77,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 				getView().setShortenUrl(shortenUrl);
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		super.onHide();
 	}
 
-	
+
 	@Override
 	public void showImageUploadWidget() {
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
@@ -101,7 +101,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		addToPopupSlot(imageUploadPresenter);
 	}
 
-	
+
 	public void setClassData(ClasspageDo classpageDo) {
 		getView().setData(classpageDo);
 	}
@@ -116,18 +116,18 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 			params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
 			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classUid, params, getShareUrlGenerationAsyncCallback());
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("EditClassSessingsPresenter : generateShareLink : "+e.getMessage());
 		}
 	}
 
-	/** 
+	/**
 	 * This method is to get the shareUrlGenerationAsyncCallback
 	 */
 	public SimpleAsyncCallback<Map<String, String>> getShareUrlGenerationAsyncCallback() {
 		return shareUrlGenerationAsyncCallback;
 	}
 
-	/** 
+	/**
 	 * This method is to set the shareUrlGenerationAsyncCallback
 	 */
 	public void setShareUrlGenerationAsyncCallback(SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback) {
@@ -142,19 +142,19 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		if(classId != null){
 			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, title,grade,null,sharing,null,null, new AsyncCallback<ClasspageDo>() {
-				
+
 				@Override
 				public void onSuccess(ClasspageDo result) {
 					getView().setUpdateClassData(result);
 					AppClientFactory.getEventBus().fireEvent(new UpdateClassTitleEvent(title));
 				}
-				
+
 				@Override
 				public void onFailure(Throwable caught) {
-					
+
 				}
 			});
 		}
 	}
-	
+
 }
