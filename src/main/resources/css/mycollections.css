@@ -1900,7 +1900,7 @@ padding-bottom: 10px;
 	font-size:17px;
 	color:#515151;
 	text-align:left;
-	word-break: break-all;
+	word-break: break-word;
 	padding-right: 10px !important;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks .singleBlock{
