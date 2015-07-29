@@ -2771,9 +2771,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					setHotTextAnswers(addHotTextAnsChoice);
 					questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
 				}else{
+					int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
 					AddHotTextQuestionAnswerChoice addHotTextAnsChoice=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[k], answer.getAnswerText());
 					addHotTextAnsChoice.setHeadLabelFields(false);
+					addHotTextQuesetionAnswerOptionTextArea(addHotTextAnsChoice,widgetCount);
 					questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
+					
 				}
 				k++;
 			}
