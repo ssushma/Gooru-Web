@@ -765,7 +765,7 @@ public class CollectionProgressReportChildView extends ChildView<CollectionProgr
 				printScoredData.add(erroeMsg);
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("CollectionProgressReportChildView : setQuestionsPrintData: "+e.getMessage());
 		}
 	}
 

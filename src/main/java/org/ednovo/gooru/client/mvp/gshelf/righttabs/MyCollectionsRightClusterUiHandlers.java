@@ -56,7 +56,7 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void setLessonsListOnRightCluster(String o1CourseId,	String o2UnitId, String o3LessDeletedonId, String currentTypeView);
 	
-	public void isAssignedToClassPage(String o1CourseId, String o2UnitId, String o3LessonId);
+	public void isAssignedToClassPage(String type,String o1CourseId, String o2UnitId, String o3LessonId, String collAssessmentId); 
 	
 	public void deleteCollectionContent(String o1CourseId, String o2UnitId,	String o3LessonId, String assessmentCollectionId);
 	

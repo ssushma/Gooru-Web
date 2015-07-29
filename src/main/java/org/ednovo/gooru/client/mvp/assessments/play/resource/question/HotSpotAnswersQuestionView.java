@@ -125,7 +125,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 					addAnswerImage.getChangeImgLbl().setVisible(false);
 					addAnswerImage.getRemoveImgLbl().setVisible(false);
 					addAnswerImage.setAnswerId(questionAnswerDo.getSequence());
-					addAnswerImage.setAnswerImage(collectionItemDo.getAssetURI()+"uploaded-media/"+questionAnswerDo.getAnswerText()+"?"+randNumber);
+					addAnswerImage.setAnswerImage(collectionItemDo.getAssetURI()+collectionItemDo.getFolder()+questionAnswerDo.getAnswerText()+"?"+randNumber);
 					addAnswerImage.setFileName(null);
 					addAnswerImage.setAnswerCorrect(questionAnswerDo.isIsCorrect());
 					addAnswerImage.selLbl.removeStyleName("answerMarkDeselected");

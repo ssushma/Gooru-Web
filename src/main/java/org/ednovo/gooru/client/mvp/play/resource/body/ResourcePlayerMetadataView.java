@@ -1636,7 +1636,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("ResourcePlayerMetadataPresenter : setFullScreen: "+ex.getMessage());
 		}
 	}
 	public void getdata(){

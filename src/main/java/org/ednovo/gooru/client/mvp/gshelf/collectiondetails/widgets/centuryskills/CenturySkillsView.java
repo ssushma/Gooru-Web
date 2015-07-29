@@ -38,7 +38,7 @@ import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
-import org.ednovo.gooru.client.uc.AppSuggestBox;
+import org.ednovo.gooru.client.uc.AppCenturyTagSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 
@@ -68,7 +68,7 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	@UiField public Button centbrowseBtn;
 	@UiField FlowPanel centPanel;
 	@UiField(provided = true)
-	AppSuggestBox centurySgstBox;
+	AppCenturyTagSuggestBox centurySgstBox;
 	private CollectionDo collectionDo = null;
 	
 	Map<Long, String> hilightSelectedValuesFromAutoSuggest=new HashMap<Long, String>();
@@ -150,7 +150,7 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	
 	public void setCenturySkills(){
 		
-		centurySgstBox = new AppSuggestBox(centurySuggestOracle) {
+		centurySgstBox = new AppCenturyTagSuggestBox(centurySuggestOracle) {
 			@Override
 			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();

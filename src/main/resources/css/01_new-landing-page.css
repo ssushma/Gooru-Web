@@ -25,6 +25,17 @@ body{
 
 }
 
+.bannerContaner .flowPlayer::before {
+    background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+
 .bannerContaner .flowPlayer img{
 	width:100%;
 }

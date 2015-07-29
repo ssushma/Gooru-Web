@@ -275,7 +275,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 				pageNumber=1;
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("StudentAssignmentPresenter : getOffsetValue : "+e.getMessage());
 		}
 
 		return (((pageNumber-1)*DEFAULT_LIMITVALUE));

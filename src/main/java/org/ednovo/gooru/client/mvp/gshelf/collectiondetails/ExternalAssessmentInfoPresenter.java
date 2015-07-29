@@ -161,8 +161,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 		folderObj.setDescription(createOrUpDate.getDescription());
 		folderObj.setUrl(createOrUpDate.getUrl());
 		folderObj.setSharing(createOrUpDate.getSharing());
-		folderObj.setIsLoginRequired(createOrUpDate.getIsLoginRequired());
-		
+		folderObj.getSettings().setIsLoginRequired(createOrUpDate.getSettings().getIsLoginRequired());
 		if(getViewType().equalsIgnoreCase(FOLDER)){
 			AppClientFactory.getInjector().getfolderService().updateCollectionDetails(createOrUpDate,id, null,null, null, null, new AsyncCallback<Void>() {
 				@Override
@@ -174,7 +173,6 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 				}
 				@Override
 				public void onFailure(Throwable caught) {
-					AppClientFactory.printInfoLogger("I am In updateCollectionDetails Failure ");
 				}
 			});
 		}else{
@@ -182,8 +180,6 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 				@Override
 				public void onSuccess(Void result) {
 					getView().resetBtns();
-			
-					
 					//folderDo.setGooruOid(id);
 					myCollectionsRightClusterPresenter.setTabItems(1, ASSESSMENTURL, folderObj);
 					myCollectionsRightClusterPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false,currentShelfTreeWidget);

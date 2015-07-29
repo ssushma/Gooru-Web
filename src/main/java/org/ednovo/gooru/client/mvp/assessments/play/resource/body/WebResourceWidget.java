@@ -95,7 +95,7 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 	             getResourcePreviewFrame().getElement().getStyle().clearPosition();
 	             getResourcePreviewFrame().getElement().getStyle().setVisibility(Visibility.VISIBLE);
  				}catch(Exception e){
- 					AppClientFactory.printSevereLogger(e.getMessage());
+ 					AppClientFactory.printSevereLogger("WebResourceWidget : onLoad : "+e.getMessage());
  				}
  			}
          });

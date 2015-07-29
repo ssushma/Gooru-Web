@@ -1,6 +1,6 @@
 
 /**
- * 
+ *
 */
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
 
@@ -25,7 +25,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 /**
  * @fileName : EditClassStudentPresenter.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -34,41 +34,41 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  *
  * @Author tumbalam
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStudentView> implements EditClassStudentViewUiHandler{
-	
+
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
-	
+
 	private SimpleAsyncCallback<StudentsAssociatedListDo> collabAsyncCallback;
 
 	private SimpleAsyncCallback<StudentsAssociatedListDo> membersActiveAsyncCallback;
 
 	private SimpleAsyncCallback<ArrayList<CollaboratorsDo>> addMembersAsyncCallback;
-	
+
 	private int pageSize = 20;
-	
+
 	private int  activeListPageNum=0;
-	
+
 	@Inject
 	private ClasspageServiceAsync classpageServiceAsync;
-	
+
 	StudentsAssociatedListDo studentsAssociatedListDo;
-	
+
 	List<String> emailId;
-	
+
 	@Inject
 	public EditClassStudentPresenter(EventBus eventBus,IsEditClassStudentView view){
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-	
-	
-	
+
+
+
 	@Override
 	public void onBind() {
 		super.onBind();
-		
+
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
 			public void onSuccess(Map<String, String> shortenUrl) {
@@ -94,15 +94,15 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 					//getView().getPendingMembersList();
 				}else{
 					//Display pending members list.
-					
+
 					getView().displayPendingMembersList(result, true, result.size(),false,true);
 				}
 			}
 		});
-		
+
 	}
-	
-	
+
+
 
 	@Override
 	public void onReveal() {
@@ -143,21 +143,21 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 		getView().setClassView(classpageDo);
 	}
 
-	/** 
+	/**
 	 * This method is to get the shareUrlGenerationAsyncCallback
 	 */
 	public SimpleAsyncCallback<Map<String, String>> getShareUrlGenerationAsyncCallback() {
 		return shareUrlGenerationAsyncCallback;
 	}
 
-	/** 
+	/**
 	 * This method is to set the shareUrlGenerationAsyncCallback
 	 */
 	public void setShareUrlGenerationAsyncCallback(
 			SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback) {
 		this.shareUrlGenerationAsyncCallback = shareUrlGenerationAsyncCallback;
 	}
-	
+
 	@Override
 	public void generateShareLink(String classpageId) {
 		try{
@@ -165,7 +165,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
 			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareUrlGenerationAsyncCallback());
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("EditClassStudentPresenter : generateShareLink :"+e.getMessage());
 		}
 	}
 
@@ -178,28 +178,28 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 		getClasspageServiceAsync().inviteStudentToClass(classpageId, emailIds, getAddMembersAsyncCallback());
 	}
 
-	/** 
+	/**
 	 * This method is to get the collabAsyncCallback
 	 */
 	public SimpleAsyncCallback<StudentsAssociatedListDo> getCollabAsyncCallback() {
 		return collabAsyncCallback;
 	}
 
-	/** 
+	/**
 	 * This method is to set the collabAsyncCallback
 	 */
 	public void setCollabAsyncCallback(SimpleAsyncCallback<StudentsAssociatedListDo> collabAsyncCallback) {
 		this.collabAsyncCallback = collabAsyncCallback;
 	}
 
-	/** 
+	/**
 	 * This method is to get the membersActiveAsyncCallback
 	 */
 	public SimpleAsyncCallback<StudentsAssociatedListDo> getMembersActiveAsyncCallback() {
 		return membersActiveAsyncCallback;
 	}
 
-	/** 
+	/**
 	 * This method is to set the membersActiveAsyncCallback
 	 */
 	public void setMembersActiveAsyncCallback(
@@ -207,20 +207,20 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 		this.membersActiveAsyncCallback = membersActiveAsyncCallback;
 	}
 
-	/** 
+	/**
 	 * This method is to get the addMembersAsyncCallback
 	 */
 	public SimpleAsyncCallback<ArrayList<CollaboratorsDo>> getAddMembersAsyncCallback() {
 		return addMembersAsyncCallback;
 	}
 
-	/** 
+	/**
 	 * This method is to set the addMembersAsyncCallback
 	 */
 	public void setAddMembersAsyncCallback(SimpleAsyncCallback<ArrayList<CollaboratorsDo>> addMembersAsyncCallback) {
 		this.addMembersAsyncCallback = addMembersAsyncCallback;
 	}
-	
+
 	/**
 	 * This method is to get the classpageServiceAsync
 	 */
@@ -239,7 +239,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	 */
 	@Override
 	public void getActiveMembersListByCollectionId(String classCode,int offSet, int pageSize, String statusType,final boolean increasePageNum, final boolean getPendingMembers,final boolean isNew) {
-		
+
 		getClasspageServiceAsync().getActiveAssociatedStudentInClassListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
 			@Override
 			public void onSuccess(StudentsAssociatedListDo result) {
@@ -252,10 +252,10 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			}
 		});
 	}
-	
+
 	@Override
 	public void getMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType,final boolean increasePageNum,final boolean isNew) {
-		
+
 		getClasspageServiceAsync().getAssociatedPendingStudentListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
 
 			@Override
@@ -306,5 +306,5 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 			getActiveMembersListByCollectionId(classId,pageSize*activeListPageNum, pageSize, "active",true,true,false);
 		}
 	}
-	
+
 }
