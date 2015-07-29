@@ -177,10 +177,16 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 						}
 						contentLabel.setText(scoreStr);
 						contentLabel.setWidth("80px");
+						if(!scoreStr.equalsIgnoreCase("--")) {
+							contentLabel.setStyleName("cursorPointer");
+							contentLabel.addClickHandler(new StudentPlaySummary(userList.get(rowWidgetCount).getUserName(), userList.get(rowWidgetCount).getUserUId(), lessonList.get(lessonWidgetCount).getGooruOId(), collectionList.get(collectionWidgetCount).getGooruOId(), collectionList.get(collectionWidgetCount).getType()));
+						}
 						assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
 						if(score>=0&&score<=100) {
 							if(views>0) {
 								assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+							} else {
+								assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 							}
 						} else {
 							assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
@@ -269,7 +275,10 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(unitName, userName,userUid);
+			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(unitName, userName,userUid, classId, courseId, unitId, null, null, null, UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW);
 		}
 	}
 	
@@ -302,4 +311,25 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 		}
 	}
 	
+	public class StudentPlaySummary implements ClickHandler {
+		String userId = null, userName = null, lessonId = null, assessmentId = null, collectionType = null;
+		
+		public StudentPlaySummary(String userName, String userId, String lessonId, String assessmentId, String collectionType) {
+			this.userId = userId;
+			this.userName = userName;
+			this.lessonId = lessonId;
+			this.assessmentId = assessmentId;
+			this.collectionType = collectionType;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			String contentName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CONTENT_NAME, "");
+			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
+			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(contentName,userName,userId, classId, courseId, unitId, lessonId, assessmentId, collectionType, UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW);
+		}
+	}
+
 }

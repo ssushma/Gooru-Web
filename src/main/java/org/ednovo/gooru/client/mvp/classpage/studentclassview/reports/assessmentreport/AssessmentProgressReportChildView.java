@@ -84,6 +84,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
@@ -107,7 +108,7 @@ import com.google.gwt.visualization.client.visualizations.Table.Options;
 public class AssessmentProgressReportChildView extends ChildView<AssessmentProgressReportChildPresenter> implements IsAssessmentProgressReportView,ClientConstants {
 
 	@UiField static FlowPanel PrintPnl;
-	@UiField FlowPanel progressRadial,scoreRoundPanel, thumbnailImage, timeSpentPanel;
+	@UiField FlowPanel progressRadial,scoreRoundPanel, thumbnailImage, timeSpentPanel, headerLinksContainer, attemptPanel, selfReportPanel;
 	@UiField HTMLPanel  collectionSummaryText, questionsTable, collectionOverviewPanel;
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage;
@@ -121,6 +122,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	@UiField Frame downloadFile;
 	@UiField Label collectionOverviewBtn, questionsBtn, oeQuestionsBtn;
 	@UiField LoadingUc loadingImageLabel;
+	@UiField Anchor externalAssessmentUrl;
 	
 	HTMLPanel printScoredData=new HTMLPanel("");
 	EmailPopup emailPopup=null;
@@ -132,7 +134,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	private CollectionDo collectionDo=null;
 	
-	private boolean isCollection = false;
+	private boolean isCollection = false, isExternalAssessment = false;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -143,13 +145,15 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	public boolean isTableToDestroy=false;
 
-	public AssessmentProgressReportChildView(String assessmentId, String classId, String userId, String courseId, String unitId, String lessonId) {
+	public AssessmentProgressReportChildView(String assessmentId, String classId, String userId, String courseId, String unitId, String lessonId, String contentType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new AssessmentProgressReportChildPresenter(this));
-		
-		String isContentType=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-		if(isContentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+		selfReportPanel.setVisible(false);
+		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
 			isCollection = true;
+		} else if(contentType.equalsIgnoreCase(UrlNavigationTokens.EXTERNAL_ASSESSMENT)) {
+			isExternalAssessment = true;
+			setExternalAssessment();
 		}
 		setLabelAndIds();
 		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
@@ -164,7 +168,17 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		oeQuestionsBtn.addClickHandler(new ResourceDataCall(oeQuestionsBtn));
 		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
-
+	
+	private void setExternalAssessment() {
+		headerLinksContainer.setVisible(false);
+		collectionResourcesCount.setVisible(false);
+		timeSpentPanel.addStyleName("col-md-20p");
+		scoreTitle.setText(i18n.GL3465_1());
+		scoreRoundPanel.setVisible(false);
+		attemptPanel.setVisible(false);
+		selfReportPanel.setVisible(true);
+	}
+	
 	public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -266,6 +280,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		String progressRedialStyle="blue-progress-"+scorePercentage;
 		progressRadial.setStyleName("progress-radial");
 		progressRadial.addStyleName(progressRedialStyle);
+		if(isExternalAssessment) {
+			externalAssessmentUrl.setText(result.getEvidence());
+			externalAssessmentUrl.setHref(result.getEvidence());
+			externalAssessmentUrl.setTarget("_blank");
+		}
 	}
 
 
@@ -426,10 +445,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			}
 			score.setText(AnalyticsUtil.getTimeSpent(totalTimeSpent));
 		}else {
-			Label erroeMsg=new Label();
-			erroeMsg.setStyleName(STYLE_ERROR_MSG);
-			erroeMsg.setText(i18n.GL3265());
-			questionsTable.add(erroeMsg);
+			setErrorData(questionsTable);
 		}
 
 
@@ -672,10 +688,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			}
 //			sortAndFixed();
 		}else {
-			Label erroeMsg=new Label();
-			erroeMsg.setStyleName(STYLE_ERROR_MSG);
-			erroeMsg.setText(i18n.GL3265());
-			questionsTable.add(erroeMsg);
+			setErrorData(questionsTable);
 		}
 	}
 
@@ -919,10 +932,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 			printScoredData.add(table);
 			if(result.size()==0){
-				Label erroeMsg=new Label();
-				erroeMsg.setStyleName(STYLE_ERROR_MSG);
-				erroeMsg.setText(i18n.GL3265());
-				printScoredData.add(erroeMsg);
+				setErrorData(questionsTable);
 			}
 		}catch(Exception e){
 			AppClientFactory.printSevereLogger(e.getMessage());
@@ -1046,10 +1056,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	@Override
 	public void errorMsg() {
-		Label erroeMsg=new Label();
-		erroeMsg.setStyleName(STYLE_ERROR_MSG);
-		erroeMsg.setText(i18n.GL3265());
-		questionsTable.add(erroeMsg);
+		setErrorData(questionsTable);
 	}
 	
 	public class ResourceDataCall implements ClickHandler {
@@ -1076,4 +1083,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		getPresenter().setCollectionSummaryData(assessmentId, classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
 	}
 	
+	private void setErrorData(HTMLPanel globalPanel) {
+		if(!isExternalAssessment) {
+			Label erroeMsg=new Label();
+			erroeMsg.setStyleName(STYLE_ERROR_MSG);
+			erroeMsg.setText(i18n.GL3265());
+			globalPanel.add(erroeMsg);
+		}
+	}
 }
