@@ -48,23 +48,29 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 
 	@UiField HTMLPanel reportBodyBlock;
 	
-	private String userId = null;
+	private String userId = null, classId = null, courseId = null, unitId = null, lessonId = null, assessmentId = null, collectionType = null, pageType = null;
 	
 	private static TeachCourseReportChildViewUiBinder uiBinder = GWT.create(TeachCourseReportChildViewUiBinder.class);
 
 	interface TeachCourseReportChildViewUiBinder extends UiBinder<Widget, TeachStudentReportPopupChildView> {
 	}
 
-	public TeachStudentReportPopupChildView(String userName, String gooruUId) {
+	public TeachStudentReportPopupChildView(String userName, String gooruUId, String classId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType, String pageType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.userId = gooruUId;
+		this.classId = classId;
+		this.courseId = courseId;
+		this.unitId = unitId;
+		this.lessonId = lessonId;
+		this.assessmentId = assessmentId;
+		this.collectionType = collectionType;
+		this.pageType = pageType;
 		setPresenter(new TeachStudentReportPopupChildPresenter(this));
-		getPresenter().getStudentReportData(gooruUId);
+		getPresenter().getStudentReportData(gooruUId,pageType,classId,courseId,unitId,lessonId);
 	}
 	
 	@Override
 	public void setReportData(ArrayList<PlanProgressDo> dataList) {
-		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		int size = 0;
 		
 		if(dataList!=null) {
@@ -79,12 +85,7 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 				reportBodyBlock.add(new SlnUnitReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-			String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID,null);
-			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID,null);
-			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID,null);
-			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID,null);
-			String assessmentId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID,null);
-			reportBodyBlock.add(new AssessmentProgressReportChildView(assessmentId, classId, userId, courseId, unitId, lessonId));
+			reportBodyBlock.add(new AssessmentProgressReportChildView(assessmentId, classId, userId, courseId, unitId, lessonId, collectionType));
 		}
 	}
 }

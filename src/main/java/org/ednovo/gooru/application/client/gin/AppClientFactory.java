@@ -417,9 +417,9 @@ public class AppClientFactory implements ClientConstants {
 	 * @param msg {@link String}
 	 */
 	public static void printInfoLogger(String msg) {
-//		if(TRUE.equals(isClientLoggersEnabled())){
+		if(TRUE.equals(isClientLoggersEnabled())){
 			clientLogger.log(Level.INFO, msg);
-//		}
+		}
 	}
 
 
@@ -429,9 +429,9 @@ public class AppClientFactory implements ClientConstants {
 	 * @param msg {@link String}
 	 */
 	public static void printSevereLogger(String msg) {
-//		if(TRUE.equals(isClientLoggersEnabled())){
+		if(TRUE.equals(isClientLoggersEnabled())){
 			clientLogger.log(Level.SEVERE, msg);
-//		}
+		}
 	}
 
 	/**
@@ -446,7 +446,7 @@ public class AppClientFactory implements ClientConstants {
 	public static void setClientLoggersEnabled(String isClientLoggersEnabled) {
 		AppClientFactory.isClientLoggersEnabled = isClientLoggersEnabled;
 	}
-	
+
 	public static Logger getClientLogger(){
 		return clientLogger;
 	}

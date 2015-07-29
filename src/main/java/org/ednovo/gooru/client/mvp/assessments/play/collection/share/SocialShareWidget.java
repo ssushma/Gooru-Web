@@ -126,7 +126,7 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("SocialShareWidget : getQuestionImage : "+e.getMessage());
 		}
 		return thumbnailImage!=null?thumbnailImage:"";
 	}

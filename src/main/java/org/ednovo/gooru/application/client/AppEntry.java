@@ -99,7 +99,7 @@ public class AppEntry implements EntryPoint {
 			});
 
 		} catch (Exception e) {
-			logger.log(Level.SEVERE,e.getMessage(),e);
+			logger.log(Level.SEVERE,"onModuleLoad : "+e.getMessage(),e);
 		}
 	}
 

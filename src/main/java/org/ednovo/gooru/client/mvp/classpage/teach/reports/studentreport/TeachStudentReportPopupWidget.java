@@ -23,7 +23,7 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 	
 	@UiField Label popupTitle;
 	
-	@UiField HTMLPanel contentPanel, panel;
+	@UiField HTMLPanel contentPanel, panel, scoreWidget;
 	
 	@UiField Anchor closeButton;
 	
@@ -40,16 +40,19 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 			UiBinder<Widget, TeachStudentReportPopupWidget> {
 	}
 	
-	public TeachStudentReportPopupWidget(String contentName, String userNameLbl, String gooruUId) {
+	public TeachStudentReportPopupWidget(String contentName, String userNameLbl, String gooruUId, String classId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType, String pageType) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassEnabled(true);
 		this.setPopupPosition(0, Window.getScrollTop()+50);
 		this.show();
-		setData(contentName, userNameLbl,gooruUId);
+		if(pageType!=null&&pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
+			scoreWidget.setVisible(false);
+		}
+		setData(contentName, userNameLbl, gooruUId, classId, courseId, unitId, lessonId, assessmentId, collectionType, pageType);
 	}
 
-	public void setData(String contentName, String userNameLbl,String gooruUId) {
+	public void setData(String contentName, String userNameLbl,String gooruUId, String classId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType, String pageType) {
 		panel.clear();
 		userName.setText("Hello, "+userNameLbl+"!");
 		userImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl()+gooruUId+".png");
@@ -60,7 +63,7 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 			}
 		});
 		popupTitle.setText(contentName);
-		panel.add(new TeachStudentReportPopupChildView(userNameLbl,gooruUId));
+		panel.add(new TeachStudentReportPopupChildView(userNameLbl,gooruUId,classId,courseId,unitId,lessonId,assessmentId,collectionType,pageType));
 	}
 	
 	@UiHandler("closeButton")

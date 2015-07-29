@@ -184,7 +184,7 @@ public class EditClasspageView extends
 	@UiField HTMLEventPanel panelPrevious,panelNext;
 
 	@UiField SimpleCheckBox changeProgressSummary;
-	
+
 	@UiField Button btnDeleteClasspage;
 
 	NewClasspagePopupView newPopup = null;
@@ -305,7 +305,7 @@ public class EditClasspageView extends
 		frameDiv.setVisible(false);
 		assignmentsTab.addClickHandler(new AssignmentsTabClicked());
 		classListTab.setEnabled(false);
-		classListTab.getElement().getStyle().setCursor(Cursor.DEFAULT); 
+		classListTab.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		//classListTab.addClickHandler(new ClassListTabClicked());
 		shareTabContainerPanel.clear();
 		shareTabContainerPanel.setVisible(false);
@@ -337,10 +337,10 @@ public class EditClasspageView extends
 			@Override
 			public void onError(ErrorEvent event) {
 				imgClasspageImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
-				
+
 			}
 		});
-		
+
 		backArrowButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -421,7 +421,7 @@ public class EditClasspageView extends
 		btnAssignCollection.getElement().setId("btnAssignCollection");
 		btnAssignCollection.getElement().setAttribute("alt",i18n.GL2115());
 		btnAssignCollection.getElement().setAttribute("title",i18n.GL2115());
-		
+
 		btnAssignCollection.addStyleName(CssTokens.DISABLED);
 		btnAssignCollection.setEnabled(false);
 
@@ -430,7 +430,7 @@ public class EditClasspageView extends
 		lblStartAssign.getElement().setAttribute("alt",i18n.GL2116());
 		lblStartAssign.getElement().setAttribute("title",i18n.GL2116());
 
-		
+
 
 		backArrowButton.setText(i18n.GL1617());
 		backArrowButton.getElement().setAttribute("alt",i18n.GL1617());
@@ -475,7 +475,7 @@ public class EditClasspageView extends
 		btnReadytoStart.getElement().setId("btnReadytoStart");
 		btnReadytoStart.getElement().setAttribute("alt",i18n.GL2115());
 		btnReadytoStart.getElement().setAttribute("title",i18n.GL2115());
-		
+
 		btnReadytoStart.setEnabled(false);
 		btnReadytoStart.addStyleName(CssTokens.DISABLED);
 
@@ -509,7 +509,7 @@ public class EditClasspageView extends
 
 		lblPrevious.setVisible(false);
 
-		
+
 		headerAssignments.getElement().setInnerHTML(i18n.GL1972());
 
 		btnDeleteClasspage.setText(i18n.GL0145());
@@ -987,7 +987,7 @@ public class EditClasspageView extends
 		}else{
 			imgClasspageImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
 		}
-		
+
 	}
 	/**
 	 *
@@ -1201,7 +1201,7 @@ public class EditClasspageView extends
 						}
 
 					}catch(Exception e){
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("EditClasspageView : showClasspageItem :"+e.getMessage());
 					}
 				}
 				showCollectionsAfterDeletingCollection(pageNumber);
@@ -1519,7 +1519,7 @@ public class EditClasspageView extends
 		    }
 		}
          catch(Exception e){
-        	 AppClientFactory.printSevereLogger(e.getMessage());
+        	 AppClientFactory.printSevereLogger("EditclasspageView : setData :"+e.getMessage());
          }
 	}
 

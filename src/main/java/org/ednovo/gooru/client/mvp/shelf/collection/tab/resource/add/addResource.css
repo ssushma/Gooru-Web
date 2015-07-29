@@ -149,7 +149,7 @@ user agent stylesheetdiv {
 	background-color:white;
 	overflow-y: auto !important;
     overflow-x: hidden !important;
-	max-height: 567px;
+	max-height: 500px;
 	min-height:300px;
 }
 .addResourceEditFormOuterDiv {

@@ -785,7 +785,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				printScoredData.add(erroeMsg);
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("AnalyticsEndview : setQuestionsPrintData : "+e.getMessage());
 		}
 	}
 

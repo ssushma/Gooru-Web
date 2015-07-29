@@ -16,8 +16,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -67,8 +65,9 @@ public class ClassListWidget extends Composite {
 			Map<String, String> params= new HashMap<String, String>();
 			params.put("classpageId", classId);
 			params.put("c-id", courseId);
-			params.put("page-view", "class-setting");
-			params.put("subpage-view", "class-info");
+			params.put("type", "course-view");
+			params.put("page-view", "teach-dashboard");
+			params.put("subpage-view", "reports");
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);
 		}
 		
