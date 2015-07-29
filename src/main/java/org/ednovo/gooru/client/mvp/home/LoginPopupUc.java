@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsShowCollectionTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.comment.events.AssessmentsSetCommentsOptionsEvent;
@@ -776,7 +777,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 	}
 	public void openClasspage() {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("view", "myclass");
+		params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS);
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
 	}
 	private void OpenClasspageEdit(String gooruOId) {
