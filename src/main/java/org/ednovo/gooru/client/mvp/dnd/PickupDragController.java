@@ -217,7 +217,7 @@ public class PickupDragController extends AbstractDragController {
 			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(10000); 
 		}
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
-			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(1000); 
+			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(10000); 
 		}
 		
 		//		movablePanel.removeFromParent();
