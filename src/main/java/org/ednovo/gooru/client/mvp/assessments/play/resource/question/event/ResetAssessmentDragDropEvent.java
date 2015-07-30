@@ -33,25 +33,23 @@ import com.google.gwt.event.shared.GwtEvent;
  * @author Gooru Team
  *
  */
-public class ResetDragDropEvent extends GwtEvent<ResetDragDropHandler> {
+public class ResetAssessmentDragDropEvent extends GwtEvent<ResetAssessmentDragDropHandler> {
 
-	public static final Type<ResetDragDropHandler> TYPE = new Type<ResetDragDropHandler>();
-
-	private int widgetIndex;
+	public static final Type<ResetAssessmentDragDropHandler> TYPE = new Type<ResetAssessmentDragDropHandler>();
 
 
-	public ResetDragDropEvent(int widgetIndex) {
-		this.widgetIndex = widgetIndex;
+
+	public ResetAssessmentDragDropEvent() {
 	}
 
 	@Override
-	public Type<ResetDragDropHandler> getAssociatedType() {
+	public Type<ResetAssessmentDragDropHandler> getAssociatedType() {
 		return TYPE;
 	}
 
 	@Override
-	protected void dispatch(ResetDragDropHandler handler) {
-		handler.resetReorder(widgetIndex);
+	protected void dispatch(ResetAssessmentDragDropHandler handler) {
+		handler.resetAssessmentReorder();
 	}
 
 }
