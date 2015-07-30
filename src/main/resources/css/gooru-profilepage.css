@@ -77,7 +77,7 @@
 	height: 20px;
 	cursor: pointer;
 	margin-top: 7px;
-	background: url('images/mos/questionmark.png') no-repeat;
+	background: url('${cdn.endpoint}/images/mos/questionmark.png') no-repeat;
 	margin-left: 5px;
 }
 
