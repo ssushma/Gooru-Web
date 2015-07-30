@@ -564,13 +564,16 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void clearReorderAnswers(){
+		
+		if(optionsContainer!=null){
 
-		for(int i=0;i<optionsContainer.getWidgetCount();i++){
-			Widget widget=optionsContainer.getWidget(i);
-			Element el=(Element) widget.getElement().getLastChild();
-			if(el != null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
-				el.removeClassName(STYLE_DND_CORRECT);
-				el.removeClassName(STYLE_DND_INCORRECT);
+			for(int i=0;i<optionsContainer.getWidgetCount();i++){
+				Widget widget=optionsContainer.getWidget(i);
+				Element el=(Element) widget.getElement().getLastChild();
+				if(el != null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
+					el.removeClassName(STYLE_DND_CORRECT);
+					el.removeClassName(STYLE_DND_INCORRECT);
+				}
 			}
 		}
 	}
