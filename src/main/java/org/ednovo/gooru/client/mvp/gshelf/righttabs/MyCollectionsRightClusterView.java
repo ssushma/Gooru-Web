@@ -838,6 +838,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	
 	@Override
 	public void disableCollabaratorOptions(boolean hide){
+		hide = ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)?true:hide;
 		moveLbl.setVisible(hide);
 		myCollDelLbl.setVisible(hide);
 	}
