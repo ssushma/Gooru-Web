@@ -159,8 +159,10 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				collectionItem.setNarration(result.getNarration());
-				collectionItem.setStart(result.getStart());
-				collectionItem.setStop(result.getStop());
+				if("video/youtube".equalsIgnoreCase(collectionItem.getResource().getResourceType().getName())){
+					collectionItem.setStart(result.getStart());
+					collectionItem.setStop(result.getStop());				
+					}
 			}
 		});
 	}

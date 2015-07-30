@@ -1567,8 +1567,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		int count=addQuestionResourceWidget.hintsContainer.getWidgetCount();
 		addQuestionResourceWidget.addHintsLabel.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 
-
-
 		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
 		addQuestionResourceWidget.centuryPanel.clear();
 		addQuestionResourceWidget.standardsPanel.clear();
@@ -1647,7 +1645,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	@Override
 	public void setDepthOfKnowledges(List<ListValuesDo> result){
 		if(addQuestionResourceWidget!=null){
-		addQuestionResourceWidget.setDepthOfKnowledes(result);
+			addQuestionResourceWidget.setDepthOfKnowledes(result);
 		}
 	}
 
