@@ -139,25 +139,13 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 				@Override
 				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-
 					if(result!=null && result.size()!=0){
 						count=0;
-						if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
-
-							int sessionSize=result.get(0).getSession().size();
-
-							int day=result.get(0).getSession().get(sessionSize-1).getSequence();
-							printData.setUserName(null);
-							printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-							printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(0).getSession().get(sessionSize-1).getEventTime()))));
-						}
-
 						displayScoreCountData(result.get(0));
 						getView().setCollectionMetaDataByUserAndSession(result);
 						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData,null);
 					}else{
 						Timer timer = new Timer() {
-
 							@Override
 							public void run() {
 								if (count < 10){
@@ -173,7 +161,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 						timer.schedule(100);
 					}
 				}
-
+				
 				@Override
 				public void onFailure(Throwable caught) {
 					getView().errorMsg();
@@ -182,10 +170,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		}else{
 			getView().errorMsg();
 		}
-
 	}
-
-
+	
 	/*analytics*/
 
 	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final PrintUserDataDO printUserDataDO, final String type) {
@@ -269,16 +255,13 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 				if(isCollection) {
 					if(type!=null&&type.equalsIgnoreCase(QUESTION)) {
 						getView().setQuestionsData(questionsData,QUESTION);
-						getView().setQuestionsPrintData(questionsData);
 					} else if(type!=null&&type.equalsIgnoreCase(OE)) {
 						getView().setQuestionsData(questionsData,OE);
-						getView().setQuestionsPrintData(questionsData);
 					} else {
 						getView().setResourcesData(questionsData);
 					}
 				} else {
 					getView().setQuestionsData(questionsData,QUESTION);
-					getView().setQuestionsPrintData(questionsData);
 				}
 			}
 		});
@@ -369,7 +352,6 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-
 				if(result!=null && result.size()!=0){
 					displayScoreCountData(result.get(0));
 				}

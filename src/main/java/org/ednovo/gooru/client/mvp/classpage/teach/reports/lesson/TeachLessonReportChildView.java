@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
@@ -184,14 +185,12 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 				        				  }
 									  } else {
 										  color=WHITE;
-										  Label answerlbl=new Label("--");
-										  mainDataVpnl.add(answerlbl);
 									  }
 			        			  }
 			        		  }
 			        		  adTable.setWidget(i, position+2,mainDataVpnl);
 			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color: "+color);
-			        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUsageData().get(i).getTimeSpent()));
+			        		  Label timeStamplbl=new Label(StringUtil.getElapsedTime(collectionProgressData.get(j).getUsageData().get(i).getTimeSpent()));
 			        		  mainDataVpnl.add(timeStamplbl);
 			        		  position++;
 		        	   }
@@ -216,47 +215,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		}
 	}
 	
-	private String getTimeSpent(Long commentCreatedTime) {
-		String createdTime = null;
-		double seconds = (double) ((double)commentCreatedTime / 1000) % 60 ;
-		int minutes = (int) ((commentCreatedTime / (1000*60)) % 60);
-		int hours   = (int) ((commentCreatedTime / (1000*60*60)) % 24);
-		int days = (int) (commentCreatedTime / (1000*60*60*24));
-		if(days!=0){
-			createdTime=days+":";
-		}
-		if(hours!=0){
-			if(createdTime!=null){
-				createdTime=createdTime+hours+":";
-			}else{
-				createdTime=hours+":";
-			}
-		}
-		if(minutes!=0){
-			if(createdTime!=null){
-				createdTime=createdTime+minutes+":";
-			}else{
-				createdTime=minutes+":";
-			}
-		}
-		if(seconds!=0){
-			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
-			String formattedTime="";
-			if(secondsInMille > 0 && secondsInMille<1){
-				formattedTime="<1";
-			}else if( Math.round(secondsInMille)>=1 &&  Math.round(secondsInMille)<10){
-				formattedTime="0"+((int) Math.round(secondsInMille))+"";
-			}else{
-				formattedTime=((int) Math.round(secondsInMille))+"";
-			}
-			if(createdTime!=null){
-				createdTime=createdTime+formattedTime+"";
-			}else{
-				createdTime="00"+":"+formattedTime+"";
-			}
-		}
-		return createdTime;
-	}
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
