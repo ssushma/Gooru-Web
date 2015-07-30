@@ -35,10 +35,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchService;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.deserializer.AutoCompleteDeSerializer;
-
 import org.ednovo.gooru.application.server.deserializer.AutoSearchKeyWordDeSerializer;
 import org.ednovo.gooru.application.server.deserializer.CollectionItemsResultDeSerializer;
 import org.ednovo.gooru.application.server.deserializer.CollectionSearchResultDeSerializer;
@@ -111,13 +111,13 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String TYPE = "type";
 
 	private static final String SHARETYPE="shareType";
-	
+
 	private static final String COLLECTION_TYPE="collectionType";
 
 	private static final String CLASSPAGE = "classpage";
 
 	private static final String SHORTEN_URL = "shortenUrl";
-	
+
 	private static final String FULL_URL = "fullUrl";
 
 	private static final String FLT_CODE_ID = "flt.codeId";
@@ -459,15 +459,18 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				}else{
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
 				}
-			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE))
+			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
-			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || params.get(TYPE).equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY))
+			}
+			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
-			else {
+			}
+			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.ASSESSMENTS_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
+			}else {
 				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 					//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
-
 				}else{
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URLAssign.getUrl()+"%26share=true", contentGooruOid));
 				}
