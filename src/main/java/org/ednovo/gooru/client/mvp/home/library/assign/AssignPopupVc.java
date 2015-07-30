@@ -651,10 +651,16 @@ public abstract class AssignPopupVc extends PopupPanel {
 		String classpageItemId=null;
 		String currentPlaceToken=AppClientFactory.getCurrentPlaceToken();
 		params.put("type", "");
-		if(currentPlaceToken!=null && (currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY) || currentPlaceToken.equals(PlaceTokens.ASSESSMENT_PLAY))){
+		if(currentPlaceToken!=null && currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY)){
 			String classpageCollectionItemId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
 			String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 			if(page!=null&&(page.equalsIgnoreCase("teach")||page.equalsIgnoreCase("study"))&&classpageCollectionItemId!=null){
+				classpageItemId=classpageCollectionItemId;
+				params.put("type", currentPlaceToken);
+			}
+		}else if(currentPlaceToken!=null && currentPlaceToken.equals(PlaceTokens.ASSESSMENT_PLAY)){
+			String classpageCollectionItemId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+			if(classpageCollectionItemId!=null){
 				classpageItemId=classpageCollectionItemId;
 				params.put("type", currentPlaceToken);
 			}
