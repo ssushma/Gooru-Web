@@ -841,6 +841,62 @@ public class StringUtil implements ClientConstants {
 	    return format;
 	}
 
+	public static String getElapsedTime(long different) {
+		String separator = ":";
+		String format="";
+		long secondsInMilli = 1000;
+		if(different==0) {
+			format="--";
+		} else if((different/1000)>1) {
+			long minutesInMilli = secondsInMilli * 60;
+			long hoursInMilli = minutesInMilli * 60;
+			long daysInMilli = hoursInMilli * 24;
+
+			long d = different / daysInMilli;
+			different = different % daysInMilli;
+
+			long h = different / hoursInMilli;
+			different = different % hoursInMilli;
+
+			long m = different / minutesInMilli;
+			different = different % minutesInMilli;
+
+			long s = different / secondsInMilli;
+
+	    	if(d>0) {
+	    		h = (24*d)+h;
+	    	}
+	    	if(h>0) {
+			    if(h<10) {
+				    format = format + "0"+h + separator;
+			    } else {
+			    	format = format + h + separator;
+			    }
+	    	}
+	    	if(m>0) {
+			    if(m<10) {
+				    format = format + "0"+m + separator;
+			    } else {
+				    format = format + m + separator;
+			    }
+	    	} else {
+	    		format = "00"+ separator;
+	    	}
+	    	if(s>0) {
+			    if(s<10) {
+		    		format = format + "0"+s;
+			    } else {
+		    		format = format + s;
+			    }
+	    	} else if(m>0){
+	    		format = format+"00";
+	    	}
+		} else if((different/1000)<1) {
+	    	format = "<1 sec";
+		}
+	    return format;
+	}
+
 	public static String getHighlightStyle(int score) {
 		String scoreStyle = "grey";
 		if(score>=0&&score<60) {

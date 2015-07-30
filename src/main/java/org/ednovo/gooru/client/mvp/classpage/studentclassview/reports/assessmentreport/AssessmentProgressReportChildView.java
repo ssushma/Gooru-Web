@@ -126,6 +126,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	String urlDomain = "";
 	String style="";
 
+	private String userId = null, contentType = null;
+	
 	private CollectionDo collectionDo=null;
 	private boolean isCollection = false, isExternalAssessment = false;
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -141,6 +143,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new AssessmentProgressReportChildPresenter(this));
 		selfReportPanel.setVisible(false);
+		this.contentType = contentType;
 		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
 			isCollection = true;
 		} else if(contentType.equalsIgnoreCase(UrlNavigationTokens.EXTERNAL_ASSESSMENT)) {
@@ -158,6 +161,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		collectionOverviewBtn.addClickHandler(new ResourceDataCall(collectionOverviewBtn));
 		questionsBtn.addClickHandler(new ResourceDataCall(questionsBtn));
 		oeQuestionsBtn.addClickHandler(new ResourceDataCall(oeQuestionsBtn));
+		this.userId = userId;
 		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
 	
@@ -621,7 +625,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
 					adTable.setWidget(i, 2,answerspnl);
 				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
-					if(result.get(i).getAnswerObject()!=null) {
+					if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 						Label viewResponselbl=new Label(VIEWRESPONSE);
 						viewResponselbl.setStyleName("summaryViewResponse");
 						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
@@ -632,7 +636,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				} else if(OE.equalsIgnoreCase(questionType)){
-					if(result.get(i).getAnswerObject()!=null) {
+					if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 						Label viewResponselbl=new Label(VIEWRESPONSE);
 						viewResponselbl.setStyleName("summaryViewResponse");
 						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
@@ -849,7 +853,10 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	private void getContentData(String type) {
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
 		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, "");
-		getPresenter().setCollectionSummaryData(assessmentId, classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
+		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
+			getPresenter().getCollectionScoreForSession(assessmentId, classpageId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);
+		}
+		getPresenter().setCollectionSummaryData(assessmentId, classpageId,userId,sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
 	}
 
 	private void setErrorData(HTMLPanel globalPanel) {

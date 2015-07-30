@@ -332,25 +332,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			pageNum=1;
 			folderTreePanel.clear();
 			setPopupTitle();
-			/*String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
-			String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-			if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
-				|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
-				|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
-				addtocollHeaderText.setText(i18n.GL3224());
-				addingTextLbl.setText(i18n.GL3462_18());
-			}else{
-				if(isCopySelected){
-					addtocollHeaderText.setText(i18n.GL3462_13());
-					addingTextLbl.setText(i18n.GL3462_14());
-				}else if(isMoveSelected){
-					addtocollHeaderText.setText(i18n.GL3462_15());
-					addingTextLbl.setText(i18n.GL3462_16());
-				}else{
-				addtocollHeaderText.setText(i18n.GL3223());
-				addingTextLbl.setText(i18n.GL3462_17());
-				}
-			}*/
 		}
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();

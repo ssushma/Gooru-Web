@@ -223,6 +223,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		Window.enableScrolling(true);
 		if (tmpIndex ==-1){
 			index = pnlReosurceList.getWidgetCount()>0 ? pnlReosurceList.getWidgetCount() : 0;
+			listOfContent.getCollectionItems().add(collectionItem);
 		}
 		if(index == 0){
 			pnlReosurceList.clear();
@@ -297,7 +298,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (resourceType.equalsIgnoreCase("Question")) {
-						
 						if(collectionItem.getCollection()!=null){
 							collectionItem.getCollection().setCollectionType(listOfContent.getCollectionType());
 						}else{
@@ -305,37 +305,34 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 							colDo.setCollectionType(listOfContent.getCollectionType());
 							collectionItem.setCollection(colDo);
 						}
-						
 						getUiHandlers().showEditQuestionResourcePopup(collectionItem);
 					} else if(resourceType.equals("resource/url") || resourceType.equals("video/youtube")
 							|| resourceType.equals("vimeo/video")){
 						editResoruce = new EditResourcePopupVc(collectionItem) {
-						@Override
-						public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
-							getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
-						}
-						@Override
-						public void resourceImageUpload() {
-							getUiHandlers().imageEditResourceUpload();
-						}
-						@Override
-						public void onSelection(SelectionEvent<Suggestion> event) {
-							super.onSelection(event);
-						}
-
-						@Override
-						public void browseStandardsInfo(boolean val,boolean userResource) {
-							getUiHandlers().getBrowseStandardsInfo(val,userResource);
-						}
-
-						@Override
-						public void closeStandardsPopup() {
-							getUiHandlers().closeBrowseStandardsPopup();
-						}
+							@Override
+							public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+								getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
+							}
+							@Override
+							public void resourceImageUpload() {
+								getUiHandlers().imageEditResourceUpload();
+							}
+							@Override
+							public void onSelection(SelectionEvent<Suggestion> event) {
+								super.onSelection(event);
+							}
+	
+							@Override
+							public void browseStandardsInfo(boolean val,boolean userResource) {
+								getUiHandlers().getBrowseStandardsInfo(val,userResource);
+							}
+	
+							@Override
+							public void closeStandardsPopup() {
+								getUiHandlers().closeBrowseStandardsPopup();
+							}
 						};
-					}
-
-					else {
+					}else {
 						MixpanelUtil.Resource_Action_Edit_Info();
 						ownResourcePopupVc = new EditUserOwnResourcePopupVc(collectionItem) {
 							@Override
@@ -383,11 +380,10 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			pnlReosurceList.insert(widgetMove, index);
 			index++;
 		}else{
-			AppClientFactory.printInfoLogger("collectionItem.getItemSequence11() : "+collectionItem.getItemSequence());
 			if(collectionItem.getItemSequence()!=null){
 				pnlReosurceList.remove(collectionItem.getItemSequence() - 1);
 				//listOfContent.getCollectionItems().remove(collectionItem.getItemSequence()-1);
-				//listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
+				listOfContent.getCollectionItems().set((collectionItem.getItemSequence()-1), collectionItem);
 				setDisplayResourceItem(collectionItem, RefreshType.INSERT, (collectionItem.getItemSequence()-1));
 			}
 		}
@@ -610,7 +606,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
         for(int i=0;i<tagList.size();i++){
         	tagsArrValue.set(i, new JSONString(tagList.get(i)));
         }
-
         JSONObject resource = new JSONObject();
         resource.put("resourceTags",tagsArrValue);
         resource.put("resource", attach);

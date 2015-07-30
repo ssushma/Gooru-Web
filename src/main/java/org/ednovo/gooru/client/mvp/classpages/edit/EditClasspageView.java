@@ -304,6 +304,7 @@ public class EditClasspageView extends
 
 		frameDiv.setVisible(false);
 		assignmentsTab.addClickHandler(new AssignmentsTabClicked());
+		classListTab.getElement().setAttribute("style", "cursor: default;background: #999999");
 		classListTab.setEnabled(false);
 		classListTab.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		//classListTab.addClickHandler(new ClassListTabClicked());
@@ -947,6 +948,7 @@ public class EditClasspageView extends
 		assignmentsTab.getElement().setId("btnAssignmentsTab");
 		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
 		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
+		
 		classListTab.setText(i18n.GL1624()+"("+(classpageDo.getMemberCount()!=null? classpageDo.getMemberCount() : "0") +")");
 		classListTab.getElement().setId("btnClassListTab");
 		classListTab.getElement().setAttribute("alt",i18n.GL1624());
