@@ -30,6 +30,8 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
+import com.google.gwt.user.client.ui.Frame;
+
 
 public interface IsTeachStudentDashboardView extends IsViewWithHandlers<TeachStudentDashboardUiHandler>{
 
@@ -59,5 +61,7 @@ public interface IsTeachStudentDashboardView extends IsViewWithHandlers<TeachStu
 	void enableEmptyContainer(boolean isVisible, ClasspageDo classpageDo);
 	
 	void setContainerVisibility(boolean isVisible);
-	
+
+	Frame getFrame();
+
 }

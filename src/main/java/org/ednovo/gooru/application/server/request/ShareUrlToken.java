@@ -23,40 +23,42 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package org.ednovo.gooru.application.server.request;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public enum ShareUrlToken {
 
 	RESOURCE_PLAY_URL("%23resource-play%26id={0}%26pn={1}"),
 
 	COLLECTION_PLAY_URL("%23collection-play%26id={0}"),
-	
+
 	ASSESSMENT_PLAY_URL("%23assessment-play%26id={0}"),
-	
+
 	COLLECTION_PLAY_URLAssign("%23collection-play%26id={0}"),
-	
+
 	COLLECTION_PLAY_CLASSPAGE_URL("%23collection-play%26id={0}%26cid={1}"),
-	
+
+	ASSESSMENTS_PLAY_CLASSPAGE_URL("%23assessment-play%26id={0}%26cid={1}"),
+
 	COLLECTION_PLAY_EMBEDED_URL("embed/collection.htm?id={0}"),
-	
+
 	CLASSPAGE("%23students-view%26id={0}%26pageSize=10%26pageNum=0%26pos=0"),
-	
-	NEWCLASSPAGE("%23student-view%26id={0}"),	
-	
+
+	NEWCLASSPAGE("%23student-view%26id={0}"),
+
 	FOLDERTOC_URL("%23folder-toc%26id={0}"),
-	
+
 	FOLDERTOC_URL_LIBRARY("%23folder-toc%26id={0}%26libName={1}"),
-	
+
 	FOLDERTOC_URL_PARENT("%23folder-toc%26id={0}%26libName={1}%26parentId={2}"),
-	
+
 	FOLDERTOC_URL_PROFILE("%23folder-toc%26id={0}%26userId={1}"),
-	
+
 	PROFILE_PAGE("%23profilepage%26id={0}");
 
 	private String url;

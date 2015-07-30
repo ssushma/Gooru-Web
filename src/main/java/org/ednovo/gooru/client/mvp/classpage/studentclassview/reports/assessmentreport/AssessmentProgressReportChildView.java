@@ -67,7 +67,6 @@ import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Clear;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -96,10 +95,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
-import com.google.gwt.visualization.client.DataTable;
-import com.google.gwt.visualization.client.visualizations.Table;
-import com.google.gwt.visualization.client.visualizations.Table.Options;
 
 /**
  * @author Gooru Team
@@ -107,7 +102,7 @@ import com.google.gwt.visualization.client.visualizations.Table.Options;
  */
 public class AssessmentProgressReportChildView extends ChildView<AssessmentProgressReportChildPresenter> implements IsAssessmentProgressReportView,ClientConstants {
 
-	@UiField static FlowPanel PrintPnl;
+	@UiField FlowPanel PrintPnl, printOptions;
 	@UiField FlowPanel progressRadial,scoreRoundPanel, thumbnailImage, timeSpentPanel, headerLinksContainer, attemptPanel, selfReportPanel;
 	@UiField HTMLPanel  collectionSummaryText, questionsTable, collectionOverviewPanel;
 	@UiField ListBox sessionsDropDown;
@@ -117,7 +112,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	@UiField H4Panel scoreTitle;
 	@UiField H2Panel score;
 	@UiField PPanel lastModifiedTime,goal;
-	@UiField HTMLPanel printWidget;
 	@UiField Button printButton,downloadButton;
 	@UiField Frame downloadFile;
 	@UiField Label collectionOverviewBtn, questionsBtn, oeQuestionsBtn;
@@ -132,6 +126,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	String urlDomain = "";
 	String style="";
 
+	private String userId = null, contentType = null;
+	
 	private CollectionDo collectionDo=null;
 	private boolean isCollection = false, isExternalAssessment = false;
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -147,6 +143,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new AssessmentProgressReportChildPresenter(this));
 		selfReportPanel.setVisible(false);
+		this.contentType = contentType;
 		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
 			isCollection = true;
 		} else if(contentType.equalsIgnoreCase(UrlNavigationTokens.EXTERNAL_ASSESSMENT)) {
@@ -164,6 +161,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		collectionOverviewBtn.addClickHandler(new ResourceDataCall(collectionOverviewBtn));
 		questionsBtn.addClickHandler(new ResourceDataCall(questionsBtn));
 		oeQuestionsBtn.addClickHandler(new ResourceDataCall(oeQuestionsBtn));
+		this.userId = userId;
 		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
 	
@@ -389,7 +387,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			questionsTable.add(adTable);
 
 			Label heading1 = new Label(i18n.GL3259());
-			Label heading2 = new Label(i18n.GL1424());
+			Label heading2 = new Label(StringUtil.capitalizeFirstLetter(i18n.GL1424()));
 			Label heading3 = new Label(i18n.GL3182());
 			Label heading4 = new Label(i18n.GL2275());
 			Label heading5 = new Label(i18n.GL3261());
@@ -627,7 +625,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
 					adTable.setWidget(i, 2,answerspnl);
 				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
-					if(result.get(i).getAnswerObject()!=null) {
+					if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 						Label viewResponselbl=new Label(VIEWRESPONSE);
 						viewResponselbl.setStyleName("summaryViewResponse");
 						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
@@ -638,7 +636,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				} else if(OE.equalsIgnoreCase(questionType)){
-					if(result.get(i).getAnswerObject()!=null) {
+					if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 						Label viewResponselbl=new Label(VIEWRESPONSE);
 						viewResponselbl.setStyleName("summaryViewResponse");
 						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
@@ -740,251 +738,28 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	@Override
 	public void setQuestionsPrintData(final ArrayList<UserDataDo> result) {
-		loadingImageLabel.setVisible(false);
-		try{
-			printScoredData.clear();
-			boolean isTickdisplay=false;
-			DataTable data = DataTable.create();
-			data.addColumn(ColumnType.NUMBER, i18n.GL3259());
-			data.addColumn(ColumnType.STRING, i18n.GL0308());
-			data.addColumn(ColumnType.STRING, i18n.GL2288());
-			data.addColumn(ColumnType.STRING, i18n.GL3269());
-			data.addColumn(ColumnType.STRING, i18n.GL3270());
-			data.addColumn(ColumnType.STRING, i18n.GL2084());
-			data.addColumn(ColumnType.STRING, i18n.GL3271());
-
-			data.addRows(result.size());
-			if(result.size()!=0){
-				for(int i=0;i<result.size();i++) {
-					isTickdisplay=false;
-					data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-
-					Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
-					questionTitle.setStyleName(STYLE_TABLE_CENTER);
-					questionTitle.setStyleName(STYLE_TXTLEFT);
-					data.setValue(i, 1, questionTitle.toString());
-					int noOfAttempts=result.get(i).getAttempts();
-					String scoreStatus= result.get(i).getStatus();
-
-					//Set Answer choices
-					String questionType= result.get(i).getType();
-					if(questionType.equalsIgnoreCase("HS")){
-						questionType= result.get(i).getQuestionType();
-					}
-					if(questionType.equalsIgnoreCase(MC) || questionType.equalsIgnoreCase(TF) || questionType.equalsIgnoreCase(TSLASHF)){
-						Label anserlbl=new Label();
-						if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-							 Map<String, Integer> authorObject = result.get(i).getOptions();
-							 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
-							 {
-								 String userSelectedOption=entry.getKey();
-
-								 if(userSelectedOption!=null){
-									 anserlbl.setText(userSelectedOption);
-									 if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
-										 anserlbl.getElement().getStyle().setColor(CORRECT);
-										 isTickdisplay=true;
-									 }else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
-										 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-									 }else{
-										 anserlbl.getElement().getStyle().setColor(INCORRECT);
-									 }
-								 }
-							 }
-						}
-						anserlbl.setStyleName(STYLE_TABLE_CENTER);
-						data.setValue(i, 3, anserlbl.toString());
-					}else if (FIB.equalsIgnoreCase(questionType)){
-						VerticalPanel answerspnl=new VerticalPanel();
-						if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-							String answerTextFormat = "";
-							String[] answersArry = null;
-							ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
-							for (MetaDataDo metaDataDo : questionList) {
-								String answerText = "";
-								if((metaDataDo.getAnswerText() != null)) {
-									answerText = metaDataDo.getAnswerText();
-								}
-								answerTextFormat += '[' + answerText +']';
-								if(questionList.size()  != metaDataDo.getSequence()){
-									answerTextFormat += ",";
-								}
-							}
-							String[] userFibOption = null;
-							if(result.get(i).getText() != null) {
-								answersArry=answerTextFormat.split(",");
-								userFibOption =result.get(i).getText().split(",");
-							}
-							if(answersArry!=null && userFibOption!=null){
-								boolean isCorrect=false;
-								for (int k = 0; k < answersArry.length; k++) {
-									Label answerChoice=new Label();
-									if(answersArry[k]!=null && k<userFibOption.length){
-										if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
-											answerChoice.setText(userFibOption[k]);
-											answerChoice.getElement().getStyle().setColor(CORRECT);
-										}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
-											answerChoice.setText(userFibOption[k]);
-											answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-											isCorrect=true;
-										}else{
-											answerChoice.setText(userFibOption[k]);
-											answerChoice.getElement().getStyle().setColor(INCORRECT);
-											isCorrect=true;
-										}
-										answerChoice.setStyleName(STYLE_TABLE_CENTER);
-										answerspnl.add(answerChoice);
-									}
-								}
-								if(!isCorrect){
-									isTickdisplay=true;
-								}
-							}
-						}
-						answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-						data.setValue(i, 3, answerspnl.toString());
-					}else  if(MA.equalsIgnoreCase(questionType)){
-						VerticalPanel answerspnl=new VerticalPanel();
-						if(result.get(i).getAnswerObject()!=null) {
-							JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
-							JSONObject answerObject = value.isObject();
-							Set<String> keys=answerObject.keySet();
-							Iterator<String> itr = keys.iterator();
-							boolean isCorrect=false;
-							while(itr.hasNext()) {
-								answerspnl.clear();
-								JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-								for(int j=0;j<attemptsObj.size();j++){
-									Label answerChoice=new Label();
-									String showMessage = null;
-									boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
-									String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-									String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-									if(skip == false)
-									{
-										if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
-											showMessage = i18n.GL_GRR_NO();
-										} else if(ONE.equalsIgnoreCase(matext)) {
-											showMessage = i18n.GL_GRR_YES();
-										}
-										answerChoice.setText(showMessage);
-										if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
-											answerChoice.getElement().getStyle().setColor(INCORRECT);
-											isCorrect=true;
-										} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
-											answerChoice.getElement().getStyle().setColor(CORRECT);
-										} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-											answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-										}
-									}else{
-										isCorrect=true;
-									}
-									answerChoice.setStyleName(STYLE_TABLE_CENTER);
-									answerspnl.add(answerChoice);
-								}
-							}
-							if(!isCorrect){
-								isTickdisplay=true;
-							}
-						}
-						answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-						data.setValue(i, 3, answerspnl.toString());
-					}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType) ){
-						VerticalPanel answerspnl=new VerticalPanel();
-						if(result.get(i).getAnswerObject()!=null) {
-							Label viewResponselbl=new Label(VIEWRESPONSE);
-							viewResponselbl.setStyleName("summaryViewResponse");
-							viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-							viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-							viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-							viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-							answerspnl.add(viewResponselbl);
-						}
-						answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-						data.setValue(i, 3, answerspnl.toString());
-					}
-
-					Image correctImg=new Image();
-					if(isTickdisplay){
-						correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
-					}else{
-						correctImg.setUrl(urlDomain+"/images/analytics/wrong.png");
-					}
-					data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
-					//Set attempts
-					Label attempts=new Label(Integer.toString(noOfAttempts));
-					attempts.setStyleName(STYLE_TABLE_CENTER);
-					data.setValue(i, 4, attempts.toString());
-
-					//Set time spent
-					data.setValue(i, 5,AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
-
-					//Set reactions
-					int reaction=result.get(i).getReaction();
-					data.setValue(i, 6, new AnalyticsReactionWidget(reaction).toString());
-				}
-			}
-			Options options = Options.create();
-			options.setAllowHtml(true);
-			Table table = new Table(data, options);
-			table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
-			printScoredData.add(table);
-			if(result.size()==0){
-				setErrorData(questionsTable);
-			}
-		}catch(Exception e){
-			AppClientFactory.printSevereLogger("AssessmentProgressReportChileView : setQuestionsPrintData: "+e.getMessage());
-		}
+		
 	}
 
 	public void setPrintIndividualSummayData(final boolean isClickedOnSave, final boolean isClickedOnEmail){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-
 			@Override
 			public void onSuccess() {
-
-				printWidget.clear();
-				Label collectionSummaryText=new Label();
-				String collectionType = i18n.GL4006();
-				if(isCollection) {
-					collectionType = i18n.GL1587();
-				}
-				collectionSummaryText.setText(collectionType);
-				collectionSummaryText.getElement().getStyle().setPaddingBottom(15, Unit.PX);
-				collectionSummaryText.addStyleName("collectionSummaryText");
-				printWidget.add(collectionSummaryText);
-				//printWidget.add(collectionSummaryWidget);
-
-				//To add scored questions
-				Label scoredQuestionHeading=new Label();
-				scoredQuestionHeading.setText(i18n.GL2282());
-				scoredQuestionHeading.getElement().getStyle().setClear(Clear.BOTH);
-				scoredQuestionHeading.getElement().getStyle().setPaddingTop(15, Unit.PX);
-				scoredQuestionHeading.getElement().getStyle().setPaddingBottom(20, Unit.PX);
-				printWidget.add(scoredQuestionHeading);
-				printWidget.add(printScoredData);
-				printScoredData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
-
-				printButton.setVisible(false);
-				downloadButton.setVisible(false);
-				timer1.schedule(100);
-
-				//To add resource breakdown
-				//printWidget.add(collectionOverViewWidget);
-				//printWidget.add(printResourceData);
 				if(isClickedOnSave){
-					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
-					printWidget.clear();
+					printOptions.setVisible(false);
+					String outputData = PrintPnl.getElement().getInnerHTML().toString();
+					outputData = outputData.replaceAll("images/", urlDomain+"/images/");
+					printOptions.setVisible(true);
+					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 				}else{
+					printOptions.setVisible(false);
 					Print.it(style,PrintPnl);
-					printWidget.clear();
+					printOptions.setVisible(true);
 				}
-
 			}
 		});
 	}
-
-
+	
 	Timer timer1=new Timer() {
 		@Override
 		public void run() {
@@ -1078,7 +853,10 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	private void getContentData(String type) {
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
 		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, "");
-		getPresenter().setCollectionSummaryData(assessmentId, classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
+		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
+			getPresenter().getCollectionScoreForSession(assessmentId, classpageId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);
+		}
+		getPresenter().setCollectionSummaryData(assessmentId, classpageId,userId,sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
 	}
 
 	private void setErrorData(HTMLPanel globalPanel) {

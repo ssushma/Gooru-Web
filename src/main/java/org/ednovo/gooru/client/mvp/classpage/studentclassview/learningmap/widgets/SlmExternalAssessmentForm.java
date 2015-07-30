@@ -14,6 +14,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -21,9 +23,9 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -40,6 +42,8 @@ public class SlmExternalAssessmentForm extends Composite {
 
 	@UiField Anchor submitTxt, inProgressTxt;
 
+	private static final String ERROR_LBL_COLOR = "#EE1E7B";
+	
 	int attemptedScore;
 
 	private PlanProgressDo planProgressDo = null;
@@ -69,6 +73,7 @@ public class SlmExternalAssessmentForm extends Composite {
 		scoreLbl.setText("Score");
 		evidenceLbl.setText("Evidence");
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
+		scoreTextBox.addKeyUpHandler(new ValidateScore());
 		submit.addClickHandler(new SaveData());
 	}
 
@@ -79,7 +84,14 @@ public class SlmExternalAssessmentForm extends Composite {
 			validateScoreEvidence();
 		}
 	}
-
+	
+	private class ValidateScore implements KeyUpHandler{
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			validateScore();
+		}
+	}
+	
 	private class NumbersOnly implements KeyPressHandler{
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
@@ -95,27 +107,33 @@ public class SlmExternalAssessmentForm extends Composite {
             }
 		}
 	}
-
-	private void validateScoreEvidence() {
-		boolean isScore = false, isEvidence = false;
+	
+	private boolean validateScore() {
+		boolean isScore = false;
 		String score = scoreTextBox.getText();
 		if(score.isEmpty()){
-			scoreTextBox.getElement().getStyle().setBorderColor("orange");
+			scoreTextBox.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
 		}else if(score != null || score != ""){
 			if(Integer.parseInt(score) >100 || Integer.parseInt(score) <0){
-				scoreTextBox.getElement().getStyle().setBorderColor("orange");
+				scoreTextBox.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
 			}else{
 				scoreTextBox.getElement().getStyle().setBorderColor("");
 				attemptedScore=Integer.valueOf(score);
 				isScore = true;
 			}
 		}
-
+		return isScore;
+	}
+	
+	private void validateScoreEvidence() {
+		boolean isScore = false, isEvidence = false;
+		isScore = validateScore();
+		
 		String evidenceStr = evidence.getText();
 		if(evidenceStr.isEmpty()){
-			evidence.getElement().getStyle().setBorderColor("orange");
+			evidence.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
 		}else if(evidenceStr != null || evidenceStr.length()>0){
-			scoreTextBox.getElement().getStyle().setBorderColor("");
+			evidence.getElement().getStyle().setBorderColor("");
 			isEvidence = true;
 		}
 		if(isScore==true&&isEvidence==true) {

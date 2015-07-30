@@ -334,7 +334,7 @@
     opacity: 0.9;
 	content: "";
 }
-.LearningMapContainer .lessonDescription .divcontainer.emptyselected:before {
+.LearningMapContainer .lessonDescription .divcontainer. emptyselected:before {
     left: 15px;
     right: 10px;
     bottom: 11px;
@@ -1851,7 +1851,7 @@ th.headcol.whitebg {
 }
 
 .myclasses-mastery-unit-cell-style {
-	width: 100px;
+	min-width: 100px;
 	color: #4897ce !important;
 	font-weight: bold;
 	text-decoration: underline !important;

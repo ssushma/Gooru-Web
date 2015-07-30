@@ -1402,7 +1402,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addHintsView.removeFromParent();
 				widgetsCount=hintsContainer.getWidgetCount();
 			}
-
 		}
 	}
 	@UiHandler("addHintsLabel")
@@ -2771,9 +2770,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					setHotTextAnswers(addHotTextAnsChoice);
 					questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
 				}else{
+					int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
 					AddHotTextQuestionAnswerChoice addHotTextAnsChoice=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[k], answer.getAnswerText());
 					addHotTextAnsChoice.setHeadLabelFields(false);
+					addHotTextQuesetionAnswerOptionTextArea(addHotTextAnsChoice,widgetCount);
 					questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
+					
 				}
 				k++;
 			}
@@ -2810,13 +2812,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				standardsPanel.add(createStandardLabel(code, codeID,label));
 			}
 		}
-
 		setExplanationContainer();
 		setDepthOfKnowledgeContainer();
 		setHintsContainer();
 		setStandardsContainer();
 		setCenturyContainer();
-
 	}
 
 	/**
@@ -3067,19 +3067,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		});
 	}
-	public class AddCheckBoxClickHandler implements ClickHandler  {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			CheckBox checkBox = (CheckBox) event.getSource();
-			boolean checked = checkBox.getValue();
-
-			depthOfKnowledgesList.clear();
-
-			setDOKCheckBoxes();
-		}
-	}
-
 
 	public void setDOKCheckBoxes(){
 		/* if(chkLevelRecall.isChecked()){
@@ -3242,11 +3229,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 
 	public void setDepthOfKnowledgeContainer(){
-
 		boolean isSelected=false;
-		/*if(chkLevelRecall.isChecked() || chkLevelSkillConcept.isChecked() || chkLevelStrategicThinking.isChecked() || chkLevelExtendedThinking.isChecked()){
-			isSelected=true;
-		 }*/
 		isSelected=isDepthofKnowledge();
 		if(isSelected){
 			addDepthOfKnowledgeLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
@@ -3255,7 +3238,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addDepthOfKnowledgeLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
 			addDepthOfKnowledgeLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabActive());
 		}
-
 	}
 
 	public void setHintsContainer(){
@@ -3311,10 +3293,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private class MinimizePanelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-
 			if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconHint")){
 				hintsContainer.setVisible(false);
 				int widgetsCount=hintsContainer.getWidgetCount();
+				if(widgetsCount==5){
+					addHintsLabel.getElement().getStyle().setDisplay(Display.BLOCK);
+				}
 				for(int i=0;i<widgetsCount;){
 					AddHintsView addHintsView =(AddHintsView) hintsContainer.getWidget(i);
 					if(addHintsView.hintTextBox.getText().equalsIgnoreCase("")){
@@ -3326,12 +3310,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						addHintsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
 						addHintsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
 					}
-
 					i++;
 				}
 				int count=hintsContainer.getWidgetCount();
 				addHintsLabel.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
-
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconExplanation")){
 				explanationContainer.setVisible(false);
 				addExplanationLabel.setVisible(true);
@@ -3412,6 +3394,24 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		for (final ListValuesDo listValuesDo : depthOfKnowledges) {
 			pnlDepthOfKnowledges.add(new DepthOfKnowledgePanel(listValuesDo));
 		}
+		if(collectionItemDo!=null && collectionItemDo.getDepthOfKnowledge()!=null){
+			if( collectionItemDo.getDepthOfKnowledge().size()>0){
+				for (checkboxSelectedDo checkboxObj : collectionItemDo.getDepthOfKnowledge()) {
+					Iterator<Widget> widgets=pnlDepthOfKnowledges.iterator();
+					while(widgets.hasNext()){
+						Widget widget=widgets.next();
+						if(widget instanceof DepthOfKnowledgePanel){
+							DepthOfKnowledgePanel pnlWidget=(DepthOfKnowledgePanel) widget;
+							if(checkboxObj.getName().equalsIgnoreCase(pnlWidget.checkbox.getText())){
+								pnlWidget.checkbox.setValue(true);
+								depthOfKnowledgesList.add(pnlWidget.listValuesDo.getId());
+							}
+						}
+					}
+				}
+			}
+			setDepthOfKnowledgeContainer();
+		}
 	}
 	/**
 	 * This will set the depth of knowledges when editing question
@@ -3447,16 +3447,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 
 	public boolean isDepthofKnowledge(){
-		AppClientFactory.printInfoLogger("Size of depthofknowledge Container"+pnlDepthOfKnowledges.getWidgetCount());
 		Iterator<Widget> widgets=pnlDepthOfKnowledges.iterator();
 		boolean depthOfKnowledge=false;
 		while(widgets.hasNext()){
 			Widget widget=widgets.next();
-			
 			if(widget instanceof DepthOfKnowledgePanel){
 				DepthOfKnowledgePanel pnlWidget=(DepthOfKnowledgePanel) widget;
-				if( pnlWidget.checkbox.getValue()==true){
-
+				if(pnlWidget.checkbox.getValue()==true){
 					depthOfKnowledge=true;
 				}
 			}

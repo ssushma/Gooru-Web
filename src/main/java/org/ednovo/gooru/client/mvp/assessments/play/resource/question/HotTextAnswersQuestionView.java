@@ -37,9 +37,9 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.question.event.ResetAssessmentDragDropEvent;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.question.event.ResetAssessmentDragDropHandler;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
-import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropEvent;
-import org.ednovo.gooru.client.mvp.play.resource.question.event.ResetDragDropHandler;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
@@ -114,7 +114,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	@UiConstructor
 	public HotTextAnswersQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo,List randomList){
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(ResetDragDropEvent.TYPE,resetReorderData);
+		AppClientFactory.getEventBus().addHandler(ResetAssessmentDragDropEvent.TYPE,resetReorderData);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo=collectionItemDo;
 		this.attemptedAnswerDo=attemptedAnswerDo;
@@ -126,7 +126,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void setQuestionTypeCaption(){
-		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
+		messageBodyText.setText(i18n.GL3466_4()+i18n.GL_SPL_FULLSTOP());
 		optionsContainerFpnl.clear();
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null && collectionItemDo.getResource().getType()==9){
 			messageBodyText.setText(i18n.GL3234_1()+i18n.GL_SPL_FULLSTOP());
@@ -161,7 +161,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					if(ansWithStyle.contains(STYLE_INCORRECT)){
 						ansWithStyle=ansWithStyle.replace(STYLE_INCORRECT, "");
 					}
-					
+
 					HTML ansHtml=new HTML(ansWithStyle);
 					ansHtml.addClickHandler(new ClickHandler() {
 
@@ -413,9 +413,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			String answerText="";
 			HTML ansText=new HTML();
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
-				
+
 				InlineLabel	oldLbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
-				
+
 				InlineLabel lbl=new InlineLabel(oldLbl.getText());
 				lbl.addStyleName(oldLbl.getStyleName());
 				lbl.getElement().setId(oldLbl.getElement().getId());
@@ -432,7 +432,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						answerOptionResult.put(0, true);
 						answerAttemptDo.setStatus("0");
 						HTHLChoiceStatus=false;
-						
+
 					}
 				}else if(!lbl.getStyleName().contains(STYLE_HIGHLIGHT) && lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
 					HTHLChoiceStatus=false;
@@ -493,12 +493,16 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 	private void clearReorderAnswers(){
 
-		for(int i=0;i<optionsContainer.getWidgetCount();i++){
-			Widget widget=optionsContainer.getWidget(i);
-			Element el=(Element) widget.getElement().getLastChild();
-			if(el != null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
-				el.removeClassName(STYLE_DND_CORRECT);
-				el.removeClassName(STYLE_DND_INCORRECT);
+		if(optionsContainer!=null){
+
+			for(int i=0;i<optionsContainer.getWidgetCount();i++){
+				Widget widget=optionsContainer.getWidget(i);
+				Element el=(Element) widget.getElement().getLastChild();
+				AppClientFactory.printInfoLogger("clearReorderAnswers--"+el);
+				if(el != null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
+					el.removeClassName(STYLE_DND_CORRECT);
+					el.removeClassName(STYLE_DND_INCORRECT);
+				}
 			}
 		}
 	}
@@ -516,10 +520,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		return text;
 	}
 
-	ResetDragDropHandler resetReorderData=new ResetDragDropHandler() {
+	ResetAssessmentDragDropHandler resetReorderData=new ResetAssessmentDragDropHandler() {
 
 		@Override
-		public void resetReorder() {
+		public void resetAssessmentReorder() {
 
 			if(checkAnswer.getStyleName().contains(STYLE_INACTIVE_BUTTON)){
 				clearReorderAnswers();
