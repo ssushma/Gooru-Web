@@ -334,12 +334,15 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		}
 		return thumbnailImage!=null?thumbnailImage:"images/defaultRes.png";
 	}
-	
+
 	private String getHTML(String html){
-		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		HTML contentHtml=new HTML(html);
-		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
+		AppClientFactory.printInfoLogger("html : "+html);
+		if (html != null){
+			html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+			HTML contentHtml=new HTML(html);
+			contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
+		}
 		return html;
 	}
-	
+
 }
