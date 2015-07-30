@@ -498,6 +498,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 					gooruGradesPresenterWidget.getView().clearGradesStyles();
 					gooruGradesPresenterWidget.setGrade(classpageDo);
 				}else{
+					gradeList.clear();
 					gooruGradesPresenterWidget.getView().clearGradesStyles();
 				}
 				if(classpageDo.getThumbnails() != null){

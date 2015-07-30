@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch.util;
 
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
@@ -79,6 +82,10 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	public static final String REMOVE = "remove";
 
 	HTMLPanel gradePanelWidget;
+	//String grade = "";
+	
+	List<String> grade = new ArrayList<>();
+	
 
 	String[] elementaryGrades = new String[]{i18n.GL2076(),i18n.GL3071(),i18n.GL3072(),i18n.GL3073(),i18n.GL3074(),i18n.GL3075(),i18n.GL3076()};
 	String[] middleGrades = new String[]{i18n.GL0167(),i18n.GL3077(),i18n.GL3078(),i18n.GL3079()};
@@ -127,6 +134,22 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 						}
 
 					}else{
+						if(lblGrade.getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
+							lblGrade.getElement().getStyle().clearBackgroundColor();
+							AppClientFactory.fireEvent(new UpdateFilterEvent("Grade "+lblGrade.getText(), REMOVE, getPageType()));
+							if(grade.contains(lblGrade.getText())){
+								grade.remove(lblGrade.getText());
+							}
+						
+						}else{
+							if(!grade.contains(lblGrade.getText())){
+								grade.add(lblGrade.getText());
+							}
+							AppClientFactory.fireEvent(new UpdateFilterEvent("Grade "+lblGrade.getText(), ADD, getPageType()));
+							lblGrade.getElement().getStyle().setBackgroundColor("#1076bb");
+						}
+						
+						
 						boolean value=checkSelectedGrades(stringArray, lblGrade.getElement().getInnerText());
 						if(value){
 							if(gradePanel.getParent().getElement().getFirstChildElement().getFirstChildElement().getStyle().getBackgroundColor().equals(backgroundColor)){
@@ -135,14 +158,12 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 								gradePanel.getParent().getElement().getFirstChildElement().getFirstChildElement().getStyle().setBackgroundColor(backgroundColor);
 							}
 
-						}
-						if(lblGrade.getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
-							lblGrade.getElement().getStyle().clearBackgroundColor();
-							AppClientFactory.fireEvent(new UpdateFilterEvent("Grade "+lblGrade.getText(), REMOVE, getPageType()));
 						}else{
-							AppClientFactory.fireEvent(new UpdateFilterEvent("Grade "+lblGrade.getText(), ADD, getPageType()));
-							lblGrade.getElement().getStyle().setBackgroundColor("#1076bb");
+							if(gradePanel.getParent().getElement().getFirstChildElement().getFirstChildElement().getStyle().getBackgroundColor().equals(backgroundColor)){
+								gradePanel.getParent().getElement().getFirstChildElement().getFirstChildElement().getStyle().clearBackgroundColor();
+							}
 						}
+						
 					}
 					gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
 				}
@@ -243,9 +264,33 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 				}
 			}
 			return true;
+		}else{
+			if(selectedValue!=null && stringArray!=null){
+				for(int i=1;i<stringArray.length;i++){
+					if(!grade.contains(stringArray[i])){
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+	}
+	
+	/*private boolean checkClassSelectedGrades(String[] stringArray, String selectedValue) {
+		if(selectedValue!=null && stringArray!=null){
+			grade+=selectedValue;
+			for(int i=1;i<stringArray.length;i++){
+				if(!grade.contains(stringArray[i])){
+					return false;
+				}
+			}
+			return true;
 		}
 		return false;
-	}
+	}*/
+	
+	
 	/**
 	 * Handled clickevent for Pre-K/Higher-ed grades
 	 *
@@ -289,7 +334,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 			gradesArray = higherGrades;
 			gradesPanel = higherPanel;
 		}
-		boolean value=checkSelectedGrades(gradesArray, filterName);
+		boolean value = checkSelectedGrades(gradesArray, filterName);
 		if(gradesPanel!=null){
 			updateGradeLevelStyle(gradesPanel,value);
 		}
@@ -339,6 +384,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 				}
 			}
 		}
+		grade.clear();
 	}
 
 	@Override
@@ -356,14 +402,16 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 */
 	@Override
 	public void setGrade(String grades) {
+		//this.grade=grades;
 		if(grades != null){
 			String [] gradesSplit = grades.split(",");
 			for(int i=0; i<gradesSplit.length; i++){
-				if(gradesSplit[i].equals("12gte")){
+				if(gradesSplit[i].equals("Higher Ed")){
 					gradesSplit[i] = i18n.GL3084();
 				}
+				grade.add(gradesSplit[i]);
 				updateFilterStyle(gradesSplit[i], "add");
-			    if(!gradesSplit[i].equals("Pre-K") && !gradesSplit[i].equals("12gte")){
+			    if(!gradesSplit[i].equals("Pre-K") && !gradesSplit[i].equals("Higher Ed")){
 			    	highlightGradeLevel(gradesSplit[i]);
 			    }
 			}
