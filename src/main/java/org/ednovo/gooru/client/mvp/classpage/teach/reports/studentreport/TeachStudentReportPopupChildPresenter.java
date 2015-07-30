@@ -48,17 +48,12 @@ public class TeachStudentReportPopupChildPresenter extends ChildPresenter<TeachS
 	}
 
 	@Override
-	public void getStudentReportData(String gooruUId) {
-		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-		String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASS_PAGE_ID, null);
-		String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
-		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
-		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
+	public void getStudentReportData(final String gooruUId, final String pageType, final String classId, final String courseId, final String unitId, final String lessonId) {
 		Map<String,String> queryParams = new HashMap<String, String>();
 		queryParams.put("userUid", gooruUId);
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-			if(classGooruOid!=null) {
-				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, null, null, "progress", queryParams, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+			if(courseId!=null) {
+				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classId, courseId, null, null, "progress", queryParams, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
 					@Override
 					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
 						getView().setReportData(dataList);
@@ -70,8 +65,8 @@ public class TeachStudentReportPopupChildPresenter extends ChildPresenter<TeachS
 				});
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
-			if(classGooruOid!=null&&unitId!=null) {
-				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classUId, classGooruOid, unitId, null, "progress", queryParams, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
+			if(courseId!=null&&unitId!=null) {
+				AppClientFactory.getInjector().getClasspageService().getStudentPlanProgressData(classId, courseId, unitId, null, "progress", queryParams, new SimpleAsyncCallback<ArrayList<PlanProgressDo>>() {
 					@Override
 					public void onSuccess(ArrayList<PlanProgressDo> dataList) {
 						getView().setReportData(dataList);

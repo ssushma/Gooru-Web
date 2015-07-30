@@ -125,26 +125,6 @@ public interface IsWrapView extends IsView {
 	HTMLPanel getCollectionSearchFiltersPanel();
 	/**
 	 *
-	 * @function showPrefilter
-	 *
-	 * @created_date : 17-Dec-2014
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) : @param addStandardsPresenter
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter);
-	/**
-	 *
 	 * @function openPreFilter
 	 *
 	 * @created_date : 17-Dec-2014
@@ -162,7 +142,6 @@ public interface IsWrapView extends IsView {
 	 *
 	 *
 	 */
-	void openPreFilter();
 
 	void updateUserHeaderProfileImage(String imageUrl);
 }

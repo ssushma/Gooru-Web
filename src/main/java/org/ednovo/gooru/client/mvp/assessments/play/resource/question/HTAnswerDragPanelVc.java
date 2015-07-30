@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.assessments.play.resource.question;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.AppRepositionDragContainer;
 import org.ednovo.gooru.client.mvp.dnd.AppVerticalPanelDropController;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
@@ -61,7 +62,9 @@ public class HTAnswerDragPanelVc extends AppRepositionDragContainer {
 		/**
 		 * Enabled drag and drop again in hotfix release for resources at m\My collections.
 		 */
+		AppClientFactory.printInfoLogger("onDrop--"+draggable);
 		HTAnswerChoiceOptionView resourceVc = (HTAnswerChoiceOptionView) draggable.getDraggableUc();
+		AppClientFactory.printInfoLogger("onDrop-resourceVc-"+resourceVc);
 		if(resourceVc!=null){
 			resourceVc.reorderCollectionItem(1);
 		}
