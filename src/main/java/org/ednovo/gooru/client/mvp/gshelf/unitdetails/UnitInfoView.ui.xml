@@ -54,12 +54,15 @@
 <div class="col-md-6 col-sm-6 col-xs-6 questionsBlockTextArea">
 <div class="dropDownRight">
 <div class="btn-group">
-  <g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">My Courses</g:Button>
-  <g:Button ui:field="taxonomyToggleBtn"  styleName="btn btn-primary dropdown-toggle">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </g:Button>
-  <!-- <ul role="menu" class="dropdown-menu pull-right">
+
+<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">Select other from
+										taxonomy</g:Button>
+									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="taxonomyToggleBtn">
+										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
+										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
+									</panel:HTMLEventPanel>
+
+   <!-- <ul role="menu" class="dropdown-menu pull-right">
     <li><a href="#">This will be replaced with popup</a></li>
   </ul> -->
 </div>

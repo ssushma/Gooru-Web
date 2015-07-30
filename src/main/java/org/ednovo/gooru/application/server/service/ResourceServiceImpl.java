@@ -368,9 +368,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionSettingsDo.class);
 					obj.setSettings(settings);
 				}
-
 				if(jsonRep.getJsonObject().has("thumbnails")){
-					ThumbnailDo thumbnailDo=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ThumbnailDo.class);
+					ThumbnailDo thumbnailDo=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("thumbnails").toString(), ThumbnailDo.class);
 					obj.setThumbnails(thumbnailDo);
 				}
 
