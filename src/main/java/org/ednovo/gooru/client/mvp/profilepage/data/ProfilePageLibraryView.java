@@ -73,7 +73,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 
 	private static final String ASSESSMENT = "assessment";
 
-	private static final String COLLECTION = "scollection";
+	private static final String COLLECTION = "collection";
 
 	private String unitListId = "";
 
