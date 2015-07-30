@@ -1402,7 +1402,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addHintsView.removeFromParent();
 				widgetsCount=hintsContainer.getWidgetCount();
 			}
-
 		}
 	}
 	@UiHandler("addHintsLabel")
@@ -3314,10 +3313,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private class MinimizePanelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-
 			if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconHint")){
 				hintsContainer.setVisible(false);
 				int widgetsCount=hintsContainer.getWidgetCount();
+				if(widgetsCount==5){
+					addHintsLabel.getElement().getStyle().setDisplay(Display.BLOCK);
+				}
 				for(int i=0;i<widgetsCount;){
 					AddHintsView addHintsView =(AddHintsView) hintsContainer.getWidget(i);
 					if(addHintsView.hintTextBox.getText().equalsIgnoreCase("")){
@@ -3329,12 +3330,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						addHintsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
 						addHintsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
 					}
-
 					i++;
 				}
 				int count=hintsContainer.getWidgetCount();
 				addHintsLabel.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
-
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconExplanation")){
 				explanationContainer.setVisible(false);
 				addExplanationLabel.setVisible(true);
