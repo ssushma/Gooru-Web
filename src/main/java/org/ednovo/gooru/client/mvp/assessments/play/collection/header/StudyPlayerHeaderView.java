@@ -115,9 +115,9 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 			authorContainer.removeStyleName(headerStyle.loggedOut());
 			authorContainer.addStyleName(headerStyle.loggedIn());
 			setLoggedInWishingText(collectionType);
-			loginMessageText.setText(StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
-			loginMessageText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
-			loginMessageText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.setText(StringUtil.generateMessage(i18n.GL3466_3(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL3466_3(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL3466_3(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
 		}
 	}
 	public void setLoggedOutWishingText(){
