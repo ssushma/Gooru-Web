@@ -238,9 +238,13 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			}else{
 				pnlSharable.addStyleName(SELECTEDSTYLE);
 			}
-			String isLoginRequired=folderObj.getSettings().getIsLoginRequired();
-			if("no".equalsIgnoreCase(isLoginRequired)){
-				lblRequiresNo.addStyleName(SELECTEDSTYLE);
+			if(folderObj.getSettings()!=null){
+				String isLoginRequired=folderObj.getSettings().getIsLoginRequired();
+				if("no".equalsIgnoreCase(isLoginRequired)){
+					lblRequiresNo.addStyleName(SELECTEDSTYLE);
+				}else{
+					lblRequiresYes.addStyleName(SELECTEDSTYLE);
+				}
 			}else{
 				lblRequiresYes.addStyleName(SELECTEDSTYLE);
 			}

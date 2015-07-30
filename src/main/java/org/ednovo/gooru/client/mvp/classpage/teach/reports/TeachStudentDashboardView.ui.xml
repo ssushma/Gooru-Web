@@ -79,6 +79,7 @@
 			      </g:HTMLPanel>
 			   </div>
 			</g:HTMLPanel>
+			<g:Frame ui:field="downloadFile"></g:Frame>
 			<g:HTMLPanel ui:field="bodyView"></g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>
