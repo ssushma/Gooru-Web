@@ -35,7 +35,9 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.course.TeachCourseReportChildView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson.TeachLessonReportChildView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildView;
@@ -52,6 +54,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -64,6 +67,9 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 	@UiField SpanPanel textLbl, currentContentName;
 	@UiField HTMLPanel topContainer, learningMapContainer, headerLinksContainer,mainContainer;
 	@UiField Button btnDownload, btnPreview;
+	@UiField Frame downloadFile;
+
+	String style="", urlDomain = "";
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -84,6 +90,14 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 		cropImageLoading.setVisible(false);
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
+		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/main-styles.min.css'>";
+		downloadFile.setVisible(false);
+	}
+
+	@Override
+	public Frame getFrame() {
+		return downloadFile;
 	}
 
 	@Override
@@ -245,5 +259,16 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 	public void setContainerVisibility(boolean isVisible) {
 		mainContainer.setVisible(isVisible);
 		cropImageLoading.setVisible(!isVisible);
+	}
+	
+	@UiHandler("btnDownload")
+	public void clickBtnDownload(ClickEvent event) {
+		setPrintIndividualSummayData(true,false);
+	}
+	
+	public void setPrintIndividualSummayData(final boolean isClickedOnSave, final boolean isClickedOnEmail){
+		String outputData = bodyView.getElement().getInnerHTML().toString();
+		outputData = outputData.replaceAll("images/", urlDomain+"/images/");
+		getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),"summary-data",isClickedOnEmail);
 	}
 }

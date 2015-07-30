@@ -123,15 +123,12 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 			if(columnWidgetCount==0) {
 				Anchor studentName = new Anchor(userList.get(rowWidgetCount).getUserName()); //
 				studentName.setStyleName("myclasses-mastery-unit-cell-style");
-				studentName.setWidth("100px");
 				studentName.addClickHandler(new StudentUnitView(userList.get(rowWidgetCount).getUserName(), userList.get(rowWidgetCount).getUserUId()));
 				assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,studentName);
 				assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 				
 				if(rowWidgetCount==0) {
-					HTML studentNameTitle = new HTML("Student&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-					studentNameTitle.setWidth("100px");
-					studentName.setStyleName("myclasses-mastery-unit-cell-style");
+					HTML studentNameTitle = new HTML("Student");
 					assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,studentNameTitle);
 					assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
 					assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);

@@ -30,10 +30,14 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
+import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -107,6 +111,23 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 				getView().setContainerVisibility(true);
 			}
 		}
+	}
+
+	@Override
+	public void setHtmltopdf(final String htmlString, final String fileName, final boolean isClickedOnEmail) {
+		AppClientFactory.getInjector().getAnalyticsService().setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
+			@Override
+			public void onSuccess(String result) {
+
+				if(!StringUtil.checkNull(result)){
+					getView().getFrame().setUrl(result);
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 	}
 
 	public void setClassDetails(ClasspageDo classpageDo) {
