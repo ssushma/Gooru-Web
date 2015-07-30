@@ -29,6 +29,8 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 public interface TeachStudentDashboardUiHandler extends BaseUiHandlers{
 
-	void openAddPopup();	
+	void openAddPopup();
+
+	void setHtmltopdf(String htmlString, String fileName, boolean isClickedOnEmail);
 	
 }

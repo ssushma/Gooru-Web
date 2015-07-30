@@ -492,7 +492,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
 					adTable.setWidget(i, 2,answerspnl);
 				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
-					if(result.get(i).getAnswerObject()!=null) {
+					if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 						Label viewResponselbl=new Label(VIEWRESPONSE);
 						viewResponselbl.setStyleName("summaryViewResponse");
 						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
