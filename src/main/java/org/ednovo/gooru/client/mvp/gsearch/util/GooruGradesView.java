@@ -241,11 +241,15 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}else if(addOrRemove.equals(REMOVE)){
 				updateFilterStyle(gradeArray[i],addOrRemove);
-				grade.remove(gradeArray[i]);
+				if(grade.contains(gradeArray[i])){
+					grade.remove(gradeArray[i]);
+				}
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}else if(grades==null){
 				updateFilterStyle(gradeArray[i],addOrRemove);
-				grade.add(gradeArray[i]);
+				if(!grade.contains(gradeArray[i])){
+					grade.add(gradeArray[i]);
+				}
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}
 		}
