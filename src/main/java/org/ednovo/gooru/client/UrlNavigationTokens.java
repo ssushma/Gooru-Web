@@ -83,10 +83,14 @@ public interface UrlNavigationTokens{
 	String TEACHER_CLASSPAGE_CONTENT = "content";
 	String TEACHER_CLASSPAGE_COLLECTION = "collection";
 	String TEACHER_CLASSPAGE_ASSESSMENT = "assessment";
+	String EXTERNAL_ASSESSMENT = "assessment/url";
 	
 	String TEACHER_PREVIEW_MODE = "teach-preview";
 	String TRUE = "true";
 	String FALSE = "false";
 	String CLASSPAGEID="classpageId";
 	String CONTENT_NAME = "content-name";
+	
+	String MYCLASS="myclass";
+	String OLDCLASS="oldclass";
 }

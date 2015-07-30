@@ -225,15 +225,6 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 			@Override
 			public void onSuccess(Boolean result) {
 				getView().setClassesData(result);
-				/*if(result){
-					Map<String, String> params = new HashMap<String, String>();
-					params.put("view", "myclass");
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
-				}else{
-					Map<String, String> params = new HashMap<String, String>();
-					params.put("view", "myclass");
-					AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.NEWSTUDY);
-				}*/
 			}
 			
 		});

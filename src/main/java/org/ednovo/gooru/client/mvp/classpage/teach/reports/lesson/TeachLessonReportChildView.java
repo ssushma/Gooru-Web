@@ -272,7 +272,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		@Override
 		public void onClick(ClickEvent event) {
 			String contentName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CONTENT_NAME, "");
-			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(contentName,userName,userId);
+			TeachStudentReportPopupWidget popup = new TeachStudentReportPopupWidget(contentName,userName,userId, classId, courseId, unitId, lessonId, assessmentId, collectionType, UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW);
 		}
 	}
 	

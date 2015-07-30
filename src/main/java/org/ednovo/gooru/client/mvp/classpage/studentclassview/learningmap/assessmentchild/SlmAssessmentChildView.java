@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
@@ -94,6 +95,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 
 	private PlanContentDo planContentDo = null;
+
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
 
@@ -159,7 +162,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment/url")) {
 			resourceImgContainer.setVisible(false);
 		} else {
-			setResourceData(planContentDo.getItems());
+			setResourceData(planContentDo.getItems(),collectionType);
 		}
 	}
 
@@ -251,7 +254,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 	}
 
-	private void setResourceData(ArrayList<PlanContentDo> resourceList) {
+	private void setResourceData(ArrayList<PlanContentDo> resourceList, String collectionType) {
 		int size = resourceList.size();
 		if(size>0) {
 			if(size>10) {
@@ -370,7 +373,11 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 				}
 			}
 		} else {
-			resourceImgContainer.add(new Label("No resources!!!"));
+			if(collectionType!=null&&collectionType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+				resourceImgContainer.add(new Label(i18n.GL3466_1()));
+			} else {
+				resourceImgContainer.add(new Label(i18n.GL3466_2()));
+			}
 		}
 	}
 

@@ -317,6 +317,16 @@
 .studentAssessmentReportViewContainer .scoreBrief .totalIndividualScore {
 	text-align: center;
 }
+.studentAssessmentReportViewContainer .scoreBrief .external-assessment {
+	text-align: left;
+	margin-left: 20px;
+}
+.studentAssessmentReportViewContainer .scoreBrief .external-assessment .anchor{
+	word-wrap: break-word;
+}
+.studentAssessmentReportViewContainer .scoreBrief .totalIndividualScore .no-border{
+	border-right: 0px;
+}
 .studentAssessmentReportViewContainer .scoreBrief .totalIndividualScore h4, .studentAssessmentReportViewContainer .scoreBrief h2 {
 	margin: 0 0 6px 0;
 }

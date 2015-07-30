@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.gshelf.util.ClassListWidget;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -156,7 +157,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	
 	@UiHandler("createClassAchr")
 	public void createNewClass(ClickEvent clickEvent){
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,new String[] { "view", "myclass"});
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,new String[] { UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS});
 	}
 
 	/**

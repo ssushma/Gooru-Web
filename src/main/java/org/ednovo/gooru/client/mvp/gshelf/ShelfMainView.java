@@ -1129,12 +1129,16 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			collectionShelfTreeWidget.getCollectionDo().getSummary().setQuestionCount(count);
 		}else{
 			int count;
-			if(isDelete){
-				count=collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()-1;
-			}else{
-				count=collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()+1;
+			try{
+					if(isDelete){
+						count=collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()-1;
+					}else{
+						count=collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()+1;
+					}
+					collectionShelfTreeWidget.getCollectionDo().getSummary().setResourceCount(count);
+			}catch(Exception e){
+				AppClientFactory.printSevereLogger("Exception------"+e);
 			}
-			collectionShelfTreeWidget.getCollectionDo().getSummary().setResourceCount(count);
 		}
 	}
 	private HashMap<String,String> getTreeParentIds(FolderDo courseDo) {
