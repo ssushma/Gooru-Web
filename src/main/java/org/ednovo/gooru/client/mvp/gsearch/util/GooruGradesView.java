@@ -165,7 +165,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 						}
 						
 					}
-					gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
+					if(gradePanelWidget != null){
+						gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
+					}
 				}
 			});
 		}
@@ -239,9 +241,11 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}else if(addOrRemove.equals(REMOVE)){
 				updateFilterStyle(gradeArray[i],addOrRemove);
+				grade.remove(gradeArray[i]);
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}else if(grades==null){
 				updateFilterStyle(gradeArray[i],addOrRemove);
+				grade.add(gradeArray[i]);
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove,getPageType()));
 			}
 		}
@@ -314,7 +318,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 				AppClientFactory.fireEvent(new UpdateFilterEvent(gradeText, ADD,getPageType()));
 				liPanel.getWidget(0).getElement().getStyle().setBackgroundColor("#1076bb");
 			}
-			gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
+			if(gradePanelWidget !=  null){
+				gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
+			}
 		}
 	}
 	/**
