@@ -724,14 +724,14 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public void onClickPendingListSeeMore(ClickEvent event){
 		lblPendingPleaseWait.setVisible(true);
 		ancPendingListSeeMore.setVisible(false);
-		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(),  pendingOffsetValue, pageSize, "pending",true,true);	//this will callback displayPendingMembersList method ....
+		getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(),  pendingOffsetValue, pageSize, "pending",true,true);	//this will callback displayPendingMembersList method ....
 	}
 	@UiHandler("ancActiveListSeeMore")
 	public void onClickActiveListSeeMore(ClickEvent event){
 		lblActivePleaseWait.setVisible(true);
 		ancActiveListSeeMore.setVisible(false);
 		int offset=(pageSize*activeListPageNum);
-		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  offset, pageSize, "active",true,false,true);	//this will callback displayActiveMembersList method ....
+		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  offset, pageSize, "active",true,false,true);	//this will callback displayActiveMembersList method ....
 	}
 	
 	@Override

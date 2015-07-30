@@ -41,9 +41,13 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.application.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEvent;
@@ -71,12 +75,15 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -170,6 +177,10 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	private static String Star_Rating_Widget = "ratingWidget";
 
 	private static final int CHILD_AGE=13;
+	
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
+
+    ShelfMainPresenter shelfMainPresenter;
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -301,7 +312,8 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	@Inject
 	public ResourcePlayerPresenter(ResourcePlayerMetadataPresenter resoruceMetadataPresenter,ResourceSharePresenter resourceSharePresenter,
 			ResourceInfoPresenter resourceInfoPresenter,EventBus eventBus, CollectionFormInPlayPresenter collectionFormInPlayPresenter,
-			IsResourcePlayerView view, IsResourcePlayerProxy proxy,AddResourceCollectionPresenter addResourceCollectionPresnter,ResourceFlagPresenter resourceFlagPresenter) {
+			IsResourcePlayerView view, IsResourcePlayerProxy proxy,AddResourceCollectionPresenter addResourceCollectionPresnter,ResourceFlagPresenter resourceFlagPresenter,
+			SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ShelfMainPresenter shelfMainPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.resoruceMetadataPresenter=resoruceMetadataPresenter;
@@ -311,6 +323,8 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		addResourceCollectionPresnter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
 		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
+		this.searchAddResourceToCollectionPresenter= searchAddResourceToCollectionPresenter;
+		this.shelfMainPresenter=shelfMainPresenter;
 		resourceFlagPresenter.setResourcePlayerPresenter(this);
 		resourceSharePresenter.setResourcePlayerPresenter(this);
 		addResourceCollectionPresnter.getAddCollectionViewButton().setVisible(false);
@@ -497,7 +511,31 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		else if(tabView.equals("add")){
 			MixpanelUtil.mixpanelEvent("Player_Click_Add");
 			resoruceMetadataPresenter.clearMarginTop();
-			setAddResourceCollectionView(resourceId);
+/*			setAddResourceCollectionView(resourceId);
+*/
+			clearSlot(TAB_PRESENTER_SLOT);
+			searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+			String resourcePlayId =resourceId;
+			ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
+			resourceSearchResultDo.setGooruOid(resourcePlayId);
+			resourceSearchResultDo.setQuestionType(collectionItemDo.getResource().getTypeName());
+			SearchResourceFormatDO searchResourceFormatDO = new SearchResourceFormatDO();
+			searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
+			resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);
+			shelfMainPresenter.SetDefaultTypeAndVersion();
+			searchAddResourceToCollectionPresenter.getLoadingImage();
+			searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+			searchAddResourceToCollectionPresenter.getView().getAppPopUp().addCloseHandler(new CloseHandler<PopupPanel>() {
+				@Override
+				public void onClose(CloseEvent<PopupPanel> event) {
+					Window.enableScrolling(false);
+					searchAddResourceToCollectionPresenter.getView().closeTabView();
+				}
+			});
 		 }
 		else if(tabView.equals("share")){
 			resoruceMetadataPresenter.clearMarginTop();
