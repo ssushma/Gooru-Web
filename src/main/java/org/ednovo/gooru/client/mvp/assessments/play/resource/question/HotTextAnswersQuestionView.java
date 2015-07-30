@@ -126,7 +126,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void setQuestionTypeCaption(){
-		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
+		messageBodyText.setText(i18n.GL3466_4()+i18n.GL_SPL_FULLSTOP());
 		optionsContainerFpnl.clear();
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null && collectionItemDo.getResource().getType()==9){
 			messageBodyText.setText(i18n.GL3234_1()+i18n.GL_SPL_FULLSTOP());
@@ -161,7 +161,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					if(ansWithStyle.contains(STYLE_INCORRECT)){
 						ansWithStyle=ansWithStyle.replace(STYLE_INCORRECT, "");
 					}
-					
+
 					HTML ansHtml=new HTML(ansWithStyle);
 					ansHtml.addClickHandler(new ClickHandler() {
 
@@ -413,9 +413,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			String answerText="";
 			HTML ansText=new HTML();
 			for(int i=0;i<optionsContainerFpnl.getWidgetCount();i++){
-				
+
 				InlineLabel	oldLbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
-				
+
 				InlineLabel lbl=new InlineLabel(oldLbl.getText());
 				lbl.addStyleName(oldLbl.getStyleName());
 				lbl.getElement().setId(oldLbl.getElement().getId());
@@ -432,7 +432,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 						answerOptionResult.put(0, true);
 						answerAttemptDo.setStatus("0");
 						HTHLChoiceStatus=false;
-						
+
 					}
 				}else if(!lbl.getStyleName().contains(STYLE_HIGHLIGHT) && lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
 					HTHLChoiceStatus=false;
@@ -492,7 +492,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void clearReorderAnswers(){
-		
+
 		if(optionsContainer!=null){
 
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){

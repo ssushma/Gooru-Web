@@ -1026,9 +1026,10 @@
 .summaryHsImg {
 	display: inline-block;
 	margin: 8px;
+	padding: 4px;
 	width :100px;
 	height:100px;
-	border: 2px solid;
+	border: 2px solid transparent;
 }
 .summaryViewResponse {
 	padding: 3px;

@@ -115,9 +115,9 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 			authorContainer.removeStyleName(headerStyle.loggedOut());
 			authorContainer.addStyleName(headerStyle.loggedIn());
 			setLoggedInWishingText(collectionType);
-			loginMessageText.setText(StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
-			loginMessageText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
-			loginMessageText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.setText(StringUtil.generateMessage(i18n.GL3466_3(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL3466_3(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL3466_3(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
 		}
 	}
 	public void setLoggedOutWishingText(){
@@ -127,7 +127,7 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 		loginUserName.setText("");
 		loginUserName.getElement().setAttribute("alt","");
 		loginUserName.getElement().setAttribute("title","");
-		wishingText.setText(i18n.GL1531());
+		wishingText.setText(i18n.GL1530());
 		wishingText.getElement().setAttribute("alt","");
 		wishingText.getElement().setAttribute("title","");
 	}
@@ -139,15 +139,10 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 		loginUserName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		loginUserName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 
-		if(collectionType!=null&&collectionType.equals("assessment")){
-			wishingText.setText(i18n.GL1530());
-			wishingText.getElement().setAttribute("alt",i18n.GL1530());
-			wishingText.getElement().setAttribute("title",i18n.GL1530());
-		}else{
-			wishingText.setText(i18n.GL3041());
-			wishingText.getElement().setAttribute("alt",i18n.GL3041());
-			wishingText.getElement().setAttribute("title",i18n.GL3041());
-		}
+		wishingText.setText(i18n.GL1530());
+		wishingText.getElement().setAttribute("alt",i18n.GL1530());
+		wishingText.getElement().setAttribute("title",i18n.GL1530());
+
 	}
 
 	public Label getCloseButton(){
