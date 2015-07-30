@@ -141,7 +141,6 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 			String unitNameLbl = usageData.get(headerColumnCount).getTitle();
 			HTML unitName = new HTML(unitNameLbl);
 			unitName.setStyleName("myclasses-mastery-unit-cell-style");
-			unitName.setWidth("150px");
 			unitName.addClickHandler(new ClickUnitName(usageData.get(headerColumnCount).getGooruOId(),"Unit "+(headerColumnCount+1)+" "+unitNameLbl));
 			courseTableWidget.setHeaderWidget(headerColumnCount+1, unitName);
 		}
