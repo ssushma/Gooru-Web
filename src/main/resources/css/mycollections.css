@@ -2910,11 +2910,19 @@ vertical-align:middle;
 	border-bottom:1px solid #dddddd;
 	padding:15px 15px 15px 15px;
 }
+#unitinfo .gliphIconImage {
+    background: url("../images/gridicon.png") no-repeat scroll 0px 0px transparent;
+    width: 11px;
+    height: 12px;
+}
 #unitinfo .scrollCourseContainer{
 	height:500px;
 	overflow-y:auto;
 }
-
+#unitinfo .unitCoverHeader .dropDownRight .btn-primary {
+    background-color: rgb(135, 186, 221);
+    border: 1px solid rgb(255, 255, 255);
+}
 #unitinfo .containerHeight{
 	height: 424px;
 	overflow-y: auto;
