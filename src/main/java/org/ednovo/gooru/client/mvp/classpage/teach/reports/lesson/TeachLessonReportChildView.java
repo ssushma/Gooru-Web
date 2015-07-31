@@ -215,10 +215,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		}
 	}
 	
-	public static native String roundToTwo(double number) /*-{
-		return ""+(Math.round(number + "e+2")  + "e-2");
-	}-*/;
-
 	public class StudentPlaySummary implements ClickHandler {
 		String userId = null, userName = null;
 		

@@ -2095,8 +2095,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					if(resourceObj.optJSONArray("content") != null){
 						getLogger().info(resourceObj.getJSONArray("content").toString());
 						dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<MasterReportDo>>(){});
-						if(dataList!=null&dataList.size()>0) {
-							Collections.sort(dataList, new ArrayListSorter("sequence", true));
+						if(dataList!=null) {
+							int size = dataList.size();
+							if(size>0) {
+								Collections.sort(dataList, new ArrayListSorter("sequence", true));
+								for(int i=0;i<size;i++) {
+									Collections.sort(dataList.get(i).getUsageData(), new ArrayListSorter("userName", true));
+								}
+							}
 						}
 					}
 				}

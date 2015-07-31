@@ -56,7 +56,7 @@ public class StudentClassLearningMapCircle extends Composite {
 		circleField.addMouseOutHandler(new MouseOutHideToolTip());
 		circleField.addClickHandler(new LessonViewNavigation());
 		if(!circleType.isEmpty()) {
-			circleField.setStyleName(circleType);
+			circleField.addStyleName(circleType);
 		}
 	}
 	
