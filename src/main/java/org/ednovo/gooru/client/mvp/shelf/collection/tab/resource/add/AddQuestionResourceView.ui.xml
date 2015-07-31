@@ -84,6 +84,7 @@
          <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForHintsCheck"></g:Label>
 
       	 <!-- Depth Of Knowledge Start-->
+      	 <div class="clearfix"></div>
       	<g:FlowPanel ui:field="depthOfKnowledgeContainer" styleName="{res1.css.depthOfKnowledgeContainer}">
 					<g:FlowPanel styleName="{res1.css.depthOfKnowledgeSubContainer}">
 					 <uc:HTMLEventPanel styleName="{addWebResourceStyle.eHeader}" ui:field="eHearderIconDepthOfKnowledge"></uc:HTMLEventPanel>
