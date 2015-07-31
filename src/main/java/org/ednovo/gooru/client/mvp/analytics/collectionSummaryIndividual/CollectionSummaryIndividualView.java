@@ -607,7 +607,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 		            viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
 	   	            viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+	   	            viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+     			    viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
 		            data.setValue(i, 5, viewResponselbl.toString());
+		            
 		        }
 		        Options options = Options.create();
 		        options.setAllowHtml(true);
@@ -619,7 +622,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	erroeMsg.setText(i18n.GL3264());
 		        	individualOpenendedData.add(erroeMsg);
 		        }
-		        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+		        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
+		       // table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 		        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 
 			}
