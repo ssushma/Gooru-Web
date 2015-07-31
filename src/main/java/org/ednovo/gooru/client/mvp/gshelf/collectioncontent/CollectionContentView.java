@@ -223,6 +223,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		Window.enableScrolling(true);
 		if (tmpIndex ==-1){
 			index = pnlReosurceList.getWidgetCount()>0 ? pnlReosurceList.getWidgetCount() : 0;
+			listOfContent.getCollectionItems().add(collectionItem);
 		}
 		if(index == 0){
 			pnlReosurceList.clear();
