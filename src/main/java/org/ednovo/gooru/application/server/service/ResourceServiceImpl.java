@@ -763,8 +763,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		params.put(GooruConstants.ID, videoId);
 		params.put(GooruConstants.YOUTUBE_KEY, getYoutubeApiKey());
 		params.put(GooruConstants.YOUTUBE_PART, YOUTUBE_PART_DETAILS);
+		logger.info("getYouTubeApiUrl() here---------------"+getYouTubeApiUrl());
 		String url=AddQueryParameter.constructQueryParams(getYouTubeApiUrl(), params);
-
+		
+		logger.info("getYoutubeDuration-----url------"+url);
 		try {
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 			jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -971,7 +973,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			throws GwtException {
 		try{
 
-			JsonRepresentation jsonRep = null;
+			JsonRepresentation jsonRep = null,jsonRepGet=null;
 			String url =null;
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO,collectionItemDo.getParentGooruOid(), collectionItemDo.getCollectionItemId());
 
@@ -1069,8 +1071,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			getLogger().info("--- pay load -- "+form);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 			jsonRep = jsonResponseRep.getJsonRepresentation();
-			return deserializeCollectionItem(jsonRep);
-
+		
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			getLogger().info("---url -- "+url);
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			return deserializeCollectionItem(jsonRepGet);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

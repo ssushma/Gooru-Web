@@ -99,7 +99,7 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 	}
 
 	private void setQuestionTypeCaption(){
-		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
+		messageBodyText.setText(i18n.GL3466_4()+i18n.GL_SPL_FULLSTOP());
 		answerText.getElement().setId("pnlAnswerText");
 		checkAnswer.getElement().setId("btnCheckAnswer");
 		messageBodyText.getElement().setId("lblMessageBodyText");
