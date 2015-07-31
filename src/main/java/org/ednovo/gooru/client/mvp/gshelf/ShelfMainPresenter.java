@@ -274,10 +274,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 					String o1=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 					if(o1==null){
 						if(clrPanel){
+							if(result !=null)
+							{
 							if(result.getSearchResult().size()>0){
 								setRightListData(result.getSearchResult(),null);
 							}else{
 								setInSlot(RIGHT_SLOT, null);
+							}
 							}
 						}else{
 							myCollectionsListPresenter.setData(type,result.getSearchResult(),clrPanel,false,null);
