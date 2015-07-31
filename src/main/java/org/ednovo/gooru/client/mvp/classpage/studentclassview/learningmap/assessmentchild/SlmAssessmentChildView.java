@@ -25,8 +25,6 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.assessmentchild;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
@@ -106,14 +104,23 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.planContentDo = planContentDo;
-
-		setData(planContentDo);
+		setData(planContentDo, status);
 		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
-		contentName.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
-		contentImage.addClickHandler(new PlayClassContent(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status, userId));
 	}
 
-	public void setData(final PlanContentDo planContentDo) {
+	public void setData(final PlanContentDo planContentDo, final String status) {
+		contentName.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				redirectPlayer(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status);
+			}
+		});
+		contentImage.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				redirectPlayer(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status);
+			}
+		});
 		final String collectionType = planContentDo.getCollectionType();
 
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
@@ -194,66 +201,41 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 	}
-
-	public class PlayClassContent implements ClickHandler {
-
-		private String type = "collection";
-		private String gooruOid = null;
-		private String status = null;
-		private String userId = null;
-
-		public PlayClassContent(String gooruOid, String type, String status, String userId) {
-			if(type!=null) {
-				this.type = type;
-			}
-			this.gooruOid = gooruOid;
-			this.status = status;
-			this.userId = userId;
-		}
-
-		@Override
-		public void onClick(ClickEvent event) {
+	
+	private void redirectPlayer(String gooruOid, String type, String status) {
+		if(!type.equalsIgnoreCase("assessment/url")) {
 			String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
 			String courseGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
 			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
 			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
-			Map<String,String> params = new LinkedHashMap<String,String>();
-
+			
 			String token = PlaceTokens.ASSESSMENT_PLAY;
-
-			if(type.equalsIgnoreCase("assessment")) {
-				token = PlaceTokens.ASSESSMENT_PLAY;
-			} else if(type.equalsIgnoreCase("collection")) {
+			if(type.equalsIgnoreCase("collection")) {
 				token = PlaceTokens.COLLECTION_PLAY;
 			}
-
+			
+			PlaceRequest placeRequest=new PlaceRequest(token);
+			placeRequest = placeRequest.with("id", gooruOid);
+			placeRequest = placeRequest.with("cid", classUId);
+			placeRequest = placeRequest.with("courseId", courseGooruOid);
+			placeRequest = placeRequest.with("unitId", unitId);
+			placeRequest = placeRequest.with("lessonId", lessonId);
+			
 			if(status!=null&&status.equalsIgnoreCase("active")) {
-				params.put("isStudent", "true");	// This should be changed based on; whether user has joined or not.
+				placeRequest = placeRequest.with("isStudent", "true");
 			}
-
-			if(status==null) {
-				status = "debug-point";
-			}
-			contentImage.getElement().setAttribute("debug-point", status);
-			contentName.getElement().setAttribute("debug-point", status);
-
-			params.put("id", gooruOid);
-			params.put("cid", classUId);
-			params.put("courseId", courseGooruOid);
-			params.put("unitId", unitId);
-			params.put("lessonId", lessonId);
-
-			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
-			if(!type.equalsIgnoreCase("assessment/url")) {
-				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-			} else {
-				if(planContentDo.getUrl()!=null&&!planContentDo.getUrl().isEmpty()) {
-					Window.open(planContentDo.getUrl(), "_blank", "");
-				}
+			
+			AppClientFactory.printInfoLogger("classUId "+classUId+" courseGooruOid "+courseGooruOid+" unitId "+unitId+" lessonId "+lessonId);
+			AppClientFactory.printInfoLogger("Practised Gooru User "+type+" Player "+AppClientFactory.getLoggedInUser().getUsernameDisplay());
+			AppClientFactory.printInfoLogger("Student Plan Lesson View "+type+" Player "+placeRequest);
+			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+		} else {
+			if(planContentDo.getUrl()!=null&&!planContentDo.getUrl().isEmpty()) {
+				Window.open(planContentDo.getUrl(), "_blank", "");
 			}
 		}
 	}
-
+	
 	private void setResourceData(ArrayList<PlanContentDo> resourceList, String collectionType) {
 		int size = resourceList.size();
 		if(size>0) {
