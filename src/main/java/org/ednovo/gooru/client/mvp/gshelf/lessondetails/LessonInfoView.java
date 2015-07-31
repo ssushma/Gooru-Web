@@ -39,6 +39,8 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubDomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.StandardsCodeDecView;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
@@ -114,6 +116,13 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	private static final String O2_LEVEL = "o2";
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObj;
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
 
 	List<LiPanelWithClose> lessonLiPanelWithCloseArray = new ArrayList<>();
 
@@ -134,7 +143,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				lessonInfo.getElement().setAttribute("style", "min-height:"+Window.getClientHeight()+"px");
 			}
 		});
-		populateStandardValues();
+		getAddStandards();
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
@@ -361,19 +370,44 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
             for(int j=0; j<standardsDescriptionList.size(); j++){
                 HTMLPanel headerDiv = new HTMLPanel("");
                 if(j==0){
-                    if(standardsDescriptionList.get(j).equalsIgnoreCase("CA CCSS")){
+                    if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
                         liPanel.getElement().setId("CA");
                     }else{
                         liPanel.getElement().setId(standardsDescriptionList.get(j));
                     }
+                   
+                    if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;"); 	  
+      		        }
+      		      else if((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS"))
+      		        {
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+      		        }
+      		      else if((!isNGSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("NGSS")){
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+      		        }
+      		      else if((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")){
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+      		        }
+                    
                     headerDiv.setStyleName("liPanelStyle");
                 }else{
+                	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
+                	{
+                        headerDiv.setStyleName("liPanelStylenonBold");
+                        liPanel.getElement().setAttribute("standarddesc", "College, Career and Civic Life");
+                	}
+                	else
+                	{
                     headerDiv.setStyleName("liPanelStylenonBold");
                     liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
+                	}
                 }
                 headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
                 liPanel.add(headerDiv);
             }
+            if(liPanel.getElement().getAttribute("style")!=null && !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;"))
+            {
             liPanel.addClickHandler(new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent event) {
@@ -388,6 +422,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				getUiHandlers().showStandardsPopup(standardsVal,standardsDesc, lessonLiPanelWithCloseArray);
 			}
 		});
+            }
             standardsDropListValues.add(liPanel);
         }
 }
@@ -858,6 +893,54 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					obj.removeStyleName("active");
 				}
 			}
+		}
+	}
+	
+public void checkStandarsList(List<String> standarsPreferencesList) {
+		
+		
+		if(standarsPreferencesList!=null){
+			if(standarsPreferencesList.contains("CCSS")){
+				isCCSSAvailable = true;
+			}else{
+				isCCSSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("NGSS")){
+				isNGSSAvailable = true;
+			}else{
+				isNGSSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("TEKS")){
+				isTEKSAvailable = true;
+			}else{
+				isTEKSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("CA")){
+				isCAAvailable = true;
+			}else{
+				isCAAvailable = false;
+			}
+		}
+
+		populateStandardValues();
+	}
+
+	public void getAddStandards() {
+		if(!AppClientFactory.isAnonymous()){
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+
+				});
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			isTEKSAvailable = false;
 		}
 	}
 
