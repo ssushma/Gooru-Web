@@ -100,14 +100,12 @@ public class StudentClassLessonContainer extends Composite {
 				styleName = "orgBorder ";
 			}
 			if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-				if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotViewed")||planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
-					styleName = styleName + " cursorPointer";
-				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("Viewed")) {
-					styleName = styleName + "emptyselected cursorPointer";
+				if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("Viewed")) {
+					styleName = styleName + "emptyselected";
 				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
-					styleName = styleName + "blueselected cursorPointer";
+					styleName = styleName + "blueselected";
 				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
-					styleName = styleName + "selected cursorPointer";
+					styleName = styleName + "selected";
 				}
 			}
 			lessonContainer.add(new StudentClassContentWidget(dataList.get(z), styleName,gooruOid, status, userId));

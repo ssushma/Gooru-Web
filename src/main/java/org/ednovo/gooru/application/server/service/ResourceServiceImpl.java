@@ -763,8 +763,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		params.put(GooruConstants.ID, videoId);
 		params.put(GooruConstants.YOUTUBE_KEY, getYoutubeApiKey());
 		params.put(GooruConstants.YOUTUBE_PART, YOUTUBE_PART_DETAILS);
+		logger.info("getYouTubeApiUrl() here---------------"+getYouTubeApiUrl());
 		String url=AddQueryParameter.constructQueryParams(getYouTubeApiUrl(), params);
-
+		
+		logger.info("getYoutubeDuration-----url------"+url);
 		try {
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 			jsonRep = jsonResponseRep.getJsonRepresentation();

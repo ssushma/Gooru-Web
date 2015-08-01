@@ -99,7 +99,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 	}
 
 	private void setQuestionTypeCaption(){
-		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
+		messageBodyText.setText(i18n.GL3466_4()+i18n.GL_SPL_FULLSTOP());
 		btnYes.setText(i18n.GL_GRR_YES());
 		btnNo.setText(i18n.GL_GRR_NO());
 	}
