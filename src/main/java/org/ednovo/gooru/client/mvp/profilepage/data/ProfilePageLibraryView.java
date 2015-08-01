@@ -150,7 +150,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			leftNav.add(leftMenuItemView);
 			leftMenuItemView.setWidgetCount(leftNav.getWidgetCount()+1);
 			leftMenuItemView.setType(folderList.get(i).getType());
-			if(folderList.get(i).getCollectionType().contains(ASSESSMENT)) {
+			if(folderList.get(i).getType().contains(ASSESSMENT)) {
 				leftMenuItemView.addStyleName("assessment");
 			}else if(folderList.get(i).getType().equals(COLLECTION)){
 				leftMenuItemView.addStyleName("collection");
@@ -163,6 +163,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
 				if(folderList.get(i).getType().equals(COLLECTION)) {
+					leftMenuItemView.removeStyleName("folderOpen");
 					setTopicListData(folderList.get(i),  unitListId);
 					listAllBtn.setVisible(false);
 					folderListPanel.setVisible(false);
@@ -225,7 +226,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
-			AppClientFactory.printSevereLogger(e.getMessage());
+		    AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e.getMessage());
 		}
 	}
 
@@ -251,7 +252,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e.getMessage());
 		}
 	}
 
