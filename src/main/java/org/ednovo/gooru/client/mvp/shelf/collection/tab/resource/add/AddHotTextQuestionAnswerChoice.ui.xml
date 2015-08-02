@@ -11,7 +11,7 @@
 	           <g:RadioButton ui:field="sentenceRDButton" styleName="htQAnswerHeadings" name="ansFormat"></g:RadioButton>
 	     </g:FlowPanel>
 	<g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormAnswerContainer} htQanswerContainer">
-	     <tinyMce:TinyMCE ui:field="highlightTextArea tinyMCETable" characterLimit="500" styleName="htQhighlightTextArea"></tinyMce:TinyMCE>
+	     <tinyMce:TinyMCE ui:field="highlightTextArea" characterLimit="500" styleName="tinyMCETable htQhighlightTextArea"></tinyMce:TinyMCE>
               <g:Label styleName="htQLabelNum" ui:field="labelChoice"></g:Label>
               <g:HTMLPanel styleName="htQAnswerInputControl answerChoiceAndHintsTextcontainer" ui:field="tinyOrTextBoxConatiner">
 	              <tinyMce:TinyMCE ui:field="answerTextBox" characterLimit="500"></tinyMce:TinyMCE>
