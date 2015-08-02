@@ -41,6 +41,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -76,7 +77,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 
 	//All Ui fields
 	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
-				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl,lblStartPage,lblEndPage,lblEditSartPageText,lblError;
+				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl,lblStartPage,lblEndPage,lblEditSartPageText,lblError,errorMsgLabel;
 	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon,pnlEditContainer,timeEditContainer;
 	@UiField FlowPanel actionVerPanel,narrationConatainer,pnlPdfEdiContainer;
 	@UiField TextBox txtMoveTextBox,startpdfPageNumber,stoppdfPageNumber;
@@ -104,6 +105,14 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String MESSAGE_CONTENT_ASSESSMENT =i18n.GL0968_1();
 	private static final String MESSAGE_HEADER =i18n.GL0748();
 	private static final String VALID_END_PAGE = i18n.GL2025();
+
+	private static final String FROM_START_TIME =i18n.GL0972();
+	
+	private static final String FROM_STOP_TIME = i18n.GL0973();
+	private static final String YOUTUBE_START_END_TIME = i18n.GL0971();
+	private static final String VALID_START_STOP_TIME = i18n.GL0970_1();
+
+	private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]{0,6}):(?:[0-5]\\d)$";
 	
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
@@ -412,6 +421,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				public void onSuccess(String youtubeInfo) {
 					if (youtubeInfo != null) {
 						totalVideoLength = Integer.parseInt(youtubeInfo);
+						startStopTimeDisplayText.setVisible(false);
 						startStopTimeDisplayText.setText(i18n.GL0957()+checkForTwoDigits(totalVideoLength/60)+":"
 						+checkForTwoDigits(totalVideoLength%60));
 					}
@@ -648,21 +658,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public void onclickOfnarrationUpdate(ClickEvent event){
 		if(youtube){
 			if(timeEditContainer.isVisible()){
-				String startMin=!startMinTxt.getText().trim().equalsIgnoreCase("")?startMinTxt.getText():"00";
-				String statrSec=!startSecTxt.getText().trim().equalsIgnoreCase("")?startSecTxt.getText():"00";
-				String start="00"+":"+startMin+":"+statrSec;
-				String stopMin=!stopMinTxt.getText().trim().equalsIgnoreCase("")?stopMinTxt.getText():"00";
-				String stopSec=!stopSecTxt.getText().trim().equalsIgnoreCase("")?stopSecTxt.getText():"00";
-				String stop="00"+":"+stopMin+":"+stopSec;
-				AppClientFactory.printInfoLogger("...id............"+collectionItem.getCollectionItemId());
-				collectionItem.setStart(start);
-				collectionItem.setStop(stop);
-				String displayTxt=startMin+":"+statrSec+" - "+stopMin+":"+stopSec;
-				fromLblDisplayText.setText(displayTxt);
-				lblUpdateTextMessage.setVisible(true);
-				actionVerPanel.setVisible(false);
-				updateVideoTime(collectionItem,start,stop);
-				//enableOrDisableTimeEdit(true);
+				editAndUpdateVideoTime();
 			}else{
 				updateNarration();
 			}
@@ -909,13 +905,15 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		enableOrDisableTimeEdit(false);
 	}
 	public void enableOrDisableTimeEdit(boolean value){
-		pnlEditContainer.setVisible(value);
-		pnlYoutubeContainer.setVisible(value);
-		pnlTimeIcon.setVisible(value);
-		pnlArrows.setVisible(value);
-		editVideoTimeLbl.setVisible(value);
-		timeEditContainer.setVisible(!value);
-		actionVerPanel.setVisible(!value);
+		if(youtube){
+			pnlEditContainer.setVisible(value);
+			pnlYoutubeContainer.setVisible(value);
+			pnlTimeIcon.setVisible(value);
+			pnlArrows.setVisible(value);
+			editVideoTimeLbl.setVisible(value);
+			timeEditContainer.setVisible(!value);
+			actionVerPanel.setVisible(!value);
+		}
 	}
 
 	public void setYoutubeTime(String startMin,String startSec,String endMin,String endSec){
@@ -1042,4 +1040,171 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	}
 	public abstract void checkKeyUpHandler(int position,ContentResourceWidgetWithMove contentWidgetWithMove);
 	public abstract void checkBlurHandler(int position,ContentResourceWidgetWithMove contentWidgetWithMove);
+	
+	/*
+	 * This clickEvent is used to update video
+	 */
+	public void editAndUpdateVideoTime()
+	{
+		String narration = null;
+		String from = null;
+		String to = null;
+		pnlTimeIcon.setVisible(false);
+		pnlYoutubeContainer.setVisible(false);
+		if((startMinTxt.getText().trim().length()>0)&&(startSecTxt.getText().trim().length()>0)&&(stopMinTxt.getText().trim().length()>0)&&(stopSecTxt.getText().trim().length()>0)){
+			if (collectionItem.getResource().getResourceType().getName()
+					.equalsIgnoreCase("video/youtube")) {
+				from = FROM_START_TIME;
+				to = FROM_STOP_TIME;
+			}
+			/*
+			 * if (resourceNarrationHtml.getHTML().length() > 0) { narration =
+			 * narrationTxtArea.getHTML(); collectionItemDo.setNarration(narration);
+			 * }
+			 */
+			if (startMinTxt.getText().length() > 0 && startSecTxt.getText().length() > 0) {
+				from = startMinTxt.getText();
+				startMinTxt.setText(from);
+				startMinTxt.getElement().setAttribute("alt", from);
+				startMinTxt.getElement().setAttribute("title", from);
+				from = startSecTxt.getText();
+				startSecTxt.setText(from);
+				startSecTxt.getElement().setAttribute("alt", from);
+				startSecTxt.getElement().setAttribute("title", from);
+				String startTimeTxtMin = null;
+				String startTimeTxtSec = null;
+				if (startMinTxt.getText().length() < 2) {
+					startTimeTxtMin = "0" + startMinTxt.getText();
+	
+				} else {
+					startTimeTxtMin = startMinTxt.getText();
+				}
+				if (startSecTxt.getText().length() < 2) {
+					startTimeTxtSec = "0" + startSecTxt.getText();
+				} else {
+					startTimeTxtSec = startSecTxt.getText();
+				}
+				from = "00:" + startTimeTxtMin + ":" + startTimeTxtSec;
+				// collectionItemDo.setStart(from);
+	
+			}
+			if (stopMinTxt.getText().length() > 0
+					&& stopSecTxt.getText().length() > 0) {
+				to = stopMinTxt.getText();
+				stopMinTxt.setText(to);
+				stopMinTxt.getElement().setAttribute("alt", to);
+				stopMinTxt.getElement().setAttribute("title", to);
+				to = stopSecTxt.getText();
+				stopSecTxt.setText(to);
+				stopSecTxt.getElement().setAttribute("alt", to);
+				stopSecTxt.getElement().setAttribute("title", to);
+				String EndTimeTxtMin = null;
+				String EndTimeTxtSec = null;
+				if (stopMinTxt.getText().length() < 2) {
+					EndTimeTxtMin = "0" + stopMinTxt.getText();
+	
+				} else {
+					EndTimeTxtMin = stopMinTxt.getText();
+				}
+				if (stopSecTxt.getText().length() < 2) {
+					EndTimeTxtSec = "0" + stopSecTxt.getText();
+				} else {
+					EndTimeTxtSec = stopSecTxt.getText();
+				}
+				to = "00:" + EndTimeTxtMin + ":" + EndTimeTxtSec;
+				// collectionItemDo.setStop(to);
+			}
+			if ((collectionItem.getResource().getResourceType().getName()
+					.equalsIgnoreCase("video/youtube"))
+					&& (!from.equals(FROM_START_TIME) || !to.equals(FROM_STOP_TIME))) {
+				this.youtubeValidation(narration, from, to);
+			}else {
+				updateVideoTime(collectionItem,from,to);
+				// setEditMode(false);
+				lblCharLimit.setVisible(false);
+				resourceNarrationHtml.getElement().getStyle().clearWidth();
+			}
+		}else
+		{
+			stopMinTxt.setFocus(true);
+			errorMsgLabel.setText("");
+			errorMsgLabel.setVisible(true);
+			errorMsgLabel.setText(YOUTUBE_START_END_TIME);
+		}
+	}
+	/*
+	 * This method is used to validate video time
+	 */
+		public void youtubeValidation(final String narration, final String start,
+				final String stop) {
+			RegExp regExp = RegExp.compile(REG_EXP);
+			if (!(regExp.test(start)) || !(regExp.test(stop))) {
+				errorMsgLabel.setText("");
+				errorMsgLabel.setText(YOUTUBE_START_END_TIME);
+				return;
+			}
+			String videoId = ResourceImageUtil.getYoutubeVideoId(collectionItem
+					.getResource().getUrl());
+			if (videoId != null) {
+				
+				AppClientFactory.getInjector().getResourceService()
+						.getYoutubeDuration(videoId,
+								new SimpleAsyncCallback<String>() {
+									@Override
+									public void onSuccess(String youtubeInfo) {
+										int totalVideoLengthInMin;
+										if(youtubeInfo!=null){
+										totalVideoLengthInMin = Integer
+												.parseInt(youtubeInfo);
+										String[] startSplitTimeHours = start
+												.split(":");
+										String[] endSplitTimeHours = stop
+												.split(":");
+										Integer startTimeInSeconds = (Integer
+												.parseInt(startSplitTimeHours[0]) * 3600)
+												+ (Integer
+														.parseInt(startSplitTimeHours[1]) * 60)
+												+ (Integer
+														.parseInt(startSplitTimeHours[2]));
+										Integer endTimeInSeconds = (Integer
+												.parseInt(endSplitTimeHours[0]) * 3600)
+												+ (Integer
+														.parseInt(endSplitTimeHours[1]) * 60)
+												+ (Integer
+														.parseInt(endSplitTimeHours[2]));
+										System.out.println("startTimeInSeconds-----"+startTimeInSeconds);
+										System.out.println("stopTimeInSeconds-----"+endTimeInSeconds);
+										System.out.println("youtubeInfo-----"+totalVideoLengthInMin);
+										System.out.println("start-----"+start);
+										System.out.println("stop-----"+stop);
+
+
+										if (startTimeInSeconds < endTimeInSeconds && startTimeInSeconds <= totalVideoLengthInMin && endTimeInSeconds <= totalVideoLengthInMin
+												|| startTimeInSeconds <= totalVideoLengthInMin && endTimeInSeconds == 0
+												|| endTimeInSeconds <= totalVideoLengthInMin && startTimeInSeconds == 0
+												|| endTimeInSeconds == 0 && startTimeInSeconds == 0) {
+											System.out.println("inside method-----");
+											errorMsgLabel.setVisible(false);
+											collectionItem.setStart(start);
+											collectionItem.setStop(stop);
+											updateVideoTime(collectionItem,start,stop);
+											///setEditMode(false);
+										} else {
+//											ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+											startMinTxt.setFocus(true);
+											errorMsgLabel.setText("");
+											errorMsgLabel.setText(VALID_START_STOP_TIME);
+											//setEditMode(true);
+											/*new AlertContentUc(i18n.GL0061(),
+													VALID_START_STOP_TIME);*/
+										}
+									}
+									}
+								});
+			}
+			else
+			{
+			}
+		}
+	
 }
