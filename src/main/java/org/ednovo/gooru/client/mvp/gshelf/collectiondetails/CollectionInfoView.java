@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
@@ -39,11 +40,14 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubDomainStandardsDo;
 import org.ednovo.gooru.application.shared.model.library.SubSubDomainStandardsDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowledgeView;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -139,6 +143,13 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	CourseGradeWidget courseGradeWidget;
 	public FolderDo courseObjG;
 	final String ACTIVE="active";
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
 
 
 	/**
@@ -160,7 +171,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
 		uploadImageLbl.setText(i18n.GL0912());
-		populateStandardValues();
+		getAddStandards();
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
@@ -545,19 +556,44 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                 for(int j=0; j<standardsDescriptionList.size(); j++){
                     HTMLPanel headerDiv = new HTMLPanel("");
                     if(j==0){
-                        if(standardsDescriptionList.get(j).equalsIgnoreCase("CA CCSS")){
+                        if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
                             liPanel.getElement().setId("CA");
                         }else{
                             liPanel.getElement().setId(standardsDescriptionList.get(j));
                         }
+                       
+                        if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
+          		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;"); 	  
+          		        }
+          		      else if((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS"))
+          		        {
+          		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+          		        }
+          		      else if((!isNGSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("NGSS")){
+          		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+          		        }
+          		      else if((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")){
+          		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+          		        }
+                        
                         headerDiv.setStyleName("liPanelStyle");
                     }else{
+                    	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
+                    	{
+                            headerDiv.setStyleName("liPanelStylenonBold");
+                            liPanel.getElement().setAttribute("standarddesc", "College, Career and Civic Life");
+                    	}
+                    	else
+                    	{
                         headerDiv.setStyleName("liPanelStylenonBold");
                         liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
+                    	}
                     }
                     headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
                     liPanel.add(headerDiv);
                 }
+                if(liPanel.getElement().getAttribute("style")!=null && !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;"))
+                {
                 liPanel.addClickHandler(new ClickHandler() {
                     @Override
                     public void onClick(ClickEvent event) {
@@ -572,6 +608,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 					getUiHandlers().showStandardsPopup(standardsVal,standardsDesc, collectionLiPanelWithCloseArray);
 				}
 			});
+                }
                 standardsDropListValues.add(liPanel);
             }
 	}
@@ -1075,9 +1112,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			@Override
 			public void onClick(ClickEvent event) {
 				//This will remove the selected value when we are trying by close button
-//				if(selValues.contains(standard.get("selectedCodeId"))){
-//					selectedValues.remove(standard.get("selectedCodeId"));
-//				}
 				removeGradeWidget(ulSelectedItems,Long.parseLong(standard.get("selectedCodeId")));
 				liPanelWithClose.removeFromParent();
 			}
@@ -1090,5 +1124,54 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		liPanelWithClose.getElement().setAttribute("tag", tagValue);
 		return liPanelWithClose;
 	}
+	public void checkStandarsList(List<String> standarsPreferencesList) {
+		
+		
+		if(standarsPreferencesList!=null){
+			if(standarsPreferencesList.contains("CCSS")){
+				isCCSSAvailable = true;
+			}else{
+				isCCSSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("NGSS")){
+				isNGSSAvailable = true;
+			}else{
+				isNGSSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("TEKS")){
+				isTEKSAvailable = true;
+			}else{
+				isTEKSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("CA")){
+				isCAAvailable = true;
+			}else{
+				isCAAvailable = false;
+			}
+		}
+
+		populateStandardValues();
+	}
+
+	public void getAddStandards() {
+		if(!AppClientFactory.isAnonymous()){
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+
+				});
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			isTEKSAvailable = false;
+		}
+	}
+
+	
 }
 
