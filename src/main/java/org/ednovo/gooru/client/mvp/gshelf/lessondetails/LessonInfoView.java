@@ -60,7 +60,10 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -169,9 +172,32 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, false);
 			}
 		});
+		lessonTitle.addKeyUpHandler(new TitleKeyUpHandler());
+		lessonTitle.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				lessonTitle.getElement().getStyle().clearBackgroundColor();
+				lessonTitle.getElement().getStyle().setBorderColor("#ccc");
+				lblErrorMessage.setVisible(false);
+			}
+		});
 	}
 
-
+	/**
+	 * This class is used for validation on collection title keypress.
+	 *
+	 */
+	private class TitleKeyUpHandler implements KeyUpHandler {
+		public void onKeyUp(KeyUpEvent event) {
+			lblErrorMessage.setVisible(false);
+			if(lessonTitle.getText().length() >= 50) {
+				lblErrorMessage.setText(i18n.GL0143());
+				lblErrorMessage.getElement().setAttribute("alt",i18n.GL0143());
+				lblErrorMessage.getElement().setAttribute("title",i18n.GL0143());
+				lblErrorMessage.setVisible(true);
+			}
+		}
+	}
         @Override
 	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
 		standardsUI.clear();

@@ -30,12 +30,12 @@
 				      </div>
 				   </div>
 				   <g:HTMLPanel styleName="whiteBand" ui:field="editClassMetadataPanel">
-				      <div class="col-md-5 col-sm-5 col-md-5-reset">
+				      <div class="col-md-7 col-sm-7 col-md-7-reset">
 				         <div class="studentDetailsLeft">
 				             <g:Image ui:field="studentImage"></g:Image><span:SpanPanel ui:field="studentMessage" styleName="margin-left-5"></span:SpanPanel>
 				         </div>
 				      </div>
-				      <g:HTMLPanel styleName="col-md-7 col-sm-7 col-md-7-reset" ui:field="planProgressBar">
+				      <g:HTMLPanel styleName="col-md-5 col-sm-5 col-md-5-reset" ui:field="planProgressBar">
 				         <g:HTMLPanel styleName="planProgress" ui:field="planProgressPanel">
 				            <div class="planView">
 				               <ul>
