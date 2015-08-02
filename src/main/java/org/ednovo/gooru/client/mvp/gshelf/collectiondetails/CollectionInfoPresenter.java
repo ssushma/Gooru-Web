@@ -128,7 +128,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		// TODO Auto-generated method stub
 		super.onReset();
 		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);
-		if(view.equalsIgnoreCase("Folder")){
+		if(view!=null && view.equalsIgnoreCase("Folder")){
 			getCollectionDo();	
 		}
 		

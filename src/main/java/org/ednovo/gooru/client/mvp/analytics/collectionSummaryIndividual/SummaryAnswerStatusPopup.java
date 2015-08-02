@@ -140,13 +140,13 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		         if(skip == false)
 					  {
 						answerChoice.setHTML(OeAnswer);
-						if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+						/*if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 							answerChoice.addStyleName(HS_INCORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 							answerChoice.addStyleName(HS_CORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
 							answerChoice.addStyleName(HS_ONMULTIPULEATTEMPTS);
-						}
+						}*/
 					  }
 		         ansFlowPnl.add(answerChoice);
 		        }
