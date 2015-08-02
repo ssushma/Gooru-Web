@@ -162,7 +162,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				leftMenuItemView.addStyleName("folderOpen");
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
-				if(folderList.get(i).getType().equals(COLLECTION)) {
+				if(folderList.get(i).getType().equals(COLLECTION) || folderList.get(i).getType().contains(ASSESSMENT)) {
 					leftMenuItemView.removeStyleName("folderOpen");
 					setTopicListData(folderList.get(i),  unitListId);
 					listAllBtn.setVisible(false);
