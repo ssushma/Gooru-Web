@@ -39,9 +39,12 @@ import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSe
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -123,10 +126,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiField HTMLEventPanel resourcePanel, collectionPanel;
 
-	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
+	@UiField HTMLPanel btnStandardsBrowse, hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,gradesDropDown;
 
 	@UiField Label lblLoadingTextPrevious,lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
-
+	
 	@UiField InlineLabel searchResults;
 
 	@UiField FlowPanel pnlAddFilters,searchResultPanel,sourceContainerFloPanel;
@@ -138,6 +141,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField Button btnSearchType;
 
 	@UiField HTMLPanel ulDropdown, panelBorderBox;
+	@UiField UlPanel standardsDropListValues;
 
 	@UiField
 	PPanel panelNotMobileFriendly,accessModePanel,reviewPanelUc;
@@ -203,8 +207,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageCountForStorage=1,previousScroll;
 
 	Widget pnlFirstTempData=null;
+	
+	List<LiPanelWithClose> searchLiPanelWithCloseArray = new ArrayList<>();
 
 	SearchContributorView ContributorViewpopup = null;
+	
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
+	
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 	/**
 	 * Assign new instance for
@@ -214,6 +230,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	public SearchAbstractView(boolean resourceSearch) {
 		sourceSuggestOracle = new AppMultiWordSuggestOracle(true);
+		
 		publisherSgstBox = new AppSuggestBox(sourceSuggestOracle) {
 			@Override
 			public void keyAction(String text,KeyUpEvent event) {
@@ -246,6 +263,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		};
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFeildsIds();
+		standardsDropListValues.setVisible(false);
 		localStore=Storage.getLocalStorageIfSupported();
 		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		//pnlBackToTop.setVisible(false);
@@ -344,6 +362,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(1), ClickEvent.getType());
 		btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
+		getAddStandards();
+		//btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
 		gradesDropDown.addDomHandler(new GradesDropDownHandler(), ClickEvent.getType());
 		oerLbl.addClickHandler(new ClickOnOER());
 		resourceFiltersDropDwn.addClickHandler(new ResourceFiltersDropDown());
@@ -390,6 +410,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						if(!isClickedOnDropDwn &&(ulSubjectPanel.isVisible() || gradesPanel.isVisible() ||moreFilterPanel.isVisible())){
 							ulSubjectPanel.setVisible(false);
 							gradesPanel.setVisible(false);
+							standardsDropListValues.setVisible(false);
 							if(moreFilterPanel.getElement().getStyle().getDisplay().equalsIgnoreCase("block") && isClickOnMoreFilter){
 								moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 								isClickOnMoreFilter=false;
@@ -401,6 +422,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							ulSubjectPanel.setVisible(false);
 							gradesPanel.setVisible(false);
 							moreFilterPanel.setVisible(false);
+							standardsDropListValues.setVisible(false);
 						}else{
 							isClickedOnDropDwn=false;
 						}
@@ -536,6 +558,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (moreFilterPanel.isVisible()){
 						moreFilterPanel.setVisible(false);
 					}
+					if (standardsDropListValues.isVisible()){
+						standardsDropListValues.setVisible(false);
+					}
 					if(value==1){
 						String displayValue=ulSubjectPanel.getElement().getStyle().getDisplay();
 						if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
@@ -547,7 +572,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						}
 					}
 					if(value==2){
-						getUiHandlers().getAddStandards();
+						if(!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;")){
+							standardsDropListValues.getElement().setAttribute("style", "display:block;");
+						}else{
+							standardsDropListValues.getElement().removeAttribute("style");
+						}
 					}
 				}
 				@Override
@@ -1664,6 +1693,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (moreFilterPanel.isVisible()){
 						moreFilterPanel.setVisible(false);
 					}
+					if (standardsDropListValues.isVisible()){
+						standardsDropListValues.setVisible(false);
+					}
 					String displayValue=gradesPanel.getElement().getStyle().getDisplay();
 					if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
 						gradesPanel.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1693,6 +1725,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					if (gradesPanel.isVisible()){
 						gradesPanel.setVisible(false);
+					}
+					if (standardsDropListValues.isVisible()){
+						standardsDropListValues.setVisible(false);
 					}
 					String displayValue=moreFilterPanel.getElement().getStyle().getDisplay();
 					if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
@@ -2032,5 +2067,124 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, "collection");
 		params.put("query", AppClientFactory.getPlaceManager().getRequestParameter("query"));
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params, true);
+	}
+	public final void populateStandardValues(){
+        for (String standardsTypesArray1 : standardsTypesArray) {
+            List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
+            LiPanel liPanel = new LiPanel();
+            for(int j=0; j<standardsDescriptionList.size(); j++){
+                HTMLPanel headerDiv = new HTMLPanel("");
+                if(j==0){
+                    if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                        liPanel.getElement().setId("CA");
+                    }else{
+                        liPanel.getElement().setId(standardsDescriptionList.get(j));
+                    }
+                   
+                    if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;"); 	  
+      		        }
+      		      else if((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS"))
+      		        {
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+      		        }
+      		      else if((!isNGSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("NGSS")){
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+      		        }
+      		      else if((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")){
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+      		        }
+                    
+                    headerDiv.setStyleName("liPanelStyle");
+                }else{
+                	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
+                	{
+                        headerDiv.setStyleName("liPanelStylenonBold");
+                        liPanel.getElement().setAttribute("standarddesc", "College, Career and Civic Life");
+                	}
+                	else
+                	{
+                    headerDiv.setStyleName("liPanelStylenonBold");
+                    liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
+                	}
+                }
+                headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
+                liPanel.add(headerDiv);
+            }
+            if(liPanel.getElement().getAttribute("style")!=null && !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;"))
+            {
+            liPanel.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+				String standardsVal = event.getRelativeElement().getAttribute("id");
+				String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+
+				searchLiPanelWithCloseArray.clear();
+			//	setUpdatedStandards
+			/*	for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
+					searchLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+				}*/
+
+				getUiHandlers().showStandardsPopup(standardsVal,standardsDesc, searchLiPanelWithCloseArray);
+			}
+		});
+            }
+            standardsDropListValues.add(liPanel);
+        }
+}
+public void checkStandarsList(List<String> standarsPreferencesList) {
+		
+		
+		if(standarsPreferencesList!=null){
+			if(standarsPreferencesList.contains("CCSS")){
+				isCCSSAvailable = true;
+			}else{
+				isCCSSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("NGSS")){
+				isNGSSAvailable = true;
+			}else{
+				isNGSSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("TEKS")){
+				isTEKSAvailable = true;
+			}else{
+				isTEKSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("CA")){
+				isCAAvailable = true;
+			}else{
+				isCAAvailable = false;
+			}
+		}
+
+		populateStandardValues();
+	}
+
+	public void getAddStandards() {
+		if(!AppClientFactory.isAnonymous()){
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+
+				});
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			isTEKSAvailable = false;
+		}
+	}
+	@Override
+	public Map<String, String> getStandardsSelectedFilters(String viewToken) {
+		 Map<String, String> filtersMap = new HashMap<String, String>();
+		 if(!selectedStandards.isEmpty()){
+			 filtersMap.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
+		 }
+		 return filtersMap;
 	}
 }
