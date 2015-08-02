@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresen
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
@@ -235,20 +236,33 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
 		if(page.equalsIgnoreCase(UrlNavigationTokens.FALSE)) {
 			if(!classpageDo.isVisibility()){
-				if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
-					if(status.equalsIgnoreCase("not-invited")){
-						new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
-					}else if(status.equalsIgnoreCase("pending")){
-						studentClassLearningMapPresenter.showProgressMapBar(false);
-						joinStudentClass();
-					} else {
-						studentClassLearningMapPresenter.showProgressMapBar(true);
-						getView().setPreviewClassMode(false);
-					}
+				if(AppClientFactory.isAnonymous()){
+					getView().setPrivateLogoutPanelVisibility(false);
+					classpageDo = null;
+					LoginPopupUc loginPopupUc=new LoginPopupUc() {
+						@Override
+						public void onLoginSuccess() {
+							
+						}
+					};
 				}else{
-					studentClassLearningMapPresenter.showProgressMapBar(false);
-					getView().setPreviewClassMode(true);
+					getView().setPrivateLogoutPanelVisibility(false);
+					if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+						if(status.equalsIgnoreCase("not-invited")){
+							new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
+						}else if(status.equalsIgnoreCase("pending")){
+							studentClassLearningMapPresenter.showProgressMapBar(false);
+							joinStudentClass();
+						} else {
+							studentClassLearningMapPresenter.showProgressMapBar(true);
+							getView().setPreviewClassMode(false);
+						}
+					}else{
+						studentClassLearningMapPresenter.showProgressMapBar(false);
+						getView().setPreviewClassMode(true);
+					}
 				}
+				
 			}else{
 				if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
 					if(status.equalsIgnoreCase("not-invited") || status.equalsIgnoreCase("pending")){
@@ -281,6 +295,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 			public void onSuccess(Boolean isJoined) {
 				if(isJoined) {
 					getView().setSuccesspopup();
+					getView().setPrivateLogoutPanelVisibility(true);
 					setClassPageDo();
 				} else {
 					getView().closeJoinPopup(false);

@@ -135,6 +135,11 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	}
 	
 	@Override
+	public void setPrivateLogoutPanelVisibility(boolean isVisible) {
+		classpageMainContainer.setVisible(isVisible);
+	}
+	
+	@Override
 	public void setCourseData(ClasspageDo classpageDo) {
 		this.classpageDo=classpageDo;
 		switchCheckBox.getElement().setId("myonoffswitch");

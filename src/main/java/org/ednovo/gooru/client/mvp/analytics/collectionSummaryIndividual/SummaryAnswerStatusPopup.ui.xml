@@ -5,7 +5,7 @@
 	<g:HTMLPanel styleName="summaryWrapper">
 		<g:HTMLPanel styleName="summaryPopUpHeader no-gutter">
 			<g:HTMLPanel styleName="col-md-7 heading">
-			     <g:Label  ui:field="titleLbl" styleName="summaryTitle">Question</g:Label>
+			     <g:Label  ui:field="titleLbl" styleName="summaryTitle">Response</g:Label>
 			  </g:HTMLPanel>
 			<g:HTMLPanel styleName="col-md-5">
 			    <g:Label  ui:field="closeLbl" styleName="summaryClose"></g:Label>

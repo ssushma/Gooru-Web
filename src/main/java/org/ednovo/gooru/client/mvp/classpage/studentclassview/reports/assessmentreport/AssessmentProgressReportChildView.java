@@ -102,7 +102,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class AssessmentProgressReportChildView extends ChildView<AssessmentProgressReportChildPresenter> implements IsAssessmentProgressReportView,ClientConstants {
 
-	@UiField FlowPanel PrintPnl, printOptions;
+	@UiField FlowPanel PrintPnl, printOptions, reportViewContainer;
 	@UiField FlowPanel progressRadial,scoreRoundPanel, thumbnailImage, timeSpentPanel, headerLinksContainer, attemptPanel, selfReportPanel;
 	@UiField HTMLPanel  collectionSummaryText, questionsTable, collectionOverviewPanel;
 	@UiField ListBox sessionsDropDown;
@@ -114,10 +114,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	@UiField PPanel lastModifiedTime,goal;
 	@UiField Button printButton,downloadButton;
 	@UiField Frame downloadFile;
-	@UiField Label collectionOverviewBtn, questionsBtn, oeQuestionsBtn;
+	@UiField Label collectionOverviewBtn, questionsBtn, oeQuestionsBtn,errorPanel;
 	@UiField LoadingUc loadingImageLabel;
 	@UiField Anchor externalAssessmentUrl;
-	
+	@UiField LoadingUc cropImageLoading;
+
 	HTMLPanel printScoredData=new HTMLPanel("");
 	EmailPopup emailPopup=null;
 
@@ -180,7 +181,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		public void onChange(ChangeEvent event) {
 			int selectedIndex=sessionsDropDown.getSelectedIndex();
 			setSessionStartTime(selectedIndex);
-			getContentData(null);
+			getContentData(null,false,null);
 		}
 	}
 
@@ -202,10 +203,14 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 
 	public void setLabelAndIds() {
-
+		loaderVisibility(true);
+		errorPanelData(false, false);
+		
 		PrintPnl.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-106)+"px");
 		progressRadial.getElement().setId("fpnlprogressRadial");
-
+		cropImageLoading.setLoadingText(i18n.GL1234());
+		cropImageLoading.getElement().setId("loadingUcCropImageLoadingInStudentSummaryView");
+		
 		String collectionType = i18n.GL4006();
 
 		if(isCollection) {
@@ -624,18 +629,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					}
 					answerspnl.setStyleName(STYLE_MARGIN_AUTO);
 					adTable.setWidget(i, 2,answerspnl);
-				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
-					if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
-						Label viewResponselbl=new Label(VIEWRESPONSE);
-						viewResponselbl.setStyleName("summaryViewResponse");
-						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
-						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
-						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
-						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						viewResponselbl.addClickHandler(new SummaryPopupClick());
-						adTable.setWidget(i, 2,viewResponselbl);
-					}
-				} else if(OE.equalsIgnoreCase(questionType)){
+				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType) || OE.equalsIgnoreCase(questionType)){
 					if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 						Label viewResponselbl=new Label(VIEWRESPONSE);
 						viewResponselbl.setStyleName("summaryViewResponse");
@@ -647,7 +641,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				}
-
 				//Set attempts
 				Label attempts=new Label(i18n.GL2269());
 				attempts.setStyleName(STYLE_TABLE_CENTER);
@@ -658,7 +651,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		            completion.setStyleName("alignCenterAndBackground");
 		            if(noOfAttempts>0){
 		            	completion.setText(i18n.GL_GRR_YES());
-		            	adTable.getRowFormatter().addStyleName(i, STYLE_GREEN);
 		            }else{
 		            	completion.setText(i18n.GL_GRR_NO());
 		            }
@@ -842,19 +834,28 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 		@Override
 		public void onClick(ClickEvent event) {
-			collectionOverviewBtn.removeStyleName(CssTokens.ACTIVE);
-			questionsBtn.removeStyleName(CssTokens.ACTIVE);
-			oeQuestionsBtn.removeStyleName(CssTokens.ACTIVE);
-			selectedLbl.addStyleName(CssTokens.ACTIVE);
-			getContentData(selectedLbl.getElement().getAttribute("type"));
+			getContentData(selectedLbl.getElement().getAttribute("type"), true, selectedLbl);
 		}
 	}
-
-	private void getContentData(String type) {
+	
+	private void setPanelStyling(Label selectedLbl) {
+		collectionOverviewBtn.removeStyleName(CssTokens.ACTIVE);
+		questionsBtn.removeStyleName(CssTokens.ACTIVE);
+		oeQuestionsBtn.removeStyleName(CssTokens.ACTIVE);
+		selectedLbl.addStyleName(CssTokens.ACTIVE);
+	}
+	
+	private void getContentData(String type, boolean isRefresh, Label selectedLbl) {
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
 		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, "");
 		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
 			getPresenter().getCollectionScoreForSession(assessmentId, classpageId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);
+		} else {
+			if(isRefresh) {
+				setPanelStyling(selectedLbl);
+			} else {
+				setPanelStyling(collectionOverviewBtn);
+			}
 		}
 		getPresenter().setCollectionSummaryData(assessmentId, classpageId,userId,sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
 	}
@@ -863,8 +864,35 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		if(!isExternalAssessment) {
 			Label erroeMsg=new Label();
 			erroeMsg.setStyleName(STYLE_ERROR_MSG);
-			erroeMsg.setText(i18n.GL3265());
+			if(collectionOverviewPanel.isVisible()) {
+				if(collectionOverviewBtn.getStyleName()!=null&&collectionOverviewBtn.getStyleName().contains(CssTokens.ACTIVE)) {
+					erroeMsg.setText(i18n.GL3467());
+				}
+				if(questionsBtn.getStyleName()!=null&&questionsBtn.getStyleName().contains(CssTokens.ACTIVE)) {
+					erroeMsg.setText(i18n.GL3264());
+				}
+				if(oeQuestionsBtn.getStyleName()!=null&&oeQuestionsBtn.getStyleName().contains(CssTokens.ACTIVE)) {
+					erroeMsg.setText(i18n.GL3265());
+				}
+			} else {
+				erroeMsg.setText(i18n.GL3265());
+			}
 			globalPanel.add(erroeMsg);
 		}
+	}
+
+	@Override
+	public void errorPanelData(boolean isErrorPanelVisible, boolean isReportContainerVisible) {
+		errorPanel.setVisible(isErrorPanelVisible);
+		reportViewContainer.setVisible(isReportContainerVisible);
+		if(isErrorPanelVisible) {
+			errorPanel.setStyleName(STYLE_ERROR_MSG);
+			errorPanel.setText(i18n.GL3115());
+		}
+	}
+
+	@Override
+	public void loaderVisibility(boolean isVisible) {
+		cropImageLoading.setVisible(isVisible);
 	}
 }

@@ -61,6 +61,7 @@
 									<g:TextBox ui:field="stopSecTxt"></g:TextBox>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
+							<g:Label ui:field="errorMsgLabel" styleName="errorMessage"></g:Label>
 							<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 							<g:HTMLPanel>
 							</g:HTMLPanel>

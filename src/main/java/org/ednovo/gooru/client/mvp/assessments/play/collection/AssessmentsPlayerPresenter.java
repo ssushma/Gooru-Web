@@ -610,7 +610,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		}
 
 		key.append(AppClientFactory.getLoggedInUser().getGooruUId());
-		AppClientFactory.printInfoLogger("getCookieKey : "+key.toString());
     	return key.toString();
     }
 

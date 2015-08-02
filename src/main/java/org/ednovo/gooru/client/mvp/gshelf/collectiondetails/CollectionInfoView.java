@@ -47,7 +47,6 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.DepthKnowled
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.LanguageView;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -68,7 +67,13 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -167,6 +172,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, false);
 			}
 		});
+		collectionTitle.addKeyUpHandler(new TitleKeyUpHandler(1));
+		collectionTitle.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				collectionTitle.getElement().getStyle().clearBackgroundColor();
+				collectionTitle.getElement().getStyle().setBorderColor("#ccc");
+				lblErrorMessage.setVisible(false);
+			}
+		});
+		
 		depthOfKnowledgeContainer.setVisible(false);
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
@@ -200,8 +215,82 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
 		});
 		collThumbnail.getElement().setId("mycollectionUploadImage");
+		learningObjective.addKeyUpHandler(new TitleKeyUpHandler(2));
+		learningObjective.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				learningObjective.getElement().getStyle().clearBackgroundColor();
+				learningObjective.getElement().getStyle().setBorderColor("#ccc");
+				lblErrorMessageForLO.setVisible(false);
+			}
+		});
+		learningObjective.addKeyDownHandler(new KeyDownHandler() {
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				restrictKeyLimit(event, learningObjective, learningObjective.getText(), lblErrorMessageForLO);
+			}
+		});	
 	}
-
+	private void restrictKeyLimit(KeyDownEvent event, TextArea textArea, String text, Label errorLabelToDisplay) {
+		if(text.trim().length()<=999) {
+			errorLabelToDisplay.setVisible(false);	 
+		} else if(text.trim().length()>998) {
+			if(event==null) {
+				textArea.cancelKey();
+				errorLabelToDisplay.setVisible(true);
+				errorLabelToDisplay.setText(i18n.GL0143());	
+				errorLabelToDisplay.getElement().setAttribute("alt",i18n.GL0143());
+				errorLabelToDisplay.getElement().setAttribute("title",i18n.GL0143());
+			} else {
+				if(event.isControlKeyDown() || event.isShiftKeyDown() ||
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_UP)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_LEFT)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_DOWN)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_RIGHT)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_DELETE))) {
+					if(text.trim().length()<=1000) {
+						errorLabelToDisplay.setVisible(false);	 
+					}
+				} else {
+					textArea.cancelKey();
+					errorLabelToDisplay.setVisible(true);
+					errorLabelToDisplay.setText(i18n.GL0143());
+					errorLabelToDisplay.getElement().setAttribute("alt",i18n.GL0143());
+					errorLabelToDisplay.getElement().setAttribute("title",i18n.GL0143());
+				}
+			}
+		}
+	}
+	/**
+	 * This class is used for validation on collection title keypress.
+	 *
+	 */
+	private class TitleKeyUpHandler implements KeyUpHandler {
+		int value;
+		TitleKeyUpHandler(int value){
+			this.value=value;
+		}
+		public void onKeyUp(KeyUpEvent event) {
+			if(value==1){
+				lblErrorMessage.setVisible(false);
+				if(collectionTitle.getText().length() >= 50) {
+					lblErrorMessage.setText(i18n.GL0143());
+					lblErrorMessage.getElement().setAttribute("alt",i18n.GL0143());
+					lblErrorMessage.getElement().setAttribute("title",i18n.GL0143());
+					lblErrorMessage.setVisible(true);
+				}
+			}else if(value==2){
+				lblErrorMessageForLO.setVisible(false);
+				if(learningObjective.getText().length() >= 1000) {
+					lblErrorMessageForLO.setText(i18n.GL0143());
+					lblErrorMessageForLO.getElement().setAttribute("alt",i18n.GL0143());
+					lblErrorMessageForLO.getElement().setAttribute("title",i18n.GL0143());
+					lblErrorMessageForLO.setVisible(true);
+				}
+			}
+		}
+	}
 	/**
 	 * This inner class is used to get selected subjects grades
 	 */
