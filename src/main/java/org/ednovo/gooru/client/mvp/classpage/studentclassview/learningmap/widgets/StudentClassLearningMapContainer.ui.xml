@@ -3,7 +3,7 @@
      xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src="" />
     <g:HTMLPanel styleName="rowContainer no-gutter">
-		<uc:HTMLEventPanel styleName="col-md-3 col-sm-3 cursorPointer" ui:field="unitBlock">
+		<uc:HTMLEventPanel styleName="cursorPointer col-md-3 col-sm-3" ui:field="unitBlock">
 		   <g:Label styleName="numaricOrder" ui:field="numericOrder"></g:Label>
 		   <g:HTMLPanel styleName="heighlightBlockUnitReports">
 		      <g:HTMLPanel styleName="lessonDetails">

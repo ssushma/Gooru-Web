@@ -1248,12 +1248,14 @@ th.headcol.whitebg {
     position: absolute;
     text-align: center;
     top: 0;
+    left: 0;
     width: 81px;
 }
 
 .lesson-view-data .resourceImgContainer div{
 	position:relative;
-	display:table-cell;
+	display:inline-block;
+	margin-right: 5px;
 }
 .lesson-view-data .resourceImgContainer div:hover {
     opacity: 0.6;

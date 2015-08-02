@@ -1346,10 +1346,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	@UiHandler("createNewCollection")
 	public void clickOnCollection(ClickEvent clickEvent){
 		getUiHandlers().addNewContent("collection");
+		getImgInlineLbl().setStyleName("");
 	}
 	@UiHandler("createNewAssessment")
 	public void clickOnAssessment(ClickEvent clickEvent){
 		getUiHandlers().addNewContent("assessment");
+		getImgInlineLbl().setStyleName("");
 	}
 
 	@Override
