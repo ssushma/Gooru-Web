@@ -1016,7 +1016,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionHotTextAnswerChoiceContainer.getWidget(i);
 			addQuestionAnswerChoice.setLabelName(anserChoiceNumArray[i]);
 		}
-		if(questionHotTextAnswerChoiceContainer.getWidgetCount()<10){
+		if(questionHotTextAnswerChoiceContainer.getWidgetCount()<5){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
@@ -1360,7 +1360,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			showRemoveToolTip(addQuestionAnswer.ansChoiceDeleteButton);
 		}
 		questionHotTextAnswerChoiceContainer.add(addQuestionAnswer);
-		if(questionHotTextAnswerChoiceContainer.getWidgetCount()>=10){
+		if(questionHotTextAnswerChoiceContainer.getWidgetCount()>=5){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}

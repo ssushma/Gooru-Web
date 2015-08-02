@@ -117,7 +117,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
 
-	boolean youtube,isPdf;
+	boolean youtube,isPdf=false;
 	boolean isHavingBadWords=false;
 	boolean isEditResourceClicked=false;
 
@@ -906,13 +906,13 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	}
 	public void enableOrDisableTimeEdit(boolean value){
 		if(youtube){
-			pnlEditContainer.setVisible(value);
-			pnlYoutubeContainer.setVisible(value);
-			pnlTimeIcon.setVisible(value);
-			pnlArrows.setVisible(value);
-			editVideoTimeLbl.setVisible(value);
-			timeEditContainer.setVisible(!value);
-			actionVerPanel.setVisible(!value);
+		pnlEditContainer.setVisible(value);
+		pnlYoutubeContainer.setVisible(value);
+		pnlTimeIcon.setVisible(value);
+		pnlArrows.setVisible(value);
+		editVideoTimeLbl.setVisible(value);
+		timeEditContainer.setVisible(!value);
+		actionVerPanel.setVisible(!value);
 		}
 	}
 

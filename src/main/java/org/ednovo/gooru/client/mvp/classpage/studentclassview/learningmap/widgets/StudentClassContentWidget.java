@@ -138,10 +138,6 @@ public class StudentClassContentWidget extends Composite {
 			if(status!=null&&status.equalsIgnoreCase("active")) {
 				params.put("isStudent", "true");
 			}
-			if(status==null) {
-				status = "debug-point";
-			}
-			contentPanel.getElement().setAttribute("debug-point", status);
 			
 			params.put("id", gooruOid);
 			params.put("cid", classUId);
@@ -159,5 +155,4 @@ public class StudentClassContentWidget extends Composite {
 			}
 		}
 	}
-
 }
