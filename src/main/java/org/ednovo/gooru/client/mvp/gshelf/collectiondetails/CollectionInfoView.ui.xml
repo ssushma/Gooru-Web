@@ -33,7 +33,7 @@
 				<p>Learning Objective</p>
 				<p>
 					<g:TextArea styleName="form-control" ui:field="learningObjective" />
-					<g:Label ui:field="lblErrorMessageForLO"></g:Label>
+					<g:Label ui:field="lblErrorMessageForLO" styleName="errorMessage text-right"></g:Label>
 				</p>
 			</div>
 		</div>
