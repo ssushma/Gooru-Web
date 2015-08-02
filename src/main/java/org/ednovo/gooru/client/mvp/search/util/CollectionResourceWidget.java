@@ -393,7 +393,7 @@ public class CollectionResourceWidget extends Composite {
 		public void setReviewCount(String resourceId,Integer count) {
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
 				if(count!=0){
-					ratingWidgetView.getRatingCountLabel().setVisible(true);
+					ratingWidgetView.getRatingCountLabel().setVisible(false);
 					setUpdateReviewCount(count);
 					if(count==1){
 						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL3006());
