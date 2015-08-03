@@ -948,8 +948,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_QUESTION_ITEM, collectionId);
 		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
+		collectionQuestionItemDo.setMediaFilename(mediafileName);
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
-		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
+		//collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
 		getLogger().info("addQuestionResource --- "+ url);
 		getLogger().info("addQuestionResource data --- "+ collectionQuestionData);

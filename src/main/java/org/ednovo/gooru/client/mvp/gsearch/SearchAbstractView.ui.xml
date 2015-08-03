@@ -142,13 +142,13 @@
 							</g:HTMLPanel>
 							<panel:UlPanel ui:field="ulSubjectPanel"/>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="btn-group" ui:field="btnStandardsBrowse">
+						<g:HTMLPanel styleName="btn-group grade" ui:field="btnStandardsBrowse">
 							<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
-							<!-- <g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
-								<span class="glyphicon gliphIconImage"
-										aria-hidden="true"></span>
+						<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
+								<g:InlineLabel styleName="caret"></g:InlineLabel>
 								<g:InlineLabel styleName="sr-only"></g:InlineLabel>
-							</g:HTMLPanel> -->
+							</g:HTMLPanel>
+							<panel:UlPanel styleName="dropdown-menu" ui:field="standardsDropListValues"/>
 						</g:HTMLPanel>
 					</div>
 					<g:FlowPanel ui:field="pnlAddFilters" styleName="searchFilters"></g:FlowPanel>
