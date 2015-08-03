@@ -1901,6 +1901,7 @@ padding-bottom: 10px;
 	color:#515151;
 	text-align:left;
 	word-break: break-word !important;
+	word-wrap: break-word;/*Fire fox*/
 	padding-right: 10px !important;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks .singleBlock{
