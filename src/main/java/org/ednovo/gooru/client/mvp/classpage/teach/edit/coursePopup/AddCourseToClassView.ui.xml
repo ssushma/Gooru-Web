@@ -18,10 +18,10 @@
             <div class="modal-body">
                <g:HTML styleName="indications" ui:field="addingTextLbl"></g:HTML>
                <g:HTMLPanel styleName="assignCourseBlock" ui:field="emptyCourseBlockContainer">
-                  <h3>You have to create a course first</h3>
+                  <uc:H3Panel ui:field="createCourseHeader"></uc:H3Panel>
                   <ul>
                      <div class="createCourseImage"></div>
-                     <li><em>To assign any content to your class,it must belong to an existing course.Course are created and edited in My Content</em></li>
+                     <li><em><g:InlineLabel ui:field="courseNotesLbl"></g:InlineLabel></em></li>
                   </ul>
                   <g:HTMLPanel styleName="mycontent">
                        <g:Button styleName="primary" text="Go to My Content" title="Go to My Content" ui:field="gotoMyContent"/>
@@ -32,11 +32,11 @@
 				</g:ScrollPanel>
 			  <g:Label ui:field="lblEmptyErrorMessage" styleName="noTextMessage"/>
               <g:HTMLPanel styleName="assignCourseBlock" ui:field="assignCourseBlockContainer">
-                  <h3>Once you assign this Course,</h3>
+                  <uc:H3Panel ui:field="assginCourse"></uc:H3Panel>
                   <ul>
-                     <li><span class="bluedot"></span> <em>You will no longer be able to delete questions in assignments, so that scores for your students are accurately represented in reports.</em></li>
-                     <li><span class="greendot"></span> <em>Any edits you make to the content after assigning to a class may affect the reports that you see for your students.</em></li>
-                     <li><span class="orgdot"></span> <em>Any new content to you add to that Course after this point will immediately reflect in the Class.</em></li>
+                     <li><span class="bluedot"></span> <em><g:InlineLabel ui:field="bluedotLbl"></g:InlineLabel></em></li>
+                     <li><span class="greendot"></span> <em><g:InlineLabel ui:field="greenLbl"></g:InlineLabel></em></li>
+                     <li><span class="orgdot"></span> <em><g:InlineLabel ui:field="orangeLbl"></g:InlineLabel></em></li>
                   </ul>
               </g:HTMLPanel> 
             </div>

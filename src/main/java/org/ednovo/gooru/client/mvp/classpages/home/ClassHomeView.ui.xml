@@ -56,7 +56,7 @@
 	      <g:HTMLPanel styleName="myClassesAlert" ui:field="notesPanel">
 	         <div class="alertIcon"> <img src="images/alertSuccessIcon.png"/> </div>
 	         <g:HTMLPanel styleName="alertText" >
-	            <p>Starting 2015-2016 school year, we are offering improvements to new Classes. As a result, we wanted to keep your old content and data in place. However, any new classes that you would like to access or will. If you are looking to access a class or create a new class, please click on the 2015 - 2016 tab. </p>
+	            <txt:PPanel ui:field="schoolAlertPanel"></txt:PPanel>
 	         </g:HTMLPanel>
 	      </g:HTMLPanel>
 	   </div>
