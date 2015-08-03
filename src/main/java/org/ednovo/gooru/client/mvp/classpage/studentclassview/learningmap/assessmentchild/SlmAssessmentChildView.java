@@ -148,13 +148,13 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			reportView.add(new SlmExternalAssessmentForm(planContentDo.getProgress()));
 		} else if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")) {
 			imageContainer.setStyleName("assessmentImageContainer");
-			timeSpentLbl.setText("Score");
-			lastAccessedLbl.setText("Last Attempted");
+			timeSpentLbl.setText(i18n.GL2288());
+			lastAccessedLbl.setText(i18n.GL3469_11());
 			timeSpent.setText(planContentDo.getProgress().getScoreInPercentage()+"%");
 		} else {
 			imageContainer.setStyleName("collectionImageContainer");
-			timeSpentLbl.setText("Total Time Spent");
-			lastAccessedLbl.setText("Last Viewed");
+			timeSpentLbl.setText(i18n.GL2275());
+			lastAccessedLbl.setText(i18n.GL3469_10());
 			timeSpent.setText(StringUtil.getFormattedDate(planContentDo.getProgress().getTimeSpent(), ""));
 		}
 		contentName.setText(planContentDo.getTitle());
