@@ -99,6 +99,7 @@
 #gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader span {
     float: left;
     padding: 17px 20px;
+    cursor: pointer;
 }
 #gShelfMainContainer .floderLeftContainer .myCoursesLeftMainHeader span.plus {
     float: right;
