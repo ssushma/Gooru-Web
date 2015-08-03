@@ -909,6 +909,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		pnlEditContainer.setVisible(value);
 		pnlYoutubeContainer.setVisible(value);
 		pnlTimeIcon.setVisible(value);
+		startStopTimeDisplayText.setVisible(true);
 		pnlArrows.setVisible(value);
 		editVideoTimeLbl.setVisible(value);
 		timeEditContainer.setVisible(!value);
@@ -1049,8 +1050,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		String narration = null;
 		String from = null;
 		String to = null;
-		pnlTimeIcon.setVisible(false);
-		pnlYoutubeContainer.setVisible(false);
 		if((startMinTxt.getText().trim().length()>0)&&(startSecTxt.getText().trim().length()>0)&&(stopMinTxt.getText().trim().length()>0)&&(stopSecTxt.getText().trim().length()>0)){
 			if (collectionItem.getResource().getResourceType().getName()
 					.equalsIgnoreCase("video/youtube")) {
@@ -1119,6 +1118,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					&& (!from.equals(FROM_START_TIME) || !to.equals(FROM_STOP_TIME))) {
 				this.youtubeValidation(narration, from, to);
 			}else {
+				startStopTimeDisplayText.setVisible(false);
 				updateVideoTime(collectionItem,from,to);
 				// setEditMode(false);
 				lblCharLimit.setVisible(false);
@@ -1140,6 +1140,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			RegExp regExp = RegExp.compile(REG_EXP);
 			if (!(regExp.test(start)) || !(regExp.test(stop))) {
 				errorMsgLabel.setText("");
+				errorMsgLabel.setVisible(true);
 				errorMsgLabel.setText(YOUTUBE_START_END_TIME);
 				return;
 			}
@@ -1172,18 +1173,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 														.parseInt(endSplitTimeHours[1]) * 60)
 												+ (Integer
 														.parseInt(endSplitTimeHours[2]));
-										System.out.println("startTimeInSeconds-----"+startTimeInSeconds);
-										System.out.println("stopTimeInSeconds-----"+endTimeInSeconds);
-										System.out.println("youtubeInfo-----"+totalVideoLengthInMin);
-										System.out.println("start-----"+start);
-										System.out.println("stop-----"+stop);
-
-
 										if (startTimeInSeconds < endTimeInSeconds && startTimeInSeconds <= totalVideoLengthInMin && endTimeInSeconds <= totalVideoLengthInMin
 												|| startTimeInSeconds <= totalVideoLengthInMin && endTimeInSeconds == 0
 												|| endTimeInSeconds <= totalVideoLengthInMin && startTimeInSeconds == 0
 												|| endTimeInSeconds == 0 && startTimeInSeconds == 0) {
-											System.out.println("inside method-----");
 											errorMsgLabel.setVisible(false);
 											collectionItem.setStart(start);
 											collectionItem.setStop(stop);
@@ -1192,6 +1185,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 										} else {
 //											ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 											startMinTxt.setFocus(true);
+											errorMsgLabel.setVisible(true);
 											errorMsgLabel.setText("");
 											errorMsgLabel.setText(VALID_START_STOP_TIME);
 											//setEditMode(true);
