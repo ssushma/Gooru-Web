@@ -2,7 +2,8 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
-	<ui:style src="" />
+    <ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+    <ui:style src="" />
 	<g:HTMLPanel styleName="rowContainer no-gutter">
 	   <uc:HTMLEventPanel styleName="col-md-3 col-sm-3" ui:field="unitBlock">
 	      <g:Label styleName="numaricOrder" ui:field="numericOrder"></g:Label>
@@ -29,7 +30,7 @@
 	   <div class="col-md-1 col-sm-1 col-xs-12">
 	      <div class="timeAndScore">
 	         <g:HTMLPanel styleName="avgScore" ui:field="avgScorePanel">
-	            <p>Avg Score</p>
+	            <span:PPanel text="{i18n.GL3469_17}"></span:PPanel>
 	            <span:H2Panel ui:field="totalScore"></span:H2Panel>
 	         </g:HTMLPanel>
 	      </div>

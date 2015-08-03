@@ -1,6 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc" 
     xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+	
+    <ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+    
 	<ui:style src="" />
 	<g:HTMLPanel styleName="dashboardContainer">
 	   	<span:LoadingUc ui:field="cropImageLoading"/>
@@ -15,11 +18,11 @@
 		         </div>
 		         <div class="col-md-6 col-sm-6">
 		            <div class="scoreStatus">
-		               <div class="red">Below 60%</div>
-		               <div class="org">60%- 69%</div>
-		               <div class="yellowgreen">70%- 79%</div>
-		               <div class="lightgreen">80%- 89%</div>
-		               <div class="green">90%- 100%</div>
+		               <g:Label styleName="red" text="{i18n.GL3469_19}"></g:Label>
+		               <g:Label styleName="org" text="{i18n.GL3469_20}"></g:Label>
+		               <g:Label styleName="yellowgreen" text="{i18n.GL3469_21}"></g:Label>
+		               <g:Label styleName="lightgreen" text="{i18n.GL3469_22}"></g:Label>
+		               <g:Label styleName="green" text="{i18n.GL3469_23}"></g:Label>
 		            </div>
 		         </div>
 		         <div class="clearfix"></div>

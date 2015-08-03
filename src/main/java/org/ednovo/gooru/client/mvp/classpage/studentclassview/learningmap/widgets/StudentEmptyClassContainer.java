@@ -1,6 +1,8 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -12,6 +14,8 @@ public class StudentEmptyClassContainer extends Composite {
 
 	@UiField PPanel errorLbl, recoverLbl;
 	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	private static StudentEmptyClassContainerUiBinder uiBinder = GWT
 			.create(StudentEmptyClassContainerUiBinder.class);
 
@@ -24,7 +28,7 @@ public class StudentEmptyClassContainer extends Composite {
 	}
 	
 	public void setUserName(String userName) {
-		errorLbl.setText(userName+" has not added content for this Class yet.");
-		recoverLbl.setText("Please check back again later!");
+		String errorLblStr = StringUtil.generateMessage(i18n.GL3469_9(), userName != null ? userName : "");
+		errorLbl.setText(errorLblStr);
 	}
 }
