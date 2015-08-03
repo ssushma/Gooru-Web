@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -64,6 +65,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
@@ -125,6 +127,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	AddCenturyPresenter addCenturyPresenter = null;
 
 	GooruGradesPresenter gooruGradesPresenter = null;
+	StandardsPopupPresenter standardsPopupPresenter;
 
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
 
@@ -149,7 +152,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchAbstractPresenter(V view, P proxy,
 			SignUpPresenter signUpViewPresenter,
 			AddStandardsPresenter addStandardsPresenterObj,
-			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewMorePeoplePresenter) {
+			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewMorePeoplePresenter,StandardsPopupPresenter standardsPopupPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.addStandardsPresenter = addStandardsPresenterObj;
@@ -157,6 +160,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		this.gooruGradesPresenter = gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.viewMorePeoplePresenter=viewMorePeoplePresenter;
+		this.standardsPopupPresenter=standardsPopupPresenter;
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
 		//addRegisteredHandler(DisableSpellSearchEvent.TYPE, this);
@@ -786,5 +790,18 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public void setSearchResultsBackToTop(
 			SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsBackToTop) {
 		this.searchResultsBackToTop = searchResultsBackToTop;
+	}
+	@Override
+	public void showStandardsPopup(String standardVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+		Window.enableScrolling(false);
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setSearchAbstractPresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
+		addToPopupSlot(standardsPopupPresenter);
+	}
+
+	public void setSelectedStandards(List<Map<String, String>> standListArray) {
+		getView().setUpdatedStandards(standListArray);
+		
 	}
 }

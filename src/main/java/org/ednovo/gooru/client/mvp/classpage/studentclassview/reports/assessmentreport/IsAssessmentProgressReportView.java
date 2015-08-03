@@ -76,4 +76,8 @@ public interface IsAssessmentProgressReportView extends IsChildView<AssessmentPr
 	
 	public void errorMsg();
 	
+	public void errorPanelData(boolean isErrorPanelVisible, boolean isReportContainerVisible);
+	
+	public void loaderVisibility(boolean isVisible);
+
 }
