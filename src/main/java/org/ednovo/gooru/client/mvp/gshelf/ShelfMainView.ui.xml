@@ -3,8 +3,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
-	<ui:with field="i18n"
-		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
+	
 	<g:HTMLPanel ui:field="gShelfMainContainer">
 		<g:HTMLPanel ui:field="pnlMainContainer" styleName="gradeContainer greyBackground">
 			<div class="container">
@@ -51,13 +51,13 @@
 								
 								
 								<panel:HTMLEventPanel styleName="myCoursesLeftMainHeader" ui:field="createNewCourse">
-								<span>Create Course</span>
+								<g:InlineLabel text="{i18n.GL3471}"></g:InlineLabel>
 								
 								<span class="plus">+</span>
 								<div class="clearfix"></div>
 								</panel:HTMLEventPanel>
 								<panel:HTMLEventPanel styleName="myCoursesLeftMainHeader createCollectionColor" ui:field="createNewCollection">
-								<span>Create Collection</span>
+								<g:InlineLabel text="{i18n.GL1451}"></g:InlineLabel>
 								
 								<span class="plus">+</span>
 								<div class="clearfix"></div>
@@ -74,7 +74,7 @@
 									<li> <a href="">Course 2</a> </li> <li> <a href="">Course 3</a> </li> </ul> -->
 						<panel:HTMLEventPanel styleName="folderLeftMainHeader"
 									ui:field="organizeRootPnl">
-									<g:Label ui:field="organizelbl">My Collections</g:Label>
+									<g:Label ui:field="organizelbl" text="{i18n.GL0180}"></g:Label>
 								</panel:HTMLEventPanel> 
 								<g:ScrollPanel ui:field="collectionListScrollpanel"
 									styleName="collectionScrlPanel">
