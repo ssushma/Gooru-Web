@@ -2177,6 +2177,7 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			isNGSSAvailable = true;
 			isCAAvailable = true;
 			isTEKSAvailable = false;
+			populateStandardValues();
 		}
 	}
 	@Override

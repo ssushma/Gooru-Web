@@ -157,10 +157,10 @@ public abstract class NewClassPopupView extends AppPopUp {
 		privateLblTxt.getElement().setInnerText(i18n.GL3341());
 
 
-		titlePanel.getElement().setInnerText(i18n.GL3337());
+		titlePanel.getElement().setInnerText(i18n.GL3450_10());
 		titlePanel.getElement().setId("pnlTitle");
-		titlePanel.getElement().setAttribute("alt",i18n.GL3337());
-		titlePanel.getElement().setAttribute("title",i18n.GL3337());
+		titlePanel.getElement().setAttribute("alt",i18n.GL3450_10());
+		titlePanel.getElement().setAttribute("title",i18n.GL3450_10());
 
 		gradePanel.getElement().setInnerText(i18n.GL0325());
 		gradePanel.getElement().setId("pnlGrade");

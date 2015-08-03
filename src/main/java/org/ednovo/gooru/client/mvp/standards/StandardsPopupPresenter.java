@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
@@ -56,6 +57,7 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	CollectionInfoPresenter collectionInfoPresenter;
 	SearchAbstractPresenter searchAbstractPresenter;
+	PreSearchPresenter preSearchPresenter;
 	LessonInfoPresenter lessonInfoPresenter;
 
 	/**
@@ -181,6 +183,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		{
 			
 		}
+		try
+		{
+		preSearchPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
 	
 	
@@ -197,6 +207,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	public void setSearchAbstractPresenter(
 			SearchAbstractPresenter searchAbstractPresenter) {
 		this.searchAbstractPresenter = searchAbstractPresenter;
+	}
+
+	public PreSearchPresenter getPreSearchPresenter() {
+		return preSearchPresenter;
+	}
+
+	public void setPreSearchPresenter(PreSearchPresenter preSearchPresenter) {
+		this.preSearchPresenter = preSearchPresenter;
 	}
 
 
