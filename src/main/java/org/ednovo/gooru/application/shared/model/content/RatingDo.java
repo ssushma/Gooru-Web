@@ -35,6 +35,10 @@ public class RatingDo implements IsSerializable {
 	private Integer votesDown;
 	private Integer votesUp;
 	
+	private Integer count=0;
+	private double average=0.0;
+	private Integer reviewCount=0;
+	
 	public RatingDo(){}
 	
 	public Integer getVotesDown() {
@@ -49,4 +53,30 @@ public class RatingDo implements IsSerializable {
 	public void setVotesUp(Integer votesUp) {
 		this.votesUp = votesUp;
 	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public double getAverage() {
+		return average;
+	}
+
+	public Integer getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public void setAverage(double average) {
+		this.average = average;
+	}
+
+	public void setReviewCount(Integer reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+	
+	
 }
