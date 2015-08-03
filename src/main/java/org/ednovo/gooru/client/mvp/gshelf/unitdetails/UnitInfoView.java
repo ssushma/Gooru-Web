@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -89,6 +90,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel unitInfo,pnlGradeContainer,pnlGradeDescContainer;
+	@UiField PPanel unitNamePpanel, bigIdeasPPanel,essentialQuestPPanel,unitCoverPPanel;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveUnitBtn,nextCreateLessonBtn,taxonomyBtn;
 	@UiField HTMLEventPanel taxonomyToggleBtn;
@@ -124,6 +126,10 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		pnlGradeContainer.getElement().setId("pnlGradeContainer");
 		ulMainGradePanel.getElement().setId("ulMainGradePanel");
 		lblErrorMessage.setText("Please Enter Valid UnitName");
+		unitNamePpanel.setText(i18n.GL3475());
+		bigIdeasPPanel.setText(i18n.GL1731());
+		essentialQuestPPanel.setText(i18n.GL1732());
+		unitCoverPPanel.setText(i18n.GL3476());
 		lblErrorMessage.setVisible(false);
 		taxonomyBtn.getElement().setId("taxonomyBtn");
 		taxonomyToggleBtn.getElement().setId("taxonomyToggleBtn");
