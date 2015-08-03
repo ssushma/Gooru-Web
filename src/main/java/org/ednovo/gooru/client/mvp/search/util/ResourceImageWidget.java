@@ -62,6 +62,10 @@ public class ResourceImageWidget extends Composite {
 					}
 				}
 			}
+			else
+			{
+				imgResourceImg.setUrl("../images/default-"+categoryValue+".png");	
+			}
 		}else{
 			imgResourceImg.setUrl("../images/default-"+categoryValue+".png");
 		}
