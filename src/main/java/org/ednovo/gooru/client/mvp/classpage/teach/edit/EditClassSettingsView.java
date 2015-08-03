@@ -508,7 +508,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 						uploadImagePanel.setText(i18n.GL0138());
 					}
 				}else{
-					uploadImagePanel.setText(i18n.GL3402());
+					uploadImagePanel.setText(i18n.GL0912());
 					classImage.setVisible(false);
 					classImage.setUrl("");
 				}

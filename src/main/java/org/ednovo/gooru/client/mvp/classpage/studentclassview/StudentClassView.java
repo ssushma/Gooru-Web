@@ -300,7 +300,8 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	 */
 	@Override
 	public void setSuccesspopup() {
-		joinClassPopup.setVisible(false);
+		//joinClassPopup.setVisible(false);
+		joinClassPopup.hide();
 		SuccessPopupViewVc success=new SuccessPopupViewVc(){
 			@Override
 			public void onClickPositiveButton(
@@ -334,6 +335,7 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 
 	@Override
 	public void closeJoinPopup(boolean isVisible) {
-		joinClassPopup.setVisible(isVisible);
+		//joinClassPopup.setVisible(isVisible);
+		joinClassPopup.hide();
 	}
 }
