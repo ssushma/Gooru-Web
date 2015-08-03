@@ -12,12 +12,14 @@ import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ScrollEvent;
@@ -37,6 +39,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -74,6 +77,10 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	
 	String currentsearchType="class";
 	
+	@UiField InlineLabel bluedotLbl,greenLbl,orangeLbl,courseNotesLbl;
+	
+	
+	@UiField H3Panel assginCourse,createCourseHeader;
 	
 	
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
@@ -142,6 +149,16 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			    }
 			  }
 		});
+		assginCourse.setText(i18n.GL3450_11());
+		bluedotLbl.setText(i18n.GL3450_12());
+		bluedotLbl.getElement().getStyle().setDisplay(Display.INLINE);
+		greenLbl.setText(i18n.GL3450_13());
+		greenLbl.getElement().getStyle().setDisplay(Display.INLINE);
+		orangeLbl.setText(i18n.GL3450_14());
+		orangeLbl.getElement().getStyle().setDisplay(Display.INLINE);
+		createCourseHeader.setText(i18n.GL3450_15());
+		courseNotesLbl.setText(i18n.GL3450_16());
+		courseNotesLbl.getElement().getStyle().setDisplay(Display.INLINE);
 	}
 
 	private void removePreviousSelectedItem() {

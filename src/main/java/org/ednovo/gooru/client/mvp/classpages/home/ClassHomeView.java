@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.LoadingUc;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
@@ -97,6 +98,8 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	@UiField Anchor myClassesAnr,archivedAnr;
 	
 	@UiField H3Panel joinedContainerTitle,teachContainerTitle;
+	
+	@UiField PPanel schoolAlertPanel;
 
 	AlertMessageUc alertMessageUc;
 	
@@ -380,6 +383,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		teachLoading.getElement().setId("studyLoadingId");
 		teachLoading.getElement().setAttribute("alt","Loading");
 		teachLoading.getElement().setAttribute("title","Loading");
+		
+		schoolAlertPanel.setText(i18n.GL3450_9());
+		schoolAlertPanel.getElement().setId("schoolAlertPanelId");
 		
 		studyLoading.setVisible(false);
 		teachLoading.setVisible(false);
