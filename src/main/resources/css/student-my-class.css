@@ -1183,6 +1183,9 @@ th.headcol.whitebg {
 .LearningMapContainer .fractionsDetailsContainer .fraNumbers{
 	padding:8px 8px;
 }
+.LearningMapContainer .fractionsDetailsContainer .fraNumbers .form-control{
+	font-size: 13px;
+}
 .LearningMapContainer .fractionsDetailsContainer .fraNumbers .list-group{
 	margin-bottom:0;
 }

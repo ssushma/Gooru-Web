@@ -1895,17 +1895,17 @@ padding-bottom: 10px;
 #pnlLessonInfo .lessonCover .fractionBlocks p{
 	margin:0 0;
 	text-align:left;
+	padding-left:10px;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks .frLeft{
 	font-size:17px;
 	color:#515151;
 	text-align:left;
-	word-break: break-word !important;
-	word-wrap: break-word;/*Fire fox*/
-	padding-right: 10px !important;
+	word-wrap: break-word !important;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks .singleBlock{
-	padding:10px 10px;
+
+		padding:10px 10px;
 }
 #pnlLessonInfo .lessonCover .fractionBlocks .singleBlock p{
 	color:#515151;

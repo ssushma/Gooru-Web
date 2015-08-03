@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H2Panel;
@@ -33,6 +34,8 @@ public class SlnUnitReportView extends Composite {
 	
 	int start = 0, end = 0;
 	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	private static SlnUnitReportViewUiBinder uiBinder = GWT.create(SlnUnitReportViewUiBinder.class);
 
 	interface SlnUnitReportViewUiBinder extends UiBinder<Widget, SlnUnitReportView> {
@@ -46,7 +49,7 @@ public class SlnUnitReportView extends Composite {
 	public void setReportData(PlanProgressDo planProgressDo, int count) {
 		numericOrder.setText(count+"");
 		lessonCountName.setText(planProgressDo.getTitle());
-		lessonName.setText("Lesson");
+		lessonName.setText(i18n.GL0910());
 		
 		String circleType = "grey";
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
