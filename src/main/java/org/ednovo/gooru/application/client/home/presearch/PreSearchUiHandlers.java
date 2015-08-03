@@ -24,7 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.client.home.presearch;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 /**
  *
  * @fileName : ViewMorePeopleUiHandlers.java
@@ -41,69 +45,6 @@ import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
  * @Reviewer:
  */
 public interface PreSearchUiHandlers extends BaseUiHandlers{
-
-	/**
-	 *
-	 * @function getAddStandards
-	 *
-	 * @created_date : 23-Jun-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void getAddStandards();
-
-	/**
-	 *
-	 * @function setUpdatedStandards
-	 *
-	 * @created_date : 23-Jun-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void setUpdatedStandards();
-
-	/**
-	 *
-	 * @function closeStandardsPopup
-	 *
-	 * @created_date : 23-Jun-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void closeStandardsPopup();
 
 	/**
 	 *
@@ -126,5 +67,10 @@ public interface PreSearchUiHandlers extends BaseUiHandlers{
 	 *
 	 */
 	void refreshSearch(String query, String filterStd);
+
+	void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
+
+	void setSelectedStandards(List<Map<String, String>> standListArray);
 
 }

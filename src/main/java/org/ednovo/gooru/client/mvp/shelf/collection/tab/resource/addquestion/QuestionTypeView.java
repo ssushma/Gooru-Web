@@ -2411,4 +2411,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
      public static native String getBrowserName() /*-{
          return navigator.userAgent.toLowerCase();
      }-*/;
+
+
+	@Override
+	public void removeQuestionEditImage() {
+		deleteConfirmationPopup.hide();
+		addQuestImgContainer.clear();
+	    addQuestionImg.setVisible(true);
+	}
 }
