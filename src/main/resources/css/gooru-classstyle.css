@@ -770,7 +770,7 @@ select option {
     position: relative;
 }
 .rosterContainer .inviteBox .auto_suggest{
-    width: 90%;
+    width: 80%;
 }
 .rosterContainer .inviteBox .token-input-input-token-gooru .gwt-SuggestBox{
     height: 27px;
@@ -920,7 +920,7 @@ select option {
 
 .rosterContainer .error{
 	text-align: right;
-	width: 86%;
+	width: 80%;
 	word-wrap: break-word;
 }
 .rosterContainer .buttonContainer {
@@ -2178,7 +2178,7 @@ font-style:normal;
         width: 750px;
     }
 }
-@media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
+@media (min-width: 768px) and (max-width: 991px) {} @media (min-width: 992px) and (max-width: 1199px) {}
 /* for Webkit's CSS-only solution */
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
@@ -2238,12 +2238,7 @@ font-style:normal;
     width: 415px;
 }
 }
- @media (min-width: 768px) and (max-width: 991px) {
-}
- @media (min-width: 992px) and (max-width: 1199px) {
-}
- @media (min-width: 1200px) {
-}
+
 
 /** student roaster css **/
 
@@ -2340,7 +2335,6 @@ font-style:normal;
         padding: 21px 20px;
     }
 }
-@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
 
 /** student reports css **/
 
@@ -2392,13 +2386,6 @@ font-style:normal;
     width: 415px;
 }
 }
- @media (min-width: 768px) and (max-width: 991px) {
-}
- @media (min-width: 992px) and (max-width: 1199px) {
-}
- @media (min-width: 1200px) {
-}
-
 
 /** new empty class css**/
 
@@ -2477,13 +2464,6 @@ font-style:normal;
     margin-left: 0;
 }
 }
- @media (min-width: 768px) and (max-width: 991px) {
-}
- @media (min-width: 992px) and (max-width: 1199px) {
-}
- @media (min-width: 1200px) {
-}
-
 
 /** new myclasses home landing page css**/
 
@@ -2550,12 +2530,6 @@ font-style:normal;
     text-align: center;
 }
 }
-/*
-@media only screen and (max-width: 767px){
-	
-	
-}*/
-
 @media only screen and (min-width: 768px) and (max-width: 992px) {
     .myClassesLanding .myClassesHeader {
         margin: 26px 0 0 0;
@@ -2679,7 +2653,6 @@ font-style:normal;
         margin: 25px 15px;
     }
 }
-@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
 
 /** content pacing media scripts  **/
 
@@ -2770,11 +2743,10 @@ font-style:normal;
         padding: 0 50px 90px;
     }
 }
-@media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
 
 /** Add course to class popup meadia scripts **/
 
-@media (min-width: 320px) and (max-width: 479px) {
+/* @media (min-width: 320px) and (max-width: 479px) {
 #addCourseToClasPopup .modal-dialog{
 	width:auto;
 	margin-left:10px;
@@ -2786,16 +2758,7 @@ font-style:normal;
 #addCourseToClasPopup .assignCourseBlock ul li em {
 	width: 80%;
 }
-}
-@media (min-width: 480px) and (max-width: 767px)  {
-}
-@media (min-width: 768px) and (max-width: 991px) {
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-}
-@media (min-width: 1200px) {
-}
-
+} */
 /** Media Script Files for Get Started Page **/
 @media (min-width: 240px) and (max-width: 319px) {
     .gettingStartedStep2 {
