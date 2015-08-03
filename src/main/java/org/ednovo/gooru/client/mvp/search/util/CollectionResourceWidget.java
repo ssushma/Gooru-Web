@@ -357,7 +357,7 @@ public class CollectionResourceWidget extends Composite {
 			.setAttribute("style",
 					"cursor: none;text-decoration: none !important;color: #4e9746;");
 		}
-
+		ratingWidgetView.getRatingCountLabel().setVisible(false);
 	}
 	/**
 	 * @return the ratingWidgetView
@@ -404,7 +404,7 @@ public class CollectionResourceWidget extends Composite {
 					ratingWidgetView.getRatingCountLabel().setVisible(false);
 				}
 				ratingWidgetView.getAverageRatingLabel().setVisible(false);
-
+				ratingWidgetView.getRatingCountLabel().setVisible(false);
 			}
 		}
 
@@ -416,6 +416,8 @@ public class CollectionResourceWidget extends Composite {
 				Integer count) {
 			if (resourceSearchResultDo.getGooruOid().equals(resourceId)) {
 				ratingWidgetView.setAvgStarRating(avg);
+				ratingWidgetView.getAverageRatingLabel().setVisible(false);
+				ratingWidgetView.getRatingCountLabel().setVisible(false);
 			}
 		}
 

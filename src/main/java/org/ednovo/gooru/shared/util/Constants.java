@@ -56,6 +56,8 @@ public interface Constants {
 	String SUSD_LOGO = "../images/library/district/susd-logo.png";
 	
 	String VALVERDE_LOGO = "../images/library/district/valverde-logo.png";
+	
+	String YUMA_ONE_LOGO = "../images/library/district/YumaOne-Logo.png";
 
 
 	String HTTPS = "https";

@@ -335,9 +335,14 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			@Override
 			public void onSuccess(List<UserPlayedSessionDo> result) {
 				if(result!=null&&result.size()>0) {
+					getView().loaderVisibility(false);
+					getView().errorPanelData(false, true);
 					setSessionId(result.get(0).getSessionId());
 					getSessionsDataByUser(assessmentId, classGooruId, gooruUid);
 					getView().setSessionsData(result);
+				} else {
+					getView().loaderVisibility(false);
+					getView().errorPanelData(true, false);
 				}
 			}
 		});

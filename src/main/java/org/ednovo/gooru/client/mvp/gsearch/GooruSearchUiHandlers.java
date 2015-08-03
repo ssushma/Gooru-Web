@@ -27,11 +27,14 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
@@ -86,4 +89,6 @@ public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandl
 	void initiateSearch();
 
 	void resetLocalStorageData();
+	void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 }

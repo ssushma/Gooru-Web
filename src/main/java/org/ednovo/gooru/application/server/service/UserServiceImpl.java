@@ -588,6 +588,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			optionObject.put("optionalValue", optionValue);
 			optionObject.put("optionalKey", optionKey);
 			updateCustomFieldObj.put("partyCustomField", optionObject);
+			logger.info("updatePartyCustomField::"+url);
+			logger.info("updatePartyCustomFielddata::"+updateCustomFieldObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), updateCustomFieldObj.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 		}

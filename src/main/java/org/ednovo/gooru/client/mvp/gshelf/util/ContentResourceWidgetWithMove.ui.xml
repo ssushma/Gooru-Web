@@ -38,12 +38,12 @@
 							<g:Image ui:field="imgDisplayIcon" />
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="timeText" ui:field="pnlYoutubeContainer">
-							<g:Label ui:field="startStopTimeDisplayText"></g:Label>
 							<g:Label ui:field="videoTimeField" styleName="youtubeText" />
 							<g:Label ui:field="fromLblDisplayText" styleName="youtubeText" />
 							<g:Label ui:field="lblEditSartPageText"></g:Label>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+						<g:Label ui:field="startStopTimeDisplayText" styleName="totalVideoTimeStyles"></g:Label>
 						<g:HTMLPanel ui:field="timeEditContainer">
 							<g:HTMLPanel styleName="col-md-6 text-center videostart">
 								<g:Label styleName="videostartHeader">Start</g:Label>
@@ -61,6 +61,7 @@
 									<g:TextBox ui:field="stopSecTxt"></g:TextBox>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
+							<g:Label ui:field="errorMsgLabel" styleName="errorMessage"></g:Label>
 							<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 							<g:HTMLPanel>
 							</g:HTMLPanel>

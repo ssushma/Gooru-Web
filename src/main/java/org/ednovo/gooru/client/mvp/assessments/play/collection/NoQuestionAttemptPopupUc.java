@@ -22,55 +22,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.application.client.home.presearch;
+package org.ednovo.gooru.client.mvp.assessments.play.collection;
 
-import java.util.List;
-import java.util.Map;
 
-import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
+
+
 /**
  *
- * @fileName : ViewMorePeopleUiHandlers.java
+ * @fileName : NoQuestionAttemptPopupUc.java
  *
  * @description :
  *
  *
  * @version : 1.0
  *
- * @date: 16-Jun-2015
+ * @date: 07-Jul-2015
  *
  * @Author tumbalam
  *
  * @Reviewer:
  */
-public interface PreSearchUiHandlers extends BaseUiHandlers{
+public class NoQuestionAttemptPopupUc extends PopupPanel{
+	
+	@UiField Button btnSubmit;
+	
+	private static NoQuestionAttemptPopupUcUiBinder uiBinder = GWT
+			.create(NoQuestionAttemptPopupUcUiBinder.class);
 
-	/**
-	 *
-	 * @function refreshSearch
-	 *
-	 * @created_date : 23-Jun-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) : @param query
-	 *
-	 * @parm(s) : @param filterStd
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void refreshSearch(String query, String filterStd);
-
-	void showStandardsPopup(String standardVal, String standardsDesc,
-			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
-
-	void setSelectedStandards(List<Map<String, String>> standListArray);
-
+	interface NoQuestionAttemptPopupUcUiBinder extends
+			UiBinder<Widget, NoQuestionAttemptPopupUc> {
+	}
+	public NoQuestionAttemptPopupUc(){
+		super(false);
+		setWidget(uiBinder.createAndBindUi(this));
+        this.setGlassStyleName("loginPopupGlassStyle");
+        this.setGlassEnabled(true);
+       	this.getElement().getStyle().setZIndex(999999);
+       	this.center();
+	}
+	
+	@UiHandler("btnSubmit")
+	public void onSubmit(ClickEvent event){
+		hide();
+	}
 }

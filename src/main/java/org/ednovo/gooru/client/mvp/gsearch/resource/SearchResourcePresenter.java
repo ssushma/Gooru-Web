@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.uc.AppPopUp;
 
 import com.google.gwt.dom.client.Document;
@@ -90,6 +91,8 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	
 	GooruGradesPresenter gooruGradesPresenter;
 	
+	StandardsPopupPresenter standardsPopupPresenter;
+	
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter = null;
 	
 	ShelfMainPresenter shelfMainPresenter;
@@ -109,9 +112,10 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 
 	@Inject
-	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,ShelfMainPresenter shelfMainPresenter) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter);
+	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,ShelfMainPresenter shelfMainPresenter,StandardsPopupPresenter standardsPopupPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter,standardsPopupPresenter);
 		this.addStandardsPresenter = addStandardsPresenter;
+		this.standardsPopupPresenter=standardsPopupPresenter;
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		this.addCenturyPresenter=addCenturyPresenter;
 		this.gooruGradesPresenter=gooruGradesPresenter;

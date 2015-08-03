@@ -619,7 +619,6 @@ public class HeaderUc extends Composite
 		resendEmailAncr.getElement().setId("lnkResendEmail");
 		resendEmailAncr.getElement().setAttribute("alt", i18n.GL1249());
 		resendEmailAncr.getElement().setAttribute("title", i18n.GL1249());
-		toggleButton.getElement().setAttribute("data-toggle", "collapse");
 		toggleButton.getElement().setAttribute("data-target",
 				"#bs-example-navbar-collapse-1");
 
