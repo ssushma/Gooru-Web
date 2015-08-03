@@ -571,7 +571,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
-		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
+		descriptionTxtAera.getElement().setAttribute("maxlength", "500");
 		resourceCategoryLabel.setText(i18n.GL0360());
 		resourceCategoryLabel.getElement().setId("lblResourceCategoryLabel");
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0360());
@@ -1780,9 +1780,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private class DescriptionKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
 			descCharcterLimit.setVisible(false);
-			if (descriptionTxtAera.getText().length() >=300) {
+			if (descriptionTxtAera.getText().length() >=500) {
 				descriptionTxtAera.setText(descriptionTxtAera.getText().trim()
-						.substring(0, 300));
+						.substring(0, 500));
 				descriptionTxtAera.getElement().setAttribute("alt", descriptionTxtAera.getText());
 				descriptionTxtAera.getElement().setAttribute("title", descriptionTxtAera.getText());
 				descCharcterLimit.setVisible(true);
