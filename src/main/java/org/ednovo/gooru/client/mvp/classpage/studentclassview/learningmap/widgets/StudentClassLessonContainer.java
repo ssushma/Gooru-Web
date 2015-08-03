@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widge
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H3Panel;
@@ -39,6 +40,8 @@ public class StudentClassLessonContainer extends Composite {
 	
 	private String gooruOid = null, status = null, userId = null;
 	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	private static StudentClassLessonContainerUiBinder uiBinder = GWT.create(StudentClassLessonContainerUiBinder.class);
 
 	interface StudentClassLessonContainerUiBinder extends
@@ -54,7 +57,7 @@ public class StudentClassLessonContainer extends Composite {
 	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count, String status, String userId) {
 		numericOrder.setText(count+"");
 		lessonCountName.setText(planProgressDo.getTitle());
-		lessonName.setText("Lesson");
+		lessonName.setText(i18n.GL0910());
 		
 		dataList = planProgressDo.getItem();
 		int size = dataList.size();
@@ -84,7 +87,7 @@ public class StudentClassLessonContainer extends Composite {
 			setData(start,end);
 		} else {
 			setArrowVisibility(false,false);
-			SpanPanel errorPanel = StringUtil.getStudentPlanErrorLbl("Your teacher has not assigned any assessments or collections yet!", "error-lbl-student-course-plan");
+			SpanPanel errorPanel = StringUtil.getStudentPlanErrorLbl(i18n.GL3469_6(), "error-lbl-student-course-plan");
 			errorPanel.addStyleName("line-height-70");
 			lessonContainer.add(errorPanel);
 		}

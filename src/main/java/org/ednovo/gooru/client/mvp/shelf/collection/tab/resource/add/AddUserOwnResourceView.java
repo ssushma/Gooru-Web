@@ -702,7 +702,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
-		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
+		descriptionTxtAera.getElement().setAttribute("maxlength", "500");
 		resourceCategoryLabel.setText(i18n.GL0360());
 		resourceCategoryLabel.getElement().setId("lblResourceCategoryLabel");
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0360());
@@ -1417,7 +1417,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			descCharcterLimit.setVisible(false);
 			resourceDescriptionContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
-			if (descriptionTxtAera.getText().length() >= 300) {
+			if (descriptionTxtAera.getText().length() >= 500) {
 				descCharcterLimit.setText(i18n.GL0143());
 				descCharcterLimit.getElement().setAttribute("alt", i18n.GL0143());
 				descCharcterLimit.getElement().setAttribute("title", i18n.GL0143());

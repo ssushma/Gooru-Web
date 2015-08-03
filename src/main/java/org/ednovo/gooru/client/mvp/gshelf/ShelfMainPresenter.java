@@ -340,11 +340,10 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		clearSlot(ShelfMainPresenter.RIGHT_SLOT);
 		if(!FOLDER.equalsIgnoreCase(getView().getViewType())){
 			getView().getCollectionLabel().setVisible(false);
-			
 			setTileIcon((folderObj!=null&&folderObj.getGooruOid()!=null)?folderObj.getTitle():(clickedItemType.equalsIgnoreCase("collection")?
 					"Untitled Collection":clickedItemType.equalsIgnoreCase("assessment")?
 							"Untitled Assessment":clickedItemType.equalsIgnoreCase("course")?
-									"Untitled Course":"Untitled External Assessment"),clickedItemType);
+									"Untitled Course":clickedItemType.equalsIgnoreCase("unit")?"Untitled Unit":clickedItemType.equalsIgnoreCase("lesson")?"Untitled Lesson":"Untitled External Assessment"),clickedItemType);
 		}else{
 			getView().getCollectionLabel().setVisible(true);
 			getView().getTitleIconContainer().setVisible(true);

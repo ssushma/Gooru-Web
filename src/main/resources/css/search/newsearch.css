@@ -522,6 +522,18 @@ Back to top button
   border-bottom-color: rgba(0, 0, 0, 0.2);
   content: '';
 }
+#gooruSearchMainContainer .dropdown-menu .liPanelStyle {
+    text-align: left;
+    font-weight: bold;
+    padding-left: 10px;
+    font-size: 9pt;
+}
+#gooruSearchMainContainer .dropdown-menu .liPanelStylenonBold {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 9pt;
+    padding-bottom: 10px;
+}
 
 #gooruSearchMainContainer .dropdown-menu:after {
   position: absolute;
@@ -556,10 +568,12 @@ Back to top button
   border-left: 6px solid transparent;
   content: '';
 }
+#gooruSearchMainContainer .seachRightNavigation li:hover {
+    background: none repeat scroll 0 0 #c3ddee;
+}
 
 
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu {
-	left: auto;
 	/* right: 0; */
 	top: 120%;
 	font-size: 12px;
@@ -620,6 +634,16 @@ Back to top button
 	padding:0 0;
 	list-style:none;
 	display:inline-block;
+}
+#gooruSearchMainContainer .standards ul li{
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	display:inline-block;
+	width:100%;
+}
+#gooruSearchMainContainer .grade ul li:hover{
+    background: none repeat scroll 0 0 #c3ddee;
 }
 
 #gooruSearchMainContainer .grade ul li a{
@@ -1273,7 +1297,6 @@ left: -200px !important;
 	}
 
 	#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu{
-		left:0;
 		right:auto;
 		top:120%;
 		font-size:12px;

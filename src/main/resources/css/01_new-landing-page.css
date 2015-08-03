@@ -76,9 +76,25 @@ body{
   top: 45%;
   width: 130px;
 }
-
-
-
+.dropdown-menu {
+    left: auto;
+    right: 0;
+}
+.dropdown-menu .liPanelStyle {
+    text-align: left;
+    font-weight: bold;
+    padding-left: 10px;
+    font-size: 9pt;
+}
+.dropdown-menu li:hover {
+    background: none repeat scroll 0 0 #c3ddee;
+}
+.dropdown-menu .liPanelStylenonBold {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 9pt;
+    padding-bottom: 10px;
+}
 
 .loadingContainer {
   display: inline-block;
@@ -1234,8 +1250,18 @@ footer ul li a {
 		margin-right:20px;
 	}
 	.focusBlock{
-		margin-top:-143px;
+		margin-top:-110px;
 	}
+	.ellipsis {
+		width: 80px;
+	  	white-space: nowrap;
+	  	overflow: hidden;
+	  	text-overflow: ellipsis;
+	}
+	#btnSubjects.ellipsis {
+		width: 80px;
+	}
+
 	.categoriesBlock{
 		padding:30px 0 20px;
 	}
@@ -1403,27 +1429,30 @@ footer ul li a {
 			font-size: 47px;
 		}
 		.focusBlock {
-			margin-top: -251px;
+			margin-top: -165px;
 		}
 
+		#btnSubjects.ellipsis {
+			width: 80px;
+		}
 		.gettingContentPane .eventsContainer{
 			height:97px;
 		}
 		.gradePanel {
-    padding: 39px 0;
-}
-.focusBlock .panel-body .btn-primary{
-	font-size:16px;
-}
-.focusBlock .standards{
-	width:19%;
-}
-.focusBlock .browseContentBtn button{
-	margin-right:25px;
-}
-#gooruSearchMainContainer .subjectContainer{
-	margin-left:0;
-}
+		    padding: 39px 0;
+		}
+		.focusBlock .panel-body .btn-primary{
+			font-size:16px;
+		}
+		.focusBlock .standards{
+			width:19%;
+		}
+		.focusBlock .browseContentBtn button{
+			margin-right:25px;
+		}
+		#gooruSearchMainContainer .subjectContainer{
+			margin-left:0;
+		}
 }
 @media (min-width: 1100px) and (max-width: 1199px){
 

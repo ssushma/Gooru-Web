@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
