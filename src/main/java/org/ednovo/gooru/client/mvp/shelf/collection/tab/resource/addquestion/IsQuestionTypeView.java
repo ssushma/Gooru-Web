@@ -32,6 +32,8 @@ public interface IsQuestionTypeView extends IsViewWithHandlers<QuestionTypeUiHan
 	void setMetadata(CollectionQuestionItemDo collectionQuestionItemDo);
 	
 	CollectionQuestionItemDo getMetadata();
+	
+	void removeQuestionEditImage();
 
 
 
