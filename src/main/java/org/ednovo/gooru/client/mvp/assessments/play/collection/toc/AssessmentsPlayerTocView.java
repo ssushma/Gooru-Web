@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.NoQuestionAttemptPopupUc;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.SubmitYourAnswersPopupUc;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.ResourceCurosal;
@@ -43,7 +44,6 @@ import org.ednovo.gooru.client.mvp.assessments.play.collection.uc.TocAssessments
 import org.ednovo.gooru.client.mvp.assessments.play.collection.uc.TocAssessmentsResourceView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.client.uc.TocResourceView;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -308,34 +308,40 @@ public class AssessmentsPlayerTocView extends BaseViewWithHandlers<AssessmentsPl
 
 	public class EndRequest implements ClickHandler{
 		public void onClick(ClickEvent event){
-			SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc() {
+			String collectionItemId = AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+			
+			if(collectionItemId!=null) {
+				SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc() {
 
-				@Override
-				public void onClickSubmit(ClickEvent event) {
-					Map<String,String> params = new LinkedHashMap<String,String>();
-					String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-					params.put("id", collectionId);
-					params.put("view", "end");
-					params = AssessmentsPreviewPlayerPresenter.setConceptPlayerParameters(params);
-					String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-					//PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
-					final PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
-					if(!getUiHandlers().isOpenEndedAnswerSubmited()){
-						NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
-							@Override
-							public void navigateToNextResource() {
-								super.hide();
-								AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-							}
-						};
-					}else{
-						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+					@Override
+					public void onClickSubmit(ClickEvent event) {
+						Map<String,String> params = new LinkedHashMap<String,String>();
+						String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+						params.put("id", collectionId);
+						params.put("view", "end");
+						params = AssessmentsPreviewPlayerPresenter.setConceptPlayerParameters(params);
+						String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+						//PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+						final PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+						if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+							NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+								@Override
+								public void navigateToNextResource() {
+									super.hide();
+									AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+								}
+							};
+						}else{
+							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+						}
+						super.hide();
 					}
-					super.hide();
-				}
-			};
-			submit.show();
-			submit.center();
+				};
+				submit.show();
+				submit.center();
+			} else {
+				NoQuestionAttemptPopupUc alertContentUc=new NoQuestionAttemptPopupUc();
+			}
 		}
 	}
 

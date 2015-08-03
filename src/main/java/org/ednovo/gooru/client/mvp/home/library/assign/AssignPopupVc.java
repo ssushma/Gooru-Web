@@ -265,7 +265,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 	}
 
 	public void loadListContainers() {
-		AppClientFactory.printInfoLogger("###loadListContainers###");
 		AssignCollectionView assignWidget = new AssignCollectionView(
 				collectionDoGlobal) {
 			@Override
@@ -656,15 +655,14 @@ public abstract class AssignPopupVc extends PopupPanel {
 			String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 			if(page!=null&&(page.equalsIgnoreCase("teach")||page.equalsIgnoreCase("study"))&&classpageCollectionItemId!=null){
 				classpageItemId=classpageCollectionItemId;
-				params.put("type", currentPlaceToken);
 			}
 		}else if(currentPlaceToken!=null && currentPlaceToken.equals(PlaceTokens.ASSESSMENT_PLAY)){
 			String classpageCollectionItemId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
 			if(classpageCollectionItemId!=null){
 				classpageItemId=classpageCollectionItemId;
-				params.put("type", currentPlaceToken);
 			}
 		}
+		params.put("type", currentPlaceToken);
 		params.put("shareType", "");
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrlforAssign(classpageId, params,classpageItemId, new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
