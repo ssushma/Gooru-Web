@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.widgets;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -36,6 +37,8 @@ public class SlnCourseReportView extends Composite {
 	private static final String SCORE_RADIAL_PERCENT_LABEL = "progress-radial org-progress-";
 	private static final String TIME_RADIAL_PERCENT_LABEL = "progress-radial blue-progress-";
 	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	private static SlnUnitReportViewUiBinder uiBinder = GWT
 			.create(SlnUnitReportViewUiBinder.class);
 
@@ -55,24 +58,24 @@ public class SlnCourseReportView extends Composite {
 	}
 	
 	private void setDebugIds() {
-		collectionStudyLbl.setText("Collections Viewed");
-		assessmentStudyLbl.setText("Assessments Attempted");
-		studyTimeLbl.setText("Total Study Time");
-		scoreLbl.setText("Avg Score");
+		collectionStudyLbl.setText(i18n.GL3469_26());
+		assessmentStudyLbl.setText(i18n.GL3469_27());
+		studyTimeLbl.setText(i18n.GL3469_18());
+		scoreLbl.setText(i18n.GL3469_17());
 	}
 	
 	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count) {
 		numericOrder.setText(count+"");
 		unitCountName.setText(planProgressDo.getTitle());
-		unitName.setText("Unit");
-		collectionStudyCount.setText(planProgressDo.getCollectionsViewed()+" of "+planProgressDo.getCollectionCount());
+		unitName.setText(i18n.GL3281());
+		collectionStudyCount.setText(planProgressDo.getCollectionsViewed()+" "+i18n.GL_GRR_OF()+" "+planProgressDo.getCollectionCount());
 		int timeRadialPercent = 0;
 		
 		if(planProgressDo.getCollectionCount()>0) {
 			timeRadialPercent = (int)(((double)planProgressDo.getCollectionsViewed() / (double)planProgressDo.getCollectionCount()) * 100);
 		}
 		timeRadial.setStyleName(TIME_RADIAL_PERCENT_LABEL+timeRadialPercent);
-		assessmentStudyCount.setText(planProgressDo.getAssessmentsAttempted()+" of "+planProgressDo.getAssessmentCount());
+		assessmentStudyCount.setText(planProgressDo.getAssessmentsAttempted()+" "+i18n.GL_GRR_OF()+" "+planProgressDo.getAssessmentCount());
 		int scorePercent = 0;
 		if(planProgressDo.getAssessmentCount()>0) {
 			scorePercent = (int)(((double)planProgressDo.getAssessmentsAttempted() / (double)planProgressDo.getAssessmentCount()) * 100);
@@ -88,7 +91,7 @@ public class SlnCourseReportView extends Composite {
 		String avgScoreTxt = "--";
 		
 		if(planProgressDo.getAssessmentCount()==0) {
-			avgScoreTxt = "NS";
+			avgScoreTxt = i18n.GL3469_28();
 			hideScoreRadial(false);
 		} else if(planProgressDo.getAssessmentsAttempted()==0) {
 			avgScoreTxt = "--";

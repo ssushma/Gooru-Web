@@ -335,9 +335,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				}
 			});
 			if(isCollection) {
-				collectionResourcesCount.setText(result.get(0).getResourceCount()+" Resources " + result.get(0).getQuestionCount()+" Questions");
+				collectionResourcesCount.setText(result.get(0).getResourceCount()+" "+i18n.GL2291()+" " + result.get(0).getQuestionCount()+" "+i18n.GL2290());
 			} else {
-				collectionResourcesCount.setText(result.get(0).getScorableQuestionCount()+" Questions");
+				collectionResourcesCount.setText(result.get(0).getScorableQuestionCount()+" "+i18n.GL2290());
 			}
 		}
 	}
