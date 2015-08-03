@@ -130,6 +130,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private static final String MESSAGE_HEADER = i18n.GL0748();
 	private static final String MESSAGE_CONTENT = i18n.GL0891();
 	private static final String ERROR_MSG_ANSWER = i18n.GL0311();
+	private static final String ERROR_MSG_HS_IMG_ANSWER = i18n.GL4014();
 	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
 	private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312();
 
@@ -1674,7 +1675,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				selectedAnswerImage=false;
 			}else{
 				selectedAnswerImage=true;
-				addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
+				addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_HS_IMG_ANSWER);
 				addHotSpotQuestionAnswerChoice.ansImageContainer.getElement().addClassName("errorBorderMessage");
 			}
 		}else if(questionType.equalsIgnoreCase("HS_TXT")){
