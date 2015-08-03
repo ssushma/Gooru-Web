@@ -126,6 +126,10 @@ public class CollectionSearchWidget extends Composite {
 		if(!StringUtil.isEmpty(collectionSearchResultDo.getUrl())){
 			imgCollection.setUrl(StringUtil.formThumbnailName(collectionSearchResultDo.getUrl(), "-160x120."));
 		}
+		else
+		{
+			StringUtil.setDefaultImages(collectionType, imgCollection, "high");
+		}
 		imgCollection.addErrorHandler(new ErrorHandler() {
 
 			@Override
