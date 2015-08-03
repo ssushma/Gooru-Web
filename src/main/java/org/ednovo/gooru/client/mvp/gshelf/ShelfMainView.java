@@ -1228,7 +1228,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			treeChildSelectedItem.remove();
 			checkFolderItemStyle(treeItem,deletedTreeParentWidget.getCollectionDo().getGooruOid());
 //			getUiHandlers().onDeleteSetBreadCrumbs(deletedTreeParentWidget.getCollectionDo().getTitle(),COURSE);
-			
 		}else if(LESSON.equalsIgnoreCase(currentTypeView)){
 			ShelfTreeWidget deletedTreeParentWidget = (ShelfTreeWidget) treeChildSelectedItem.getParentItem().getWidget();
 			TreeItem treeItem = treeChildSelectedItem.getParentItem();
