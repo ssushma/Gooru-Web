@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.AudienceView
 import org.ednovo.gooru.client.mvp.gshelf.util.CourseGradeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -82,6 +83,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel courseInfo,pnlGradeContainer;
+	@UiField PPanel courseTitlePpanel,tagCoursePpanel;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveCourseBtn,nextUnitBtn,btnK12,btnHigherEducation,btnProfessionalLearning;
 	@UiField TextBox courseTitle;
@@ -127,6 +129,8 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		btnK12.addClickHandler(new CallTaxonomy(1));
 		btnHigherEducation.addClickHandler(new CallTaxonomy(2));
 		btnProfessionalLearning.addClickHandler(new CallTaxonomy(3));
+		courseTitlePpanel.setText(i18n.GL3472()); 
+		tagCoursePpanel.setText(i18n.GL3473());
 	}
 
 	/**

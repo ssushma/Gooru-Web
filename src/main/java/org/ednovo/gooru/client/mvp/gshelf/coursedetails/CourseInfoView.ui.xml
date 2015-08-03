@@ -6,14 +6,14 @@
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="courseInfo">
 		<div class="courseNameBlock">
-			<p>Course Name</p>
+			<uc:PPanel ui:field="courseTitlePpanel"></uc:PPanel>
 			<p>
 				<g:TextBox styleName="form-control" ui:field="courseTitle" maxLength="50"/>
 				<g:Label ui:field="lblErrorMessage" styleName="errorMessage text-right"></g:Label>
 			</p>
 		</div>
 		<div class="tagCoursePanel">
-			<p>Tag your course. What do you plan to cover?</p>
+			<uc:PPanel ui:field="tagCoursePpanel"></uc:PPanel>
 			<div class="tagCoursePanelHeader">
 				<div class="btn-group btn-group-justified" role="group"
 					aria-label="...">
