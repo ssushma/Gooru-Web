@@ -186,7 +186,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		emailAddTxt.setText(i18n.GL1591());
 		emailAddTxt.getElement().setId("emailAddTextId");
 		
-		inviteBtn.setText(i18n.GL0944());
+		inviteBtn.setText(i18n.GL3450_17());
 		inviteBtn.getElement().setId("inviteBtnId");
 		
 		

@@ -188,6 +188,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	private static final int DECREMENT_BY_ONE = -1;
 
 	private static final String EDUCATOR_DEFAULT_IMG = "../images/settings/setting-user-image.png";
+	private static final String DEFAULT_COLLECTION_THUMBNAIL = "images/default-collection-image-160x120.png";
 	private Anchor usernameAnchor;
 
 	private int totalCommentCount = 0;
@@ -390,7 +391,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}else{
 			scoreMainContainer.setVisible(true);
 		}
-		setCollectionImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():"");
+		setCollectionImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():DEFAULT_COLLECTION_THUMBNAIL);
 
 		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3044():i18n.GL2083();
 
