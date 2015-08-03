@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widge
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.H3Panel;
@@ -38,6 +39,8 @@ public class StudentClassLearningMapContainer extends Composite {
 
 	private final static int CAROUSEL_LIMIT = 11;
 	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	private static StudentClassLearningMapContainerUiBinder uiBinder = GWT
 			.create(StudentClassLearningMapContainerUiBinder.class);
 
@@ -55,7 +58,7 @@ public class StudentClassLearningMapContainer extends Composite {
 	public void setCircleContainerItems(PlanProgressDo planProgressDo, int count) {
 		numericOrder.setText((count+1)+"");
 		unitCountName.setText(planProgressDo.getTitle());
-		unitName.setText("Unit");
+		unitName.setText(i18n.GL3281());
 		int size = planProgressDo.getItem().size();
 		if(size>0) {
 			dataList = planProgressDo.getItem();
@@ -68,7 +71,7 @@ public class StudentClassLearningMapContainer extends Composite {
 			setData(start,end);
 		} else {
 			setArrowVisibility(false,false);
-			circleContainer.add(StringUtil.getStudentPlanErrorLbl("Your teacher has not assigned any lessons yet!", "error-lbl-student-course-plan"));
+			circleContainer.add(StringUtil.getStudentPlanErrorLbl(i18n.GL3469_5(), "error-lbl-student-course-plan"));
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
@@ -9,6 +10,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -41,12 +43,16 @@ public class SlmExternalAssessmentForm extends Composite {
 	@UiField TextArea evidence;
 
 	@UiField Anchor submitTxt, inProgressTxt;
+	
+	@UiField Label evidenceErrorLbl;
 
 	private static final String ERROR_LBL_COLOR = "#EE1E7B";
 	
 	int attemptedScore;
 
 	private PlanProgressDo planProgressDo = null;
+
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static SlmExternalAssessmentFormUiBinder uiBinder = GWT
 			.create(SlmExternalAssessmentFormUiBinder.class);
@@ -61,19 +67,26 @@ public class SlmExternalAssessmentForm extends Composite {
 		setIds();
 		if(planProgressDo.getEvidence()!=null) {
 			evidence.setText(planProgressDo.getEvidence());
-		} else {
-			evidence.setText("--");
 		}
-		scoreTextBox.setText(planProgressDo.getScoreInPercentage()+"");
+		if(planProgressDo.getViews()>0) {
+			scoreTextBox.setText(planProgressDo.getScoreInPercentage()+"");
+		}
 	}
-
+	
 	private void setIds() {
+		evidenceErrorLbl.setVisible(false);
 		scoreTextBox.setMaxLength(3);
 		setButtonVisibility(true);
-		scoreLbl.setText("Score");
-		evidenceLbl.setText("Evidence");
+		scoreLbl.setText(i18n.GL2288());
+		evidenceLbl.setText(i18n.GL3469_8());
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
 		scoreTextBox.addKeyUpHandler(new ValidateScore());
+		scoreTextBox.getElement().setAttribute("placeholder", i18n.GL3469_15());
+		evidence.getElement().setAttribute("placeholder", i18n.GL3469_16());
+		scoreTextBox.getElement().getStyle().setFontSize(13, Unit.PX);
+		evidence.getElement().getStyle().setFontSize(13, Unit.PX);
+		evidence.getElement().setAttribute("maxlength", "250");
+		evidenceErrorLbl.getElement().getStyle().setColor(ERROR_LBL_COLOR);
 		submit.addClickHandler(new SaveData());
 	}
 
@@ -133,8 +146,13 @@ public class SlmExternalAssessmentForm extends Composite {
 		if(evidenceStr.isEmpty()){
 			evidence.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
 		}else if(evidenceStr != null || evidenceStr.length()>0){
-			evidence.getElement().getStyle().setBorderColor("");
-			isEvidence = true;
+			if(evidenceStr.length()>250) {
+				evidenceErrorLbl.setVisible(true);
+			} else {
+				evidenceErrorLbl.setVisible(false);
+				evidence.getElement().getStyle().setBorderColor("");
+				isEvidence = true;
+			}
 		}
 		if(isScore==true&&isEvidence==true) {
 			logDataEvent();
@@ -216,7 +234,7 @@ public class SlmExternalAssessmentForm extends Composite {
 				      @Override
 				      public void run() {
 				    	  setButtonVisibility(true);
-				    	  submitTxt.setText("Saved. Resubmit.");
+				    	  submitTxt.setText(i18n.GL3469_14());
 				      }
 				 };
 				 t.schedule(2000);
