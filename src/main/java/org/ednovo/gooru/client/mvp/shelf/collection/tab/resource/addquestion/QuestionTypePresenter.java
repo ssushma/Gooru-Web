@@ -93,6 +93,14 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
                     MixpanelUtil.AddQuestion();
             }
 		});
+		
+		setRemoveQuestionImageAsyncCallback(new SimpleAsyncCallback<Void>(){
+			@Override
+			public void onSuccess(Void result) {
+				getView().removeQuestionEditImage();
+			}	
+		});
+		
 	}
 
 	public ResourceServiceAsync getResourceService() {

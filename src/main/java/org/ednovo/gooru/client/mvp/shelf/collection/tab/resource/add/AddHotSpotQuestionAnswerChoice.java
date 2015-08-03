@@ -162,7 +162,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 			addAnswerChoice.optionSelectedButton.getElement().setId(CLICK);
 
-			if(i>0){
+			if(i>1){
 
 				addAnswerChoice.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
 					@Override

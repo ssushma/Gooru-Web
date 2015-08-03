@@ -425,9 +425,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 	public void setHeaderAndBodyText(String tabType){
-		if(tabType.equals("HS_TXT") || tabType.equals("HS_IMG")){
+		if( tabType.equals("HS_IMG")){
 			questionTypeHeader.setText(i18n.GL3226_1());
-			questionTypeText.setText(i18n.GL0350());
+			questionTypeText.setText(i18n.GL4011());
+		}else if(tabType.equals("HS_TXT")){
+			questionTypeHeader.setText(i18n.GL4013());
+			questionTypeText.setText(i18n.GL4012());
 		}
 	}
 
@@ -1845,6 +1848,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	public void resetFields(String type) {
 		clearTinyMce();
+		setHeaderAndBodyText(type);
 		questionType=type;
 		buttonContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		resetToHints();
@@ -2411,4 +2415,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
      public static native String getBrowserName() /*-{
          return navigator.userAgent.toLowerCase();
      }-*/;
+
+
+	@Override
+	public void removeQuestionEditImage() {
+		deleteConfirmationPopup.hide();
+		addQuestImgContainer.clear();
+	    addQuestionImg.setVisible(true);
+	}
 }

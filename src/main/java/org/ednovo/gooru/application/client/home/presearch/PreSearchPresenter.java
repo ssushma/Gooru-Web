@@ -38,8 +38,10 @@ import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
@@ -66,7 +68,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 	public static final Object GRADES = new Object();
 
 	GooruGradesPresenter gooruGradesPresenter = null;
-	AddStandardsPresenter addStandardsPresenter = null;
+	StandardsPopupPresenter standardsPopupPresenter;
 
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
@@ -78,11 +80,11 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 
 
 	@Inject
-	public PreSearchPresenter(EventBus eventBus, IsPreSearchView view, GooruGradesPresenter gooruGradesPresenter,AddStandardsPresenter addStandardsPresenterObj) {
+	public PreSearchPresenter(EventBus eventBus, IsPreSearchView view, GooruGradesPresenter gooruGradesPresenter,StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.gooruGradesPresenter = gooruGradesPresenter;
-		this.addStandardsPresenter = addStandardsPresenterObj;
+		this.standardsPopupPresenter = standardsPopupPresenter;
 	}
 
 	@Override
@@ -108,89 +110,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 		}
 	}
 
-	@Override
-	public void getAddStandards() {
-		if(!AppClientFactory.isAnonymous()){
-			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
-				USER_META_ACTIVE_FLAG,
-				new SimpleAsyncCallback<ProfileDo>() {
-					@Override
-					public void onSuccess(final ProfileDo profileObj) {
-
-						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
-					}
-					public void checkStandarsList(List<String> standarsPreferencesList) {
-						if(standarsPreferencesList!=null){
-							if(standarsPreferencesList.contains("CCSS")){
-								isCCSSAvailable = true;
-							}else{
-								isCCSSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("NGSS")){
-								isNGSSAvailable = true;
-							}else{
-								isNGSSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("TEKS")){
-								isTEKSAvailable = true;
-							}else{
-								isTEKSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("CA")){
-								isCAAvailable = true;
-							}else{
-								isCAAvailable = false;
-							}
-						}
-						setStandardsPopup();
-					}
-				});
-		}else{
-			isCCSSAvailable = true;
-			isNGSSAvailable = true;
-			isCAAvailable = true;
-			isTEKSAvailable = false;
-			setStandardsPopup();
-		}
-	}
-	/**
-	 *
-	 * @function setStandardsPopup
-	 *
-	 * @created_date : 02-Jul-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	private void setStandardsPopup(){
-		if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-			Window.enableScrolling(false);
-			addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-			addToPopupSlot(addStandardsPresenter);
-			getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
-		}
-	}
-
-	@Override
-	public void setUpdatedStandards() {
-		getView().setUpdatedStandards(addStandardsPresenter.getStandardListArray());
-	}
-
-	@Override
-	public void closeStandardsPopup() {
-		addStandardsPresenter.hidePopup();
-	}
+	
 
 	@Override
 	public void refreshSearch(String query, String filterStd) {
@@ -218,5 +138,19 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SEARCH_COLLECTION, params, true);
 
 	}
+	@Override
+	public void showStandardsPopup(String standardVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+		Window.enableScrolling(false);
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setPreSearchPresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
+		addToPopupSlot(standardsPopupPresenter);
+	}
+	@Override
+	public void setSelectedStandards(List<Map<String, String>> standListArray) {
+		getView().setUpdatedStandards(standListArray);
+		
+	}
+
 
 }

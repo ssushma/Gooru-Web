@@ -248,15 +248,15 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
 			allContentPanel.removeStyleName("cursorPointer");
-			setNavLinksData("You have "+dataList.size()+" Units to complete", null, null, null);
+			setNavLinksData(i18n.GL3469_1(), null, null, null);
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
 			allContentPanel.addStyleName("cursorPointer");
 			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
-			setLinksData(unitId, dataList, "All Units", "Unit");
+			setLinksData(unitId, dataList, i18n.GL3469_1(), "Unit");
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 			allContentPanel.addStyleName("cursorPointer");
 			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
-			setLinksData(lessonId, dataList, "All Lessons", "Lesson");
+			setLinksData(lessonId, dataList, i18n.GL3469_12(), "Lesson");
 		}
 	}
 	

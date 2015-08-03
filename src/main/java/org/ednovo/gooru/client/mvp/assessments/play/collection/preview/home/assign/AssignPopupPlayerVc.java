@@ -588,7 +588,8 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 
 	public void generateShareLink(String classpageId) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", "");
+		String currentPlaceToken=AppClientFactory.getCurrentPlaceToken();
+		params.put("type", currentPlaceToken);
 		params.put("shareType", "");
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrlforAssign(classpageId, params,null,new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
