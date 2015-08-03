@@ -156,7 +156,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 
 		setCollectionImage((collectionDo.getThumbnails()!=null&&collectionDo.getThumbnails().getUrl()!=null)?collectionDo.getThumbnails().getUrl():"");
-		setCollectionGoal(collectionDo.getGoals()!=null?collectionDo.getGoals():"");
+		setCollectionGoal(collectionDo.getDescription()!=null?collectionDo.getDescription():"");
 
 		showPopupAfterGmailSignin();
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
