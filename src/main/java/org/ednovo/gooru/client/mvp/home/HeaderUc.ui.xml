@@ -42,7 +42,7 @@
 											<span class="icon-bar"></span>
 										</g:Button>
 										<g:HTMLPanel
-											styleName="collapse navbar-collapse navbar-collapse"
+											styleName="collapse navbar-collapse"
 											ui:field="mainInnerDotsPanel">
 											<uc:UlPanel ui:field="dotsPanel" styleName="nav navbar-nav">
 												<uc:LiPanel styleName="dropdown">
