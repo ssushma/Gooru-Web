@@ -1,6 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc" 
     xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+	
+    <ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+    
 	<ui:style src="" />
 	<g:HTMLPanel styleName="fractionsDetailsContainer">
 	     <g:HTMLPanel styleName="rowContainer no-gutter ">
@@ -28,7 +31,7 @@
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
 	                       <g:HTMLPanel styleName="list-group-item totalViews">
-	                          <g:HTMLPanel styleName="pull-left">Views</g:HTMLPanel>
+	                          <g:Label styleName="pull-left" text="{i18n.GL2276}"></g:Label>
 	                          <g:Label styleName="pull-right" ui:field="viewCount"></g:Label>
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
@@ -38,7 +41,7 @@
 	                          <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	                       </g:HTMLPanel>
 	                       <panel:HTMLEventPanel styleName="list-group-item viewLink" ui:field="viewReport">
-	                          <g:Anchor ui:field="reportUrl">View Report</g:Anchor>
+	                          <g:Anchor ui:field="reportUrl" text="{i18n.GL2296}"></g:Anchor>
 	                       </panel:HTMLEventPanel>
 	                    </g:HTMLPanel>
 	                 </g:HTMLPanel>
