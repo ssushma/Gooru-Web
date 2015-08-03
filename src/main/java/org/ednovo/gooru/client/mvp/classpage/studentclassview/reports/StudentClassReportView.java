@@ -205,13 +205,13 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 		allContentStr = ALL;
 		
 		if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
-			setNavLinksData("Your progress for this class", null, null, null);
+			setNavLinksData(i18n.GL3469_24(), null, null, null);
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_VIEW)) {
 			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
-			setLinksData(unitId, dataList, "All Units", "Unit");
+			setLinksData(unitId, dataList, i18n.GL3469_1(), "Unit");
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
-			setLinksData(lessonId, dataList, "All Lessons", "Lesson");
+			setLinksData(lessonId, dataList, i18n.GL3469_12(), "Lesson");
 		}
 	}
 	
@@ -256,7 +256,7 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 			currentContentPanel.setVisible(false);
 			nextContentPanel.setVisible(false);
 			legendContainer.setVisible(false);
-			String lessonName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_NAME,"Back to Lesson");
+			String lessonName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_NAME,i18n.GL3469_25());
 			previousContentStr = "ALL";
 			previousContentName.setText(lessonName);
 		}

@@ -1,6 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.uc"
     xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:emptyPanel="urn:import:org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets">
+	
+    <ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+    
 	<ui:style src="" />
 	<g:HTMLPanel styleName="container">
 	   <span:LoadingUc ui:field="cropImageLoading"/>
@@ -17,9 +20,9 @@
 			    <g:HTMLPanel styleName="col-md-8">
 			       <g:HTMLPanel styleName="indicationBox" ui:field="learnMapScore">
 			          <g:HTMLPanel ui:field="colorPanel">
-				          <g:HTMLPanel><b><g:Label>Lesson Progress</g:Label></b></g:HTMLPanel>
-			              <g:HTMLPanel><span:SpanPanel styleName="green-circle"></span:SpanPanel><g:Label>Score Met</g:Label></g:HTMLPanel>
-				          <g:HTMLPanel><span:SpanPanel styleName="blue-circle"></span:SpanPanel><g:Label>Score Not Met</g:Label></g:HTMLPanel>
+				          <g:HTMLPanel><b><g:Label text="{i18n.GL3469_13}"></g:Label></b></g:HTMLPanel>
+			              <g:HTMLPanel><span:SpanPanel styleName="green-circle"></span:SpanPanel><g:Label text="{i18n.GL3469_2}"></g:Label></g:HTMLPanel>
+				          <g:HTMLPanel><span:SpanPanel styleName="blue-circle"></span:SpanPanel><g:Label text="{i18n.GL3469_3}"></g:Label></g:HTMLPanel>
 			          </g:HTMLPanel>
 			       </g:HTMLPanel>
 			    </g:HTMLPanel>
@@ -50,10 +53,7 @@
 			   <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="lessonMetaDataContainer col-md-12" ui:field="standardsBlock">
-				<g:HTMLPanel styleName="standardsBlock" ui:field="standardsBlockList">
-				   <g:Label styleName="lessonStandard"></g:Label>
-				   <g:Label styleName="lessonStandard"></g:Label>
-				</g:HTMLPanel>
+				<g:HTMLPanel styleName="standardsBlock" ui:field="standardsBlockList"></g:HTMLPanel>
 			</g:HTMLPanel>
 	    	<g:HTMLPanel styleName="learningBodyBlock" ui:field="learningMapContainer"/>
 	   </g:HTMLPanel>
