@@ -2681,7 +2681,7 @@ margin-top: 18px; */
 	font-style: normal;
 	margin: 2px 0px;
 	cursor: pointer;
-	float: left;
+	display: inline-block;
 }
 
 .fileContainer {
