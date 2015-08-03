@@ -594,6 +594,9 @@
 		text-align: center;
 		top: -13%;
 	}
+	#headerMainPanel .gooruLearningIcon {
+		margin: 10px;
+	}
 	#headerMainPanel .header-searchbox .navbar-form .form-control {
 		width: 88% !important;
 		margin: 0 auto;
@@ -896,7 +899,9 @@
 	#headerMainPanel .displayRight {
 		right: 0;
 	}
-
+	#headerMainPanel .gooruLearningIcon {
+		margin: 10px;
+	}
 	#headerMainPanel .spacing {
 		margin-bottom: 7px !important;
 	}
@@ -917,6 +922,9 @@
 	}
 	#headerMainPanel .banner {
 		/* margin-top: -36px; */
+	}
+	#headerMainPanel .gooruLearningIcon {
+		margin: 0px;
 	}
 	#headerMainPanel .bannerInner .caption {
 		left: 4%;
@@ -1090,6 +1098,9 @@
 	#headerMainPanel .header-searchbox {
 		display: block !important;
 		z-index: 999;
+	}
+	#headerMainPanel .gooruLearningIcon {
+		margin: 10px;
 	}
 	#headerMainPanel .header-searchbox .form-control {
 		height: 33px;
