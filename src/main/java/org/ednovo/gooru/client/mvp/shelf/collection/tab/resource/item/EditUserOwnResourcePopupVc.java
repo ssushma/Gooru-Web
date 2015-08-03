@@ -670,6 +670,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		descriptionTxtAera.getElement().setId("tatDescriptionTxtAera");
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		resourcePathTextBox.getElement().setId("txtResourcePathTextBox");
+		resourcePathTextBox.getElement().getStyle().setWidth(82, Unit.PCT);
 		StringUtil.setAttributes(resourcePathTextBox, true);
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");

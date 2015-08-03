@@ -362,6 +362,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setSharing(jsonRep.getJsonObject().isNull("sharing")?"":jsonRep.getJsonObject().getString("sharing"));
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
+				obj.setDescription(jsonRep.getJsonObject().isNull("description")?"":jsonRep.getJsonObject().getString("description"));
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
 
 				if(jsonRep.getJsonObject().has("settings")){
@@ -765,7 +766,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		params.put(GooruConstants.YOUTUBE_PART, YOUTUBE_PART_DETAILS);
 		logger.info("getYouTubeApiUrl() here---------------"+getYouTubeApiUrl());
 		String url=AddQueryParameter.constructQueryParams(getYouTubeApiUrl(), params);
-		
+
 		logger.info("getYoutubeDuration-----url------"+url);
 		try {
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
@@ -948,8 +949,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_QUESTION_ITEM, collectionId);
 		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
+		collectionQuestionItemDo.setMediaFilename(mediafileName);
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
-		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
+		//collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
 		getLogger().info("addQuestionResource --- "+ url);
 		getLogger().info("addQuestionResource data --- "+ collectionQuestionData);
@@ -1071,7 +1073,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			getLogger().info("--- pay load -- "+form);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 			jsonRep = jsonResponseRep.getJsonRepresentation();
-		
+
 			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			getLogger().info("---url -- "+url);
 			jsonRepGet=jsonResponseRep1.getJsonRepresentation();

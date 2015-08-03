@@ -95,18 +95,16 @@ public class ResourceCollectionUserWidget extends Composite {
 			}
 			relatedUserName.setText(resourceCollDo.getUser().getUsername());
 		}
-		
-		
-		collectionImage.setUrl(resourceCollDo.getThumbnails().getUrl());
 
 
+		collectionImage.setUrl(resourceCollDo.getThumbnails() != null && resourceCollDo.getThumbnails().getUrl() !=null ? resourceCollDo.getThumbnails().getUrl() : DEFULT_IMAGE);
 
 		relatedCollectionTitle.setText(resourceCollDo.getTitle());
 		relatedCollectionTitle.getElement().setAttribute("id", resourceCollDo.getGooruOid());
 		relatedCollectionTitle.getElement().getStyle().setColor("#1076bb");
 		relatedCollectionTitle.getElement().getStyle().setCursor(Cursor.POINTER);
 		relatedCollectionTitle.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				Map<String, String> params = new HashMap<String, String>();

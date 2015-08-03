@@ -28,12 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -54,6 +56,8 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	private SearchServiceAsync searchService;
 
 	CollectionInfoPresenter collectionInfoPresenter;
+	SearchAbstractPresenter searchAbstractPresenter;
+	PreSearchPresenter preSearchPresenter;
 	LessonInfoPresenter lessonInfoPresenter;
 
 	/**
@@ -171,6 +175,22 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		{
 			
 		}
+		try
+		{
+		searchAbstractPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		try
+		{
+		preSearchPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
 	
 	
@@ -179,4 +199,25 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 			List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
 		getView().setSelectedItmes(collectionLiPanelWithCloseArray);
 	}
+
+	public SearchAbstractPresenter getSearchAbstractPresenter() {
+		return searchAbstractPresenter;
+	}
+
+	public void setSearchAbstractPresenter(
+			SearchAbstractPresenter searchAbstractPresenter) {
+		this.searchAbstractPresenter = searchAbstractPresenter;
+	}
+
+	public PreSearchPresenter getPreSearchPresenter() {
+		return preSearchPresenter;
+	}
+
+	public void setPreSearchPresenter(PreSearchPresenter preSearchPresenter) {
+		this.preSearchPresenter = preSearchPresenter;
+	}
+
+
+	
+	
 }

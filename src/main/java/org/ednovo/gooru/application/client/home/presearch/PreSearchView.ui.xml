@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc" xmlns:tbp="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel styleName="gradeContainer">
 			<section class="focusBlock">
@@ -47,9 +47,11 @@
 								    <g:Button ui:field="btnBrowseContent" styleName="btn btn-primary primary" text="{i18n.GL3293}"></g:Button>
 								</div>
 								<div class="col-md-2 standards">
-									<span class="blocksSearch">
+									<span class="blocksSearch subjectContainer">
 									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary primary" text="{i18n.GL3294}"></g:Button>
+									    <tbp:UlPanel styleName="dropdown-menu" ui:field="standardsDropListValues"/>
 									</span>
+									
 								</div>
 								<div class="clearfix"></div>
 							</div>

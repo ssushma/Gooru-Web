@@ -48,7 +48,10 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -112,9 +115,34 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, false);
 			}
 		});
+		courseTitle.addKeyUpHandler(new TitleKeyUpHandler());
+		courseTitle.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				courseTitle.getElement().getStyle().clearBackgroundColor();
+				courseTitle.getElement().getStyle().setBorderColor("#ccc");
+				lblErrorMessage.setVisible(false);
+			}
+		});
 		btnK12.addClickHandler(new CallTaxonomy(1));
 		btnHigherEducation.addClickHandler(new CallTaxonomy(2));
 		btnProfessionalLearning.addClickHandler(new CallTaxonomy(3));
+	}
+
+	/**
+	 * This class is used for validation on collection title keypress.
+	 *
+	 */
+	private class TitleKeyUpHandler implements KeyUpHandler {
+		public void onKeyUp(KeyUpEvent event) {
+			lblErrorMessage.setVisible(false);
+			if(courseTitle.getText().length() >= 50) {
+				lblErrorMessage.setText(i18n.GL0143());
+				lblErrorMessage.getElement().setAttribute("alt",i18n.GL0143());
+				lblErrorMessage.getElement().setAttribute("title",i18n.GL0143());
+				lblErrorMessage.setVisible(true);
+			}
+		}
 	}
 	class CallTaxonomy implements ClickHandler{
 		int selectedIndex;

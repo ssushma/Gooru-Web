@@ -1104,9 +1104,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
 					courseImage.setVisible(false);
 					districtSpecificPartnersMain.setVisible(true);
-					/*districtLibraryHeaderText.getElement().setInnerText("");
-					districtLibrarySubHeaderText.getElement().setInnerText("");*/
-					
+					districtLibraryHeaderText.getElement().setInnerText("Yuma Elementary School District ONE's Professional Learning Library");
+					districtLibrarySubHeaderText.getElement().setInnerText("The Department of Learning Services offers these collections created by our Instructional Coaches, empowering educators to utilize digital tools for higher achievement and innovative excellence.");
 					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainYesd());
 					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainYesd());
 					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogoYesd());

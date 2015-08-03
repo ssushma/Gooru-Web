@@ -857,7 +857,7 @@ public class CollectionShareTabVc extends Composite {
 
 	public void onReveal() {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", "!collection-search");
+		params.put("type", PlaceTokens.COLLECTION_SEARCH);
 		params.put("shareType", "share");
 		if (socialShareLinksView.getshareLinkTxtBox().getText().length() < 4) {
 			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(collection.getGooruOid(), params, getShareShortenUrlAsyncCallback());

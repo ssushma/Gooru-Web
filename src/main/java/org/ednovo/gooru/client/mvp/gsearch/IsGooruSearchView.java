@@ -119,4 +119,6 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	void setJsonResponseInStorage(String data,boolean isApiCalled);
 
 	void setCollectionContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> result);
+
+	Map<String, String> getStandardsSelectedFilters(String viewToken);
 }

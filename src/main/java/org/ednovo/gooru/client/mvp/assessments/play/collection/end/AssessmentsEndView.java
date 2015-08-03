@@ -796,7 +796,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			public void onSuccess() {
 
 				printWidget.clear();
-				Label collectionSummaryText=new Label();
+				/*Label collectionSummaryText=new Label();
 				collectionSummaryText.setText(i18n.GL4006());
 				collectionSummaryText.getElement().getStyle().setPaddingBottom(15, Unit.PX);
 				collectionSummaryText.addStyleName("collectionSummaryText");
@@ -811,7 +811,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				scoredQuestionHeading.getElement().getStyle().setPaddingBottom(20, Unit.PX);
 				printWidget.add(scoredQuestionHeading);
 				printWidget.add(printScoredData);
-				printScoredData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+				printScoredData.getElement().getStyle().setPaddingBottom(20, Unit.PX);*/
 
 				printButton.setVisible(false);
 				downloadButton.setVisible(false);
@@ -821,7 +821,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 				//printWidget.add(collectionOverViewWidget);
 				//printWidget.add(printResourceData);
 				if(isClickedOnSave){
-					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
+					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+PrintPnl.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 					printWidget.clear();
 				}else{
 					Print.it(style,PrintPnl);

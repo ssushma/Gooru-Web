@@ -64,6 +64,7 @@ public class CollectionQuestionItemDo implements IsSerializable {
 	private List<Integer> skillIds;
 	private List<Integer> standardIds;
 	private ArrayList<String> mediaFiles;
+	private String mediaFilename;
 
 	
 	private String hlType;
@@ -247,4 +248,16 @@ public class CollectionQuestionItemDo implements IsSerializable {
 	public void setDepthOfKnowledgeIds(List<Integer> depthOfKnowledgeIds) {
 		this.depthOfKnowledgeIds = depthOfKnowledgeIds;
 	}
+
+
+	public String getMediaFilename() {
+		return mediaFilename;
+	}
+
+
+	public void setMediaFilename(String mediaFilename) {
+		this.mediaFilename = mediaFilename;
+	}
+	
+	
 }
