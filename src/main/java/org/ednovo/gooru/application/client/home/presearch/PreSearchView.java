@@ -1134,8 +1134,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
                 }else{
                 	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
                 	{
+                		standardsDescriptionList.set(j, "College, Career, and Civic Life");
                         headerDiv.setStyleName("liPanelStylenonBold");
-                        liPanel.getElement().setAttribute("standarddesc", "College, Career and Civic Life");
+                        liPanel.getElement().setAttribute("standarddesc", "College, Career, and Civic Life");
                 	}
                 	else
                 	{
