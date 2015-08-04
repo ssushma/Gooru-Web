@@ -4,7 +4,7 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<ui:style src=""/>
 	<g:HTMLPanel>
-		<uc:PPanel ui:field="scoreLbl"></uc:PPanel>
+		<g:InlineLabel ui:field="scoreLbl"/><g:InlineLabel text="{i18n.GL3425}" styleName="errorMessage pull-right" ui:field="scoreErrorLbl"/>
 		<g:HTMLPanel styleName="textBoxPadding">
 			<g:HTMLPanel styleName="col-md-10">
 				<g:TextBox styleName="pull-left form-control" ui:field="scoreTextBox"></g:TextBox>
@@ -12,8 +12,7 @@
 			<g:Label styleName="pull-right col-md-2 percentLbl">%</g:Label>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		</g:HTMLPanel>
-		<uc:PPanel ui:field="evidenceLbl"></uc:PPanel>
-		<g:Label text="{i18n.GL3469_30}" ui:field="evidenceErrorLbl"></g:Label>
+		<g:InlineLabel ui:field="evidenceLbl"/><g:InlineLabel text="{i18n.GL0143}" styleName="errorMessage pull-right" ui:field="evidenceErrorLbl"/>
 		<g:TextArea styleName="form-control textBoxPadding" ui:field="evidence"></g:TextArea>
 		<panel:HTMLEventPanel styleName="list-group-item viewLink" ui:field="submit">
 			<g:Anchor ui:field="submitTxt" text="{i18n.GL0666}"></g:Anchor>
