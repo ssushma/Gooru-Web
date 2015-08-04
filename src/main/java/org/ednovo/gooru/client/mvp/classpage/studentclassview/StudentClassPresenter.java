@@ -246,7 +246,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 						}
 					};
 				}else{
-					getView().setPrivateLogoutPanelVisibility(false);
+					getView().setPrivateLogoutPanelVisibility(true);
 					if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
 						if(status.equalsIgnoreCase("not-invited")){
 							new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());

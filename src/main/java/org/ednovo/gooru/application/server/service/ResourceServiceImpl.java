@@ -47,12 +47,12 @@ import org.ednovo.gooru.application.server.request.UrlToken;
 import org.ednovo.gooru.application.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
-
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemsListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionProfileItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
@@ -363,6 +363,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				obj.setViews(jsonRep.getJsonObject().getInt("views")+"");
 				obj.setGoals(jsonRep.getJsonObject().isNull("goals")?"":jsonRep.getJsonObject().getString("goals"));
 				obj.setDescription(jsonRep.getJsonObject().isNull("description")?"":jsonRep.getJsonObject().getString("description"));
+				obj.setLanguageObjective(jsonRep.getJsonObject().isNull("languageObjective")?"":jsonRep.getJsonObject().getString("languageObjective"));
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
 
 				if(jsonRep.getJsonObject().has("settings")){
@@ -400,6 +401,42 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 						checkboxSelectedDos1.add(item);
 					}
 				}
+
+
+				CollectionMetaInfoDo metaInfoDo = new CollectionMetaInfoDo();
+
+				List<StandardFo> lstStandardsFo =new ArrayList<>();
+				if(jsonRep.getJsonObject().has("standards")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("standards");
+					for(int i=0;i<array.length();i++){
+						StandardFo item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), StandardFo.class);
+						lstStandardsFo.add(item);
+					}
+				}
+				metaInfoDo.setStandards(lstStandardsFo);
+
+				List<String> lstCourse =new ArrayList<>();
+				if(jsonRep.getJsonObject().has("taxonomyCourse")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("taxonomyCourse");
+					for(int i=0;i<array.length();i++){
+						checkboxSelectedDo item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), checkboxSelectedDo.class);
+						lstCourse.add(item.getName());
+					}
+				}
+				metaInfoDo.setCourse(lstCourse);
+
+				List<StandardFo> lstSkills =new ArrayList<>();
+				if(jsonRep.getJsonObject().has("skills")){
+					JSONArray array=jsonRep.getJsonObject().getJSONArray("skills");
+					for(int i=0;i<array.length();i++){
+						StandardFo item=JsonDeserializer.deserialize(array.getJSONObject(i).toString(), StandardFo.class);
+						lstSkills.add(item);
+					}
+				}
+				metaInfoDo.setSkills(lstSkills);
+
+				obj.setMetaInfo(metaInfoDo);
+
 				obj.setDepthOfKnowledges(checkboxSelectedDos1);
 				obj.setPublishStatus(jsonRep.getJsonObject().isNull("publishStatus")?"":jsonRep.getJsonObject().getString("publishStatus"));
 				long time = jsonRep.getJsonObject().isNull("lastModified")?0:jsonRep.getJsonObject().getLong("lastModified");
