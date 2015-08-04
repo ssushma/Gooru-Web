@@ -584,8 +584,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		inviteBtn.getElement().addClassName("disabled");
 		inviteBtn.setEnabled(false);
 		//Call API to add the Student to the class.
-		getUiHandlers().addStudents(classpageDo.getClassUid(), lstEmailID);	// this will callback the displayPendingMembersList method.
-
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		if(classId != null){
+			getUiHandlers().addStudents(classId, lstEmailID);	// this will callback the displayPendingMembersList method.
+		}
 	}
 	
 	@Override
