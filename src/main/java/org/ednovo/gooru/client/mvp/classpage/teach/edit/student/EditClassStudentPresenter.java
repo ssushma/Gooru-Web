@@ -161,8 +161,12 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 	@Override
 	public void generateShareLink(String classpageId) {
 		try{
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
+			if(courseId != null){
+				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, courseId);
+			}
 			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareUrlGenerationAsyncCallback());
 		}catch(Exception e){
 			AppClientFactory.printSevereLogger("EditClassStudentPresenter : generateShareLink :"+e.getMessage());
