@@ -520,7 +520,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}else{
 					getView().hidePopup();
 					Window.enableScrolling(false);
-					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry Something Went Wrong");
+					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),result.getErrorMessage());
 				}
 			}
 		});
@@ -556,7 +556,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}else{
 					getView().hidePopup();
 					Window.enableScrolling(false);
-					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry Something Went Wrong");
+					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),result.getErrorMessage());
 				}
 			}
 		});
