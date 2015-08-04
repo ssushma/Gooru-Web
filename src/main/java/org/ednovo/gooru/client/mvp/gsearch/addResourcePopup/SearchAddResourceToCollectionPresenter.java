@@ -155,7 +155,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(type==null){
-					if(folderListDo!=null && folderListDo.getCount()!=null && folderListDo.getCount()==0){
+					if(folderListDo!=null && folderListDo.getCount()!=null && folderListDo.getCount()==0 && clearShelfPanel){
 						getView().displayNoCollectionsMsg(type);
 					}else{
 						getView().enableAddButton();
@@ -163,14 +163,14 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					}
 				}
 				else if(type.equalsIgnoreCase(FOLDER)){
-					if(folderListDo!=null && folderListDo.getCount()!=null && folderListDo.getCount()==0){
+					if(folderListDo!=null && folderListDo.getCount()!=null && folderListDo.getCount()==0 && clearShelfPanel){
 						getView().displayNoCollectionsMsg(type);
 					}else{
 						getView().enableAddButton();
 						getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
 					}
 				}else if(type.equalsIgnoreCase("course")){
-					if(folderListDo.getSearchResult().size()==0){
+					if(folderListDo.getSearchResult().size()==0 && clearShelfPanel){
 						getView().displayNoCollectionsMsg(type);
 					}else{
 						getView().enableAddButton();

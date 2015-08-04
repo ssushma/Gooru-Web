@@ -196,7 +196,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					leftMenuItemView.addStyleName("folderOpen");
 					leftMenuItemView.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
-					if(leftMenuItemView.getType().equals(COLLECTION)) {
+					if(leftMenuItemView.getType().equals(COLLECTION) || leftMenuItemView.getType().contains(ASSESSMENT)) {
 						leftMenuItemView.removeStyleName("folderOpen");
 						getPresenter().getProfileLibraryCollection(unitListId, false);
 						listAllBtn.setVisible(false);
@@ -226,6 +226,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
+			//e.printStackTrace();
 		    AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e.getMessage());
 		}
 	}
@@ -252,6 +253,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
+			//e.printStackTrace();
 			AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e.getMessage());
 		}
 	}

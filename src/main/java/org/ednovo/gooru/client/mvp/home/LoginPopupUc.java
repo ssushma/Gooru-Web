@@ -489,6 +489,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 							    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SAUSD_LIBRARY);
 							    }
 						    }
+						    onLoginSuccess();
 						}
 						else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
 							handleInProgress();
@@ -527,7 +528,6 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 							}
 						});
-						onLoginSuccess();
 					}
 
 

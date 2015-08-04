@@ -500,7 +500,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		setAttemptCount(getAttemptCount()+1);
 	}
 
-	public void showTabWidget(String tabView,String resourceId){
+	public void showTabWidget(String tabView,final String resourceId){
 		if(tabView==null||tabView.isEmpty()){
 			getView().clearActiveButton(true,true,true,true);
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
@@ -509,33 +509,20 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			resoruceMetadataPresenter.setMarginTop();
 		}
 		else if(tabView.equals("add")){
-			MixpanelUtil.mixpanelEvent("Player_Click_Add");
-			resoruceMetadataPresenter.clearMarginTop();
-/*			setAddResourceCollectionView(resourceId);
-*/
-			clearSlot(TAB_PRESENTER_SLOT);
-			searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
-			String resourcePlayId =resourceId;
-			ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
-			resourceSearchResultDo.setGooruOid(resourcePlayId);
-			resourceSearchResultDo.setQuestionType(collectionItemDo.getResource().getTypeName());
-			SearchResourceFormatDO searchResourceFormatDO = new SearchResourceFormatDO();
-			searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
-			resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);
-			shelfMainPresenter.SetDefaultTypeAndVersion();
-			searchAddResourceToCollectionPresenter.getLoadingImage();
-			searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
-			searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
-			searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
-			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
-			searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
-			searchAddResourceToCollectionPresenter.getView().getAppPopUp().addCloseHandler(new CloseHandler<PopupPanel>() {
-				@Override
-				public void onClose(CloseEvent<PopupPanel> event) {
-					Window.enableScrolling(false);
-					searchAddResourceToCollectionPresenter.getView().closeTabView();
+			if(AppClientFactory.isAnonymous()){
+				LoginPopupUc loginPopupUc=new LoginPopupUc() {
+					@Override
+					public void onLoginSuccess() {
+						clearSlot(TAB_PRESENTER_SLOT);
+						callRemixPopup(resourceId);
+					}
+				};
+				loginPopupUc.show();
+				loginPopupUc.setGlassEnabled(true);
+				loginPopupUc.setWidgetMode("Add");
+			}else{
+				callRemixPopup(resourceId);
 				}
-			});
 		 }
 		else if(tabView.equals("share")){
 			resoruceMetadataPresenter.clearMarginTop();
@@ -547,7 +534,16 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		 else if(tabView.equals("flag")){
 			 if(AppClientFactory.isAnonymous()){
 				 clearSlot(TAB_PRESENTER_SLOT);
-				 showLoginPopupWidget(i18n.GL0600().toUpperCase());
+				 LoginPopupUc loginPopupUc=new LoginPopupUc() {
+						@Override
+						public void onLoginSuccess() {
+							clearSlot(TAB_PRESENTER_SLOT);
+							setResourceFlagView(resourceId);
+						}
+					};
+					loginPopupUc.show();
+					loginPopupUc.setGlassEnabled(true);
+					loginPopupUc.setWidgetMode("flag");
 			}else{
 				setResourceFlagView(resourceId);
 			 }
@@ -860,10 +856,10 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	@Override
 	public void showTabWidget(String widgetMode,boolean isLoginRequestCancel) {
 		  String resourceId=getPlaceManager().getRequestParameter("id", null);
-		  if(!isLoginRequestCancel&&widgetMode.equals(i18n.GL0590().toUpperCase())){
-			  setAddResourceCollectionView(resourceId);
+		  if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase("Add")){
+			  callRemixPopup(resourceId);
 		  } else if(!isLoginRequestCancel&&widgetMode.equals(RESOURCE_THUMBS_WIDGET_MODE)){
-		  }else if(!isLoginRequestCancel&&widgetMode.equals(i18n.GL0600().toUpperCase())){
+		  }else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase(i18n.GL0600().toUpperCase())){
 			  getContentReport(collectionItemDo.getResource().getGooruOid());
 		  }
 		  else if(isLoginRequestCancel){
@@ -1205,6 +1201,33 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			public void onSuccess(Void result) {
 				// Current not required to handle any thing on success.
 
+			}
+		});
+	}
+	public void callRemixPopup(String resourceId){
+		MixpanelUtil.mixpanelEvent("Player_Click_Add");
+		resoruceMetadataPresenter.clearMarginTop();
+		clearSlot(TAB_PRESENTER_SLOT);
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		String resourcePlayId =resourceId;
+		ResourceSearchResultDo resourceSearchResultDo= new ResourceSearchResultDo();
+		resourceSearchResultDo.setGooruOid(resourcePlayId);
+		resourceSearchResultDo.setQuestionType(collectionItemDo.getResource().getTypeName());
+		SearchResourceFormatDO searchResourceFormatDO = new SearchResourceFormatDO();
+		searchResourceFormatDO.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
+		resourceSearchResultDo.setResourceFormat(searchResourceFormatDO);
+		shelfMainPresenter.SetDefaultTypeAndVersion();
+		searchAddResourceToCollectionPresenter.getLoadingImage();
+		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo, "coursebuilder", null);
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().show();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+		searchAddResourceToCollectionPresenter.getView().getAppPopUp().addCloseHandler(new CloseHandler<PopupPanel>() {
+			@Override
+			public void onClose(CloseEvent<PopupPanel> event) {
+				Window.enableScrolling(false);
+				searchAddResourceToCollectionPresenter.getView().closeTabView();
 			}
 		});
 	}

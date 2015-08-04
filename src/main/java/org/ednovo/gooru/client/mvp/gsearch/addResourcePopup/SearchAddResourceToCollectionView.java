@@ -277,7 +277,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
-			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())&&(totalHitCount>pageNum*limit)){
+			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())){
 				if(isFromMyCourse){
 					currentsearchType="coursebuilder";
 				}else{

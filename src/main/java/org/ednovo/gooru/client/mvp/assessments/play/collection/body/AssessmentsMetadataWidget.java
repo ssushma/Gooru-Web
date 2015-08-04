@@ -324,13 +324,13 @@ public class AssessmentsMetadataWidget extends Composite {
 			depthOfKnowledgePanel.clear();
 			boolean depthofKnowledgeValue = false;
 			for(checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
-				if(checkboxSelectedDo.isSelected()){
+//				if(checkboxSelectedDo.isSelected()){
 					depthofKnowledgeValue = true;
-					Label depthofKnowledge = new Label(checkboxSelectedDo.getValue());
+					Label depthofKnowledge = new Label(checkboxSelectedDo.getName());
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
 					depthofKnowledge.getElement().setAttribute("style", "display:table");
 					depthOfKnowledgePanel.add(depthofKnowledge);
-				}
+//				}
 			}
 			if(depthofKnowledgeValue){
 				depthOfKnowledgeContainer.setVisible(true);
@@ -369,11 +369,11 @@ public class AssessmentsMetadataWidget extends Composite {
 			audiencePanel.clear();
 			boolean audience=false;
 			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
-				if(checkboxSelectedDo.isSelected()){
+//				if(checkboxSelectedDo.isSelected()){
 					audience = true;
 					Label lblaudience = new Label(checkboxSelectedDo.getValue());
 					audiencePanel.add(lblaudience);
-				}
+//				}
 			}
 			if(audience){
 				audienceContainer.setVisible(true);

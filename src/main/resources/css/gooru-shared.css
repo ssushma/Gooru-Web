@@ -439,7 +439,7 @@
 }
 
 .lessonTitle {
-	padding: 8px 63px;
+	padding: 8px 63px !important;
 	margin: 7px 0px;
 	font-weight:bold;
 	background-color:rgba(255,255,255,0.5);

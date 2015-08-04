@@ -178,7 +178,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				loadingPanel(true);
 				libraryUnitMenuView.addStyleName(districtStyleUc.unitLiActive());
 				unitListId = profileLibraryDoList.get(i).getGooruOid();
-				if(profileLibraryDoList.get(i).getType().equals("scollection")) {
+				if(profileLibraryDoList.get(i).getType().equals("collection")||profileLibraryDoList.get(i).getType().contains("assessment")) {
 					setTopicListData(profileLibraryDoList.get(i), unitListId,libraryGooruOid);
 				} else {
 					folderTopicTitleLbl.setText(profileLibraryDoList.get(i).getTitle());
