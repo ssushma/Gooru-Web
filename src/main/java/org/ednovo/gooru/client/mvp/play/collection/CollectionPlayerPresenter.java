@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
@@ -47,6 +48,7 @@ import org.ednovo.gooru.application.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerPresenter.BackToClassHandler;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
@@ -104,7 +106,6 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
-
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -559,10 +560,18 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
         });
     }
 
-	private void getClassPageDetails(String classItemId) {
-		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
+	private void getClassPageDetails(final String classItemId) {
+		AppClientFactory.getInjector().getClasspageService().v3GetClassById(classItemId, new SimpleAsyncCallback<ClasspageDo>() {
+
 			@Override
-			public void onSuccess(ClasspageItemDo classpageItemDo) {
+			public void onSuccess(ClasspageDo result) {
+				ClasspageItemDo classpageItemDo = new ClasspageItemDo();
+				classpageItemDo.setTitle(result.getName() != null ? result.getName() : "");
+				classpageItemDo.setUserNameDispaly(result.getUser() !=null && result.getUser().getUsername() != null ? result.getUser().getUsername() : "");
+				classpageItemDo.setProfileImageUrl(result.getUser() !=null && result.getUser().getProfileImageUrl() != null ? result.getUser().getProfileImageUrl() : "");
+				classpageItemDo.setPlannedEndDate("");
+				classpageItemDo.setDirection("");
+
 				metadataPresenter.setTeacherInfo(classpageItemDo);
 				collectionEndPresenter.setTeacherInfo(classpageItemDo);
 				classpageId=classpageItemDo.getClasspageId();
@@ -595,7 +604,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
     				}
 				}
-				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
+				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classItemId));
 			}
 		});
 	}

@@ -42,6 +42,7 @@ import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
@@ -631,10 +632,18 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
         });
     }
 
-	private void getClassPageDetails(String classItemId) {
-		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
+	private void getClassPageDetails(final String classItemId) {
+		AppClientFactory.getInjector().getClasspageService().v3GetClassById(classItemId, new SimpleAsyncCallback<ClasspageDo>() {
+
 			@Override
-			public void onSuccess(ClasspageItemDo classpageItemDo) {
+			public void onSuccess(ClasspageDo result) {
+				ClasspageItemDo classpageItemDo = new ClasspageItemDo();
+				classpageItemDo.setTitle(result.getName() != null ? result.getName() : "");
+				classpageItemDo.setUserNameDispaly(result.getUser() !=null && result.getUser().getUsername() != null ? result.getUser().getUsername() : "");
+				classpageItemDo.setProfileImageUrl(result.getUser() !=null && result.getUser().getProfileImageUrl() != null ? result.getUser().getProfileImageUrl() : "");
+				classpageItemDo.setPlannedEndDate("");
+				classpageItemDo.setDirection("");
+
 				metadataPresenter.setTeacherInfo(classpageItemDo);
 				collectionEndPresenter.setTeacherInfo(classpageItemDo);
 				classpageId=classpageItemDo.getClasspageId();
@@ -667,7 +676,7 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
     					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
     				}
 				}
-				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
+				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classItemId));
 			}
 		});
 	}
