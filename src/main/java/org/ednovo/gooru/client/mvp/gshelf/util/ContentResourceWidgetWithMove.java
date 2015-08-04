@@ -970,10 +970,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 			HashMap<String,String> params = new HashMap<String,String>();
 			params.put("id", collectionId);
-			
+
 			params.put("rid", collectionItem.getCollectionItemId());
 			if(!StringUtil.isEmpty(collectionItem.getNarration())){
-				params.put("tab", collectionItem.getNarration());
+				params.put("tab", "narration");
 			}
 			if(!selectedFolderId.isEmpty()){
 				params.put("folderId", selectedFolderId);
