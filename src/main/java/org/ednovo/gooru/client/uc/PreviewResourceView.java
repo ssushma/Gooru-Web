@@ -336,7 +336,6 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 	}
 
 	private String getHTML(String html){
-		AppClientFactory.printInfoLogger("html : "+html);
 		if (html != null){
 			html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 			HTML contentHtml=new HTML(html);
