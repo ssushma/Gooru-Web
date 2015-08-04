@@ -115,20 +115,20 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 				isUnitLinks = false;
 			}
 			setContainerVisibility(true, true, true, isUnitLinks, true, false, false, false);
-			setNavLinksData("All Units",false);
+			setNavLinksData(i18n.GL3469_1(),false);
 		} else if(reportView.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 			bodyView.add(new TeachLessonReportChildView());
 			boolean isScoreLinks = true;
 			boolean isCollectionLinks = true;
 			if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
 				isScoreLinks = false;
-				btnPreview.setText("Preview Collection");
+				btnPreview.setText(i18n.GL3469_36());
 			} else {
 				isCollectionLinks = false;
-				btnPreview.setText("Preview Assessment");
+				btnPreview.setText(i18n.GL3469_35());
 			}
 			setContainerVisibility(true, true, true, false, false, isScoreLinks, isCollectionLinks, true);
-			setNavLinksData("All Lessons",true);
+			setNavLinksData(i18n.GL3469_12(),true);
 		}
 		setContentLinksHighlight(contentView);
 	}
@@ -212,7 +212,7 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 				break;
 			}
 		}
-		currentContentName.setText("Unit"+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle());
+		currentContentName.setText(i18n.GL3281()+" "+(matchedCount+1)+": "+dataList.get(matchedCount).getTitle());
 	}
 	
 	@UiHandler("btnPreview")

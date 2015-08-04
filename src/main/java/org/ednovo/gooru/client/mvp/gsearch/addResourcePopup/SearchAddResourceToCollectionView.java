@@ -228,6 +228,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						urlparams.put(O2_LEVEL, urlparams.get(O2_LEVEL));
 						urlparams.put(O3_LEVEL, folderTreeItemWidget.getGooruOid());
 					}
+					courseId=urlparams.get(O1_LEVEL);
+					unitId=urlparams.get(O2_LEVEL);
+					lessonId=urlparams.get(O3_LEVEL);
 					if (!folderTreeItemWidget.isApiCalled()) {
 						folderTreeItemWidget.setApiCalled(true);
 					String typevalue=	folderTreeItemWidget.getType();
@@ -432,7 +435,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
 			lblEmptyErrorMessage.setVisible(true);
 			lblEmptyErrorMessage.setText(i18n.GL3462_22());
-			urlparams.clear();
+			/*urlparams.clear();*/
 			folderTreePanel.clear();
 		}
 	}
