@@ -317,7 +317,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			public void onSelection(SelectionEvent<TreeItem> event) {
 				organizeRootPnl.removeStyleName("active");
 				ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) event.getSelectedItem().getWidget();
-					
 				treeChildSelectedItem = event.getSelectedItem();
 				((ShelfTreeWidget) treeChildSelectedItem.getWidget()).openFolderItem();
 				getUiHandlers().setBreadCrumbs(shelfTreeWidget.getUrlParams());
@@ -328,7 +327,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 					getUiHandlers().setRightPanelData(shelfTreeWidget.getCollectionDo(), widgetType, null);
 				}
 				showLastEditCollaborater("", false);
-				collectionListScrollpanel.getElement().setScrollTop(shelfTreeWidget.getAbsoluteTop()+shelfTreeWidget.getOffsetHeight());
 			}
 		});
 		floderTreeContainer.add(shelfFolderTree);
@@ -356,8 +354,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		if(shelfTreeWidget!=null&&shelfTreeWidget.getCollectionDo()!=null){
 				if("folder".equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || COURSE.equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || UNIT.equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType()) || LESSON.equalsIgnoreCase(shelfTreeWidget.getCollectionDo().getType())) {
 					TreeItem parent = treeChildSelectedItem.getParentItem();
-					treeChildSelectedItem.getTree().setSelectedItem(parent, false);
-					if(parent != null)parent.setSelected(false);
+					treeChildSelectedItem.getTree().setSelectedItem(null, false);
+					if(parent != null){
+						parent.setSelected(false);
+					}
 					treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
 					String type=shelfTreeWidget.getCollectionDo().getType();
 					if(FOLDER.equalsIgnoreCase(type)){
@@ -381,10 +381,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				if(previousshelfTreeWidget!=null && previousshelfTreeWidget.getCollectionDo()==null){
 					previousshelfTreeWidget.setActiveStyle(false);
 				}
-			//}
 		}else{
 			TreeItem parent = treeChildSelectedItem.getParentItem();
-			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
+			treeChildSelectedItem.getTree().setSelectedItem(null, false);
 			if(parent != null)parent.setSelected(false);
 			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
 
@@ -393,9 +392,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 			}else{
 				shelfTreeWidget.setCollectionOpenedStatus(true);
 			}*/
-                        if (shelfTreeWidget != null) {
-        			shelfTreeWidget.setActiveStyle(true);
-                        }
+            if (shelfTreeWidget != null) {
+        		shelfTreeWidget.setActiveStyle(true);
+            }
 			ShelfTreeWidget previousshelfTreeWidget = (ShelfTreeWidget) previousTreeChildSelectedItem.getWidget();
 			if(previousshelfTreeWidget==null) {
 				previousTreeChildSelectedItem = treeChildSelectedItem;
@@ -404,7 +403,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				previousshelfTreeWidget.setActiveStyle(false);
 			}
 		}
-		
 		previousTreeChildSelectedItem = treeChildSelectedItem;
 	}
 
@@ -913,7 +911,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		lnkMyCourses.addStyleName("disabled");
 		lnkMyFoldersAndCollecctions.setEnabled(false);
 		lnkMyFoldersAndCollecctions.addStyleName("disabled");
-		
 		if(isLeftScroll){
 			if(collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
 				pageNumber = pageNumber + 1;
