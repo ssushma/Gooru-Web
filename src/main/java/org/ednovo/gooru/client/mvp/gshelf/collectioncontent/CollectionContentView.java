@@ -749,5 +749,21 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}
 		return msg;
 	}
+	
+	@Override
+	public void updateResouceItemImage(String imageUrl,String fileNameWithOutRespUrl, boolean isEditUserOwnResourceImage) {
+		if(isEditUserOwnResourceImage){
+			ownResourcePopupVc.getSetThumbnailImage().setUrl(imageUrl + "?" + Math.random());
+			ownResourcePopupVc.setThumbnailUrlStr(imageUrl);
+			ownResourcePopupVc.setFileNameWithOutRespUrl(fileNameWithOutRespUrl);
+		}
+		else{
+			editResoruce.getSetThumbnailImage().setUrl(imageUrl + "?" + Math.random());
+			editResoruce.setThumbnailUrlStr(imageUrl);
+			editResoruce.setFileNameWithOutRespUrl(fileNameWithOutRespUrl);
+		}
+		
+	}
+
 
 }

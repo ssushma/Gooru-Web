@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
@@ -1664,6 +1665,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											collectionItemDo.getResource().setCategory(categoryStr);
 
 											if (thumbnailUrlStr!=null){
+												
+												if(collectionItemDo.getResource().getThumbnails()==null){
+													ThumbnailDo thumbnailObj=new ThumbnailDo();
+													collectionItemDo.getResource().setThumbnails(thumbnailObj);
+												}
+												
 												collectionItemDo.getResource().getThumbnails().setUrl(thumbnailUrlStr);
 											}else{
 												if(collectionItemDo.getResource().getThumbnails()!=null)
