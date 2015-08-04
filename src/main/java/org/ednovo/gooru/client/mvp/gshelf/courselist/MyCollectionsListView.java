@@ -399,12 +399,12 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			enableCreateButtons(true);
 			btnCreateResource.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL1451());
 			btnCreateQuestion.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3024());
-			lblAddNewForResource.setText(i18n.GL2001());
+			lblAddNewForResource.setText(i18n.GL3483());
 			lblAddNewForQuestion.setText(i18n.GL3372());
 			
 			StringUtil.setAttributes(btnCreateResource.getElement(), i18n.GL1451(), i18n.GL1451());
 			StringUtil.setAttributes(btnCreateQuestion.getElement(), i18n.GL3024(), i18n.GL3024());
-			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL2001());
+			StringUtil.setAttributes(lblAddNewForResource.getElement(), i18n.GL2001(), i18n.GL3483());
 			StringUtil.setAttributes(lblAddNewForQuestion.getElement(), i18n.GL3418(), i18n.GL3372());
 			
 			btnCreate.setVisible(false);
