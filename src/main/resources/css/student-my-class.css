@@ -334,14 +334,8 @@
     opacity: 0.9;
 	content: "";
 }
-.LearningMapContainer .lessonDescription .divcontainer. emptyselected:before {
-    left: 15px;
-    right: 10px;
-    bottom: 11px;
-    top: 11px;
-    position: absolute;
-    opacity: 0.4;
-	content: "";
+.empty-plan-collection-selected {
+    opacity: 0.5 !important;
 }
 .LearningMapContainer .lessonDescription .scoreWidget {
 	color: #fff;
