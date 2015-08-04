@@ -5,7 +5,7 @@
 	<g:HTMLPanel ui:field="lessonInfo">
 <div class="courseNameBlock">
 
-<p>Lesson Name</p>
+<uc:PPanel ui:field="lessonNamePpanel"></uc:PPanel>
 <p><g:TextBox styleName="form-control" ui:field="lessonTitle" maxLength="50" />
 <g:Label ui:field="lblErrorMessage" styleName="errorMessage text-right"></g:Label>
 </p>
@@ -28,8 +28,7 @@
 						<div class="col-md-12">
 							<div class="dropDownRight">
 								<div class="btn-group">
-									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">Select other from
-										taxonomy</g:Button>
+									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn" text="{i18n.GL3480}"></g:Button>
 									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="taxonomyToggleBtn">
 										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
@@ -48,8 +47,8 @@
 
 								<panel:HTMLEventPanel styleName="btn-group"
 									ui:field="btnStandardsBrowse">
-									<g:Button styleName="btn btn-primary" text="{i18n.GL3209}"
-										title="{i18n.GL3209}" />
+									<g:Button styleName="btn btn-primary" text="{i18n.GL3479}"
+										title="{i18n.GL3479}" />
 									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
 										<g:InlineLabel styleName="caret"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
@@ -92,9 +91,9 @@
 
 <g:Button styleName="secondary" ui:field="saveLessonBtn" text="{i18n.GL3366}"/>
 
-<g:Button styleName="secondary" ui:field="btnSaveAndCreateCollection" text="Next: Create a Collection"/>
+<g:Button styleName="secondary" ui:field="btnSaveAndCreateCollection" text="{i18n.GL3481}"/>
 or
-<g:Button styleName="secondary" ui:field="btnSaveAndCreateAssessment" text="Next: Create an Assessment"/>
+<g:Button styleName="secondary" ui:field="btnSaveAndCreateAssessment" text="{i18n.GL3482}"/>
 
 </div>
 

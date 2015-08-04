@@ -103,7 +103,7 @@
 
 <div class="stepsButtonGroup">
 	<g:Button styleName="secondary" ui:field="saveUnitBtn" text="{i18n.GL3362}"/>
-			<g:Button styleName="primary" ui:field="nextCreateLessonBtn" text="{i18n.GL3363}"/>
+			<g:Button styleName="primary marginRight" ui:field="nextCreateLessonBtn" text="{i18n.GL3363}"/>
 
 </div>
 
