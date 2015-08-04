@@ -847,22 +847,22 @@ public class StringUtil implements ClientConstants {
 		long secondsInMilli = 1000;
 		if(different==0) {
 			format="--";
-		} else if((different/1000)>1) {
+		} else if((different/1000)>=1) {
 			long minutesInMilli = secondsInMilli * 60;
 			long hoursInMilli = minutesInMilli * 60;
 			long daysInMilli = hoursInMilli * 24;
 
-			long d = different / daysInMilli;
+			long d = Math.round(((double)((double)different / (double)daysInMilli)));
 			different = different % daysInMilli;
-
-			long h = different / hoursInMilli;
+			
+			long h = Math.round(((double)((double)different / (double)hoursInMilli)));
 			different = different % hoursInMilli;
 
-			long m = different / minutesInMilli;
+			long m = Math.round(((double)((double)different / (double)minutesInMilli)));
 			different = different % minutesInMilli;
-
-			long s = different / secondsInMilli;
-
+			
+			long s = Math.round(((double)((double)different / (double)secondsInMilli)));
+			
 	    	if(d>0) {
 	    		h = (24*d)+h;
 	    	}

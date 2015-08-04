@@ -5,12 +5,13 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
-import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -27,14 +28,12 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SlmExternalAssessmentForm extends Composite {
-
-	@UiField PPanel scoreLbl, evidenceLbl;
 
 	@UiField HTMLEventPanel submit;
 
@@ -44,8 +43,8 @@ public class SlmExternalAssessmentForm extends Composite {
 
 	@UiField Anchor submitTxt, inProgressTxt;
 	
-	@UiField Label evidenceErrorLbl;
-
+	@UiField InlineLabel scoreErrorLbl, evidenceErrorLbl, scoreLbl, evidenceLbl;
+	
 	private static final String ERROR_LBL_COLOR = "#EE1E7B";
 	
 	int attemptedScore;
@@ -75,18 +74,18 @@ public class SlmExternalAssessmentForm extends Composite {
 	
 	private void setIds() {
 		evidenceErrorLbl.setVisible(false);
+		scoreErrorLbl.setVisible(false);
 		scoreTextBox.setMaxLength(3);
 		setButtonVisibility(true);
 		scoreLbl.setText(i18n.GL2288());
 		evidenceLbl.setText(i18n.GL3469_8());
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
 		scoreTextBox.addKeyUpHandler(new ValidateScore());
+		scoreTextBox.addBlurHandler(new ValidateScoreBlur());
 		scoreTextBox.getElement().setAttribute("placeholder", i18n.GL3469_15());
 		evidence.getElement().setAttribute("placeholder", i18n.GL3469_16());
 		scoreTextBox.getElement().getStyle().setFontSize(13, Unit.PX);
 		evidence.getElement().getStyle().setFontSize(13, Unit.PX);
-		evidence.getElement().setAttribute("maxlength", "250");
-		evidenceErrorLbl.getElement().getStyle().setColor(ERROR_LBL_COLOR);
 		submit.addClickHandler(new SaveData());
 	}
 
@@ -101,6 +100,13 @@ public class SlmExternalAssessmentForm extends Composite {
 	private class ValidateScore implements KeyUpHandler{
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
+			validateScore();
+		}
+	}
+	
+	private class ValidateScoreBlur implements BlurHandler{
+		@Override
+		public void onBlur(BlurEvent event) {
 			validateScore();
 		}
 	}
@@ -128,8 +134,10 @@ public class SlmExternalAssessmentForm extends Composite {
 			scoreTextBox.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
 		}else if(score != null || score != ""){
 			if(Integer.parseInt(score) >100 || Integer.parseInt(score) <0){
+				scoreErrorLbl.setVisible(true);
 				scoreTextBox.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
 			}else{
+				scoreErrorLbl.setVisible(false);
 				scoreTextBox.getElement().getStyle().setBorderColor("");
 				attemptedScore=Integer.valueOf(score);
 				isScore = true;
@@ -145,6 +153,7 @@ public class SlmExternalAssessmentForm extends Composite {
 		String evidenceStr = evidence.getText();
 		if(evidenceStr.isEmpty()){
 			evidence.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
+			evidenceErrorLbl.setVisible(false);
 		}else if(evidenceStr != null || evidenceStr.length()>0){
 			if(evidenceStr.length()>250) {
 				evidenceErrorLbl.setVisible(true);
@@ -161,6 +170,11 @@ public class SlmExternalAssessmentForm extends Composite {
 		}
 	}
 
+	public void setButtonVisibility(boolean isVisible) {
+		submitTxt.setVisible(isVisible);
+		inProgressTxt.setVisible(!isVisible);
+	}
+	
 	private void logDataEvent() {
 			try
 			{
@@ -239,10 +253,5 @@ public class SlmExternalAssessmentForm extends Composite {
 				 };
 				 t.schedule(2000);
 			}
-	}
-
-	public void setButtonVisibility(boolean isVisible) {
-		submitTxt.setVisible(isVisible);
-		inProgressTxt.setVisible(!isVisible);
 	}
 }

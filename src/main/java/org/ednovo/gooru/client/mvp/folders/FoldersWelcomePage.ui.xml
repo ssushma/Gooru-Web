@@ -1,5 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"  
+    xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+    xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 
 <g:HTMLPanel>
 	<g:HTMLPanel ui:field="myContentLoggedout">
@@ -8,11 +10,11 @@
 	      <div class="container">
 	         <div class="row">
 	            <div class="contentBannerCaptions">
-	               <h1>Educate. Innovate. Create. </h1>        
-	               <h3>Create collections with engaging multimedia resources and assessments for personalized learning. </h3>
+	               <uc:H1Panel ui:field="educatePanel"></uc:H1Panel>        
+	               <uc:H3Panel ui:field="educateNotesPanel"></uc:H3Panel>
 	            </div>
 	            <div class="contentBannerButtonBlock">
-	               <g:Button styleName="primary" ui:field="createCourseBtn">Create your course</g:Button>
+	               <g:Button styleName="primary" ui:field="createCourseBtn"></g:Button>
 	            </div>
 	         </div>
 	      </div>
@@ -21,11 +23,11 @@
 	      <div class="container">
 	         <div class="row">
 	            <div class="col-md-5 col-sm-5 wow fadeInLeft">
-	               <h3>182,859 resources added by teachers</h3>
-	               <p class="lead">Teachers upload their own materials as well as videos, games, and other resources from their favorite websites.</p>
+	               <uc:H3Panel ui:field="resourceAdded"></uc:H3Panel>
+	               <uc:PPanel styleName="lead" ui:field="leadPanel"></uc:PPanel>
 	            </div>
 	            <div class="col-md-7 col-sm-7 resourcesCountScreen wow fadeInRight">
-	               <h4>Resource Formats</h4>
+	               <uc:H4Panel ui:field="resourceFormatPanel"></uc:H4Panel>
 	               <img src="../images/logout-page/ResourceCount.png" class="img-responsive"/> 
 	            </div>
 	            <div class="clearfix"></div>
@@ -37,8 +39,8 @@
 	         <div class="row">
 	            <div class="col-md-7 col-sm-7 wow fadeInLeft"> <img src="../images/logout-page/CollectionsCreated.png" class="img-responsive"/> </div>
 	            <div class="col-md-5 col-sm-5 wow fadeInRight">
-	               <h3>Diverse collections in all K-12 subjects</h3>
-	               <p class="lead">Teachers remix resources with quiz questions to create classroom-ready collections for courses in core K-12 subject areas.</p>
+	               <uc:H3Panel ui:field="subjectsPanel"></uc:H3Panel>
+	               <uc:PPanel styleName="lead" ui:field="subjectNotesPanel"></uc:PPanel>
 	            </div>
 	            <div class="clearfix"></div>
 	         </div>
@@ -49,23 +51,23 @@
 	         <img src="../images/logout-page/myclassesstudent21b.jpg" class="img-responsive"/>
 	      </div>
 	      <div class="studentBannerCaptions">
-	         <h2 class="wow fadeInLeft">Share Gooru collections with students so they can learn at their own pace.</h2>
+	         <uc:H2Panel styleName="wow fadeInLeft" ui:field="sharePanel"></uc:H2Panel>
 	      </div>
 	   </section>
 	   <section class="studentsPreferences">
 	      <div class="container">
 	         <div class="row">
 	            <div class="preferencesInnerBlock">
-	               <h2>Every student has different preferences across subject areas and resource formats.</h2>
+	               <uc:H2Panel ui:field="stdPrefePanel"></uc:H2Panel>
 	               <div class="col-md-5 col-sm-5 border-right-line wow fadeInLeft">
-	                  <h3>610,038+</h3>
-	                  <p class="lead">Collections views by subject</p>
+	                  <uc:H3Panel ui:field="collCountPanel"></uc:H3Panel>
+	                  <uc:PPanel styleName="lead" ui:field="collTxtPanel"></uc:PPanel>
 	                  <img src="../images/logout-page/CollectionViews.png" class="img-responsive"/> 
 	               </div>
 	               <div class="col-md-7 col-sm-7 wow fadeInRight">
 	                  <div class="resourcesViewed">
-	                     <h3>3,029,835+</h3>
-	                     <p class="lead">Resources studied by students</p>
+	                     <uc:H3Panel ui:field="resourceCount"></uc:H3Panel>
+	                     <uc:PPanel styleName="lead"  ui:field="resourceTxtPanel"></uc:PPanel>
 	                     <p class="lead"><img src="../images/logout-page/ResourceViews.png" class="img-responsive"/></p>
 	                  </div>
 	               </div>
@@ -77,9 +79,9 @@
 	   <section class="joinCommunity">
 	      <div class="container">
 	         <div class="row">
-	            <h2>Join a community of K-12 educators</h2>
-	            <p class="lead">		   sharing their expertise to support personalized learning for all.</p>
-	            <p><g:Button styleName="primary" ui:field="loginBtn">Create your course</g:Button></p>
+	            <uc:H2Panel ui:field="joinPanel"></uc:H2Panel>
+	            <uc:PPanel styleName="lead" ui:field="shareExpPanel"></uc:PPanel>
+	            <p><g:Button styleName="primary" ui:field="loginBtn"></g:Button></p>
 	         </div>
 	      </div>
 	   </section>
