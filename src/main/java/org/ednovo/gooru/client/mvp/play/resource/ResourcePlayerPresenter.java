@@ -534,7 +534,16 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		 else if(tabView.equals("flag")){
 			 if(AppClientFactory.isAnonymous()){
 				 clearSlot(TAB_PRESENTER_SLOT);
-				 showLoginPopupWidget(i18n.GL0600().toUpperCase());
+				 LoginPopupUc loginPopupUc=new LoginPopupUc() {
+						@Override
+						public void onLoginSuccess() {
+							clearSlot(TAB_PRESENTER_SLOT);
+							setResourceFlagView(resourceId);
+						}
+					};
+					loginPopupUc.show();
+					loginPopupUc.setGlassEnabled(true);
+					loginPopupUc.setWidgetMode("flag");
 			}else{
 				setResourceFlagView(resourceId);
 			 }
