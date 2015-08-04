@@ -89,6 +89,15 @@ public class CollectionDo extends ResourceDo implements IsSerializable{
 	private String type;
 	
 	private CourseSummaryDo summary;
+	private String errorMessage;
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 	public CollectionDo(){}
 	
