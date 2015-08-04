@@ -691,7 +691,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	 *
 	 */
 	private void updateNarration(){
-
 		lblUpdateTextMessage.setVisible(true);
 		actionVerPanel.setVisible(false);
 		Map<String, String> parms = new HashMap<>();
@@ -732,6 +731,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					lblCharLimit.setVisible(false);
 					resourceNarrationHtml.getElement().getStyle().clearWidth();
 					enableOrDisableTimeEdit(true);
+					startStopTimeDisplayText.setVisible(false);
 				}
 			}
 		});
