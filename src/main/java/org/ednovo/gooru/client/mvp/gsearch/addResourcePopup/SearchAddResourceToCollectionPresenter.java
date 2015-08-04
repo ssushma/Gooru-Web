@@ -436,7 +436,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					}else{
 						getView().hidePopup();
 						Window.enableScrolling(false);
-						AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't Copy this Collection");
+						AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry Something Went Wrong");
 					}
 				}
 			});
@@ -477,7 +477,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}else{
 					getView().hidePopup();
 					Window.enableScrolling(false);
-					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't Copy this Collection");
+					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry Something Went Wrong");
 				}
 			}
 		});
@@ -518,7 +518,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}else{
 					getView().hidePopup();
 					Window.enableScrolling(false);
-					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't Move this Collection");
+					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry Something Went Wrong");
 				}
 			}
 		});
@@ -554,7 +554,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				}else{
 					getView().hidePopup();
 					Window.enableScrolling(false);
-					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't Move this Collection");
+					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry Something Went Wrong");
 				}
 			}
 		});
