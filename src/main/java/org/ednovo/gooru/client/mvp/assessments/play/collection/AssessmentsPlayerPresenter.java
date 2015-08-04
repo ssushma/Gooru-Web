@@ -727,7 +727,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 						}
 					}
 				}
-				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
+				AppClientFactory.getInjector().getResourceService().getCollection(collectionId, false, new SimpleAsyncCallback<CollectionDo>() {
+
 					@Override
 					public void onSuccess(CollectionDo collectionDo) {
 						getOldValuesOnRefresh();
@@ -742,6 +743,22 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 						}
 					}
 				});
+
+//				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
+//					@Override
+//					public void onSuccess(CollectionDo collectionDo) {
+//						getOldValuesOnRefresh();
+//						updateHeaderView();
+//						hideAuthorInHeader(true);
+//						if(collectionDo.getStatusCode()!=200){
+//							showCollectionErrorMessage();
+//						}else{
+//							setPageTitle(collectionDo);
+//							showCollectionView(collectionDo,collectionId,resourceId,tabView,view);
+//							setCollectionDetails(collectionDo);
+//						}
+//					}
+//				});
 
 			}
 		}
