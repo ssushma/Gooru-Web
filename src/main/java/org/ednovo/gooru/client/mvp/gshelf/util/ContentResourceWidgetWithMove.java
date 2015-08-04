@@ -907,14 +907,15 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	}
 	public void enableOrDisableTimeEdit(boolean value){
 		if(youtube){
-		pnlEditContainer.setVisible(value);
-		pnlYoutubeContainer.setVisible(value);
-		pnlTimeIcon.setVisible(value);
-		startStopTimeDisplayText.setVisible(true);
-		pnlArrows.setVisible(value);
-		editVideoTimeLbl.setVisible(value);
-		timeEditContainer.setVisible(!value);
-		actionVerPanel.setVisible(!value);
+			pnlEditContainer.setVisible(value);
+			pnlYoutubeContainer.setVisible(value);
+			pnlTimeIcon.setVisible(value);
+			startStopTimeDisplayText.setVisible(true);
+			pnlArrows.setVisible(value);
+			videoTimeField.setVisible(value);
+			editVideoTimeLbl.setVisible(value);
+			timeEditContainer.setVisible(!value);
+			actionVerPanel.setVisible(!value);
 		}
 	}
 	public void setYoutubeTime(String startMin,String startSec,String endMin,String endSec){
