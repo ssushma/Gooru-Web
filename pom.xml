@@ -15,7 +15,7 @@
 		<org.springframework.security.version>3.1.1.RELEASE</org.springframework.security.version>
 		<!-- Convenience property to set the GWT version -->
 		<gwtVersion>2.7.0</gwtVersion>
-		<!-- <gwt.style>DETAILED</gwt.style> -->
+		<gwt.style>DETAILED</gwt.style>
 		<!-- <project.build.directory>/home/rajam/pandoraspace</project.build.directory>
 			<project.build.finalName>/beta</project.build.finalName> -->
 		<!-- GWT needs at least java 1.7 -->
@@ -541,7 +541,7 @@
 					<style>${gwt.style}</style>
 					<!-- <extraJvmArgs>-XX:MaxPermSize=1024m -Xmx4024m</extraJvmArgs> -->
 					<extraJvmArgs>-XX:MaxPermSize=2048m -Xmx4096m</extraJvmArgs>
-					<localWorkers>3</localWorkers>
+					<localWorkers>1</localWorkers>
 					<!-- <extraJvmArgs>-Xmx896M -Xms2048m -XX:PermSize=64m -XX:MaxPermSize=128m</extraJvmArgs> -->
 					<copyWebapp>true</copyWebapp>
 				</configuration>
