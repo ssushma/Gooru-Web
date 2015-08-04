@@ -265,9 +265,15 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	private boolean checkSelectedGrades(String[] stringArray, String selectedValue) {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT);
 		if(grades!=null && stringArray!=null){
-			grades+=selectedValue;
+			grades+=","+selectedValue;
+			String[] selectedArray=grades.split(",");
+			
 			for(int i=1;i<stringArray.length;i++){
-				if(!grades.contains(stringArray[i])){
+				if(!Arrays.toString(selectedArray).contains(stringArray[i])){
+					return false;
+				}
+				boolean value=isContains(stringArray[i], selectedArray);
+				if(!value){
 					return false;
 				}
 			}
@@ -298,12 +304,26 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		return false;
 	}*/
 	
-	
+	/**
+	 * Checking string array value contains in selected grades.
+	 * @param stringValue {@link String}
+	 * @param selectedArray 
+	 * @return if selected grades contains array value 
+	 */
+	private boolean isContains(String stringValue, String[] selectedArray) {
+		for(int j=0;j<selectedArray.length;j++){
+			if(stringValue.equals(selectedArray[j])){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Handled clickevent for Pre-K/Higher-ed grades
 	 *
 	 */
-	private class ClickOnGradeLiPnl implements ClickHandler{
+	class ClickOnGradeLiPnl implements ClickHandler{
 		LiPanel liPanel;
 		String gradeText;
 
@@ -326,6 +346,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 				gradePanelWidget.getElement().getStyle().setDisplay(Display.NONE);
 			}
 		}
+	
 	}
 	/**
 	 * Highlight gradeLevel if select all grades of particular gradeArray.
