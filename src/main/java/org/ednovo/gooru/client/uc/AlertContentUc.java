@@ -129,7 +129,7 @@ public class AlertContentUc extends Composite {
 	public void onOkClick(ClickEvent clickEvent) {
 		alertBoxUc.hide();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)||placeRequest.getNameToken().equals(PlaceTokens.MYCONTENT)){
 			Window.enableScrolling(true);
 		}
 	}
