@@ -801,13 +801,14 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             
         }
 		setStaticData(type);
-
         if (courseObj == null ) {
             if (COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type)) {
                 collectionTitle.setText("");
             }
         } else {
-            collectionTitle.setText(courseObj.getTitle());
+        	if(!i18n.GL3367().equalsIgnoreCase(courseObj.getTitle()) && !i18n.GL3396().equalsIgnoreCase(courseObj.getTitle()) && !"UntitledExternalAssessment".equalsIgnoreCase(courseObj.getTitle())){
+        		 collectionTitle.setText(courseObj.getTitle());
+        	}
         }
 		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
 		collThumbnail.addErrorHandler(new ErrorHandler() {
@@ -819,12 +820,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		getUiHandlers().callCourseInfoTaxonomy();
 	}
 
-	public void setStaticData(String type)
-	{
-		if(type.equalsIgnoreCase(ASSESSMENT))
-		{
-
+	public void setStaticData(String type){
+		if(type.equalsIgnoreCase(ASSESSMENT)){
 			colltitle.setText(i18n.GL3381());
+			StringUtil.setAttributes(colltitle.getElement(), i18n.GL3381(), i18n.GL3381());
 			collimagetitle.setText(i18n.GL3382());
 			thumbnailImageContainer.setStyleName("assessmentThumbnail");
 			tagcollectiontitle.setText(i18n.GL3385());
@@ -833,6 +832,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}else{
 			collectionTitle.getElement().setPropertyString("placeholder",i18n.GL3367());
 			colltitle.setText(i18n.GL3380());
+			StringUtil.setAttributes(colltitle.getElement(), i18n.GL3380(), i18n.GL3380());
 			collimagetitle.setText(i18n.GL3383());
 			thumbnailImageContainer.setStyleName("collectionThumbnail");
 			tagcollectiontitle.setText(i18n.GL3384());

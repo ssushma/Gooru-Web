@@ -2568,7 +2568,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				for(int i=0;i<collectionDo.getCollectionItems().size();i++){
 					CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
 					if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
-						collectionItemDo.getResource().getRatings().setReviewCount(reviewCount);
+						collectionItemDo.getRating().setReviewCount(reviewCount);
 						return;
 					}
 				}
@@ -2583,7 +2583,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				for(int i=0;i<collectionDo.getCollectionItems().size();i++){
 					CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
 					if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
-						collectionItemDo.getResource().getRatings().setAverage(average);
+						collectionItemDo.getRating().setAverage(average);
 						return;
 					}
 				}
@@ -2596,7 +2596,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
 				CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
 				if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
-					return collectionItemDo.getResource().getRatings().getAverage();
+					return collectionItemDo.getRating().getAverage();
 				}
 			}
 		}

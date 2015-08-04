@@ -202,6 +202,10 @@ public class CollectionResourceWidget extends Composite {
 						if(userCollectionsList.get(0).getThumbnails()!=null && userCollectionsList.get(0).getThumbnails().getUrl()!=null){
 							relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
 						}
+						else
+						{
+							setDefaultCollectionImage(collectionType);
+						}
 						relatedCollectionTitle.setStyleName("collectionTitle");
 						relatedCollectionImage.addErrorHandler(new ErrorHandler() {
 							@Override
