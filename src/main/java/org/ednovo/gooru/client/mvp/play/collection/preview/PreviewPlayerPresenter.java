@@ -1849,6 +1849,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(courseId!=null) {
 			anchorLink += "&courseId="+courseId;
 		}
+
 		return anchorLink;
 	}
 
