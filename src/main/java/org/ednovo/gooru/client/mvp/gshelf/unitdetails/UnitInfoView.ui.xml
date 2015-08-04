@@ -7,7 +7,7 @@
 
 <div class="courseNameBlock">
 
-<p>Unit Name</p>
+<uc:PPanel ui:field="unitNamePpanel"></uc:PPanel>
 <p>
 <g:TextBox styleName="form-control" ui:field="unitTitle" maxLength="50"/>
 <g:Label ui:field="lblErrorMessage" styleName="errorMessage text-right"></g:Label>
@@ -21,7 +21,7 @@
 <div class="questionsBlock">
 
 <div class="col-md-6 col-sm-6 questionsBlockTextArea">
-<p>Big Idea</p>
+<uc:PPanel ui:field="bigIdeasPPanel"></uc:PPanel>
 <p>
 <g:TextArea styleName="form-control" ui:field="txaBigIdeas"/>
 <g:Label ui:field="lblErrorMessageForBig" styleName="errorMessage text-right"></g:Label>
@@ -29,7 +29,7 @@
 
 </div>
 <div class="col-md-6 col-sm-6 questionsBlockTextArea">
-<p>Essential Questions</p>
+<uc:PPanel ui:field="essentialQuestPPanel"></uc:PPanel>
 <p><g:TextArea styleName="form-control" ui:field="txaEssentialQuestions" />
 <g:Label ui:field="lblErrorMessageForEssential" styleName="errorMessage text-right"></g:Label>
 </p>
@@ -50,7 +50,7 @@
 
 <div class="unitCoverHeader">
 
-<div class="col-md-6 col-sm-6 col-xs-6 questionsBlockTextArea"> <p>What will this unit cover?</p></div>
+<div class="col-md-6 col-sm-6 col-xs-6 questionsBlockTextArea"> <uc:PPanel ui:field="unitCoverPPanel"></uc:PPanel></div>
 <div class="col-md-6 col-sm-6 col-xs-6 questionsBlockTextArea">
 <div class="dropDownRight">
 <div class="btn-group">

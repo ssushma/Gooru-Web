@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchService;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.deserializer.AutoCompleteDeSerializer;
@@ -109,6 +108,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String MY_STRING = "my";
 
 	private static final String TYPE = "type";
+	
+	private static final String COURSEID = "c-id";
 
 	private static final String SHARETYPE="shareType";
 
@@ -410,7 +411,12 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
 			params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
 		}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASS)) {
-			params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.NEWCLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
+			if(params.containsKey(COURSEID)){
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.NEWCLASSPAGE.getUrl(), contentGooruOid,params.get(COURSEID),CLASSPAGE));
+			}else{
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.NEWCLASSPAGEID.getUrl(), contentGooruOid, CLASSPAGE));
+			}
+			
 		}else {
 			if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));

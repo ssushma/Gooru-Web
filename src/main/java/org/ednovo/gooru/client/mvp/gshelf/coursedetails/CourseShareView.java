@@ -30,6 +30,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -68,6 +69,8 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	interface CourseShareViewUiBinder extends UiBinder<Widget, CourseShareView> {
 	}
 	
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField ListBox classListBox;
 	@UiField Button assignCourseBtn;
 	@UiField VerticalPanel classListPnl;
@@ -87,7 +90,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 		errorMsgLbl.setVisible(false);
 		assinPnl.getElement().setId("addCourseToClasPopup");
 		titlePanel.getElement().getStyle().setFontSize(18, Unit.PX);
-		titlePanel.setText("Select classes that will use this course");
+		titlePanel.setText(i18n.GL3474());
 		classListPnl.getElement().getStyle().setWidth(100, Unit.PCT);
 	}
 	
