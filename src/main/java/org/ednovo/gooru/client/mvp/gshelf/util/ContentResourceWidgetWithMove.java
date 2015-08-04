@@ -596,6 +596,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public void onclickcancelNarrationBtn(ClickEvent event){
 		resetNarrationDetails();
 		enableOrDisableTimeEdit(true);
+		startStopTimeDisplayText.setVisible(false);
 	}
 	/**
 	 * This method is used to reset the narration details on click of cancel and mouse out of this widget.
@@ -916,7 +917,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		actionVerPanel.setVisible(!value);
 		}
 	}
-
 	public void setYoutubeTime(String startMin,String startSec,String endMin,String endSec){
 		startMinTxt.setText(startMin);
 		startSecTxt.setText(startSec);
