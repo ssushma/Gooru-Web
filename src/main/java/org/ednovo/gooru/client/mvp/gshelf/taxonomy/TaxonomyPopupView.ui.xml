@@ -82,7 +82,7 @@
 						</div>
 
 						<div class="col-md-2 col-sm-2 col-xs-2 addButton">
-							<g:Button styleName="primary" ui:field="addTaxonomyBtn"> Add</g:Button>
+							<g:Button styleName="primary" ui:field="addTaxonomyBtn" text="{i18n.GL0590_1}"></g:Button>
 						</div>
 
 						<div class="clearfix"></div>
