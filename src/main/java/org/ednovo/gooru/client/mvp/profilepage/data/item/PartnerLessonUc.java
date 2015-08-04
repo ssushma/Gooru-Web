@@ -81,7 +81,7 @@ public class PartnerLessonUc extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
-		if(profileLibraryDo.getType().equals("scollection")) {
+		if(profileLibraryDo.getType().equals("collection") || profileLibraryDo.getType().contains("assessment")) {
 			setCollectionData(profileLibraryDo, isLessonHighlighted, lessonNumber,libraryGooruOid);
 		} else {
 			setLessonData(null, profileLibraryDo, profileLibraryDo.getCollectionItems(),isLessonHighlighted,lessonNumber, isPaginated,libraryGooruOid);
@@ -192,9 +192,9 @@ public class PartnerLessonUc extends Composite{
 			conceptId = profileLibraryDo.getGooruOid();
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 				if(profileLibraryDo.getCollectionType().contains(ASSESSMENT)){
-					lessonTitle.addStyleName("assessment");
+					lessonTitle.setStyleName("assessment");
 				}else{
-					lessonTitle.addStyleName("collection"); 
+					lessonTitle.setStyleName("collection"); 
 				}
 				lessonTitle.addStyleName("lessonTitle");
 				
