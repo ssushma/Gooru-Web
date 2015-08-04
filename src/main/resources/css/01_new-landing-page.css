@@ -76,10 +76,7 @@ body{
   top: 45%;
   width: 130px;
 }
-.dropdown-menu {
-    left: auto;
-    right: 0;
-}
+
 .dropdown-menu .liPanelStyle {
     text-align: left;
     font-weight: bold;
