@@ -140,7 +140,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	
 	
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
-		getView().clearUrlParams();
+		if(clearShelfPanel){
+			getView().clearUrlParams();
+		}
 		if(COLLECTION.equalsIgnoreCase(searchType)){
 			type= FOLDER;
 			accessType = ACESSTEXT;
@@ -601,5 +603,4 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public void getLoadingImage() {
 		getView().loadingImage();
 	}
-
 }
