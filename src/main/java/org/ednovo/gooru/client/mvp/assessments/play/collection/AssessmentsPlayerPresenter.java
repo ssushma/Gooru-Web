@@ -47,6 +47,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.application.shared.model.content.RatingDo;
 import org.ednovo.gooru.application.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
@@ -2657,6 +2658,10 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 				for(int i=0;i<collectionDo.getCollectionItems().size();i++){
 					CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
 					if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+						if(collectionItemDo.getRating()==null){
+							RatingDo rating=new RatingDo();
+							collectionItemDo.setRating(rating);
+						}
 						collectionItemDo.getRating().setAverage(average);
 						return;
 					}
