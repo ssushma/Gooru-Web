@@ -4,14 +4,14 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	 <g:HTMLPanel styleName="shareColContainer">
             <div class="shareThisCollection">
-              <h5><g:Label text="{i18n.GL0598}"></g:Label></h5>
+              <h5><g:Label ui:field="shareLbl"></g:Label></h5>
               <p>
                 <g:TextArea styleName="form-control" ui:field="shareTextArea" readOnly="true"></g:TextArea>
               </p>
               <div class="linkFormat"><g:Anchor ui:field="bitlyLink">Bit.ly</g:Anchor> <span class="devider">|</span> <g:Anchor ui:field="embedLink">Embed</g:Anchor></div>
             </div>
             <div class="collectionVisibility no-gutter">
-              <h5><g:Label text="{i18n.GL0842}"></g:Label></h5>
+              <h5><g:Label ui:field="visiblityLbl"></g:Label></h5>
               <panel:HTMLEventPanel styleName="col-md-4 col-xs-4 col-sm-4" ui:field="publicShareFloPanel"> <a>
                 <div class="visibilityHeader"><img src="images/signup/Public_Selected.png"></img> Public</div>
                 <p>Allows others to find and learn from your collection</p>

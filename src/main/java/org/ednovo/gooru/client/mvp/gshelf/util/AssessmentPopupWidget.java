@@ -36,7 +36,7 @@ public abstract class AssessmentPopupWidget extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		pnlMainContainer.getElement().setId("addAssessmentPopup");
 		pnlTitle.getElement().setId("myModalLabel");
-		pnlTitle.setText(i18n.GL3374());
+		pnlTitle.setText(i18n.GL3024());
 		pBuildText.setText(i18n.GL3200());
 		pLinkText.setText(i18n.GL3201());
 		pNoteText.setText(i18n.GL3202());
