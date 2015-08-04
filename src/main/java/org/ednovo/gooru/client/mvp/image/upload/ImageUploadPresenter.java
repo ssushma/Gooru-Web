@@ -359,7 +359,10 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 
 
 	public void saveQuestionImage(String fileName){
-		this.getMediaUploadService().saveQuestionImage(getCollectionItemId(), fileName, saveQuestionImageAysncCallback);
+		AppClientFactory.fireEvent(new AddResouceImageEvent(fileNameWithRepository,fileNameWithoutRepository,isUpdateQuestionImage,isuserOwnResourceImage));
+		getView().closeImageUploadWidget();
+		getView().resetImageUploadWidget();
+		//this.getMediaUploadService().saveQuestionImage(getCollectionItemId(), fileName, saveQuestionImageAysncCallback);
 	}
 
 	/*public void saveResourceImage(String fileName){
