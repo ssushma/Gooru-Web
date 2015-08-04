@@ -18,14 +18,11 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -34,7 +31,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -152,18 +148,18 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				isFromMyCourse=false;
 				btnAddExisting.setEnabled(true);
 				btnAddExisting.setStyleName("primary");
-					String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-					 String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
-					if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
-						|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
-						|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
-						isTopMostSelected=false;
-						removePreviousSelectedItem();
-						getUiHandlers().getWorkspaceData(0, 20, true, "resource");
-					}else{
-						isTopMostSelected=true;
-						getUiHandlers().getWorkspaceData(0, 20, true, "collection");
-					}
+				String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
+				if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)|| nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
+					|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
+					|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
+					isTopMostSelected=false;
+					removePreviousSelectedItem();
+					getUiHandlers().getWorkspaceData(0, 20, true, "resource");
+				}else{
+					isTopMostSelected=true;
+					getUiHandlers().getWorkspaceData(0, 20, true, "collection");
+				}
 			}
 		});
 		mycontentLbl.addClickHandler(new ClickHandler() {
@@ -280,7 +276,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
-			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())){
+			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition() && folderTreePanel.getItemCount()>=20)){
 				if(isFromMyCourse){
 					currentsearchType="coursebuilder";
 				}else{
