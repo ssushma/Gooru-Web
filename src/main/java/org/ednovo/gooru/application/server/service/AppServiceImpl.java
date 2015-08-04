@@ -101,6 +101,8 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 
 			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN);
 			String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.APIKEY,"");
+			logger.info("----------v2Signin-------------------"+url);
+			logger.info("----------v2Signin postData-------------------"+postData.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 
