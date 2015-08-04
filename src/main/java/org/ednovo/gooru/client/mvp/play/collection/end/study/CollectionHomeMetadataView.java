@@ -147,7 +147,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
 		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 
-		setCollectionImage((collectionDo.getThumbnails()!=null&&collectionDo.getThumbnails().getUrl()!=null)?collectionDo.getThumbnails().getUrl():"");
+		setCollectionImage((collectionDo.getThumbnails()!=null&&collectionDo.getThumbnails().getUrl()!=null)?collectionDo.getThumbnails().getUrl():DEFULT_COLLECTION);
 		setCollectionGoal(collectionDo.getDescription()!=null?collectionDo.getDescription():"");
 
 		showPopupAfterGmailSignin();

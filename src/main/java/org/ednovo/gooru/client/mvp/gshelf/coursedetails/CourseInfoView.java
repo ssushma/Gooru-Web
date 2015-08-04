@@ -357,7 +357,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				}
 			}else{
 				lblGradeErrorMsg.setVisible(true);
-				lblGradeErrorMsg.setText("Select at least one Subject");
+				lblGradeErrorMsg.setText("Select at least one Course");
 			}
 		}
 	}
