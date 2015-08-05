@@ -260,6 +260,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 					assessmentURL = "http://" + assessmentURL;
 					txtAssessmentURL.setText(assessmentURL);
 					StringUtil.setAttributes(txtAssessmentURL.getElement(), assessmentURL, assessmentURL);
+					createOrUpDate.setUrl(assessmentURL);
 				}
 			}
 			if(!StringUtil.isValidUrl(assessmentURL, true)){
