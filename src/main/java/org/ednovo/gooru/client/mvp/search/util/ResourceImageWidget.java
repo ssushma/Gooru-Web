@@ -45,11 +45,9 @@ public class ResourceImageWidget extends Composite {
 				String thumbnailFolder=resourceDo.getThumbnails().getThumbnailFolder()!=null?resourceDo.getThumbnails().getThumbnailFolder():"";
 				String thumbnailName=resourceDo.getThumbnails().getThumbnailName()!=null?resourceDo.getThumbnails().getThumbnailName():"";
 				String resourceUrl = resourceDo.getUrl() != null ? resourceDo.getUrl() : null;
-				AppClientFactory.printInfoLogger("ResourceImageUtil.getYoutubeVideoId(resourceUrl) : "+ResourceImageUtil.getYoutubeVideoId(resourceUrl));
 				if ("video".equalsIgnoreCase(categoryValue) && (ResourceImageUtil.getYoutubeVideoId(resourceUrl) != null)){
 					String thumbnailUrl = ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(resourceUrl),Window.Location.getProtocol());
 					imgResourceImg.setUrl(thumbnailUrl);
-					AppClientFactory.printInfoLogger("resourceUrl : "+resourceUrl+"---categoryValue : "+categoryValue+"---thumbnailUrl : "+thumbnailUrl);
 				}else{
 					if(thumbnailName.startsWith("http")){
 						if("video".equalsIgnoreCase(categoryValue)){

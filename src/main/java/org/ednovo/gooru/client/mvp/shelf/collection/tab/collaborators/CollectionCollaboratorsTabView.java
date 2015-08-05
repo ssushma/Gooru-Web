@@ -539,7 +539,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		panelEditMode.setVisible(false);
 		panelViewMode.setVisible(false);
 		lblCollectionCreator.setVisible(false);
-		AppClientFactory.printInfoLogger("collectionDo.isIsCollaborator()::"+collectionDo.isIsCollaborator());
 		// If Collaborator display only view of all collaborators.
 		if (collectionDo!=null && collectionDo.isIsCollaborator()){
 			panelViewMode.setVisible(true);

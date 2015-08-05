@@ -59,32 +59,32 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	interface SearchAddResourceToCollectionViewUiBinder extends
 			UiBinder<Widget, AddCourseToClassView> {
 	}
-	
+
 	@UiField HTMLPanel floderTreeContainer,emptyCourseBlockContainer,footerPanel;
 	@UiField Button cancelResourcePopupBtnLbl,gotoMyContent;
 	@UiField Anchor btnAddNew;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddExisting,assignBtn,cancel;
 	@UiField H4Panel addtocollHeaderText;
-	
+
 	@UiField Label lblEmptyErrorMessage,lblError;
-	
+
 	@UiField HTML addingTextLbl;
-	
+
 	@UiField HTMLPanel popupContainer,assignCourseBlockContainer;
-	
+
 	String classId;
-	
+
 	String currentsearchType="class";
-	
+
 	@UiField InlineLabel bluedotLbl,greenLbl,orangeLbl,courseNotesLbl;
-	
-	
+
+
 	@UiField H3Panel assginCourse,createCourseHeader;
-	
-	
+
+
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
-	
+
 	private int limit=20;
 	private int pageNum=1;
 	private CourseTreeItem currectCourseSelectedTreeItem = null;
@@ -92,7 +92,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	HashMap<String,String> urlparams ;
 	boolean isTopMostSelected =true,isAddingInProgress=true;
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	PopupPanel appPopUp;
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
 		 @Override
@@ -140,9 +140,9 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 					previousCourseSelectedTreeItem = currectCourseSelectedTreeItem;
 					currectCourseSelectedTreeItem.addStyleName("selected");
 					TreeItem parent = item.getParentItem();
-					item.getTree().setSelectedItem(parent, false); 
+					item.getTree().setSelectedItem(parent, false);
 					if (parent != null)
-						parent.setSelected(false); 
+						parent.setSelected(false);
 					item.setState(!item.getState(), false);
 			    }
 			  }
@@ -178,7 +178,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	public Widget asWidget() {
 		return appPopUp;
 	}
-	
+
 	/**
 	 * @return the appPopUp
 	 */
@@ -199,7 +199,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 
 	@Override
 	public void onUnload() {
-		
+
 	}
 
 	private  void adjustTreeItemStyle(final UIObject uiObject) {
@@ -285,7 +285,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		Window.enableScrolling(true);
 		enableTopFilters();
 	}
-	
+
 	@UiHandler("cancel")
 	public void cancelEvent(ClickEvent event){
 		hide();
@@ -306,7 +306,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			lblError.setVisible(true);
 		}
 	}
-	
+
 	@UiHandler("assignBtn")
 	public void addCourseToClass(ClickEvent event){
 		classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
@@ -314,7 +314,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 			getUiHandlers().connectCourseToClass(classId,currectCourseSelectedTreeItem.getGooruOid());
 		}
 	}
-	
+
 	@UiHandler("gotoMyContent")
 	public void connectToMyContent(ClickEvent event){
 		hide();
@@ -323,11 +323,10 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	}
 	@UiHandler("btnAddNew")
 	public void createNewCourse(ClickEvent event){
-		AppClientFactory.printInfoLogger("clicked in create new course");
 		AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.MYCONTENT);
 		hide();
 	}
-	
+
 	@Override
 	public Anchor getAddButton(){
 		return null;
@@ -342,8 +341,8 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		isAddingInProgress=true;
 		enableTopFilters();
 	}
-	
-	
+
+
 
 	@Override
 	public void setDefaultPanelVisibility(Boolean blnVal){
@@ -357,7 +356,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		hide();
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);
 	}
-		
+
 	public void enableTopFilters(){
 		Element element = Document.get().getElementById("fixedFilterSearchID");
 		if(element!=null){
@@ -365,7 +364,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		}
 		Window.enableScrolling(true);
 	}
-	
+
 
 	@Override
 	public void clearUrlParams() {
@@ -420,7 +419,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		lblEmptyErrorMessage.setVisible(false);
 		lblError.setVisible(false);
 		lblEmptyErrorMessage.getElement().getStyle().setPadding(0, Unit.PX);
-		
+
 	}
-	
+
 }

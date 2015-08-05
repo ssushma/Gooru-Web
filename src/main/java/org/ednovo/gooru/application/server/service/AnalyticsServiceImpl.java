@@ -263,7 +263,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			AppClientFactory
 					.printSevereLogger("Error while getting status from JSON object");
 		}
-		AppClientFactory.printInfoLogger("message : " + messageSessionStatus);
 		status = messageSessionStatus != null && "completed".equalsIgnoreCase(messageSessionStatus) ? true : false;
 		logger.info("last return--" + status);
 		return status;

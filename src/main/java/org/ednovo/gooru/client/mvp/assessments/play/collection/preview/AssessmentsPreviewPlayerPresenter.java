@@ -1085,7 +1085,6 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(),
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
 				startPlayerActivityEvent(collectionActivityEventId, "", PlayerConstants.COLLECTION_EVENT_NAME, collectionDo.getGooruOid(), collectionDo.getGooruOid(), PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid(), getUserAgent());
-				AppClientFactory.printInfoLogger("Assessments Preview Presenter sessionIdCreationCount : "+sessionIdCreationCount);
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
@@ -1219,18 +1218,13 @@ public class AssessmentsPreviewPlayerPresenter extends BasePlacePresenter<IsAsse
 	}
 
 	public void createSession(String collectionGooruOid,String parentGooruOid,String mode){
-		AppClientFactory.printInfoLogger("createSession 1 ");
 		sessionId = GwtUUIDGenerator.uuid();
-		AppClientFactory.printInfoLogger("createSession 2 :"+sessionId);
 		AssessmentsPreviewPlayerPresenter.this.sessionId=sessionId;
 		triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
-		AppClientFactory.printInfoLogger("createSession 3 :"+sessionId);
 		createResourceDataLog();
-		AppClientFactory.printInfoLogger("createSession 4 :"+sessionId);
 		if(collectionItemDo!=null){
 			createSessionItem(sessionId, collectionItemDo.getCollectionItemId(), collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getTypeName(),"open");
 		}
-		AppClientFactory.printInfoLogger("createSession 5 :"+sessionId);
 	}
 
 	public void createSessionItem(String sessionTrackerId,String collectionItemId, String resourceGooruOid,String questionType, String status){

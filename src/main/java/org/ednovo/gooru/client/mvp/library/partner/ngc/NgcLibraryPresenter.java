@@ -102,12 +102,10 @@ public class NgcLibraryPresenter extends BasePlacePresenter<IsNgcLibraryView, Ng
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		long startTime = System.currentTimeMillis();
-		AppClientFactory.printInfoLogger("Entered into NGC start time -- "+startTime);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
-			AppClientFactory.printInfoLogger("NGC End time -- "+(System.currentTimeMillis() - startTime));
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 		    //To show SignUp (Registration popup)
