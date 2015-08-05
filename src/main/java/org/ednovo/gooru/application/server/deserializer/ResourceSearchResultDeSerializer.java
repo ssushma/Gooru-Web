@@ -102,7 +102,10 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			if (resourceSearchResultDo.getResourceTypeString() != null && resourceSearchResultDo.getResourceTypeString().equalsIgnoreCase(VIDEO_YOUTUBE)) {
 				resourceSearchResultDo.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(getJsonString(recordJsonObject, URL))));
 			} else {
+				if(recordJsonObject.getJSONObject(THUMBNAILS)!=null)
+				{
 				resourceSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
+				}
 			}
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
