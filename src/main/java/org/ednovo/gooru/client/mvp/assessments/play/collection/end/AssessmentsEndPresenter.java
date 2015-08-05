@@ -269,10 +269,11 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	@Override
 	public void getCollectionScoreForSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
+		System.out.println("getCollectionScoreForSession 1");
 		this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-
+				System.out.println("getCollectionScoreForSession 2 : "+result.size());
 				if(result!=null && result.size()!=0){
 					displayScoreCountData(result.get(0));
 				}
@@ -280,7 +281,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 			@Override
 			public void onFailure(Throwable caught) {
-
+				System.out.println("getCollectionScoreForSession 3 : "+caught.getMessage());
 			}
 		});
 

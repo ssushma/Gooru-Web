@@ -90,7 +90,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiField Button btnEdit;
 	@UiField InlineLabel spnResourceType;
 	@UiField HTMLEventPanel titleBlockPnl;
-	
+
 	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
 	//final strings
 	private static final String VIDEO_TIME =i18n.GL0974();
@@ -107,13 +107,13 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String VALID_END_PAGE = i18n.GL2025();
 
 	private static final String FROM_START_TIME =i18n.GL0972();
-	
+
 	private static final String FROM_STOP_TIME = i18n.GL0973();
 	private static final String YOUTUBE_START_END_TIME = i18n.GL0971();
 	private static final String VALID_START_STOP_TIME = i18n.GL0970_1();
 
 	private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]{0,6}):(?:[0-5]\\d)$";
-	
+
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
 
@@ -131,7 +131,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private ConfirmationPopupVc deleteConfirmationPopupVc;
 
 	AddTagesPopupView popup;
-	
+
 	String collectionType;
 
 	public ContentResourceWidgetWithMove(int index,CollectionItemDo collectionItem, String CollectionType) {
@@ -725,7 +725,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 						enableDisableNarration(true);
 						//getPresenter().updateNarrationItem(collectionItem.getCollectionItemId(), narration);
 					}catch(Exception e){
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("ContentResourceWidgetWithMove : updateNarration : "+e.getMessage());
 					}
 					lblUpdateTextMessage.setVisible(false);
 					lblCharLimit.setVisible(false);
@@ -791,13 +791,13 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public void deleteCollectionItem(ClickEvent clickEvent) {
 		if(ASSESSMENT.equalsIgnoreCase(collectionType)){
 			String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-			isAssignedToClassPage(courseId); 
+			isAssignedToClassPage(courseId);
 		}else{
 			invokeDelete();
 		}
 	}
-	
-	
+
+
 	/**
 	 * This will handle the click event on the add tags for resoruce
 	 * @param clickEvent
@@ -951,14 +951,14 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		checkYoutubeResourceOrNot(itemDo,true);
 		}
 	/**
-	 * To navigate to collection/assessment player 
+	 * To navigate to collection/assessment player
 	 * @author gooruTeam
 	 */
 	private class TitleClickHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);	
+			final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String selectedFolderId;
 			if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
 				selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o3");
@@ -983,7 +983,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(placeToken, params);
 			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 		}
-		
+
 	}
 
 
@@ -995,7 +995,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 
 	public abstract void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop);
 
-	
+
 	public abstract void dispalyNewResourcePopup(CollectionItemDo collectionItemDo);
 
 	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
@@ -1007,7 +1007,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			dispalyNewResourcePopup(collectionItem);
 		}
 	}
-	
+
 	private void invokeDelete() {
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
@@ -1027,9 +1027,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		};
 	}
-	
+
 	public void isAssignedToClassPage(String o1CourseId) {
-		AppClientFactory.getInjector().getfolderService().getClassesAssociatedWithCourse(o1CourseId, new SimpleAsyncCallback<Integer>() { 
+		AppClientFactory.getInjector().getfolderService().getClassesAssociatedWithCourse(o1CourseId, new SimpleAsyncCallback<Integer>() {
 			@Override
 			public void onSuccess(Integer result) {
 				if(result>0){
@@ -1037,12 +1037,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				}else{
 					invokeDelete();
 				}
-			} 
+			}
 		});
 	}
 	public abstract void checkKeyUpHandler(int position,ContentResourceWidgetWithMove contentWidgetWithMove);
 	public abstract void checkBlurHandler(int position,ContentResourceWidgetWithMove contentWidgetWithMove);
-	
+
 	/*
 	 * This clickEvent is used to update video
 	 */
@@ -1075,7 +1075,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				String startTimeTxtSec = null;
 				if (startMinTxt.getText().length() < 2) {
 					startTimeTxtMin = "0" + startMinTxt.getText();
-	
+
 				} else {
 					startTimeTxtMin = startMinTxt.getText();
 				}
@@ -1086,7 +1086,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				}
 				from = "00:" + startTimeTxtMin + ":" + startTimeTxtSec;
 				// collectionItemDo.setStart(from);
-	
+
 			}
 			if (stopMinTxt.getText().length() > 0
 					&& stopSecTxt.getText().length() > 0) {
@@ -1102,7 +1102,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				String EndTimeTxtSec = null;
 				if (stopMinTxt.getText().length() < 2) {
 					EndTimeTxtMin = "0" + stopMinTxt.getText();
-	
+
 				} else {
 					EndTimeTxtMin = stopMinTxt.getText();
 				}
@@ -1148,7 +1148,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			String videoId = ResourceImageUtil.getYoutubeVideoId(collectionItem
 					.getResource().getUrl());
 			if (videoId != null) {
-				
+
 				AppClientFactory.getInjector().getResourceService()
 						.getYoutubeDuration(videoId,
 								new SimpleAsyncCallback<String>() {
@@ -1201,5 +1201,5 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			{
 			}
 		}
-	
+
 }
