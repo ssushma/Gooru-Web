@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompletePr
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.StudentClassLearningMapPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportPresenter;
-import org.ednovo.gooru.client.mvp.classpage.study.StudyClassCodePresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresenter;
@@ -67,7 +66,6 @@ import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
@@ -268,8 +266,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<AddCenturyPresenter> getAddCenturyPresenter();
 
 	AsyncProvider<GooruGradesPresenter> getGooruGradesPresenter();
-
-	AsyncProvider<AddStandardsPreSearchPresenter> getAddStandardsPreSearchPresenter();
 
 	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
 
