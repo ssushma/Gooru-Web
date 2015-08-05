@@ -852,13 +852,13 @@ public class StringUtil implements ClientConstants {
 			long hoursInMilli = minutesInMilli * 60;
 			long daysInMilli = hoursInMilli * 24;
 
-			long d = Math.round(((double)((double)different / (double)daysInMilli)));
+			long d = different / daysInMilli;
 			different = different % daysInMilli;
 			
-			long h = Math.round(((double)((double)different / (double)hoursInMilli)));
+			long h = different / hoursInMilli;
 			different = different % hoursInMilli;
 
-			long m = Math.round(((double)((double)different / (double)minutesInMilli)));
+			long m = different / minutesInMilli;
 			different = different % minutesInMilli;
 			
 			long s = Math.round(((double)((double)different / (double)secondsInMilli)));

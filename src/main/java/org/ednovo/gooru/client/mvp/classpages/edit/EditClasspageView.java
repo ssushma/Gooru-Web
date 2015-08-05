@@ -948,7 +948,7 @@ public class EditClasspageView extends
 		assignmentsTab.getElement().setId("btnAssignmentsTab");
 		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
 		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
-		
+
 		classListTab.setText(i18n.GL1624()+"("+(classpageDo.getMemberCount()!=null? classpageDo.getMemberCount() : "0") +")");
 		classListTab.getElement().setId("btnClassListTab");
 		classListTab.getElement().setAttribute("alt",i18n.GL1624());
@@ -1021,7 +1021,6 @@ public class EditClasspageView extends
 		this.classlistPresenter = classlistPresenter;
 		classpageItemsList.clear();
 		classpageItemsList.addAll(classpageItemsList1);
-		AppClientFactory.printInfoLogger("tab:"+tab);
 		if(tab!=null && tab.equalsIgnoreCase("classList")){
 			panelAssignmentPath.setVisible(false);
 			headerAssignments.setVisible(false);
@@ -1044,7 +1043,6 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 		}
 		else if(tab!=null && tab.equalsIgnoreCase("reports")){
-			AppClientFactory.printInfoLogger("reports");
 			reportsTab.addStyleName("selected");
 			assignmentsTab.getElement().setClassName("");
 			classListTab.getElement().setClassName("");
@@ -1089,7 +1087,6 @@ public class EditClasspageView extends
 			paginationFocPanel1.setVisible(false);
 			changeProgressSummary.setValue(false);
 			sequenceNumberLabel.setText(i18n.GL2228());
-			AppClientFactory.printInfoLogger("analyticsId:"+analyticsId);
 			getUiHandlers().setCollectionProgressData(SUMMARY,analyticsId,collectionTitleUc.getText());
 
 		}

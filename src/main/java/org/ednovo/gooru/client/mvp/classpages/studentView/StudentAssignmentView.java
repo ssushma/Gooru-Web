@@ -418,7 +418,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		mainTitleLbl.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		mainTitleLbl.getElement().setAttribute("alt",classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		mainTitleLbl.getElement().setAttribute("title",classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
-		AppClientFactory.printInfoLogger("classpageDo.getTitle():"+classpageDo.getTitle());
 		studentViewImage.setAltText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		studentViewImage.setTitle(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 
@@ -429,8 +428,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
-
-		AppClientFactory.printInfoLogger("profile imge:"+classpageDo.getCreatorProfileImage());
 
 		if(classpageDo.getCreatorProfileImage() != null){
 			imgProfileImage.setUrl(classpageDo.getCreatorProfileImage());

@@ -1307,7 +1307,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 
 		};
-		//AppClientFactory.printInfoLogger("update grade list1233::::"+gradeList);
 		return gradeLblKindergarten;
 	}
 	private String generateGrade(String gradeTxt){

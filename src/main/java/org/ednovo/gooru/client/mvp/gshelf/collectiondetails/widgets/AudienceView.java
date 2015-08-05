@@ -86,9 +86,9 @@ public class AudienceView extends Composite {
 
 	public void setCollectonDetails(CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
-		setSelectedValues(collectionDo.getAudience()); 
+		setSelectedValues(collectionDo.getAudience());
 	}
-	
+
 	public void setFolderDetails(FolderDo  folderDo){
 		resetAllSelection();
 		if(folderDo!=null){
@@ -97,9 +97,8 @@ public class AudienceView extends Composite {
 		}
 	}
 
-	
+
 	public void setSelectedValues(List<checkboxSelectedDo> checkboxSelectedDos){
-		AppClientFactory.printInfoLogger("audience list"+ checkboxSelectedDos);
 		resetAllSelection();
 		selectedAudience=new HashMap<Integer, String>();
 		if(checkboxSelectedDos!=null){
@@ -107,7 +106,7 @@ public class AudienceView extends Composite {
 				selectedAudience.put(do1.getId(),do1.getName());
 			}
 		}
-	
+
 		int size=listGroup.getWidgetCount();
 
 		for(int i=0;i<size;i++){
@@ -123,9 +122,9 @@ public class AudienceView extends Composite {
 			}
 		}
 	}
-	
+
 	public void resetAllSelection(){
-		
+
 		int size=listGroup.getWidgetCount();
 		for(int i=0;i<size;i++){
 			Widget widget=listGroup.getWidget(i);

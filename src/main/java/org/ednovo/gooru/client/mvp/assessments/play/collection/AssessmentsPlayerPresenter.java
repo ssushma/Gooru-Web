@@ -505,7 +505,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 			@Override
 			public void onWindowClosing(ClosingEvent event) {
-				AppClientFactory.printInfoLogger("Closing... Window....");
 			}
 		});
 
@@ -1443,7 +1442,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 				newCollectionStartTime=collectionStartTime;
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(),
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
-				AppClientFactory.printInfoLogger("Assessments Player Presenter sessionIdCreationCount : "+sessionIdCreationCount);
 				PlayerDataLogEvents.printLogs("createPlayerDataLogs 1",sessionId, null);
 				if(sessionIdCreationCount==1){
 					sessionId=null;
@@ -1508,13 +1506,11 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 	public void stopCollectionDataLogs(){
 		if(this.collectionDo!=null){
-			AppClientFactory.printInfoLogger("stopCollectionDataLogs");
 			stopResourceDataLogFromHomePage();
 		}
 	}
 
 	public void startResourceInsightDataLog(){
-		AppClientFactory.printInfoLogger("startResourceInsightDataLog");
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
 		resourceNewDataLogEventId=GwtUUIDGenerator.uuid();
 		if(GooruConstants.TRUE.equals(isItem_Refreshed)){
@@ -1544,7 +1540,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * Triggers the collection.resource.stop event
 	 */
 	public void stopResourceInsightDataLog(){
-		AppClientFactory.printInfoLogger("stopResourceInsightDataLog");
 		stopHintOrExplanationEvent();
 		Long resourceEndTime=PlayerDataLogEvents.getUnixTime();
 		PlayerDataLogEvents.resourcePlayStartStopEvent(resourceDataLogEventId, resourcePlayEventName, collectionDataLogEventId,resourceActivityResourceId,collectionDo.getGooruOid(), PlayerDataLogEvents.STOP_EVENT_TYPE, resourceStartTime,
@@ -1621,7 +1616,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			}
 			escalateToTriggerEvents(sessionId);
 		}else{
-			AppClientFactory.printInfoLogger("isRefreshed : "+isRefreshed);
 			if(GooruConstants.TRUE.equals(isRefreshed)){
 				isRefreshed = null;
 				createResourceDataLog();
@@ -1630,7 +1624,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 				}
 			}else{
 				sessionId = GwtUUIDGenerator.uuid();
-				AppClientFactory.printInfoLogger("session Id creating for first Time : "+sessionId);
 				collectionEndPresenter.setSessionId(sessionId);
 				triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
 				escalateToTriggerEvents(sessionId);
@@ -1648,7 +1641,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 		if(AppClientFactory.isAnonymous()){
 			this.sessionItemId = sessionId;
-			AppClientFactory.printInfoLogger("-- item id -- "+sessionItemId);
 		}else{
 			if(!StringUtil.isEmpty(resourceGooruOid)){
 				this.contentResourceGooruOId = resourceGooruOid;
@@ -1750,7 +1742,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void startExplanationDataLogEvent(){
-		AppClientFactory.printInfoLogger("startExplanationDataLogEvent");
 		stopHintOrExplanationEvent();
 		isExplanationUsed=true;
 		hintOrExplanationEventId=GwtUUIDGenerator.uuid();
@@ -1770,7 +1761,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void saveOeQuestionAnswerDataLogEvent(){
-		AppClientFactory.printInfoLogger("saveOeQuestionAnswerDataLogEvent");
 		stopHintOrExplanationEvent();
 		hintOrExplanationEventName=null;
 		String submitEventId=GwtUUIDGenerator.uuid();
@@ -1781,7 +1771,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void stopHintOrExplanationEvent(){
-		AppClientFactory.printInfoLogger("stopHintOrExplanationEvent");
 		if(hintOrExplanationEventName!=null){
 			Long endTime=PlayerDataLogEvents.getUnixTime();
 			Long spendTime=endTime-hintOrExplanationStartTime;
@@ -2013,7 +2002,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 	public void resetCollectionPlayer(){
 		if(collectionDo!=null){
-			AppClientFactory.printInfoLogger("in resetCollectionPlayer");
 			stopCollectionDataLogs();
 			getView().hidePlayerButtons(true,null);
 			AppClientFactory.getPlaceManager().setDataLogClasspageId(null);
@@ -2204,7 +2192,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * @param score
 	 */
 	public void triggerCollectionNewDataLogStartStopEvent(Long collectionStartTime,Long collectionEndTime,String eventType,Integer score){
-		AppClientFactory.printInfoLogger("triggerCollectionNewDataLogStartStopEvent");
 		try
 		{
 			JSONObject collectionDataLog=new JSONObject();
@@ -2268,7 +2255,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
-		AppClientFactory.printInfoLogger("triggerCollectionItemNewDataLogStartStopEvent");
 		try
 		{
 		JSONObject collectionDataLog=new JSONObject();
@@ -2309,7 +2295,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 	}
 	public void triggerSaveOeAnswerTextDataEvent(String eventId,String resourceId,Long oeStartTime,Long oeEndTime,int score){
-		AppClientFactory.printInfoLogger("triggerSaveOeAnswerTextDataEvent");
 		JSONObject collectionDataLog=new JSONObject();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(eventId));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_RESOURCE_SAVE));
@@ -2335,7 +2320,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerReactiontDataLogEvent(String resourceId,Long reactionStartTime,Long reactionEndTime,String reactionType,String eventName){
-		AppClientFactory.printInfoLogger("triggerReactiontDataLogEvent");
 		JSONObject collectionDataLog=new JSONObject();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(eventName));
@@ -2363,7 +2347,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerItemLoadDataLogEvent(Long startTime,String itemType,String collectionId){
-		AppClientFactory.printInfoLogger("triggerItemLoadDataLogEvent");
 		JSONObject collectionDataLog=new JSONObject();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_LOAD));
@@ -2402,7 +2385,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 
 	public void triggerItemFlagDataLogEvent(Long startTime,String itemType,String flagText,ArrayList<String> contentReportList,String itemGooruOid,String collectionItemId){
-		AppClientFactory.printInfoLogger("triggerItemFlagDataLogEvent");
 		JSONObject collectionDataLog=new JSONObject();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_FLAG));
@@ -2450,7 +2432,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerShareDatalogEvent(String resourceGooruOid,String collectionItemId, String itemType,String shareType, boolean confirmStatus){
-		AppClientFactory.printInfoLogger("triggerShareDatalogEvent");
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
@@ -2467,7 +2448,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	}
 
 	public void triggerCollectionShareDataEvent( String collectionId, String itemType, String shareType, boolean confirmStatus){
-		AppClientFactory.printInfoLogger("triggerCollectionShareDataEvent 3");
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 		String path="";
@@ -2500,7 +2480,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * @param commentText  specifies the user commented text.
 	 */
 	public void triggerCommentDataLogEvent(String commentId,String eventName,String commentText){
-		AppClientFactory.printInfoLogger("triggerCommentDataLogEvent");
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 		String path="";
@@ -2532,7 +2511,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * @param previousRate specifies user previous given star rating for collection item.
 	 */
 	public void triggerRatingDataLogEvent(String resourceId,double currentRate,double previousRate){
-		AppClientFactory.printInfoLogger("triggerRatingDataLogEvent");
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
 			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
@@ -2552,7 +2530,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 	 * @param reviewText specifies user review text.
 	 */
 	public void triggerReviewDataLogEvent(String resourceId,String reviewText){
-		AppClientFactory.printInfoLogger("triggerReviewDataLogEvent");
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
 			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
