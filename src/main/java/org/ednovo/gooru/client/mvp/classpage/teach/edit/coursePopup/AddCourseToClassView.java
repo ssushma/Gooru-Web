@@ -86,12 +86,10 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
-	private int totalHitCount=0;
 	private int pageNum=1;
 	private CourseTreeItem currectCourseSelectedTreeItem = null;
 	private CourseTreeItem previousCourseSelectedTreeItem = null;
 	HashMap<String,String> urlparams ;
-	private static final String O1_LEVEL = "o1";
 	boolean isTopMostSelected =true,isAddingInProgress=true;
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -170,7 +168,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
-			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())&&(totalHitCount>pageNum*limit)){
+			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition() && folderTreePanel.getItemCount()>=20)){
 				getUiHandlers().getWorkspaceData(pageNum*limit, limit,false,currentsearchType);
 				pageNum++;
 			}
@@ -220,15 +218,6 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 	            element.getStyle().setMarginLeft(0, Unit.PX);
 	         }
 	    }
-	}
-	private String  getTreeItemStyleName(int folderLevel){
-		if(folderLevel==1){
-			return "parent";
-		}else if(folderLevel==2){
-			return "child";
-		}else{
-			return "innerchild";
-		}
 	}
 	public class CourseTreeItem extends Composite{
 		private FlowPanel folderContainer=null;
@@ -389,6 +378,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		emptyCourseBlockContainer.setVisible(false);
 		currectCourseSelectedTreeItem=null;
 		cancel.setVisible(false);
+		pageNum=1;
 	}
 
 	/* (non-Javadoc)
@@ -413,11 +403,14 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 					 footerPanel.setVisible(true);
 				 }
 			 }else{
-				 dropdownListContainerScrollPanel.setVisible(false);
-				 footerPanel.setVisible(false);
-				 addingTextLbl.setText(i18n.GL3439());
-				 emptyCourseBlockContainer.setVisible(true);
-				 assignCourseBlockContainer.setVisible(false);
+				 if(clearShelfPanel){
+					 dropdownListContainerScrollPanel.setVisible(false);
+					 footerPanel.setVisible(false);
+					 addingTextLbl.setText(i18n.GL3439());
+					 emptyCourseBlockContainer.setVisible(true);
+					 assignCourseBlockContainer.setVisible(false);
+				 }
+				
 			 }
 		}
 		currentsearchType=searchType;
