@@ -76,6 +76,7 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 	}
 	
 	public void  loadNavigationPage(){
+		getView().getFrame().setUrl("");
 		getView().setContainerVisibility(false);
 		boolean isNoCourse = false, isNoStudent = false;
 		if(getClassDetails().getCourseGooruOid()==null) {
@@ -122,6 +123,7 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 				if(!StringUtil.checkNull(result)){
 					getView().getFrame().setUrl(result);
 				}
+				
 			}
 
 			@Override
