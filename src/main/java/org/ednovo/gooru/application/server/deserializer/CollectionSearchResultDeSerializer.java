@@ -95,7 +95,10 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 
 		searchResult.setOwner(ownerDo);
 		try {
+			if(!recordJsonObject.isNull(THUMBNAILS))
+			{
 			searchResult.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
+			}
 			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {
 				JSONObject taxonomyDataSet = new JSONObject(getJsonString(recordJsonObject, TAXONOMY_DATA_SET));
 				JSONObject curriculum = taxonomyDataSet.getJSONObject(CURRICULUM);
