@@ -118,9 +118,9 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		}
 		if(isPrivateResource) {
 			setVisibilityData(false, false);
-			shareMsgTitle.setText(i18n.GL0363());
-			shareMsgTitle.getElement().setAttribute("alt",i18n.GL0363());
-			shareMsgTitle.getElement().setAttribute("title",i18n.GL0363());
+			shareMsgTitle.setText(i18n.GL1965());
+			shareMsgTitle.getElement().setAttribute("alt",i18n.GL1965());
+			shareMsgTitle.getElement().setAttribute("title",i18n.GL1965());
 			shareMsgTxt.setText(i18n.GL0364());
 			shareMsgTxt.getElement().setAttribute("alt",i18n.GL0364());
 			shareMsgTxt.getElement().setAttribute("title",i18n.GL0364());
@@ -248,7 +248,7 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		} else {
 			alertBodyStyle.getElement().getStyle().setMargin(4, Unit.PX);
 			alertBodyStyle.getElement().getStyle().setMarginTop(-4, Unit.PX);
-			alertBodyStyle.getElement().getStyle().setPaddingTop(50, Unit.PX);
+			alertBodyStyle.getElement().getStyle().setPaddingTop(25, Unit.PX);
 			alertBodyStyle.getElement().getStyle().setPaddingRight(30, Unit.PX);
 			alertBodyStyle.getElement().getStyle().setPaddingBottom(15, Unit.PX);
 			alertBodyStyle.getElement().getStyle().setPaddingLeft(30, Unit.PX);
