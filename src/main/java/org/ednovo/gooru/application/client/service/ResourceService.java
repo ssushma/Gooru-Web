@@ -303,7 +303,7 @@ public interface ResourceService extends BaseService {
 	
 	public MediaUploadDo saveUserOwnResource(String filePath) throws GwtException, ServerDownException;  
 	
-	public CollectionItemDo updateUserOwnResource(String jsonString, String gooruOid)throws GwtException, ServerDownException; 
+	public CollectionItemDo updateUserOwnResource(String jsonString, String gooruOid, String collectionId)throws GwtException, ServerDownException; 
 	public CollectionItemDo updateNarrationMetadata(String collectionItemId, String narration, String narrationType)  throws GwtException, ServerDownException;
 	//For Flag existing resources
 	//To create content report

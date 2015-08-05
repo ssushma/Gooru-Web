@@ -262,6 +262,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers ,UpdateEditR
 	void imageEditUserOwnResourceUpload();
 	/**
 	 *
+	 * @param collectionId 
 	 * @function editUserOwnResource
 	 *
 	 * @created_date : 04-Jul-2015
@@ -280,7 +281,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers ,UpdateEditR
 	 *
 	 *
 	 */
-	void editUserOwnResource(String jsonString, String gooruOid);
+	void editUserOwnResource(String jsonString, String gooruOid, String collectionId);
 
 	/**
 	 *
