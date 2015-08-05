@@ -23,24 +23,24 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DepthKnowledgeView extends Composite {
-	
+
 	private CollectionDo collectionDo;
-	
+
 	@UiField HTMLPanel detailsContainer,mainContainer;
 
 	Map<Integer,String> selectedValues=new HashMap<Integer, String>();
-	
+
 	private static DepthKnowledgeViewUiBinder uiBinder = GWT.create(DepthKnowledgeViewUiBinder.class);
 
 	interface DepthKnowledgeViewUiBinder extends UiBinder<Widget, DepthKnowledgeView> {
 	}
 
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	
+
+
 	public DepthKnowledgeView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
 		mainContainer.getElement().setId("dokwidget");
 	}
 	public void init(List<ListValuesDo> listValuesDos){
@@ -53,7 +53,7 @@ public class DepthKnowledgeView extends Composite {
 			detailsContainer.add(checkBox);
 		}
 	}
-	
+
 	public Map<Integer, String> getSelectedValue(){
 		selectedValues=new HashMap<Integer, String>();
 		int count=detailsContainer.getWidgetCount();
@@ -62,36 +62,32 @@ public class DepthKnowledgeView extends Composite {
 			if(widget instanceof CheckBox){
 				CheckBox checkBox=(CheckBox)widget;
 				if(checkBox.getValue()){
-					selectedValues.put(Integer.parseInt(checkBox.getElement().getId()),checkBox.getText());	
+					selectedValues.put(Integer.parseInt(checkBox.getElement().getId()),checkBox.getText());
 				}
 			}
 		}
 		return selectedValues;
 	}
-	
-	
+
+
 	public void setCollectionDo(CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
 		if(collectionDo!=null){
 		//	setSelectedValues(collectionDo.getDepthOfKnowledges());
 		}
 	}
-	
+
 	public void setFolderDo(FolderDo folderDo){
-		AppClientFactory.printInfoLogger(" folder DOK");
 		reset();
 		if(folderDo!=null){
-			AppClientFactory.printInfoLogger("Folder Do..........."+folderDo.getGooruOid());
-			AppClientFactory.printInfoLogger("Depth of knowledge.........."+folderDo.getDepthOfKnowledge());
 			setSelectedValues(folderDo.getDepthOfKnowledge());
 
 		}
 	}
-	
-	
+
+
 	public void reset(){
 		int count=detailsContainer.getWidgetCount();
-		AppClientFactory.printInfoLogger("I am In Details Container reset"+count);
 		for(int i=0;i<count;i++){
 			Widget widget=detailsContainer.getWidget(i);
 			if(widget instanceof CheckBox){
@@ -104,11 +100,10 @@ public class DepthKnowledgeView extends Composite {
 		selectedValues=new HashMap<Integer, String>();
 		int count=detailsContainer.getWidgetCount();
 		if(list!=null){
-			
+
 			for(checkboxSelectedDo checkboxSelectedDoObj:list){
-				AppClientFactory.printInfoLogger(checkboxSelectedDoObj.getId()+"================="+ checkboxSelectedDoObj.getName());
 				selectedValues.put(checkboxSelectedDoObj.getId(), checkboxSelectedDoObj.getName());
-			
+
 			}
 		}
 		for(int i=0;i<count;i++){

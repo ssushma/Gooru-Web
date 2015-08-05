@@ -110,7 +110,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 		}
 	}
 
-	
+
 
 	@Override
 	public void refreshSearch(String query, String filterStd) {
@@ -131,7 +131,6 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 	}
 
 	public void onSearchRequest(String filterStd) {
-		AppClientFactory.printInfoLogger("in on search request.");
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("flt.standard", filterStd);
 		params.put(QUERY, "*");
@@ -149,7 +148,7 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 	@Override
 	public void setSelectedStandards(List<Map<String, String>> standListArray) {
 		getView().setUpdatedStandards(standListArray);
-		
+
 	}
 
 
