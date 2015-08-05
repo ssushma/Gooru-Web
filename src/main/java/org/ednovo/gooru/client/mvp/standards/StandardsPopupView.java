@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.standards;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -110,7 +111,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
 
 
-	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip(i18n.GL3050(),i18n.GL0192());
+	BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip(i18n.GL3050(),i18n.GL0192());
 
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
 	/**
@@ -131,7 +132,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 			@Override
 			public void onClick(ClickEvent event) {
-				getUiHandlers().setSelectedStandards(standListArray);
+//				getUiHandlers().setSelectedStandards(standListArray);
 				appPopUp.hide();
 				Window.enableScrolling(true);
 			}
@@ -215,108 +216,108 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		}
 		imageLoader.setVisible(false);
 		standardsContainer.setVisible(true);
-	//	appPopUp.getElement().setAttribute("style", "width:1000px;height:599px;z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
+		//	appPopUp.getElement().setAttribute("style", "width:1000px;height:599px;z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
 	}
-	
+
 	public void getStandardsData(StandardsLevel1DO levelOneData)
 	{
 
-			for(int i=0;i<levelOneData.getNode().size();i++){
-				LiPanel liPanel2=new LiPanel();
-				Anchor levelOneStandardsInner2 = new Anchor();
-				liPanel2.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-				levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.getNode().get(i).getLabel());
-				liPanel2.getElement().setAttribute("id", levelOneData.getNode().get(i).getCodeId().toString());
-				if(i==0){
-					liPanel2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-				}
-				liPanel2.addClickHandler(new ClickHandler() {
+		for(int i=0;i<levelOneData.getNode().size();i++){
+			LiPanel liPanel2=new LiPanel();
+			Anchor levelOneStandardsInner2 = new Anchor();
+			liPanel2.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+			levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.getNode().get(i).getLabel());
+			liPanel2.getElement().setAttribute("id", levelOneData.getNode().get(i).getCodeId().toString());
+			if(i==0){
+				liPanel2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+			}
+			liPanel2.addClickHandler(new ClickHandler() {
 
-					@Override
-					public void onClick(ClickEvent event) {
-						LiPanel clickedElement = (LiPanel)event.getSource();
-						String codeStandardsVal = clickedElement.getElement().getAttribute("id");
-						getSecondLevelObjects("2",codeStandardsVal);
-						for(int l=0;l<levelTwoStandards.getWidgetCount();l++)
-						{
-							levelTwoStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-						}
-						clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-
+				@Override
+				public void onClick(ClickEvent event) {
+					LiPanel clickedElement = (LiPanel)event.getSource();
+					String codeStandardsVal = clickedElement.getElement().getAttribute("id");
+					getSecondLevelObjects("2",codeStandardsVal);
+					for(int l=0;l<levelTwoStandards.getWidgetCount();l++)
+					{
+						levelTwoStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					}
-				});
-				liPanel2.add(levelOneStandardsInner2);
-				levelTwoStandards.add(liPanel2.asWidget());
-				if(i==0){
-					for(int j=0;j<levelOneData.getNode().get(i).getNode().size();j++){
-						LiPanel  liPanel3=new LiPanel();
-						Anchor levelOneStandardsInner3 = new Anchor();
-						liPanel3.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-						levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getLabel());
-						liPanel3.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getCodeId().toString());
-						if(j==0)
-						{
-							liPanel3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-						}
-						liPanel3.addClickHandler(new ClickHandler() {
+					clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 
-							@Override
-							public void onClick(ClickEvent event) {
-								LiPanel clickedElement = (LiPanel)event.getSource();
-								String codeStandardsVal = clickedElement.getElement().getAttribute("id");
-								getThirdLevelObjects("3",codeStandardsVal);
-								for(int l=0;l<levelThreeStandards.getWidgetCount();l++)
-								{
-									levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-								}
-								clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+				}
+			});
+			liPanel2.add(levelOneStandardsInner2);
+			levelTwoStandards.add(liPanel2.asWidget());
+			if(i==0){
+				for(int j=0;j<levelOneData.getNode().get(i).getNode().size();j++){
+					LiPanel  liPanel3=new LiPanel();
+					Anchor levelOneStandardsInner3 = new Anchor();
+					liPanel3.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+					levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getLabel());
+					liPanel3.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getCodeId().toString());
+					if(j==0)
+					{
+						liPanel3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+					}
+					liPanel3.addClickHandler(new ClickHandler() {
 
+						@Override
+						public void onClick(ClickEvent event) {
+							LiPanel clickedElement = (LiPanel)event.getSource();
+							String codeStandardsVal = clickedElement.getElement().getAttribute("id");
+							getThirdLevelObjects("3",codeStandardsVal);
+							for(int l=0;l<levelThreeStandards.getWidgetCount();l++)
+							{
+								levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
-						});
-						liPanel3.add(levelOneStandardsInner3);
-						levelThreeStandards.add(liPanel3.asWidget());
-						if(j==0){
+							clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+
+						}
+					});
+					liPanel3.add(levelOneStandardsInner3);
+					levelThreeStandards.add(liPanel3.asWidget());
+					if(j==0){
 						for(int k=0;k<levelOneData.getNode().get(i).getNode().get(j).getNode().size();k++){
-								LiPanel levelOneStandardsInner4Outer = new LiPanel();
-								HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
-								HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
-								if(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode()!=null){
-									levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-									levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode());
-									levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel());
-									final String codeVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode();
-									final Integer codeIdVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId();
-									final String codeDesc = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel();
+							LiPanel levelOneStandardsInner4Outer = new LiPanel();
+							HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
+							HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
+							if(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode()!=null){
+								levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+								levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode());
+								levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel());
+								final String codeVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode();
+								final Integer codeIdVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId();
+								final String codeDesc = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel();
 
-									levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-									levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
-									levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
-									for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
-										if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
-											levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-										}
+								levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
+								levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
+								levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
+								for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
+									if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
+										levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 									}
-									levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
+								}
+								levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
 
-										@Override
-										public void onClick(ClickEvent event) {
-											// TODO Auto-generated method stub
-											LiPanel clickedObject = (LiPanel)event.getSource();
-											if(clickedObject.getStyleName().contains("dropMenuSelected")){
-												for(int i=0; i<standListArray.size(); i++){
-													if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
-														standListArray.remove(i);
-													}
+									@Override
+									public void onClick(ClickEvent event) {
+										// TODO Auto-generated method stub
+										LiPanel clickedObject = (LiPanel)event.getSource();
+										if(clickedObject.getStyleName().contains("dropMenuSelected")){
+											for(int i=0; i<standListArray.size(); i++){
+												if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+													standListArray.remove(i);
 												}
-												clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-											}else{
-												Map<String,String> selectedStadDetails= new HashMap<String,String>();
-												selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
-												selectedStadDetails.put("selectedCodeVal", codeVal);
-												selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
-												selectedStadDetails.put("selectedCodeDesc", codeDesc);
-												if(standListArray.size()>0)
-												{
+											}
+											clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+										}else{
+											Map<String,String> selectedStadDetails= new HashMap<String,String>();
+											selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+											selectedStadDetails.put("selectedCodeVal", codeVal);
+											selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
+											selectedStadDetails.put("selectedCodeDesc", codeDesc);
+											if(standListArray.size()>0)
+											{
 												boolean flagVal = false;
 												for(int i=0; i<standListArray.size(); i++){
 													if(!standListArray.get(i).get("selectedCodeVal").equalsIgnoreCase(codeVal)){
@@ -328,48 +329,47 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 														break;
 													}
 												}
-												if(!flagVal)
-												{
+												if(!flagVal){
 													LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
+													liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 													liPanelWithClose.setId(codeIdVal);
 													liPanelWithClose.setDifferenceId(3);
 													ulSelectedItems.add(liPanelWithClose);
 													standListArray.add(selectedStadDetails);
 												}
-												}
-												else
-												{
-													standListArray.add(selectedStadDetails);
-													LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
-													liPanelWithClose.setId(codeIdVal);
-													liPanelWithClose.setDifferenceId(3);
-													ulSelectedItems.add(liPanelWithClose);
-												}
-
-									
-
-
-												clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-											}
-											if(standListArray.size()!=0){
-												addBtn.setEnabled(true);
-												addBtn.removeStyleName("secondary");
-												addBtn.addStyleName("primary");
 											}else{
-												addBtn.setEnabled(false);
-												addBtn.removeStyleName("primary");
-												addBtn.addStyleName("secondary");
+												standListArray.add(selectedStadDetails);
+												LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
+												liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
+												liPanelWithClose.setId(codeIdVal);
+												liPanelWithClose.setDifferenceId(3);
+												ulSelectedItems.add(liPanelWithClose);
 											}
+
+
+
+
+											clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 										}
-									});
-									levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
-								}
+										if(standListArray.size()!=0){
+											addBtn.setEnabled(true);
+											addBtn.removeStyleName("secondary");
+											addBtn.addStyleName("primary");
+										}else{
+											addBtn.setEnabled(false);
+											addBtn.removeStyleName("primary");
+											addBtn.addStyleName("secondary");
+										}
+									}
+								});
+								levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
 							}
 						}
 					}
 				}
 			}
-	
+		}
+
 	}
 
 
@@ -412,154 +412,153 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		{
 			try
 			{
-			LiPanel liPanel1=new LiPanel();
-			Anchor levelOneStandardsInner2 = new Anchor();
-			liPanel1.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-			levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.get(i).getLabel());
-			liPanel1.getElement().setAttribute("id", levelOneData.get(i).getCodeId().toString());
-			if(i==0)
-			{
-				liPanel1.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-			}
-			liPanel1.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					LiPanel clickedElement = (LiPanel)event.getSource();
-					String codeStandardsVal = clickedElement.getElement().getAttribute("id");
-					getSecondLevelObjects("2",codeStandardsVal);
-					for(int l=0;l<levelTwoStandards.getWidgetCount();l++)
-					{
-						levelTwoStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-					}
-					clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-
-				}
-			});
-			liPanel1.add(levelOneStandardsInner2);
-			levelTwoStandards.add(liPanel1.asWidget());
-			if(i==0)
-			{
-			for(int j=0;j<levelOneData.get(i).getNode().size();j++)
-			{
-				LiPanel liPanel=new LiPanel();
-				Anchor levelOneStandardsInner3 = new Anchor();
-				liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-				levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getLabel());
-				liPanel.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getCodeId().toString());
-				if(j==0)
+				LiPanel liPanel1=new LiPanel();
+				Anchor levelOneStandardsInner2 = new Anchor();
+				liPanel1.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+				levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.get(i).getLabel());
+				liPanel1.getElement().setAttribute("id", levelOneData.get(i).getCodeId().toString());
+				if(i==0)
 				{
-					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+					liPanel1.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 				}
-				liPanel.addClickHandler(new ClickHandler() {
+				liPanel1.addClickHandler(new ClickHandler() {
 
 					@Override
 					public void onClick(ClickEvent event) {
 						LiPanel clickedElement = (LiPanel)event.getSource();
 						String codeStandardsVal = clickedElement.getElement().getAttribute("id");
-						getThirdLevelObjects("3",codeStandardsVal);
-						for(int l=0;l<levelThreeStandards.getWidgetCount();l++)
+						getSecondLevelObjects("2",codeStandardsVal);
+						for(int l=0;l<levelTwoStandards.getWidgetCount();l++)
 						{
-							levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							levelTwoStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 						}
 						clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 
 					}
 				});
-				liPanel.add(levelOneStandardsInner3);
-				levelThreeStandards.add(liPanel.asWidget());
-				if(j==0)
+				liPanel1.add(levelOneStandardsInner2);
+				levelTwoStandards.add(liPanel1.asWidget());
+				if(i==0)
 				{
-				for(int k=0;k<levelOneData.get(i).getNode().get(j).getNode().size();k++)
-				{
-					LiPanel levelOneStandardsInner4Outer = new LiPanel();
-					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
-					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
-					if(levelOneData.get(i).getNode().get(j).getNode().get(k).getCode()!=null){
-					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getCode());
-					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel());
-					final String codeVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCode();
-					final Integer codeIdVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId();
-					final String codeDesc = levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel();
+					for(int j=0;j<levelOneData.get(i).getNode().size();j++)
+					{
+						LiPanel liPanel=new LiPanel();
+						Anchor levelOneStandardsInner3 = new Anchor();
+						liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+						levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getLabel());
+						liPanel.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getCodeId().toString());
+						if(j==0)
+						{
+							liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+						}
+						liPanel.addClickHandler(new ClickHandler() {
 
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
-					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
-					for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
-						if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
-							levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							@Override
+							public void onClick(ClickEvent event) {
+								LiPanel clickedElement = (LiPanel)event.getSource();
+								String codeStandardsVal = clickedElement.getElement().getAttribute("id");
+								getThirdLevelObjects("3",codeStandardsVal);
+								for(int l=0;l<levelThreeStandards.getWidgetCount();l++)
+								{
+									levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+								}
+								clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+
+							}
+						});
+						liPanel.add(levelOneStandardsInner3);
+						levelThreeStandards.add(liPanel.asWidget());
+						if(j==0)
+						{
+							for(int k=0;k<levelOneData.get(i).getNode().get(j).getNode().size();k++)
+							{
+								LiPanel levelOneStandardsInner4Outer = new LiPanel();
+								HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
+								HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
+								if(levelOneData.get(i).getNode().get(j).getNode().get(k).getCode()!=null){
+									levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+									levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getCode());
+									levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel());
+									final String codeVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCode();
+									final Integer codeIdVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId();
+									final String codeDesc = levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel();
+
+									levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
+									levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
+									levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
+									for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
+										if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
+											levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+										}
+									}
+									levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
+
+										@Override
+										public void onClick(ClickEvent event) {
+											// TODO Auto-generated method stub
+											LiPanel clickedObject = (LiPanel)event.getSource();
+											if(clickedObject.getStyleName().contains("dropMenuSelected")){
+												for(int i=0; i<standListArray.size(); i++){
+													if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+														standListArray.remove(i);
+													}
+												}
+												clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+											}else{
+												Map<String,String> selectedStadDetails= new HashMap<String,String>();
+												selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+												selectedStadDetails.put("selectedCodeVal", codeVal);
+												selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
+												selectedStadDetails.put("selectedCodeDesc", codeDesc);
+												if(standListArray.size()>0)
+												{
+													boolean flagVal = false;
+													for(int i=0; i<standListArray.size(); i++){
+														if(!standListArray.get(i).get("selectedCodeVal").equalsIgnoreCase(codeVal)){
+
+														}
+														else
+														{
+															flagVal=true;
+															break;
+														}
+													}
+													if(!flagVal){
+														LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
+														liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
+														liPanelWithClose.setId(codeIdVal);
+														liPanelWithClose.setDifferenceId(3);
+														ulSelectedItems.add(liPanelWithClose);
+														standListArray.add(selectedStadDetails);
+													}
+												}else{
+													standListArray.add(selectedStadDetails);
+													LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
+													liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
+													liPanelWithClose.setId(codeIdVal);
+													liPanelWithClose.setDifferenceId(3);
+													ulSelectedItems.add(liPanelWithClose);
+												}
+
+												clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+											}
+											if(standListArray.size()!=0){
+												addBtn.setEnabled(true);
+												addBtn.removeStyleName("secondary");
+												addBtn.addStyleName("primary");
+											}else{
+												addBtn.setEnabled(false);
+												addBtn.removeStyleName("primary");
+												addBtn.addStyleName("secondary");
+											}
+										}
+									});
+									levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
+								}
+							}
 						}
 					}
-					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-
-						@Override
-						public void onClick(ClickEvent event) {
-							// TODO Auto-generated method stub
-							LiPanel clickedObject = (LiPanel)event.getSource();
-							if(clickedObject.getStyleName().contains("dropMenuSelected")){
-								for(int i=0; i<standListArray.size(); i++){
-									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
-										standListArray.remove(i);
-									}
-								}
-								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-							}else{
-								Map<String,String> selectedStadDetails= new HashMap<String,String>();
-								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
-								selectedStadDetails.put("selectedCodeVal", codeVal);
-								selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
-								selectedStadDetails.put("selectedCodeDesc", codeDesc);
-								if(standListArray.size()>0)
-								{
-								boolean flagVal = false;
-								for(int i=0; i<standListArray.size(); i++){
-									if(!standListArray.get(i).get("selectedCodeVal").equalsIgnoreCase(codeVal)){
-
-									}
-									else
-									{
-										flagVal=true;
-										break;
-									}
-								}
-								if(!flagVal)
-								{
-									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
-									liPanelWithClose.setId(codeIdVal);
-									liPanelWithClose.setDifferenceId(3);
-									ulSelectedItems.add(liPanelWithClose);
-									standListArray.add(selectedStadDetails);
-								}
-								}
-								else
-								{
-									standListArray.add(selectedStadDetails);
-									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
-									liPanelWithClose.setId(codeIdVal);
-									liPanelWithClose.setDifferenceId(3);
-									ulSelectedItems.add(liPanelWithClose);
-								}
-								
-								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-							}
-							if(standListArray.size()!=0){
-								addBtn.setEnabled(true);
-								addBtn.removeStyleName("secondary");
-								addBtn.addStyleName("primary");
-							}else{
-								addBtn.setEnabled(false);
-								addBtn.removeStyleName("primary");
-								addBtn.addStyleName("secondary");
-							}
-						}
-					});
-					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
 				}
-				}
-				}
-			}
-			}
 			}
 			catch(Exception ex)
 			{
@@ -574,9 +573,9 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		levelFourStandards.clear();
 		//standListArray.clear();
 
-			for(int j=0;j<levelOneData.size();j++)
-			{
-				try{
+		for(int j=0;j<levelOneData.size();j++)
+		{
+			try{
 				LiPanel liPanel=new LiPanel();
 				Anchor levelOneStandardsInner3 = new Anchor();
 				liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -605,100 +604,99 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 				levelThreeStandards.add(liPanel.asWidget());
 				if(j==0)
 				{
-				for(int k=0;k<levelOneData.get(j).getNode().size();k++)
-				{
-					LiPanel levelOneStandardsInner4Outer = new LiPanel();
-					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
-					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
-					if(levelOneData.get(j).getNode().get(k).getCode()!=null){
-					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getCode());
-					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getLabel());
-					final String codeVal = levelOneData.get(j).getNode().get(k).getCode();
-					final Integer codeIdVal = levelOneData.get(j).getNode().get(k).getCodeId();
-					final String codeDesc = levelOneData.get(j).getNode().get(k).getLabel();
-
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
-					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(j).getNode().get(k).getCodeId().toString());
-					for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
-						if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
+					for(int k=0;k<levelOneData.get(j).getNode().size();k++)
+					{
+						LiPanel levelOneStandardsInner4Outer = new LiPanel();
+						HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
+						HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
+						if(levelOneData.get(j).getNode().get(k).getCode()!=null){
 							levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+							levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getCode());
+							levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getLabel());
+							final String codeVal = levelOneData.get(j).getNode().get(k).getCode();
+							final Integer codeIdVal = levelOneData.get(j).getNode().get(k).getCodeId();
+							final String codeDesc = levelOneData.get(j).getNode().get(k).getLabel();
+
+							levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
+							levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
+							levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(j).getNode().get(k).getCodeId().toString());
+							for(int r=0; r<ulSelectedItems.getWidgetCount(); r++){
+								if(ulSelectedItems.getWidget(r).getElement().getInnerText().equals(codeVal)){
+									levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+								}
+							}
+							levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
+
+								@Override
+								public void onClick(ClickEvent event) {
+									LiPanel clickedObject = (LiPanel)event.getSource();
+
+									if(clickedObject.getStyleName().contains("dropMenuSelected")){
+										for(int i=0; i<standListArray.size(); i++){
+											if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
+												standListArray.remove(i);
+											}
+										}
+										clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+									}else{
+										Map<String,String> selectedStadDetails= new HashMap<String,String>();
+										selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
+										selectedStadDetails.put("selectedCodeVal", codeVal);
+										selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
+										selectedStadDetails.put("selectedCodeDesc", codeDesc);
+										if(standListArray.size()>0)
+										{
+											boolean flagVal = false;
+											for(int i=0; i<standListArray.size(); i++){
+												if(!standListArray.get(i).get("selectedCodeVal").equalsIgnoreCase(codeVal)){
+
+												}
+												else
+												{
+													flagVal=true;
+													break;
+												}
+											}
+											if(!flagVal){
+												LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
+												liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
+												liPanelWithClose.setId(codeIdVal);
+												liPanelWithClose.setDifferenceId(3);
+												ulSelectedItems.add(liPanelWithClose);
+												standListArray.add(selectedStadDetails);
+											}
+										}else{
+											standListArray.add(selectedStadDetails);
+											LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
+											liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
+											liPanelWithClose.setId(codeIdVal);
+											liPanelWithClose.setDifferenceId(3);
+											ulSelectedItems.add(liPanelWithClose);
+										}
+
+										clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+									}
+									if(standListArray.size()!=0){
+										addBtn.setEnabled(true);
+										addBtn.removeStyleName("secondary");
+										addBtn.addStyleName("primary");
+									}else{
+										addBtn.setEnabled(false);
+										addBtn.removeStyleName("primary");
+										addBtn.addStyleName("secondary");
+									}
+								}
+							});
+							levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
 						}
 					}
-					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-
-						@Override
-						public void onClick(ClickEvent event) {
-							LiPanel clickedObject = (LiPanel)event.getSource();
-
-							if(clickedObject.getStyleName().contains("dropMenuSelected")){
-								for(int i=0; i<standListArray.size(); i++){
-									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
-										standListArray.remove(i);
-									}
-								}
-								clickedObject.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
-							}else{
-								Map<String,String> selectedStadDetails= new HashMap<String,String>();
-								selectedStadDetails.put("selectedCodeId", String.valueOf(codeIdVal));
-								selectedStadDetails.put("selectedCodeVal", codeVal);
-								selectedStadDetails.put("selectedDifferenceId", String.valueOf(3));
-								selectedStadDetails.put("selectedCodeDesc", codeDesc);
-								if(standListArray.size()>0)
-								{
-								boolean flagVal = false;
-								for(int i=0; i<standListArray.size(); i++){
-									if(!standListArray.get(i).get("selectedCodeVal").equalsIgnoreCase(codeVal)){
-
-									}
-									else
-									{
-										flagVal=true;
-										break;
-									}
-								}
-								if(!flagVal)
-								{
-									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
-									liPanelWithClose.setId(codeIdVal);
-									liPanelWithClose.setDifferenceId(3);
-									ulSelectedItems.add(liPanelWithClose);
-									standListArray.add(selectedStadDetails);
-								}
-								}
-								else
-								{
-									standListArray.add(selectedStadDetails);
-									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
-									liPanelWithClose.setId(codeIdVal);
-									liPanelWithClose.setDifferenceId(3);
-									ulSelectedItems.add(liPanelWithClose);
-								}
-
-								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-							}
-							if(standListArray.size()!=0){
-								addBtn.setEnabled(true);
-								addBtn.removeStyleName("secondary");
-								addBtn.addStyleName("primary");
-							}else{
-								addBtn.setEnabled(false);
-								addBtn.removeStyleName("primary");
-								addBtn.addStyleName("secondary");
-							}
-						}
-					});
-					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
 				}
-				}
-				}
-				}
-				catch(Exception ex)
-				{
-					AppClientFactory.printSevereLogger(ex.getMessage());
-				}
-				}
+			}
+			catch(Exception ex)
+			{
+				AppClientFactory.printSevereLogger(ex.getMessage());
+			}
+		}
 
 	}
 
@@ -708,14 +706,14 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		//standListArray.clear();
 
 
-				for(int k=0;k<levelOneData.size();k++)
-				{
-					LiPanel levelOneStandardsInner4Outer = new LiPanel();
-					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
-					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
-					if(levelOneData.get(k).getCode()!=null)
-					{
-					try{
+		for(int k=0;k<levelOneData.size();k++)
+		{
+			LiPanel levelOneStandardsInner4Outer = new LiPanel();
+			HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
+			HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
+			if(levelOneData.get(k).getCode()!=null)
+			{
+				try{
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(k).getLabel());
@@ -752,30 +750,29 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 								selectedStadDetails.put("selectedCodeDesc", codeDesc);
 								if(standListArray.size()>0)
 								{
-								boolean flagVal = false;
-								for(int i=0; i<standListArray.size(); i++){
-									if(!standListArray.get(i).get("selectedCodeVal").equalsIgnoreCase(codeVal)){
+									boolean flagVal = false;
+									for(int i=0; i<standListArray.size(); i++){
+										if(!standListArray.get(i).get("selectedCodeVal").equalsIgnoreCase(codeVal)){
 
+										}
+										else
+										{
+											flagVal=true;
+											break;
+										}
 									}
-									else
-									{
-										flagVal=true;
-										break;
+									if(!flagVal){
+										LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
+										liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
+										liPanelWithClose.setId(codeIdVal);
+										liPanelWithClose.setDifferenceId(3);
+										ulSelectedItems.add(liPanelWithClose);
+										standListArray.add(selectedStadDetails);
 									}
-								}
-								if(!flagVal)
-								{
-									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
-									liPanelWithClose.setId(codeIdVal);
-									liPanelWithClose.setDifferenceId(3);
-									ulSelectedItems.add(liPanelWithClose);
-									standListArray.add(selectedStadDetails);
-								}
-								}
-								else
-								{
+								}else{
 									standListArray.add(selectedStadDetails);
 									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
+									liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 									liPanelWithClose.setId(codeIdVal);
 									liPanelWithClose.setDifferenceId(3);
 									ulSelectedItems.add(liPanelWithClose);
@@ -796,12 +793,12 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
 				}
-					catch(Exception ex)
-					{
-						AppClientFactory.printSevereLogger(ex.getMessage());
-					}
+				catch(Exception ex)
+				{
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
-				}
+			}
+		}
 
 
 	}
@@ -831,9 +828,9 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 	@Override
 	public void hideLoaderIcon() {
-	imageLoader.setVisible(false);
-	//imageLoader.setHeight("550"+Unit.PX);
-	standardsContainer.setVisible(true);
+		imageLoader.setVisible(false);
+		//imageLoader.setHeight("550"+Unit.PX);
+		standardsContainer.setVisible(true);
 	}
 	@Override
 	public void hidePopup()
@@ -867,14 +864,42 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 			liPanelWithClose.setId(liPanelWithClose.getId());
 			liPanelWithClose.setDifferenceId(liPanelWithClose.getDifferenceId());
 			ulSelectedItems.add(liPanelWithClose);
-			
+
 			Map<String,String> selectedStadDetails= new HashMap<String,String>();
 			selectedStadDetails.put("selectedCodeId", String.valueOf(liPanelWithClose.getId()));
 			selectedStadDetails.put("selectedCodeVal", String.valueOf(liPanelWithClose.getName()));
 			selectedStadDetails.put("selectedDifferenceId", String.valueOf(liPanelWithClose.getDifferenceId()));
 			selectedStadDetails.put("selectedCodeDesc", "");
 			standListArray.add(selectedStadDetails);
-			
+
+		}
+	}
+
+
+	private class RemoveLiWithClosePanel implements ClickHandler{
+
+		LiPanelWithClose closeLiPanel;
+
+		public RemoveLiWithClosePanel(LiPanelWithClose closeLiPanel) {
+			this.closeLiPanel = closeLiPanel;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			removeActiveStyle(closeLiPanel.getId());
+			closeLiPanel.removeFromParent();
+		}
+
+	}
+
+
+	public void removeActiveStyle(long id) {
+		Iterator<Widget> widgets = levelFourStandards.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(String.valueOf(id).equals(widget.getElement().getAttribute("id"))){
+				widget.removeStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+			}
 		}
 	}
 }
