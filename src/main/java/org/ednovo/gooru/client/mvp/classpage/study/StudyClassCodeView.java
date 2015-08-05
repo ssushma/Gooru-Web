@@ -126,9 +126,10 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 		btnCreateClass.getElement().setAttribute("title",i18n.GL1771());
 		
 		moreLinkAnr.setText(i18n.GL3462_12());
-		moreLinkAnr.setHref("http://support.goorulearning.org/hc/en-us");
+		moreLinkAnr.setHref("http://support.goorulearning.org/hc/en-us/sections/201152845");
 		moreLinkAnr.setTarget("_blank");
 		
+				
 		
 		
 		txtClassCode.setPlaceholder(i18n.GL1785());
