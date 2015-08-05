@@ -95,7 +95,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 
 		searchResult.setOwner(ownerDo);
 		try {
-			if(recordJsonObject.getJSONObject(THUMBNAILS)!=null)
+			if(!recordJsonObject.isNull(THUMBNAILS))
 			{
 			searchResult.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
 			}
