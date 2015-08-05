@@ -201,33 +201,30 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			AppClientFactory.getPlaceManager().revealPlace(request);
 		}
 	}
-	
+
 	private void redirectPlayer(String gooruOid, String type, String status) {
 		if(!type.equalsIgnoreCase("assessment/url")) {
 			String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
 			String courseGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
 			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
 			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
-			
+
 			String token = PlaceTokens.ASSESSMENT_PLAY;
 			if(type.equalsIgnoreCase("collection")) {
 				token = PlaceTokens.COLLECTION_PLAY;
 			}
-			
+
 			PlaceRequest placeRequest=new PlaceRequest(token);
 			placeRequest = placeRequest.with("id", gooruOid);
 			placeRequest = placeRequest.with("cid", classUId);
 			placeRequest = placeRequest.with("courseId", courseGooruOid);
 			placeRequest = placeRequest.with("unitId", unitId);
 			placeRequest = placeRequest.with("lessonId", lessonId);
-			
+
 			if(status!=null&&status.equalsIgnoreCase("active")) {
 				placeRequest = placeRequest.with("isStudent", "true");
 			}
-			
-			AppClientFactory.printInfoLogger("classUId "+classUId+" courseGooruOid "+courseGooruOid+" unitId "+unitId+" lessonId "+lessonId);
-			AppClientFactory.printInfoLogger("Practised Gooru User "+type+" Player "+AppClientFactory.getLoggedInUser().getUsernameDisplay());
-			AppClientFactory.printInfoLogger("Student Plan Lesson View "+type+" Player "+placeRequest);
+
 			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 		} else {
 			if(planContentDo.getUrl()!=null&&!planContentDo.getUrl().isEmpty()) {
@@ -235,7 +232,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			}
 		}
 	}
-	
+
 	private void setResourceData(ArrayList<PlanContentDo> resourceList, String collectionType) {
 		int size = resourceList.size();
 		if(size>0) {

@@ -1574,7 +1574,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 		if(AppClientFactory.isAnonymous()){
 			this.sessionItemId = sessionId;
-			AppClientFactory.printInfoLogger("-- item id -- "+sessionItemId);
 		}else{
 			if(!StringUtil.isEmpty(resourceGooruOid)){
 				this.contentResourceGooruOId = resourceGooruOid;
