@@ -35,7 +35,7 @@ public class ProfilePageTabVc extends FocusPanel {
 		wrapperFloPanel.getElement().setId("gooruProfilePage");
 		imageSimPanel.getElement().setId("spnlImageSimPanel");
 		labelcount.getElement().setId("labelcount");
-		labelcount.setVisible(false);
+//		labelcount.setVisible(false);
 		labelLbl.getElement().setId("labelLbl");
 
 	}
@@ -83,10 +83,10 @@ public class ProfilePageTabVc extends FocusPanel {
 	}
 	public void setLabelCount(String label)
 	{
-		labelcount.setVisible(false);
-//		labelcount.setText(label);
-//		labelcount.getElement().setAttribute("alt",label);
-//		labelcount.getElement().setAttribute("title",label);
+//		labelcount.setVisible(false);
+		labelcount.setText(label);
+		labelcount.getElement().setAttribute("alt",label);
+		labelcount.getElement().setAttribute("title",label);
 	}
 	public Label getLabelCount()
 	{
