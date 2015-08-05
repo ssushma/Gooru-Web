@@ -1442,16 +1442,24 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public CollectionItemDo updateUserOwnResource(String jsonString,String gooruOid) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_RESOURCE, gooruOid);
+	public CollectionItemDo updateUserOwnResource(String jsonString,String gooruOid,String collectionId) throws GwtException {
+		JsonRepresentation jsonRep = null, jsonResponseRepget=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_USER_RESOURCE, collectionId, gooruOid);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), jsonString);
 
 		getLogger().info("---- Updating User own resource -- "+url);
 		getLogger().info("--- payload -- "+jsonString);
 
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+		try{
+		/*	logger.info("updateUserOwnResource v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri"));
+			String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+		*/	JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(url,getRestUsername(),getRestPassword());
+			jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
+		}catch(Exception e){
+			logger.error("Exception-------"+e);
+		}
+		return deserializeCollectionItem(jsonResponseRepget);
 	}
 
 	@Override
