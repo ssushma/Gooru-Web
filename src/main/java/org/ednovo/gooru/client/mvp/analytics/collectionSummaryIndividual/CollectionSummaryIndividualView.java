@@ -26,6 +26,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -44,7 +45,6 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -603,13 +603,16 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            data.setValue(i, 4, new AnalyticsReactionWidget(reaction).toString());
 
 		            //set View response label
+		        	if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 		            Label viewResponselbl=new Label(VIEWRESPONSE);
 		            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 		            viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
 	   	            viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 	   	            viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
      			    viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+     			    viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 		            data.setValue(i, 5, viewResponselbl.toString());
+		        	}
 		            
 		        }
 		        Options options = Options.create();
@@ -622,7 +625,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	erroeMsg.setText(i18n.GL3264());
 		        	individualOpenendedData.add(erroeMsg);
 		        }
-		        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 		       // table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 		        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 
@@ -732,7 +734,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 											for (MetaDataDo metaDataDo : questionList) {
 												String answerText = "";
 												if((metaDataDo.getAnswerText() != null)) {
-													answerText = metaDataDo.getAnswerText();
+													String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+													answerText = text;
 												}
 												answerTextFormat += '[' + answerText +']';
 												if(questionList.size()  != metaDataDo.getSequence()){
@@ -855,7 +858,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        Options options = Options.create();
 			        options.setAllowHtml(true);
 			        Table table = new Table(data, options);
-			        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 			        printScoredData.add(table);
 			        if(result.size()==0){
 			        	Label erroeMsg=new Label();
@@ -936,7 +938,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 										for (MetaDataDo metaDataDo : questionList) {
 											String answerText = "";
 											if((metaDataDo.getAnswerText() != null)) {
-												answerText = metaDataDo.getAnswerText();
+												String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+												answerText = text;
 											}
 											answerTextFormat += '[' + answerText +']';
 											if(questionList.size()  != metaDataDo.getSequence()){
@@ -1018,6 +1021,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+					        			viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 					        			answerspnl.add(viewResponselbl);
 					        		}
 					        		 answerspnl.setStyleName(res.css().setMarginAuto());
@@ -1040,7 +1044,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        Options options = Options.create();
 		        options.setAllowHtml(true);
 		        Table table = new Table(data, options);
-		        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 		        table.getElement().setId("individulaDataScored");
 		        individualScoredData.add(table);
 		        if(result.size()==0){
@@ -1206,23 +1209,31 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	public class SummaryPopupClick implements ClickHandler{
 
+		String answerObj;
+		String questionType;
+		String attempts;
+		
+		public SummaryPopupClick(UserDataDo userDataDo) {
+			answerObj=userDataDo.getAnswerObject();
+			questionType=userDataDo.getType();
+			attempts=String.valueOf(userDataDo.getAttempts());
+		}
+
 		@Override
 		public void onClick(ClickEvent event) {
-			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId")) && !StringUtil.isEmpty(ele.getAttribute("answerObj"))){
-				 JSONValue value = JSONParser.parseStrict(ele.getAttribute("answerObj").toString());
-    			 JSONObject answerObject = value.isObject();
-    			 Set<String> keys=answerObject.keySet();
-    			 Iterator<String> itr = keys.iterator();
-    			 JSONArray attemptsObj=null;
-    		      while(itr.hasNext()) {
-    		         attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-    		       }
-    		      if(attemptsObj!=null){
-    		      SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
-    		      }
-			}
+				JSONValue value = JSONParser.parseStrict(answerObj);
+				JSONObject answerObject = value.isObject();
+				Set<String> keys=answerObject.keySet();
+				Iterator<String> itr = keys.iterator();
+				JSONArray attemptsObj=null;
+				while(itr.hasNext()) {
+					attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+				}
+				if(attemptsObj!=null){
+					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, questionType,attempts);
+				}
 		}
 	};
+
 
 }

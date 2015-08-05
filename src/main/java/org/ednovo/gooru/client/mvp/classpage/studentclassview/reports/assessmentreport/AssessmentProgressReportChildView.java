@@ -62,6 +62,7 @@ import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
@@ -549,7 +550,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						for (MetaDataDo metaDataDo : questionList) {
 							String answerText = "";
 							if((metaDataDo.getAnswerText() != null)) {
-								answerText = metaDataDo.getAnswerText();
+								String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+								answerText = text;
 							}
 							answerTextFormat += '[' + answerText +']';
 							if(questionList.size()  != metaDataDo.getSequence()){
@@ -631,7 +633,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						viewResponselbl.addClickHandler(new SummaryPopupClick());
+						viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				}
@@ -702,11 +704,19 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	public class SummaryPopupClick implements ClickHandler{
 
+		String answerObj;
+		String questionType;
+		String attempts;
+		
+		public SummaryPopupClick(UserDataDo userDataDo) {
+			answerObj=userDataDo.getAnswerObject();
+			questionType=userDataDo.getType();
+			attempts=String.valueOf(userDataDo.getAttempts());
+		}
+
 		@Override
 		public void onClick(ClickEvent event) {
-			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId")) && !StringUtil.isEmpty(ele.getAttribute("answerObj"))){
-				JSONValue value = JSONParser.parseStrict(ele.getAttribute("answerObj").toString());
+				JSONValue value = JSONParser.parseStrict(answerObj);
 				JSONObject answerObject = value.isObject();
 				Set<String> keys=answerObject.keySet();
 				Iterator<String> itr = keys.iterator();
@@ -715,11 +725,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				}
 				if(attemptsObj!=null){
-					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
+					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, questionType,attempts);
 				}
-			}
 		}
 	};
+
 
 
 	@Override
@@ -739,6 +749,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 				}else{
 					printOptions.setVisible(false);
+					downloadFile.setUrl("");
 					Print.it(style,PrintPnl);
 					printOptions.setVisible(true);
 				}

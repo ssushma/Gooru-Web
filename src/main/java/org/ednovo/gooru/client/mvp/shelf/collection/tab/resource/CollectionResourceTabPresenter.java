@@ -303,9 +303,9 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	}
 
 	@Override
-	public void editUserOwnResource(String jsonString, String gooruOid) {
+	public void editUserOwnResource(String jsonString, String gooruOid, String collectionId) {
 		MixpanelUtil.Resource_Edit_Info_Success();
-		AppClientFactory.getInjector().getResourceService().updateUserOwnResource(jsonString,gooruOid,new SimpleAsyncCallback<CollectionItemDo>(){
+		AppClientFactory.getInjector().getResourceService().updateUserOwnResource(jsonString,gooruOid,collectionId,new SimpleAsyncCallback<CollectionItemDo>(){
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hideUpdateOwnResourcePopup();
