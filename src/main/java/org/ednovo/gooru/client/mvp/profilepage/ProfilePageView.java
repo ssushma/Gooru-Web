@@ -733,10 +733,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		else{
 			collectionsTabVc.setLabel(i18n.GL1888());
 		}
-		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
+//		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
 		followersTabVc.setLabelCount("");
-		
+
 		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()+"");
 		//tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
