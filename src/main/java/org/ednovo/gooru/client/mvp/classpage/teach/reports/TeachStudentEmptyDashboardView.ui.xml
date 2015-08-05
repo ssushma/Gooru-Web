@@ -46,7 +46,7 @@
 				       <g:Anchor text="{i18n.GL1752}" title="{i18n.GL1752}" ui:field="myContentAnr"></g:Anchor>
 				       <g:InlineLabel text="{i18n.GL3462_11}" title="{i18n.GL3462_11}"></g:InlineLabel>
 				   </g:HTMLPanel>
-				   <a href="http://support.goorulearning.org/hc/en-us" target="_blank" text="{i18n.GL3462_12}" title="{i18n.GL3462_12}">More information in the Support Center</a>
+				   <a href="http://support.goorulearning.org/hc/en-us/sections/201152845" target="_blank" text="{i18n.GL3462_12}" title="{i18n.GL3462_12}">More information in the Support Center</a>
 				</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>

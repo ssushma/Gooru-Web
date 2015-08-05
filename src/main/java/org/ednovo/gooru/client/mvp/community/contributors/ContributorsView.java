@@ -162,11 +162,8 @@ public class ContributorsView extends
 		lblPleaseWait.setVisible(false);
 		if (stockStore != null && stockStore.getItem(CONTRIBUTORS_DATA) != null){
 			map = stockStore.getItem(CONTRIBUTORS_DATA);
-			AppClientFactory.printInfoLogger("Start display : "+System.currentTimeMillis());
 			deserializeCollaboratorsList(map);
-			AppClientFactory.printInfoLogger("End display : "+System.currentTimeMillis());
 		} else {
-			AppClientFactory.printInfoLogger("Start : "+System.currentTimeMillis());
 			AppClientFactory.getInjector().getLibraryService().getLibraryContributorsUsers("community",new SimpleAsyncCallback<String>() {
 				@Override
 				public void onSuccess(String result) {
@@ -174,9 +171,7 @@ public class ContributorsView extends
 						stockStore.setItem(CONTRIBUTORS_DATA,
 								result);
 					}
-					AppClientFactory.printInfoLogger("End API: "+System.currentTimeMillis());
 					deserializeCollaboratorsList(result);
-					AppClientFactory.printInfoLogger("Display Results : "+System.currentTimeMillis());
 				}
 			});
 		}

@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -128,7 +129,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	String style="";
 
 	private String userId = null, contentType = null;
-	
+
 	private CollectionDo collectionDo=null;
 	private boolean isCollection = false, isExternalAssessment = false;
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -165,7 +166,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		this.userId = userId;
 		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
-	
+
 	private void setExternalAssessment() {
 		headerLinksContainer.setVisible(false);
 		collectionResourcesCount.setVisible(false);
@@ -175,7 +176,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		attemptPanel.setVisible(false);
 		selfReportPanel.setVisible(true);
 	}
-	
+
 	public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -205,12 +206,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	public void setLabelAndIds() {
 		loaderVisibility(true);
 		errorPanelData(false, false);
-		
+
 		PrintPnl.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-106)+"px");
 		progressRadial.getElement().setId("fpnlprogressRadial");
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageLoading.getElement().setId("loadingUcCropImageLoadingInStudentSummaryView");
-		
+
 		String collectionType = i18n.GL4006();
 
 		if(isCollection) {
@@ -458,7 +459,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		loadingImageLabel.setVisible(false);
 		questionsTable.setVisible(true);
 		questionsTable.clear();
-		AppClientFactory.printInfoLogger("isTableToDestroy :"+isTableToDestroy);
 		if (isTableToDestroy){
 			isTableToDestroy = false;
 			destoryTables();
@@ -502,7 +502,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			adTable.setHeaderWidget(3, heading4);
 			adTable.setHeaderWidget(4, heading5);
 			adTable.setHeaderWidget(5, heading6);
-			AppClientFactory.printInfoLogger("result.size() : "+result.size());
 			for(int i=0;i<result.size();i++) {
 				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
@@ -552,13 +551,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 							if((metaDataDo.getAnswerText() != null)) {
 								answerText = metaDataDo.getAnswerText();
 							}
-							AppClientFactory.printInfoLogger("answerText : "+answerText);
 							answerTextFormat += '[' + answerText +']';
 							if(questionList.size()  != metaDataDo.getSequence()){
 								answerTextFormat += ",";
 							}
 						}
-						AppClientFactory.printInfoLogger("answerTextFormat : "+answerTextFormat.toString());
 						String[] userFibOption = null;
 						if(result.get(i).getText() != null) {
 							answersArry=answerTextFormat.split(",");
@@ -568,9 +565,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 							for (int k = 0; k < answersArry.length; k++) {
 								Label answerChoice=new Label();
 								if(answersArry[k]!=null && k<userFibOption.length){
-									AppClientFactory.printInfoLogger("answersArry[k].toLowerCase().trim() : "+answersArry[k].toLowerCase().trim());
-									AppClientFactory.printInfoLogger("userFibOption[k].toLowerCase().trim() : "+userFibOption[k].toLowerCase().trim());
-									AppClientFactory.printInfoLogger("noOfAttempts : "+noOfAttempts);
 									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
 										answerChoice.setText(userFibOption[k]);
 										answerChoice.getElement().getStyle().setColor(CORRECT);
@@ -730,7 +724,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	@Override
 	public void setQuestionsPrintData(final ArrayList<UserDataDo> result) {
-		
+
 	}
 
 	public void setPrintIndividualSummayData(final boolean isClickedOnSave, final boolean isClickedOnEmail){
@@ -751,7 +745,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			}
 		});
 	}
-	
+
 	Timer timer1=new Timer() {
 		@Override
 		public void run() {
@@ -837,16 +831,21 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			getContentData(selectedLbl.getElement().getAttribute("type"), true, selectedLbl);
 		}
 	}
-	
+
 	private void setPanelStyling(Label selectedLbl) {
 		collectionOverviewBtn.removeStyleName(CssTokens.ACTIVE);
 		questionsBtn.removeStyleName(CssTokens.ACTIVE);
 		oeQuestionsBtn.removeStyleName(CssTokens.ACTIVE);
 		selectedLbl.addStyleName(CssTokens.ACTIVE);
 	}
-	
+
 	private void getContentData(String type, boolean isRefresh, Label selectedLbl) {
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
+		String classpageId="";
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASS)) {
+			classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, "");
+		} else {
+			classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
+		}
 		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, "");
 		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
 			getPresenter().getCollectionScoreForSession(assessmentId, classpageId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);
