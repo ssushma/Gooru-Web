@@ -68,6 +68,7 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 	@Override
 	protected void onHide() {
 		super.onHide();
+		getView().getFrame().setUrl("");
 	}
 	
 	@Override

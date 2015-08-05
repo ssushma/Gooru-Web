@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
@@ -417,7 +418,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 							String answerText = "";
 							if((metaDataDo.getAnswerText() != null)) {
-								answerText = metaDataDo.getAnswerText();
+								String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+								answerText = text;
 							}
 							answerTextFormat += '[' + answerText +']';
 							if(questionList.size()  != metaDataDo.getSequence()){
@@ -499,7 +501,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						viewResponselbl.addClickHandler(new SummaryPopupClick());
+						viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				}
@@ -567,11 +569,19 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	public class SummaryPopupClick implements ClickHandler{
 
+		String answerObj;
+		String questionType;
+		String attempts;
+		
+		public SummaryPopupClick(UserDataDo userDataDo) {
+			answerObj=userDataDo.getAnswerObject();
+			questionType=userDataDo.getType();
+			attempts=String.valueOf(userDataDo.getAttempts());
+		}
+
 		@Override
 		public void onClick(ClickEvent event) {
-			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId")) && !StringUtil.isEmpty(ele.getAttribute("answerObj"))){
-				JSONValue value = JSONParser.parseStrict(ele.getAttribute("answerObj").toString());
+				JSONValue value = JSONParser.parseStrict(answerObj);
 				JSONObject answerObject = value.isObject();
 				Set<String> keys=answerObject.keySet();
 				Iterator<String> itr = keys.iterator();
@@ -580,9 +590,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				}
 				if(attemptsObj!=null){
-					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
+					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, questionType,attempts);
 				}
-			}
 		}
 	};
 
@@ -652,7 +661,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							for (MetaDataDo metaDataDo : questionList) {
 								String answerText = "";
 								if((metaDataDo.getAnswerText() != null)) {
-									answerText = metaDataDo.getAnswerText();
+									String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+									answerText = text;
 								}
 								answerTextFormat += '[' + answerText +']';
 								if(questionList.size()  != metaDataDo.getSequence()){
@@ -776,7 +786,6 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			Options options = Options.create();
 			options.setAllowHtml(true);
 			Table table = new Table(data, options);
-			table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 			printScoredData.add(table);
 			if(result.size()==0){
 				Label erroeMsg=new Label();
@@ -824,6 +833,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+PrintPnl.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 					printWidget.clear();
 				}else{
+					downloadFile.setUrl("");
 					Print.it(style,PrintPnl);
 					printWidget.clear();
 				}

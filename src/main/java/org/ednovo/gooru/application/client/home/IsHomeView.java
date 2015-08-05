@@ -33,7 +33,6 @@ import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 
 import com.google.gwt.user.client.ui.Button;
 
@@ -98,11 +97,7 @@ public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 	 */
 	void displayPartnerLibraries(ArrayList<LibraryUserDo> partnersList);
 
-	/**
-	 * To show preFilter popup
-	 * @param addStandardsPresenter
-	 */
-	void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter);
+
 
 
 }

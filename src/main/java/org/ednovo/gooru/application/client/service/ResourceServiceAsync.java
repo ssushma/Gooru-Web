@@ -120,7 +120,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 	void saveUserOwnResource(String filePath,AsyncCallback<MediaUploadDo> simpleAsyncCallback);
 
-	void updateUserOwnResource(String jsonString, String gooruOid,AsyncCallback<CollectionItemDo> simpleAsyncCallback);  
+	void updateUserOwnResource(String jsonString, String gooruOid, String collectionId,AsyncCallback<CollectionItemDo> simpleAsyncCallback);  
 	
 	void updateNarrationMetadata(String collectionItemId, String narration, String narrationType, AsyncCallback<CollectionItemDo> callback);
 

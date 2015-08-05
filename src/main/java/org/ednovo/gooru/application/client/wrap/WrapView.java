@@ -24,20 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.client.wrap;
 
-import java.util.List;
-
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseView;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.PreFilterPopup;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DeviceUc;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -45,8 +39,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window.Navigator;
@@ -75,15 +67,6 @@ public class WrapView extends BaseView implements IsWrapView {
 	HeaderUc headerUc;
 
 	@UiField HTMLPanel panelWrapper, panelDevice,searchPush,menuRight, resorceSearchFilters, collectionSearchFilters,wrapBodyPanel;
-
-	AddStandardsPreSearchPresenter addStandardsPresenter = null;
-
-	private static final String USER_META_ACTIVE_FLAG = "0";
-
-	private boolean isCCSSAvailable =false;
-	private boolean isNGSSAvailable =false;
-	private boolean isTEKSAvailable =false;
-	private boolean isCAAvailable =false;
 
 	private boolean isArrowIcon = false;
 
