@@ -633,7 +633,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						viewResponselbl.addClickHandler(new SummaryPopupClick());
+						viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				}
@@ -704,11 +704,19 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	public class SummaryPopupClick implements ClickHandler{
 
+		String answerObj;
+		String questionType;
+		String attempts;
+		
+		public SummaryPopupClick(UserDataDo userDataDo) {
+			answerObj=userDataDo.getAnswerObject();
+			questionType=userDataDo.getType();
+			attempts=String.valueOf(userDataDo.getAttempts());
+		}
+
 		@Override
 		public void onClick(ClickEvent event) {
-			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId")) && !StringUtil.isEmpty(ele.getAttribute("answerObj"))){
-				JSONValue value = JSONParser.parseStrict(ele.getAttribute("answerObj").toString());
+				JSONValue value = JSONParser.parseStrict(answerObj);
 				JSONObject answerObject = value.isObject();
 				Set<String> keys=answerObject.keySet();
 				Iterator<String> itr = keys.iterator();
@@ -717,11 +725,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				}
 				if(attemptsObj!=null){
-					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
+					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, questionType,attempts);
 				}
-			}
 		}
 	};
+
 
 
 	@Override
