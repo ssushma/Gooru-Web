@@ -905,15 +905,22 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			
 			collectionObject.put("languageObjective", languageObjective);
 			List<String> dokKeys=new ArrayList<>();		
-			Set<Integer> keys=audience.keySet();
-			
-			collectionObject.put("audienceIds", getKeys(audience.keySet()));
+			Set<Integer> audienceKeys=audience!=null?audience.keySet():null;
+			if(audience!=null){
+				collectionObject.put("audienceIds", getKeys(audience.keySet()));
+			}
+			if(dok!=null){
+				collectionObject.put("depthOfKnowledgeIds", getKeys(dok.keySet()));
+			}
+			if(centurySkills!=null){
+				collectionObject.put("skillsIds", getKeysLong(centurySkills.keySet()));
+			}
 			collectionObject.put("title", createDoObj.getTitle());
-			collectionObject.put("skillsIds", getKeysLong(centurySkills.keySet()));
-			collectionObject.put("depthOfKnowledgeIds", getKeys(dok.keySet()));
+			String dataPassing=ResourceFormFactory.generateStringDataForm(createDoObj, null);
+			
 			getLogger().info("Url update coll details -- "+url);
-			getLogger().info("form data -- "+collectionObject.toString());
-			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),collectionObject.toString());
+			getLogger().info("form data -- "+dataPassing);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),dataPassing);
 		
 		} catch (Exception e) {
 			logger.error("Exception::", e);

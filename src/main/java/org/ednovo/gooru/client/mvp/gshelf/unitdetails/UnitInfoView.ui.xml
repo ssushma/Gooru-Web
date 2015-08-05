@@ -55,8 +55,7 @@
 <div class="dropDownRight">
 <div class="btn-group">
 
-<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">Select other from
-										taxonomy</g:Button>
+<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn" text="{i18n.GL3486}"></g:Button>
 									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="taxonomyToggleBtn">
 										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>

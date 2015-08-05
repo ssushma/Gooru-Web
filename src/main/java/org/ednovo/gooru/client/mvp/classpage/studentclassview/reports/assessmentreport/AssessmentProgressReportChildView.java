@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -61,6 +62,7 @@ import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
@@ -548,7 +550,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						for (MetaDataDo metaDataDo : questionList) {
 							String answerText = "";
 							if((metaDataDo.getAnswerText() != null)) {
-								answerText = metaDataDo.getAnswerText();
+								String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+								answerText = text;
 							}
 							answerTextFormat += '[' + answerText +']';
 							if(questionList.size()  != metaDataDo.getSequence()){
@@ -840,7 +843,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	}
 
 	private void getContentData(String type, boolean isRefresh, Label selectedLbl) {
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
+		String classpageId="";
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASS)) {
+			classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, "");
+		} else {
+			classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
+		}
 		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, "");
 		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
 			getPresenter().getCollectionScoreForSession(assessmentId, classpageId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);

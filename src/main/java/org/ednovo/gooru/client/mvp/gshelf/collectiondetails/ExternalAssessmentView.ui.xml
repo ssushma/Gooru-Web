@@ -6,7 +6,7 @@
 		<div class="existingAssessment">
 		
 		<div class="assessmentTitle">
-		<uc:Paragraph>Assessment Title</uc:Paragraph>
+		<uc:Paragraph text="{i18n.GL3381}"></uc:Paragraph>
 		<p>
 			<g:TextBox styleName="form-control"  ui:field="txtAssessmentTitle" maxLength="50"/>
 			<g:Label ui:field="lblErrorMessage"  styleName="errorMessage text-right"/>
@@ -15,14 +15,14 @@
 		
 		
 		<div class="assessmentURL">
-		<uc:Paragraph>Assessment URL</uc:Paragraph>
+		<uc:Paragraph text="{i18n.GL3183}"></uc:Paragraph>
 		<p><g:TextBox styleName="form-control"  ui:field="txtAssessmentURL"/> 
 		<g:Label ui:field="lblErrorMessageForURL"  styleName="errorMessage text-right"/>
 		</p>
 		</div>
 		
 		<div class="assessmentDescription">
-		<uc:Paragraph>Description</uc:Paragraph>
+		<uc:Paragraph text="{i18n.GL0904}"></uc:Paragraph>
 		<p><g:TextArea styleName="form-control" ui:field="txaAssessmentDescription"/>
 		<g:Label ui:field="lblErrorMessageForDesc"  styleName="errorMessage text-right"/></p>
 		</div>
@@ -30,7 +30,7 @@
 		<div class="assessmentPrivacy">
 		<div class="row">
 		<div class="col-md-2 col-sm-3 setPaddingLeft">
-		<uc:Paragraph>Privacy</uc:Paragraph>
+		<uc:Paragraph text="{i18n.GL0873}"></uc:Paragraph>
 		</div>
 		<div class="col-md-10 col-sm-9">
 		<input type="radio" class="css-checkbox" id="radio6" name="radiog_dark"/><g:HTMLPanel styleName="css-label radGroup2" ui:field="pnlPublic"><img src="images/publicIcon.png"/> Public</g:HTMLPanel>
@@ -44,7 +44,7 @@
 		<div class="assessmentRequires">
 		<div class="row">
 		<div class="col-md-2 col-sm-3 setPaddingLeft">
-		<uc:Paragraph>Requires Log In?</uc:Paragraph>
+		<uc:Paragraph text="{i18n.GL3487}"></uc:Paragraph>
 		</div>
 		<div class="col-md-10 col-sm-9">
 		<input type="radio" class="css-checkbox" id="radio9" name="radiog_dark"/><g:Label styleName="css-label radGroup2" text="{i18n.GL_GRR_YES}" title="{i18n.GL_GRR_YES}" ui:field="lblRequiresYes"/>
