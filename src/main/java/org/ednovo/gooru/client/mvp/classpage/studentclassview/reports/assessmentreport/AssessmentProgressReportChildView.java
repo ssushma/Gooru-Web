@@ -749,6 +749,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 				}else{
 					printOptions.setVisible(false);
+					downloadFile.setUrl("");
 					Print.it(style,PrintPnl);
 					printOptions.setVisible(true);
 				}

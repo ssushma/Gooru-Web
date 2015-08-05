@@ -833,6 +833,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+PrintPnl.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 					printWidget.clear();
 				}else{
+					downloadFile.setUrl("");
 					Print.it(style,PrintPnl);
 					printWidget.clear();
 				}
