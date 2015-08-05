@@ -2422,6 +2422,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					}else{
 						collectionDoObj=new CollectionDo();
 						collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
+						if(jsonResponseRep.getResponseDo()!=null && jsonResponseRep.getResponseDo().getErrorMessage()!=null){
+						logger.info("status code moveCollectionToMyCOllections errormessage:::::"+jsonResponseRep.getResponseDo().getErrorMessage());
+						collectionDoObj.setErrorMessage(jsonResponseRep.getResponseDo().getErrorMessage());
+						}
 					}
 			}
 			catch(Exception e){
@@ -2448,6 +2452,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					}else{
 						collectionDoObj=new CollectionDo();
 						collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
+						if(jsonResponseRep.getResponseDo()!=null && jsonResponseRep.getResponseDo().getErrorMessage()!=null){
+						logger.info("status code moveCollectionTOLesson errormessage:::::"+jsonResponseRep.getResponseDo().getErrorMessage());
+						collectionDoObj.setErrorMessage(jsonResponseRep.getResponseDo().getErrorMessage());
+						}
 					}
 			}catch(Exception e){
 				logger.error("Exception-------"+e);

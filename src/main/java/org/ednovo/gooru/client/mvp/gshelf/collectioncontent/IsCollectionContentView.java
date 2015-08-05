@@ -208,4 +208,6 @@ public interface IsCollectionContentView extends IsViewWithHandlers<CollectionCo
 	
 	public void getResourceListPanel();
 	void setCollectionDetails(CollectionItemDo collectionItemDo);
+	public void updateResouceItemImage(String fileName,
+			String fileNameWithOutRespUrl, boolean isEditUserOwnResourceImage);
 }
