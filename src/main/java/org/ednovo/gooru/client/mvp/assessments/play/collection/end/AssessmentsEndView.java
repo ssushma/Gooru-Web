@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
@@ -417,7 +418,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 							String answerText = "";
 							if((metaDataDo.getAnswerText() != null)) {
-								answerText = metaDataDo.getAnswerText();
+								String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+								answerText = text;
 							}
 							answerTextFormat += '[' + answerText +']';
 							if(questionList.size()  != metaDataDo.getSequence()){
@@ -652,7 +654,8 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							for (MetaDataDo metaDataDo : questionList) {
 								String answerText = "";
 								if((metaDataDo.getAnswerText() != null)) {
-									answerText = metaDataDo.getAnswerText();
+									String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+									answerText = text;
 								}
 								answerTextFormat += '[' + answerText +']';
 								if(questionList.size()  != metaDataDo.getSequence()){
