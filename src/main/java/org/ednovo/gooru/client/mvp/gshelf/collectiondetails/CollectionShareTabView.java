@@ -475,7 +475,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			@Override
 			public void onSuccess(Void result) {
 				// TODO Auto-generated method stub
-				System.out.println("collectionDo.getSharing()::"+collectionDo.getSharing());
 				if (share.equalsIgnoreCase(PRIVATE)) {
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
