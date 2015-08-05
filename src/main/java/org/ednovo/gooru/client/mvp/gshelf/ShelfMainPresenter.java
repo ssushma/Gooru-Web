@@ -98,6 +98,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	boolean isApiCalled=false;
 	
+	boolean isSuccess=true;
+	
 	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback = null;
 	
 	private static final String CALLBACK = "callback";
@@ -195,6 +197,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		super.onReset();
 		Window.enableScrolling(true);
 		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+		String isSuccessParm = AppClientFactory.getPlaceManager().getRequestParameter("isSuccess") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("isSuccess").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("isSuccess") : null;
+		if(isSuccessParm!=null && isSuccessParm.equalsIgnoreCase("true") && isSuccess){
+			SetDefaultTypeAndVersion();
+			isSuccess = false;
+		}
 		if (idParm != null && AppClientFactory.isAnonymous()){
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 			
@@ -529,6 +536,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void SetDefaultTypeAndVersion() {
 		version=null;
 		type="Course";
+		isSuccess=true;
 		ShelfMainView.pageNumber=1;
 	}
 	@Override
