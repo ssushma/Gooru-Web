@@ -129,7 +129,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField HTMLPanel btnStandardsBrowse, hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,gradesDropDown;
 
 	@UiField Label lblLoadingTextPrevious,lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
-	
+
 	@UiField InlineLabel searchResults;
 
 	@UiField FlowPanel pnlAddFilters,searchResultPanel,sourceContainerFloPanel;
@@ -207,19 +207,19 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageCountForStorage=1,previousScroll;
 
 	Widget pnlFirstTempData=null;
-	
+
 	List<LiPanelWithClose> searchLiPanelWithCloseArray = new ArrayList<>();
 
 	SearchContributorView ContributorViewpopup = null;
-	
-	
+
+
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
-	
+
 	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
-	
+
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 	/**
@@ -230,7 +230,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	public SearchAbstractView(boolean resourceSearch) {
 		sourceSuggestOracle = new AppMultiWordSuggestOracle(true);
-		
+
 		publisherSgstBox = new AppSuggestBox(sourceSuggestOracle) {
 			@Override
 			public void keyAction(String text,KeyUpEvent event) {
@@ -337,13 +337,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							lblLoadingText.setVisible(true);
 							pageNumber++;
 							isForwardScroll = true;
-							AppClientFactory.printInfoLogger("Search read data from local store---->"+pageNumber);
 							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
 
-							AppClientFactory.printInfoLogger("Search Abstract View forward scroll---->");
 							if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStore.getItem((pageNumber+1)+"") == null){
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-									AppClientFactory.printInfoLogger("Search Abstract View forward scroll for resource---->");
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 								}else{
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
@@ -485,7 +482,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	@UiHandler("btnSearchType")
 	public void OnClickSearchType(ClickEvent event){
-		AppClientFactory.printInfoLogger("ulDropdown.isVisible() : "+ulDropdown.isVisible());
 		if (ulDropdown.isVisible()){
 			ulDropdown.setVisible(false);
 		}else{
@@ -713,7 +709,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		searchDoGbl = searchDo;
 		pnlBackToTop.setVisible(true);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
-			AppClientFactory.printInfoLogger(" post search searchDo.getSearchResults()---->"+ searchDo.getSearchResults().size());
 			searchResults.setVisible(true);
 			panelBorderBox.getElement().getStyle().clearBackgroundColor();
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
@@ -2080,9 +2075,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
                     }else{
                         liPanel.getElement().setId(standardsDescriptionList.get(j));
                     }
-                   
+
                     if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
-      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;"); 	  
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
       		      else if((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS"))
       		        {
@@ -2094,7 +2089,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
       		      else if((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")){
       		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
-                    
+
                     headerDiv.setStyleName("liPanelStyle");
                 }else{
                 	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
@@ -2134,8 +2129,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
         }
 }
 public void checkStandarsList(List<String> standarsPreferencesList) {
-		
-		
+
+
 		if(standarsPreferencesList!=null){
 			if(standarsPreferencesList.contains("CCSS")){
 				isCCSSAvailable = true;

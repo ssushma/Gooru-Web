@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -61,34 +61,34 @@ import com.google.gwt.user.client.ui.Widget;
 public class FeaturedCollectionUc extends Composite{
 
 	@UiField LandingPageStyleCss landingPageStyle;
-	
+
 	@UiField Label courseTitle, collectionTitle, gradeTag1, gradeTag2,createdByText,gradesText,standardsText;
-	
+
 	@UiField Anchor collectionAuthor;
-	
+
 	@UiField Image featuredCollectionImg;
-	
+
 	@UiField HTMLPanel collectionGrades, collectionStandards, standardsTab, creatorText;
-	
+
 	@UiField HTMLEventPanel featuredCollectionHoverEvent;
-	
+
 	@UiField HTML featuredCollectionDescription;
-	
+
 	private Label standardsLabel = new Label();
-	
+
 	private boolean displayStandardsLabel = false;
 
 	private boolean displayGradesLabel = false;
-	
+
 	private String DEFAULT_COLLECTION_IMAGE = "images/default-collection-image-160x120.png";
-		
+
 	private static FeaturedCollectionUcUiBinder uiBinder = GWT
 			.create(FeaturedCollectionUcUiBinder.class);
 
 	interface FeaturedCollectionUcUiBinder extends
 			UiBinder<Widget, FeaturedCollectionUc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public FeaturedCollectionUc(CollectionDo collectionDo) {
@@ -97,7 +97,7 @@ public class FeaturedCollectionUc extends Composite{
 		featuredCollectionHoverEvent.addMouseOverHandler(new ShowHoverCollectionContainer());
 		featuredCollectionHoverEvent.addMouseOutHandler(new HideHoverCollectionContainer());
 		setCollectionData(collectionDo);
-		
+
 		courseTitle.getElement().setId("lblCourseTitle");
 		featuredCollectionHoverEvent.getElement().setId("epnlFeaturedCollectionHoverEvent");
 		featuredCollectionImg.getElement().setId("imgFeaturedCollection");
@@ -114,7 +114,7 @@ public class FeaturedCollectionUc extends Composite{
 		standardsText.getElement().setId("lblStandardsText");
 		standardsTab.getElement().setId("pnlStandardsTab");
 	}
-	
+
 	private class ShowHoverCollectionContainer implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -151,22 +151,22 @@ public class FeaturedCollectionUc extends Composite{
 			createdByText.setText(i18n.GL0622()+" ");
 			createdByText.getElement().setAttribute("alt",i18n.GL0622()+" ");
 			createdByText.getElement().setAttribute("title",i18n.GL0622()+" ");
-			
+
 			gradesText.setText(i18n.GL1320_1());
 			gradesText.getElement().setAttribute("alt",i18n.GL1320_1());
 			gradesText.getElement().setAttribute("title",i18n.GL1320_1());
-			
+
 			standardsText.setText(i18n.GL0575());
 			standardsText.getElement().setAttribute("alt",i18n.GL0575());
 			standardsText.getElement().setAttribute("title",i18n.GL0575());
-			
+
 			collectionTitle.setText(collectionDo.getTitle());
 			collectionTitle.getElement().setAttribute("alt",collectionDo.getTitle());
 			collectionTitle.getElement().setAttribute("title",collectionDo.getTitle());
-		
+
 			collectionAuthor.setText(collectionDo.getUser().getUsernameDisplay());
 			collectionAuthor.setStyleName(landingPageStyle.userNamePPPdisabled());
-			
+
 			try {
 				int customFieldSize = collectionDo.getUser().getCustomFields().size();
 				for(int i = 0; i < customFieldSize; i++) {
@@ -184,9 +184,9 @@ public class FeaturedCollectionUc extends Composite{
 					}
 				}
 			} catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("FCUc : setCollectionData : "+e.getMessage());
 			}
-			
+
 			featuredCollectionImg.setUrl(StringUtil.formThumbnailName(collectionDo.getThumbnails().getUrl(),"-160x120."));
 			featuredCollectionImg.setAltText(collectionDo.getTitle());
 			featuredCollectionImg.setTitle(collectionDo.getTitle());
@@ -207,7 +207,7 @@ public class FeaturedCollectionUc extends Composite{
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 				}
 			});
-			
+
 			featuredCollectionDescription.setHTML(collectionDo.getGoals());
 			try {
 				if (collectionDo.getMetaInfo().getCourse().get(0)!=null) {
@@ -220,7 +220,7 @@ public class FeaturedCollectionUc extends Composite{
 					}
 					else
 					{
-						courseTitle.setText(collectionDo.getMetaInfo().getCourse().get(0));	
+						courseTitle.setText(collectionDo.getMetaInfo().getCourse().get(0));
 						courseTitle.getElement().setAttribute("alt",collectionDo.getMetaInfo().getCourse().get(0));
 						courseTitle.getElement().setAttribute("title",collectionDo.getMetaInfo().getCourse().get(0));
 					}
@@ -230,7 +230,7 @@ public class FeaturedCollectionUc extends Composite{
 			} catch (Exception e) {
 				courseTitle.setVisible(false);
 			}
-			
+
 			if (collectionDo.getMetaInfo() != null && collectionDo.getMetaInfo().getStandards() != null && collectionDo.getMetaInfo().getStandards().size() > 0) {
 				for (StandardFo standard : collectionDo.getMetaInfo().getStandards()) {
 					standardsLabel.setText(standard.getCode());
@@ -241,7 +241,7 @@ public class FeaturedCollectionUc extends Composite{
 			} else {
 					collectionStandards.setVisible(false);
 			}
-			
+
 			if(collectionDo.getGrade()!=null && !collectionDo.getGrade().isEmpty()) {
 				try {
 					String grades[] = collectionDo.getGrade().split(",");
@@ -260,7 +260,7 @@ public class FeaturedCollectionUc extends Composite{
 						displayGradesLabel = true;
 					}
 				} catch (Exception e) {
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("FCUc : setCollectionData : "+e.getMessage());
 				}
 			} else {
 				collectionGrades.setVisible(false);

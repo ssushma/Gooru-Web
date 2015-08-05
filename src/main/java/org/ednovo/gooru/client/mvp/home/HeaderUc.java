@@ -1581,7 +1581,6 @@ public class HeaderUc extends Composite
 		}
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
 		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT,null);
 		if(collectionType!=null){
 			params.put(IsGooruSearchView.COLLECTIONTYPE_FLT, collectionType);

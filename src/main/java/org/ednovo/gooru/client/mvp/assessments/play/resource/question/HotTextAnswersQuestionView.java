@@ -498,7 +498,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			for(int i=0;i<optionsContainer.getWidgetCount();i++){
 				Widget widget=optionsContainer.getWidget(i);
 				Element el=(Element) widget.getElement().getLastChild();
-				AppClientFactory.printInfoLogger("clearReorderAnswers--"+el);
 				if(el != null && el.getId()!=null && !el.getId().equalsIgnoreCase("")){
 					el.removeClassName(STYLE_DND_CORRECT);
 					el.removeClassName(STYLE_DND_INCORRECT);
