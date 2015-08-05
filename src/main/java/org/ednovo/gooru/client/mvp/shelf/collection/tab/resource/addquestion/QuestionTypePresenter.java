@@ -166,6 +166,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 

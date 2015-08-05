@@ -26,6 +26,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -732,7 +733,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 											for (MetaDataDo metaDataDo : questionList) {
 												String answerText = "";
 												if((metaDataDo.getAnswerText() != null)) {
-													answerText = metaDataDo.getAnswerText();
+													String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+													answerText = text;
 												}
 												answerTextFormat += '[' + answerText +']';
 												if(questionList.size()  != metaDataDo.getSequence()){
@@ -936,7 +938,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 										for (MetaDataDo metaDataDo : questionList) {
 											String answerText = "";
 											if((metaDataDo.getAnswerText() != null)) {
-												answerText = metaDataDo.getAnswerText();
+												String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+												answerText = text;
 											}
 											answerTextFormat += '[' + answerText +']';
 											if(questionList.size()  != metaDataDo.getSequence()){
