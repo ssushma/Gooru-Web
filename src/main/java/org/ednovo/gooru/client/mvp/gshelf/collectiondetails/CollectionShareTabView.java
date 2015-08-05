@@ -89,7 +89,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	@UiField HTMLEventPanel privateShareFloPanel,publicShareFloPanel,linkShareFloPanel;
 	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel;
 	@UiField Button rbPublic;
-	@UiField Label lblPublishPending,lblPublish;
+	@UiField Label lblPublishPending,lblPublish,shareLbl,visiblityLbl;
 
 	CollectionDo collectionDo;
 
@@ -163,6 +163,8 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	public void setCollectionData(CollectionDo collectionDo, FolderDo folderDo) {
 		this.collectionDo = collectionDo;
 		this.folderDo = folderDo;
+		shareLbl.setText("collection".equalsIgnoreCase(folderDo.getType())?i18n.GL0598():i18n.GL3485());
+		visiblityLbl.setText("collection".equalsIgnoreCase(folderDo.getType())?i18n.GL0842():i18n.GL3186());
 		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
 		AppClientFactory.printInfoLogger("folder-publish:"+folderDo.getPublishStatus());
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);

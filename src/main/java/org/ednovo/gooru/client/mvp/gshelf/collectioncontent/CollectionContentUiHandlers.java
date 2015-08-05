@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageHandler;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -38,7 +39,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author Search Team
  *
  */
-public interface CollectionContentUiHandlers extends BaseUiHandlers {
+public interface CollectionContentUiHandlers extends BaseUiHandlers ,UpdateEditResourceImageHandler {
 	/**
 	 * This method is used to set the folderdo object
 	 * @param folderDo

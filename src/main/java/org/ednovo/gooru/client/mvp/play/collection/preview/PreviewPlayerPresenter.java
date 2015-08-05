@@ -1803,6 +1803,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
 		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
 		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String isStudent=AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
 		if(classpageItemId!=null){
 			anchorLink += "&cid="+classpageItemId;
 		}
@@ -1833,6 +1836,19 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(eventId!=null) {
 			anchorLink += "&eventid="+eventId;
 		}
+
+		if(unitId!=null) {
+			anchorLink += "&unitId="+unitId;
+		}
+
+		if(isStudent!=null) {
+			anchorLink += "&isStudent="+isStudent;
+		}
+
+		if(courseId!=null) {
+			anchorLink += "&courseId="+courseId;
+		}
+
 		return anchorLink;
 	}
 
