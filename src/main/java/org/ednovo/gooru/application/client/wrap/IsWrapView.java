@@ -27,7 +27,6 @@ package org.ednovo.gooru.application.client.wrap;
 import org.ednovo.gooru.application.client.gin.IsView;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 

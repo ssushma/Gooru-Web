@@ -54,7 +54,6 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
@@ -311,8 +310,6 @@ public class HeaderUc extends Composite
 	private ClasspageListVc classpageListVc;
 
 	private SaveSharePanel saveSharePanel;
-
-	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 
 	@Inject
 	HomeUiHandlers homeUiHandlers;
@@ -1535,49 +1532,6 @@ public class HeaderUc extends Composite
 				params.remove(IsGooruSearchView.GRADE_FLT);
 				}
 			}
-			String standardsUrlParam = null;
-			if(AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.STANDARD_FLT)!=null)
-			{
-				stadardsListCode="";
-				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.STANDARD_FLT);
-				if(addStandardsPresenter!=null && isClicked){
-					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
-					int standardArraySize = standardsList.size();
-					if(standardArraySize!=0){
-						for(int i=0; i<standardArraySize; i++){
-							if(!stadardsListCode.isEmpty()){
-								stadardsListCode += ",";
-							}
-							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
-						}
-						params.put(IsGooruSearchView.STANDARD_FLT, stadardsListCode);
-					}
-					isClicked=false;
-				}
-				if(!stadardsListCode.isEmpty()){
-					params.put(IsGooruSearchView.STANDARD_FLT, standardsUrlParam+","+stadardsListCode);
-				}else{
-					params.put(IsGooruSearchView.STANDARD_FLT, standardsUrlParam);
-				}
-			}
-			else
-			{
-				stadardsListCode="";
-				if(addStandardsPresenter!=null && isClicked){
-					List<Map<String, String>>  standardsList = addStandardsPresenter.getStandardListArray();
-					int standardArraySize = standardsList.size();
-					if(standardArraySize!=0){
-						for(int i=0; i<standardArraySize; i++){
-							if(!stadardsListCode.isEmpty()){
-								stadardsListCode += ",";
-							}
-							stadardsListCode +=	standardsList.get(i).get("selectedCodeVal");
-						}
-						params.put(IsGooruSearchView.STANDARD_FLT, stadardsListCode);
-					}
-					isClicked=false;
-				}
-			}
 		}
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
@@ -2176,9 +2130,4 @@ public class HeaderUc extends Composite
 		$wnd.showToggleMenu();
 	}-*/;
 
-	public void setAddStandardsPresenter(
-			AddStandardsPreSearchPresenter addStandardsPresenter, boolean isClicked) {
-		this.addStandardsPresenter=addStandardsPresenter;
-		this.isClicked=isClicked;
-	}
 }
