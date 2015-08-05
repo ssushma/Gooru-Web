@@ -98,12 +98,10 @@ public class NatGeoLibraryPresenter extends BasePlacePresenter<IsNatGeoLibraryVi
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		long startTime = System.currentTimeMillis();
-		AppClientFactory.printInfoLogger("Entered into NatGeo start time -- "+startTime);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
-			AppClientFactory.printInfoLogger("Natgeo End time -- "+(System.currentTimeMillis()-startTime));
 			
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {

@@ -30,7 +30,7 @@
 			</g:HTMLPanel>
 
 			<div class="learningObjective">
-				<p>Learning Objective</p>
+				<ppanel:PPanel ui:field="learningObjPpanel"></ppanel:PPanel>
 				<p>
 					<g:TextArea styleName="form-control" ui:field="learningObjective" />
 					<g:Label ui:field="lblErrorMessageForLO" styleName="errorMessage text-right"></g:Label>
@@ -57,8 +57,7 @@
 						<div class="col-md-8">
 							<div class="dropDownRight">
 								<div class="btn-group">
-									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn">Select other from
-										taxonomy</g:Button>
+									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn" text="{i18n.GL3480}"></g:Button>
 									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="taxonomyToggleBtn">
 										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
@@ -77,8 +76,8 @@
 
 								<panel:HTMLEventPanel styleName="btn-group"
 									ui:field="btnStandardsBrowse">
-									<g:Button styleName="btn btn-primary" text="{i18n.GL3209}"
-										title="{i18n.GL3209}" />
+									<g:Button styleName="btn btn-primary" text="{i18n.GL3479}"
+										title="{i18n.GL3479}" />
 									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
 										<g:InlineLabel styleName="caret"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>

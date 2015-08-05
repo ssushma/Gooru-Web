@@ -94,17 +94,17 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	@UiField HTMLPanel joinedClassesContainer,ownerClassesContainer;
 
 	@UiField TextBoxWithPlaceholder txtCode;
-	
+
 	@UiField Anchor myClassesAnr,archivedAnr;
-	
+
 	@UiField H3Panel joinedContainerTitle,teachContainerTitle;
-	
+
 	@UiField PPanel schoolAlertPanel;
 
 	AlertMessageUc alertMessageUc;
-	
+
 	@UiField LoadingUc studyLoading,teachLoading;
-	
+
 
 	private NewClassPopupView newPopup = null;
 
@@ -117,12 +117,12 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 	private Integer pageInitialLimitOwner = 10;
 	private Integer offsetLimitOwner = 0;
-	
-	
+
+
 	@UiField HTMLPanel notesPanel,createClassPanel,classCodePanel,mainPanel,emptyClassesPanel,landingPagePanel;
-	
-	
-	
+
+
+
 
 	interface ClassCodeViewUiBinder extends UiBinder<Widget, ClassHomeView> {
 
@@ -156,16 +156,16 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		pageInitialLimitJoined = 10;
 		offsetLimitOwner = 0;
 		offsetLimitJoined = 0;
-		
+
 		getUiHandlers().getV2TeachStudy();
-		
+
 		getUiHandlers().getV1TeachStudy("10", "0");
-		
-		
+
+
 		String view = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
-		
-		
-		
+
+
+
 		if(view.equalsIgnoreCase(UrlNavigationTokens.MYCLASS) || view.isEmpty()){
 			isSetVisiblity(false);
 			studyLoading.setVisible(true);
@@ -263,7 +263,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							if(result.getSearchResults().size()>0)
 							{
 								ownerClassesContainer.getElement().setInnerHTML("");
-							for(int i = 0; i<result.getSearchResults().size();i++) 
+							for(int i = 0; i<result.getSearchResults().size();i++)
 							{
 								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
 								classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Teach");
@@ -275,10 +275,10 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
 								ownerClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
-							
+
 						}
 					});
-			
+
 			AppClientFactory.getInjector().getClasspageService().v2GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
 					new SimpleAsyncCallback<ClasspageListDo >() {
 						@Override
@@ -295,7 +295,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							if(result.getSearchResults().size()>0)
 							{
 							joinedClassesContainer.getElement().setInnerHTML("");
-							for(int i = 0; i<result.getSearchResults().size();i++) 
+							for(int i = 0; i<result.getSearchResults().size();i++)
 							{
 								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
 								classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Study");
@@ -307,13 +307,13 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
 								joinedClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
-							
+
 						}
 					});
-			
+
 		}
-		
-		
+
+
 	}
 	private void setCreateClassVisibility() {
 
@@ -375,21 +375,21 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		seeMorebtnOwner.getElement().setId("btnSeeMoreOwner");
 		seeMorebtnOwner.getElement().setAttribute("alt",i18n.GL0508());
 		seeMorebtnOwner.getElement().setAttribute("title",i18n.GL0508());
-		
+
 		studyLoading.getElement().setId("studyLoadingId");
 		studyLoading.getElement().setAttribute("alt","Loading");
 		studyLoading.getElement().setAttribute("title","Loading");
-		
+
 		teachLoading.getElement().setId("studyLoadingId");
 		teachLoading.getElement().setAttribute("alt","Loading");
 		teachLoading.getElement().setAttribute("title","Loading");
-		
+
 		schoolAlertPanel.setText(i18n.GL3450_9());
 		schoolAlertPanel.getElement().setId("schoolAlertPanelId");
-		
+
 		studyLoading.setVisible(false);
 		teachLoading.setVisible(false);
-		
+
 
 		txtCode.addFocusHandler(new FocusHandler() {
 
@@ -516,7 +516,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			setEnterLblVisbility(true);
-			
+
 			if (txtCode.getText().trim().equalsIgnoreCase("") || txtCode.getText().trim() == null){
 				alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
 				ClickHandler alertHandler=new ClickHandler() {
@@ -568,7 +568,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						});
 					}else if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 					{
-						
+
 						Map<String, String> params = new HashMap<String, String>();
 						params.put("id",result.getClassUid());
 						if(result.getCourseGooruOid() != null){
@@ -710,18 +710,18 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								}
 
 
-								for(int i = 0; i<result.getSearchResults().size();i++) 
+								for(int i = 0; i<result.getSearchResults().size();i++)
 								{
 									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
 									classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Study");
 									joinedClassesContainer.add(classpageWidget);
 								}
 
-								
+
 							}
 						});
 			}
-			
+
 		}
 
 	}
@@ -788,18 +788,18 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								}
 
 
-								for(int i = 0; i<result.getSearchResults().size();i++) 
+								for(int i = 0; i<result.getSearchResults().size();i++)
 								{
 									ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
 									classpageWidget.setArchedClassPageImage(result.getSearchResults().get(i),"Teach");
 									ownerClassesContainer.add(classpageWidget);
 								}
 
-								
+
 							}
 				 });
 			}
-			
+
 		}
 
 	}
@@ -826,12 +826,12 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		btnEnter.setVisible(!isVisible);
 		disabledBtn.setVisible(isVisible);
 	}
-	
+
 	private class TeachClassTabNavigationHandler implements ClickHandler{
 
-		
+
 		Anchor headerAnr;
-		
+
 		public TeachClassTabNavigationHandler(Anchor headerAnr){
 			this.headerAnr=headerAnr;
 		}
@@ -841,20 +841,18 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			if(headerAnr.equals(myClassesAnr)){
-				AppClientFactory.printInfoLogger("clicked on headerAnr");
 				Map<String, String> params = new HashMap<String, String>();
 				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
 			}else if(headerAnr.equals(archivedAnr)){
-				AppClientFactory.printInfoLogger("clicked on archivedAnr");
 				Map<String, String> params = new HashMap<String, String>();
 				params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.OLDCLASS);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
 			}
 		}
-		
+
 	}
-	
+
 	public void isSetVisiblity(boolean isVisible){
 		notesPanel.setVisible(isVisible);
 		classCodePanel.setVisible(!isVisible);
@@ -893,6 +891,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 				emptyClassesPanel.setVisible(true);
 			}
 		}
-		
+
 	}
 }

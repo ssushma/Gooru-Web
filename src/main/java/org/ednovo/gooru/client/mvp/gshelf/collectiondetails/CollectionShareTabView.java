@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -82,14 +82,14 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 
 	@UiTemplate("CollectionShareTabView.ui.xml")
 	interface CollectionShareTabViewUiBinder extends UiBinder<Widget, CollectionShareTabView> {
-	}	
+	}
 
 	@UiField TextArea shareTextArea;
 	@UiField Anchor bitlyLink,embedLink;
 	@UiField HTMLEventPanel privateShareFloPanel,publicShareFloPanel,linkShareFloPanel;
 	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel;
 	@UiField Button rbPublic;
-	@UiField Label lblPublishPending,lblPublish;
+	@UiField Label lblPublishPending,lblPublish,shareLbl,visiblityLbl;
 
 	CollectionDo collectionDo;
 
@@ -121,7 +121,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 
 	/**
-	 * Class constructor 
+	 * Class constructor
 	 * @param eventBus {@link EventBus}
 	 */
 	@Inject
@@ -163,8 +163,8 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	public void setCollectionData(CollectionDo collectionDo, FolderDo folderDo) {
 		this.collectionDo = collectionDo;
 		this.folderDo = folderDo;
-		AppClientFactory.printInfoLogger("collectionDo.getPublishStatus():"+collectionDo.getPublishStatus());
-		AppClientFactory.printInfoLogger("folder-publish:"+folderDo.getPublishStatus());
+		shareLbl.setText("collection".equalsIgnoreCase(folderDo.getType())?i18n.GL0598():i18n.GL3485());
+		visiblityLbl.setText("collection".equalsIgnoreCase(folderDo.getType())?i18n.GL0842():i18n.GL3186());
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		getUserType();
 		// Hiding private functionality in 1.6
@@ -173,7 +173,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		}else{
 			privateShareFloPanel.setVisible(false);
 		}
-		AppClientFactory.printInfoLogger("iscollaborator:"+collectionDo.isIsCollaborator());
 		if (AppClientFactory.isContentAdmin() || collectionDo
 				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
 						.getGooruUId())){
@@ -240,7 +239,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			shareBitlyUrl = shareUrlsList.get(ClientConstants.SHORTENURL);
 			//shareUrl= shareUrlsList.get(ClientConstants.DECODERAWURL).toString();
 			embedurl=shareUrlsList.get(ClientConstants.EMBEDURLRAWURL);
-			setIframeUrl(embedurl);		
+			setIframeUrl(embedurl);
 		}
 		collectionShareMap.put(i18n.GL0643_1(), shareUrl);
 		collectionShareMap.put(i18n.GL0639_1(), shareBitlyUrl);
@@ -323,19 +322,19 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			@Override
 			public void onSuccess(V2UserDo result) {
 				if(result.getUser().getAccountTypeId()!=null) {
-					//hiding public panel for child user 
+					//hiding public panel for child user
 					if(result.getUser().getAccountTypeId()==2) {
 						rbPublicPanel.setVisible(false);
 						publicShareFloPanel.setVisible(false);
 						linkShareFloPanel.setVisible(true);
 						//privateShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 					} else {
-						displayAllVisiblePanels();	
+						displayAllVisiblePanels();
 						}
 				} else {
 					displayAllVisiblePanels();
 				}
-			}			
+			}
 		});
 	}
 
@@ -465,7 +464,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	}
 	/**
 	 * update collection sharing as sharing or public or anyonewithlink
-	 * 
+	 *
 	 * @param share
 	 */
 	private void updateShare(final String share) {
@@ -475,7 +474,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			@Override
 			public void onSuccess(Void result) {
 				// TODO Auto-generated method stub
-				System.out.println("collectionDo.getSharing()::"+collectionDo.getSharing());
 				if (share.equalsIgnoreCase(PRIVATE)) {
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
@@ -486,7 +484,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 					privateShareFloPanel.addStyleName("inActive");
 					linkShareFloPanel.removeStyleName("inActive");
 					showPublishBtn();
-				}else { 
+				}else {
 					if(PRIVATE.equalsIgnoreCase(collectionDo.getSharing())){
 						publicShareFloPanel.addStyleName("inActive");
 						privateShareFloPanel.addStyleName("inActive");
@@ -523,7 +521,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	/**
 	 * @author Search Team Updated sharing type , change the collection as
 	 *         public
-	 * 
+	 *
 	 */
 	private class OnPublicClick implements ClickHandler {
 		@Override

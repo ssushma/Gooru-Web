@@ -167,10 +167,7 @@ public class PlayerDataLogEvents {
 	public static final String SCORE_IN_PERCENTAGE="scoreInPercentage";
 
 	public static void collectionStartStopEvent(JSONObject collectionDataLogEventMap){
-		AppClientFactory.printInfoLogger("--- "+collectionDataLogEventMap.get("eventName")+" event data --->> \n"+collectionDataLogEventMap.toString()+"\n");
-		AppClientFactory.printInfoLogger("--- All data is sent to trigger et.data push --- \n");
 		triggerDataLogCall(collectionDataLogEventMap);
-		AppClientFactory.printInfoLogger("--- Triggered "+collectionDataLogEventMap.get("eventName")+" event successfully --- \n\n");
 	}
 	public static void collectionItemStartStopEvent(){
 
@@ -191,7 +188,6 @@ public class PlayerDataLogEvents {
 			eventJsonObject.put(APIKEY, new JSONString(AppClientFactory.getLoggedInUser().getSettings().getApiKeyPoint()));
 			eventJsonObject.put(ORGANIZATIONUID, new JSONString(""));
 			eventJsonObject.put(SESSIONTOKEN, new JSONString(AppClientFactory.getLoggedInUser().getToken()));
-			AppClientFactory.printInfoLogger("getDataLogSessionObject -- session id : "+sessionId);
 			if(sessionId!=null){
 				eventJsonObject.put(SESSIONID, new JSONString(sessionId));
 			}else{
@@ -881,11 +877,6 @@ public class PlayerDataLogEvents {
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
 		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
 		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
-
-		AppClientFactory.printInfoLogger("Player : "+AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()+"-- @ : "+from+"--courseId : " + courseId
-				+ "-- unitId : " + unitId + "-- Lesson Id : " + lessonId
-				+ "--cid : " + cid + "-- isStudent:" + isStudent
-				+ "-- sessionId : " + sessionId + "-- eventId : " + eventId+"-- userId : "+AppClientFactory.getLoggedInUser().getGooruUId());
 	}
 
 }

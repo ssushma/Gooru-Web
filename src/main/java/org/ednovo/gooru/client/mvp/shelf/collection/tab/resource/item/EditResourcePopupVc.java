@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
@@ -1250,7 +1251,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		if(collectionItemDo.getResource().getResourceTags()!=null){
 			for(int i=0;i<collectionItemDo.getResource().getResourceTags().size();i++){
 				tagListGlobal.add("\""+collectionItemDo.getResource().getResourceTags().get(i).getLabel()+"\"");
-				AppClientFactory.printInfoLogger("collectionItemDo.getMediaFeature().size()........."+collectionItemDo.getMediaFeature());
 
 				if(collectionItemDo.getMediaFeature()!=null&&collectionItemDo.getMediaFeature().size()>0)
 				{
@@ -1259,7 +1259,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 			
 
-				AppClientFactory.printInfoLogger("collectionItemDo.getAccessHazard().size()........."+collectionItemDo.getAccessHazard());
 				if(collectionItemDo.getAccessHazard()!=null&&collectionItemDo.getAccessHazard().size()>0)
 				{
 					setAccessHazardObjectVal(collectionItemDo.getAccessHazard());
@@ -1664,6 +1663,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											collectionItemDo.getResource().setCategory(categoryStr);
 
 											if (thumbnailUrlStr!=null){
+												
+												if(collectionItemDo.getResource().getThumbnails()==null){
+													ThumbnailDo thumbnailObj=new ThumbnailDo();
+													collectionItemDo.getResource().setThumbnails(thumbnailObj);
+												}
+												
 												collectionItemDo.getResource().getThumbnails().setUrl(thumbnailUrlStr);
 											}else{
 												if(collectionItemDo.getResource().getThumbnails()!=null)
@@ -2138,7 +2143,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				codeObj.setCode(standard);
 				standardsDo.add(codeObj);
 				DownToolTipWidgetUc  downToolTipWidgetUc=createStandardLabel(standard, id, standardCodesMap.get(id));
-				AppClientFactory.printInfoLogger("---------codeId-----------addStandard"+id);
 				downToolTipWidgetUc.getElement().setId(id);
 				downToolTipWidgetUc.getElement().setTitle(standard);
 				standardsPanel.add(downToolTipWidgetUc);
@@ -2263,7 +2267,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		int size=hazardContainer.getWidgetCount();
 		List<checkboxSelectedDo> accessHazardsSelected = new ArrayList<checkboxSelectedDo>();
 
-		AppClientFactory.printInfoLogger("..........."+size);
 		for(int i=0;i<size;i++){
 			Label label=(Label)hazardContainer.getWidget(i);
 			if(label.getStyleName().contains("select")){
@@ -2345,7 +2348,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				standardsDo.add(codeObj);
 				DownToolTipWidgetUc downToolTipWidgetUc=createStandardLabel(setStandardsVal, Integer.toString(codeId), setStandardDesc);
 				downToolTipWidgetUc.getElement().setId(codeId+"");
-				AppClientFactory.printInfoLogger("========================setUpdatedBrowseStandardsVal"+codeId);
 				downToolTipWidgetUc.getElement().setTitle(setStandardsVal);
 
 				standardsPanel.add(downToolTipWidgetUc);
@@ -2582,8 +2584,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	 *
 	 */
 	public void updateMobileFriendlyAdvancedStyles(){
-		AppClientFactory.printInfoLogger("mobileYes"+AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-		AppClientFactory.printInfoLogger("mobileNo"+AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 
 		if(mobileYes.getStyleName().equalsIgnoreCase(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 		{

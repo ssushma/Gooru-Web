@@ -116,7 +116,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
 		int listofFoldres = folderList.size();
 		long uiStartTime = System.currentTimeMillis();
-		AppClientFactory.printInfoLogger(" Ui Start Time --- "+uiStartTime);
 		if(folderList.size()==0 && PlaceTokens.ASPIRE_EPACS.equals(AppClientFactory.getCurrentPlaceToken())){
 			loadingPanel(false);
 			getComingSoonText(true);
@@ -158,7 +157,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 				@Override
 				public void onClick(ClickEvent event) {
 					long unticlickStarttime = System.currentTimeMillis();
-					AppClientFactory.printInfoLogger("---- Lib unit Clicked Start time -- "+AppClientFactory.getCurrentPlaceToken()+" -- "+unticlickStarttime);
 					libraryView.getContentScroll().setVisible(false);
 					loadingPanel(true);
 					final Iterator<Widget> widgetsPanel = libraryView.getLeftNav().iterator();
@@ -178,7 +176,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			});
 			widgetCount++;
 		}
-		AppClientFactory.printInfoLogger(" over all  End Time consumed for ui --- "+(System.currentTimeMillis() -uiStartTime));
 	}
 
 	/**
@@ -187,7 +184,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	@Override
 	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId,String libraryGooruOid) {
 		long startTime = System.currentTimeMillis();
-		AppClientFactory.printInfoLogger("on unit selected ---- "+startTime);
 		libraryView.getContentScroll().clear();
 		try {
 			int count = 0; 
@@ -197,7 +193,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			}
 			libraryView.getContentScroll().setVisible(true);
 			loadingPanel(false);
-			AppClientFactory.printInfoLogger(" ---- on unit selected Ui End time consumed --- "+(System.currentTimeMillis()-startTime));
 		} catch (Exception e) {
 			loadingPanel(false);
 			AppClientFactory.printSevereLogger(e.toString());

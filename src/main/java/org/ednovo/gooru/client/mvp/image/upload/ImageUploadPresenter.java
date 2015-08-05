@@ -337,8 +337,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	
 	public void saveImageClass(String gooruOid,String fileName){
 		ClasspageDo classpageDo = new ClasspageDo();
-		AppClientFactory.printInfoLogger("fileName:"+fileName);
-		AppClientFactory.printInfoLogger("classId:"+gooruOid);
 		classpageDo.setMediaFilename(fileName);
 		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(gooruOid, null,null,fileName,null,null,null, new AsyncCallback<ClasspageDo>() {
 			

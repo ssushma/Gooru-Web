@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResource
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
+import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.event.shared.EventBus;
@@ -103,6 +104,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.searchAddResourceToCollectionPresenter = searchAddResourceToCollectionPresenter;
+		addRegisteredHandler(UpdateEditResourceImageEvent.TYPE, this);
 		getView().setCollectionContentPresenter(this);
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
 			@Override
@@ -407,6 +409,11 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	@Override
 	public void showLastEditCollaborater(String lastEditedBy,boolean hasLastModifiedUser) {
 		myCollectionsRightClusterPresenter.getShelfMainPresenter().showLastEditCollaborater(lastEditedBy,hasLastModifiedUser);
+	}
+
+	@Override
+	public void setUpdateResourceImageUrl(String fileName,	String fileNameWithOutRespUrl, boolean isEditUserOwnResourceImage) {
+		 getView().updateResouceItemImage(fileName, fileNameWithOutRespUrl,isEditUserOwnResourceImage);
 	}
 }
 

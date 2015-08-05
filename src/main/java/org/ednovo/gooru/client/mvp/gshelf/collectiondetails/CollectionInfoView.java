@@ -123,6 +123,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField AudienceView audienceContainer;
 	@UiField PPanel colltitle,collimagetitle,tagcollectiontitle;
 	@UiField UlPanel ulSelectedItems;
+	@UiField PPanel learningObjPpanel;
 	private boolean isLanguageObjectInfo=false;
 	private boolean isCenturySkillsInfo=false;
 	private boolean isDepthOfKnlzeInfo = false;
@@ -230,6 +231,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				restrictKeyLimit(event, learningObjective, learningObjective.getText(), lblErrorMessageForLO);
 			}
 		});	
+		
+		learningObjPpanel.setText(i18n.GL3484());
 	}
 	private void restrictKeyLimit(KeyDownEvent event, TextArea textArea, String text, Label errorLabelToDisplay) {
 		if(text.trim().length()<=999) {

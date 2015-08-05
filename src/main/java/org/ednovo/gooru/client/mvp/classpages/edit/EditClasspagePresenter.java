@@ -373,7 +373,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		this.classpageId=getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
-		AppClientFactory.printInfoLogger("classpageId:"+classpageId);
 		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			getView().resetEditClasspageView();
 		}
@@ -407,7 +406,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			this.classpageService.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
 				@Override
 				public void onSuccess(ClasspageDo classpageDo) {
-					AppClientFactory.printInfoLogger("onSuccess"+ classpageDo.getClasspageId());
 					//If the user is first time logged in user and he/she created the new class at that time it will display this welcome popup.
 					AppClientFactory.getInjector().getClasspageService().v2GetClassPartyCustomField(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<ProfilePageDo>() {
 						@Override
@@ -420,10 +418,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						}
 					});
 					EditClasspagePresenter.this.classpageDo=classpageDo;
-					AppClientFactory.printInfoLogger("onSuccess2"+ classpageDo.getClasspageId());
-					AppClientFactory.printInfoLogger("classCode:"+classpageDo.getClassCode());
 					if(classpageDo.getClasspageId() != null){
-						AppClientFactory.printInfoLogger("inside if");
 						offset=0;
 						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
@@ -439,7 +434,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 					} else {
-						AppClientFactory.printInfoLogger("else");
 						ErrorPopup error = new ErrorPopup(i18n.GL0341());
 						error.center();
 						error.show();
@@ -515,7 +509,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	 *
 	 */
 	public void getClasspageItems(String classpageId,String offset,String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder,final int assignemntCount){
-		AppClientFactory.printInfoLogger("getClasspageItems:"+classpageId);
 		this.classpageService.getClassPageItems(classpageId, offset, limit,sortingOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
@@ -735,7 +728,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 
 	@Override
 	public void setCollectionProgressData(String clickedTab,String collectionId,String collectionTitle) {
-		AppClientFactory.printInfoLogger("setCollectionProgressData:"+clickedTab);
 		analyticsPresenter.getIframe().setUrl("");
 		clearSlot(SLOT_SET_SUMMARY_PROGRESS);
 		if(clickedTab!=null){

@@ -75,65 +75,65 @@ public class LogoutPanelVc extends Composite{
 	}
 
 	 private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	/**
 	 * Class constructor
 	 */
 	public LogoutPanelVc() {
-	
+
 		setWidget(uiBinder.createAndBindUi(this));
-		
+
 		anrSettings.setText(i18n.GL0192());
 		anrSettings.getElement().setId("lnkSettings");
 		anrSettings.getElement().setAttribute("alt",i18n.GL0192());
 		anrSettings.getElement().setAttribute("title",i18n.GL0192());
 		anrSettings.setHref("#settings");
-		
+
 		classicGooruAnr.setText(i18n.GL0193());
 		classicGooruAnr.getElement().setId("lnkClassicGooru");
 		classicGooruAnr.getElement().setAttribute("alt",i18n.GL0193());
 		classicGooruAnr.getElement().setAttribute("title",i18n.GL0193());
-		
+
 		supportAnr.setText(i18n.GL0194());
 		supportAnr.getElement().setId("lnkSupport");
 		supportAnr.getElement().setAttribute("alt",i18n.GL0194());
 		supportAnr.getElement().setAttribute("title",i18n.GL0194());
 		supportAnr.setHref("http://support.goorulearning.org/hc/en-us");
-		
-		
+
+
 		gooruTutorialsAnr.setText(i18n.GL3205());
 		gooruTutorialsAnr.getElement().setId("lnkGooruTutorials");
 		gooruTutorialsAnr.getElement().setAttribute("alt",i18n.GL3205());
 		gooruTutorialsAnr.getElement().setAttribute("title",i18n.GL3205());
-		gooruTutorialsAnr.setHref("#profilepage&pageSize=5&id=9aeb031a-4c43-4d4b-9b30-84261e39fdb2&user=GooruTutorials&pageNum=0&pos=1");
-		
+		gooruTutorialsAnr.setHref("/tutorials");
 
-		
+
+
 		feedbackAnr.setText(i18n.GL0195());
 		feedbackAnr.getElement().setId("lnkFeedback");
 		feedbackAnr.getElement().setAttribute("alt",i18n.GL0195());
 		feedbackAnr.getElement().setAttribute("title",i18n.GL0195());
-		
+
 		logoutAnr.setText(i18n.GL0197());
 		logoutAnr.getElement().setId("lnkLogout");
 		logoutAnr.getElement().setAttribute("alt",i18n.GL0197());
 		logoutAnr.getElement().setAttribute("title",i18n.GL0197());
-		
+
 		classicGooruAnr.setVisible(false);
-		
+
 		logPanel.getElement().setId("fpnlLogPanel");
 		triggerUserVoice();
-		
+
 		mainContainer.getElement().setId("headerMainPanel");
 	}
 
 	/**
 	 * Get confirm to logout popup
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
-	
+
 	/*public int getGooruGuideIconLeft() {
 		return gooruGuideImgLbl.getAbsoluteLeft();
 	}
