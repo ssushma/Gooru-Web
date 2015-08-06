@@ -95,7 +95,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 
 	private static final String MYCONTENT ="coursebuilder";
 	private boolean isFromCopyResource= false;
-	
+
 
 	HashMap<String,String> successparams = new HashMap<String, String>();
 
@@ -213,7 +213,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						}
 					}
 						 totalCount = resourceCount+questionCount;
-						System.out.println("totalCount-----------"+totalCount);
 						if(totalCount<=25){
 							String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
 							AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
@@ -221,6 +220,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 								public void onSuccess(CollectionItemDo result) {
 									if(result!=null && result.getStatusCode()==200){
 										successparams.put("id", selectedFolderOrCollectionid);
+										urlparams.put("isSuccess", "true");
 										getView().displaySuccessPopup(title,selectedFolderOrCollectionid,urlparams,searchType,null);
 									}else{
 										getView().hidePopup();
