@@ -68,6 +68,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -482,7 +483,15 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				} else {
 					Window.enableScrolling(false);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-					displayNewResourcePopup();
+					Timer tm=new Timer() {
+						
+						@Override
+						public void run() {
+							displayNewResourcePopup();
+						}
+					};
+					tm.schedule(3000);
+					
 				}
 			}catch(Exception e){
 				//AppClientFactory.printInfoLogger(e.getMessage());
