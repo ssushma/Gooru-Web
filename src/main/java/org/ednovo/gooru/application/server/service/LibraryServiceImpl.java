@@ -1052,6 +1052,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			params.put(GooruConstants.OFFSET, offset);
 			params.put(GooruConstants.LIMIT, "20");
 			params.put(GooruConstants.SHARING, GooruConstants.SHARING_TYPE);
+			params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 			String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 			getLogger().info("-- getLibraryCoursesList -- "+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());

@@ -1699,12 +1699,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String limitSize = Integer.toString(limit);
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
+		Map<String, String> params = new LinkedHashMap<>();
 		if(GooruConstants.COURSE.equalsIgnoreCase(collectionType)){
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_USER_COURSES_LIST,getLoggedInUserUid());
 		}else{
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_WORKSPACE_FOLDER_LIST);
+			params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 		}
-		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.OFFSET, offsetSize);
 		if(sharingType!=null){
 			params.put(GooruConstants.SHARING, sharingType);
@@ -1713,7 +1714,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
 		}
 		params.put(GooruConstants.LIMIT,limitSize);
-		//params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 
 		if(isExcludeAssessment){
 			params.put(GooruConstants.EXCLUDE_TYPE, "assessment/url");
