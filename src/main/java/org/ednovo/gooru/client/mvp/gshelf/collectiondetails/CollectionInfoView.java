@@ -877,7 +877,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			Window.scrollTo(collectionTitle.getAbsoluteLeft(), collectionTitle.getAbsoluteTop()-(collectionTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
 			collectionTitle.addStyleName("textAreaErrorMessage");
-			lblErrorMessage.setText("Please Enter Collection Title");
+			
+			lblErrorMessage.setText("collection".equalsIgnoreCase(type)?"Please Enter Collection Title":"Please Enter Assessment Title");
 			resetBtns();
 		}
 	}
