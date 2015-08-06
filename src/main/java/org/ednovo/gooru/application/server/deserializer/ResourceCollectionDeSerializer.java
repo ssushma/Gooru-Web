@@ -196,7 +196,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
 		try {
-				resourceSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
+				resourceSearchResultDo.setUrl(getJsonString(recordJsonObject.isNull(THUMBNAILS)?null:recordJsonObject.getJSONObject(THUMBNAILS), URL));
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
