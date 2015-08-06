@@ -1653,15 +1653,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	@Override
 	public void hidePopUpStyle() {
 		appPopUp.setGlassEnabled(false);
+		appPopUp.setAutoHideEnabled(true);
 		popUpMain.setVisible(false);
-		Timer tm=new Timer() {
-			
-			@Override
-			public void run() {
-				appPopUp.setAutoHideEnabled(true);
-			}
-		};
-		tm.schedule(2000);
 		
 	}
 
