@@ -354,6 +354,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}else{
 			getView().getCollectionLabel().setVisible(true);
 			getView().getTitleIconContainer().setVisible(true);
+			getView().getImgInlineLbl().setStyleName("");
 			getView().getCollectionLabel().setText((folderObj!=null&&folderObj.getGooruOid()!=null)?folderObj.getTitle():(clickedItemType.equalsIgnoreCase("collection")?
 					"Untitled Collection":clickedItemType.equalsIgnoreCase("assessment")?
 							"Untitled Assessment":"Untitled External Assessment"));
