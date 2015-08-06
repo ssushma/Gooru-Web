@@ -83,6 +83,8 @@ public class CollectionResourceWidget extends Composite {
 	private static final String NULL = "null";
 
 	private static final String PLAYER_NAME = "resource";
+	
+	private static final String ASSESSMENT = "assessment";
 
 	private int updateReviewCount = 0;
 
@@ -192,12 +194,12 @@ public class CollectionResourceWidget extends Composite {
 				if(userCollectionsList.size()>0){
 						relatedCollectionImage.setVisible(true);
 						creatorImage.setVisible(true);
-						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid()));
-						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid()));
+						final String collectionType=StringUtil.isEmpty(userCollectionsList.get(0).getCollectionType())?null:userCollectionsList.get(0).getCollectionType();
+						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid(),collectionType));
+						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid(),collectionType));
 						relatedCollectionTitle.setText(userCollectionsList.get(0).getTitle());
 						relatedCollectionTitle.setTitle(userCollectionsList.get(0).getTitle());
 						creatorImage.setUrl(userCollectionsList.get(0).getUser().getProfileImageUrl());
-						final String collectionType=StringUtil.isEmpty(userCollectionsList.get(0).getCollectionType())?null:userCollectionsList.get(0).getCollectionType();
 						setDefaultCollectionImage(collectionType);
 						if(userCollectionsList.get(0).getThumbnails()!=null && userCollectionsList.get(0).getThumbnails().getUrl()!=null){
 							relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
@@ -258,7 +260,7 @@ public class CollectionResourceWidget extends Composite {
 	 * @param collectionType {@link String}
 	 */
 	protected void setDefaultCollectionImage(String collectionType) {
-		if(collectionType!=null && collectionType.equals("assessment")){
+		if(collectionType!=null && collectionType.equals(ASSESSMENT)){
 			relatedCollectionImage.setUrl(DEFULT_ASSESSMENTIMAGE);
 			relatedCollectionImage.getElement().setAttribute("style", "border-left: 3px solid #feae29;");
 		}else{
@@ -302,7 +304,7 @@ public class CollectionResourceWidget extends Composite {
 	 */
 	public void setUrl(final String thumbnailUrl, final String realUrl, final String category, final String title, final boolean generateYoutube) {
 		failedThumbnailGeneration = false;
-		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category;
+		final String categoryString = category == null || category.startsWith(ASSESSMENT) ? ImageUtil.QUESTION : category;
 		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
 			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
 		} else {
@@ -458,8 +460,10 @@ public class CollectionResourceWidget extends Composite {
 	};
 	 public class ResourceCollectionHandler implements ClickHandler{
 	    String gooruOid;
-		public ResourceCollectionHandler(String gooruOid) {
+	    String collectionType;
+		public ResourceCollectionHandler(String gooruOid, String collectionType) {
 			this.gooruOid=gooruOid;
+			this.collectionType=collectionType;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
@@ -468,7 +472,12 @@ public class CollectionResourceWidget extends Composite {
 				public void onSuccess() {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", gooruOid);
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					PlaceRequest placeRequest;
+					if(collectionType.equalsIgnoreCase(ASSESSMENT)){
+						placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+					}else{
+						placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					}
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}
 				@Override
