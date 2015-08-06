@@ -9,7 +9,7 @@
 		<div class="folderBlockSitemap">
 			<div class="col-md-9 col-sm-9">
 				<g:Anchor ui:field="lnkInfo" styleName="active" text="{i18n.GL0828}"></g:Anchor>
-				<g:Anchor ui:field="lnkContent">Content</g:Anchor>
+				<g:Anchor ui:field="lnkContent" text="{i18n.GL3488}"></g:Anchor>
 				<g:Anchor ui:field="lnkshare" text="{i18n.GL0536}"></g:Anchor>
 			</div>
 			<div class="col-md-3 col-sm-3 actions">

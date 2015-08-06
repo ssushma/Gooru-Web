@@ -143,9 +143,6 @@ import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.Studen
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.IsStudentClassReportView;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportPresenter;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.StudentClassReportView;
-import org.ednovo.gooru.client.mvp.classpage.study.IsStudyClassCodeView;
-import org.ednovo.gooru.client.mvp.classpage.study.StudyClassCodePresenter;
-import org.ednovo.gooru.client.mvp.classpage.study.StudyClassCodeView;
 import org.ednovo.gooru.client.mvp.classpage.teach.IsTeachClassView;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
@@ -280,9 +277,6 @@ import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupView;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.IsUnitInfoView;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoView;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchView;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView;
 import org.ednovo.gooru.client.mvp.home.register.IsUserRegistrationView;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
@@ -739,7 +733,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
 		bindPresenterWidget(AddCenturyPresenter.class, IsAddCenturyView.class, AddCenturyView.class);
 		bindPresenterWidget(GooruGradesPresenter.class, IsGooruGradesView.class, GooruGradesView.class);
-		bindPresenterWidget(AddStandardsPreSearchPresenter.class, IsAddStandardsPreSearchView.class, AddStandardsPreSearchView.class);
 		bindPresenterWidget(ContributorsPresenter.class, IsContributorsView.class, ContributorsView.class);
 
 		bindPresenterWidget(DistrictPresenter.class, IsDistrictView.class, DistrictView.class);

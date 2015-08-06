@@ -94,8 +94,9 @@ public interface CollectionResourceTabUiHandlers extends BaseUiHandlers,UpdateQu
 	/**
 	 * @param string
 	 * @param gooruOid
+	 * @param collectionId 
 	 */
-	void editUserOwnResource(String string, String gooruOid);
+	void editUserOwnResource(String string, String gooruOid, String collectionId);
 
 	/**
 	 * @param val

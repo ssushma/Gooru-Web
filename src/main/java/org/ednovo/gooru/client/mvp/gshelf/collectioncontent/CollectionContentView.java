@@ -347,7 +347,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 								category = categoryStr;
 								thumbnailUrl = thumbnailUrlStr;
 								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
+								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 							}
 							@Override
 							public void browseStandardsInfo(boolean val, boolean userResource) {
