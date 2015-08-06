@@ -806,7 +806,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		setStaticData(type);
         if (courseObj == null ) {
             if (COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type)) {
+            	collectionTitle.removeStyleName("textAreaErrorMessage");
                 collectionTitle.setText("");
+                lblErrorMessage.setText("");
+                lblErrorMessageForLO.setText("");
             }
         } else {
         	if(!i18n.GL3367().equalsIgnoreCase(courseObj.getTitle()) && !i18n.GL3396().equalsIgnoreCase(courseObj.getTitle()) && !"UntitledExternalAssessment".equalsIgnoreCase(courseObj.getTitle())){
