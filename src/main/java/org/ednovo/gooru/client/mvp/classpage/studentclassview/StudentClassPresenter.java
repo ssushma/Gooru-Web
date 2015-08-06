@@ -233,6 +233,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 	
 	public void setCheckClassVisiblity(ClasspageDo classpageDo){
 		String status = classpageDo.getStatus();
+		getView().setPrivateLogoutPanelVisibility(true);
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
 		if(page.equalsIgnoreCase(UrlNavigationTokens.FALSE)) {
 			if(!classpageDo.isVisibility()){
@@ -246,11 +247,12 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 						}
 					};
 				}else{
-					getView().setPrivateLogoutPanelVisibility(true);
 					if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
 						if(status.equalsIgnoreCase("not-invited")){
+							getView().setPrivateLogoutPanelVisibility(false);
 							new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
 						}else if(status.equalsIgnoreCase("pending")){
+							getView().setPrivateLogoutPanelVisibility(false);
 							studentClassLearningMapPresenter.showProgressMapBar(false);
 							joinStudentClass();
 						} else {
