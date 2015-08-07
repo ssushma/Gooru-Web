@@ -205,10 +205,10 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 					Element element=Document.get().getElementsByTagName("html").getItem(0);
 					element.getStyle().setOverflowY(Overflow.AUTO);
 				}
-				if(getSearchDo().getPageNum()==1){
+				/*if(getSearchDo().getPageNum()==1){
 					getSearchDo().setPageNum(2);
 					getSearchResultsBackToTop().execute(getSearchDo());
-				}
+				}*/
 			}
 		});
 		//first time data store
@@ -233,7 +233,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			public void onCallSuccess(SearchDo<T>  result) {
 				setSearchDo(result);
 				getView().postSearch(result,false);
-				getView().setJsonResponseInStorage(result, false);
+				//getView().setJsonResponseInStorage(result, false);
 				if(getSearchDo().getPageNum()==1){
 					getSearchDo().setPageNum(2);
 					getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
@@ -265,7 +265,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 			@Override
 			public void onCallSuccess(SearchDo<T> result) {
-				getView().setJsonResponseInStorage(result,false);
+				setSearchDo(result);
+				getView().postSearch(result,false);
 				//getSearchAsyncCallbackLoadInStore().execute(false,result,getSearchDo());
 			}
 		});
