@@ -610,7 +610,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	   	            viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 	   	            viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
      			    viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-     			    viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 		            data.setValue(i, 5, viewResponselbl.toString());
 		        	}
 		            
@@ -625,6 +624,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	erroeMsg.setText(i18n.GL3264());
 		        	individualOpenendedData.add(erroeMsg);
 		        }
+		        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 		       // table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 		        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 
@@ -1021,7 +1021,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-					        			viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 					        			answerspnl.add(viewResponselbl);
 					        		}
 					        		 answerspnl.setStyleName(res.css().setMarginAuto());
@@ -1052,6 +1051,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	erroeMsg.setText(i18n.GL3265());
 		        	individualScoredData.add(erroeMsg);
 		        }
+		        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 		        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 
 			}
@@ -1209,19 +1209,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	public class SummaryPopupClick implements ClickHandler{
 
-		String answerObj;
-		String questionType;
-		String attempts;
-		
-		public SummaryPopupClick(UserDataDo userDataDo) {
-			answerObj=userDataDo.getAnswerObject();
-			questionType=userDataDo.getType();
-			attempts=String.valueOf(userDataDo.getAttempts());
-		}
 
 		@Override
 		public void onClick(ClickEvent event) {
-				JSONValue value = JSONParser.parseStrict(answerObj);
+			Element ele=event.getNativeEvent().getEventTarget().cast();
+			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId")) && !StringUtil.isEmpty(ele.getAttribute("answerObj"))){
+				JSONValue value = JSONParser.parseStrict(ele.getAttribute("answerObj").toString());
 				JSONObject answerObject = value.isObject();
 				Set<String> keys=answerObject.keySet();
 				Iterator<String> itr = keys.iterator();
@@ -1230,10 +1223,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				}
 				if(attemptsObj!=null){
-					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, questionType,attempts);
+					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
 				}
+			}
 		}
 	};
-
 
 }

@@ -28,7 +28,6 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.AppPopUp;
 
@@ -168,7 +167,7 @@ public class SentEmailSuccessVc extends Composite {
 	public void onBtnClick(ClickEvent clickEvent) {
 		appPopUp.hide();
 		String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(placeToken.equals(PlaceTokens.STUDENT) && !StudentAssignmentView.getMainContainerStatus())
+		if(placeToken.equals(PlaceTokens.STUDENT_VIEW))
 		{
 			Window.enableScrolling(true);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
