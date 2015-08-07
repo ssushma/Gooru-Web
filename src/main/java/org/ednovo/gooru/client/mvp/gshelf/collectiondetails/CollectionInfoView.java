@@ -234,6 +234,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		
 		learningObjPpanel.setText(i18n.GL3484());
 	}
+	public void resetErrorMessages(){
+		learningObjective.getElement().getStyle().clearBackgroundColor();
+		learningObjective.getElement().getStyle().setBorderColor("#ccc");
+		lblErrorMessageForLO.setVisible(false);
+		collectionTitle.getElement().getStyle().clearBackgroundColor();
+		collectionTitle.getElement().getStyle().setBorderColor("#ccc");
+		lblErrorMessage.setVisible(false);
+		collectionTitle.removeStyleName("textAreaErrorMessage");
+	}
 	private void restrictKeyLimit(KeyDownEvent event, TextArea textArea, String text, Label errorLabelToDisplay) {
 		if(text.trim().length()<=999) {
 			errorLabelToDisplay.setVisible(false);	 
@@ -724,6 +733,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 		ulSelectedItems.clear();
 		selectedValues.clear();
+		resetErrorMessages();
+		
 		if(courseObj!=null){
 			courseObjG.setCollectionType(type);
 			if(courseObj.getThumbnails()!=null){
@@ -867,20 +878,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			thumbnailObj.setUrl(collThumbnail.getUrl());
 			createOrUpDate.setThumbnails(thumbnailObj);
 			Element element=Document.get().getElementById("mycollectionUploadImage");
-			if(element.getAttribute("filename")!=null)
-			{
+			if(element.getAttribute("filename")!=null){
 				createOrUpDate.setMediaFilename(element.getAttribute("filename"));
 			}
-
 			lblErrorMessage.setVisible(false);
 			collectionTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(collectionTitle.getText().trim(),true,0,type,createOrUpDate,currentShelfTreeWidget);
-
 		}else{
 			Window.scrollTo(collectionTitle.getAbsoluteLeft(), collectionTitle.getAbsoluteTop()-(collectionTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
 			collectionTitle.addStyleName("textAreaErrorMessage");
-			
 			lblErrorMessage.setText("collection".equalsIgnoreCase(type)?"Please Enter Collection Title":"Please Enter Assessment Title");
 			resetBtns();
 		}
