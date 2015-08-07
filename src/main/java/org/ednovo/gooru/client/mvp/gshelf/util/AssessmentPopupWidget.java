@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
@@ -51,6 +52,7 @@ public abstract class AssessmentPopupWidget extends PopupPanel {
 	}
 	@UiHandler("spnClose")
 	public void clickOnClose(ClickEvent event){
+		AppClientFactory.printInfoLogger("fire Click Event");
 		this.hide();
 		Window.enableScrolling(true);
 	}

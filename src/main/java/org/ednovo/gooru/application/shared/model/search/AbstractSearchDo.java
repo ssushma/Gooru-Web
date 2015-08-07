@@ -27,16 +27,16 @@
  */
 package org.ednovo.gooru.application.shared.model.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * @author Search Team
  * 
  */
-public class AbstractSearchDo<T> implements IsSerializable {
+public class AbstractSearchDo<T> implements Serializable {
 
 	/**
 	 * 

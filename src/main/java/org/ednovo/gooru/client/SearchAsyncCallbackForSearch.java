@@ -12,7 +12,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public abstract class SearchAsyncCallbackForSearch<T extends AbstractSearchDo<?>> implements AsyncCallback<String>  {
+public abstract class SearchAsyncCallbackForSearch<T extends AbstractSearchDo<?>> implements AsyncCallback<T>{
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	@Override
 	public void onFailure(Throwable caught) {
@@ -58,7 +58,7 @@ public abstract class SearchAsyncCallbackForSearch<T extends AbstractSearchDo<?>
 	}
 
 	@Override
-	public final void onSuccess(String result) {
+	public final void onSuccess(T result) {
 		onCallSuccess(result);
 	}
 
@@ -68,5 +68,5 @@ public abstract class SearchAsyncCallbackForSearch<T extends AbstractSearchDo<?>
 
 	protected abstract void run(T searchDo);
 
-	public abstract void onCallSuccess(String result);
+	public abstract void onCallSuccess(T result);
 }

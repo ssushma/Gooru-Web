@@ -418,6 +418,13 @@
 		     <scope>provided</scope>
 		</dependency>
 		<!--For analytics end  -->
+		<!--For Strorage start  -->
+		<dependency>
+		    <groupId>com.seanchenxi.gwt</groupId>
+		    <artifactId>gwt-storage</artifactId>
+		    <version>1.2.1</version>
+		</dependency>
+		<!--For Strorage end  -->
 	</dependencies>
 	<profiles>
 		<profile>

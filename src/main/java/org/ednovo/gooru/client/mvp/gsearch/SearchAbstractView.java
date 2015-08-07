@@ -94,6 +94,7 @@ import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
+import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -106,6 +107,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.seanchenxi.gwt.storage.client.StorageExt;
+import com.seanchenxi.gwt.storage.client.StorageKey;
+import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
+import com.seanchenxi.gwt.storage.client.StorageQuotaExceededException;
 
 /**
  * @author Search Team
@@ -200,7 +205,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	private HandlerRegistration handlerRegistration=null;
 
-	private Storage localStore = null;
+	//private Storage localStore = null;
+	
+	StorageExt localStorage = null;
 
 	InlineLabel cart = null;
 
@@ -264,7 +271,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFeildsIds();
 		standardsDropListValues.setVisible(false);
-		localStore=Storage.getLocalStorageIfSupported();
+		//localStore=Storage.getLocalStorageIfSupported();
+		localStorage = StorageExt.getLocalStorage();
 		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		//pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
@@ -299,59 +307,56 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
-				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
-					if(publisherSgstBox!=null && aggregatorSgstBox!=null){
-						publisherSgstBox.hideSuggestionList();
-						aggregatorSgstBox.hideSuggestionList();
-					}
-
-					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top
-					if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/10) && previousScroll>event.getScrollTop()){
-						if(!isBackToTopClicked && pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
-							isApiInProgressBack=isApiInProgressBackLoad=false;
-							isInsertTems=true;
-							//lblLoadingTextPrevious.setVisible(true);
-							isForwardScroll = false;
-							if(Storage.isLocalStorageSupported()){
-								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-10)+""),true);
-							}
-							if(pageCountForStorage>11 && localStore.getItem((pageCountForStorage-11)+"") == null && (pageNumber-1)>=1){
-								if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
-									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 9);
-									}else{
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 8);
+				try{
+					String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+					if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
+						//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top
+						if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/10) && previousScroll>event.getScrollTop()){
+							if(!isBackToTopClicked && pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
+								isApiInProgressBack=isApiInProgressBackLoad=false;
+								isInsertTems=true;
+								//lblLoadingTextPrevious.setVisible(true);
+								isForwardScroll = false;
+								if(Storage.isLocalStorageSupported()){
+									postSearch(readDataFromLocalStorage(((pageCountForStorage-10)+"")), true);
+								}
+								if(pageCountForStorage>11 && localStorage.get(getSerializableKey((pageCountForStorage-11)+"")) == null && (pageNumber-1)>=1){
+									if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
+										if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+											getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 9);
+										}else{
+											getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 8);
+										}
 									}
+									pageNumber--;
+									pageCountForStorage--;
 								}
-								pageNumber--;
-								pageCountForStorage--;
 							}
 						}
-					}
-					//This condition is used to check that the user is scrolling top to bottom
-					if(resultCountVal>=8 && isApiInProgress && isApiInProgressLoad && !isBackToTopClicked){
-						if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
-							isInsertTems=false;
-							isApiInProgress=isApiInProgressLoad=false;
-							lblLoadingText.setVisible(true);
-							pageNumber++;
-							isForwardScroll = true;
-							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
-
-							if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStore.getItem((pageNumber+1)+"") == null){
-								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
+						//This condition is used to check that the user is scrolling top to bottom
+						if(resultCountVal>=8 && isApiInProgress && isApiInProgressLoad && !isBackToTopClicked){
+							if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
+								isInsertTems=false;
+								isApiInProgress=isApiInProgressLoad=false;
+								lblLoadingText.setVisible(true);
+								pageNumber++;
+								isForwardScroll = true;
+								postSearch(readDataFromLocalStorage(pageNumber+""), true);
+								if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStorage.get(getSerializableKey((pageNumber+1)+"")) == null){
+									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
+									}else{
+										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
+									}
 								}else{
-									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
+									isApiInProgress=isApiInProgressLoad=true;
 								}
-							}else{
-								isApiInProgress=isApiInProgressLoad=true;
 							}
 						}
 					}
+					previousScroll=event.getScrollTop();
+					}catch(Exception e){
 				}
-				previousScroll=event.getScrollTop();
 			}
 		});
 		pnlBackToTop.getElement().setId("back-top");
@@ -513,20 +518,22 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		return 0;
 	}
 	public void removeFromLocalStorageForward(){
-		if(Storage.isLocalStorageSupported() && localStore.getLength()>10){
+		if(Storage.isLocalStorageSupported() && localStorage.size()>10){
 			int keyVal=pageCountForStorage-11;
-			localStore.removeItem(keyVal+"");
+			localStorage.remove(getSerializableKey(keyVal+""));
+			//localStore.removeItem(keyVal+"");
 		}
 	}
 	public void removeFromLocalStorageBackword(){
-		if(Storage.isLocalStorageSupported() && localStore.getLength()>10){
+		if(Storage.isLocalStorageSupported() && localStorage.size()>10){
 			int keyVal;
 			if(pageCountForStorage>=10){
 				keyVal=pageCountForStorage;
 			}else{
 				keyVal=pageCountForStorage+7;
 			}
-			localStore.removeItem(keyVal+"");
+			//localStore.removeItem(keyVal+"");
+			localStorage.remove(getSerializableKey(keyVal+""));
 		}
 	}
 
@@ -679,7 +686,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						if(widgetCount>removeableWidgetCount){
 							break;
 						}
-
 						final Widget widget = widgets.next();
 						searchResultPanel.remove(widget);
 						widgetCount++;
@@ -1755,7 +1761,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageNumber = 1;
 		previousCount=0;
 		pageCountForStorage=1;
-		localStore.clear();
+		//localStore.clear();
+		localStorage.clear();
 		isForwardScroll=true;
 		previousValue=0;
 		pageFlag=false;
@@ -1769,7 +1776,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageNumber = 1;
 		pageFlag=false;
 		pageCountForStorage=1;
-		localStore.clear();
+		//localStore.clear();
+		localStorage.clear();
 		isForwardScroll=true;
 		getUiHandlers().resetLocalStorageData();
 		callAnimation();
@@ -2023,25 +2031,34 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		isClickOnMoreFilter=true;
 	}
 	@Override
-	public void setJsonResponseInStorage(String data,boolean isApiCalled){
-		if(Storage.isLocalStorageSupported() && !isApiCalled){
-			if(isForwardScroll){
-				if(pageNumber==1 && !pageFlag){
-					pageFlag = true;
-					localStore.setItem((pageNumber)+"", data);
+	public void setJsonResponseInStorage(SearchDo<T> data,boolean isApiCalled){
+		try{
+			if(Storage.isLocalStorageSupported() && !isApiCalled){
+				if(isForwardScroll){
+					if(pageNumber==1 && !pageFlag){
+						pageFlag = true;
+						//localStore.setItem((pageNumber)+"", data);
+						localStorage.put(getSerializableKey((pageNumber)+""), data);
+					}else{
+						pageFlag = false;
+						//localStore.setItem((pageNumber+1)+"", data);
+						localStorage.put(getSerializableKey((pageNumber+1)+""), data);
+					}
+					pageCountForStorage++;
+					removeFromLocalStorageForward();
+					isApiInProgressLoad=true;
 				}else{
-					pageFlag = false;
-					localStore.setItem((pageNumber+1)+"", data);
+					isApiInProgressBackLoad=true;
+					//localStore.setItem((pageCountForStorage-10)+"", data);
+					localStorage.put(getSerializableKey((pageCountForStorage-10)+""), data);
+					removeFromLocalStorageBackword();
 				}
-				pageCountForStorage++;
-				removeFromLocalStorageForward();
-				isApiInProgressLoad=true;
-			}else{
-				isApiInProgressBackLoad=true;
-				localStore.setItem((pageCountForStorage-10)+"", data);
-				removeFromLocalStorageBackword();
+				isBackToTopClicked=false;
 			}
-			isBackToTopClicked=false;
+		} catch (SerializationException e) {
+			e.printStackTrace();
+		} catch (StorageQuotaExceededException e) {
+			e.printStackTrace();
 		}
 	}
 	@UiHandler("assessmentsBtn")
@@ -2183,5 +2200,30 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			 filtersMap.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
 		 }
 		 return filtersMap;
+	}
+	/**
+	 * This method will return the data for the stored key
+	 * @param key
+	 * @return
+	 */
+	public SearchDo<T> readDataFromLocalStorage(String key){
+		try{
+			StorageKey<SearchDo<T>> serializableKey = StorageKeyFactory.<SearchDo<T>>serializableKey(key);
+			if(localStorage!=null){
+				return localStorage.get(serializableKey);
+			}
+		}catch(Exception e){
+			
+		}
+		return null;
+	}
+	/**
+	 * This method will return the serializableKey
+	 * @param key
+	 * @return StorageKey<SearchDo<T>>
+	 */
+	public StorageKey<SearchDo<T>> getSerializableKey(String key){
+		StorageKey<SearchDo<T>> serializableKey = StorageKeyFactory.serializableKey(key);
+		return serializableKey;
 	}
 }

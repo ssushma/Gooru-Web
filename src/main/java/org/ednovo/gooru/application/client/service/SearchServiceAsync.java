@@ -57,14 +57,14 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 
 	void getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput, AsyncCallback<SearchDo<ResourceSearchResultDo>> callback);
 
-	void getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchInput,AsyncCallback<String> callback) throws GwtException, ServerDownException;
+	void getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchInput,AsyncCallback<SearchDo<ResourceSearchResultDo>> callback) throws GwtException, ServerDownException;
 	
 	void descralizeResourceSearchResults(String response,SearchDo<ResourceSearchResultDo> searchDo,AsyncCallback<SearchDo<ResourceSearchResultDo>> callback) throws GwtException, ServerDownException;
 	
 	
 	void getCollectionSearchResults(SearchDo<CollectionSearchResultDo> searchInput, AsyncCallback<SearchDo<CollectionSearchResultDo>> callback);
 	
-	void getCollectionSearchResultsJson(SearchDo<CollectionSearchResultDo> searchInput,AsyncCallback<String> callback);
+	void getCollectionSearchResultsJson(SearchDo<CollectionSearchResultDo> searchInput,AsyncCallback<SearchDo<CollectionSearchResultDo>> callback);
 	
 	void descralizeCollectionSearchResults(String response,SearchDo<CollectionSearchResultDo> searchDo,AsyncCallback<SearchDo<CollectionSearchResultDo>> callback);
 

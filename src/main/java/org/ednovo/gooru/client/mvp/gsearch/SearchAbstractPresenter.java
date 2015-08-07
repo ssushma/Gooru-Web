@@ -184,9 +184,22 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			protected void run(SearchDo<T> searchDo) {
 				requestSearchLoad(searchDo, this,true);
 			}
-
+/*
 			@Override
 			public void onCallSuccess(String result) {
+				getView().setJsonResponseInStorage(result,false);
+				if(getSearchDo().getPageNum()==2){
+					Element element=Document.get().getElementsByTagName("html").getItem(0);
+					element.getStyle().setOverflowY(Overflow.AUTO);
+				}
+				if(getSearchDo().getPageNum()==1){
+					getSearchDo().setPageNum(2);
+					getSearchResultsBackToTop().execute(getSearchDo());
+				}
+			}*/
+
+			@Override
+			public void onCallSuccess(SearchDo<T> result) {
 				getView().setJsonResponseInStorage(result,false);
 				if(getSearchDo().getPageNum()==2){
 					Element element=Document.get().getElementsByTagName("html").getItem(0);
@@ -201,9 +214,9 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		//first time data store
 		setSearchAsyncCallback(new SearchAsyncCallbackForString<SearchDo<T>>() {
 			@Override
-			protected void run(boolean isApiCalled,String representation, SearchDo<T> searchDo) {
-				getView().setJsonResponseInStorage(representation,isApiCalled);
-				requestSearchFormJson(representation,searchDo);
+			protected void run(boolean isApiCalled,SearchDo<T> representation, SearchDo<T> searchDo) {
+				//getView().setJsonResponseInStorage(representation,isApiCalled);
+				//requestSearchFormJson(representation,searchDo);
 			}
 			@Override
 			public void onCallSuccess(SearchDo<T> result,boolean isApiCalled) {
@@ -217,19 +230,21 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				requestSearch(searchDo, this);
 			}
 			@Override
-			public void onCallSuccess(String result) {
-				getSearchAsyncCallback().execute(false,result,getSearchDo());
+			public void onCallSuccess(SearchDo<T>  result) {
+				setSearchDo(result);
+				getView().postSearch(result,false);
+				getView().setJsonResponseInStorage(result, false);
 				if(getSearchDo().getPageNum()==1){
 					getSearchDo().setPageNum(2);
-					getSearchResultsJsonAsyncCallbackLoadInStore().execute(getSearchDo());
+					getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
 				}
 			}
 		});
 		//Next time it will add to local store
 		setSearchAsyncCallbackLoadInStore(new SearchAsyncCallbackForString<SearchDo<T>>() {
 			@Override
-			protected void run(boolean isApiCalled, String representation,SearchDo<T> searchDo) {
-				getView().setJsonResponseInStorage(representation,isApiCalled);
+			protected void run(boolean isApiCalled,SearchDo<T> representation,SearchDo<T> searchDo) {
+				//getView().setJsonResponseInStorage(representation,isApiCalled);
 			}
 
 			@Override
@@ -242,15 +257,21 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			protected void run(SearchDo<T> searchDo) {
 				requestSearchLoad(searchDo, this,false);
 			}
+/*
 			@Override
 			public void onCallSuccess(String result) {
 				getSearchAsyncCallbackLoadInStore().execute(false,result,getSearchDo());
+			}*/
+
+			@Override
+			public void onCallSuccess(SearchDo<T> result) {
+				getView().setJsonResponseInStorage(result,false);
+				//getSearchAsyncCallbackLoadInStore().execute(false,result,getSearchDo());
 			}
 		});
+		
 		gooruGradesPresenter.setGradePanel(getView().getGradePanel());
-		gooruGradesPresenter.setPageType("search");
 		getView().getGradePanel().add(gooruGradesPresenter.getWidget());
-
 		if (getViewToken().equals(PlaceTokens.SEARCH_RESOURCE)) {
 			setSourceSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
 				@Override
@@ -272,7 +293,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 					getView().setAggregatorSuggestions(result);
 				}
 			});
-
 		}
 	}
 
@@ -633,9 +653,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback);
 
 	protected abstract void requestSearchLoad(SearchDo<T> searchDo,SearchAsyncCallbackForSearch<SearchDo<T>> searchResultsJsonAsyncCallback, boolean isBackToTop);
-
-	protected abstract void requestSearchFormJson(String result,SearchDo<T> searchDo2);
-
 	/**
 	 * @return the standardSuggestionInfoAsyncCallback
 	 */
@@ -780,7 +797,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	@Override
 	public void setDataReterivedFromStorage(String data,boolean isApiCalled) {
-		getSearchAsyncCallback().execute(isApiCalled,data, getSearchDo());
+		//getSearchAsyncCallback().execute(isApiCalled,data, getSearchDo());
 	}
 
 	public SearchAsyncCallbackForSearch<SearchDo<T>> getSearchResultsBackToTop() {
