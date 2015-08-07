@@ -319,8 +319,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								isForwardScroll = false;
 								if(Storage.isLocalStorageSupported()){
 									postSearch(readDataFromLocalStorage(((pageCountForStorage-10)+"")), true);
-									//getUiHandlers().setDataReterivedFromStorage(localStorage.getItem((pageCountForStorage-10)+""),true);
-									//getUiHandlers().setDataReterivedFromStorage(localStorage.getItem((pageCountForStorage-10)+""),true);
 								}
 								if(pageCountForStorage>11 && localStorage.get(getSerializableKey((pageCountForStorage-11)+"")) == null && (pageNumber-1)>=1){
 									if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
@@ -344,7 +342,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								pageNumber++;
 								isForwardScroll = true;
 								postSearch(readDataFromLocalStorage(pageNumber+""), true);
-								//getUiHandlers().setDataReterivedFromStorage(localStorage.get(getSerializableKey(pageNumber+"")),true);
 								if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStorage.get(getSerializableKey((pageNumber+1)+"")) == null){
 									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
@@ -689,7 +686,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						if(widgetCount>removeableWidgetCount){
 							break;
 						}
-
 						final Widget widget = widgets.next();
 						searchResultPanel.remove(widget);
 						widgetCount++;

@@ -200,7 +200,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 			@Override
 			public void onCallSuccess(SearchDo<T> result) {
-				//getView().setJsonResponseInStorage(result,false);
+				getView().setJsonResponseInStorage(result,false);
 				if(getSearchDo().getPageNum()==2){
 					Element element=Document.get().getElementsByTagName("html").getItem(0);
 					element.getStyle().setOverflowY(Overflow.AUTO);
