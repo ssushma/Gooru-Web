@@ -316,10 +316,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								isApiInProgressBack=isApiInProgressBackLoad=false;
 								isInsertTems=true;
 								//lblLoadingTextPrevious.setVisible(true);
-								isForwardScroll = false;
-								if(Storage.isLocalStorageSupported()){
-									postSearch(readDataFromLocalStorage(((pageCountForStorage-10)+"")), true);
-								}
+								isForwardScroll = false;						
 								if(pageCountForStorage>11 && localStorage.get(getSerializableKey((pageCountForStorage-11)+"")) == null && (pageNumber-1)>=1){
 									if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
 										if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
@@ -331,6 +328,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 									pageNumber--;
 									pageCountForStorage--;
 								}
+								if(Storage.isLocalStorageSupported()){
+									postSearch(readDataFromLocalStorage(((pageCountForStorage-9)+"")), true);
+								}
 							}
 						}
 						//This condition is used to check that the user is scrolling top to bottom
@@ -340,8 +340,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								isApiInProgress=isApiInProgressLoad=false;
 								lblLoadingText.setVisible(true);
 								pageNumber++;
-								isForwardScroll = true;
-								postSearch(readDataFromLocalStorage(pageNumber+""), true);
+								isForwardScroll = true;								
 								if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStorage.get(getSerializableKey((pageNumber+1)+"")) == null){
 									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
@@ -351,6 +350,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 								}else{
 									isApiInProgress=isApiInProgressLoad=true;
 								}
+								postSearch(readDataFromLocalStorage(pageNumber+""), true);
 							}
 						}
 					}
