@@ -29,10 +29,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ReactionDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
@@ -52,11 +57,6 @@ import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ReactionDo;
-import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -113,7 +113,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiField SectionTag collectionContainer;
 
 	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
-	/*@UiField ResourcePlayerMetadataBundle playerStyle;*/
+
 	@UiField HTML resourceTitleLbl;
 
 	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;
@@ -1003,12 +1003,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		else{
 			if(!sourceUrl.contains("docs.google.com")){
 				isProtocolsMatched=sourceUrl.contains("https");
+			}else{
+				isProtocolsMatched=true;
 			}
 		}
 		if(sourceUrl.toLowerCase().endsWith("jpg")||sourceUrl.toLowerCase().endsWith("jpeg")){
-			{
-				isProtocolsMatched=sourceUrl.contains("https");
-			}
+			if(FlashAndVideoPlayerWidget.getProtocal().equalsIgnoreCase("https:")){
+					isProtocolsMatched=!sourceUrl.contains("https");
+				}else{
+					isProtocolsMatched=sourceUrl.contains("https");
+				}
+
 		}
 		return isProtocolsMatched;
 	}
@@ -1631,7 +1636,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("ResourcePlayerMetadataPresenter : setFullScreen: "+ex.getMessage());
 		}
 	}
 	public void getdata(){

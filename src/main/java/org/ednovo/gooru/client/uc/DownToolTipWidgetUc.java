@@ -58,6 +58,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	boolean isStandardsTitle = false;
 	
 	List<Map<String, String>> standards = null;
+	private String title;
 	
 	/**
 	 * Class constructor with no parameter
@@ -74,7 +75,9 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	 * @param html text for html widget
 	 */
 	public DownToolTipWidgetUc(Widget widget, String html) {
+		
 		this(widget, !StringUtil.isEmpty(html)? new HTML(html) : null);
+		this.title=title;
 	}
 
 	/**
@@ -227,5 +230,8 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 
 	public void setStandards(boolean isStandards) {
 		this.isStandards = isStandards;
+	}
+	public String getTitle(){
+		return title;
 	}
 }

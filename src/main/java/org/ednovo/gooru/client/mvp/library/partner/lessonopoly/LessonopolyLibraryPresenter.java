@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.library.partner.lessonopoly;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.AppPlaceKeeper;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
@@ -97,12 +97,10 @@ public class LessonopolyLibraryPresenter extends BasePlacePresenter<IsLessonopol
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		long startTime = System.currentTimeMillis();
-		AppClientFactory.printInfoLogger("Entered into Lessonopoly start time -- "+startTime);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
-			AppClientFactory.printInfoLogger(" Lessonopoly end time -- "+(System.currentTimeMillis() - startTime));
 			
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {

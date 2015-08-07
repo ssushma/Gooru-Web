@@ -26,9 +26,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

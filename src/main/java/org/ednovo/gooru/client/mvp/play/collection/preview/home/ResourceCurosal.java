@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
 import org.ednovo.gooru.shared.util.ClientConstants;
 
-
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;

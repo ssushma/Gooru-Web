@@ -77,8 +77,6 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		initWidget(uiBinder.createAndBindUi(this));
 		labelChoice.getElement().setId("lblLabelChoice");
 		labelChoice.setText(labelName);
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
@@ -96,8 +94,6 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		this.richTextData=richTextData;
 		labelChoice.getElement().setId("lblLabelChoice");
 		labelChoice.setText(labelName);
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
@@ -114,7 +110,7 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		labelChoice.getElement().setId("lblLabelChoice");
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
-		tinyOrTextBoxConatiner.setStyleName(addWebResourceStyle.addResourceMultipleAnswerInputControl());
+		tinyOrTextBoxConatiner.setStyleName("multipleAnswerInputControl");
 		tinyOrTextBoxConatiner.addStyleName("multiAnswerChoiceContainer");
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");
@@ -139,7 +135,7 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 	@Override
 	public void onLoad(){
 		super.onLoad();
-		 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 				@Override
 				public void execute() {
 						setRichTextData();
@@ -156,15 +152,11 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		 errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		   if(richTextData!=null){
 			   answerTextBox.setText(richTextData);
-			   answerTextBox.getElement().setAttribute("alt", richTextData);
-			   answerTextBox.getElement().setAttribute("title", richTextData); 
 		   }	   
 	   }
 	public void setLabelName(String labelName){
 		labelChoice.setText(labelName);
 		labelChoice.getElement().setId("lblLabelChoice");
-		labelChoice.getElement().setAttribute("alt", labelName);
-		labelChoice.getElement().setAttribute("title", labelName);
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");

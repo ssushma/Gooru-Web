@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.image.upload;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.LoadingUc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.code.gwt.crop.client.GWTCropper;
 import com.google.gwt.core.client.GWT;

@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.model.analytics.ChartMetaDataOptions;
-import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.analytics.ChartMetaDataOptions;
+import org.ednovo.gooru.application.shared.model.analytics.GradeJsonData;
 import org.moxieapps.gwt.highcharts.client.Chart;
 import org.moxieapps.gwt.highcharts.client.ChartTitle;
 import org.moxieapps.gwt.highcharts.client.Credits;
@@ -26,8 +26,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public class HCLineChart {
 	final Chart chart = new Chart();
-	
-	
+
+
 /**
  * This method is used to create a line chart
  * @param gradeData
@@ -38,14 +38,14 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		ChartMetaDataOptions chartmetadata=new ChartMetaDataOptions();
 		chartmetadata.setHeight(200);
 		chartmetadata.setShowLegends(true);
-	
+
 		int size=gradeData.size();
 		Number averageTime[]=new Number[size];
 	    Number suggestedTime[]=new Number[size];
-	    
+
 		Number minimumScore[]=new Number[size];
 	    Number averageScore[]=new Number[size];
-	   
+
 	    for(int i=0;i<size;i++){
 	    	if(gradeData.get(i).getEstimatedTime()!=null){
 	    		String estimatedTime=gradeData.get(i).getEstimatedTime().replaceAll("hrs", ":").replaceAll("mins", "").trim();
@@ -67,9 +67,9 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		    		try{
 		        	int miniscoreVal=Integer.parseInt(gradeData.get(i).getMinimumScore());
 		        	minimumScore[i]=miniscoreVal;
-			    	averageScore[i]= miniscoreVal-(miniscoreVal/2);	
+			    	averageScore[i]= miniscoreVal-(miniscoreVal/2);
 		    		}catch(Exception ex){
-		    			AppClientFactory.printSevereLogger(ex.getMessage());
+		    			AppClientFactory.printSevereLogger("HCLineChart: chart : "+ex.getMessage());
 		    		}
 		    	}else{
 		    		minimumScore[i]=0;
@@ -82,20 +82,20 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    		suggestedTime[i]=0;
 	    	}
 	    }
-		
+
 	    String category[]=new String[size];
 	    for(int i=0;i<size;i++) {
 	    	category[i] = String.valueOf(i+1);
-	    }		   
-    
+	    }
+
 	    List<Number[]> numberslineChart1=new ArrayList<Number[]>();
 	    numberslineChart1.add(averageTime);
 	    numberslineChart1.add(suggestedTime);
-	    
+
 	    List<Number[]> numberslineChart2=new ArrayList<Number[]>();
 	    numberslineChart2.add(minimumScore);
 	    numberslineChart2.add(averageScore);
-	    
+
 		List<String> contentListNew=new ArrayList<String>();
 		String subjects[]={"Average Time","Suggested Time"};
 		for(String subject:subjects){
@@ -112,32 +112,32 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 			data.put(contentListNew.get(i), numberslineChart1.get(i));
 			data1.put(contentListNew1.get(i), numberslineChart2.get(i));
 		}
-		
+
 		chartmetadata.setShowXaxisTop(true);
 		LineChartView lineChartView=new LineChartView();
 		lineChartView.createLineChart("", "", category, contentListNew, data, chartmetadata,true);
-		
+
 		chartmetadata.setShowXaxisTop(false);
 		LineChartView lineChartView1=new LineChartView();
 		lineChartView1.createLineChart("", "", category, contentListNew1, data1, chartmetadata,false);
-		
+
 		Map<String,Number[]> data2 = new HashMap<String,Number[]>();
 		LineChartView lineChartView2=new LineChartView();
 		List<String> contentListNew2=new ArrayList<String>();
 		lineChartView2.createLineChart("Average Reaction","", category, contentListNew2, data2, chartmetadata,false);
-		
+
 		Map<String,Number[]> data3 = new HashMap<String,Number[]>();
 		LineChartView lineChartView3=new LineChartView();
 		lineChartView3.createLineChart("Student Completion","", category, contentListNew2, data3, chartmetadata,false);
-		
+
 		studyChartContainer.add(lineChartView);
 		studyChartContainer.add(lineChartView1);
 		//studyChartContainer.add(lineChartView2);
 		//studyChartContainer.add(lineChartView3);
-		
+
 		return studyChartContainer;
 	}
-		
+
 /**
  * This is used to convert long time format
  * @param commentCreatedTime
@@ -175,7 +175,7 @@ private String getTimeSpent(Long commentCreatedTime) {
 	}
 	return createdTime;
 }
-	
+
 	/**
 	 * This method is used to create chart line
 	 * @param categories
@@ -186,19 +186,19 @@ private String getTimeSpent(Long commentCreatedTime) {
 	 * @return
 	 */
 	public Chart createChartLine(String[] categories, List<String> legend, Map<String, Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst) {
-	
+
 		String[] colors={"red","green","blue","gray"};
-		chart.setType(Series.Type.LINE)  
+		chart.setType(Series.Type.LINE)
 	        .setZoomType(Chart.ZoomType.X_AND_Y)
-			.setChartTitle(new ChartTitle()  
+			.setChartTitle(new ChartTitle()
 				.setText("")
 			)
 			.setHeight(chartmetadata.getHeight())
 			.setWidth(chartmetadata.getWidth())
 			.setCredits(new Credits().setText(""))
-			.setToolTip(new ToolTip()  
-				.setFormatter(new ToolTipFormatter() {  
-					public String format(ToolTipData toolTipData) {  
+			.setToolTip(new ToolTip()
+				.setFormatter(new ToolTipFormatter() {
+					public String format(ToolTipData toolTipData) {
 						if(toolTipData.getSeriesName().equalsIgnoreCase("Average Score") || toolTipData.getSeriesName().equalsIgnoreCase("Minimum Score")){
 							return ""+toolTipData.getYAsDouble();
 						}else{
@@ -206,11 +206,11 @@ private String getTimeSpent(Long commentCreatedTime) {
 							long minutes = Math.round(toolTipData.getYAsDouble()) % 60;
 							return hours+"hrs "+minutes+"mins";
 						}
-					}  
-				})  
-			);  
+					}
+				})
+			);
 		chart.getXAxis().setCategories(categories);
-		
+
 		/*if(chartmetadata.isShowXaxisTop()){
 				chart.getXAxis().setOpposite(true);
 		 } else {
@@ -227,37 +227,37 @@ private String getTimeSpent(Long commentCreatedTime) {
 			chart.getYAxis().setAxisTitleText("");
 		}
 		if(isFirst){
-			chart.getYAxis()  
-	        .setAxisTitleText("")  
-	        .setLineWidth(1)  
-	        .setLabels(new YAxisLabels()  
-	            .setFormatter(  
-	                new AxisLabelsFormatter() {  
-	                    public String format(AxisLabelsData axisLabelsData) {  
+			chart.getYAxis()
+	        .setAxisTitleText("")
+	        .setLineWidth(1)
+	        .setLabels(new YAxisLabels()
+	            .setFormatter(
+	                new AxisLabelsFormatter() {
+	                    public String format(AxisLabelsData axisLabelsData) {
 	                    	long hours = Math.round( axisLabelsData.getValueAsLong()) / 60;
 							long minutes = Math.round( axisLabelsData.getValueAsLong()) % 60;
 							return hours+"hrs "+minutes+"mins";
-	                    }  
-	                }  
-	            )  
-	        ); 
+	                    }
+	                }
+	            )
+	        );
 		}else{
 			chart.getYAxis()
-			.setLineWidth(1)  
+			.setLineWidth(1)
 			.setLabels(new YAxisLabels().setEnabled(true));
 		}
 		//chart.getYAxis().setGridLineWidth(0);
 		//chart.getYAxis().setGridLineColor("transparent");
-		
+
 		chart.getYAxis().setMin(0);
 		if(categories.length>15) {
 			chart.getXAxis()
-			.setLabels(new XAxisLabels()  
-	            .setRotation(-45)  
-	            .setAlign(Labels.Align.RIGHT)  
+			.setLabels(new XAxisLabels()
+	            .setRotation(-45)
+	            .setAlign(Labels.Align.RIGHT)
 	            .setStyle(new Style()
-	                .setFont("normal 10px Verdana, sans-serif")  
-	            )  
+	                .setFont("normal 10px Verdana, sans-serif")
+	            )
 	        );
 		}
        for(int series=0; series<legend.size();series++) {
@@ -266,14 +266,14 @@ private String getTimeSpent(Long commentCreatedTime) {
 					.setPoints(data.get(legend.get(series))));
 				/*	.setColors(colors[series]);*/
 		}
-		
+
 		if(chartmetadata.getyMaxValue()!=0){
 			chart.getYAxis().setMax(chartmetadata.getyMaxValue());
 		}
 		if(chartmetadata.isShowLegends()){
 			chart.setLegend(new Legend().setEnabled(true));
 		}
-		
+
 		return chart;
 	}
 }

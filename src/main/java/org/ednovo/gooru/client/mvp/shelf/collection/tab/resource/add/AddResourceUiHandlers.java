@@ -37,22 +37,26 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 * @Reviewer 
 *
 */
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResourceImageHandler;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 
 import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageHandler, EventHandler{
 
-	void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr,Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName, List<String> tagList);
+	void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr,Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills,String hostName, List<String> tagList,Map<String,List<Integer>> mediafeaturesAndHazards, String mediaType);
 	
 	void getResourceMetaInfo(String url);
 	
@@ -92,5 +96,18 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl);
 
 	void getResourceImageInfo(String userUrlStr);
+	
+	void addSelectedQuestionType(String type,CollectionQuestionItemDo collectionQuestionItemDo);
+	
+	void setEditQuestionData(CollectionItemDo collectionItemDo);
+	
+	void setHSEditData();
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> SLOT_QUESTION_TYPE = new Type<RevealContentHandler<?>>();
+	
+	public void getDepthOfKnowledges();
+
+	
 
 }

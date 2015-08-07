@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,16 +27,17 @@ package org.ednovo.gooru.client.mvp.search;
 import java.util.HashMap;
 import java.util.List;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.end.study.CloseAssessmentsPlayerEvent;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
@@ -87,8 +88,8 @@ public class AddResourceContainerView extends
 	@UiField
 	HTMLPanel floderTreeContainer, buttonsContainer,
 			createCollectionbuttonsContainer, loadingImage, enableSuccessView;
-	
-	
+
+
 
 	@UiField
 	Button addResourceBtnLbl, okButton;
@@ -108,9 +109,9 @@ public class AddResourceContainerView extends
 
 	@UiField
 	InlineLabel headerTitleDes;
-	
+
 	Label loadingText = null;
-	
+
 	private boolean isLeftFolderClicked = false;
 	HashMap<String,String> urlparams ;
 	private int offset = 0;
@@ -131,9 +132,9 @@ public class AddResourceContainerView extends
 	private static final String O2_LEVEL = "o2";
 
 	private static final String O3_LEVEL = "o3";
-	
+
 	private static final String ASSESSMENT = "assessment";
-	
+
 	boolean isPlayer = false;
 	boolean isTopMostSelected =true;
 	HTMLPanel topMostTreeItem=new HTMLPanel("");
@@ -180,7 +181,7 @@ public class AddResourceContainerView extends
 						topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
 					}
 					ClickHandler handler = new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
@@ -239,7 +240,7 @@ public class AddResourceContainerView extends
 						}
 						isSelectedFolder = true;
 						isSelectedCollection = false;
-						
+
 						if (parent != null)
 							parent.setSelected(false); // TODO FIX ME
 						item.setState(!item.getState(), false);
@@ -254,7 +255,7 @@ public class AddResourceContainerView extends
 						selectedCollectionGooruOid = cureentcollectionTreeItem.getGooruOid();
 						isSelectedCollection = true;
 						isSelectedFolder = false;
-						
+
 					}
 					if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
 							PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
@@ -264,7 +265,7 @@ public class AddResourceContainerView extends
 						topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
 					}
 				}
-			
+
 		});
 		floderTreeContainer.clear();
 		floderTreeContainer.add(topMostTreeItem);
@@ -276,7 +277,7 @@ public class AddResourceContainerView extends
 		}else{
 			topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
-	
+
 		loadingImage.setVisible(false);
 		folderTreePanel.addItem(loadingTreeItem());
 	}
@@ -334,11 +335,10 @@ public class AddResourceContainerView extends
 	}
 
 	public TreeItem loadingTreeItem() {
-		
-		if (AppClientFactory.getCurrentPlaceToken().equals(
-				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
-						PlaceTokens.COLLECTION_PLAY)) {
+
+		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)) {
 			loadingText = new Label(i18n.GL1452());
+			displayErrorLabel.setVisible(false);
 		} else {
 			loadingText = new Label(i18n.GL2051());
 		}
@@ -382,7 +382,7 @@ public class AddResourceContainerView extends
 					.arrow());
 			folderContainer.add(arrowLabel);
 			floderName = new Label();
-			
+
 			floderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
 			floderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
@@ -434,6 +434,7 @@ public class AddResourceContainerView extends
 		private String collectionName = null;
 		private String gooruOid = null;
 		private boolean isOpen = false;
+		private String collectionType;
 
 		public CollectionTreeItem() {
 			initWidget(folderContainer = new FlowPanel());
@@ -462,6 +463,7 @@ public class AddResourceContainerView extends
 			}
 			this.gooruOid = gooruOid;
 			this.collectionName = folderTitle;
+			this.collectionType = collectionType;
 			folderName.setText(folderTitle);
 		}
 
@@ -475,6 +477,10 @@ public class AddResourceContainerView extends
 
 		public String getGooruOid() {
 			return gooruOid;
+		}
+
+		public String getCollectionType() {
+			return collectionType;
 		}
 
 		public String getCollectionName() {
@@ -670,7 +676,7 @@ public class AddResourceContainerView extends
 		dropdownListContainerScrollPanel.setVisible(false);
 		buttonsContainer.setVisible(false);
 		displayCountLabel.setVisible(true);
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)){
 			displayCountLabel.setText(i18n.GL3188());
 			addResourceText.setText(i18n.GL2088());
 			addCollectiorOrReourceText.setText(i18n.GL2089());
@@ -695,11 +701,11 @@ public class AddResourceContainerView extends
 		buttonsContainer.setStyleName(AddResourceContainerCBundle.INSTANCE
 				.css().assignmentButtonsContainer());
 	}
-	
-	
+
+
 	@UiHandler("addResourceBtnLbl")
 	public void addResourceBtnLblClick(ClickEvent event) {
-		
+
 		addingText.setVisible(true);
 		addResourceBtnLbl.setVisible(false);
 		if (currentsearchType.equalsIgnoreCase("collection")) {
@@ -710,16 +716,21 @@ public class AddResourceContainerView extends
 			isCollectionSearch = false;
 		}
 		if (isResourceSearch) {
-			
 			if (isSelectedCollection) {
-				getUiHandlers().addResourceToCollection(
-						selectedCollectionGooruOid, currentsearchType,
-						cureentcollectionTreeItem.getCollectionName());
+				boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getCollectionType());
+				if(flag){
+					displayErrorLabel.setVisible(false);
+					getUiHandlers().addResourceToCollection(selectedCollectionGooruOid, currentsearchType,cureentcollectionTreeItem.getCollectionName());
+				}else{
+					getButtonVisiblity();
+					displayErrorLabel.setVisible(true);
+					displayErrorLabel.setText("Oops! can copy only questions for Assessments.");
+				}
+
 			} else if (isSelectedFolder) {
 				displayErrorLabel.setText(i18n.GL3193());
 				getButtonVisiblity();
 			} else {
-			
 				if (!isSelectedCollection && !isSelectedFolder) {
 					restrictionToAddResourcesData(i18n.GL1134());
 					getButtonVisiblity();
@@ -729,7 +740,7 @@ public class AddResourceContainerView extends
 			if (isSelectedFolder) {
 				getUiHandlers().addCollectionToFolder(selectedFolderGooruOid,currentsearchType,currentFolderSelectedTreeItem.floderName.getText(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
 				urlparams.clear();
-			} 
+			}
 			if(isTopMostSelected) {
 				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
 			}
@@ -832,6 +843,7 @@ public class AddResourceContainerView extends
 				AppClientFactory.getPlaceManager().revealPlace(
 						PlaceTokens.SHELF, params);
 				AppClientFactory.fireEvent(new CloseCollectionPlayerEvent(true));
+				AppClientFactory.fireEvent(new CloseAssessmentsPlayerEvent(true));
 			}
 		});
 

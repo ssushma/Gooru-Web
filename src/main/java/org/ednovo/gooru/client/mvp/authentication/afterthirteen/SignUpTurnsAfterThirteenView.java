@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,9 +27,12 @@ package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.authentication.uc.SignUpDontWorryView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
@@ -38,9 +41,6 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -61,7 +61,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 /**
- * 
+ *
  * @fileName : SignUpTurnsAfterThirteenView.java
  *
  * @description :
@@ -127,42 +127,32 @@ public class SignUpTurnsAfterThirteenView extends
 	public void displayView() {
 		appPopUp = new AppPopUp(i18n.GL0697());
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
-		/*
-		 * appPopUp.setStyleName(RegisterCBundle.INSTANCE.css()
-		 * .registerPopupStyle());
-		 */appPopUp.setGlassEnabled(true);
+		appPopUp.setGlassEnabled(true);
 		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css()
 				.signUpPopUpGlassCss());
 
-		/*
-		 * appPopUp.setAutoHideOnHistoryEventsEnabled(false);
-		 * 
-		 * appPopUp.getElement().getStyle().setZIndex(99);
-		 */Window.enableScrolling(false);
+		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		// appPopUp.getElement().setAttribute("style",
-		// "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
-		// appPopUp.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 		appPopUp.center();
 	}
 	/**
-	 * 
-	 * @function setUiAndIds 
-	 * 
+	 *
+	 * @function setUiAndIds
+	 *
 	 * @created_date : 06-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -248,7 +238,6 @@ public class SignUpTurnsAfterThirteenView extends
 		tooltipContent.getElement().setAttribute("title", "");
 
 		btnSubmit.getElement().setAttribute("style", "margin-left: 10px");
-		// txtEmailId.addBlurHandler(new OnBlurHandler());
 		txtEmailId.addKeyUpHandler(new OnKeyUpHandler());
 
 		lblUpdating.setVisible(false);
@@ -273,21 +262,21 @@ public class SignUpTurnsAfterThirteenView extends
 		}
 	}
 	/**
-	 * 
-	 * @function sendConfirmationMail 
-	 * 
+	 *
+	 * @function sendConfirmationMail
+	 *
 	 * @created_date : 06-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param params
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -315,7 +304,7 @@ public class SignUpTurnsAfterThirteenView extends
 
 	/*
 	 * private class OnBlurHandler implements BlurHandler {
-	 * 
+	 *
 	 * @Override public void onBlur(BlurEvent event) { if (event.getSource() ==
 	 * txtEmailId && txtEmailId.getText() != null &&
 	 * !txtEmailId.getText().equalsIgnoreCase("")) { boolean isValidFrom =
@@ -329,15 +318,15 @@ public class SignUpTurnsAfterThirteenView extends
 	 * emailValidUc.addStyleName(res.css().errorLbl());
 	 * emailValidUc.setText(MessageProperties.i18n.GL0464);
 	 * emailValidUc.setVisible(true); } }
-	 * 
+	 *
 	 * } }
 	 */
 	/**
 	 * Checks the availability of user name, entered by User.
-	 * 
+	 *
 	 * @param userName
 	 * @param type
-	 * 
+	 *
 	 */
 	public boolean checkUserAvailability(String userName, final String type) {
 
@@ -371,10 +360,10 @@ public class SignUpTurnsAfterThirteenView extends
 		return isValid;
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : SignUpTurnsAfterThirteenView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -478,19 +467,16 @@ public class SignUpTurnsAfterThirteenView extends
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLoad() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUnload() {
-		// TODO Auto-generated method stub
 
 	}
 

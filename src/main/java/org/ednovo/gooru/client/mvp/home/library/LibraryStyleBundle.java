@@ -81,12 +81,13 @@ public interface LibraryStyleBundle extends CssResource {
 	
 	String lpsPartnerLogo();
 	String lpsHeader();
-	
+	String yesdHeader();
 	String coreDistrictLogo();
 	String coreDistrictHeader();
 	String districtSpecificPartnersMainCore();
 	String districtSpecificPartnersInnerMainCore();
 	String districtSpecificPartnerLogoCore();
+	String districtSpecificPartnerLogoYesd();
 	String districtLibraryHeaderTextCore();
 	String districtLibrarySubHeaderTextCore();
 	
@@ -100,4 +101,9 @@ public interface LibraryStyleBundle extends CssResource {
 	String topicBlockStyle();
 	
 	String listViewBtnStyle();
+	
+	String districtSpecificPartnersMainYesd();
+	String districtSpecificPartnersInnerMainYesd();
+	String districtLibraryHeaderTextYesd();
+	String districtLibrarySubHeaderTextYesd();
 	}

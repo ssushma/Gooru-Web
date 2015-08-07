@@ -5,13 +5,16 @@
 			<g:HTMLPanel styleName="panel panel-default">
 				<g:HTMLPanel styleName="panel-heading">
 					<div class="no-gutter">
-						<g:HTMLPanel styleName="col-md-12 col-sm-12 col-xs-12 viewContainer">
+						<g:HTMLPanel styleName="col-md-6 col-sm-6 col-xs-6 viewContainer">
 							<span>
 								<img title="Number of Remixes" src="images/rev-arrows.png"/> <g:Label styleName="authorName" ui:field="remixCountLbl"></g:Label>
 							</span>
 							<span>
 								<img title="Number of Views" src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
 							</span>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-md-6 col-sm-6 col-xs-6 remixButton">
+							<g:Button styleName="primary" ui:field="remixBtn">Remix</g:Button>
 						</g:HTMLPanel>
 						<div class="clearfix"></div>
 					</div>
@@ -24,10 +27,10 @@
 							</a>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-md-6 col-sm-6 collectionDesc">
-							<g:Label styleName="collectionTitleincoll" ui:field="collectionTitle"/> 
+							<g:Label styleName="collectionTitleincoll" ui:field="collectionTitle"/>
 							<g:HTMLPanel styleName="userDetails">
-								<g:Image ui:field="imgAuthor"/> 
-								<g:Label ui:field="authorName" styleName="authorName authorNameAddLeft"/> 
+								<g:Image ui:field="imgAuthor"/>
+								<g:Label ui:field="authorName" styleName="authorName authorNameAddLeft"/>
 								<g:HTMLPanel ui:field="creatorPanel"></g:HTMLPanel>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="collectionDescription" ui:field="collectionDescription"/>
@@ -45,12 +48,12 @@
 						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="panel-footer no-gutter">
+				<!-- <g:HTMLPanel styleName="panel-footer no-gutter">
 					<g:HTMLPanel styleName="col-md-12 col-sm-12 remixButton">
 						<g:Button styleName="primary" ui:field="remixBtn">Remix</g:Button>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-				</g:HTMLPanel>
+				</g:HTMLPanel> -->
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

@@ -29,6 +29,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -42,6 +43,7 @@ public class CheckBoxAnswerOptionView extends Composite{
 	@UiField public Label answerChoiceResult,radioYesButton,radioNoButton;
 	@UiField HTML answerOptionText;
 	@UiField public RadioButton answerOptionYesRadioButton,answerOptionNoRadioButton;
+	@UiField FlowPanel questionsMainPanel;
 	private int answerId;
 	private boolean isAnswerCorrect;
 	private String answerText="";
@@ -51,6 +53,7 @@ public class CheckBoxAnswerOptionView extends Composite{
 	 */
 	public CheckBoxAnswerOptionView(String questionText,String questionSerialNum){
 		initWidget(questionAnswerOptionViewUiBinder.createAndBindUi(this));
+		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
 		this.answerText=questionText;
 		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText!=null?questionText:""));
 		answerOptionYesRadioButton.setName(questionSerialNum);

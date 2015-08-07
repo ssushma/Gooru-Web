@@ -27,14 +27,13 @@ package org.ednovo.gooru.client.mvp.play.resource.narration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -48,6 +47,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -62,6 +62,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	@UiField HTML resourceTitle,narrationText;
 	@UiField Label narrationCloseButton,authorName;
 	@UiField Button okButton;
+	@UiField HTMLPanel narrartionpopupPnl;
 	public PopupPanel appPopUp;
 	
 	GlobalTooltipWithButton globalTooltipWithButton;
@@ -81,8 +82,8 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		super(eventsBus);
 		appPopUp=new NarrationPopupPanel(true);
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
-		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
-		appPopUp.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().narrationPopupContainer());
+		narrartionpopupPnl.getElement().setId("narrartionpopupPnl");
+		appPopUp.setStyleName("narrationPopupContainer");
 		narrationCloseButton.addClickHandler(new CloseNarrationPopupEvent());
 		okButton.addClickHandler(new CloseNarrationPopupEvent());
 		authorName.setText(i18n.GL0423());

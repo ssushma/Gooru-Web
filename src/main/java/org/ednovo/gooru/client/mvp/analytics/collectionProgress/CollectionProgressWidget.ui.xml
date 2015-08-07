@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressCBundle" field="res"/>
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<ui:style field="unitStyle" src="collectionProgress.css" />
 	 <g:HTMLPanel>
 	 <g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel1">
@@ -34,4 +34,4 @@
 	 </g:HTMLPanel>
 	 </g:HTMLPanel>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

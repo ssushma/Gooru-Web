@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.search.CollectionItemSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
@@ -36,9 +39,6 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;

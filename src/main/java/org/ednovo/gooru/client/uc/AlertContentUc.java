@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -129,7 +129,7 @@ public class AlertContentUc extends Composite {
 	public void onOkClick(ClickEvent clickEvent) {
 		alertBoxUc.hide();
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+		if(placeRequest.getNameToken().equals(PlaceTokens.SEARCH_RESOURCE)||placeRequest.getNameToken().equals(PlaceTokens.MYCONTENT)){
 			Window.enableScrolling(true);
 		}
 	}

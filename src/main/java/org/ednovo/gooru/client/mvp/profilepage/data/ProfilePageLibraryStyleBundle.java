@@ -42,24 +42,12 @@ import com.google.gwt.resources.client.CssResource;
 
 
 public interface ProfilePageLibraryStyleBundle extends CssResource {
-	String open();
 	String active();
 	String resourceImage();
-	String conceptTitle();
-	String collectionSmall();
-	String assessmentSmall();
-	String conceptActive();
-	String lessonTitle();
-	String collection();
-	String assessment();
 	String collectionViewerSubStyle();
 	String collectionInfoSubStyle();
 	String resourcesInsideSubStyle();
 	String emptyFolderContainer();
-	String libraryTitle();
-	String libraryConceptTitle();
-	String libraryConceptActive();
-	String marginTop5();
 	String folderTitleStyle();
 	String loadingImageStyle();
 }

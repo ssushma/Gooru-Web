@@ -24,9 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 /**
  * @fileName : IsSearchMainView.java
  *

@@ -28,16 +28,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryListDo;
+import org.ednovo.gooru.application.shared.model.library.SubjectDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
-import org.ednovo.gooru.shared.model.library.SubjectDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.TextAlign;
@@ -225,7 +225,12 @@ public abstract class DistrictMenuNav extends Composite {
 			setGooruAnrText(i18n.GL2071(), i18n.GL2072(),false);
 		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
 			setGooruAnrText(i18n.GL2184(), i18n.GL2185(),false);
-		}
+		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YCGL_LIBRARY)) {
+			learnText.setText(i18n.GL2077());
+			setGooruAnrText(i18n.GL3291_1(), i18n.GL3292_1(),false);
+			learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
+			learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
+		} 
 
 		aboutGooruAnr.setTarget("_blank");
 		aboutGooruAnr.addStyleName(districtStyleUc.aboutGooruAnrPadding());
@@ -250,8 +255,8 @@ public abstract class DistrictMenuNav extends Composite {
 		elaPanel.getElement().setId("epnlElaPanel");
 		elaCourses.getElement().setId("pnlElaCourses");
 		learnPanel.getElement().setId("epnlLearnPanel");
-		learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
-		learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
+		//learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
+		//learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
 		learnCourses.getElement().setId("pnlLearnCourses");
 		aboutGooruAnr.getElement().setId("lnkAboutGooruAnr");
 	}

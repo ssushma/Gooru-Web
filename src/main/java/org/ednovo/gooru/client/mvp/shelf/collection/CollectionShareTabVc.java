@@ -28,9 +28,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
@@ -46,11 +51,6 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -392,7 +392,7 @@ public class CollectionShareTabVc extends Composite {
 			privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = true;
-				if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("reviewed")){
+				if(collection.getPublishStatus()!=null && collection.getPublishStatus().equalsIgnoreCase("reviewed")){
 						rbPublic.setVisible(false);
 						lblPublishPending.setVisible(false);
 						publishedPanel.setVisible(true);
@@ -403,7 +403,7 @@ public class CollectionShareTabVc extends Composite {
 			publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = false;
-				if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
+				if(collection.getPublishStatus()!=null && collection.getPublishStatus().equalsIgnoreCase("pending")){
 						selectPrivateResource("pending");
 						rbPublic.setVisible(false);
 						lblPublishPending.setVisible(true);
@@ -416,7 +416,7 @@ public class CollectionShareTabVc extends Composite {
 			privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = true;
-			if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
+			if(collection.getPublishStatus()!=null && collection.getPublishStatus().equalsIgnoreCase("pending")){
 					selectPrivateResource("pending");
 					rbPublic.setVisible(false);
 					lblPublishPending.setVisible(true);
@@ -748,7 +748,7 @@ public class CollectionShareTabVc extends Composite {
 								}
 								if(result.getSharing().equalsIgnoreCase(share)){
 									if(result.getPublishStatus()!=null){
-										if(result.getPublishStatus().getValue().equals("reviewed")){
+										if(result.getPublishStatus().equals("reviewed")){
 											publishedPanel.setVisible(true);
 											rbPublic.setVisible(false);
 											lblPublishPending.setVisible(false);
@@ -769,8 +769,8 @@ public class CollectionShareTabVc extends Composite {
 									lblPublishPending.setVisible(true);
 								}
 								
-								if(result!=null && result.getPublishStatus()!=null && result.getPublishStatus().getValue()!=null){
-									AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),result.getPublishStatus().getValue(),true,result));
+								if(result!=null && result.getPublishStatus()!=null && result.getPublishStatus()!=null){
+									AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),result.getPublishStatus(),true,result));
 								}else{
 									AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),null,true,result));
 								}
@@ -857,7 +857,7 @@ public class CollectionShareTabVc extends Composite {
 
 	public void onReveal() {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", "!collection-search");
+		params.put("type", PlaceTokens.COLLECTION_SEARCH);
 		params.put("shareType", "share");
 		if (socialShareLinksView.getshareLinkTxtBox().getText().length() < 4) {
 			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(collection.getGooruOid(), params, getShareShortenUrlAsyncCallback());

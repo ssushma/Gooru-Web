@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,8 +29,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.register.NewRegisterCBundle;
@@ -43,8 +45,6 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -70,18 +70,18 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class ResourceRegister extends PopupPanel{
 
-	
-	
+
+
 	@UiField
 	TextBox emailIdTxtBox;
 
 	@UiField
 	Anchor cancelAnr;
-	
+
 	@UiField
 	Anchor iHaveAcc;
 
@@ -96,10 +96,10 @@ public class ResourceRegister extends PopupPanel{
 
 	@UiField
 	SimplePanel dateSimPanel;
-	
+
 	@UiField Label wantToSaveAndShareText,getAnAccountText,signUpGooruText,birthDateText,emailText;
   @UiField FlowPanel headerPanel,buttonContainer,loginContainer;
-	
+
 	private DateBoxUc dateBoxUc;
 
 	protected UserDo userDo;
@@ -109,55 +109,55 @@ public class ResourceRegister extends PopupPanel{
 	private SimpleAsyncCallback<UserDo> registerAsyncCallback;
 
 	private String dob;
-	
+
 //	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = i18n.GL0214;
-	
+
 	private static final String PARENT = "Parent";
-	
+
 	private static final String EMAIL = "email";
-	
+
 	private static final String BIRTH_DAY = "birthday";
-	
+
 	private static final String GOORU_UID = "gooruUid";
-	
+
 	private static final String ACCOUNT_TYPE = "accountType";
-	
+
 	private static final String DATE_OF_BIRTH = "dateOfBirth";
-	
+
 	private static final String FIRST_NAME = "firstName";
-	
+
 	private static final String FIRSTNAME = "firstname";
-	
+
 	private static final String USER_NAME = "userName";
-	
+
 	private static final String PASSWORD = "password";
-	
+
 	private static final String EMAIL_ID = "emailId";
-	
+
 	private static final String ORGANIZATION_CODE = "organizationCode";
-	
+
 	private static final String CHILD_DOB = "childDOB";
-	
+
 	private static final String LAST_NAME = "lastName";
-	
+
 	private static final String LASTNAME = "lastname";
-	
+
 	private static final String GOORU = "gooru";
-	
+
 	private static final String PWD_VALUE = "041299";
-	
+
 	private static final String AT_SYMBOL = "@";
-	
+
 	private static final String NON_SYMBOL = "NonParent";
-	
-	
+
+
 	private static FaqSlideUiBinder uiBinder = GWT
 			.create(FaqSlideUiBinder.class);
 
 	@UiTemplate("ResourceRegister.ui.xml")
 	interface FaqSlideUiBinder extends UiBinder<Widget, ResourceRegister> {
 	}
-	
+
 	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
@@ -173,42 +173,42 @@ public class ResourceRegister extends PopupPanel{
 		wantToSaveAndShareText.getElement().setId("lblWantToSaveAndShareText");
 		wantToSaveAndShareText.getElement().setAttribute("alt",i18n.GL0669());
 		wantToSaveAndShareText.getElement().setAttribute("title",i18n.GL0669());
-		
+
 		getAnAccountText.setText(i18n.GL0670());
 		getAnAccountText.getElement().setId("lblGetAnAccountText");
 		getAnAccountText.getElement().setAttribute("alt",i18n.GL0670());
 		getAnAccountText.getElement().setAttribute("title",i18n.GL0670());
-		
+
 		signUpGooruText.setText(i18n.GL0671());
 		signUpGooruText.getElement().setId("lblSignUpGooruText");
 		signUpGooruText.getElement().setAttribute("alt",i18n.GL0671());
 		signUpGooruText.getElement().setAttribute("title",i18n.GL0671());
-		
+
 		birthDateText.setText(i18n.GL0672());
 		birthDateText.getElement().setId("lblBirthDateText");
 		birthDateText.getElement().setAttribute("alt",i18n.GL0672());
 		birthDateText.getElement().setAttribute("title",i18n.GL0672());
-		
+
 		emailText.setText(i18n.GL0212());
 		emailText.getElement().setId("lblEmailText");
 		emailText.getElement().setAttribute("alt",i18n.GL0212());
 		emailText.getElement().setAttribute("title",i18n.GL0212());
-		
+
 		goBtnUc.setText(i18n.GL0673());
 		goBtnUc.getElement().setId("btnSignMeUp");
 		goBtnUc.getElement().setAttribute("alt",i18n.GL0673());
 		goBtnUc.getElement().setAttribute("title",i18n.GL0673());
-		
+
 		cancelAnr.setText(i18n.GL0674());
 		cancelAnr.getElement().setId("lnkCancel");
 		cancelAnr.getElement().setAttribute("alt",i18n.GL0674());
 		cancelAnr.getElement().setAttribute("title",i18n.GL0674());
-		
+
 		iHaveAcc.setText(i18n.GL0675());
 		iHaveAcc.getElement().setId("lnkHaveAcc");
 		iHaveAcc.getElement().setAttribute("alt",i18n.GL0675());
 		iHaveAcc.getElement().setAttribute("title",i18n.GL0675());
-		
+
 		//i18n.GL0675
 		dateBoxUc = new DateBoxUc(true,false,false);
 		dateSimPanel.add(dateBoxUc);
@@ -224,21 +224,21 @@ public class ResourceRegister extends PopupPanel{
 		emailIdTxtBox.addBlurHandler(new OnEmailBlur());
 		emailIdTxtBox.getElement().setId("txtEmail");
 		StringUtil.setAttributes(emailIdTxtBox, true);
-	
-	
-	
+
+
+
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
-		
+
 		emailValidationUc.setVisible(false);
 		dateValidationUc.setVisible(false);
 		this.setGlassEnabled(true);
 		MixpanelUtil.Arrive_ResourceRegisterPopup();
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-		
+
 		this.setStyleName("guidePopUpContainer");
 		this.getElement().getStyle().setWidth(790, Unit.PX);
-		
+
 		headerPanel.getElement().setId("fpnlHeaderPanel");
 		dateSimPanel.getElement().setId("spnlDateSimPanel");
 		dateValidationUc.getElement().setId("errlblDateValidationUc");
@@ -250,7 +250,7 @@ public class ResourceRegister extends PopupPanel{
 		this.center();
 
 	}
-	
+
 	@UiHandler("cancelAnr")
 	public void onCancelClick(ClickEvent clickEvent) {
 		hide();
@@ -267,18 +267,18 @@ public class ResourceRegister extends PopupPanel{
 		LoginPopupUc popup = new  LoginPopupUc(new HeaderUc()) {
 			@Override
 			public void onLoginSuccess() {
-				
+
 			}
 		};
 		popup.setGlassEnabled(true);
 		popup.show();
-		popup.center();	 
+		popup.center();
 	}
 
-	
-	
+
+
 	/**
-	 * if ok button is clicked it calls the user check availability method 
+	 * if ok button is clicked it calls the user check availability method
 	 * @param event instance of {@link ClickEvent}
 	 */
 	@UiHandler("goBtnUc")
@@ -288,11 +288,11 @@ public class ResourceRegister extends PopupPanel{
 	}
 
 	/**
-	 * Checks user availability with user email id and user account type  
-	 * 
+	 * Checks user availability with user email id and user account type
+	 *
 	 * @param accountType user account type nonParent, parent, child
 	 * @param isValid true if email id satisfy the condition else false
-	 * @param emailId of the user that is mandatory to check availability   
+	 * @param emailId of the user that is mandatory to check availability
 	 */
 	private void checkAvailability(final String accountType, boolean isValid,
 			final String emailId) {
@@ -310,14 +310,14 @@ public class ResourceRegister extends PopupPanel{
 									}
 								});
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("ResourceRegister : checkAvailability : "+e.getMessage());
 			}
 		}
 	}
 
 	/**
 	 * Send confirmation mail to user after successful registration
-	 * @param params  contains emailId, accountType, dataOfBirth 
+	 * @param params  contains emailId, accountType, dataOfBirth
 	 */
 	private void sendConfirmationMail(Map<String, String> params) {
 
@@ -339,9 +339,9 @@ public class ResourceRegister extends PopupPanel{
 	 * validate the user availability after check availability calls,
 	 * validate the email id already has been taken by some one and validate the confirm status of user account
 	 * If emailId already has been taken by some one it brings alert popup
-	 * 
+	 *
 	 * @param user instance of {@link UserDo} which has user all user info
-	 * @param accountType of user 
+	 * @param accountType of user
 	 * @param emailId of user
 	 */
 	private void validateAvailability(UserDo user, String accountType,
@@ -379,8 +379,8 @@ public class ResourceRegister extends PopupPanel{
 	}
 
 	/**
-	 * Register a new user after check availability and validation  
-	 * @param accountType of user 
+	 * Register a new user after check availability and validation
+	 * @param accountType of user
 	 * @param email of user
 	 * @param dob of user
 	 */
@@ -406,7 +406,7 @@ public class ResourceRegister extends PopupPanel{
 	}
 
 	/**
-	 * Validate emailId and dateOfBirth 
+	 * Validate emailId and dateOfBirth
 	 * @return true if emailId,dateOfBirth are satisfy the condition else false
 	 */
 	private boolean hasValidateData() {
@@ -417,10 +417,10 @@ public class ResourceRegister extends PopupPanel{
 				.isEmpty()) && dateBoxUc.hasValidateDate()) {
 			Date date = dateBoxUc.getValue();
 			int age = getAge(date);
-		
-			
+
+
 			if (age < 13) {
-				 
+
 				dob = dateBoxUc.getDate();
 				hide();
 				parentRegisterVc = new ParentRegisterVc();
@@ -437,14 +437,14 @@ public class ResourceRegister extends PopupPanel{
 		} else {
 			dateBoxUc.getDatePickerUc().hide();
 		}
-		
+
 		if ((email == null || (email != null && email.isEmpty()))
 				&& (dob == null || (dob != null && dob.isEmpty()))) {
 			emailValidationUc
 					.setText(StringUtil.generateMessage(i18n.GL0082(), EMAIL));
 			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
 			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
-			  
+
 			emailValidationUc.setVisible(true);
 			dateValidationUc.setText(StringUtil.generateMessage(i18n.GL0082(),
 					BIRTH_DAY));
@@ -514,7 +514,7 @@ public class ResourceRegister extends PopupPanel{
 			if (dateBoxUc.dateValidation()){
 				if (!(dateBoxUc.getValue() == null || dateBoxUc.getDateBox().getText()
 						.isEmpty()) && dateBoxUc.hasValidateDate()) {
-					
+
 					Date date = dateBoxUc.getValue();
 					int age = getAge(date);
 					if (age < 13) {
@@ -581,7 +581,7 @@ public class ResourceRegister extends PopupPanel{
 			SimpleAsyncCallback<UserDo> registerAsyncCallback) {
 		this.registerAsyncCallback = registerAsyncCallback;
 	}
-	
+
 	/**
 	 * Calculate the age from entered dataOfbirth
 	 * @param birthDate to validate the age
@@ -590,15 +590,15 @@ public class ResourceRegister extends PopupPanel{
 	private int getAge(Date birthDate){
 		long ageInMillis = new Date().getTime() - birthDate.getTime();
 		Date age = new Date(ageInMillis);
- 
+
 		return age.getYear()- 70;
 	}
-	
+
 	@Override
 	public void hide(boolean autoClose) {
 		super.hide(true);
 		Window.enableScrolling(true);
 	}
-	
-	
+
+
 }

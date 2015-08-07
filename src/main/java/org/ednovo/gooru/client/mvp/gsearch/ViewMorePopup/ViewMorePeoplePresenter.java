@@ -29,10 +29,10 @@ package org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.model.content.ResourceCollDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;

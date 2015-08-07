@@ -10,15 +10,18 @@
 }
 #gooruSearchMainContainer .searchFilters{
 	display: inline-block;
-	width: 65%;
-	margin-top: 20px;
+	/* width: 40%; */
+	margin-left: 20px;
+	margin-bottom: 5px;
+	margin-top: 3px;
 }
 #gooruSearchMainContainer .subNavigation{
-	background: #e8e7e7;
-	padding-top: 5px;
+	background: #ffffff;
+	height: 50px;
+	box-shadow: 0px 1px 1px 0px #ccc;
 }
 #gooruSearchMainContainer .viewContainer{
-	text-align:right;
+
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 	margin:0 0;
@@ -32,7 +35,7 @@
 	margin-bottom:-1px;
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li:last-child a{
-	border-right: 1px solid #d1cfcf;
+	/* border-right: 1px solid #d1cfcf; */
 }
 
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a{
@@ -40,15 +43,14 @@
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a{
     display:block;
-	padding:16px 45px;
 	color:#515151;
 	background:#dddddd;
 	border-left:1px solid #d1cfcf;
 	font-size:13px;
-	height: 57px;
-	line-height: 23px;
-	border-radius: 6px 6px 0 0 !important;
-	
+	/* height: 57px; */
+	/* line-height: 23px; */
+	border-radius: 4px !important;
+
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:hover, #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:focus{
 	opacity:0.75;
@@ -72,7 +74,7 @@
 
 #gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 	padding:0 0;
-	margin:10px 0;
+	padding-top: 4px;
 	display:inline-block;
 }
 #gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li{
@@ -119,11 +121,13 @@
 	background:url(../images/folders/panel/assessment-type.png) no-repeat 18px 6px;
 }
 #gooruSearchMainContainer .seachRightNavigation{
-	text-align:right;
-	margin:11px 0;
+	text-align:left;
+	margin:15px 0 0;
+	display: table;
+	width: 100%;
 }
 #gooruSearchMainContainer .collectionDetails{
-	margin-bottom:10px;
+	/* margin-bottom:7px; */
 }
 #gooruSearchMainContainer .btn-group{
 	position: relative;
@@ -135,18 +139,21 @@
 	display:inline-block;
 	vertical-align:middle;
 	padding:0 20px;
-	min-height:40px;
 	border-left:1px solid #cccccc;
 	font-size:13px;
+	min-height: 50px;
+	padding-top: 10px;
 }
 #gooruSearchMainContainer .authorDetails .input-group {
-	
+
 }
 #gooruSearchMainContainer .authorDetails .input-group .form-control{
 	display:inline-block;
 	vertical-align:middle;
 	width:auto;
 	float:none;
+	border-radius: 4px;
+	height: 30px;
 }
 #gooruSearchMainContainer .authorDetails .input-group  span{
 	display:inline-block;
@@ -187,8 +194,8 @@
 
 
 #gooruSearchMainContainer .searchStandard{
-	
-	/* 
+
+	/*
 	background: #dddddd;
 
 	Safari 4-5, Chrome 1-9
@@ -205,14 +212,14 @@
 
 	Opera 11.10+
 	background: -o-linear-gradient(top, #666666, #515151); */
-	
+
 	border-radius:3px 3px;
 	font-size:10px;
 	padding:3px 3px;
 	display:inline-block;
 	margin:8px 0;
-	
-	
+
+
 }
 
 
@@ -222,9 +229,12 @@
 	color:#0c74be;
 	margin-top:2px;
     text-overflow: ellipsis;
-    white-space: normal;
+    white-space: nowrap;
     cursor:pointer;
     max-height:42px;
+    overflow: hidden;
+    margin-left: 10px;
+	margin-top: 10px;
 }
 
 #gooruSearchMainContainer .libraryMainContainerBlock .collectionTitleincoll{
@@ -240,8 +250,9 @@
 }
 #gooruSearchMainContainer .libraryMainContainerBlock .resourceAuthorDetails{
 	white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  	text-overflow: ellipsis;
+  	overflow: hidden;
+  	margin-left: 10px;
 }
 #gooruSearchMainContainer .userDetails img{
 	width:30px;
@@ -274,14 +285,16 @@
 }
 
 #gooruSearchMainContainer .standerdContainer{
-	padding:5px 10px;
-	border-bottom:1px solid #dddddd;
-	max-height: 55px;
-  	min-height: 55px;
+	border-bottom: 1px solid #ddd;
+	max-height: 40px;
+	min-height: 40px;
+	padding-left: 10px;
+	box-sizing: content-box;
 }
 #gooruSearchMainContainer .resourcesInside {
 	padding:8px 8px;
 	min-height: 8.9547em;
+	height: 8.9547em;
 }
 #gooruSearchMainContainer .resourcesInside p {
 	margin-left: 2.5%;
@@ -395,17 +408,11 @@
 	margin:7px 0 6px 0;
 }
 #gooruSearchMainContainer .viewContainer span{
-	margin-right:5px;
-	font-size:13px;
+	font-size: 12px;
 	color:#515151;
 }
 #gooruSearchMainContainer .SmallWidthContainer{
   margin: 0 auto;
-  padding: 2px 10px;
-  background: #F7F6F6;
-  border-radius: 6px 6px;
-  margin-top: 135px;
-	
 }
 #gooruSearchMainContainer .remixButton{
 	text-align:right;
@@ -420,6 +427,10 @@
 }
 #gooruSearchMainContainer .borderBox{
 	padding:20px 8px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	/* background-color: #fff; */
 }
 .noSearchResultsTextContainer{
 	background-color: #fff;
@@ -457,7 +468,7 @@
 }
 
 /*
-Back to top button 
+Back to top button
 */
 #gooruSearchMainContainer  #back-top {
 	position: fixed;
@@ -476,7 +487,7 @@ Back to top button
 	-webkit-transition: 1s;
 	-moz-transition: 1s;
 	transition: 1s;
-	
+
 }
 #gooruSearchMainContainer  #back-top a:hover {
 	color: #000;
@@ -503,8 +514,42 @@ Back to top button
 #gooruSearchMainContainer .dropdown-menu:before {
   position: absolute;
   top: -7px;
-  right: 9px;
-  left:auto;
+  left: 33px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+#gooruSearchMainContainer .dropdown-menu .liPanelStyle {
+    text-align: left;
+    font-weight: bold;
+    padding-left: 10px;
+    font-size: 9pt;
+}
+#gooruSearchMainContainer .dropdown-menu .liPanelStylenonBold {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 9pt;
+    padding-bottom: 10px;
+}
+
+#gooruSearchMainContainer .dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  left: 34px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+#gooruSearchMainContainer .ratingandGrid .dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  left: 263px;
   display: inline-block;
   border-right: 7px solid transparent;
   border-bottom: 7px solid #ccc;
@@ -513,20 +558,23 @@ Back to top button
   content: '';
 }
 
-#gooruSearchMainContainer .dropdown-menu:after {
+#gooruSearchMainContainer .ratingandGrid .dropdown-menu:after {
   position: absolute;
   top: -6px;
-  right: 10px;
-  left:auto;
+  left: 264px;
   display: inline-block;
   border-right: 6px solid transparent;
   border-bottom: 6px solid #ffffff;
   border-left: 6px solid transparent;
   content: '';
 }
+#gooruSearchMainContainer .seachRightNavigation li:hover {
+    background: none repeat scroll 0 0 #c3ddee;
+}
+
+
 #gooruSearchMainContainer .seachRightNavigation .dropdown-menu {
-	left: auto;
-	right: 0;
+	/* right: 0; */
 	top: 120%;
 	font-size: 12px;
 	min-width: 245px;
@@ -554,18 +602,25 @@ Back to top button
 	text-align: left;
 }
 #gooruSearchMainContainer .searchResultsBox{
-	font-size: 23px;
-	padding: 9px;
-	margin-top: 12px;
-	clear: both;
-	display: inline-block;
-	vertical-align: top;
+	font-size: 14px;
+	vertical-align: middle;
+	margin-right: 12px;
 }
 #gooruSearchMainContainer .seachRightNavigation .btn-primary {
 	background-color: #87badd;
 	border-color: #7cb1d5;
 	color: #fff;
+	padding: 4px 6px;
+	font-size: 12px;
 }
+#gooruSearchMainContainer .seachRightNavigation .btn-primarysearch {
+	background-color: #87badd;
+	border-color: #7cb1d5;
+	color: #fff;
+	padding: 4px 6px;
+	font-size: 12px;
+}
+
 
 
 #gooruSearchMainContainer .grade ul{
@@ -579,6 +634,16 @@ Back to top button
 	padding:0 0;
 	list-style:none;
 	display:inline-block;
+}
+#gooruSearchMainContainer .standards ul li{
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	display:inline-block;
+	width:100%;
+}
+#gooruSearchMainContainer .grade ul li:hover{
+    background: none repeat scroll 0 0 #c3ddee;
 }
 
 #gooruSearchMainContainer .grade ul li a{
@@ -604,7 +669,7 @@ Back to top button
 	width:auto;
 	height:auto;
 	border-radius:2px 2px;
-	
+
 }
 #gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu{
 	min-width:300px;
@@ -701,7 +766,107 @@ word-wrap: break-word;
 
 
 
+
+button#btnSearchType .caret {
+	margin-right: 5px;
+	margin-left: 13px;
+}
+
+
+.seachLeftNavigation .dropdown{
+	font-size: 13px !important;
+	color: rgb(81, 81, 81);
+	cursor: pointer !important;
+	text-decoration: none !important;
+  	width: 97%;
+	box-sizing: border-box;
+	background: rgb(255, 255, 255);
+	position: absolute;
+	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
+.seachLeftNavigation .dropdown .dropdownItem{
+	font-size: 13px!important;
+	color: #515151;
+	cursor: pointer!important;
+	text-decoration: none!important;
+	padding: 4px 11px;
+	box-sizing: border-box;
+	background: rgb(255, 255, 255);
+	z-index: 90;
+	background-color: #fff;
+	background-clip: padding-box;
+}
+
+.seachLeftNavigation .dropdown .dropdownItem:hover{
+	background: #cfe3f1;
+}
+
+.no-gutter-col{
+	width: 115px !important;
+	margin-top: 3px;
+	padding-top: 5px;
+}
+
+#gooruSearchMainContainer .subFilters {
+	background: #F7F6F6;
+	padding-top: 39px;
+	clear: both;
+	min-height: 86px;
+}
+
+.subFilters .searchFiltersContainer{
+	width: 1000px;
+	margin: 0px auto;
+	float: none;
+}
+
+.seachRightNavigation .panelFilterOptions{
+	vertical-align: middle;
+	margin: 0% auto;
+	display: table-cell;
+	width: 30%;
+	border-right: 1px solid #ccc;
+}
+
+.overrideFilterColor{
+	background-color: #C3DDEE;
+	background: -moz-linear-gradient(center top, #C3DDEE, #C3DDEE) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#C3DDEE), to(#C3DDEE));
+	background: -webkit-linear-gradient(top, #C3DDEE, #C3DDEE);
+	background-image: -ms-linear-gradient(top, #C3DDEE, #C3DDEE);
+	background: -o-linear-gradient(top, #C3DDEE, #C3DDEE);
+}
+
+
+.borderBox .libraryMainContainerBlock{
+	border-radius: 5px;
+}
+
+.resourceViewsContainer{
+	text-align: right !important;
+}
+
+.usedDetails .viewContainer{
+	display: inline-block;
+	width: 72%;
+}
+
+.usedDetails .buttonAddResource{
+	display: inline-block;
+	width: 22%;
+  	text-align: right;
+}
+
+
 @media (min-width: 240px) and (max-width: 319px){
+	#gooruSearchMainContainer .searchFilters{
+		min-height: 1px;
+		margin: 0px;
+		padding: 0px;
+		display: block;
+	}
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
 	}
@@ -710,7 +875,7 @@ word-wrap: break-word;
 		float: left;
 	}
 	#morePeoplePopWrapper .closeButton {
-	    margin-left: 0px;
+	    margin-left: 5%;
 	}
 	#gooruSearchMainContainer .collectionImg{
 		width:160px;
@@ -724,7 +889,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .collectionDesc{
 		text-align:center;
 	}
-	
+
 	#gooruSearchMainContainer .circleBlocks{
 		text-align:center;
 	}
@@ -734,7 +899,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .standerdContainer{
 		text-align:center;
 	}
-	
+
 	#gooruSearchMainContainer .remixButton button.primary{
 		padding:7px 10px;
 	}
@@ -747,7 +912,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .btn{
 		padding:6px 4px;
 		font-size:12px;
@@ -777,7 +942,7 @@ word-wrap: break-word;
 			margin-bottom:10px;
 	}
 	#gooruSearchMainContainer .remixButton{
-		text-align:center;
+		text-align: right;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 		width:100%;
@@ -794,8 +959,7 @@ word-wrap: break-word;
 		margin:10px 0;
 	}
 	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
-		background:#d8d8d8;
-	 
+
 	    text-align: center;
 	}
 	#gooruSearchMainContainer .viewContainer span{
@@ -813,21 +977,172 @@ word-wrap: break-word;
 	width: 100%;
 	background: #fff;
 	}
+.no-gutter-col {
+    margin: 3px auto;
+    padding-top: 5px;
+    width: 115px !important;
+}
+#gooruSearchMainContainer .subNavigation{
+	height:auto;
+}
+
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
+	margin-bottom:5px;
+}
+
+
+
+#gooruSearchMainContainer  .subNavigation .container{
+	padding-left:0;
+	padding-right:0;
+}
+
+#gooruSearchMainContainer .subFilters {
+    background: #f7f6f6 none repeat scroll 0 0;
+    clear: both;
+    min-height:auto;
+    padding: 0;
+}
+
+
+#gooruSearchMainContainer .seachRightNavigation {
+
+    padding: 15px 0;
+
+}
+
+
+
+
+
+.subFilters .searchFiltersContainer{
+	width:100%;
+	margin:0 0;
+}
+
+
+
+
+
+#gooruSearchMainContainer .searchResultsBox {
+    display: inline-block;
+    font-size: 14px;
+    margin-top: 21px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+}
+
+
+.borderBox .libraryMainContainerBlock{
+	padding-top:15px;
+	padding-bottom:15px;
+}
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation.resourceDropDown{
+	border-bottom:none !important;
+
+}
+.seachLeftNavigation.resourceDropDown .dropdown{
+	z-index:9999;
+}
+#gooruSearchMainContainer .authorDetails{
+	padding:10px 0 !important;
+	background:#f5f5f5;
+	border-top:1px solid #eaeaea;
+	border-left:none;
+}
+#gooruSearchMainContainer .authorDetails .input-group span{
+	margin-right:5px;
+
+}
+#gooruSearchMainContainer .subFilters {
+background: #f7f6f6 none repeat scroll 0 0;
+clear: both;
+min-height:inherit !important;
+padding-top: 0 !important;
+}
+.subFilters .searchFiltersContainer {
+width: 100% !important;
+margin: 0 0;
+float: none;
+padding: 0 0;
+text-align:center;
+min-height:inherit;
+}
+#gooruSearchMainContainer .seachRightNavigation{
+	margin:0 0;
+}
+.seachRightNavigation .panelFilterOptions {
+vertical-align: middle;
+margin: 0 0;
+display: block !important;
+width: 100% !important;
+border-right: none !important;
+text-align:center;
+}
+#gooruSearchMainContainer .searchFilters {
+display: inline-block;
+margin-left: 15px;
+margin-bottom: 5px;
+margin-top: 3px;
+width: auto;
+margin-right: 15px;
+}
+
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul.rating.playerrating{
+	background:transparent !important;
+	padding:0 0 !important;
+}
+#gooruSearchMainContainer .oerStyle{
+	border-left:none;
+}
+#gooruSearchMainContainer .ratingandGrid{
+	padding:5px 0;
+}
+#gooruSearchMainContainer .resourceDetails{
+	margin-bottom:0  !important;
+}
+#gooruSearchMainContainer .oerStyle div{
+	border: 2px solid transparent !important;
+}
+#gooruSearchMainContainer .resourceDropdown{
+	text-align:left !important;
+}
+#gooruSearchMainContainer .gridToggle .dropdown-menu {
+left: -200px !important;
+}
+#gooruSearchMainContainer .ratingandGrid .dropdown-menu:after{
+	content:none;
+}
+#gooruSearchMainContainer .ratingandGrid .dropdown-menu:before{
+	content:none;
+}
 }
 
 @media (min-width: 320px) and (max-width: 479px){
+	#gooruSearchMainContainer .searchFilters{
+		min-height: 1px;
+		margin: 0px;
+		padding: 0px;
+		display: block;
+	}
+
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
 	}
-		#gooruSearchMainContainer  #back-top {
-	margin-left: 81%;
+	#gooruSearchMainContainer  #back-top {
+		margin-left: 81%;
 	}
 	#morePeoplePopWrapper .peopleBlock .viewMore{
 		width:50%;
 		float: left;
 	}
+	#morePeoplePopWrapper .peopleBlock .viewMore p{
+		margin-left: 21%;
+		margin-top: -2%;
+	}
 	#morePeoplePopWrapper .closeButton {
-	    margin-left: 0px;
+	    margin-left: 7%;
 	}
 	#gooruSearchMainContainer .collectionImg{
 		width:100% !important;
@@ -839,11 +1154,11 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .collectionDesc{
 		width:auto !important;
 	}
-	
+
 	#gooruSearchMainContainer .collectionDesc{
 		text-align:center;
 	}
-	
+
 	#gooruSearchMainContainer .circleBlocks{
 		text-align:center;
 	}
@@ -856,7 +1171,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .remixButton button.primary{
 		padding:7px 10px;
 	}
-	
+
 	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a{
 		padding:16px 40px;
 	}
@@ -869,24 +1184,24 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .btn{
 		padding:6px 4px;
 		font-size:12px;
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a{
 		text-align:left;
 			font-size:12px;
 	}
 	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
-		background:#d8d8d8;
+		background:#ffffff;
 	}
 	#gooruSearchMainContainer .seachRightNavigation .btn-group > .btn + .dropdown-toggle{
 		padding-left:4px;
 		padding-right:4px;
 	}
-	
+
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a{
 		padding:10px 6px 10px 40px;
 	}
@@ -904,9 +1219,9 @@ word-wrap: break-word;
 		width:100%;
 		margin-bottom:10px;
 	}
-	
+
 	#gooruSearchMainContainer .remixButton{
-		text-align:center;
+		text-align: right;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 		width:100%;
@@ -923,19 +1238,18 @@ word-wrap: break-word;
 		margin:10px 0;
 	}
 	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
-		background:#d8d8d8;
-	 
+		background:#ffffff;
 	    text-align: center;
 	}
 	#gooruSearchMainContainer .authorDetails{
 		background:#eaeaea;
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation{
 		text-align:center;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align: right;
+
 		margin: 5px 0 5px 0;
 	}
 	#gooruSearchMainContainer .circleBlocks ul li {
@@ -969,7 +1283,7 @@ word-wrap: break-word;
 	  border-bottom-color: rgba(0, 0, 0, 0.2);
 	  content: '';
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu:after {
 	  position: absolute;
 	  top: -6px;
@@ -981,9 +1295,8 @@ word-wrap: break-word;
 	  border-left: 6px solid transparent;
 	  content: '';
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu{
-		left:0;
 		right:auto;
 		top:120%;
 		font-size:12px;
@@ -1006,7 +1319,7 @@ word-wrap: break-word;
 	  border-bottom-color: rgba(0, 0, 0, 0.2);
 	  content: '';
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .subject .dropdown-menu:after {
 	  position: absolute;
 	  top: -6px;
@@ -1018,7 +1331,7 @@ word-wrap: break-word;
 	  border-left: 6px solid transparent;
 	  content: '';
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .subject  .dropdown-menu{
 		left:-75px;
 		right:auto;
@@ -1037,9 +1350,147 @@ word-wrap: break-word;
 		width: 100%;
 		background: #fff;
 	}
+	.no-gutter-col {
+    margin: 3px auto;
+    padding-top: 5px;
+    width: 115px !important;
+}
+#gooruSearchMainContainer .subNavigation{
+	height:auto;
+}
+
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
+	margin-bottom:0;
+	padding:8px 0;
+}
+
+
+
+#gooruSearchMainContainer  .subNavigation .container{
+	padding-left:0;
+	padding-right:0;
+}
+
+#gooruSearchMainContainer .subFilters {
+    background: #f7f6f6 none repeat scroll 0 0;
+    clear: both;
+    min-height:auto;
+    padding: 0;
+}
+
+
+#gooruSearchMainContainer .seachRightNavigation {
+
+    padding: 0 0;
+
+}
+
+
+
+
+
+.subFilters .searchFiltersContainer{
+	width:100%;
+	margin:0 0;
+	verticle-align:top;
+	display:inline-block;
+}
+
+
+.seachRightNavigation .panelFilterOptions{
+	border-right:none;
+}
+
+
+#gooruSearchMainContainer .searchResultsBox {
+    display: inline-block;
+    font-size: 14px;
+    margin-top: 21px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+}
+
+
+.borderBox .libraryMainContainerBlock{
+	padding-top:15px;
+	padding-bottom:15px;
+}
+
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation.resourceDropDown{
+	border-bottom:none !important;
+	display:inline-block;
+	margin:4px 0 8px 0;
+
+}
+.seachLeftNavigation.resourceDropDown .dropdown{
+	z-index:9999;
+}
+#gooruSearchMainContainer .subFilters{
+	padding-top:0;
+}
+.subFilters .searchFiltersContainer{
+	width:100% !important;
+}
+.seachRightNavigation .panelFilterOptions{
+	width:100% !important;
+	display: block!important;
+
+	margin:0 0;
+	border-right:none !important;
+
+}
+#gooruSearchMainContainer .subFilters{
+	min-height:inherit !important;
+	padding-top:0  !important;
+}
+#gooruSearchMainContainer .seachRightNavigation .dropdown-menu{
+	left:-100% !important;
+}
+#gooruSearchMainContainer .dropdown-menu:before, #gooruSearchMainContainer .dropdown-menu:after {
+	left:50% !important;
+}
+
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul.rating.playerrating{
+	background:transparent !important;
+	padding:0 0 !important;
+}
+#gooruSearchMainContainer .oerStyle{
+	border-left:none;
+}
+#gooruSearchMainContainer .ratingandGrid{
+	padding:5px 0;
+}
+
+#gooruSearchMainContainer .resourceDetails{
+	margin-bottom:0 !important;
+}
+#gooruSearchMainContainer .oerStyle div{
+	border: 2px solid transparent !important;
+}
+#gooruSearchMainContainer .resourceDropdown{
+	text-align:left !important;
+}
+#gooruSearchMainContainer .gridToggle .dropdown-menu {
+left: -210px !important;
+}
+#gooruSearchMainContainer .ratingandGrid .dropdown-menu:after{
+	content:none;
+}
+#gooruSearchMainContainer .ratingandGrid .dropdown-menu:before{
+	content:none;
+}
+
 }
 
 @media (min-width: 480px) and (max-width: 767px)  {
+	#gooruSearchMainContainer .searchFilters{
+		min-height: 1px;
+		margin: 0px;
+		padding: 0px;
+		display: block;
+	}
+
 	#morePeoplePopWrapper .peopleBlock {
 		width:100%;
 	}
@@ -1050,9 +1501,9 @@ word-wrap: break-word;
 		width:50%;
 		float: left;
 	}
-	
-	#morePeoplePopWrapper .closeButton {
-	    margin-left: 0px;
+	#morePeoplePopWrapper .peopleBlock .viewMore p{
+		margin-left: 21%;
+		margin-top: -2%;
 	}
 	#gooruSearchMainContainer .fixedPosition{
 		position: relative;
@@ -1077,27 +1528,27 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .resourceImage:last-child{
 		margin:5px 0 5px 1px;
 	}
-	
+
 	#gooruSearchMainContainer .circleBlocks{
 		text-align:center;
 	}
 	#gooruSearchMainContainer .collectionDescription{
 
-	
+
 	}
 	#gooruSearchMainContainer .standerdContainer{
 
 	}
-	
+
 	#gooruSearchMainContainer .remixButton button.primary{
 		padding:7px 10px;
 	}
-	
+
 	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
 	}
 	#gooruSearchMainContainer .remixButton{
-	
+
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 		width:100%;
@@ -1112,7 +1563,7 @@ word-wrap: break-word;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachRightNavigation{
 		margin:10px 0;
-	}	
+	}
 	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 		background:#d8d8d8;
 		border-bottom:1px solid #979797;
@@ -1124,14 +1575,16 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .authorDetails{
 		background:#eaeaea;
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation{
 		text-align:center;
+		margin:0 0;
+		padding:15px 0;
 	}
 	#gooruSearchMainContainer .viewContainer{
-		text-align:right;
+
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu:before {
 	  position: absolute;
 	  top: -7px;
@@ -1144,7 +1597,7 @@ word-wrap: break-word;
 	  border-bottom-color: rgba(0, 0, 0, 0.2);
 	  content: '';
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu:after {
 	  position: absolute;
 	  top: -6px;
@@ -1156,7 +1609,7 @@ word-wrap: break-word;
 	  border-left: 6px solid transparent;
 	  content: '';
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu{
 		left:0;
 		right:auto;
@@ -1173,16 +1626,84 @@ word-wrap: break-word;
 	width: 100%;
 	background: #fff;
 	}
+
+	.seachLeftNavigation.resourceDropDown .dropdown{
+	z-index:9999;
+}
+#gooruSearchMainContainer .subFilters{
+	padding-top:0;
+}
+.subFilters .searchFiltersContainer{
+	width:100% !important;
+}
+.seachRightNavigation .panelFilterOptions{
+	width:100% !important;
+display:block !important;
+	margin:0 0;
+	border-right:none !important;
+
+}
+#gooruSearchMainContainer .subFilters{
+	min-height:inherit;
+	padding-top:0;
+}
+#gooruSearchMainContainer .subNavigation{
+	height:auto;
+	text-align
+}
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul {
+background: #ffffff;
+border-bottom:none;
+text-align: center;
+margin-bottom:15px;
+}
+.no-gutter-col{
+	margin:0 auto;
+}
+#gooruSearchMainContainer .subNavigation .container{
+	padding:0 0 !important;
+}
+#gooruSearchMainContainer .searchResultsBox {
+font-size: 14px;
+vertical-align: middle;
+margin-right: 0;
+padding: 20px 15px 0 15px;
+display: block;
+}
+
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul.rating.playerrating{
+	background:transparent !important;
+	padding:0 0 !important;
+}
+#gooruSearchMainContainer .oerStyle{
+	border-left:none;
+}
+#gooruSearchMainContainer .ratingandGrid{
+	padding:5px 0;
+}
+#gooruSearchMainContainer .resourceDetails{
+	margin-bottom:0  !important;
+}
+#gooruSearchMainContainer .oerStyle div{
+	border: 2px solid transparent !important;
+}
+#gooruSearchMainContainer .resourceDropdown{
+	text-align:left !important;
+}
+#gooruSearchMainContainer .gridToggle .dropdown-menu {
+left: auto !important;
+}
+
 }
 
 
 /* Landscape */
-@media only screen 
-  and (min-device-width: 768px) 
+@media only screen
+  and (min-device-width: 768px)
   and (max-device-width: 991px)
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: portrait) {
-	  
+
 	 #gooruSearchMainContainer  .resourceImage{
 		  width:70px;
 		  height:60px;
@@ -1195,12 +1716,12 @@ word-wrap: break-word;
 }
 
 /* Landscape */
-@media only screen 
-  and (min-device-width: 768px) 
+@media only screen
+  and (min-device-width: 768px)
   and (max-device-width: 991px)
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
-	  
+
 	  #gooruSearchMainContainer .resourceImage{
 		  width:70px;
 		  height:60px;
@@ -1223,21 +1744,21 @@ word-wrap: break-word;
 	margin-left: 90%;
 	}
 	#gooruSearchMainContainer .resourcesInside{
-	
+
 	}
 	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
 		margin-top: 0px;
 	}
-		
+
 	#gooruSearchMainContainer .collectionDesc {
 	    width: 42% !important;
-	}	
-	
+	}
+
 	#gooruSearchMainContainer .collectionImg {
 	    width: 173px !important;
 	}
-	
+
 	#gooruSearchMainContainer .seachRightNavigation .btn{
 		font-size:12px;
 		height:32px;
@@ -1246,11 +1767,10 @@ word-wrap: break-word;
 		width:130px;
 	}
 	#gooruSearchMainContainer .authorDetails{
-		padding:0 10px;
+		padding:10px 10px 0 10px;
 	}
 	#gooruSearchMainContainer .viewContainer{
 		text-align: left;
-		width: 100%;
 	}
 	#gooruSearchMainContainer .resourceImage{
 		  width: 66px;
@@ -1260,7 +1780,7 @@ word-wrap: break-word;
 	    height: 100%;
 	/*     width: 100%; */
 	  	margin-left: -7px;
-	
+
 	}
 	#gooruSearchMainContainer .videoSmall {
     background: url("../images/Video_1.png") no-repeat scroll center 0 transparent;
@@ -1278,7 +1798,7 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .resourceName{
 		width:100%;
 	}
-	
+
 	#gooruSearchMainContainer .resourceImage{
 	    margin:2% 1.5% 2% 1.5%;
 	}
@@ -1291,8 +1811,9 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .libraryMainContainerBlock .collectionTitle {
 	    overflow: hidden;
 	    text-overflow: ellipsis;
-	    white-space: normal;
+	    white-space: nowarp;
 	    cursor: pointer;
+	    overflow: hidden;
 	}
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon {
 	    background: url("../images/folderIcon-sprite.png") no-repeat scroll 8px -36px rgba(0, 0, 0, 0);
@@ -1303,7 +1824,51 @@ word-wrap: break-word;
 	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a {
 	    padding: 10px 25px 10px 44px;
 	}
+	#gooruSearchMainContainer .subNavigation, #gooruSearchMainContainer .collectionDetails{
+	display:inline-block;
+	}
+	.subFilters .searchFiltersContainer{
+	width:100% !important;
+	}
+	#gooruSearchMainContainer .subFilters{
+	padding:1px 0px !important;
+	min-height:inherit !important;
+	}
+	.seachRightNavigation .panelFilterOptions {
+vertical-align: middle;
+margin: 0 0;
+display: inline-block;
+width: auto;
+border-right: 1px solid #ccc;
+vertical-align:top;
+padding-right: 20px;
 }
+#gooruSearchMainContainer .seachRightNavigation {
+text-align: left;
+margin: 12px 0;
+display:block;
+width: 100%;
+}
+#gooruSearchMainContainer .subNavigation {
+width: 100%;
+}
+#gooruSearchMainContainer .subNavigation{
+	height:auto;
+}
+#gooruSearchMainContainer .resourceDropdown{
+	text-align:left !important;
+}
+#gooruSearchMainContainer .gridToggle .dropdown-menu {
+left: 0;
+}
+#gooruSearchMainContainer .ratingandGrid .dropdown-menu:after{
+	content:none;
+}
+#gooruSearchMainContainer .ratingandGrid .dropdown-menu:before{
+	content:none;
+}
+}
+
 
 @media (min-width: 992px) and (max-width: 1199px) {
 	#gooruSearchMainContainer  #back-top {
@@ -1313,9 +1878,12 @@ word-wrap: break-word;
 
 @media (min-width: 1200px) and (max-width: 1800px) {
 	#gooruSearchMainContainer .container{
-		
+
 	}
 	#gooruSearchMainContainer  #back-top {
 	margin-left: 950px;
 	}
 }
+
+
+

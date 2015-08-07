@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,7 +39,7 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 
 	private Label removeLabel;
 	String panelName="";
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	/**
 	 * Class constructor
@@ -57,10 +57,12 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 		label.setText(text);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 			setStyleName(UcCBundle.INSTANCE.css().closeLabelSearch());
+			addStyleName("overrideFilterColor");
 		}else{
 			setStyleName(UcCBundle.INSTANCE.css().closeLabel());
+			removeStyleName("overrideFilterColor");
 		}
-		
+
 		add(label);
 		add(removeLabel);
 		removeLabel.addClickHandler(this);
@@ -86,7 +88,7 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 			onCloseLabelClick(event);
 		}
 	}
-	
+
 	/*Unused Method
 	 * public void disableParentRemoveFunction() {
 		removeLabel.getElement().getStyle().setDisplay(Display.NONE);

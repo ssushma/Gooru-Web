@@ -31,7 +31,7 @@
 		<g:HTMLPanel ui:field="panelEditMode" styleName="{res.css.collaboratorContainer}">
 			<!-- -->
 			<g:HTMLPanel styleName="{res.css.collaboratorBg}">
-				<g:Label styleName="{res.css.collaboratorTitle}" ui:field="lblYouAreTheCollectionCreator"/>
+				<g:Label styleName="{res.css.collaboratorTitle}" ui:field="lblYouAreTheCollectionCreator" visible="false"/>
 				<g:HTMLPanel styleName="{res.css.collaboratorContent}">
 					<g:Label styleName="{res.css.collaboratorSubTitle}"
 						ui:field="lblAddCollaborator"/>

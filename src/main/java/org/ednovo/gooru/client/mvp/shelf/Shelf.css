@@ -1,4 +1,6 @@
-	/*ShelfView*/
+@charset "utf-8";
+/* CSS Document */
+/*ShelfView*/
 .userShelfViewMainContainer {
 	min-height: 440px;
 	min-width: 1200px;
@@ -222,7 +224,7 @@
 	text-align: center;
 }
 
-.userCollectionMetaInfoImage,.userCollectionMetaCollaboratorImage,.userCollectionMetaResourceImage,.userCollectionMetaAssignImage,.userCollectionMetaShareImage,.userCollectionMetaStatisticsImage
+.userCollectionMetaInfoImage,.userCollectionMetaCollaboratorImage,.userCollectionMetaResourceImage,.userCollectionMetaShareImage,.userCollectionMetaStatisticsImage
 	{
 	float: left;
 	margin-right: 5px;
@@ -249,13 +251,6 @@
 	opacity: 0.3;
 }
 
-.userCollectionMetaAssignImage {
-	/*background-position: -43px -62px;
-	height: 19px;
-	width: 19px;*/
-	opacity: 0.3;
-}
-
 .userCollectionMetaShareImage {
 	background-position: -43px -87px;
 	height: 18px;
@@ -267,10 +262,6 @@
 	height: 17px;
 	width: 18px;
 	opacity: 0.3;
-}
-
-.userCollectionMetaShelfFtLft {
-	/* float: left; */
 }
 
 .metaInfo {
@@ -1589,49 +1580,8 @@ padding-left: 11px;
 	margin-left: 40px;
 	margin-top:5px; 
 }
-.userprofilecount {
-	font-weight: bold;
-	color: #1076bb;
-	font-size: 13px;
-}
-.profileMetaDataTabTitle {
-	padding: 3px;
-	text-align: center;
-	cursor: pointer !important;
-	display: inline-block;
-	box-sizing: border-box;
-	height: 45px;
-	width: 150px;
-	margin-right: -3px;
-	padding: 9px 3.4%;
-}
 
-.profileMetaDataTabTitle:hover {
-	background: none repeat scroll 0 0 #EFEFEF !important;
-	box-shadow: none !important;
-}
-.profileMetaDataTabTitleActive, .profileMetaDataTabTitleActive:hover {
-	background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#f5f5f5)) !important;
-	background: -moz-linear-gradient(top, #ddd, #f5f5f5) !important;
-	box-shadow: inset 0 0 10px rgba(0,0,0,.1) !important;
-    cursor: default !important;
-	float: left;
-	padding: 3px 5.5%;
-	text-align: center;
-}
-.profileMetaDataTabTitleDisabled {
-	color: #999;
-	background-color: transparent;
-	cursor: default !important;
-	float: left;
-	padding: 9px 3.4%;
-	text-align: center;
-	display: inline-block;
-	box-sizing: border-box;
-	height: 45px;
-	width: 150px;
-	margin-right: -3px;
-}
+
 .publishPending{
 	font-style: italic;
 	color: #515151;

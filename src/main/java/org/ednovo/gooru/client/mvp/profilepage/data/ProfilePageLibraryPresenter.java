@@ -27,12 +27,12 @@
  */
 package org.ednovo.gooru.client.mvp.profilepage.data;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.child.ChildPresenter;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildPresenter;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
 /**
  * @author Search Team

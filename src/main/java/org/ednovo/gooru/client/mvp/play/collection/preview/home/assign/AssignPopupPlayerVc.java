@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,8 +29,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.ForgotPasswordVc;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
@@ -40,7 +47,6 @@ import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInPlayEvent;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignCollectionView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.ShareViewUc;
@@ -49,12 +55,6 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.ScrollPopupUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
@@ -85,7 +85,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author BLR Team
- * 
+ *
  */
 public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientConstants{
 
@@ -117,11 +117,11 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 
 	@UiField
 	Anchor  swithUrlLbl, swithToEmbedLbl;
-	
+
 	@UiField InlineLabel lblPii,toUsText;
-	
+
 	@UiField Anchor ancprivacy;
-	
+
 	private boolean isPrivate = false;
 	private static final String SWITCH_URL_LABEL = "swithUrlLbl";
 	private static final String SWITCH_TO_EMBED_LABEL = "swithToEmbedLbl";
@@ -164,10 +164,10 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 
 	}
 	private static final Binder binder = GWT.create(Binder.class);
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	/**
-	 * 
+	 *
 	 */
 	public AssignPopupPlayerVc(String collectionIdVal) {
 		super(false);
@@ -178,7 +178,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		donothaveAccountText.getElement().setInnerHTML(i18n.GL0634());
 		donothaveAccountText.getElement().setAttribute("style", "float: left;margin-left: 22%;");
 		ancSignUp.setText(i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
-		
+
 		swithUrlLbl.setText(i18n.GL0639());
 		swithToEmbedLbl.setText(i18n.GL0640());
 		ancSignUp.getElement().setAttribute("style", "float: left;margin-left: 2%;");
@@ -219,7 +219,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		}
 		catch(Exception ex)
 		{
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("AssignPopupPlayerVc : Constructor : "+ex.getMessage());
 		}
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
 			@Override
@@ -259,7 +259,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 
 	/**
 	 * Added click handler to hide the login popup.
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -269,54 +269,54 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setLabelsAndIds
-	 * 
+	 *
 	 * @created_date : Jul 30, 2013
-	 * 
+	 *
 	 * @description To set the default values for labels, button and id for
 	 *              button.
-	 * 
+	 *
 	 * @parm(s) : NONE
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	public void setLabelsAndIds() {
 		lblPii.setText(i18n.GL1892());
 		lblPii.getElement().setId("spnLblPii");
 		lblPii.getElement().setAttribute("alt",i18n.GL1892());
 		lblPii.getElement().setAttribute("title",i18n.GL1892());
-		
+
 		ancprivacy.setText(i18n.GL1893());
 		ancprivacy.getElement().setId("lnkAncprivacy");
 		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
 		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
 		ancprivacy.getElement().getStyle().setMarginLeft(5, Unit.PX);
-		
+
 		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnToUsText");
 		toUsText.getElement().setAttribute("alt",i18n.GL1894());
 		toUsText.getElement().setAttribute("title",i18n.GL1894());
-		
+
 		forgotPwd.getElement().setId("lnkForgotPwd");
 		forgotPwd.setText(i18n.GL0205());
 		forgotPwd.getElement().setAttribute("alt",i18n.GL0205());
 		forgotPwd.getElement().setAttribute("title",i18n.GL0205());
-		
+
 		loginTxtBox.setPlaceholder(i18n.GL0202());
 		loginTxtBox.getElement().setAttribute("placeholder",i18n.GL0202());
 		loginTxtBox.setFocus(true);
 		loginTxtBox.getElement().setId("tbLoginUsername");
-		
+
 		passwordTxtBox.setPlaceholder(i18n.GL0204());
 		passwordTxtBox.getElement().setId("tbLoginPassword");
-	
+
 		loginButton.setText(i18n.GL0187());
 		loginButton.getElement().setId("btnLogin");
 		loginButton.getElement().setAttribute("alt",i18n.GL0187());
@@ -327,12 +327,12 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		lblPleaseWait.getElement().setAttribute("alt",i18n.GL0242());
 		lblPleaseWait.getElement().setAttribute("title",i18n.GL0242());
 		lblPleaseWait.setVisible(false);
-		
+
 		gmailButton.setText(i18n.GL0203());
 		gmailButton.getElement().setId("btnGmailButton");
 		gmailButton.getElement().setAttribute("alt",i18n.GL0203());
 		gmailButton.getElement().setAttribute("title",i18n.GL0203());
-		
+
 		lblOr.setText(i18n.GL0209());
 		lblOr.getElement().setId("lblOr");
 		lblOr.getElement().setAttribute("alt",i18n.GL0209());
@@ -342,32 +342,32 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		shareLinkTxtBox.addClickHandler(new OnClickShareHandler());
 		shareLinkTxtBox.getElement().setId("tatShareLinkTxtBox");
 		StringUtil.setAttributes(shareLinkTxtBox, true);
-		
+
 		assignDes.setText(i18n.GL0513());
 		assignDes.getElement().setId("lblAssignDes");
 		assignDes.getElement().setAttribute("alt",i18n.GL0513());
 		assignDes.getElement().setAttribute("title",i18n.GL0513());
-		
+
 		lblAssignPopDes.setText(i18n.GL0514());
 		lblAssignPopDes.getElement().setId("lblAssignPopDes");
 		lblAssignPopDes.getElement().setAttribute("alt",i18n.GL0514());
 		lblAssignPopDes.getElement().setAttribute("title",i18n.GL0514());
-		
+
 		lblAssignTitle.setText(i18n.GL0518());
 		lblAssignTitle.getElement().setId("lblAssignTitle");
 		lblAssignTitle.getElement().setAttribute("alt",i18n.GL0518());
 		lblAssignTitle.getElement().setAttribute("title",i18n.GL0518());
-		
+
 		lblpopupTitle.setText(i18n.GL0519());
 		lblpopupTitle.getElement().setId("lblpopupTitle");
 		lblpopupTitle.getElement().setAttribute("alt",i18n.GL0519());
 		lblpopupTitle.getElement().setAttribute("title",i18n.GL0519());
-		
+
 		lblLoginPopupTitle.setText(i18n.GL0520());
 		lblLoginPopupTitle.getElement().setId("lblLoginPopupTitle");
 		lblLoginPopupTitle.getElement().setAttribute("alt",i18n.GL0520());
 		lblLoginPopupTitle.getElement().setAttribute("title",i18n.GL0520());
-		
+
 		loginButton.setText(i18n.GL0187());
 		ancSignUp.setText(i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
 		ancSignUp.getElement().setId("lnkAncSignUp");
@@ -563,10 +563,10 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 
 		return iframeText;
 	}
-	
+
 	/**
 	 * Switching between Url and Bitly link
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -588,7 +588,8 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 
 	public void generateShareLink(String classpageId) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", "");
+		String currentPlaceToken=AppClientFactory.getCurrentPlaceToken();
+		params.put("type", currentPlaceToken);
 		params.put("shareType", "");
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrlforAssign(classpageId, params,null,new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
@@ -629,14 +630,14 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 			shareDo.setDecodeRawUrl(link);
 			shareDo.setShareType(shareType);
 		} catch (Exception ex) {
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("AssignPopupPlayerVc : addShareWidgetInPlay : "+ex.getMessage());
 		}
 	}
 
 	/**
 	 * Added click handler to perform Login operation by taking entered user
 	 * name and password from the user.
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -645,8 +646,8 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 	public void onLoginClicked(ClickEvent clickEvent) {
 		if (isCookieEnabled()) {
 			String username = loginTxtBox.getText().trim();
-			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim()); 
-			
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim());
+
 			if(username.length() > 1 && password.length() > 1){
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
@@ -697,7 +698,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 
 	/**
 	 * creating inner class implementing KeyUpHandler interface.
-	 * 
+	 *
 	 */
 	public class LoginKeyupHandler implements KeyUpHandler {
 		@Override
@@ -735,7 +736,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		if(params.containsKey("flt.subjectName"))
 		{
 			String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
-			params.put("flt.subjectName", subjectNameVal);	
+			params.put("flt.subjectName", subjectNameVal);
 		}
 		params.put("callback", "signup");
 		params.put("type", "1");
@@ -743,11 +744,11 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 				AppClientFactory.getCurrentPlaceToken(), params);
 		closePoup();
 	}
-	
+
 	/**
 	 * User login popup allows to sign in if correct credentials and set user
 	 * info on header view
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */

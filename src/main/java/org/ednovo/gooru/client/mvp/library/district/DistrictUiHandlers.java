@@ -3,7 +3,7 @@
  */
 package org.ednovo.gooru.client.mvp.library.district;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 /**
  * @author Search Team

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,9 +29,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.ForgotPasswordVc;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
@@ -45,7 +53,6 @@ import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEve
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
@@ -55,12 +62,6 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.ScrollPopupUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -90,12 +91,12 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author BLR Team
- * 
+ *
  */
 public abstract class AssignPopupVc extends PopupPanel {
 
 	@UiField
-	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer,assignPopupContent;
+	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer,assignPopupContent,contentBorderPanel;
 
 	@UiField
 	HTMLEventPanel htmlEvenPanelContainer;
@@ -116,15 +117,15 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 	@UiField
 	Anchor forgotPwd,ancSignUp;
-	
+
 	@UiField
 	Button gmailButton;
-	
+
 	@UiField Label lblOr,lblLoginwithGooru;
 
 	@UiField
 	Label cancelButton,lblPleaseWait,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle;
-	
+
 	@UiField InlineLabel lblPii,toUsText,donothaveAC;
 	@UiField Anchor ancprivacy ,swithUrlLbl, swithToEmbedLbl;
 
@@ -159,21 +160,21 @@ public abstract class AssignPopupVc extends PopupPanel {
 	private static final String UNAUTHORIZED_MSG ="Please double-check your password and try signing in again.";
 	private static final String USER_ID_WRONG_MSG = "Please double-check your email address and password, and then try logging in again.";
 
-	
+
 	private static final int HTTP_SUCCESS_STATUS_CODE = 200;
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
-	
+
 	private static final String ERR_GL0078 = "401-GL0078";
 	private static final String ERR_GL0079 = "401-GL0079";
 	private static final String ERR_GL010501 = "401-GL010501";
 	private static final String ERR_GL010502 = "401-GL010502";
 	private static final String ERR_GL010503 = "401-GL010503";
 	private static final String ERR_GL0081="401-GL0081";
-	
+
 	public HTMLPanel getAssignContainer(){
 		return assignContainer;
 	}
-	
+
 	private static AssignPopupVcUiBinder uiBinder = GWT
 			.create(AssignPopupVcUiBinder.class);
 
@@ -190,12 +191,12 @@ public abstract class AssignPopupVc extends PopupPanel {
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 
 	/**
-	 * 
+	 *
 	 */
 	public AssignPopupVc(String collectionIdVal, String collectionTitle, String collectionDescription) {
 		super(false);
@@ -215,12 +216,13 @@ public abstract class AssignPopupVc extends PopupPanel {
 		Window.enableScrolling(false);
 		setLabelsAndIds();
 		setHandlers();
-		
+
 		shareContainer = new ShareViewUc("", "");
 		ftmPanel = new HTMLPanel("");
 
 		htmlLoginPanel.setVisible(false);
-		
+		contentBorderPanel.setVisible(false);
+
 		loadingImageLabel.setVisible(true);
 		popupContentAssign.setVisible(false);
 
@@ -233,7 +235,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 					if (AppClientFactory.isAnonymous()) {
 						hideContainers();
 					} else {
-						loadListContainers();
+						//loadListContainers();
 					}
 				}
 				loadingImageLabel.setVisible(false);
@@ -248,7 +250,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 			}
 		});
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-		this.center();	
+		this.center();
 		Window.enableScrolling(false);
 		 boolean device = BrowserAgent.isDevice();
 		if(device){
@@ -259,6 +261,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 	public void hideContainers() {
 		htmlEvenPanelContainer.setVisible(false);
 		htmlLoginPanel.setVisible(true);
+		contentBorderPanel.setVisible(true);
 	}
 
 	public void loadListContainers() {
@@ -277,18 +280,18 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 	public abstract void closePoup();
 
-	
-	
+
+
 	/**
 	 * Added click handler to hide the login popup.
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
 		closePoup();
-		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
 		Window.enableScrolling(false);
 		}else{
 			Window.enableScrolling(true);
@@ -296,23 +299,23 @@ public abstract class AssignPopupVc extends PopupPanel {
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setLabelsAndIds
-	 * 
+	 *
 	 * @created_date : Jul 30, 2013
-	 * 
+	 *
 	 * @description To set the default values for labels, button and id for
 	 *              button.
-	 * 
+	 *
 	 * @parm(s) : NONE
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	public void setLabelsAndIds() {
 
@@ -320,31 +323,31 @@ public abstract class AssignPopupVc extends PopupPanel {
 		lblPii.getElement().setId("spnPii");
 		lblPii.getElement().setAttribute("alt",i18n.GL1892());
 		lblPii.getElement().setAttribute("title",i18n.GL1892());
-		
+
 		ancprivacy.setText(i18n.GL1893());
 		ancprivacy.getElement().setId("lnkAncprivacy");
 		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
 		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
-		
+
 		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnToUsText");
 		toUsText.getElement().setAttribute("alt",i18n.GL1894());
 		toUsText.getElement().setAttribute("title",i18n.GL1894());
-		
+
 		loginTxtBox.setPlaceholder(i18n.GL0202());
 		loginTxtBox.getElement().setAttribute("placeholder",
 				i18n.GL0202());
 		loginTxtBox.setFocus(true);
 		loginTxtBox.getElement().setId("tbLoginUsername");
-		
+
 		passwordTxtBox.setPlaceholder(i18n.GL0204());
 		passwordTxtBox.getElement().setId("tbLoginPassword");
-		
+
 		forgotPwd.setText(i18n.GL0205());
 		forgotPwd.getElement().setId("lnkForgotPwd");
 		forgotPwd.getElement().setAttribute("alt",i18n.GL0205());
 		forgotPwd.getElement().setAttribute("title",i18n.GL0205());
-		
+
 		loginButton.setText(i18n.GL0187());
 		loginButton.getElement().setId("btnLogin");
 		loginButton.getElement().setAttribute("alt",i18n.GL0187());
@@ -355,60 +358,60 @@ public abstract class AssignPopupVc extends PopupPanel {
 		lblPleaseWait.getElement().setAttribute("alt",i18n.GL0242());
 		lblPleaseWait.getElement().setAttribute("title",i18n.GL0242());
 		lblPleaseWait.setVisible(false);
-		
+
 		gmailButton.setText(i18n.GL0203());
 		gmailButton.getElement().setId("btnAssignGmail");
 		gmailButton.getElement().setAttribute("alt",i18n.GL0203());
 		gmailButton.getElement().setAttribute("title",i18n.GL0203());
-		
+
 		lblOr.setText(i18n.GL0209());
 		lblOr.getElement().setId("lblOr");
 		lblOr.getElement().setAttribute("alt",i18n.GL0209());
 		lblOr.getElement().setAttribute("title",i18n.GL0209());
-		
+
 		shareLinkTxtBox.setReadOnly(true);
 		shareLinkTxtBox.addClickHandler(new OnClickShareHandler());
-		
+
 		assignDes.setText(i18n.GL0513());
 		assignDes.getElement().setId("lblAssignDes");
 		assignDes.getElement().setAttribute("alt",i18n.GL0513());
 		assignDes.getElement().setAttribute("title",i18n.GL0513());
-		
+
 		lblAssignPopDes.setText(i18n.GL0514());
 		lblAssignPopDes.getElement().setId("lblAssignPopDes");
 		lblAssignPopDes.getElement().setAttribute("alt",i18n.GL0514());
 		lblAssignPopDes.getElement().setAttribute("title",i18n.GL0514());
-		
+
 		lblAssignTitle.setText(i18n.GL0518());
 		lblAssignTitle.getElement().setId("lblAssignTitle");
 		lblAssignTitle.getElement().setAttribute("alt",i18n.GL0518());
 		lblAssignTitle.getElement().setAttribute("title",i18n.GL0518());
-		
+
 		lblpopupTitle.setText(i18n.GL0519());
 		lblpopupTitle.getElement().setId("lblpopupTitle");
 		lblpopupTitle.getElement().setAttribute("alt",i18n.GL0519());
 		lblpopupTitle.getElement().setAttribute("title",i18n.GL0519());
-		
+
 		lblLoginPopupTitle.setText(i18n.GL0520());
 		lblLoginPopupTitle.getElement().setId("lblLoginPopupTitle");
 		lblLoginPopupTitle.getElement().setAttribute("alt",i18n.GL0520());
 		lblLoginPopupTitle.getElement().setAttribute("title",i18n.GL0520());
-		
+
 		donothaveAC.getElement().setInnerHTML(i18n.GL0634()+"&nbsp;");
 		donothaveAC.getElement().setId("lblDonothaveAC");
 		donothaveAC.getElement().setAttribute("alt",i18n.GL0634()+" ");
 		donothaveAC.getElement().setAttribute("title",i18n.GL0634()+" ");
-		
+
 		ancSignUp.setText(i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
 		ancSignUp.getElement().setId("lnkAncSignUp");
 		ancSignUp.getElement().setAttribute("alt",i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
 		ancSignUp.getElement().setAttribute("title",i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
-		
+
 		lblLoginwithGooru.setText(i18n.GL0346());
 		lblLoginwithGooru.getElement().setId("lblLoginwithGooru");
 		lblLoginwithGooru.getElement().setAttribute("alt",i18n.GL0346());
 		lblLoginwithGooru.getElement().setAttribute("title",i18n.GL0346());
-		
+
 		ancSignUp.getElement().setAttribute("style", "float: left;");
 		donothaveAC.getElement().setAttribute("style", "float: left;padding:0;");
 
@@ -422,6 +425,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		htmlLoginPanel.getElement().setId("epnlHtmlLoginPanel");
 		signUpStyles.getElement().setId("pnlSignUpStyles");
 		htmlEvenPanelContainer.getElement().setId("epnlHtmlEvenPanelContainer");
+		contentBorderPanel.getElement().setId("epnlcontentBorderPanelId");
+		contentBorderPanel.setVisible(false);
 	}
 
 	@UiHandler("swithUrlLbl")
@@ -620,7 +625,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 	/**
 	 * Switching between Url and Bitly link
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -645,14 +650,19 @@ public abstract class AssignPopupVc extends PopupPanel {
 		String classpageItemId=null;
 		String currentPlaceToken=AppClientFactory.getCurrentPlaceToken();
 		params.put("type", "");
-		if(currentPlaceToken!=null&&currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY)){
+		if(currentPlaceToken!=null && currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY)){
 			String classpageCollectionItemId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
 			String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 			if(page!=null&&(page.equalsIgnoreCase("teach")||page.equalsIgnoreCase("study"))&&classpageCollectionItemId!=null){
 				classpageItemId=classpageCollectionItemId;
-				params.put("type", PlaceTokens.COLLECTION_PLAY);
+			}
+		}else if(currentPlaceToken!=null && currentPlaceToken.equals(PlaceTokens.ASSESSMENT_PLAY)){
+			String classpageCollectionItemId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+			if(classpageCollectionItemId!=null){
+				classpageItemId=classpageCollectionItemId;
 			}
 		}
+		params.put("type", currentPlaceToken);
 		params.put("shareType", "");
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrlforAssign(classpageId, params,classpageItemId, new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
@@ -689,7 +699,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 	/**
 	 * Added click handler to perform Login operation by taking entered user
 	 * name and password from the user.
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -736,14 +746,15 @@ public abstract class AssignPopupVc extends PopupPanel {
 								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(false));
 							}
 
-							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.ASSESSMENT_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.ASSESSMENT_PLAY)){
 								AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
+								AppClientFactory.fireEvent(new AssessmentsSetPlayerLoginStatusEvent(true));
 							}
 
 							AppClientFactory.setUserflag(true);
 							AppClientFactory.resetPlace();
 
-							loadListContainers();
+							//loadListContainers();
 							MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
 						}else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
 							loginButton.setVisible(true);
@@ -789,7 +800,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 	/**
 	 * creating inner class implementing KeyUpHandler interface.
-	 * 
+	 *
 	 */
 	public class LoginKeyupHandler implements KeyUpHandler {
 
@@ -843,11 +854,11 @@ public abstract class AssignPopupVc extends PopupPanel {
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 		hide();
 	}
-	
+
 	/**
 	 * User login popup allows to sign in if correct credentials and set user
 	 * info on header view
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -873,16 +884,16 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 
 	}
-	
+
 	SetLoginStatusHandler setLoginStatusHandler = new SetLoginStatusHandler() {
 		@Override
 		public void setLoginStatusHandler(boolean isLoggedIn) {
 			if(isLoggedIn) {
-				loadListContainers();
+				//loadListContainers();
 			}
 		}
 	};
-	
+
 	@UiHandler("ancprivacy")
 	public void onClickPrivacyAnchor(ClickEvent clickEvent){
 		Window.enableScrolling(false);
@@ -894,7 +905,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 			}
-			
+
 		};
 		termsOfUse.show();
 		termsOfUse.center();

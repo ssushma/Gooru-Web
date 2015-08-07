@@ -26,7 +26,7 @@
  * 
  */
 package org.ednovo.gooru.client.mvp.devicesupport;
-import org.ednovo.gooru.client.gin.IsView;
+import org.ednovo.gooru.application.client.gin.IsView;
 /**
  * 
  * @fileName : IsDeviceSupportView.java

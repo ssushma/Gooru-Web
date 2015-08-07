@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="unitStyle" src="collectionSummary.css" />
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	 <g:HTMLPanel>
 		    <g:HTMLPanel styleName="{unitStyle.collectionSummaryDetailsWrapper}">
 				<g:HTMLPanel styleName="{unitStyle.left_container}">
@@ -13,7 +13,7 @@
 				<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}" ui:field="pnlCollectionLastAccessed">
-				<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}"  ui:field="collectionLastAccessedlbl"></g:InlineLabel> 
+				<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}"  ui:field="collectionLastAccessedlbl"></g:InlineLabel>
 				<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
@@ -24,10 +24,10 @@
 						   <g:InlineLabel ui:field="sessionAccessedTime"></g:InlineLabel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
-						<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}"  ui:field="sessionText"></g:InlineLabel> 
+						<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}"  ui:field="sessionText"></g:InlineLabel>
 						<g:InlineLabel ui:field="sessionValue" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		 </g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

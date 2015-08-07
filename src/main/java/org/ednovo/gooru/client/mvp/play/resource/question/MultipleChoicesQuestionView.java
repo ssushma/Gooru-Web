@@ -29,11 +29,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
-import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -54,8 +54,7 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class  MultipleChoicesQuestionView extends Composite {
 	
 	@UiField Button checkAnswer;
-	@UiField FlowPanel optionsContainer;
-	@UiField QuestionStyleResource oeStyle;
+	@UiField FlowPanel optionsContainer,questionsMainPanel;
 	@UiField Label messageBodyText;
 	@UiField HTMLPanel answerText;
 	private boolean isCheckButtonEnabled=true;
@@ -76,12 +75,14 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 	
 	public MultipleChoicesQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
 		setQuestionTypeCaption();
 	}
 	
 	@UiConstructor
 	public MultipleChoicesQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
+		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo=collectionItemDo;
 		setQuestionTypeCaption();
@@ -177,7 +178,7 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 	
 	private void enableCheckAnswerButton(){
 		isCheckButtonEnabled=true;
-		checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
+		checkAnswer.removeStyleName("hintsInActiveButton");
 		checkAnswer.addStyleName("primary");
 	}
 	
@@ -187,7 +188,7 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 			showCorrectResult();
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName("primary");
-			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
+			checkAnswer.addStyleName("hintsInActiveButton");
 		}
 	}
 	

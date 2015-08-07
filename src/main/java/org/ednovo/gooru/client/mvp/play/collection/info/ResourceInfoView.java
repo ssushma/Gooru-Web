@@ -32,10 +32,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.LicenseDo;
+import org.ednovo.gooru.application.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
@@ -53,13 +60,6 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.LicenseDo;
-import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -507,7 +507,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			{
 				if(collectionItemDo.getResource().getResourceType().getName() != null)
 				{
-					if (VIDEO_YOUTUBE.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()) || RESOURCE_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()))
+					if (VIDEO_YOUTUBE.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()) || RESOURCE_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())  || RESOURCE_VIMEO_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()))
 					{
 						setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 										collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
@@ -690,12 +690,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		
 		if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 		 depthofknowledgedetails = new ArrayList<String>();
-			if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
-			if(collectionItemDo.getResource().getDepthOfKnowledges().size()>0){
-			for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledges().size();i++){
-				if(collectionItemDo.getResource().getDepthOfKnowledges().get(i).isSelected())
+			if(collectionItemDo.getResource().getDepthOfKnowledge()!=null){
+			if(collectionItemDo.getResource().getDepthOfKnowledge().size()>0){
+			for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledge().size();i++){
+				if(collectionItemDo.getResource().getDepthOfKnowledge().get(i).isSelected())
 				{
-				depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledges().get(i).getValue());
+				depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledge().get(i).getValue());
 				}
 			}
 			setDepthofknowledgeDetails(depthofknowledgedetails);

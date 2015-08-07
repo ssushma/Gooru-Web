@@ -29,9 +29,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
@@ -51,9 +54,6 @@ import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -216,7 +216,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	public void updateViews(String count, String contentId, String whatToUpdate){
 		if (resourceSearchResultDo.getGooruOid()!=null && resourceSearchResultDo.getGooruOid().equalsIgnoreCase(contentId)){
 			metaDataFloPanel.clear();
-			String category = (resourceSearchResultDo.getResourceFormat()!=null && resourceSearchResultDo.getResourceFormat().getValue() != null)? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
+			String category = (resourceSearchResultDo.getNewResourceFormat()!=null && resourceSearchResultDo.getNewResourceFormat().getValue() != null)? resourceSearchResultDo.getNewResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 			
 			if(resourceSearchResultDo.getAggregator()!=null){
@@ -265,15 +265,14 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
-		if(resourceSearchResultDo.getRatings().getCount()!=0){
+		if(resourceSearchResultDo.getRatings()!=null && resourceSearchResultDo.getRatings().getCount()!=0){
 			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
 			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		}
-		
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
-		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
-        String description = resourceSearchResultDo.getDescription();
+		String category = resourceSearchResultDo.getNewResourceFormat().getValue() != null ? resourceSearchResultDo.getNewResourceFormat().getValue() : "webpage";
+		String description = resourceSearchResultDo.getDescription();
         String title = "";
         String resourceTitle;
         if (resourceSearchResultDo.getResourceTitle().contains("class")){
@@ -281,9 +280,8 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
         }else{
         	title = StringUtil.truncateText(resourceSearchResultDo.getResourceTitle(), 38);
         }
+        
 		boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
-		
-		
 		if(resourceSearchResultDo.getAggregator()!=null){
 			 String aggregatorData = "";
 			for (String aggregator: resourceSearchResultDo.getAggregator()) {
@@ -315,9 +313,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				publisherData=publisherData.substring(0, publisherData.length()-1);
 			}
 		}
-		
 		renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
-		
         renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
@@ -335,7 +331,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		if (lblResourceTitle.getText().length()>38){
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
-		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
 		
 		if(setVisibility)
@@ -441,13 +436,10 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	}
 	public abstract void closePopup();
 	private class AddClickHandler implements ClickHandler {
-
 		@Override
 		public void onClick(ClickEvent event) {
 		addResourceBtnPanel.setVisible(false);
-		
-		AppClientFactory.getInjector().getResourceService().createCollectionItem(collectionId, resourceSearchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
-
+		AppClientFactory.getInjector().getResourceService().createNewCollectionItem(collectionId, resourceSearchResultDo.getGooruOid(),resourceSearchResultDo.getNewResourceFormat().getValue(), new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				Window.enableScrolling(true);
@@ -456,14 +448,11 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 			}
 		});
-		}
-		
+	  }
 	}
-	
 	public static void renderMetaData(FlowPanel flowPanel, String data) {
 		renderMetaData(flowPanel, data, null, -1);
 	}
-	
 	public static void renderMetaData(FlowPanel flowPanel, List<String> datas, int wrapLength) {
 		if (datas == null) {
 			return;

@@ -26,10 +26,10 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.child.IsChildView;
+import org.ednovo.gooru.application.client.child.IsChildView;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.ResourceDo;
 
 /**
  * 

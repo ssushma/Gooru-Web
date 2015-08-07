@@ -44,9 +44,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.library.ConceptDo;
+import org.ednovo.gooru.application.shared.model.library.CourseDo;
+import org.ednovo.gooru.application.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.application.shared.model.library.PartnerFolderListDo;
+import org.ednovo.gooru.application.shared.model.library.StandardCourseDo;
+import org.ednovo.gooru.application.shared.model.library.StandardsDo;
+import org.ednovo.gooru.application.shared.model.library.SubjectDo;
+import org.ednovo.gooru.application.shared.model.library.TopicDo;
+import org.ednovo.gooru.application.shared.model.library.UnitDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenSubjectCourseEvent;
@@ -57,16 +67,6 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoHandler;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.library.ConceptDo;
-import org.ednovo.gooru.shared.model.library.CourseDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
-import org.ednovo.gooru.shared.model.library.StandardCourseDo;
-import org.ednovo.gooru.shared.model.library.StandardsDo;
-import org.ednovo.gooru.shared.model.library.SubjectDo;
-import org.ednovo.gooru.shared.model.library.TopicDo;
-import org.ednovo.gooru.shared.model.library.UnitDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -293,7 +293,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
-			}else {
+			}if(getPlaceToken().equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY)) {
+				partnerLogo.setStyleName(libraryStyleUc.rusdPartnerLogo());
+				partnerLogo.setVisible(true);
+				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
+				landingBanner.setVisible(false);
+			} else {
 				partnerLogo.setVisible(false);
 			}
 
@@ -341,6 +346,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredCousesLbl.setText(i18n.GL1901());
 			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL1901());
 			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
+		}if(getPlaceToken().equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY)) {
+			landingBanner.getElement().setId("landingRusdBanner");
+			landingBanner.setHeight("250px");
+			featuredCousesLbl.setText(i18n.GL0588());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL0588());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL0588());
 		} else {
 			landingBanner.getElement().setId("landingBanner");
 			featuredCousesLbl.setText(i18n.GL0587());
@@ -767,7 +778,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			final int widgetCountTemp = widgetCount;
 			FeaturedCourseListView featuredCourseListView = ((FeaturedCourseListView) widget);
 			try {
-				if(courseId.equals(""+featuredCourseListView.getCourseId())) {
+				if(courseId !=null && courseId.equals(""+featuredCourseListView.getCourseId())) {
 					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						if(courseDoList.get(widgetCount).getParentId()!=null) {
 							if(partnerFolderList.size()>0) {
@@ -874,7 +885,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			final int widgetCountTemp = widgetCount;
 			final LibraryUnitMenuView libraryUnitMenuView = ((LibraryUnitMenuView) widget);
 			try {
-				if(unitId.equals(libraryUnitMenuView.getUnitId())) {
+				if(unitId != null && unitId.equals(libraryUnitMenuView.getUnitId())) {
 					widget.addStyleName(libraryStyleUc.unitLiActive());
 					if(widgetCountTemp==0) {
 						unitListId = unitDoList.get(widgetCountTemp).getCodeId()+"";
@@ -1052,6 +1063,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
 //					partnerLogo.setStyleName(libraryStyleUc.coreDistrictLogo());
 //					partnerLogo.setVisible(true);
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YESD_LIBRARY)){
+					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
 				}
 				else{
 				partnerLogo.setVisible(false);
@@ -1085,6 +1098,19 @@ public class LibraryView extends Composite implements  ClickHandler {
 					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogoCore());
 					districtLibraryHeaderText.setStyleName(libraryStyleUc.districtLibraryHeaderTextCore());
 					districtLibrarySubHeaderText.setStyleName(libraryStyleUc.districtLibrarySubHeaderTextCore());
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YESD_LIBRARY)) {
+					courseImage.setHeight("190px");
+					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
+					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
+					courseImage.setVisible(false);
+					districtSpecificPartnersMain.setVisible(true);
+					districtLibraryHeaderText.getElement().setInnerText("Yuma Elementary School District ONE's Professional Learning Library");
+					districtLibrarySubHeaderText.getElement().setInnerText("The Department of Learning Services offers these collections created by our Instructional Coaches, empowering educators to utilize digital tools for higher achievement and innovative excellence.");
+					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainYesd());
+					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainYesd());
+					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogoYesd());
+					districtLibraryHeaderText.setStyleName(libraryStyleUc.districtLibraryHeaderTextYesd());
+					districtLibrarySubHeaderText.setStyleName(libraryStyleUc.districtLibrarySubHeaderTextYesd());
 				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)) {
 					courseImage.setHeight("190px");
 					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);

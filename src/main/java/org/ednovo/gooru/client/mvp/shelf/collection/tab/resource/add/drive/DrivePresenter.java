@@ -25,21 +25,19 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.List;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.AppPlaceKeeper;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.shared.model.user.GoogleToken;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
-import org.ednovo.gooru.shared.model.user.GoogleToken;
-import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -197,10 +195,9 @@ public class DrivePresenter extends
 	
 	public Label setLoadingPanel(){
 		Label loadingImage=new Label();
-		EditClasspageCBundle.INSTANCE.css().ensureInjected();
-		loadingImage.setStyleName(EditClasspageCBundle.INSTANCE.css().loadingpanelImage());
-		loadingImage.getElement().getStyle().setMarginLeft(70, Unit.PX);
-		loadingImage.getElement().getStyle().setMarginTop(25, Unit.PX);
+		loadingImage.setStyleName("loadingpanelImage");
+		//loadingImage.getElement().getStyle().setMarginLeft(70, Unit.PX);
+		loadingImage.getElement().getStyle().setMarginTop(95, Unit.PX);
 		return loadingImage;
 	}
 	

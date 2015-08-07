@@ -27,8 +27,8 @@
  */
 package org.ednovo.gooru.client.mvp.resource.dnd;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.AppSimpleDropController;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;

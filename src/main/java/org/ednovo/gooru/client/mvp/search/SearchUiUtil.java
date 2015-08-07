@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.search;
 
@@ -31,13 +31,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.UcCBundle;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -48,14 +50,14 @@ import com.google.gwt.user.client.ui.Label;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class SearchUiUtil{
 
 	public static final String STANDARD_CODE = "code";
 
 	public static final String STANDARD_DESCRIPTION = "description";
-	
+
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public static void renderStandards(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
@@ -90,11 +92,11 @@ public class SearchUiUtil{
 				toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLink());
 				standardsContainer.add(toolTipUc);
 				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
-				
+
 			}
 		}
 	}
-	public static void renderStandardsforCollection(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
+	public static void renderStandardsforCollection(FlowPanel standardsContainer, CollectionSearchResultDo searchResultDo) {
 		if (searchResultDo.getStandards() != null) {
 			List<Map<String, String>> standards = searchResultDo.getStandards();
 			Iterator<Map<String, String>> iterator = standards.iterator();
@@ -126,7 +128,7 @@ public class SearchUiUtil{
 				toolTipUc.setStyleName("blueLink");
 				standardsContainer.add(toolTipUc);
 				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
-				
+
 			}
 		}
 	}
@@ -135,8 +137,8 @@ public class SearchUiUtil{
 			List<Map<String, String>> standards = searchResultDo.getStandards();
 			Iterator<Map<String, String>> iterator = standards.iterator();
 			int count = 0;
+			Boolean flagUI = false;
 			FlowPanel toolTipwidgets = new FlowPanel();
-			String standardsfirstVal = "";
 			while (iterator.hasNext()) {
 				Map<String, String> standard = iterator.next();
 				String stdCode = standard.get(STANDARD_CODE);
@@ -147,12 +149,17 @@ public class SearchUiUtil{
 						toolTipwidgets.add(standardItem);
 					}
 				} else {
-					if(stdCode.length()>23 && count==0){
-						standardsfirstVal = stdCode;
-					}else{
-						DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
-						toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandardResource());
-						standardsContainer.add(toolTipUc);
+					if(stdCode.length()>23 && count==1)
+					{
+						flagUI = true;
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+					else
+					{
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
+					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					standardsContainer.add(toolTipUc);
 					}
 				}
 				count++;
@@ -161,20 +168,21 @@ public class SearchUiUtil{
 				final Label left = new Label(i18n.GL_SPL_PLUS()+(standards.size() - 18));
 				toolTipwidgets.add(left);
 			}
-			if (searchResultDo.getStandards().size() > 2) {
+			if (searchResultDo.getStandards().size() > 2 && (!flagUI)) {
 				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
-				if(!standardsfirstVal.isEmpty()){
-					moreStandardsCount = moreStandardsCount+1;
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
-					toolTipUc.setStyleName("blueLink");
-					standardsContainer.add(toolTipUc);
-					toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
-				}else{					
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
-					toolTipUc.setStyleName("blueLink");
-					standardsContainer.add(toolTipUc);
-					toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
-				}
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
+				toolTipUc.setStyleName("blueLink");
+				standardsContainer.add(toolTipUc);
+				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
+
+			}
+			if(flagUI)
+			{
+				Integer moreStandardsCount = searchResultDo.getStandards().size() - 1;
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
+				toolTipUc.setStyleName("blueLink");
+				standardsContainer.add(toolTipUc);
+				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
 			}
 		}
 	}
@@ -206,8 +214,8 @@ public class SearchUiUtil{
 			}
 		}
 	}*/
-	
-	
+
+
 
 	public static void renderMetaData(FlowPanel flowPanel, String data) {
 		renderMetaData(flowPanel, data, null, -1);
@@ -241,7 +249,7 @@ public class SearchUiUtil{
 			}else{
 				toolTipwidgets.add(label);
 			}
-			
+
 		}
 		if (datas != null && datas.size() > 1) {
 			Integer moreCount = datas.size() - 1;
@@ -250,14 +258,14 @@ public class SearchUiUtil{
 			flowPanel.add(toolTipUc);
 		}
 	}
-	
+
 	public static void renderMetaData(FlowPanel flowPanel, List<String> datas) {
-		
+
 		// this method is using to display publisher
 		if (datas == null) {
 			return;
 		}
-		
+
 		renderMetaData(flowPanel, datas.size() > 0 ? i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+datas.get(0) : null, null, 0);
 		FlowPanel toolTipwidgets = new FlowPanel();
 		FlowPanel toolTipwidget1 = new FlowPanel();
@@ -269,7 +277,7 @@ public class SearchUiUtil{
 			}else{
 				toolTipwidgets.add(label);
 			}
-			
+
 		}
 		if (datas != null && datas.size() > 1) {
 			Integer moreCount = datas.size() - 1;
@@ -294,7 +302,7 @@ public class SearchUiUtil{
 		}
 		return null;
 	}
-	
+
 	public static void renderSourceMetadata(FlowPanel flowPanel,String data,String suffix, int wrapLength){
 		if (suffix != null || StringUtil.hasValidString(data)) {
 			if (wrapLength > 0) {
@@ -318,6 +326,6 @@ public class SearchUiUtil{
 
 
 
-	
+
 
 }

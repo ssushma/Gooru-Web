@@ -1,6 +1,6 @@
 package org.ednovo.gooru.client.mvp.library.district.lusd;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;

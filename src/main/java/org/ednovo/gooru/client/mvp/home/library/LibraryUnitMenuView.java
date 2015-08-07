@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.library;
 
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.model.library.UnitDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.application.shared.model.library.UnitDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;

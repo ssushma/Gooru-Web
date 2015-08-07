@@ -32,22 +32,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.application.shared.model.library.CourseDo;
+import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.application.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.shared.model.library.CourseDo;
-import org.ednovo.gooru.shared.model.library.LibraryUserDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-
 import org.ednovo.gooru.shared.util.ClientConstants;
-
 import org.ednovo.gooru.shared.util.Constants;
 
 import com.google.gwt.core.client.GWT;
@@ -118,7 +116,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
 		int listofFoldres = folderList.size();
 		long uiStartTime = System.currentTimeMillis();
-		AppClientFactory.printInfoLogger(" Ui Start Time --- "+uiStartTime);
 		if(folderList.size()==0 && PlaceTokens.ASPIRE_EPACS.equals(AppClientFactory.getCurrentPlaceToken())){
 			loadingPanel(false);
 			getComingSoonText(true);
@@ -160,7 +157,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 				@Override
 				public void onClick(ClickEvent event) {
 					long unticlickStarttime = System.currentTimeMillis();
-					AppClientFactory.printInfoLogger("---- Lib unit Clicked Start time -- "+AppClientFactory.getCurrentPlaceToken()+" -- "+unticlickStarttime);
 					libraryView.getContentScroll().setVisible(false);
 					loadingPanel(true);
 					final Iterator<Widget> widgetsPanel = libraryView.getLeftNav().iterator();
@@ -180,7 +176,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			});
 			widgetCount++;
 		}
-		AppClientFactory.printInfoLogger(" over all  End Time consumed for ui --- "+(System.currentTimeMillis() -uiStartTime));
 	}
 
 	/**
@@ -189,7 +184,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	@Override
 	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId,String libraryGooruOid) {
 		long startTime = System.currentTimeMillis();
-		AppClientFactory.printInfoLogger("on unit selected ---- "+startTime);
 		libraryView.getContentScroll().clear();
 		try {
 			int count = 0; 
@@ -199,10 +193,9 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			}
 			libraryView.getContentScroll().setVisible(true);
 			loadingPanel(false);
-			AppClientFactory.printInfoLogger(" ---- on unit selected Ui End time consumed --- "+(System.currentTimeMillis()-startTime));
 		} catch (Exception e) {
 			loadingPanel(false);
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger(e.toString());
 		}
 	}
 	
@@ -253,6 +246,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		map.put(PlaceTokens.GEOEDUCATION, GeoEduBanner.getGeoEduIstance());
 		map.put(PlaceTokens.LPS, LpsBanner.getLpsIstance());
 		map.put(PlaceTokens.CORE_LIBRARY, CoreBanner.getcoreIstance());
+		map.put(PlaceTokens.YESD_LIBRARY, YesdBanner.getyesdIstance());
 		map.put(PlaceTokens.ESYP, EsypBanner.getEsypIstance());
 		map.put(PlaceTokens.CCST_Cal_TAC, CcstBanner.getCcstIstance());
 		map.put(PlaceTokens.TICAL, TicalBanner.getTicalInstance());
@@ -758,6 +752,45 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return libCourseDo;
 		}
 	}
+
+	
+	/**
+	 * Inner class for implementing YESD library banner.
+	 * 
+	 */
+	private static class YesdBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static YesdBanner yesdBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private YesdBanner() {
+		}
+
+		// Providing Global point of access
+		public static YesdBanner getyesdIstance() {
+			if (null == yesdBannerInstance) { 
+				yesdBannerInstance = new YesdBanner();
+			}
+			return yesdBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel("Yuma Elementary School District ONE");
+			thumbnailDo.setUrl(Constants.YESD_BANNER);
+			libraryUserDo.setPartnerName(" About Yuma Elementary School District ONE");
+			libraryUserDo.setPartnerUrl("http://www.yuma.org/");
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+
+	
 	
 
 	/**

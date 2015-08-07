@@ -26,10 +26,10 @@ package org.ednovo.gooru.client.mvp.folder.toc;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderTocDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;

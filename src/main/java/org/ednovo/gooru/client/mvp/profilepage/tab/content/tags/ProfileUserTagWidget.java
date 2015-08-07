@@ -25,9 +25,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.tags;
 
+import org.ednovo.gooru.application.shared.model.search.ResourceTagsListDo;
+import org.ednovo.gooru.application.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.model.search.ResourceTagsListDo;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

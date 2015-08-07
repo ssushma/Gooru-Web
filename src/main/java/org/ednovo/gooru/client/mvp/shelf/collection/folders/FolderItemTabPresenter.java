@@ -3,16 +3,16 @@ package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.FolderServiceAsync;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateAssmntUrlOnMycollEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
-import org.ednovo.gooru.client.service.FolderServiceAsync;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -160,7 +160,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 
 	@Override
 	public void reorderFoldersOrCollection(final ShelfFolderItemChildView shelfFolderItemChildView, final int itemToBeMovedPosSeqNumb,final int itemPosSeqNumb, final String downArrow, String collectionItemId,int itemSeqToAPI) {
-		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemSeqToAPI,collectionItemId, new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(null,null,null,null,itemSeqToAPI,collectionItemId,null, new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {

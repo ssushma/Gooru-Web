@@ -31,18 +31,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTreeItem;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderTocDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.Constants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -115,7 +115,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField Hidden myHiddenField;
 	
 	final String FOLDER = "folder";
-	final String SCOLLECTION = "scollection";
+	final String COLLECTION = "collection";
+	final String SCOLLECTION="scollection";
 	private static final String USER_ID = "userId";
 	private static final String BACK2TOC = "backToToc";
 	private static final String EMPTY_FOLDER = i18n.GL3198();
@@ -159,6 +160,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
 		setBannerStaticImages();
+		
 	}
 
 	/**
@@ -232,7 +234,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBannerStaticImages() {
 		bannerVal= new HashMap<String, List<String>>();
 		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px no-repeat;",i18n.GL0532(),Constants.RUSD_LOGO));
+		
+		bannerVal.put(PlaceTokens.YCGL_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-ycgl.png) -7px -47px no-repeat; background-position: center center; ",i18n.GL3287_1(),Constants.YCGL_LOGO));
+		
 		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png) no-repeat;",i18n.GL2108(),Constants.CORE_LOGO));
+		
+		bannerVal.put(PlaceTokens.YESD_LIBRARY, Arrays.asList("background: url(../images/library/district/YumaOneBanner.png) no-repeat; background-position: center center;","Yuma Country Library",Constants.YUMA_ONE_LOGO));
+		
 		bannerVal.put(PlaceTokens.LPS, Arrays.asList("background: url(../images/library/district/landing-image-rusd_purple.png) no-repeat;",i18n.GL2053(), Constants.LPS_LOGO));
 		bannerVal.put(PlaceTokens.LUSD, Arrays.asList("background: url(../images/library/district/landing-image-lusd.png) 0px 0px no-repeat;background-size: auto 130% !important;",i18n.GL2181(), Constants.LUSD_LOGO));
 		bannerVal.put(PlaceTokens.VALVERDE, Arrays.asList("background: url(../images/library/district/landing-image-valverde.png)-7px -50px no-repeat;background-size: auto 128% !important;height: 220px; margin-top: -12px;",i18n.GL2061(), Constants.VALVERDE_LOGO));
@@ -272,7 +280,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
-					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+					 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo,null));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
@@ -298,7 +306,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousRequest();
 
 			//This is used for handling folder toc back button code
-			if(placeRequest!=null && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(placeRequest.getNameToken()) && !PlaceTokens.FOLDER_TOC.equalsIgnoreCase(placeRequest.getNameToken())){
+			if(placeRequest!=null && !PlaceTokens.ASSESSMENT_PLAY.equalsIgnoreCase(placeRequest.getNameToken()) && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(placeRequest.getNameToken()) && !PlaceTokens.FOLDER_TOC.equalsIgnoreCase(placeRequest.getNameToken())){
 				String paramerersString="";
 				Set<String> parameters=placeRequest.getParameterNames();
 				if(parameters.size()>0){
@@ -386,7 +394,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 							}
 
 						}
-				 }else if(SCOLLECTION.equalsIgnoreCase(itemType)){
+				 }else if(COLLECTION.equalsIgnoreCase(itemType) || SCOLLECTION.equalsIgnoreCase(itemType)){
 					 if(folderLevel>=2){
 						 element.getStyle().setPaddingLeft(69, Unit.PX);
 				            element.getStyle().setMarginLeft(0, Unit.PX);
@@ -540,7 +548,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
 								item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem,floderDo.getType(),folderLevel);
-						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+						 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
 								folderItem.getElement().removeAttribute("style");
 							 	item.addItem(folderItem);

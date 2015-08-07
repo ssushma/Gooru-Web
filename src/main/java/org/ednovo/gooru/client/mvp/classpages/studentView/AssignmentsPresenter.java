@@ -29,12 +29,12 @@ package org.ednovo.gooru.client.mvp.classpages.studentView;
  */
 import java.util.List;
 
+import org.ednovo.gooru.application.client.child.ChildPresenter;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ClasspageService;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildPresenter;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.service.ClasspageService;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
-import org.ednovo.gooru.shared.model.content.ResourceDo;
 
 /**
  * 

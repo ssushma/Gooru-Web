@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  *
  */
 package org.ednovo.gooru.shared.util;
@@ -34,12 +34,18 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.client.uc.SpanPanel;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -47,6 +53,7 @@ import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -55,31 +62,33 @@ import com.googlecode.gwt.crypto.client.TripleDesCipher;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class StringUtil implements ClientConstants {
 
 
 
-	
+
 	 public static final int INDEX_NOT_FOUND = -1;
-	 
+
 	 public static final String EMPTY = "";
-	 
+
 	 public static boolean IPAD_MESSAGE_Close_Click = false;
-	 
+
 	 private static final String ASSESSMENT_URL = "assessment/url";
-		
+
      private static final String ASSESSMENT = "assessment";
-     
+
      private static final String DEFULT_COLLECTION = "images/default-collection-image-160x120.png";
- 	
+
  	 private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 
  	 public static Map<String, String> categoryMap =null;
-	
+
+
+
 	private final static byte[] key = CRYPTO_KEY.getBytes();
-	
+
 
 	static{
 		addAllCategories();
@@ -106,7 +115,7 @@ public class StringUtil implements ClientConstants {
 		return truncateText(text, maxCharLength, "...");
 	}
 
-	public static String truncateText(String text, int maxCharLength, String suffix) {	
+	public static String truncateText(String text, int maxCharLength, String suffix) {
 		if (text != null && text.trim().length() > maxCharLength && !text.equalsIgnoreCase("multiple sources"))
 		{
 			text = text.trim().substring(0, maxCharLength) + suffix;
@@ -189,29 +198,29 @@ public class StringUtil implements ClientConstants {
 		String  thumbnailFilename = null;
 		if (thumbnailName != null) {
 			String  fileExtension =  StringUtil.substringAfterLast(thumbnailName, ".");
-			if (fileExtension != null) { 
+			if (fileExtension != null) {
 				thumbnailFilename = StringUtil.substringBeforeLast(thumbnailName, "." + fileExtension) + thumbnailSuffix + fileExtension;
 			}
 		}
 		return thumbnailFilename;
 	}
 	/**
-	 * 
-	 * @function splitQuery 
-	 * 
+	 *
+	 * @function splitQuery
+	 *
 	 * @created_date : Dec 5, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param url
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : Map<String,String>
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -241,7 +250,7 @@ public class StringUtil implements ClientConstants {
 	//
 	//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 	//		Date resultdate = new Date(dateMilliseconds);
-	//		
+	//
 	//		return sdf.format(resultdate);
 	//	}
 
@@ -265,11 +274,11 @@ public class StringUtil implements ClientConstants {
 
 	public static boolean isPartnerUser(String userName) {
 		boolean isPartner = false;
-		if(AUTODESK.equalsIgnoreCase(userName) || LESSONOPOLOGY.equalsIgnoreCase(userName) || COMMONSENCEMEDIA.equalsIgnoreCase(userName) 
+		if(AUTODESK.equalsIgnoreCase(userName) || LESSONOPOLOGY.equalsIgnoreCase(userName) || COMMONSENCEMEDIA.equalsIgnoreCase(userName)
 				|| FTE.equalsIgnoreCase(userName) || WSPWH.equalsIgnoreCase(userName) || LISANGC.equalsIgnoreCase(userName) || NGC.equalsIgnoreCase(userName)
-				|| ONR.equalsIgnoreCase(userName) || PlaceTokens.FINCAPINC.equalsIgnoreCase(userName) || PlaceTokens.PSDPAL.equalsIgnoreCase(userName) 
-				|| PlaceTokens.YOUTHVOICES.equalsIgnoreCase(userName) || PlaceTokens.GEOEDUCATION.equalsIgnoreCase(userName) || PlaceTokens.LPS.equalsIgnoreCase(userName) 
-				|| PlaceTokens.CORE_LIBRARY.equalsIgnoreCase(userName) || PlaceTokens.ESYP.equalsIgnoreCase(userName) || PlaceTokens.CCST_Cal_TAC.equalsIgnoreCase(userName) || PlaceTokens.ASPIRE_EPACS.equalsIgnoreCase(userName) || PlaceTokens.TICAL.equalsIgnoreCase(userName)) {
+				|| ONR.equalsIgnoreCase(userName) || PlaceTokens.FINCAPINC.equalsIgnoreCase(userName) || PlaceTokens.PSDPAL.equalsIgnoreCase(userName)
+				|| PlaceTokens.YOUTHVOICES.equalsIgnoreCase(userName) || PlaceTokens.GEOEDUCATION.equalsIgnoreCase(userName) || PlaceTokens.LPS.equalsIgnoreCase(userName)
+				|| PlaceTokens.CORE_LIBRARY.equalsIgnoreCase(userName) ||PlaceTokens.YESD_LIBRARY.equalsIgnoreCase(userName) || PlaceTokens.ESYP.equalsIgnoreCase(userName) || PlaceTokens.CCST_Cal_TAC.equalsIgnoreCase(userName) || PlaceTokens.ASPIRE_EPACS.equalsIgnoreCase(userName) || PlaceTokens.TICAL.equalsIgnoreCase(userName)) {
 			isPartner = true;
 		}
 		return isPartner;
@@ -329,9 +338,9 @@ public class StringUtil implements ClientConstants {
 
 	public static String replaceSpecial(String originalString){
 		String str = "";
-		str = originalString.replaceAll("%", "%25");	
+		str = originalString.replaceAll("%", "%25");
 		str = str.replaceAll("\"", "%22").replaceAll("'", "%27");
-		str = str.replaceAll("<", "%3C").replaceAll(">", "%3E");		
+		str = str.replaceAll("<", "%3C").replaceAll(">", "%3E");
 		return str;
 	}
 
@@ -376,22 +385,22 @@ public class StringUtil implements ClientConstants {
 	}
 
 	/**
-	 * @function setAttributes 
-	 * 
+	 * @function setAttributes
+	 *
 	 * @created_date : Jul 15, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param msgTxa
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	 */
 
 	public static void setAttributes(RichTextArea rtatBox, boolean isTrue) {
@@ -399,23 +408,23 @@ public class StringUtil implements ClientConstants {
 	}
 
 	/**
-	 * @function setAttributes 
-	 * 
+	 * @function setAttributes
+	 *
 	 * @created_date : Jul 17, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param editSearchTxtBox
 	 * @param isTrue
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	 */
 
 	public static void setAttributes(AppSuggestBox editSearchTxtBox,
@@ -424,24 +433,24 @@ public class StringUtil implements ClientConstants {
 	}
 
 	/**
-	 * 
-	 * @function setAttributes 
-	 * 
+	 *
+	 * @function setAttributes
+	 *
 	 * @created_date : Jul 26, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param object
 	 * @param idValue
 	 * @param altValue
 	 * @param titleValue
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -452,7 +461,25 @@ public class StringUtil implements ClientConstants {
 		if (!isEmpty(titleValue) )
 			object.setAttribute("title",titleValue);
 	}
-
+	/**
+	 * @function setAttributes
+	 *
+	 * @description
+	 *
+	 * @param object
+	 * @param altValue
+	 * @param titleValue
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 */
+	public static void setAttributes(Element object,String altValue, String titleValue){
+		if (!isEmpty(altValue) )
+			object.setAttribute("alt",altValue);
+		if (!isEmpty(titleValue) )
+			object.setAttribute("title",titleValue);
+	}
 	/**
 	 * Generalised method for converting object to toString (This will avoid NPE)
 	 * @param obj
@@ -470,7 +497,7 @@ public class StringUtil implements ClientConstants {
 	public static <T> boolean checkNull(T e){
 		return e==null;
 	}
-	
+
 	/**
 	 * Adding all the categories with new category as a value.
 	 * @return
@@ -478,14 +505,14 @@ public class StringUtil implements ClientConstants {
 	private static void addAllCategories() {
 		categoryMap = new HashMap<String,String>();
 		categoryMap.put(LESSON, TEXT);
-		categoryMap.put(TEXTBOOK,TEXT); 
-		categoryMap.put(HANDOUT, TEXT); 
+		categoryMap.put(TEXTBOOK,TEXT);
+		categoryMap.put(HANDOUT, TEXT);
 		categoryMap.put(SLIDE, IMAGE);
 		categoryMap.put(EXAM, WEBPAGE);
 		categoryMap.put(WEBSITE,WEBPAGE);
-		categoryMap.put(CHALLENGE, WEBPAGE); 
+		categoryMap.put(CHALLENGE, WEBPAGE);
 	}
-	
+
 	/**
 	 * Returns the equivalent category.
 	 * @param type
@@ -494,11 +521,11 @@ public class StringUtil implements ClientConstants {
 	public static String getEquivalentCategory(String type){
 		return categoryMap.get(type)==null?type:categoryMap.get(type);
 	}
-	
+
 	/**
 	 * Encrypts the given string by using GWT crypto method.
 	 * @param data {@link String}
-	 * 
+	 *
 	 * @return encrypted {@link String}
 	 */
 	public static String getCryptoData(String data) {
@@ -512,13 +539,13 @@ public class StringUtil implements ClientConstants {
 		}
 		return encrypted;
 	}
-	
-	
+
+
 	/**
 	 * Decrypts the crypto data and returns the plain text.
-	 * 
+	 *
 	 * @param cryptoData {@link String}
-	 * 
+	 *
 	 * @return plainText {@link String}
 	 */
 	public static String getDecryptedData(String cryptoData){
@@ -532,50 +559,49 @@ public class StringUtil implements ClientConstants {
 		}
 		return plainText;
 	}
-	
+
 
 	public static native String removeHtml(String htmText) /*-{
 		var regex = /(<([^>]+)>)/ig;
 		result = htmText.replace(regex, "");
 		return result;
 	}-*/;
-	
+
 	/**
 	 * To remove rich text content using the following method.
-	 * 
+	 *
 	 * @param htmlText
 	 * @return filteredInnerText
 	 */
 	public static String removeAllHtmlCss(String htmlText){
 		Element element=Document.get().createElement("div");
 		element.setInnerHTML(htmlText);
-		String filteredInnerText = element.getInnerText(); 
+		String filteredInnerText = element.getInnerText();
 		element.removeFromParent();
 		return filteredInnerText;
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @function SysOut 
-	 * 
+	 *
+	 * @function SysOut
+	 *
 	 * @created_date : 24-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param message
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	public static void SysOut(String message){
-//		System.out.println(message);
 	}
 	/**
 	 * To set the default image based on collectionType value
@@ -594,18 +620,18 @@ public class StringUtil implements ClientConstants {
 			imgField.getElement().setAttribute("style", borderColor);
 		}
 	}
-	
+
 	private static RegExp urlValidator;
 	private static RegExp urlPlusTldValidator;
 	/**
-	 * @function isValidUrl 
-	 * 
+	 * @function isValidUrl
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param url
 	 * @parm(s) : @param topLevelDomainRequired
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -617,7 +643,7 @@ public class StringUtil implements ClientConstants {
 		if (urlValidator == null || urlPlusTldValidator == null) {
 			urlValidator = RegExp
 					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
-			
+
 			urlPlusTldValidator = RegExp
 					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
 
@@ -626,13 +652,13 @@ public class StringUtil implements ClientConstants {
 				.exec(url) != null;
 	}
 	/**
-	 * @function returnCount 
-	 * 
+	 * @function returnCount
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param url
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : Integer
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -705,4 +731,267 @@ public class StringUtil implements ClientConstants {
 		  }
 		return resourceCategory;
 	}
+
+
+	/**
+	 *
+	 * @function loadVisualizationLibraries
+	 *
+	 * @created_date : 17-Jun-2015
+	 *
+	 * @description
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 *
+	 *
+	 *
+	 */
+	public static void loadVisualizationLibraries(){
+//		boolean status = getScriptStatus();
+//		AppClientFactory.printInfoLogger("status : "+status);
+//		if (!status){
+//			Runnable onLoad = new Runnable() {
+//	            @Override
+//	            public void run() {
+//
+//	            }
+//	        };
+//	        VisualizationUtils.loadVisualizationApi(onLoad, PieChart.PACKAGE);
+//	        VisualizationUtils.loadVisualizationApi(onLoad, Table.PACKAGE);
+
+//			AjaxLoaderOptions options = AjaxLoaderOptions.newInstance();
+//            options.setPackages(PieChart.PACKAGE,Table.PACKAGE);
+//            AjaxLoader.loadApi("visualization", "1", new Runnable() {
+//              public void run() {
+//              }
+//            }, options);
+//
+//		}
+	}
+
+	public static String capitalizeFirstLetter(String original){
+	    if(original.length() == 0)
+	        return original;
+	    return original.substring(0, 1).toUpperCase() + original.substring(1);
+	}
+
+
+	public static ClassDo getClassObj(){
+		ClassDo classObj=new ClassDo();
+		String classId=AppClientFactory.getPlaceManager().getRequestParameter(CID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(CID):"";
+		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(COURSEID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(COURSEID):"";
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(UNITID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(UNITID):"";
+		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSONID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(LESSONID):"";
+
+		classObj.setClassId(classId);
+		classObj.setCourseId(courseId);
+		classObj.setLessonId(lessonId);
+		classObj.setUnitId(unitId);
+		return classObj;
+	}
+
+	public static String getFormattedDate(long different, String separator) {
+		String format="";
+		long secondsInMilli = 1000;
+		if(different==0) {
+			format="--";
+		} else if((different/1000)>60) {
+			long minutesInMilli = secondsInMilli * 60;
+			long hoursInMilli = minutesInMilli * 60;
+			long daysInMilli = hoursInMilli * 24;
+
+			long d = different / daysInMilli;
+			different = different % daysInMilli;
+
+			long h = different / hoursInMilli;
+			different = different % hoursInMilli;
+
+			long m = different / minutesInMilli;
+			different = different % minutesInMilli;
+
+			long s = different / secondsInMilli;
+
+	    	if(d>0) {
+	    		h = (24*d)+h;
+	    	}
+		    if(separator!=null&&separator.equalsIgnoreCase(":")) {
+		    	format = format + h + separator;
+			    format = format + m + separator;
+			    format = format + s;
+		    } else {
+		    	if(h>0) {
+			    	format = format + h +" hrs ";
+		    	}
+		    	if(m>0) {
+				    format = format + m +" min ";
+		    	}
+		    	if(s>0) {
+			    	format = format + s +" sec";
+		    	}
+		    }
+		} else if((different/1000)<60) {
+	    	format = "< 1min";
+		}
+	    return format;
+	}
+
+	public static String getElapsedTime(long different) {
+		String separator = ":";
+		String format="";
+		long secondsInMilli = 1000;
+		if(different==0) {
+			format="--";
+		} else if((different/1000)>=1) {
+			long minutesInMilli = secondsInMilli * 60;
+			long hoursInMilli = minutesInMilli * 60;
+			long daysInMilli = hoursInMilli * 24;
+
+			long d = different / daysInMilli;
+			different = different % daysInMilli;
+			
+			long h = different / hoursInMilli;
+			different = different % hoursInMilli;
+
+			long m = different / minutesInMilli;
+			different = different % minutesInMilli;
+			
+			long s = Math.round(((double)((double)different / (double)secondsInMilli)));
+			
+	    	if(d>0) {
+	    		h = (24*d)+h;
+	    	}
+	    	if(h>0) {
+			    if(h<10) {
+				    format = format + "0"+h + separator;
+			    } else {
+			    	format = format + h + separator;
+			    }
+	    	}
+	    	if(m>0) {
+			    if(m<10) {
+				    format = format + "0"+m + separator;
+			    } else {
+				    format = format + m + separator;
+			    }
+	    	} else {
+	    		format = "00"+ separator;
+	    	}
+	    	if(s>0) {
+			    if(s<10) {
+		    		format = format + "0"+s;
+			    } else {
+		    		format = format + s;
+			    }
+	    	} else if(m>0){
+	    		format = format+"00";
+	    	}
+		} else if((different/1000)<1) {
+	    	format = "<1 sec";
+		}
+	    return format;
+	}
+
+	public static String getHighlightStyle(int score) {
+		String scoreStyle = "grey";
+		if(score>=0&&score<60) {
+			scoreStyle = CssTokens.RED_STYLE;
+		} else if(score>=60&&score<=69) {
+			scoreStyle = CssTokens.ORANGE_STYLE;
+		} else if(score>=70&&score<=79) {
+			scoreStyle = CssTokens.YELLOW_GREEN_STYLE;
+		} else if(score>=80&&score<=89) {
+			scoreStyle = CssTokens.LIGHT_GREEN_STYLE;
+		} else if(score>=90&&score<=100) {
+			scoreStyle = CssTokens.GREEN_STYLE;
+		}
+		return scoreStyle;
+	}
+
+	public static List<String> getKeys(Set<Integer> keys){
+		List<String> keyString=new ArrayList<String>();
+
+		for(Integer key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
+	public static List<String> getKeysLong(Set<Long> keys){
+		List<String> keyString=new ArrayList<String>();
+
+		for(Long key:keys){
+			keyString.add(key+"");
+		}
+		return keyString;
+	}
+
+	public static List<checkboxSelectedDo> getCheckBoxSelectedDo(Map<Integer,String> detailsMap){
+		List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<checkboxSelectedDo>();
+		if(detailsMap!=null){
+
+			for(Map.Entry<Integer, String> entry:detailsMap.entrySet()){
+				checkboxSelectedDo checkboxSelectedDo=new checkboxSelectedDo();
+				checkboxSelectedDo.setId(entry.getKey());
+				checkboxSelectedDo.setName(entry.getValue());
+				checkboxSelectedDos.add(checkboxSelectedDo);
+			}
+		}
+		return checkboxSelectedDos;
+	}
+
+
+public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
+	List<StandardFo> standardFos=new ArrayList<StandardFo>();
+	if(detailsMap!=null){
+		for(Map.Entry<Long, String> entry:detailsMap.entrySet()){
+			StandardFo fo=new StandardFo();
+			fo.setId(Integer.parseInt(entry.getKey()+""));
+			fo.setLabel(entry.getValue());
+			standardFos.add(fo);
+		}
+	}
+	return standardFos;
+}
+
+	public static SpanPanel getStudentPlanErrorLbl(String errorStr, String style) {
+		SpanPanel errorLbl = new SpanPanel();
+		errorLbl.setText(errorStr);
+		errorLbl.setStyleName(style);
+		return errorLbl;
+	}
+	
+	public static String getResourceFormatImage(String resourceCategory) {
+		String categoryStyle="";
+		if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory)){
+			resourceCategory = WEBPAGE;
+			categoryStyle="category_new_type_webpage";
+		} else if(SLIDE.equalsIgnoreCase(resourceCategory) || IMAGE.equalsIgnoreCase(resourceCategory)){
+			resourceCategory = IMAGE;
+			categoryStyle="category_new_type_image";
+		} else if(HANDOUT.equalsIgnoreCase(resourceCategory) || LESSON.equalsIgnoreCase(resourceCategory) || TEXTBOOK.equalsIgnoreCase(resourceCategory)|| TEXT.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = TEXT;
+			categoryStyle="category_new_type_text";
+		}  else if(EXAM.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = WEBPAGE;
+			categoryStyle="category_new_type_webpage";
+		} else if(VIDEO.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = VIDEO;
+			categoryStyle="category_new_type_video";
+		} else if(INTERACTIVE.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = INTERACTIVE;
+			categoryStyle="category_new_type_interactive";
+		}else if(AUDIO.equalsIgnoreCase(resourceCategory)) {
+			resourceCategory = AUDIO;
+			categoryStyle="category_new_type_audio";
+		} else{
+			categoryStyle="category_new_type_other";
+		}
+		return categoryStyle;
+	}
+	
 }

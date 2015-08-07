@@ -27,8 +27,8 @@
 */
 package org.ednovo.gooru.client.mvp.library.district;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -116,6 +116,11 @@ public class DistrictBannerView extends Composite {
 		} else if(placeToken.contains(PlaceTokens.LUSD)) {
 			setLandingBannerText(i18n.GL2181(),i18n.GL2182(),"","","","");
 			partnerLogo.setStyleName(districtStyleUc.lusdPartnerLogo());
+			partnerLogo.setVisible(true);
+			bannerContainer.setVisible(false);
+		}else if(placeToken.contains(PlaceTokens.YCGL_LIBRARY)) {
+			setLandingBannerText(i18n.GL3287_1(),i18n.GL3288_1(),"","","","");
+			partnerLogo.setStyleName(districtStyleUc.ycglDistrictLogo());
 			partnerLogo.setVisible(true);
 			bannerContainer.setVisible(false);
 		}

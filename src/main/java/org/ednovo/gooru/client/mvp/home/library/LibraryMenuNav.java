@@ -30,10 +30,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.library.CourseDo;
+import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.application.shared.model.library.StandardCourseDo;
+import org.ednovo.gooru.application.shared.model.library.StandardsDo;
+import org.ednovo.gooru.application.shared.model.library.SubjectDo;
+import org.ednovo.gooru.application.shared.model.library.UnitDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenSubjectCourseEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetStandardDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoEvent;
@@ -42,13 +49,6 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.library.CourseDo;
-import org.ednovo.gooru.shared.model.library.LibraryUserDo;
-import org.ednovo.gooru.shared.model.library.StandardCourseDo;
-import org.ednovo.gooru.shared.model.library.StandardsDo;
-import org.ednovo.gooru.shared.model.library.SubjectDo;
-import org.ednovo.gooru.shared.model.library.UnitDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -193,7 +193,12 @@ public class LibraryMenuNav extends Composite{
 			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
 			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
 			aboutGooruAnr.setHref(i18n.GL1900());
-		} else {
+		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YCGL_LIBRARY)) {
+			aboutGooruAnr.setText("About Yuma");
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
+			aboutGooruAnr.setHref("http://www.yumasupt.org");
+		}else {
 			aboutGooruAnr.setText(i18n.GL1024());
 			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1024());
 			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1024());

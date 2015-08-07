@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,10 +25,10 @@
 package org.ednovo.gooru.client.mvp.classpages.assignments;
 
 /*
- * 
+ *
  * @fileName : AssignmentPopupView.java
  *
- * @description : This class is responsible to show and add assignments 
+ * @description : This class is responsible to show and add assignments
  *
  *
  * @version : 5.3
@@ -42,14 +42,14 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
 
 import java.util.Date;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
+import org.ednovo.gooru.application.shared.model.content.AttachToDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentDo;
-import org.ednovo.gooru.shared.model.content.AttachToDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -88,9 +88,9 @@ public abstract class AssignmentPopupView extends Composite{
 
 	public static AssignmentPopupViewUiBinder uiBinder = GWT
 			.create(AssignmentPopupViewUiBinder.class);
-	
+
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static final String MANDATORY_TITLE = i18n.GL0173();
 	private static final String CHARACTERS_LIMIT = i18n.GL0143();
 	String classpageId = "";
@@ -106,10 +106,10 @@ public abstract class AssignmentPopupView extends Composite{
 
 	@UiField
 	TextArea assignmentDirectionsTxtArea;
-	
+
 	@UiField
 	HTMLPanel addResourceBtnPanel;
-	
+
     boolean isClicked = false;
 
 	public AssignmentPopupView() {
@@ -118,44 +118,44 @@ public abstract class AssignmentPopupView extends Composite{
 		assignmentTitleLabel.getElement().setId("lblAssignmentTitle");
 		assignmentTitleLabel.getElement().setAttribute("alt",i18n.GL1407());
 		assignmentTitleLabel.getElement().setAttribute("title",i18n.GL1407());
-		
+
 		mandatoryTitleLabel.setText(i18n.GL0173());
 		mandatoryTitleLabel.getElement().setId("lblMandatoryTitle");
 		mandatoryTitleLabel.getElement().setAttribute("alt",i18n.GL0173());
 		mandatoryTitleLabel.getElement().setAttribute("title",i18n.GL0173());
-		
+
 		assignmentDueDateLabel.setText(i18n.GL0238());
 		assignmentDueDateLabel.getElement().setId("lblAssignmentDueDate");
 		assignmentDueDateLabel.getElement().setAttribute("alt",i18n.GL0238());
 		assignmentDueDateLabel.getElement().setAttribute("title",i18n.GL0238());
-		
+
 		mandatoryDueDateLabel.setText(i18n.GL0235());
 		mandatoryDueDateLabel.getElement().setAttribute("id", "datePickerErrorMessageLabel");
 		mandatoryDueDateLabel.getElement().setAttribute("alt",i18n.GL0235());
 		mandatoryDueDateLabel.getElement().setAttribute("title",i18n.GL0235());
-		
+
 		assignmentDirectionLabel.setText(i18n.GL1408());
 		assignmentDirectionLabel.getElement().setAttribute("id", "lblAssignmentDirection");
 		assignmentDirectionLabel.getElement().setAttribute("alt",i18n.GL1408());
 		assignmentDirectionLabel.getElement().setAttribute("title",i18n.GL1408());
-		
+
 		mandatoryDirectionLabel.setText(i18n.GL0236());
 		mandatoryDirectionLabel.getElement().setId("errlblDirectional");
-		
+
 		addResourceBtnLbl.setText(i18n.GL0590());
 		addResourceBtnLbl.getElement().setId("lblAdd");
 		addResourceBtnLbl.getElement().setAttribute("alt",i18n.GL0590());
 		addResourceBtnLbl.getElement().setAttribute("title",i18n.GL0590());
-		
+
 		cancelResourcePopupBtnLbl.setText(i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		cancelResourcePopupBtnLbl.getElement().setAttribute("alt",i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		assignmentTitleTxt.getElement().setAttribute("id", "txtAssignmentTitle");
 		assignmentDirectionsTxtArea.getElement().setAttribute("id", "txtAreaDirections");
 		StringUtil.setAttributes(assignmentTitleTxt, true);
-		
+
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 
@@ -179,7 +179,7 @@ public abstract class AssignmentPopupView extends Composite{
 
 		dateValidationUc.setVisible(false);
 		dateValidationUc.getElement().setId("errlblDateValidationUc");
-		
+
 		addResourceBtnPanel.getElement().setId("pnlAddResource");
 		clearFields();
 	}
@@ -187,12 +187,12 @@ public abstract class AssignmentPopupView extends Composite{
 	public abstract void hidePopup();
 
 	public abstract void createAssignment(CollectionDo collectionDo, String todaysDate);
-	
+
 	public abstract void createAssignment(AssignmentDo assignmentDo);
 
 	/**
 	 * Validate Assignment Date
-	 * 
+	 *
 	 * @return true if valid
 	 */
 	private boolean hasValidateDate(String dueDate) {
@@ -203,17 +203,17 @@ public abstract class AssignmentPopupView extends Composite{
 			assignmentDueDateLabel.getElement().setAttribute("alt","");
 			assignmentDueDateLabel.getElement().setAttribute("title","");
 			dateValidationUc.setVisible(true);
-			
+
 			isValid = false;
 		}
 		return isValid;
 	}
 
 	/**
-	 * 
+	 *
 	 * @fileName : AssignmentPopupView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -238,10 +238,10 @@ public abstract class AssignmentPopupView extends Composite{
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : AssignmentPopupView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -268,10 +268,10 @@ public abstract class AssignmentPopupView extends Composite{
 	}
 
 	/**
-	 * 
+	 *
 	 * @fileName : AssignmentPopupView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -304,10 +304,10 @@ public abstract class AssignmentPopupView extends Composite{
 	}
 
 	/**
-	 * 
+	 *
 	 * @fileName : AssignmentPopupView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -323,7 +323,7 @@ public abstract class AssignmentPopupView extends Composite{
 		@Override
 		public void onClick(ClickEvent event) {
 			boolean isFormFilled = true;
-			
+
 			String title = assignmentTitleTxt.getText().trim();
 			String dueDate = dateBoxUc.getDateBox().getText();
 			String directions = assignmentDirectionsTxtArea.getText().trim();
@@ -359,22 +359,22 @@ public abstract class AssignmentPopupView extends Composite{
 					assignmentDo.setPlannedEndDate(dueDate);
 				}
 				assignmentDo.setClasspageId(classpageId);
-				
+
 				TaskDo taskDo = new TaskDo();
 				taskDo.setTitle(title);
 				taskDo.setTypeName("assignment");
 				if (directions!=null && !directions.trim().equalsIgnoreCase("")){
 					taskDo.setDescription(directions);
 				}
-				
+
 				assignmentDo.setTask(taskDo);
-				
+
 				AttachToDo attachToDo = new AttachToDo();
 				attachToDo.setId(classpageId);
 				attachToDo.setType("classpage");
-				
+
 				assignmentDo.setAttachTo(attachToDo);
-				
+
 				if(!isClicked){
 					isClicked = true;
 					MixpanelUtil.Create_Assignment_Success();
@@ -385,12 +385,12 @@ public abstract class AssignmentPopupView extends Composite{
 		}
 	}
 
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : AssignmentPopupView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -414,12 +414,12 @@ public abstract class AssignmentPopupView extends Composite{
 			}
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : AssignmentPopupView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -445,21 +445,21 @@ public abstract class AssignmentPopupView extends Composite{
 	}
 
 	/**
-	 * 
-	 * @function clearFields 
-	 * 
+	 *
+	 * @function clearFields
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -471,7 +471,7 @@ public abstract class AssignmentPopupView extends Composite{
 		assignmentDirectionsTxtArea.setText("");
 		assignmentTitleTxt.setText("");
 		dateBoxUc.getDateBox().setText("");
-		
+
 		isClicked = false;
 	}
 
@@ -489,7 +489,7 @@ public abstract class AssignmentPopupView extends Composite{
 	public void setClasspageId(String classpageId) {
 		this.classpageId = classpageId;
 	}
-	
+
 	public void isClikedMethod(){
 			isClicked = false;
 			}

@@ -24,12 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.profilepage;
 
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -42,6 +43,8 @@ public class ProfilePageCollectionMetaData extends Composite {
 	@UiField
 	Label folderTitle, folderDescription;
 	
+	@UiField HTMLPanel mainContainer;
+	
 	private static ProfilePageCollectionMetaDataUiBinder uiBinder = GWT
 			.create(ProfilePageCollectionMetaDataUiBinder.class);
 
@@ -51,6 +54,7 @@ public class ProfilePageCollectionMetaData extends Composite {
 	public ProfilePageCollectionMetaData(final CollectionItemDo collectionItemDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(collectionItemDo);
+		mainContainer.getElement().setId("gooruProfilePage");
 	}
 
 	public void setData(CollectionItemDo collectionItemDo) {

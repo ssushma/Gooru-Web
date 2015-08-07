@@ -31,9 +31,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
@@ -48,13 +55,6 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
-import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
-import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -978,8 +978,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 
 			if (!isSaveButtonClicked) {
 				isSaveButtonClicked = true;
-				updateQuestionResource(collectionItemDo.getResource()
-						.getGooruOid(), collectionQuestionItemDo);
+				updateQuestionResource(collectionItemDo.getResource().getGooruOid(), collectionQuestionItemDo);
 			}
 			panelPleaseWait.setVisible(true);
 			panelControls.setVisible(false);

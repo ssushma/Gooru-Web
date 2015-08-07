@@ -31,11 +31,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
-import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.InfoUtil;
@@ -62,8 +62,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class FillIntheBlankQuestionView extends Composite implements ClientConstants{
 	
 	@UiField Button checkAnswer;
-	@UiField FlowPanel optionsContainer,resultPanel;
-	@UiField QuestionStyleResource oeStyle;
+	@UiField FlowPanel optionsContainer,resultPanel,questionsMainPanel;
 	@UiField Label messageBodyText;
 	@UiField HTMLPanel answerText;
 
@@ -86,6 +85,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 	 */
 	public FillIntheBlankQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
 		setQuestionTypeCaption();
 		answerText.getElement().setInnerHTML(i18n.GL0665());
 		answerText.getElement().setAttribute("alt",i18n.GL0665());
@@ -113,6 +113,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 	@UiConstructor
 	public FillIntheBlankQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
+		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
 		this.collectionItemDo=collectionItemDo;
 		this.attemptedAnswerDo=attemptedAnswerDo;
 		setQuestionTypeCaption();
@@ -143,7 +144,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 			String fibQuestionTxt = "";
 			int answerArraySize = this.collectionItemDo.getResource().getAnswers()!=null?this.collectionItemDo.getResource().getAnswers().size():0;
 			HTML fibText=new HTML();
-			fibText.setStyleName(oeStyle.answerTextContainer());
+			fibText.setStyleName("answerTextContainer");
 			if(fibArray!=null){
 				for(int i = 0; i < fibArray.length; i++) {
 					fibQuestionTxt = fibQuestionTxt + fibArray[i];
@@ -169,7 +170,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 		for(int i = 0; i < answerArraySize; i++) {
 			TextBox answerText = new TextBox();
 			answerText.addKeyUpHandler(new AnswerTextBoxKeypressEvent());
-			answerText.setStyleName(oeStyle.answerTextBox());
+			answerText.setStyleName("answerTextBox");
 			optionsContainer.add(answerText);
 			textBoxArray.add(answerText);
 			Document.get().getElementById("fib"+i).appendChild(answerText.getElement());
@@ -193,8 +194,8 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 	 */
 	private void enableCheckAnswerButton(){
 		isCheckButtonEnabled=true;
-		checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
-		checkAnswer.addStyleName(oeStyle.openEndedQuestionSubmitButton());
+		checkAnswer.removeStyleName("hintsInActiveButton");
+		checkAnswer.addStyleName("openEndedQuestionSubmitButton");
 	}
 	/**
 	 * This handler is used to call the highlight text boxes functionality and increase the no.of user attempts
@@ -207,8 +208,8 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 			increaseUserAttemptCount();
 			setEnteredFibAnswersData(enteredAnswerText);
 			isCheckButtonEnabled=false;
-			checkAnswer.removeStyleName(oeStyle.openEndedQuestionSubmitButton());
-			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
+			checkAnswer.removeStyleName("openEndedQuestionSubmitButton");
+			checkAnswer.addStyleName("hintsInActiveButton");
 		}		
 	}
 	/**
@@ -248,11 +249,11 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 							if(isFibStatus){
 								isFibStatus=true;
 							}
-							textBoxArray.get(i).addStyleName(oeStyle.answerCorrectTextBox());
+							textBoxArray.get(i).addStyleName("answerCorrectTextBox");
 						}else{
 							answerAttemptDo.setStatus("0");
 							isFibStatus=false;
-							textBoxArray.get(i).addStyleName(oeStyle.answerWrongTextBox());
+							textBoxArray.get(i).addStyleName("answerWrongTextBox");
 							showResultPanel(i,questionAnswerDo.getAnswerText());
 						}
 						textBoxArray.get(i).setReadOnly(true);
@@ -329,21 +330,21 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 	 */
 	private void showResultPanel(int blankNum,String correctAnswer){
 		FlowPanel resultContianer=new FlowPanel();
-		resultContianer.setStyleName(oeStyle.resultPanelConatiner());
+		resultContianer.setStyleName("resultPanelConatiner");
 		HTMLPanel blankHtml=new HTMLPanel(i18n.GL1455()+" "+(blankNum+1)+i18n.GL_SPL_SEMICOLON()+" ");
-		blankHtml.setStyleName(oeStyle.resultPanelText());
+		blankHtml.setStyleName("resultPanelText");
 		Label answerWrongImagePanel=new Label();
 		answerWrongImagePanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
-		answerWrongImagePanel.addStyleName(oeStyle.resultPanelAnswerImageFIB());
+		answerWrongImagePanel.addStyleName("resultPanelAnswerImageFIB");
 		
 		HTML answerOptiontext=new HTML();
 		answerOptiontext.setHTML(i18n.GL1456()+i18n.GL_SPL_SEMICOLON()+" "+correctAnswer);
-		answerOptiontext.setStyleName(oeStyle.resultPanelText());
+		answerOptiontext.setStyleName("resultPanelText");
 		resultContianer.add(blankHtml);
 		resultContianer.add(answerWrongImagePanel);
 		resultContianer.add(answerOptiontext);
 		resultPanel.add(resultContianer);
-		resultPanel.setStyleName(oeStyle.resultPanel());
+		resultPanel.setStyleName("resultPanel");
 	}
 	/**
 	 * This method is used to set the FIB answer's data

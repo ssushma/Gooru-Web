@@ -29,12 +29,12 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -46,6 +46,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -58,8 +59,8 @@ public abstract class OpendEndedQuestionView extends Composite{
 	@UiField HTMLPanel answetTextAfterSubmission,answertext;
 	@UiField Button submitButton;
 	@UiField TextArea openEndedAnswerTextArea;
-	@UiField QuestionStyleResource oeStyle;
 	@UiField Label submittedText,errorMessageText,messageBodyText, lblCharLimit;
+	@UiField FlowPanel questionsMainPanel;
 	private String answerText="";
 	private CollectionItemDo collectionItemDo;
 	private boolean isCheckButtonEnabled=false;
@@ -75,6 +76,7 @@ public abstract class OpendEndedQuestionView extends Composite{
 	@Inject
 	public OpendEndedQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
+		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
 		this.collectionItemDo=collectionItemDo;
 		setQuestionTypeCaption();
 		answertext.getElement().setInnerHTML(i18n.GL0665());
@@ -145,9 +147,8 @@ public abstract class OpendEndedQuestionView extends Composite{
 	public void clickOnSubmitButton(ClickEvent clickEvent){
 		if(isCheckButtonEnabled){
 		isCheckButtonEnabled=false;
-		submitButton.removeStyleName(oeStyle.openEndedQuestionSubmitButton());
-		submitButton.addStyleName(oeStyle.hintsInActiveButton());
-		
+		submitButton.removeStyleName("openEndedQuestionSubmitButton");
+		submitButton.addStyleName("hintsInActiveButton");
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			MixpanelUtil.ClickOpenEndedQuestionSubmitButtonFromCollectionPlayer();
 		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
@@ -216,13 +217,13 @@ public abstract class OpendEndedQuestionView extends Composite{
 	}
 	private void enableSubmitButton(){
 		isCheckButtonEnabled=true;
-		submitButton.removeStyleName(oeStyle.hintsInActiveButton());
-		submitButton.addStyleName(oeStyle.openEndedQuestionSubmitButton());
+		submitButton.removeStyleName("hintsInActiveButton");
+		submitButton.addStyleName("openEndedQuestionSubmitButton");
 	}
 	private void disableSubmitButton(){
 		isCheckButtonEnabled=false;
-		submitButton.removeStyleName(oeStyle.openEndedQuestionSubmitButton());
-		submitButton.addStyleName(oeStyle.hintsInActiveButton());
+		submitButton.removeStyleName("openEndedQuestionSubmitButton");
+		submitButton.addStyleName("hintsInActiveButton");
 	}
 	public abstract void createSesstionItemAttemptOe(String answerId,String answerText);
 	public abstract void setAttemptStatus(String collecionItemId, AttemptedAnswersDo attempteAnswersDo);

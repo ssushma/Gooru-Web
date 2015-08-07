@@ -1,7 +1,5 @@
 package org.ednovo.gooru.client.mvp.profilepage;
 
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -14,7 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ProfilePageTabVc extends FocusPanel {
 
 	private static ProfilePageTabVc selectedTabTitleVc;
-	
+
 	private static ProfilePageTabVcUiBinder uiBinder = GWT
 			.create(ProfilePageTabVcUiBinder.class);
 
@@ -26,21 +24,23 @@ public class ProfilePageTabVc extends FocusPanel {
 
 	@UiField
 	FlowPanel wrapperFloPanel;
-	
+
 	@UiField
 	SimplePanel imageSimPanel;
-	
+
 	String title ="";
-	
+
 	public ProfilePageTabVc() {
 		setWidget(uiBinder.createAndBindUi(this));
-		wrapperFloPanel.getElement().setId("fpnlWrapperFloPanel");
+		wrapperFloPanel.getElement().setId("gooruProfilePage");
 		imageSimPanel.getElement().setId("spnlImageSimPanel");
 		labelcount.getElement().setId("labelcount");
+//		labelcount.setVisible(false);
 		labelLbl.getElement().setId("labelLbl");
+
 	}
 
-	/** 
+	/**
 	 * @param enable decides to add or remove activeClass style
 	 */
 	public void setSelected(boolean enable) {
@@ -48,10 +48,10 @@ public class ProfilePageTabVc extends FocusPanel {
 			selectedTabTitleVc.setSelected(false);
 		}
 		String activeCss;
-		
-		activeCss = ShelfCBundle.INSTANCE.css().profileMetaDataTabTitleActive();
-		
-		
+
+		activeCss = "profileMetaDataTabTitleActive";
+
+
 		if (enable) {
 			wrapperFloPanel.addStyleName(activeCss);
 		} else {
@@ -62,12 +62,12 @@ public class ProfilePageTabVc extends FocusPanel {
 
 	public void setEnabled(boolean enabled) {
 		if(enabled) {
-			wrapperFloPanel.setStyleName(ShelfCBundle.INSTANCE.css().profileMetaDataTabTitle());
+			wrapperFloPanel.setStyleName("profileMetaDataTabTitle");
 		} else {
-			wrapperFloPanel.setStyleName(ShelfCBundle.INSTANCE.css().profileMetaDataTabTitleDisabled());
+			wrapperFloPanel.setStyleName("profileMetaDataTabTitleDisabled");
 		}
 	}
-	
+
 	/**
 	 * @param label name of label
 	 */
@@ -83,6 +83,7 @@ public class ProfilePageTabVc extends FocusPanel {
 	}
 	public void setLabelCount(String label)
 	{
+//		labelcount.setVisible(false);
 		labelcount.setText(label);
 		labelcount.getElement().setAttribute("alt",label);
 		labelcount.getElement().setAttribute("title",label);
@@ -90,7 +91,7 @@ public class ProfilePageTabVc extends FocusPanel {
 	public Label getLabelCount()
 	{
 		return labelcount;
-		
+
 	}
 	/**
 	 * @param style for image panel
@@ -99,6 +100,6 @@ public class ProfilePageTabVc extends FocusPanel {
 		imageSimPanel.setStyleName(style);
 	}
 
-	
+
 
 }

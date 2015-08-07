@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,12 +28,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -45,14 +45,15 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 
 /**
- * 
+ *
  * @fileName : ContributorsView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -87,6 +88,9 @@ public class ContributorsView extends
 	@UiField
 	Anchor ancView;
 
+	@UiField
+	Label lblPleaseWait;
+
 	private Storage stockStore = Storage.getLocalStorageIfSupported();
 
 	/**
@@ -96,25 +100,25 @@ public class ContributorsView extends
 		setWidget(uiBinder.createAndBindUi(this));
 
 		setIds();
-		getContributorsList();
+//		getContributorsList();
 	}
 
 	/**
 	 * @function setIds
-	 * 
+	 *
 	 * @created_date : Jul 28, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void setIds() {
 		Map<String, String> urlPara = new HashMap<String, String>();
@@ -134,38 +138,38 @@ public class ContributorsView extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @function getContributorsList
-	 * 
+	 *
 	 * @created_date : Jul 28, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
+	@Override
 	public void getContributorsList() {
 
 		String map = null;
-		
+		lblPleaseWait.setVisible(false);
 		if (stockStore != null && stockStore.getItem(CONTRIBUTORS_DATA) != null){
 			map = stockStore.getItem(CONTRIBUTORS_DATA);
 			deserializeCollaboratorsList(map);
 		} else {
-			
 			AppClientFactory.getInjector().getLibraryService().getLibraryContributorsUsers("community",new SimpleAsyncCallback<String>() {
 				@Override
 				public void onSuccess(String result) {
 					if (stockStore != null) {
 						stockStore.setItem(CONTRIBUTORS_DATA,
-								result);											
+								result);
 					}
 					deserializeCollaboratorsList(result);
 				}
@@ -173,21 +177,21 @@ public class ContributorsView extends
 		}
 	}
 	/**
-	 * 
-	 * @function deserializeCollaboratorsList 
-	 * 
+	 *
+	 * @function deserializeCollaboratorsList
+	 *
 	 * @created_date : 28-Apr-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param jsonString
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -201,29 +205,30 @@ public class ContributorsView extends
 			}
 		});
 	}
-	
+
 
 	/**
-	 * 
+	 *
 	 * @function displayContributors
-	 * 
+	 *
 	 * @created_date : Jul 28, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param result
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	public void displayContributors(ArrayList<LibraryUserDo> result) {
 		int count=0;
+		panelContributorsList.clear();
 		for (int i = 0; count < 8; i++) {
 			if (result.get(i).getGooruUId() != null
 					&& !result.get(i).getGooruUId().equalsIgnoreCase("")
@@ -244,7 +249,7 @@ public class ContributorsView extends
 
 				img.getElement().addClassName(fc.profileImage());
 				panelContributorsList.add(img);
-				
+
 				count++;
 			}
 		}

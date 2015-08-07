@@ -30,27 +30,31 @@ package org.ednovo.gooru.client.mvp.gsearch.collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.AppPlaceKeeper;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.SearchServiceAsync;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.SearchAsyncCallbackForSearch;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEventHandler;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.client.service.SearchServiceAsync;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -71,7 +75,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
  *
  * @Reviewer: 
  */
-public class SearchCollectionPresenter extends SearchAbstractPresenter<CollectionSearchResultDo, ResourceSearchResultDo, IsSearchCollectionView, SearchCollectionPresenter.IsSearchCollectionProxy> implements GooruSearchUiHandlers,RefreshDisclosurePanelForFoldersEventHandler {
+public class SearchCollectionPresenter extends SearchAbstractPresenter<CollectionSearchResultDo, ResourceSearchResultDo, IsSearchCollectionView, SearchCollectionPresenter.IsSearchCollectionProxy> implements GooruSearchUiHandlers {
 
 	@Inject
 	private SearchServiceAsync searchService;
@@ -84,7 +88,10 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	
 	GooruGradesPresenter gooruGradesPresenter;
 	
+	StandardsPopupPresenter standardsPopupPresenter;
+	
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
+	ShelfMainPresenter shelfMainPresenter;
 	
 	ViewMorePeoplePresenter viewmorePeoplePresenter=null;
 	
@@ -95,21 +102,28 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	}
 
 	@Inject
-	public SearchCollectionPresenter(IsSearchCollectionView view, IsSearchCollectionProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter);
+	public SearchCollectionPresenter(IsSearchCollectionView view, IsSearchCollectionProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,ShelfMainPresenter shelfMainPresenter,StandardsPopupPresenter standardsPopupPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter,standardsPopupPresenter);
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.addCenturyPresenter=addCenturyPresenter;
 		this.gooruGradesPresenter=gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.viewmorePeoplePresenter=viewmorePeoplePresenter;
+		this.shelfMainPresenter=shelfMainPresenter;
 		getView().setUiHandlers(this);
+
+//		((ServiceDefTarget)searchService)
+//		   .setServiceEntryPoint(AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint() + GWT.getModuleBaseURL() + "/greet");
+
+
+
 	}
 
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.SEARCH_COLLECTION;
 	}
-	
+
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, SearchMainPresenter.TYPE_VIEW, this);
@@ -142,12 +156,6 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 		this.searchService = searchService;
 	}
 
-	
-	@Override
-	public void refreshDisclosurePanelForFoldersinSearch(String collectionId) {
-		
-	}
-
 	@Override
 	protected void requestSearch(final SearchDo<CollectionSearchResultDo> searchDo,final SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
 		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
@@ -178,16 +186,19 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	@Override
 	protected Map<String, String> getSearchFilters() {
 		Map<String, String> filters = super.getSearchFilters();
-		String author = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
+		String author = getPlaceManager().getRequestParameter(IsGooruSearchView.OWNER_FLT);
 		if (author != null) {
-			filters.put(IsSearchView.OWNER_FLT, author);
+			filters.put(IsGooruSearchView.OWNER_FLT, author);
 		}
 		return filters;
 	}
 
 	@Override
 	public void displayRemixForCollectionsPoup(CollectionSearchResultDo collectionsearchResultDo,CollectionSearchWidget collectionSearchWidget) {
-		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionsearchResultDo, "collection",collectionSearchWidget);
+		shelfMainPresenter.SetDefaultTypeAndVersion();
+		searchAddResourceToCollectionPresenter.getLoadingImage();
+		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionsearchResultDo, "coursebuilder",collectionSearchWidget);
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
 	}
 	@Override

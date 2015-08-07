@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.studentView;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -205,7 +205,6 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 		joinIntoClass();
 		joinBtnPanel.setVisible(false);
 		lblJoining.setVisible(true);
-		StudentAssignmentView.setPrivatePageActive();
 		/*if(AppClientFactory.isAnonymous()){
 			LoginPopupUc loginPopupUc=new LoginPopupUc();
 		}else{

@@ -30,11 +30,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionSettingsDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderItemDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
@@ -55,15 +64,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
-import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderItemDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -99,7 +99,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
-r * @author Search Team
+ * @author Search Team
  * 
  */
 public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> implements IsShelfListView,ClickHandler {
@@ -399,7 +399,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			searchRequest = AppClientFactory.getPlaceManager().getPreviousRequest();
 			if (searchRequest != null) {
 				String query = searchRequest.getParameter("query", null);
-				String classpageId=searchRequest.getParameter("classpageid", null);
+				String classpageId=searchRequest.getParameter("classpageId", null);
 				visible = searchRequest != null && query != null;
 				boolean 	isVisible = searchRequest != null && classpageId != null;
 				if (visible) {
@@ -1681,6 +1681,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				TreeItem item = myShelfVerPanel.getItem(i);
 				checkFolderItemStyle(item, gooruOid);
 			}
+			organizeRootPnl.addStyleName(folderStyle.active());
 		} else {
 			/** If the selected folder is closed, and when clicked on right side the following condition executes and make that folder open. **/
 			if(treeChildSelectedItem.getState()==false){

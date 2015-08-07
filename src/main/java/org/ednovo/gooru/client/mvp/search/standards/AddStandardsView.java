@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,7 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
@@ -37,12 +44,6 @@ import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -61,6 +62,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
@@ -74,64 +76,64 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
  *
  */
 public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHandlers> implements IsAddStandardsView {
-	
+
 
 	private AppPopUpStandards appPopUp;
-	
+
 	ToolTip toolTip;
-	
+
 	@UiField Button commonStandards,texasKnowledge,ngss,californiaStandards,addBtn;
 	@UiField Label subjects,grade,course,standard;
 	@UiField UlPanel levelOneStandards,levelTwoStandards,levelThreeStandards,levelFourStandards;
-	
+
 	private boolean isCheckedValue;
-	
+
 	private boolean scienceCodeVal, instantVal = false;
 
 	private String scienceStrCode = "";
 	private CollectionDo collectionDo;
-	
+
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
-	
+
 //	public static final String GRADE_INFO = MessageProperties.GL0320;
 
 //	public static final String COURSE_INFO = MessageProperties.GL0321;
 
 	private static final String GOORU_UID = "gooruuid";
-	
+
 	String selectedCodeVal = "";
-	
+
 	Integer selectedCodeId = 0;
 	String selectedCodeDesc = "";
-	
+
 	List<Map<String, String>> standListArray= new ArrayList<Map<String,String>>();
-	
+
 	private static AddStandardsViewUiBinder uiBinder = GWT.create(AddStandardsViewUiBinder.class);
-	
+
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
-	
+
 	private static String CONFIRM_MESSAGE = i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
-	
+
 	boolean isHavingBadWords;
-	
+
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
-	
+
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
-	
+
 	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip(i18n.GL3050(),i18n.GL0192());
 	private boolean isBrowseStandardsToolTip = false;
-	
+
 	@UiTemplate("AddStandardsView.ui.xml")
 	interface AddStandardsViewUiBinder extends UiBinder<Widget, AddStandardsView> {
 	}
 
 	/**
-	 * Class constructor 
+	 * Class constructor
 	 * @param eventBus {@link EventBus}
 	 */
 	@Inject
@@ -142,11 +144,13 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 
 		appPopUp = new AppPopUpStandards();
 		appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				appPopUp.hide();
-				
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME)){
+					Window.enableScrolling(true);
+				}
 			}
 		});
 		addBtn= new Button();
@@ -154,20 +158,20 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		texasKnowledge = new Button();
 		ngss = new Button();
 		californiaStandards = new Button();
-	
-		
+
+
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(AddStandardsBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
-		
+
 		AddStandardsBundle.INSTANCE.css().ensureInjected();
 
 		appPopUp.setViewTitle(i18n.GL0575());
-		
+
 		commonStandards.setStyleName("primary");
 
 //		commonStandards.addStyleName(AddStandardsBundle.INSTANCE.css().btnStandardsStyle());
-	
+
 		commonStandards.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -186,7 +190,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	          }
 	    });
 		ngss.addMouseOverHandler(new MouseOverHandler() {
-			
+
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isNGSSAvailable==false){
@@ -199,7 +203,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			}
 		});
 		texasKnowledge.addMouseOverHandler(new MouseOverHandler() {
-			
+
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isTEKSAvailable==false){
@@ -212,7 +216,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			}
 		});
 		californiaStandards.addMouseOverHandler(new MouseOverHandler() {
-			
+
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isCAAvailable==false){
@@ -225,11 +229,15 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			}
 		});
 	}
-	
+
 	@Override
 	public void loadData()
 	{
-		addBtn.setText("Add");
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME)){
+			addBtn.setText(i18n.GL0176());
+		}else{
+			addBtn.setText(i18n.GL0590());
+		}
 		addBtn.setEnabled(false);
 		addBtn.removeStyleName("primary");
 		addBtn.addStyleName("secondary");
@@ -238,7 +246,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		ngss.setText("Next Generation Science Standards");
 		californiaStandards.setText("California State Standards");
 	}
-	
+
 	@Override
 	public void SetData(final StandardsLevel1DO levelOneData, int valArr)
 	{
@@ -254,16 +262,16 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		{
 			scienceStrCode = levelOneData.getCodeId().toString();
 			instantVal = true;
-			scienceCodeVal = true;	
+			scienceCodeVal = true;
 		}
 		}
 		if(!scienceStrCode.isEmpty())
-		{			
+		{
 			liPanel.getElement().setAttribute("dupid", scienceStrCode);
 		}
 		if(valArr==0)
 		{
-			liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+			liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 		}
 		liPanel.addClickHandler(new ClickHandler() {
 			@Override
@@ -290,7 +298,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				{
 					levelOneStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 				}
-				clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+				clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 			}
 		});
 
@@ -299,7 +307,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		{
 		levelOneStandards.add(liPanel.asWidget());
 		}
-		
+
 		if(valArr == 0)
 		{
 		for(int i=0;i<levelOneData.getNode().size();i++)
@@ -311,10 +319,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			liPanel2.getElement().setAttribute("id", levelOneData.getNode().get(i).getCodeId().toString());
 			if(i==0)
 			{
-				liPanel2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+				liPanel2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 			}
 			liPanel2.addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					LiPanel clickedElement = (LiPanel)event.getSource();
@@ -324,8 +332,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					{
 						levelTwoStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					}
-					clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
-					
+					clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+
 				}
 			});
 			liPanel2.add(levelOneStandardsInner2);
@@ -341,10 +349,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				liPanel3.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getCodeId().toString());
 				if(j==0)
 				{
-					liPanel3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 				}
 				liPanel3.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						LiPanel clickedElement = (LiPanel)event.getSource();
@@ -355,7 +363,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 						}
 						clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-						
+
 					}
 				});
 				liPanel3.add(levelOneStandardsInner3);
@@ -372,19 +380,18 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					final String codeVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId();
 					final String codeDesc = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel();
-				
+
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
+					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -418,7 +425,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	}
 	//	appPopUp.getElement().setAttribute("style", "width:1000px;height:599px;z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
 	}
-	
+
 	public void getFirstLevelObjects(String levelOrder, String standardCodeSelected)
 	{
 		selectedCodeVal = "";
@@ -446,29 +453,29 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		addBtn.addStyleName("secondary");
 		getUiHandlers().getThirdLevelObjects(levelOrder,standardCodeSelected);
 	}
-	
+
 	public void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> levelOneData)
 	{
 		levelTwoStandards.clear();
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
 		standListArray.clear();
-		
+
 		for(int i=0;i<levelOneData.size();i++)
 		{
 			try
 			{
-			LiPanel liPanel1=new LiPanel();	
+			LiPanel liPanel1=new LiPanel();
 			Anchor levelOneStandardsInner2 = new Anchor();
 			liPanel1.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 			levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.get(i).getLabel());
 			liPanel1.getElement().setAttribute("id", levelOneData.get(i).getCodeId().toString());
 			if(i==0)
 			{
-				liPanel1.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+				liPanel1.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 			}
 			liPanel1.addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					LiPanel clickedElement = (LiPanel)event.getSource();
@@ -479,7 +486,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						levelTwoStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 					}
 					clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-					
+
 				}
 			});
 			liPanel1.add(levelOneStandardsInner2);
@@ -495,10 +502,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				liPanel.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getCodeId().toString());
 				if(j==0)
 				{
-					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 				}
 				liPanel.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						LiPanel clickedElement = (LiPanel)event.getSource();
@@ -509,7 +516,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 						}
 						clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-						
+
 					}
 				});
 				liPanel.add(levelOneStandardsInner3);
@@ -527,19 +534,18 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					final String codeVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId();
 					final String codeDesc = levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel();
-					
+
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
+					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -576,27 +582,27 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			}
 		}
 	}
-	
+
 	public void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> levelOneData)
 	{
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
 		standListArray.clear();
-		
+
 			for(int j=0;j<levelOneData.size();j++)
 			{
 				try{
-				LiPanel liPanel=new LiPanel();	
+				LiPanel liPanel=new LiPanel();
 				Anchor levelOneStandardsInner3 = new Anchor();
 				liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 				levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.get(j).getLabel());
 				liPanel.getElement().setAttribute("id", levelOneData.get(j).getCodeId().toString());
 				if(j==0)
 				{
-					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 				}
 				liPanel.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						LiPanel clickedElement = (LiPanel)event.getSource();
@@ -607,7 +613,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							levelThreeStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 						}
 						clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
-						
+
 					}
 				});
 				liPanel.add(levelOneStandardsInner3);
@@ -625,19 +631,18 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					final String codeVal = levelOneData.get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(j).getNode().get(k).getCodeId();
 					final String codeDesc = levelOneData.get(j).getNode().get(k).getLabel();
-					
+
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
+					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(j).getNode().get(k).getCodeId().toString());
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							LiPanel clickedObject = (LiPanel)event.getSource();
-							
+
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -673,12 +678,12 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				}
 
 	}
-	
+
 	public void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> levelOneData)
 	{
 		levelFourStandards.clear();
 		standListArray.clear();
-		
+
 
 				for(int k=0;k<levelOneData.size();k++)
 				{
@@ -692,19 +697,18 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					final String codeVal = levelOneData.get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(k).getCodeId();
 					final String codeDesc = levelOneData.get(k).getLabel();
-					
+
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
-					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
+					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(k).getCodeId().toString());
 					levelOneStandardsInner4Outer.addClickHandler(new ClickHandler() {
-						
+
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
 							LiPanel clickedObject = (LiPanel)event.getSource();
 							if(clickedObject.getStyleName().contains("dropMenuSelected")){
 								for(int i=0; i<standListArray.size(); i++){
-									System.out.println("::::::"+standListArray.get(i).get("selectedCodeVal"));
 									if(standListArray.get(i).get("selectedCodeVal").equals(codeVal)){
 										standListArray.remove(i);
 									}
@@ -736,10 +740,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				}
-				
+
 
 	}
-	
+
 
 
 	@Override
@@ -760,7 +764,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		levelFourStandards.clear();
 		scienceCodeVal = false;
 	}
-	
+
 	@Override
 	public void setDefaultCCSS() {
 		texasKnowledge.removeStyleName("primary");
@@ -785,7 +789,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	@Override
 	public void onUnload() {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public Button getAddBtn() {
@@ -795,7 +799,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	public void setAddBtn(Button addBtn) {
 		this.addBtn = addBtn;
 	}
-	
+
 	@Override
 	public String setStandardsVal()
 	{
@@ -813,7 +817,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	{
 		appPopUp.hide();
 	}
-	
+
 	@UiHandler("texasKnowledge")
 	public void ontexasKnowledgeClick(ClickEvent click){
 		if(isTEKSAvailable){
@@ -836,7 +840,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		}else{
 		}
 	}
-	
+
 	@UiHandler("commonStandards")
 	public void oncommonStandardsClick(ClickEvent click){
 
@@ -861,7 +865,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		}
 
 	}
-	
+
 	@UiHandler("ngss")
 	public void onngssClick(ClickEvent click){
 		if(isNGSSAvailable){
@@ -882,10 +886,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		ngss.addStyleName("primary");
 		getUiHandlers().loadStateStandards("NGSS");
 		}else{
-			
+
 		}
 	}
-	
+
 	@UiHandler("californiaStandards")
 	public void oncaliforniaStandardsClick(ClickEvent click){
 		if(isCAAvailable){
@@ -906,7 +910,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		californiaStandards.addStyleName("primary");
 		getUiHandlers().loadStateStandards("CA");
 		}else{
-			
+
 		}
 	}
 
@@ -933,7 +937,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		texasKnowledge.removeStyleName("secondary");
 		texasKnowledge.addStyleName("primary");
 	}
-	
+
 	public void setDefaultNGSS() {
 		texasKnowledge.removeStyleName("primary");
 		texasKnowledge.addStyleName("secondary");
@@ -944,7 +948,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		ngss.removeStyleName("secondary");
 		ngss.addStyleName("primary");
 	}
-	
+
 	public void setDefaultCA() {
 		texasKnowledge.removeStyleName("primary");
 		texasKnowledge.addStyleName("secondary");
@@ -955,7 +959,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		californiaStandards.removeStyleName("secondary");
 		californiaStandards.addStyleName("primary");
 	}
-	
+
 	@Override
 	public void setEnableStandardButtons(boolean isCCSSAvailable,
 			boolean isNGSSAvailable, boolean isTEKSAvailable,
@@ -964,7 +968,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		this.isNGSSAvailable = isNGSSAvailable;
 		this.isTEKSAvailable = isTEKSAvailable;
 		this.isCAAvailable = isCAAvailable;
-		
+
 		if(isCCSSAvailable == true){
 			commonStandards.getElement().getStyle().clearColor();
 			commonStandards.getElement().removeClassName("disabled");
@@ -979,7 +983,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			ngss.getElement().getStyle().setColor("#999");
 			ngss.getElement().addClassName("disabled");
 		}
-		
+
 		if(isTEKSAvailable == true){
 			texasKnowledge.getElement().getStyle().clearColor();
 			texasKnowledge.getElement().removeClassName("disabled");
@@ -987,7 +991,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			texasKnowledge.getElement().getStyle().setColor("#999");
 			texasKnowledge.getElement().addClassName("disabled");
 		}
-		
+
 		if(isCAAvailable == true){
 			californiaStandards.getElement().getStyle().clearColor();
 			californiaStandards.getElement().removeClassName("disabled");
@@ -995,7 +999,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			californiaStandards.getElement().getStyle().setColor("#999");
 			californiaStandards.getElement().addClassName("disabled");
 		}
-		
+
 	}
 
 	@Override
@@ -1011,7 +1015,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			setDefaultCA();
 		}
 	}
-	
+
 	public void hideBrowseStandardsPopup(NativePreviewEvent event){
 		try{
 			if(event.getTypeInt()==Event.ONMOUSEOVER){
@@ -1028,7 +1032,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
-	
+
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
@@ -1040,43 +1044,43 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		}
 		return false;
 	}
-	
+
 	@UiHandler("subjects")
 	public void subjectdropdown(ClickEvent clickEvent){
 		invokestandrs1();
 	}
-	
+
 	@UiHandler("grade")
 	public void gradedropdown(ClickEvent clickEvent){
 		invokestandrs2();
 	}
-	
+
 	@UiHandler("course")
 	public void courseropdown(ClickEvent clickEvent){
 		invokestandrs3();
 	}
-	
+
 	@UiHandler("standard")
 	public void standarddropdown(ClickEvent clickEvent){
 		invokestandrs4();
 	}
-	
+
 	public static native void invokestandrs1() /*-{
-		
+
 		$wnd.searchStandard1();
 	}-*/;
-	
+
 	public static native void invokestandrs2() /*-{
-		
+
 		$wnd.searchStandard2();
 	}-*/;
-	
+
 	public static native void invokestandrs3() /*-{
-		
+
 		$wnd.searchStandard3();
 	}-*/;
 	public static native void invokestandrs4() /*-{
-	
+
 		$wnd.searchStandard4();
 	}-*/;
 }

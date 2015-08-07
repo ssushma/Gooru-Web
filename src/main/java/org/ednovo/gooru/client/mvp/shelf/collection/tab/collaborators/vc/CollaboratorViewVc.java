@@ -27,10 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.DeselectRadioButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.DeselectRadioButtonHandler;
 import org.ednovo.gooru.client.mvp.search.event.RemoveCollaboratorObjectEvent;
@@ -41,10 +45,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetPanelVisibilityEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
-import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -120,7 +120,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if (!collectionDo.getMeta().isIsCollaborator()){
+				if (!collectionDo.isIsCollaborator()){
 					btnRemoveCollab.setVisible(true);
 					panelCollaborators.getElement().getStyle().setBackgroundColor("#F0F0F0");
 				}
@@ -132,7 +132,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				if (!collectionDo.getMeta().isIsCollaborator()){
+				if (!collectionDo.isIsCollaborator()){
 					btnRemoveCollab.setVisible(false);
 					panelCollaborators.getElement().getStyle().clearBackgroundColor();
 				}
@@ -172,14 +172,14 @@ public abstract class CollaboratorViewVc extends Composite {
 		}
 		if (collaboratorsDo !=null && collaboratorsDo.getGooruUid() != null){
 			//Getting all the List of Classpages for the particular(collaborator) user
-			AppClientFactory.getInjector().getClasspageService().getClasspagesListByCollectionId(collectionDo.getGooruOid(), collaboratorsDo.getGooruUid(), new SimpleAsyncCallback<ArrayList<ClassPageCollectionDo>>() {
+			/*AppClientFactory.getInjector().getClasspageService().getClasspagesListByCollectionId(collectionDo.getGooruOid(), collaboratorsDo.getGooruUid(), new SimpleAsyncCallback<ArrayList<ClassPageCollectionDo>>() {
 	
 				@Override
 				public void onSuccess(ArrayList<ClassPageCollectionDo> result) {
 					classpageTitles = result;
 				}
 				
-			});
+			});*/
 		}
 	}
 	
@@ -203,7 +203,6 @@ public abstract class CollaboratorViewVc extends Composite {
 		btnRemoveCollab.getElement().setAttribute("alt",i18n.GL0237());
 		btnRemoveCollab.getElement().setAttribute("title",i18n.GL0237());
 		btnRemoveCollab.setVisible(false);
-		
 		if (collaboratorsDo!=null && collaboratorsDo.getStatus().equalsIgnoreCase("pending")){
 			panelCollaboratorsListContainer.getElement().setId(collaboratorsDo !=null && collaboratorsDo.getEmailId() !=null ? collaboratorsDo.getEmailId() : "divListPendingCollaborators");
 		}else{
@@ -248,7 +247,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			btnRemoveCollab.getElement().setAttribute("username", (collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : lblEmailId.getText());
 		}
 		
-		if (collectionDo.getMeta() !=null &&  collectionDo.getMeta().isIsCollaborator()){
+		if (collectionDo!=null &&  collectionDo.isIsCollaborator()){
 			btnRemoveCollab.setVisible(false);
 		}else{
 			lblUserName.getElement().getStyle().setDisplay(lblUserName.getText() !=null && !lblUserName.getText().equalsIgnoreCase("") ? Display.INLINE_BLOCK : Display.NONE);
@@ -309,7 +308,7 @@ public abstract class CollaboratorViewVc extends Composite {
 						AppClientFactory.fireEvent(new RemoveCollaboratorObjectEvent(toRemove));
 						if (collaboratorsDo.getStatus().equalsIgnoreCase("active")){
 							AppClientFactory.fireEvent(new SetCollabCountEvent("decrementBy", 1));
-							collectionDo.getMeta().setCollaboratorCount(collectionDo.getMeta().getCollaboratorCount() -1);
+							//collectionDo.getMeta().setCollaboratorCount(collectionDo.getMeta().getCollaboratorCount() -1);
 						}
 						setCollabCount(1, "decrementBy");
 						btnRemoveCollab.setEnabled(true);
@@ -383,9 +382,9 @@ public abstract class CollaboratorViewVc extends Composite {
 						Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
 						if (map.size()>1){
 							map.remove("id");
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, map);
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, map);
 						}else{
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 						}
 						AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(collectionId)); 
 					}
@@ -403,7 +402,7 @@ public abstract class CollaboratorViewVc extends Composite {
 		if (classpageTitles.size()>0){
 			StringBuffer sb = new StringBuffer();
 			String anchString = "<a href=\"{0}\" target=\"_blank\">{1}</a>";
-			String classpageUrl = "#teach&pageSize=10&classpageid={0}&pageNum=0&pos=1";
+			String classpageUrl = "#teach&pageSize=10&classpageId={0}&pageNum=0&pos=1";
 			int count = classpageTitles.size() >= defaultCollabCount ? defaultCollabCount : classpageTitles.size(); 
 			for (int i=0; i<count;i++){
 				String url = StringUtil.generateMessage(classpageUrl, classpageTitles.get(i).getClasspageId());

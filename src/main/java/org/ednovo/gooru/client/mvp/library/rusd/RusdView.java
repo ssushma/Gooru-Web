@@ -1,7 +1,7 @@
 package org.ednovo.gooru.client.mvp.library.rusd;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 
 import com.google.gwt.core.client.GWT;

@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
 		field="res" />
 	<ui:style field="folderStyle" src="folderList.css"
@@ -74,14 +74,14 @@
 							<g:Label styleName="{res.css.descriptionAlertMessage}"
 							ui:field="descriptionAlertMessageLbl" />
 						</panel:HTMLEventPanel>
-						
+
 						<g:HTMLPanel styleName="{res.css.buttonContainerDesc}">
 							<g:Button ui:field="editSelfCollectionDescSaveButtonCancel"
 								styleName="{res.css.mySelfCollectionEditTitlePreviewCancelButton}"></g:Button>
 							<g:Button ui:field="editSelfCollectionDescSaveButton"
 								styleName="primary {res.css.mySelfCollectionrEditTitle}"></g:Button>
 						</g:HTMLPanel>
-						
+
 					</g:FlowPanel>
 
 					<g:FlowPanel styleName="{res.css.panelAlignRight}">
@@ -109,7 +109,7 @@
 					<col:CollectionTabTitleVc enabled="true"
 						ui:field="resourceTabVc" />
 					<col:CollectionTabTitleVc ui:field="shareTabVc" />
-					<col:CollectionTabTitleVc imageStyle="{res.css.userCollectionMetaAssignImage}"
+					<col:CollectionTabTitleVc imageStyle="userCollectionMetaAssignImage"
 						ui:field="assignTabVc" enabled="true" />
 					<col:CollectionTabTitleVc ui:field="collaboratorTabVc"
 						enabled="true" />
@@ -132,4 +132,4 @@
 			<sg:FooterOrganizeUc ui:field="panelFoooter"/>
 		</g:HTMLPanel>
 	</g:FlowPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

@@ -30,10 +30,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemsList;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
@@ -42,11 +47,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateColle
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemsList;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -82,16 +82,16 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 
 	private static final String ASSESSMENT = "assessment";
 
-	private static ResourceShareViewUiBinder uiBinder = GWT.create(ResourceShareViewUiBinder.class);
+	private static AddResourceCollectionViewUiBinder uiBinder = GWT.create(AddResourceCollectionViewUiBinder.class);
 
-	interface ResourceShareViewUiBinder extends UiBinder<Widget, AddResourceCollectionView> {
+	interface AddResourceCollectionViewUiBinder extends UiBinder<Widget, AddResourceCollectionView> {
 
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel dropdownListContainer,createCollectionLabelContainer,resourceImageContainerInAddResource,
-		addCollectionInsteadLabelContainer,addCollectionContainer,addresourceText,existingCollectionContainer;
+		addCollectionInsteadLabelContainer,addCollectionContainer,addresourceText,existingCollectionContainer,mainPanel;
 	@UiField InlineLabel dropdownListPlaceHolder;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button addResourceToCollectionButton,workSpaceBtn;
@@ -105,6 +105,10 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	private String collectionId=null;
 	
 	private String resourceId=null;
+	
+	private String category = null;
+	
+	private String questionType=null;
 	
 	private boolean isAllUserShelfCollectionsLoaded=false;
 	
@@ -131,6 +135,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public AddResourceCollectionView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
+		mainPanel.getElement().setId("mainPanel");
 		hideText.setText(i18n.GL0592());
 		hideText.getElement().setId("lblHideText");
 		hideText.getElement().setAttribute("alt",i18n.GL0592());
@@ -276,6 +281,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		Label folderName=null;
 		private String collectionName=null;
 		private String gooruOid=null;
+		private String collectionType;
 		private int itemsCount=0;
 		private boolean isOpen=false;
 		public CollectionTreeItem(){
@@ -302,6 +308,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			this.gooruOid=gooruOid;
 			this.collectionName=folderTitle;
 			this.itemsCount=itemsCount;
+			this.collectionType=collectionType;
 			folderName.setText(folderTitle);
 		}
 		public boolean isOpen() {
@@ -315,6 +322,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		}
 		public String getCollectionName(){
 			return collectionName;
+		}
+		public String getCollectionType(){
+			return collectionType;
 		}
 		public int getItemsCount() {
 			return itemsCount;
@@ -694,6 +704,8 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo) {
 		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getGooruOid()!=null){
 		this.resourceId=collectionItemDo.getResource().getGooruOid();
+		this.category = collectionItemDo.getResource().getCategory();
+		this.questionType=collectionItemDo.getQuestionType();
 		}
 		changeButtonText();
 	}
@@ -727,16 +739,23 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 					errorMessage.getElement().setAttribute("alt",i18n.GL0699_2());
 					errorMessage.getElement().setAttribute("title",i18n.GL0699_2());
 				}else{
-					getAddResourceToCollectionButton().getElement().getStyle().setDisplay(Display.NONE);
-					errorMessage.setText("");
-					errorMessage.getElement().setAttribute("alt","");
-					errorMessage.getElement().setAttribute("title","");
-					addingLabel.setText(i18n.GL0591());
-					addingLabel.getElement().setAttribute("alt",i18n.GL0591());
-					addingLabel.getElement().setAttribute("title",i18n.GL0591());
-					getAddingLabel().getElement().getStyle().setDisplay(Display.BLOCK);
-					if(resourceId!=null&&cureentcollectionTreeItem.getGooruOid()!=null){
-					copyCollectionItem(resourceId, cureentcollectionTreeItem.getGooruOid());
+					boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getCollectionType(),category,questionType);
+					if(flag){
+						errorMessage.setVisible(false);
+						getAddResourceToCollectionButton().getElement().getStyle().setDisplay(Display.NONE);
+						errorMessage.setText("");
+						errorMessage.getElement().setAttribute("alt","");
+						errorMessage.getElement().setAttribute("title","");
+						addingLabel.setText(i18n.GL0591());
+						addingLabel.getElement().setAttribute("alt",i18n.GL0591());
+						addingLabel.getElement().setAttribute("title",i18n.GL0591());
+						getAddingLabel().getElement().getStyle().setDisplay(Display.BLOCK);
+						if(resourceId!=null&&cureentcollectionTreeItem.getGooruOid()!=null){
+						copyCollectionItem(resourceId, cureentcollectionTreeItem.getGooruOid());
+						}
+					}else{
+						errorMessage.setVisible(true);
+						errorMessage.setText("Oops! can copy only questions for Assessments.");
 					}
 				}
 			}
@@ -755,8 +774,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 				for (CollectionItemsList userCollection : userCollectionsList) {
 					addDropDownListItem(userCollection.getCollectionTitle(),userCollection.getCollectionId(),userCollection.getCollectionItemsListSize());
 				}
-			} else {
-			}
+			} 
 	}
 	
 	/**

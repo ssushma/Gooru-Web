@@ -5,7 +5,7 @@
 	xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.home.AlmostDoneUcCBundle"
 		field="res" />
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}">
 		<g:HTMLPanel styleName="{res.css.popupInner}">
 			<g:Label styleName="{res.css.popupHeader}" ui:field="lblHeader"/>

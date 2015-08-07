@@ -28,12 +28,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssetsDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
@@ -45,20 +52,12 @@ import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
-import org.ednovo.gooru.client.mvp.shelf.event.ReorderCollectionResourcesEvent;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssetsDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -68,7 +67,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -101,7 +99,6 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
@@ -331,8 +328,14 @@ public class ShelfCollectionResourceChildView extends
 
 	public boolean checkLoggedInUser() {
 		boolean isValid = true;
-		if (AppClientFactory.getLoggedInUser().getGooruUId().equalsIgnoreCase(
-				collectionItemDo.getResource().getUser().getGooruUId())) {
+		String gooruUId = "";
+		if(collectionItemDo.getResource().getUser()==null){
+			 gooruUId=collectionItemDo.getGooruUId();
+		}else{
+			 gooruUId=collectionItemDo.getResource().getUser().getGooruUId();
+		}
+		
+		if (AppClientFactory.getLoggedInUser().getGooruUId().equalsIgnoreCase(gooruUId)) {
 			isValid = true;
 		} else {
 			isValid = false;
@@ -1538,7 +1541,8 @@ public class ShelfCollectionResourceChildView extends
 			}
 		} else {
 			disableAllEditMode();
-			copyConfirmPopupVc = new CopyConfirmPopupVc() {
+			copyConfirmPopupVc = new CopyConfirmPopupVc(collectionItemDo.getResource().getCategory(),collectionItemDo.getQuestionType()) {
+				
 				@Override
 				public void populateUserCollections() {
 					pageNumber=1;

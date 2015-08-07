@@ -26,20 +26,20 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
+import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPreviewPlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
-import org.ednovo.gooru.client.service.ShelfServiceAsync;
-import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -109,7 +109,7 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 				getView().reset();
 				fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
 				playerType=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(playerType.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+				if(playerType.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || playerType.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
 					fireEvent(new RefreshCollectionInShelfListInPlayEvent(result.getGooruOid()));
 					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
 				}else if(playerType.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){

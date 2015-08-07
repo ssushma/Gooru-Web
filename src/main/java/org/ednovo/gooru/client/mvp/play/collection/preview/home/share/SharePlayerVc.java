@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,17 +29,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.uc.ShareViewUc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -59,7 +59,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Gooru Team
- * 
+ *
  */
 public abstract class SharePlayerVc extends PopupPanel{
 
@@ -102,7 +102,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 	public interface AssignPopupPlayerVcUiBinder extends
 			UiBinder<Widget, SharePlayerVc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField(provided = true)
@@ -114,7 +114,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 
 	private static final Binder binder = GWT.create(Binder.class);
 	/**
-	 * 
+	 *
 	 */
 	public SharePlayerVc(String collectionIdVal) {
 		super(false);
@@ -126,17 +126,17 @@ public abstract class SharePlayerVc extends PopupPanel{
 		sharetext.getElement().setId("pnlSharetext");
 		sharetext.getElement().setAttribute("alt",i18n.GL0638());
 		sharetext.getElement().setAttribute("title",i18n.GL0638());
-		
+
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setId("lblSwithUrlLbl");
 		swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
-		
+
 		swithToEmbedLbl.setText(i18n.GL0640());
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
 		swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
-		
+
 		setLabelsAndIds();
 		shareContainer = new ShareViewUc("", "");
 		ftmPanel = new HTMLPanel("");
@@ -163,7 +163,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 			});
 		}
 		catch(Exception ex){
-			AppClientFactory.printSevereLogger(ex.getMessage());
+			AppClientFactory.printSevereLogger("SharePlayerVc : Constructor : "+ex.getMessage());
 		}
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
 			@Override
@@ -177,18 +177,18 @@ public abstract class SharePlayerVc extends PopupPanel{
 		Window.enableScrolling(false);
 		this.getElement().setAttribute("style", "z-index:99999;");
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
-		
+
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.setHeight("500px");
 		this.show();
-		this.center();	
+		this.center();
 	}
 
 	public abstract void closePoup();
 
 	/**
 	 * Added click handler to hide the login popup.
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -199,16 +199,16 @@ public abstract class SharePlayerVc extends PopupPanel{
 
 	/**
 	 * @function setLabelsAndIds
-	 * 
+	 *
 	 * @created_date : Jul 30, 2013
-	 * 
+	 *
 	 * @description To set the default values for labels, button and id for
 	 *              button.
-	 * 
+	 *
 	 * @parm(s) : NONE
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
 	public void setLabelsAndIds() {
@@ -218,17 +218,17 @@ public abstract class SharePlayerVc extends PopupPanel{
 		assignDes.getElement().setId("lblAssignDes");
 		assignDes.getElement().setAttribute("alt",i18n.GL0546());
 		assignDes.getElement().setAttribute("title",i18n.GL0546());
-		
+
 		lblAssignTitle.setText(i18n.GL0545());
 		lblAssignTitle.getElement().setId("lblAssignTitle");
 		lblAssignTitle.getElement().setAttribute("alt",i18n.GL0545());
 		lblAssignTitle.getElement().setAttribute("title",i18n.GL0545());
-		
+
 		lblpopupTitle.setText(i18n.GL0544());
 		lblpopupTitle.getElement().setId("lblAssignTitle");
 		lblpopupTitle.getElement().setAttribute("alt",i18n.GL0544());
 		lblpopupTitle.getElement().setAttribute("title",i18n.GL0544());
-		
+
 		cancelButton.getElement().setId("lblCancelButton");
 		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
 		popupContentAssign.getElement().setId("pnlPopupContentAssign");
@@ -404,7 +404,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 	}
 
 	private void fullUrlMixPanelEvent() {
-	
+
 	}
 
 	private String getIframeText() {
@@ -419,7 +419,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 
 	/**
 	 * Switching between Url and Bitly link
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -441,7 +441,8 @@ public abstract class SharePlayerVc extends PopupPanel{
 
 	public void generateShareLink(String classpageId) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", "");
+		String currentPlaceToken=AppClientFactory.getCurrentPlaceToken();
+		params.put("type", currentPlaceToken);
 		params.put("shareType", "");
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params,new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
@@ -486,7 +487,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 			ftmPanel.add(socialView);
 			socialSharePanel.add(ftmPanel);
 			} catch (Exception ex) {
-				AppClientFactory.printSevereLogger(ex.getMessage());
+				AppClientFactory.printSevereLogger("SharePlayerVc : addShareWidgetInPlay : "+ex.getMessage());
 		}
 	}
 
@@ -498,7 +499,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 		}
 	}
 	public void triggerShareEvent(String shareType,boolean confirmStatus){
-		
+
 	}
 	private static native boolean isCookieEnabled() /*-{
 		return navigator.cookieEnabled;

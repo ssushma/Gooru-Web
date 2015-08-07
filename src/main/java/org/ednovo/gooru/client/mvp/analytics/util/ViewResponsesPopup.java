@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,10 +26,10 @@ package org.ednovo.gooru.client.mvp.analytics.util;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -42,14 +42,14 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ViewResponsesPopup extends PopupPanel {
-	
+
 	private static ViewResponsesPopupUiBinder uiBinder = GWT
 			.create(ViewResponsesPopupUiBinder.class);
 
 	interface ViewResponsesPopupUiBinder extends
 			UiBinder<Widget, ViewResponsesPopup> {
 	}
-	
+
 	@UiField HTMLPanel viewResponsepnl;
 	@UiField Label totalResponselbl;
 	/**
@@ -63,7 +63,7 @@ public class ViewResponsesPopup extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		setCollectionProgressData(questionCount, questionText, questionAnswers,questionType);
 	}
-	
+
 	/**
 	 * This method is used to display the view responses
 	 * @param result
@@ -107,7 +107,7 @@ public class ViewResponsesPopup extends PopupPanel {
 		viewResponsepnl.clear();
 		totalResponselbl.setVisible(true);
 		totalResponselbl.setText(result.size()+" Responses");
-		
+
 		viewResponsepnl.getElement().getStyle().setHeight(250, Unit.PX);
 		for (OetextDataDO oetextDataDO : result) {
 			ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session,classpageItemDo);
@@ -117,7 +117,7 @@ public class ViewResponsesPopup extends PopupPanel {
 	@Override
 	protected void onUnload() {
 		super.onUnload();
-		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
 			  Window.enableScrolling(false);
 			}else{
 			   Window.enableScrolling(true);

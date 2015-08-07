@@ -1,18 +1,15 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header" 
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:htmlevents="urn:import:org.ednovo.gooru.client.ui" xmlns:starRatings="urn:import:org.ednovo.gooru.client.uc"
 	xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags">
-	
-	<!-- <ui:style field="playerStyle" src="resourceplayermetadata.css" type="org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataBundle"/> -->
-	<!-- <ui:style field="ratingstyle" src="ratings.css"></ui:style> -->
-	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource"/>
-	<ui:with type="org.ednovo.gooru.shared.i18n.MessageProperties" field="i18n"></ui:with>
 
-	<g:FlowPanel ui:field="wrapperContainerField" styleName="container {palyerStyleResource.getPlayerStyleResource.whitebg}">
+	<ui:with type="org.ednovo.gooru.application.shared.i18n.MessageProperties" field="i18n"></ui:with>
+
+	<g:FlowPanel ui:field="wrapperContainerField" styleName="container player-whitebg">
 		<g:FlowPanel styleName="row">
-			<html5:SectionTag styleName="{palyerStyleResource.getPlayerStyleResource.blocksmall}" ui:field="collectionContainer">
+			<html5:SectionTag styleName="blocksmallPlayer" ui:field="collectionContainer">
 				<g:FlowPanel styleName="col-md-7 col-xs-5">
 					<g:FlowPanel styleName="leftBigarrow">
 						<g:Button styleName="spriteType next" ui:field="backwardButton"></g:Button>
@@ -28,7 +25,7 @@
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
-				<g:FlowPanel styleName=" col-md-5 col-xs-7 {palyerStyleResource.getPlayerStyleResource.rightWrapper}">
+				<g:FlowPanel styleName=" col-md-5 col-xs-7 rightWrapper">
 					<g:FlowPanel styleName="rightBigarrow">
 						<g:Button styleName="" ui:field="fullScreenButton"></g:Button>
 						<g:Button styleName="spriteType prev" ui:field="forwardButton"></g:Button>
@@ -80,8 +77,8 @@
 			    </htmlevents:HTMLEventPanel>
 					<g:HTMLPanel  styleName="ratingContainer" ui:field="ratingsContainer">
 					    <g:Label styleName="ratingValue" ui:field="starValue"></g:Label>
-		                <g:Label styleName="ratingValue" ui:field="mouseOverStarValue"></g:Label> 
-		                <g:HTMLPanel styleName="subRatingContainer rating playerrating"> 
+		                <g:Label styleName="ratingValue" ui:field="mouseOverStarValue"></g:Label>
+		                <g:HTMLPanel styleName="subRatingContainer rating playerrating">
 		                    <g:InlineHTML ui:field="one_star" styleName="ratingItems star"></g:InlineHTML>
 		                    <g:InlineHTML ui:field="two_star" styleName="ratingItems star"></g:InlineHTML>
 		                    <g:InlineHTML ui:field="three_star" styleName="ratingItems star"></g:InlineHTML>
@@ -93,7 +90,7 @@
 			</html5:SectionTag>
 		</g:FlowPanel>
 		<g:FlowPanel styleName="row" ui:field="rowPanel">
-			<g:FlowPanel styleName="col-md-12 {palyerStyleResource.getPlayerStyleResource.bodysection}">
+			<g:FlowPanel styleName="col-md-12 bodysection">
 				<html5:SectionTag styleName="" ui:field="resourceWidgetContainer"></html5:SectionTag>
 			</g:FlowPanel>
 		</g:FlowPanel>

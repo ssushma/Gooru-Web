@@ -1,6 +1,8 @@
 package org.ednovo.gooru.client.mvp.analytics.util;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -19,6 +21,8 @@ public abstract class AnalyticsTabContainer extends Composite implements ClientC
 	interface AnalyticsTabContainerUiBinder extends
 			UiBinder<Widget, AnalyticsTabContainer> {
 	}
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField Button btnScoredQuestions,btnOpenEndedQuestions,btnCollectionBreakDown,btnPtint,btnSave,btnEmail;
 	
@@ -33,6 +37,9 @@ public abstract class AnalyticsTabContainer extends Composite implements ClientC
 		btnPtint.addClickHandler(new ClickImplemntation(PRINT));
 		btnEmail.addClickHandler(new ClickImplemntation(EMAIL));
 		btnSave.addClickHandler(new ClickImplemntation(SAVEBTN));
+		StringUtil.setAttributes(btnPtint.getElement(), "btnPtint", i18n.GL3284(), i18n.GL3284());
+		StringUtil.setAttributes(btnEmail.getElement(), "btnPtint", "print", "Email");
+		StringUtil.setAttributes(btnSave.getElement(), "btnSave", i18n.GL0141(), i18n.GL0141());
 	}
 	/**
 	 * This method is used to clear the highlight styles

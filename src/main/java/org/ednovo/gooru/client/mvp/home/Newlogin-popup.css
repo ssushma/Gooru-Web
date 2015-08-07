@@ -1,9 +1,4 @@
 
-body {
-	background: #efeded url(../images/background-image.png) repeat
-		!important;
-	font-family: Arial, Helvetica, sans-serif !important;
-}
 .subj {
 		clear: both;
 }
@@ -24,7 +19,7 @@ body {
 	color: white;
 	cursor: pointer;
 	display: inline-block;
-	margin: 0 10px 10px 0;	
+	margin: 0 10px 10px 0;
 }
 .processing {
 	text-align: center;
@@ -591,7 +586,7 @@ button.secondary:hover {
 .popupInnerGrey {
 	border: 1px solid #ddd;
 	position: relative;
-	
+
 }
 
 .popupContentGrey {
@@ -1005,7 +1000,7 @@ width: 100%;
 .loginShareContainer .form-control{
 	height:28px;
 	font-size:12px;
-	
+
 }
 .shareSelection .contentDesc{
 	padding:5px 0 10px 0;
@@ -1327,7 +1322,7 @@ text-align: left;
 	border: 1px solid #ccc;
     height: 372px;
     overflow: auto;
- 
+
 }
 
 .listGroup{
@@ -1405,7 +1400,7 @@ text-align: left;
 
 .panelRatingValues {
     border-left: 1px solid #ccc;
-   
+
 }
 .bar {
     background-color: #8cc63e;
@@ -1440,7 +1435,7 @@ text-align: left;
 
 .childInputGroup{
 	padding:10px 25px;
-	
+
 	background-color: rgba(136, 187, 221, 0.2);
 }
 
@@ -1630,7 +1625,7 @@ display:inline-block;
 	font-size:16px;
 	/* Safari 4-5, Chrome 1-9 */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7AB075), to(#4e9746));
-	
+
 	/* Safari 5.1, Chrome 10+ */
 	background: -webkit-linear-gradient(top, #7AB075, #4e9746);
 
@@ -1674,7 +1669,7 @@ display:inline-block;
 }
 
 .footerText{
-	
+
 }
 
 .forgotPasswordBottomContainer {
@@ -1688,12 +1683,12 @@ display:inline-block;
 {
 	text-align:center;
 	margin-top:8px;
-}	
+}
 
 .popupInner {
 	border: 1px solid #DDD;
 	position:relative;
-	background: url(../images/login/registration-bg.png) no-repeat 30px -30px;	
+	background: url(../images/login/registration-bg.png) no-repeat 30px -30px;
 }
 
 .popup {
@@ -1708,8 +1703,8 @@ display:inline-block;
 
 
 .forgetImgBG{
-	
-}	
+
+}
 
 .errorLabel {
 	font-family: Arial, Helvetica, sans-serif;
@@ -1722,4 +1717,17 @@ display:inline-block;
 
 .loginWithGooru{
 	font-size: 14px;
+}
+.AssessmentPopupMain{
+	width:902px;
+	color:#515151;
+	margin: 10px auto;
+	position:relative;
+	font-family:arial;
+	font-size:12px;
+	background:#ffffff;
+	border-radius:0 0;
+	border:1px solid #999;
+	padding:3px 3px;
+	z-index:999;
 }

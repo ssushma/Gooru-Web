@@ -26,12 +26,12 @@ package org.ednovo.gooru.client.mvp.shelf;
 
 import java.util.HashMap;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEventHandler;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;

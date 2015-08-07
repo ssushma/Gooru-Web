@@ -5,7 +5,7 @@
 .filesConatiner{
 	float: left;
 	padding: 0px 1px;
-	width: 73%;
+	width: 100%;
 	border-left: 1px solid #ddd;
 	background-color: white;
 	overflow-y: auto !important;

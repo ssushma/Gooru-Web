@@ -2,7 +2,7 @@ package org.ednovo.gooru.client.mvp.play.collection.flag;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 
 public interface CollectionFlagUiHandler extends BaseUiHandlers{

@@ -28,10 +28,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.RemoveCollaboratorObjectEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetCollabCountEvent;
@@ -43,9 +46,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.AutoSuggestForm;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -540,7 +540,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		panelViewMode.setVisible(false);
 		lblCollectionCreator.setVisible(false);
 		// If Collaborator display only view of all collaborators.
-		if (collectionDo.getMeta() !=null && collectionDo.getMeta().isIsCollaborator()){
+		if (collectionDo!=null && collectionDo.isIsCollaborator()){
 			panelViewMode.setVisible(true);
 			lblCollectionCreator.setVisible(true);
 			panelCreator.clear();
@@ -556,7 +556,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			//Call Get collaborators API. This method will callback displayViewCollaboratorsByList.
 			getUiHandlers().getCollaboratosListByCollectionId(collectionDo.getGooruOid(), "view");
 			
-		}else if (collectionDo.getMeta() !=null && !collectionDo.getMeta().isIsCollaborator()){
+		}else if (collectionDo!=null && !collectionDo.isIsCollaborator()){
 		// else if owner then display edit mode and list of all collaborators.
 			panelEditMode.setVisible(true);
 			//Call Get collaborators API. This method will callback displayActiveCollaboratorsByList & displayPendingCollaboratorsByList.

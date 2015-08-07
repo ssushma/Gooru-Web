@@ -17,7 +17,7 @@ import org.moxieapps.gwt.highcharts.client.plotOptions.PlotOptions;
 
 public class HCBarChart {
   
-    public Chart pieChart(String backGroundColor,int[] pieChatValues,final boolean isPrint) {
+    public Chart pieChart(String backGroundColor,final int[] pieChatValues,final boolean isPrint) {
     	final String Colors[]={"#fac6c4","#a6caa2","#A7A9AC"};
     	final String LabelsText[]={"Incorrect","Correct","Skip"};
 		final Chart chart = new Chart()
@@ -34,23 +34,40 @@ public class HCBarChart {
 			.setAllowPointSelect(true)
 			.setCursor(PlotOptions.Cursor.POINTER)
 			.setPieDataLabels(new PieDataLabels()
+			.setConnectorColor("#000000") //new line added
 				.setEnabled(true)
+				.setColor("#000000")  // new line addded
 				.setDistance(-10)
 				 .setFormatter(new DataLabelsFormatter() {  
-                     public String format(DataLabelsData dataLabelsData) {  
-                    	 if(dataLabelsData.getYAsLong()!=0 && isPrint){
-                    		  return "<b>" + dataLabelsData.getPointName() + "</b>(" + dataLabelsData.getYAsLong()+")";  
-                    	 }
-                    	 return  "";
-                     }  
+					 public String format(DataLabelsData dataLabelsData) {
+						 if(dataLabelsData.getYAsLong()!=0){
+							 if(isPrint){
+								 return "<b>" + dataLabelsData.getPointName() + "</b>(" + dataLabelsData.getYAsLong()+")";
+							 }else{
+								 double values =(dataLabelsData.getYAsDouble()/((double)pieChatValues[3])*100);
+								 return "<b>" +Math.round(values)+"%";
+							 }
+						 }
+						 return "";
+					 }
                  }) 
 			)
 			.setAllowPointSelect(true)
 			.setShowInLegend(false)
+			
 		)
-		.setToolTip(new ToolTip()
-			.setEnabled(false)
-		);
+         .setToolTip(new ToolTip()  
+             .setFormatter(new ToolTipFormatter() {  
+                 public String format(ToolTipData toolTipData) { 
+                	 double values =(toolTipData.getYAsDouble()/((double)pieChatValues[3])*100);
+                     return "<b>" + toolTipData.getPointName() + "</b>: " + Math.round(values) + "%";  
+                 }  
+             })  
+         ); 
+		/*.setToolTip(new ToolTip()
+			.setEnabled(true)
+		);*/
+ 
 		Point[] pointArr = new Point[3];
 		for(int i = 0; i <3; i++){
 			Point pointArray = new Point(LabelsText[i],pieChatValues[i]).setColor(Colors[i]);
@@ -63,8 +80,24 @@ public class HCBarChart {
 		chart.addSeries(chart.createSeries()
 				.setPoints(pointArr)
 			);
+    	
 		return chart;
 	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public Chart createTestChart() {  
     	  
         final Chart chart = new Chart()  

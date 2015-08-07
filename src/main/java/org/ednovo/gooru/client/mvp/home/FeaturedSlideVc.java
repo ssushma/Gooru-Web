@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,11 +27,12 @@ package org.ednovo.gooru.client.mvp.home;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.home.HomeCBundle;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.featured.FeaturedContentDo;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.featured.FeaturedContentDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -62,32 +63,32 @@ public class FeaturedSlideVc extends Composite{
 
 	interface FeaturedSlideVcUiBinder extends UiBinder<Widget, FeaturedSlideVc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	ParagraphElement contentDisplayTitle;
-	
+
 	@UiField(provided = true)
 	HomeCBundle res;
-	
+
 	@UiField
 	FocusPanel collectionStudyButtonFocPanel;
-	
+
 	@UiField
 	Hidden collectionGooruOid;
-	
+
 	@UiField Label didYouKnowText;
-	
+
 	@UiField
 	StudyFeaturedCollection studyFeaturedCollection;
-	
-	
+
+
 
 	/**
 	 * Class constructor , assign featuredContentDo instance and initialise  mouse over , mouse out methods
-	 * 
-	 * @param featuredContentDo instance of {@link FeaturedContentDo} 
+	 *
+	 * @param featuredContentDo instance of {@link FeaturedContentDo}
 	 */
 	public FeaturedSlideVc(FeaturedContentDo featuredContentDo) {
 		this.res = HomeCBundle.INSTANCE;
@@ -100,18 +101,18 @@ public class FeaturedSlideVc extends Composite{
 		contentDisplayTitle.setId("pContentDisplayTitle");
 		this.setData(featuredContentDo);
 		collectionStudyButtonFocPanel.addMouseOverHandler(new MouseOverHandler() {
-			
+
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				  if( FeaturedContentVc.elapsedTimer != null){
-				  FeaturedContentVc.elapsedTimer.cancel();	
+				  FeaturedContentVc.elapsedTimer.cancel();
 				  }
 				  studyFeaturedCollection.featuredStartStudyFloPanel.setVisible(true);
-							
+
 			}
 		});
 		collectionStudyButtonFocPanel.addMouseOutHandler(new MouseOutHandler() {
-			
+
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
 				if( FeaturedContentVc.elapsedTimer != null){
@@ -123,11 +124,11 @@ public class FeaturedSlideVc extends Composite{
 		});
 		collectionStudyButtonFocPanel.getElement().setId("focuspnlCollectionStudyButtonFocPanel");
 		studyFeaturedCollection.getElement().setId("sfcStudyFeaturedCollection");
-	
-	
+
+
 	}
 
-	/** 
+	/**
 	 * Set featured content information such as title , image url
 	 * @param featuredContentDo instance of {@link FeaturedContentDo}
 	 */

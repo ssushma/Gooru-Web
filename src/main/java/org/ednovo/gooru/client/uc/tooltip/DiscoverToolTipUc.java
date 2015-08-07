@@ -29,16 +29,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
@@ -314,6 +314,8 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 		publicPartners.put(i18n.GL1898(),PlaceTokens.SAUSD_LIBRARY);
 		publicPartners.put(i18n.GL2057(),PlaceTokens.SUSD);
 		publicPartners.put(i18n.GL2060(),PlaceTokens.VALVERDE);
+		/*publicPartners.put(i18n.GL3290_1(),PlaceTokens.YCGL_LIBRARY);
+		publicPartners.put("Yuma Elementary School District ONE",PlaceTokens.YESD_LIBRARY);*/
 		return publicPartners;
 	}
 }

@@ -26,13 +26,13 @@ package org.ednovo.gooru.client.mvp.profilepage;
 
 import java.util.Set;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.code.ProfileCodeDo;
+import org.ednovo.gooru.application.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenHandler;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenHandler;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEventHandler;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
-import org.ednovo.gooru.shared.model.user.UserFollowDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;

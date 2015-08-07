@@ -1,5 +1,5 @@
-@CHARSET "UTF-8";
-
+@charset "utf-8";
+/* CSS Document */
 .myFolderCollectionMainWrapper {
 	font-family: Arial, sans-serif;
 	color: #333;
@@ -1686,7 +1686,6 @@ input[type="text"] {
 	margin-top: 10px;
 }
 
- @charset "utf-8";
 /* CSS Document */
 .textarea {
 	width: 65%;

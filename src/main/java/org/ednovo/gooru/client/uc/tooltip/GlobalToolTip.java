@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -132,7 +132,7 @@ public class GlobalToolTip extends Composite {
     	if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
     		confirmationPanel.getElement().getStyle().setLeft(-136, Unit.PX);
 			panelArrow.getElement().getStyle().setLeft(141, Unit.PX);
-		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)){
 			if(AppClientFactory.getPlaceManager().getRequestParameter("page")!=null && AppClientFactory.getPlaceManager().getRequestParameter("page").equals("teach")){
 				confirmationPanel.getElement().getStyle().setWidth(131, Unit.PX);
 				desLbl.getElement().getStyle().setTextAlign(TextAlign.CENTER);

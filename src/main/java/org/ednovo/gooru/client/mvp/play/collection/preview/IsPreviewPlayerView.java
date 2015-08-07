@@ -1,6 +1,6 @@
 package org.ednovo.gooru.client.mvp.play.collection.preview;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.PopupView;

@@ -26,14 +26,14 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.ReorderCollectionResourcesEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateQuestionImageHandler;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 
 /**
  * @author Search Team
@@ -94,8 +94,9 @@ public interface CollectionResourceTabUiHandlers extends BaseUiHandlers,UpdateQu
 	/**
 	 * @param string
 	 * @param gooruOid
+	 * @param collectionId 
 	 */
-	void editUserOwnResource(String string, String gooruOid);
+	void editUserOwnResource(String string, String gooruOid, String collectionId);
 
 	/**
 	 * @param val

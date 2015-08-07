@@ -18,7 +18,7 @@
 	-webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 	background-color: #494949;
-	background-image: url(images/player_sprite.png) !important;
+	background-image: url("images/player_sprite.png") !important;
 	padding: 0;
 	width: 55px;
 	height: 50px;
@@ -1130,17 +1130,17 @@ float: left;
  */
 .star:before {
     display: inline-block;
-    font-family: FontAwesome;
+    /* font-family: FontAwesome; */
     font-style: normal;
     font-weight: normal;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content:'\f006';
+    content:'\2606';
 }
 
 .star.filled:before {
-    content: "\f005";
+    content: "\2605";
 }
 
 .userRating .star.filled {

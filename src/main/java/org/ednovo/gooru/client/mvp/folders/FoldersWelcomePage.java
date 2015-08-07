@@ -24,11 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.folders;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
+import org.ednovo.gooru.client.uc.H1Panel;
+import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.H3Panel;
+import org.ednovo.gooru.client.uc.H4Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,214 +38,128 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FoldersWelcomePage extends Composite {
-
+	
+	@UiField HTMLPanel myContentLoggedout;
+	
+	@UiField Button createCourseBtn, loginBtn;
+	
+	@UiField H1Panel educatePanel;
+	
+	@UiField H3Panel educateNotesPanel,resourceAdded,subjectsPanel,collCountPanel,resourceCount;
+	
+	@UiField PPanel leadPanel,subjectNotesPanel,collTxtPanel,resourceTxtPanel,shareExpPanel;
+	
+	@UiField H4Panel resourceFormatPanel;
+	
+	@UiField H2Panel sharePanel,stdPrefePanel,joinPanel;
+	
+	
+	
 	private static FoldersWelcomePageUiBinder uiBinder = GWT
 			.create(FoldersWelcomePageUiBinder.class);
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField
-	Label lblStartCreateingCollection, lblCollectionDesc, lblViewWalkthrough,
-			lblUpload, lblCustomizeCollections, lblCollaborate, lblFurther,
-			lblAssess, lblAddQuestion, lblGuideWith, lblGuideNarration,
-			lblCustomizeResource, lblEditStart, lblOne, lblTwo, lblThree,
-			lblFour, lblFive;
-	
-	@UiField HTML htmlWalkSampleCollection;
-	
-	@UiField HTMLPanel tutorialsMainContainer;
-	
-	@UiField Anchor imgSampleCollection;
-	
-	@UiField
-	Button btnCreateCollection;
-
 	interface FoldersWelcomePageUiBinder extends
 			UiBinder<Widget, FoldersWelcomePage> {
 	}
 
 	public FoldersWelcomePage() {
 		initWidget(uiBinder.createAndBindUi(this));
-		Window.enableScrolling(true);
-
-		SetButtonHandler setButtonVisibility = new SetButtonHandler() {
-
-			@Override
-			public void setButtonVisibility() {
-				setVisibility();
-			}
-		};
-		AppClientFactory.getEventBus().addHandler(
-				SetButtonEvent.TYPE, setButtonVisibility);
-		
-		
 		setText();
-		
-		imgSampleCollection.setHref("#collection-play&id=2548d591-9131-4577-b873-83b8f172eda5");
-		imgSampleCollection.setTarget("_blank");
-		
-		Image imgComponent = new Image();
-		imgComponent.setUrl("images/EmptyPages/thumbnail.png");
-		imgComponent.setWidth("119");
-		imgComponent.setHeight("74");
-		
-		imgSampleCollection.getElement().appendChild(imgComponent.getElement());
-		imgSampleCollection.getElement().setId("lnkSampleCollection");
-		
-		tutorialsMainContainer.getElement().setId("mycollTutorials");
-		
-	/*	<g:Image styleName="{WelcomePage.thumbnailImage}" url="images/EmptyPages/thumbnail.png" width="119"
-				height="74" />*/
-		
-/*		
-		imgSampleCollection.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				Window.open("#preview-play&id=2548d591-9131-4577-b873-83b8f172eda5", "_blank", "");
-			}
-		});*/
 	}
-
-	/**
-	 * @function setText 
-	 * 
-	 * @created_date : May 22, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
 	
 	private void setText() {
-		lblStartCreateingCollection.setText(i18n.GL1813());
-		lblStartCreateingCollection.getElement().setId("lblStartCreateingCollection");
-		lblStartCreateingCollection.getElement().setAttribute("alt",i18n.GL1813());
-		lblStartCreateingCollection.getElement().setAttribute("title",i18n.GL1813());
+		myContentLoggedout.getElement().setId("myContentLoggedout");
+		educatePanel.setText(i18n.GL3550());
+		educatePanel.getElement().setId("educatePanelId");
 		
-		lblCollectionDesc.setText(i18n.GL1814());
-		lblCollectionDesc.getElement().setId("lblCollectionDesc");
-		lblCollectionDesc.getElement().setAttribute("alt",i18n.GL1814());
-		lblCollectionDesc.getElement().setAttribute("title",i18n.GL1814());
+		educateNotesPanel.setText(i18n.GL3551());
+		educateNotesPanel.getElement().setId("educateNotesPanelId");
 		
-		btnCreateCollection.setText(i18n.GL1815());
-		btnCreateCollection.getElement().setId("btnCreateCollection");
-		btnCreateCollection.getElement().setAttribute("alt",i18n.GL1815());
-		btnCreateCollection.getElement().setAttribute("title",i18n.GL1815());
-		//lblViewWalkthrough.setText(i18n.GL1816);
-		lblViewWalkthrough.getElement().setId("lblViewWalkthrough");
+		createCourseBtn.setText(i18n.GL3552());
+		createCourseBtn.getElement().setId("createCourseBtnId");
 		
-		lblUpload.setText(i18n.GL1817());
-		lblUpload.getElement().setId("lblUpload");
-		lblUpload.getElement().setAttribute("alt",i18n.GL1817());
-		lblUpload.getElement().setAttribute("title",i18n.GL1817());
+		resourceAdded.setText(i18n.GL3553());
+		resourceAdded.getElement().setId("resourceAddedId");
 		
-		lblCustomizeCollections.setText(i18n.GL1818());
-		lblCustomizeCollections.getElement().setId("lblCustomizeCollections");
-		lblCustomizeCollections.getElement().setAttribute("alt",i18n.GL1818());
-		lblCustomizeCollections.getElement().setAttribute("title",i18n.GL1818());
+		leadPanel.setText(i18n.GL3554());
+		leadPanel.getElement().setId("leadPanelId");
 		
-		lblCollaborate.setText(i18n.GL1819());
-		lblCollaborate.getElement().setId("lblCollaborate");
-		lblCollaborate.getElement().setAttribute("alt",i18n.GL1819());
-		lblCollaborate.getElement().setAttribute("title",i18n.GL1819());
+		resourceFormatPanel.setText(i18n.GL3555());
+		resourceFormatPanel.getElement().setId("resourceFormatPanelId");
 		
-		lblFurther.setText(i18n.GL1820());
-		lblFurther.getElement().setId("lblFurther");
-		lblFurther.getElement().setAttribute("alt",i18n.GL1820());
-		lblFurther.getElement().setAttribute("title",i18n.GL1820());
+		subjectsPanel.setText(i18n.GL3556());
+		subjectsPanel.getElement().setId("subjectsPanelId");
 		
-		lblAssess.setText(i18n.GL1821());
-		lblAssess.getElement().setId("lblAssess");
-		lblAssess.getElement().setAttribute("alt",i18n.GL1821());
-		lblAssess.getElement().setAttribute("title",i18n.GL1821());
+		subjectNotesPanel.setText(i18n.GL3557());
+		subjectNotesPanel.getElement().setId("subjectNotesPanelID");
 		
-		lblAddQuestion.setText(i18n.GL1822());
-		lblAddQuestion.getElement().setId("lblAddQuestion");
-		lblAddQuestion.getElement().setAttribute("alt",i18n.GL1822());
-		lblAddQuestion.getElement().setAttribute("title",i18n.GL1822());
+		sharePanel.setText(i18n.GL3558());
+		sharePanel.getElement().setId("sharePanelId");
 		
-		lblGuideWith.setText(i18n.GL1823());
-		lblGuideWith.getElement().setId("lblGuideWith");
-		lblGuideWith.getElement().setAttribute("alt",i18n.GL1823());
-		lblGuideWith.getElement().setAttribute("title",i18n.GL1823());
+		stdPrefePanel.setText(i18n.GL3559());
+		stdPrefePanel.getElement().setId("stdPrefePanelId");
 		
-		lblGuideNarration.setText(i18n.GL1824());
-		lblGuideNarration.getElement().setId("lblGuideNarration");
-		lblGuideNarration.getElement().setAttribute("alt",i18n.GL1824());
-		lblGuideNarration.getElement().setAttribute("title",i18n.GL1824());
+		collCountPanel.setText(i18n.GL3560());
+		collCountPanel.getElement().setId("collCountPanelId");
 		
-		lblCustomizeResource.setText(i18n.GL1825());
-		lblCustomizeResource.getElement().setId("lblCustomizeResource");
-		lblCustomizeResource.getElement().setAttribute("alt",i18n.GL1825());
-		lblCustomizeResource.getElement().setAttribute("title",i18n.GL1825());
+		collTxtPanel.setText(i18n.GL3561());
+		collTxtPanel.getElement().setId("collTxtPanelId");
 		
-		lblEditStart.setText(i18n.GL1826());
-		lblEditStart.getElement().setId("lblEditStart");
-		lblEditStart.getElement().setAttribute("alt",i18n.GL1826());
-		lblEditStart.getElement().setAttribute("title",i18n.GL1826());
+		resourceCount.setText(i18n.GL3562());
+		resourceCount.getElement().setId("resourceCountId");
 		
-		lblOne.setText(i18n.GL_GRR_NUMERIC_ONE());
-		lblOne.getElement().setId("lblOne");
-		lblOne.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_ONE());
-		lblOne.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_ONE());
+		resourceTxtPanel.setText(i18n.GL3563());
+		resourceTxtPanel.getElement().setId("resourceTxtPanelId");
 		
-		lblTwo.setText(i18n.GL_GRR_NUMERIC_TWO());
-		lblTwo.getElement().setId("lblTwo");
-		lblTwo.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_TWO());
-		lblTwo.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_TWO());
+		joinPanel.setText(i18n.GL3564());
+		joinPanel.getElement().setId("joinPanelId");
 		
-		lblThree.setText(i18n.GL_GRR_NUMERIC_THREE());
-		lblThree.getElement().setId("lblThree");
-		lblThree.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_THREE());
-		lblThree.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_THREE());
+		shareExpPanel.setText(i18n.GL3565());
+		shareExpPanel.getElement().setId("shareExpPanel");
 		
-		lblFour.setText(i18n.GL_GRR_NUMERIC_FOUR());
-		lblFour.getElement().setId("lblFour");
-		lblFour.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_FOUR());
-		lblFour.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_FOUR());
+		loginBtn.setText(i18n.GL3552());
+		loginBtn.getElement().setId("loginBtnId");
 		
-		lblFive.setText(i18n.GL_GRR_NUMERIC_FIVE());
-		lblFive.getElement().setId("lblFive");
-		lblFive.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_FIVE());
-		lblFive.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_FIVE());
 		
-		htmlWalkSampleCollection.setHTML(i18n.GL1830());
-		htmlWalkSampleCollection.getElement().setId("htmlWalkSampleCollection");
-		htmlWalkSampleCollection.getElement().setAttribute("alt",i18n.GL1830());
-		htmlWalkSampleCollection.getElement().setAttribute("title",i18n.GL1830());
-		
-		setVisibility();
-	}
-
-	private void setVisibility(){
-		if (AppClientFactory.isAnonymous()){
-			btnCreateCollection.setVisible(false);
-		}else{
-			btnCreateCollection.setVisible(true);
-		}
 	}
 	
-	@UiHandler("btnCreateCollection")
-	public void OnClickNewCollection(ClickEvent event) {
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
+	@UiHandler("createCourseBtn")
+	public void clickCourseBtn(ClickEvent event) {
+		openLogin();
 	}
+	
+	@UiHandler("loginBtn")
+	public void clickloginBtn(ClickEvent event) {
+		openLogin();
+	}
+
+	private void openLogin() {
+		LoginPopupUc loginPopupUc=new LoginPopupUc() {
+			@Override
+			public	void onLoginSuccess(){
+				
+			}
+		};
+		Window.enableScrolling(false);
+		loginPopupUc.show();
+		loginPopupUc.setGlassEnabled(true);
+	}
+
+	@Override
+	public void onLoad() {
+		animate();
+	}
+	
+	public static native void animate() /*-{
+		new $wnd.WOW().init();
+	}-*/;
+
 }

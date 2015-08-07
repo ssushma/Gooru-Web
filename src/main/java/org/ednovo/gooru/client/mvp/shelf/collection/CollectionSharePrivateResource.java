@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection;
 
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.mvp.search.NoSearchResultBundle;
 import org.ednovo.gooru.client.uc.UcCBundle;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -75,42 +75,43 @@ public class CollectionSharePrivateResource extends Composite {
 		resourceTitle.getElement().setAttribute("alt",resourceHtmlTitle);
 		resourceTitle.getElement().setAttribute("title",resourceHtmlTitle);
 		resourceTitle.setStyleName("resourceTitleShare");
-		category = collectionItemDo.getResource().getCategory();
-		if(category.equalsIgnoreCase("question")){
+		category = collectionItemDo.getResource().getResourceFormat()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():null;
+		category=category.toLowerCase();
+		if("question".equalsIgnoreCase(category)){
 			resourceCategory.setText("Question");
 			resourceCategory.getElement().setAttribute("alt","Question");
 			resourceCategory.getElement().setAttribute("title","Question");
-		}else if(category.equalsIgnoreCase("text")){
+		}else if("text".equalsIgnoreCase(category)){
 			resourceCategory.setText("Text");
 			resourceCategory.getElement().setAttribute("alt","Text");
 			resourceCategory.getElement().setAttribute("title","Text");
 		}
-		else if(category.equalsIgnoreCase("slide")){
+		else if("slide".equalsIgnoreCase(category)){
 			resourceCategory.setText("Slide");
 			resourceCategory.getElement().setAttribute("alt","Slide");
 			resourceCategory.getElement().setAttribute("title","Slide");
 		}
-		else if(category.equalsIgnoreCase("webpage")){
+		else if("webpage".equalsIgnoreCase(category)){
 			resourceCategory.setText("Webpage");
 			resourceCategory.getElement().setAttribute("alt","Webpage");
 			resourceCategory.getElement().setAttribute("title","Webpage");
 		}
-		else if(category.equalsIgnoreCase("interactive")){
+		else if("interactive".equalsIgnoreCase(category)){
 			resourceCategory.setText("Interactive");	
 			resourceCategory.getElement().setAttribute("alt","Interactive");
 			resourceCategory.getElement().setAttribute("title","Interactive");
 		}
-		else if(category.equalsIgnoreCase("audio")){
+		else if("audio".equalsIgnoreCase(category)){
 			resourceCategory.setText("Audio");	
 			resourceCategory.getElement().setAttribute("alt","Audio");
 			resourceCategory.getElement().setAttribute("title","Audio");
 		}
-		else if(category.equalsIgnoreCase("video")){
+		else if("video".equalsIgnoreCase(category)){
 			resourceCategory.setText("Video");	
 			resourceCategory.getElement().setAttribute("alt","Video");
 			resourceCategory.getElement().setAttribute("title","Video");
 		}
-		else if(category.equalsIgnoreCase("handout")){
+		else if("handout".equalsIgnoreCase(category)){
 			resourceCategory.setText("Text");	
 			resourceCategory.getElement().setAttribute("alt","Text");
 			resourceCategory.getElement().setAttribute("title","Text");
@@ -141,7 +142,7 @@ public class CollectionSharePrivateResource extends Composite {
 				category=category.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
 			}
 		}
-		final String url = collectionItemDo.getResource().getThumbnails().getUrl();
+		final String url = collectionItemDo.getResource().getThumbnails()!=null?collectionItemDo.getResource().getThumbnails().getUrl():null;
 		if(url!=null) {
 			resourceImageUc.setUrl(ResourceImageUtil.ensure_has_protocol(url));
 		} else {

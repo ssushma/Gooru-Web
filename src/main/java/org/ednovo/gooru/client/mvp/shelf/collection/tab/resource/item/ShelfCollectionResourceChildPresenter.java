@@ -30,15 +30,14 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import java.util.List;
 
+import org.ednovo.gooru.application.client.child.ChildPresenter;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildPresenter;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
@@ -103,7 +102,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	 * @param collectionItemId  gooruOid of collection item
 	 */
 	public void deleteCollectionItem(String collectionItemId) {
-		this.getResourceService().deleteCollectionItem(collectionItemId, getDeleteCollectionItemAsyncCallback());
+		this.getResourceService().deleteCollectionItem("",collectionItemId, getDeleteCollectionItemAsyncCallback());
 	}
 
 	/**

@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.home.library.events;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.shared.model.library.ConceptDo;
+import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 
 import com.google.gwt.event.shared.GwtEvent;
 

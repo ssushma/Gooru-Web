@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,10 +28,10 @@ package org.ednovo.gooru.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionResourceView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -50,7 +50,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -64,12 +63,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class TinyMCE extends Composite{
 	private static List<String> richTextsList=new ArrayList<String>();
 	private static String lastButtonId="";
-    private TextArea tinyMceTextArea=null;
+    public TextArea tinyMceTextArea=null;
     private static final String BUTTONID="_richtext_button";
     private String id=null;
     private Button toolBarOpenButton=null;
     public HTMLPanel markAsBlankPanel=null;
-    private Label errorMessageLabel=null; 
+    private Label errorMessageLabel=null;
     private HandlerRegistration nativePreviewHandlerRegistration=null;
     private int characterLimit=500;
     private MessageProperties i18n=GWT.create(MessageProperties.class);
@@ -79,7 +78,7 @@ public class TinyMCE extends Composite{
 		public void onClick(ClickEvent event) {
 			MixpanelUtil.Rich_Text_Click();
 			showTinyMceToolBar();
-		}	
+		}
     }
     public TinyMCE() {
         super();
@@ -115,7 +114,7 @@ public class TinyMCE extends Composite{
         	hidePopup(event);
           }
         });
-              
+        this.addStyleName("tinyMCETable");
     }
     @UiConstructor
     public TinyMCE(Integer characterLimit) {
@@ -125,9 +124,10 @@ public class TinyMCE extends Composite{
     public void setCharacterLimit(int characterLimit){
     	this.characterLimit=characterLimit;
     }
-    
+
     public void initializeTinyMce(){
     	initilizeTinyMce(this,id);
+    	 this.addStyleName("tinyMCETable");
     }
     public void hidePopup(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){
@@ -148,7 +148,7 @@ public class TinyMCE extends Composite{
         return id;
     }
 
-   
+
     /**
      * setText() -
      *
@@ -166,7 +166,7 @@ public class TinyMCE extends Composite{
         getTextData();
         return tinyMceTextArea.getText();
     }
-    
+
     public String getText(){
     	return getContent();
     }
@@ -181,18 +181,20 @@ public class TinyMCE extends Composite{
 			public void execute() {
 				setWidth("100%");
                 setTextAreaToTinyMCE(id);
-                setMarkAsBlankLabel(); 
+                setMarkAsBlankLabel();
 			}
         });
     }
-    
-    
+
+
     public void setMarkAsBlankLabel(){
     	Element markAsBlankElement=getFibButton();
+    	if(markAsBlankElement!=null){
         if(markAsBlankElement.hasChildNodes()){
         	markAsBlankElement.getFirstChildElement().setInnerText(i18n.GL1507());
         }
         markAsBlankPanel.getElement().appendChild(markAsBlankElement);
+    	}
     }
 
     /**
@@ -254,18 +256,18 @@ public class TinyMCE extends Composite{
     public String getContent(){
     	return getContent(id);
     }
-    
+
     public String getRawContent(){
     	return getRawContent(id);
     }
-    
-    
+
+
     public void getHighlightedText(){
     	 getHighlightedText(id);
     	// return "";
    }
-    
-    
+
+
     protected native String getContent(String idd)/*-{
     	var rawData= $wnd.tinyMCE.get(idd).getContent();
     	return rawData;
@@ -274,19 +276,19 @@ public class TinyMCE extends Composite{
 		var rawData= $wnd.tinyMCE.get(idd).getContent({format : 'raw'});
 		return rawData;
 	}-*/;
-    
+
     protected native void getHighlightedText(String idd)/*-{
     	$wnd.tinyMCE.get(idd).execCommand('mceFillInTheBlank',false,idd);
-    	
+
 	}-*/;
-    
+
     public void setContent(String text){
     	setContent(id, text);
     }
     public void setEmptyContent(String text){
     	setEmptyContent(id,text);
     }
-    
+
     public Element getFibButton(){
     	return Document.get().getElementById(id+"_fillintheblank");
     }
@@ -299,8 +301,8 @@ public class TinyMCE extends Composite{
     protected native void setEmptyContent(String editorUniqueId,String text)/*-{
 	$wnd.tinyMCE.get(editorUniqueId).setContent('');
 	}-*/;
-    
-    
+
+
     protected native void getTextData() /*-{
         $wnd.tinyMCE.triggerSave();
     }-*/;
@@ -335,11 +337,11 @@ public class TinyMCE extends Composite{
     protected native void removeMCE(String id) /*-{
         $wnd.tinyMCE.execCommand('mceRemoveControl', true, id);
     }-*/;
-    
+
     protected native void setFoucs(String id) /*-{
     	$wnd.tinyMCE.get(id).focus();
     }-*/;
-    
+
     protected void setFoucs(){
     	setFoucs(id);
     }
@@ -373,18 +375,16 @@ public class TinyMCE extends Composite{
 		    theme_advanced_toolbar_align : "left",
 		    theme_advanced_statusbar_location : "none",
 		    plugins : 'asciimath,asciisvg,table,inlinepopups,fillintheblank',
-		    AScgiloc : 'http://www.imathas.com/editordemo/php/svgimg.php',			      //change me  
-		  	ASdloc : 'http://www.imathas.com/editordemo/jscripts/tiny_mce/plugins/asciisvg/js/d.svg',  //change me  
 		  	     setup : function (ed) {
 		  	     	ed.onKeyPress.add(function(ed, event) {
       				var content=this.getContent({format : 'raw'});
       				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
       				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
       				  if(event.keyCode==8 || event.keyCode==46) {
-								
+
 					  }else if(noOfCharacters>=parseInt(charLim)){
       				 	 event.preventDefault();
-					}		
+					}
       				});
     				ed.onClick.add(function(ed, e) {
     					tinymce.@org.ednovo.gooru.client.ui.TinyMCE::hideTinyMceToolBar(Ljava/lang/String;)(ed.id);
@@ -393,9 +393,9 @@ public class TinyMCE extends Composite{
       				var content=this.getContent({format : 'raw'});
       				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
       				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
-	      				
+
 	      				if(event.keyCode==8 || event.keyCode==46) {
-								
+
 					  	   }else if(noOfCharacters>parseInt(charLim)){
 						 	 event.preventDefault();
 						}
@@ -413,16 +413,13 @@ public class TinyMCE extends Composite{
 									event.returnValue = false; // disable Ctrl+C
 								}
 							}
-							
+
 							if(event.keyCode==13) {
 				  	     		event.preventDefault();
 								event.returnValue = false; // disable Enter Key
 				  	     	}
       				});
-				},
-				
-			
-		    content_css : "css/content.css"
+				}
 		});
 	}-*/;
 
@@ -439,9 +436,10 @@ public class TinyMCE extends Composite{
 	public void hideTinyMceToolBar(String id){
 		   hideAllButtons();
 		   try{
-			   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.BLOCK);
-			  // Document.get().getElementById(id+"_external").getStyle().setDisplay(Display.NONE);
-			   Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
+			   if (id!=null && Document.get().getElementById(id+"_external") != null){
+				   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.BLOCK);
+				   Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
+			   }
 		   }catch(Exception e){
 			   AppClientFactory.printSevereLogger(e.getMessage());
 		   }
@@ -449,16 +447,16 @@ public class TinyMCE extends Composite{
 	}
 	public void hideTinyMceToolBar(String id,boolean toolBarButtonVisible){
 		try{
-		  // Document.get().getElementById(id+"_external").getStyle().setDisplay(Display.NONE);
-			 Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
-		   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
+			if (id!=null  && Document.get().getElementById(id+"_external") != null){
+				 Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
+				 Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
+			}
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
-	  
+
 	}
 	public void showTinyMceToolBar(){
-	   //Document.get().getElementById(id+"_external").getStyle().setDisplay(Display.BLOCK);
 	   Document.get().getElementById(id+"_external").setAttribute("style", "display:block");
 	   setToolBarPosition(id);
 	   setFoucs(id);
@@ -487,19 +485,21 @@ public class TinyMCE extends Composite{
 	}
 	public int countCharcters(String content,String tinyMceId){
 		AddQuestionResourceView.errorMessageForQuestion.setText("");
+		int charLimit=AddQuestionResourceView.questionCharcterLimit;
 		//This regex is used to get text count with out html tags
 		String noHTMLString = content.replaceAll("\\<.*?>","");
 		if(noHTMLString.length()>=Integer.parseInt(getHiddenValue(tinyMceId))){
 			setErrorMessage(ERROR_MESSAGE,tinyMceId);
-			if(noHTMLString.length()>=503)
+			if(noHTMLString.length()>=charLimit+3)
 			{
-			setContent(tinyMceId,content.substring(0, 503));
+			setContent(tinyMceId,content.substring(0, charLimit+3));
 			}
 		}else{
 			clearErrorMessage(tinyMceId);
 		}
 		return noHTMLString.length();
 	}
+
 	public void clearErrorMessage(String tinyMceId){
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText("");
@@ -511,7 +511,7 @@ public class TinyMCE extends Composite{
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText(errorMessage);
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());	
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	public String getHiddenValue(String tinyMceId){
@@ -519,12 +519,12 @@ public class TinyMCE extends Composite{
 			String charLimit=Document.get().getElementById(tinyMceId).getAttribute("charLimit");
 			return charLimit;
 		}catch(Exception e){
-			return "100";	
+			return "100";
 		}
 	}
-	
+
 	public void onKeypereesss(){
 	}
-	
+
 
 }

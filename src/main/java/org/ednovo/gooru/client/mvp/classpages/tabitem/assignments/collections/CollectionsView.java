@@ -28,10 +28,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildView;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView;
 import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
@@ -40,8 +42,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonHandler;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -92,9 +92,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView{
 	
-	@UiField Button viewClassItemAnalyticsButton,editClassItemButton;
 	
-	@UiField FlowPanel dropdownPanel,editButtonsToolBar,classpageItemContainer,dropdownPanelAnalyticsButton;
+	@UiField FlowPanel editButtonsToolBar,classpageItemContainer;
 	
 	@UiField HTMLPanel directionContentPanel,thumbnailContainer, panelCircle;
 	
@@ -102,11 +101,11 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Anchor classpageItemTitle;
 	
-	@UiField Label editDueDateButton,editDirectionButton,deleteItemButton,dueDateText,dueDate,editCollection,directionsLabel,learningObjective,moniterProgress,collectionSummary,assignmentIndex;
+	@UiField Label dueDateText,dueDate,directionsLabel,learningObjective,assignmentIndex;
 	
 	@UiField Image collectionImage;
 	
-	@UiField FlowPanel headerRightPanel;
+	//@UiField FlowPanel headerRightPanel;
 	
 	@UiField Label lblDirectionCharLimit;
 	
@@ -150,8 +149,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 
 		this.classpageItemDo=classpageItemDo;
-		dropdownPanel.setVisible(false);
-		dropdownPanelAnalyticsButton.setVisible(false);
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hidePopup(event);
@@ -159,16 +156,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	    });
 		setClasspageItemDo();
 		setCollectionItemIndex(sequenceNum);
-		editClassItemButton.addClickHandler(new OpenDropdownPanelEvent());
-		viewClassItemAnalyticsButton.addClickHandler(new OpenAnalyticsDropdownPanelEvent());
-		editDirectionButton.addClickHandler(new EditDirectionEvent());
-		editDueDateButton.addClickHandler(new EditDueDateEvent());
-		deleteItemButton.addClickHandler(new DeleteItemEvent());
-		editCollection.addClickHandler(new CollectionEditEvent());
-		
-		moniterProgress.addClickHandler(new monitorProgressEvent());
-		
-		collectionSummary.addClickHandler(new CollectionSummaryEvent());
 		/**
 		 * Adding Event Handler.
 		 * @param UpdateSocialShareMetaDataEvent.TYPE is type of event.
@@ -239,42 +226,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		editButtonsToolBar.getElement().setId("pnlEditButtonsToolBar");
 		dueDateText.getElement().setId("lblDueDateText");
 		dueDate.getElement().setId("lblDueDate");
-		headerRightPanel.getElement().setId("pnlHeaderRight");
-		dropdownPanelAnalyticsButton.getElement().setId("btnDropdownPanelAnalytics");
-		dropdownPanel.getElement().setId("pnlDropdown");
 		directionContentPanel.getElement().setId("pnlDirectionContent");
 		thumbnailContainer.getElement().setId("pnlThumbnailContainer");
 		collectionImage.getElement().setId("imgCollectionImage");
-		
-		viewClassItemAnalyticsButton.setText(i18n.GL0510());
-		viewClassItemAnalyticsButton.getElement().setId("btnViewClassItemAnalytics");
-		viewClassItemAnalyticsButton.getElement().setAttribute("alt",i18n.GL0510());
-		viewClassItemAnalyticsButton.getElement().setAttribute("title",i18n.GL0510());
-		
-		editClassItemButton.setText(i18n.GL0140());
-		editClassItemButton.getElement().setId("btnEditClassItem");
-		editClassItemButton.getElement().setAttribute("alt",i18n.GL0140());
-		editClassItemButton.getElement().setAttribute("title",i18n.GL0140());
-		
-		editDueDateButton.setText(i18n.GL1368());
-		editDueDateButton.getElement().setId("btnEditDueDate");
-		editDueDateButton.getElement().setAttribute("alt",i18n.GL1368());
-		editDueDateButton.getElement().setAttribute("title",i18n.GL1368());
-		
-		editDirectionButton.setText(i18n.GL1369());
-		editDirectionButton.getElement().setId("btnEditDirection");
-		editDirectionButton.getElement().setAttribute("alt",i18n.GL1369());
-		editDirectionButton.getElement().setAttribute("title",i18n.GL1369());
-		
-		editCollection.setText(i18n.GL1370());
-		editCollection.getElement().setId("btnEditCollection");
-		editCollection.getElement().setAttribute("alt",i18n.GL1370());
-		editCollection.getElement().setAttribute("title",i18n.GL1370());
-		
-		deleteItemButton.setText(i18n.GL1371());
-		deleteItemButton.getElement().setId("btnDeleteItem");
-		deleteItemButton.getElement().setAttribute("alt",i18n.GL1371());
-		deleteItemButton.getElement().setAttribute("title",i18n.GL1371());
 		
 		directionsLabel.setText(i18n.GL1372());	
 		directionsLabel.getElement().setId("lblDirections");
@@ -286,16 +240,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		learningObjective.getElement().setAttribute("alt",i18n.GL1373());
 		learningObjective.getElement().setAttribute("title",i18n.GL1373());
 		
-		moniterProgress.setText(i18n.GL1586());
-		moniterProgress.getElement().setId("lblMointerProgress");
-		moniterProgress.getElement().setAttribute("alt",i18n.GL1586());
-		moniterProgress.getElement().setAttribute("title",i18n.GL1586());
-		
-		collectionSummary.setText(i18n.GL1587());
-		collectionSummary.getElement().setId("lblCollectionSummary");
-		collectionSummary.getElement().setAttribute("alt",i18n.GL1587());
-		collectionSummary.getElement().setAttribute("title",i18n.GL1587());
-	
 		classpageItemTitle.getElement().setId("lnkClasspageItemTitle");
 		learningObject.getElement().setId("htmlLearningObject");
 		
@@ -315,7 +259,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		setPresenter(new CollectionsPresenter(this));
 		CollectionsCBundle.INSTANCE.css().ensureInjected();
 		this.classpageItemDo=classpageItemDo;
-		headerRightPanel.clear();
 		createChangeStatusButton();
 		setClasspageItemDo();
 		setCollectionItemIndex(sequenceNum);
@@ -372,7 +315,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	 */
 	private void setClasspageItemTitle(){
 		classpageItemTitle.setHTML(classpageItemDo.getCollectionTitle());
-		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken()+"&eventid="+AppClientFactory.getPlaceManager().getClasspageEventId());
+		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&page="+getCurrentPlaceToken()+"&eventid="+AppClientFactory.getPlaceManager().getClasspageEventId());
 	}
 	/**
 	 * 
@@ -491,7 +434,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		StringUtil.setDefaultImages(collectionType, collectionImage, "small");
 		collectionImage.setUrl(classpageItemDo.getThumbnailUrl()!=null?StringUtil.formThumbnailName(classpageItemDo.getThumbnailUrl(),"-160x120."):"null");
 		Anchor thumbnailAnchor=new Anchor();
-		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken()+"&eventid="+AppClientFactory.getPlaceManager().getClasspageEventId());
+		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&page="+getCurrentPlaceToken()+"&eventid="+AppClientFactory.getPlaceManager().getClasspageEventId());
 		thumbnailAnchor.getElement().appendChild(collectionImage.getElement());
 		thumbnailContainer.add(thumbnailAnchor);
 	}
@@ -553,7 +496,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				changeCollectionStatus();
 			}
 		});
-		headerRightPanel.add(changeStatusButton);
 	}
 	/**
 	 * 
@@ -609,167 +551,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public void setDefaultMessage(){
 		
 	}
-	/**
-	 * 
-	 * @fileName : CollectionsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	private class OpenDropdownPanelEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			if(dropdownPanel.isVisible()){
-				dropdownPanel.setVisible(false);
-			}else{
-				dropdownPanel.setVisible(true);
-			}
-		}
-	}
-	/**
-	 * 
-	 * @fileName : CollectionsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	private class OpenAnalyticsDropdownPanelEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			getPresenter().checkCollectionStaus(classpageId,classpageItemDo.getCollectionId());
-			
-		}
-	}
-	/**
-	 * 
-	 * @fileName : CollectionsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	private class EditDirectionEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			dropdownPanel.setVisible(false);
-			editDirection();
-			editButtonsToolBar.setVisible(false);
-			lblDirectionCharLimit.setVisible(true);
-			editToolBarView=new EditToolBarView(false);
-			if(classpageItemDo.getPlannedEndDate()!=null&&!classpageItemDo.getPlannedEndDate().toString().equals("")){
-				editToolBarView.dueDatePanel.add(new Label(classpageItemDo.getPlannedEndDate()!=null?classpageItemDo.getPlannedEndDate().toString():"")); // TODO need to set date.
-				editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
-				editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
-				editToolBarView.dueDatePanel.setStyleName(CollectionsCBundle.INSTANCE.css().dateText());
-			}
-			editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
-			editToolBarView.saveButton.addClickHandler(new UpdateEditedContentEvent());
-			classpageItemContainer.insert(editToolBarView, 0);
-		}
-	}
-	/**
-	 * 
-	 * @fileName : CollectionsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	private class EditDueDateEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			dropdownPanel.setVisible(false);
-			editButtonsToolBar.setVisible(false);
-			editToolBarView=new EditToolBarView(true);
-			editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
-			editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
-			//editToolBarView.dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
-			editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
-			editToolBarView.saveButton.addClickHandler(new UpdateEditedDueDateEvent());
-			classpageItemContainer.insert(editToolBarView, 0);
-		}
-		
-	}
-	/**
-	 * 
-	 * @fileName : CollectionsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	private class DeleteItemEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			dropdownPanel.setVisible(false);
-			removeConfirmBox=new WaitPopupVc(i18n.GL1387(),i18n.GL1388()) {
-				@Override
-				public void onTextConfirmed() {
-					getPresenter().deleteClasspageItem(classpageItemDo.getCollectionItemId());
-				}
-			};
-		}
-		
-	}
-	/**
-	 * 
-	 * @fileName : CollectionsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	private class CollectionEditEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			getCollectionFolders();
-		};
-	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * 
 	 * @fileName : CollectionsView.java
@@ -1163,11 +950,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
     	if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
-        	if(!target)
-        	{
-        		dropdownPanel.setVisible(false);
-        		dropdownPanelAnalyticsButton.setVisible(false);
-        	}
     	}
      }
 	/**
@@ -1193,7 +975,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return dropdownPanel.getElement().isOrHasChild(Element.as(target))||editClassItemButton.getElement().isOrHasChild(Element.as(target));
+			//return dropdownPanel.getElement().isOrHasChild(Element.as(target))||editClassItemButton.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}
@@ -1369,17 +1151,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	@Override
 	public void setViewCollectionAnalytics(boolean isaggregateData) {
 		if(isaggregateData){
-			if(dropdownPanelAnalyticsButton.isVisible()){
-				dropdownPanelAnalyticsButton.setVisible(false);
-			}else{
-				dropdownPanelAnalyticsButton.setVisible(true);
-			}
+			
 		}else{
 			ToolTip toolTip=new ToolTip(i18n.GL3098(),"");
 			toolTip.getTootltipContent().getElement().setAttribute("style", "width: 184px;");
 			toolTip.getElement().getStyle().setBackgroundColor("transparent");
 			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			toolTip.setPopupPosition(viewClassItemAnalyticsButton.getAbsoluteLeft(), viewClassItemAnalyticsButton.getAbsoluteTop()+36);
 			toolTip.setAutoHideEnabled(true);
 			toolTip.show();
 		}

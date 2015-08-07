@@ -28,16 +28,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.library.LessonDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleHandler;
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
-import org.ednovo.gooru.shared.model.library.LessonDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NodeList;
@@ -55,7 +55,6 @@ public class PartnerLessonUc extends Composite{
 
 	private static final String ASSESSMENT = "assessment";
 	@UiField HTMLPanel lessonList;
-	@UiField ProfilePageLibraryStyleBundle style;
 	private Integer topicId;
 	private String conceptId;
 	private Integer lessonId;
@@ -82,7 +81,7 @@ public class PartnerLessonUc extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
-		if(profileLibraryDo.getType().equals("scollection")) {
+		if(profileLibraryDo.getType().equals("collection") || profileLibraryDo.getType().contains("assessment")) {
 			setCollectionData(profileLibraryDo, isLessonHighlighted, lessonNumber,libraryGooruOid);
 		} else {
 			setLessonData(null, profileLibraryDo, profileLibraryDo.getCollectionItems(),isLessonHighlighted,lessonNumber, isPaginated,libraryGooruOid);
@@ -115,7 +114,7 @@ public class PartnerLessonUc extends Composite{
 			lessonId = lessonNumber;
 		}
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-			lessonTitle.addStyleName(style.lessonTitle());
+			lessonTitle.addStyleName("lessonTitle");
 			if(lessonNumber == 1) {
 				lessonTitle = setOpenStyle(true);
 			} else {
@@ -124,9 +123,9 @@ public class PartnerLessonUc extends Composite{
 			lessonTitle.addClickHandler(new OpenLessonHandler());
 		} else {
 			if(lessonNumber==1) {
-				lessonTitle.addStyleName(style.marginTop5());
+				lessonTitle.addStyleName("marginTop5");
 			}
-			lessonTitle.addStyleName(style.libraryTitle());
+			lessonTitle.addStyleName("libraryTitle");
 		}
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			String conceptTitle = "";
@@ -144,26 +143,26 @@ public class PartnerLessonUc extends Composite{
 			
 			Label conceptTitleLbl = new Label(conceptTitle);
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-				conceptTitleLbl.addStyleName(style.conceptTitle());
+				conceptTitleLbl.addStyleName("conceptTitle"); 
 				if(profileLibraryTemp.getCollectionType().contains(ASSESSMENT)){
-					conceptTitleLbl.addStyleName(style.assessmentSmall());
+					conceptTitleLbl.addStyleName("assessmentSmall");
 				}else{
-					conceptTitleLbl.addStyleName(style.collectionSmall());
+					conceptTitleLbl.addStyleName("collectionSmall");
 				}
 				
 			} else {
-				conceptTitleLbl.addStyleName(style.libraryConceptTitle());
+				conceptTitleLbl.addStyleName("libraryConceptTitle");
 			}
 
 			conceptList.add(conceptTitleLbl);
 			conceptTitles.put(profileLibrary.getGooruOid(), conceptTitleLbl);
 			if(i==0&&isLessonHighlighted) {
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-					conceptTitleLbl.addStyleName(style.conceptActive());
+					conceptTitleLbl.addStyleName("conceptActive");
 					conceptId = profileLibrary.getGooruOid();
 					openCollection(libraryGooruOid);
 				} else {
-					conceptTitleLbl.addStyleName(style.libraryConceptActive());
+					conceptTitleLbl.addStyleName("libraryConceptActive");
 				}
 				isLessonHighlighted = false;
 			}
@@ -193,23 +192,23 @@ public class PartnerLessonUc extends Composite{
 			conceptId = profileLibraryDo.getGooruOid();
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 				if(profileLibraryDo.getCollectionType().contains(ASSESSMENT)){
-					lessonTitle.addStyleName(style.assessment());
+					lessonTitle.setStyleName("assessment");
 				}else{
-					lessonTitle.addStyleName(style.collection());
+					lessonTitle.setStyleName("collection"); 
 				}
-				lessonTitle.addStyleName(style.lessonTitle());
+				lessonTitle.addStyleName("lessonTitle");
 				
 			} else {
 				//lessonTitle.addStyleName(style.libraryTitle());
-				lessonTitle.addStyleName(style.libraryConceptTitle());
+				lessonTitle.addStyleName("libraryConceptTitle");
 			}
 		}
 		if(lessonNumber==1&&isLessonHighlighted) {
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-				lessonTitle.addStyleName(style.conceptActive());
+				lessonTitle.addStyleName("conceptActive");
 			} else {
-				lessonTitle.addStyleName(style.libraryConceptActive());
-				lessonTitle.addStyleName(style.marginTop5());
+				lessonTitle.addStyleName("libraryConceptActive");
+				lessonTitle.addStyleName("marginTop5");
 			}
 			openCollection(libraryGooruOid);
 			isLessonHighlighted = false;
@@ -222,10 +221,10 @@ public class PartnerLessonUc extends Composite{
 				    for (int i = 0; i < links.getLength(); i++) {
 				      com.google.gwt.user.client.Element link =
 				        (com.google.gwt.user.client.Element) links.getItem(i);
-				      link.getFirstChildElement().removeClassName(style.conceptActive());
-				      link.getFirstChildElement().removeClassName(style.libraryConceptActive());
+				      link.getFirstChildElement().removeClassName("conceptActive");
+				      link.getFirstChildElement().removeClassName("libraryConceptActive");
 				    }
-				lessonTitle.addStyleName(style.conceptActive());
+				lessonTitle.addStyleName("conceptActive");
 			}
 		});
 	}
@@ -267,9 +266,9 @@ public class PartnerLessonUc extends Composite{
 			if(topicNo==topicId) {
 				String activeStyle = "";
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-					activeStyle = style.conceptActive();
+					activeStyle = "conceptActive";
 				} else {
-					activeStyle = style.libraryConceptActive();
+					activeStyle = "libraryConceptActive";
 				}
 				for (Map.Entry<String, Label> entry : conceptTitles.entrySet()) {
 				    if(entry.getKey().equals(collectionId)&&(lessonId==lessonNo)) {
@@ -284,9 +283,9 @@ public class PartnerLessonUc extends Composite{
 	
 	private HTML setOpenStyle(boolean isOpen) {
 		if(isOpen) {
-			lessonTitle.addStyleName(style.open());
+			lessonTitle.addStyleName("folderOpen");
 		} else {
-			lessonTitle.removeStyleName(style.open());
+			lessonTitle.removeStyleName("folderOpen");
 		}
 		return lessonTitle;
 	}

@@ -1,10 +1,10 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateAssmntUrlOnMycollEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 /**
  * @author Search Team

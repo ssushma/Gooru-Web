@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<ui:style>
 	.popupWrapper {
 		bottom: 0;
@@ -127,7 +127,7 @@
 		width: 120px !important;
 	}
 	.privateImg{
-		
+
 	}
 
 	.publicImg label{
@@ -191,19 +191,19 @@
 		display: inline-block;
 		resize: none;
 		height: 85px;
-	}				
+	}
 	.privacy{
 		vertical-align: top !important;
 		margin-top: 8px;
 	}
-																						
+
 	</ui:style>
 	<g:HTMLPanel styleName="{style.popupWrapper}">
 		<div class="{style.PopupMainVSmall}">
 			<div class="{style.popupInnerGrey}">
 						<div class="{style.popupgreyHeader}">
 							<div class="row">
-								<g:Label styleName="col-md-8 col-xs-8" text="{i18n.GL3167}" title="{i18n.GL3167}">Edit Assessment URL </g:Label> 
+								<g:Label styleName="col-md-8 col-xs-8" text="{i18n.GL3167}" title="{i18n.GL3167}">Edit Assessment URL </g:Label>
 									<div class="clearfix"></div>
 								</div>
 							</div>
@@ -258,4 +258,4 @@
 	   		 </div>
 		</div>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

@@ -27,16 +27,13 @@
 */
 package org.ednovo.gooru.client.mvp.shelf;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -109,7 +106,7 @@ public class ErrorPopup extends PopupPanel{
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			navigateClasspage();
-		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
+		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT_VIEW)){
 			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.HOME);
 		}
 		hide();
@@ -126,7 +123,7 @@ public class ErrorPopup extends PopupPanel{
 				if (result.getSearchResults().size()>0){
 					String gooruOId = result.getSearchResults().get(0).getGooruOid();
 					Map<String, String> params = new HashMap<String, String>();
-					params.put("classpageid", gooruOId);
+					params.put("classpageId", gooruOId);
 					params.put("pageNum", "0");
 					params.put("pageSize", "10");
 					params.put("pos", "1");

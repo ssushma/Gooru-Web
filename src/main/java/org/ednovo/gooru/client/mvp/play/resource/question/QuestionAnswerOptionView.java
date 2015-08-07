@@ -29,6 +29,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -42,14 +43,17 @@ public class QuestionAnswerOptionView extends Composite{
 	@UiField public Label answerChoiceResult,radioButton;
 	@UiField HTML answerOptionText;
 	@UiField public RadioButton answerOptionRadioButton;
+	@UiField FlowPanel questionsMainPanel;
 	private int answerId;
 	private boolean isAnswerCorrect;
 	private String answerText="";
+	boolean isChecked;
 	public static QuestionAnswerOptionViewUiBinder questionAnswerOptionViewUiBinder=GWT.create(QuestionAnswerOptionViewUiBinder.class);
 	
 	public QuestionAnswerOptionView(String questionText,String questionSerialNum){ 
 		initWidget(questionAnswerOptionViewUiBinder.createAndBindUi(this));
 		this.answerText=questionText;
+		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
 		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText!=null?questionText:""));
 		answerChoiceResult.getElement().setId("lblAnswerChoiceResult");
 		radioButton.getElement().setId("lblRadioButton");

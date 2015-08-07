@@ -2,15 +2,15 @@ package org.ednovo.gooru.client.uc;
 
 
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -334,12 +334,14 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		}
 		return thumbnailImage!=null?thumbnailImage:"images/defaultRes.png";
 	}
-	
+
 	private String getHTML(String html){
-		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		HTML contentHtml=new HTML(html);
-		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
+		if (html != null){
+			html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+			HTML contentHtml=new HTML(html);
+			contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
+		}
 		return html;
 	}
-	
+
 }

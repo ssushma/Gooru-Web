@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
 
 public interface PreviewHomeUiHandlers extends BaseUiHandlers,OpenReviewPopUpEventHandler{

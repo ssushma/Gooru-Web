@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.share;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -52,16 +52,16 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 	interface SocialShareWidgetUiBinder extends
 			UiBinder<Widget, SocialShareWidget> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField Button fbButton,twitterButton,emailButton;
 	@UiField Image resourceHiddenImage;
-	
+
 	private String resourceDescription=null,resourceThumbnail=null;
-	
+
 	private String category="";
-	
+
 	private CollectionItemDo collectionItemDo;
 
 	public SocialShareWidget(String resourceDescription,String resourceThumbnail,String category) {
@@ -70,12 +70,12 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 		fbButton.getElement().setId("btnFbButton");
 		fbButton.getElement().setAttribute("alt",i18n.GL0646());
 		fbButton.getElement().setAttribute("title",i18n.GL0646());
-		
+
 		twitterButton.setText(i18n.GL0647());
 		twitterButton.getElement().setId("btnTwitterButton");
 		twitterButton.getElement().setAttribute("alt",i18n.GL0647());
 		twitterButton.getElement().setAttribute("title",i18n.GL0647());
-		
+
 		emailButton.setText(i18n.GL0212());
 		emailButton.getElement().setId("btnEmailButton");
 		emailButton.getElement().setAttribute("alt",i18n.GL0212());
@@ -126,14 +126,14 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("SocialShareWidget : getQuestionImage : "+e.getMessage());
 		}
 		return thumbnailImage!=null?thumbnailImage:"";
 	}
 	public String getThumbnailUrl(){
 		return resourceThumbnail;
 	}
-	
+
 	@UiHandler("fbButton")
 	public void onClickFbButton(ClickEvent clickEvent) {
 		onFacebook();
@@ -143,12 +143,12 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 	public void onClickTwitterButton(ClickEvent clickEvent) {
 		onTwitter();
 	}
-	
+
 	@UiHandler("emailButton")
 	public void onClickEmailButton(ClickEvent clickEvent) {
 		onEmail();
 	}
-	
+
 	@UiHandler("resourceHiddenImage")
 	public void setDefaultThumnialUrl(ErrorEvent event){
 		if (COLLECTION.equalsIgnoreCase(category)) {
@@ -176,6 +176,6 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 	public abstract void onFacebook();
 
 	public abstract void onTwitter();
-	
+
 	public abstract void onEmail();
 }

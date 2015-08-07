@@ -301,17 +301,17 @@ content:â€�â€¦â€�;
 
 #fpnlWrapperContainerField .star:before {
 	display: inline-block;
-	font-family: FontAwesome;
+	/* font-family: FontAwesome; */
 	font-style: normal;
 	font-weight: normal;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	content: '\f006';
+	content: '\2606';
 }
 
 #fpnlWrapperContainerField .star.filled:before {
-	content: "\f005";
+	content: "\2605";
 }
 
 #fpnlWrapperContainerField .userRating .star.filled {
@@ -542,25 +542,25 @@ body.popupBG {
 	display: inline-block;
 	text-decoration: inherit;
 	display: inline-block;
-	font-family: FontAwesome;
+	/* font-family: FontAwesome; */
 	font-style: normal;
 	font-weight: normal;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	content: '\f006';
+	content: '\2606';
 }
 
 #fpnlWrapperContainerField .rating>input:checked  ~ label:before,#fpnlWrapperContainerField .rating:not (:checked ) >label:hover:before,#fpnlWrapperContainerField .rating:not
 	(:checked ) >label:hover  ~ label:before {
 	display: inline-block;
-	font-family: FontAwesome;
+/* 	font-family: FontAwesome; */
 	font-style: normal;
 	font-weight: normal;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	content: '\f005';;
+	content: '\2605';;
 }
 
 #fpnlWrapperContainerField .rating>input:checked  ~ label {

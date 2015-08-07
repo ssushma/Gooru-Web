@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="toolTip" src="ToolTip.css" />
-		<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
+		<ui:with type="org.ednovo.gooru.application.client.home.HomeCBundle"
 		field="res" />
 
 	<ui:style>
@@ -12,10 +12,10 @@
 		<!-- <g:HTMLPanel styleName="{toolTip.arrowBorder}"></g:HTMLPanel> -->
 		<uc:UlPanel styleName="dropdown-menu dropdowDisplay" ui:field="tooltipPanel">
 		    <uc:LiPanel>
-		        <g:Anchor ui:field="lblGooruLibrary"></g:Anchor> 
+		        <g:Anchor ui:field="lblGooruLibrary"></g:Anchor>
 		    </uc:LiPanel>
 		    <uc:LiPanel>
-		        <g:Anchor ui:field="lblDistrictLibrary"></g:Anchor> 
+		        <g:Anchor ui:field="lblDistrictLibrary"></g:Anchor>
 		        <g:HTMLPanel ui:field="dropdownImgLib" styleName="right-caret rightArrow"></g:HTMLPanel>
 				<panel:HTMLEventPanel  ui:field="districtLibContainer">
   				</panel:HTMLEventPanel>
@@ -31,13 +31,13 @@
 </ui:UiBinder>
 
 
-<!-- 
+<!--
 		<ul class="dropdown-menu">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
-                
+
                     <li><a href="#">Separated link</a></li>
-                   
+
                     <li><a href="#">One more separated link</a></li>
                   </ul> -->

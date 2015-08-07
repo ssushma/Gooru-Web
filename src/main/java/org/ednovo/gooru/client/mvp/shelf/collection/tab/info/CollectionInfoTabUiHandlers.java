@@ -26,10 +26,10 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 
 /**
  * @author Search Team

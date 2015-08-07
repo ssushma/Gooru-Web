@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,16 +28,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.AssignmentDo;
+import org.ednovo.gooru.application.shared.model.content.AttachToDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListHandler;
-import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
-import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleHandler;
+import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClassPopupView;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
@@ -46,13 +53,6 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentDo;
-import org.ednovo.gooru.shared.model.content.AttachToDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.TaskDo;
-import org.springframework.jca.cci.object.SimpleRecordOperation;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -79,18 +79,18 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
+ *
  * @fileName : ClasspageListVc.java
- * 
+ *
  * @description : This class is used to display the List of Classpaes on
  *              clicking on Teach Tab.
- * 
+ *
  * @version : 1.0
- * 
+ *
  * @date: Aug 14, 2013
- * 
+ *
  * @Author Gooru Team
- * 
+ *
  * @Reviewer:
  */
 public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
@@ -99,7 +99,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	Label lblTitle;
 	@UiField
 	Anchor ancNewClasspage;
-	
+
 	@UiField HTMLPanel mainContainer;
 
 	@UiField
@@ -110,7 +110,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	ClasspageListDo classpageListDo = null;
 
-	Map<String, CollectionDo> classpageList = new HashMap<String, CollectionDo>();
+	Map<String, ClasspageDo> classpageList = new HashMap<String, ClasspageDo>();
 	ArrayList<String> listClasspage = new ArrayList<String>();
 
 	AlertMessageUc alertMessageUc;
@@ -131,30 +131,25 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	@UiField(provided = true)
 	ClasspageListPopupViewCBundle res;
-	
+
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	
-	private NewClasspagePopupView newPopup = null;
-	
-	
+	private NewClassPopupView newPopup = null;
+
+
 
 	/**
 	 * Class constructor
 	 */
 	public ClasspageListVc(boolean isClasspageRefreshed,
 			String deletedClasspageId) {
-	
+
 		this.res = ClasspageListPopupViewCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		ancNewClasspage.getElement().setId("lnkNewClasspage");
 
-		SetSelectedClasspageListHandler setSelectedHandler = new SetSelectedClasspageListHandler() {
-			@Override
-			public void setClasspageTitle(String classpageId) {
-				setClasspageSetSelected(classpageId);
-			}
-		};
 
 		RefreshClasspageListHandler refreshHandler = new RefreshClasspageListHandler() {
 
@@ -174,8 +169,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		};
 
 		AppClientFactory.getEventBus().addHandler(
-				SetSelectedClasspageListEvent.TYPE, setSelectedHandler);
-		AppClientFactory.getEventBus().addHandler(
 				RefreshClasspageListEvent.TYPE, refreshHandler);
 		AppClientFactory.getEventBus().addHandler(
 				UpdateClasspageTitleEvent.TYPE, updateTitleHandler);
@@ -185,52 +178,23 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		mainContainer.getElement().setId("headerMainPanel");
 	}
 
-	/**
-	 * 
-	 * @function updateTitle
-	 * 
-	 * @created_date : Aug 21, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageId
-	 * @parm(s) : @param classpageTitle
-	 * 
-	 * @return : void
-	 * 
-	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-
-	private void updateTitle(String classpageId, String classpageTitle) {
-		// Update the ClasspageObject inside classpageList object.
-
-		CollectionDo classpageDo = classpageList.get(classpageId);
-		classpageDo.setTitle(classpageTitle);
-		classpageList.put(classpageId, classpageDo);
-
-	}
 
 	/**
-	 * 
+	 *
 	 * @function setLabels
-	 * 
+	 *
 	 * @created_date : Aug 14, 2013
-	 * 
+	 *
 	 * @description This method is used to set the Label text.
-	 * 
+	 *
 	 * @parm(s) :
-	 * 
+	 *
 	 * @return : void
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void setLabels() {
 		ancNewClasspage.setText(i18n.GL0115());
@@ -264,10 +228,10 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		lblTitle.getElement().setId("lblTitle");
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClasspageListVc.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -283,7 +247,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		@Override
 		public void onClick(ClickEvent event) {
 			GWT.runAsync(new SimpleRunAsyncCallback() {
-				
+
 				@Override
 				public void onSuccess() {
 					setButtonStatus("active");
@@ -459,8 +423,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 													if (alertMessageUc != null)
 														alertMessageUc.hide();
 
-													StudentAssignmentView
-															.setPrivatePagePending();
+													//StudentAssignmentView.setPrivatePagePending();
 
 												} else {
 													if (AppClientFactory.isAnonymous()) {
@@ -500,15 +463,15 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 														.equalsIgnoreCase(
 																AppClientFactory
 																		.getGooruUid())) {
-													StudentAssignmentView
-															.setPublicPage();
+													/*StudentAssignmentView
+															.setPublicPage();*/
 												} else if (result.getStatus()
 														.equalsIgnoreCase("active")) {
-													StudentAssignmentView
-															.setPublicPageActive();
+													/*StudentAssignmentView
+															.setPublicPageActive();*/
 												} else {
-													StudentAssignmentView
-															.setPublicPagePending();
+												/*	StudentAssignmentView
+															.setPublicPagePending();*/
 												}
 
 											}
@@ -518,74 +481,74 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 									});
 				}
 			});
-			
+
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @function getAllClasspages
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param offSet
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	public void getAllClasspages(final String offSet,
 			final boolean isClasspageRefreshed, final String deletedClasspageId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
-		AppClientFactory
-				.getInjector()
-				.getClasspageService()
-				.v2GetAllClass(String.valueOf(limit), offSet,
-						new SimpleAsyncCallback<ClasspageListDo>() {
-							@Override
-							public void onSuccess(ClasspageListDo result) {
-								classpageListDo = result;
-								listClasspages(result, isClasspageRefreshed,
-										deletedClasspageId);
-							}
-						});
-	}
+				AppClientFactory
+						.getInjector()
+						.getClasspageService()
+						.v2GetAllClass(String.valueOf(limit), offSet,
+								new SimpleAsyncCallback<ClasspageListDo>() {
+									@Override
+									public void onSuccess(ClasspageListDo result) {
+										classpageListDo = result;
+										listClasspages(result, isClasspageRefreshed,
+												deletedClasspageId);
+									}
+								});
+			}
 		});
 	}
 
 	/**
-	 * 
+	 *
 	 * @function listClasspages
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param result
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void listClasspages(final ClasspageListDo result,
 			final boolean isClasspageRefershed, final String deletedClasspageId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				isApiCalling = false;
@@ -601,13 +564,10 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 						classpageList.clear();
 					}
 					for (int i = 0; i < resultSize; i++) {
-						String classpageId = classpageListDo.getSearchResults().get(i)
-								.getGooruOid();
-						classpageList.put(classpageId, classpageListDo
-								.getSearchResults().get(i));
+						String classpageId = classpageListDo.getSearchResults().get(i).getGooruOid();
+						//classpageList.put(classpageId, classpageListDo.getSearchResults().get(i));
 						listClasspage.add(classpageId);
 					}
-					generateClasspageList();
 				} else {
 					// Set no classpage info, if there are not classpages.
 					if (toClear) {
@@ -619,7 +579,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 					}
 					if (whileDeleting) {
 						whileDeleting = false;
-						
+
 					}
 				}
 				if (isClasspageRefershed) {
@@ -629,77 +589,54 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		});
 	}
 
-	/**
-	 * 
-	 * @function generateClasspageList
-	 * 
-	 * @created_date : Aug 18, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) :
-	 * 
-	 * @return : void
-	 * 
-	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	public void generateClasspageList() {
-	}
+
 
 	/**
-	 * 
+	 *
 	 * @function onClickNewClasspage
-	 * 
+	 *
 	 * @created_date : Aug 21, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	@UiHandler("ancNewClasspage")
 	public void onClickNewClasspage(ClickEvent event) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				MixpanelUtil.ClickOnNewClassPage();
 				HeaderUc.closeClassContainer();
-				newPopup = new NewClasspagePopupView() {
-
+				newPopup = new NewClassPopupView() {
+					
 					@Override
-					public void createNewClasspage(String title) {
-
+					public void createNewClasspage(String title, String grade,	boolean sharing) {
+						
 						MixpanelUtil.Create_NewClasspage();
 						CollectionDo collectionDo = new CollectionDo();
 						collectionDo.setTitle(title);
 						collectionDo.setCollectionType("classpage");
-						AppClientFactory
-								.getInjector()
-								.getClasspageService()
-								.createClassPage(collectionDo.getTitle(),
-										new SimpleAsyncCallback<CollectionDo>() {
+						AppClientFactory.getInjector().getClasspageService().createClass(title, grade, sharing,	new SimpleAsyncCallback<ClasspageDo>() {
 
 											@Override
-											public void onSuccess(CollectionDo result) {
-												final String classpageId = result
-														.getGooruOid();
-												AssignmentDo assignmentDo = new AssignmentDo();
-												assignmentDo
-														.setClasspageId(classpageId);
+											public void onSuccess(ClasspageDo result) {
+												final String classpageId = result.getUri();
+												String[] uri=result.getUri().split("/");
+												String id=  uri[uri.length-1];
+												String title = result.getName();
+												/*AssignmentDo assignmentDo = new AssignmentDo();
+												assignmentDo.setClasspageId(classpageId);
 
 												TaskDo taskDo = new TaskDo();
 												taskDo.setTitle(i18n.GL0121());
@@ -708,14 +645,16 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 												AttachToDo attachToDo = new AttachToDo();
 												attachToDo.setId(classpageId);
-												attachToDo.setType("classpage");
+												attachToDo.setType("classpage");*/
 
-												assignmentDo.setAttachTo(attachToDo);
-												listClasspage.add(0, classpageId);
+												//assignmentDo.setAttachTo(attachToDo);
+												listClasspage.add(0, id);
 
-												classpageList.put(classpageId, result);
+												classpageList.put(id, result);
+												OpenClasspageEdit(id);
+												newPopup.ClosePopup();
 
-												AppClientFactory
+												/*AppClientFactory
 														.getInjector()
 														.getClasspageService()
 														.v2CreateAssignment(
@@ -727,11 +666,10 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 																			AssignmentDo result) {
 																		// Assig to
 																		// classpage.
-																		generateClasspageList();
 																		OpenClasspageEdit(classpageId);
 																		newPopup.ClosePopup();
 																	}
-																});
+																});*/
 											}
 										});
 					}
@@ -741,42 +679,38 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	}
 
 	/**
-	 * 
+	 *
 	 * @function OpenClasspageEdit
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param gooruOId
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void OpenClasspageEdit(final String gooruOId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				setClassapageItemSeleted(gooruOId);
-				AppClientFactory.getInjector().getClasspageService().v2GetClasspageById(gooruOId, new SimpleAsyncCallback<CollectionDo>() {
+				AppClientFactory.getInjector().getClasspageService().v3GetClassById(gooruOId, new SimpleAsyncCallback<ClasspageDo>() {
 					@Override
-					public void onSuccess(CollectionDo result) {
-						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()))
+					public void onSuccess(ClasspageDo result) {
+						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()))
 						{
 							Map<String, String> params = new HashMap<String, String>();
-							params.put("classpageid", gooruOId);
-							params.put("pageNum", "0");
-							params.put("pageSize", "10");
-							params.put("pos", "1");
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.EDIT_CLASSPAGE, params);
+							params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
+						    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS, params);
 						}
 						else
 						{
@@ -785,8 +719,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 							params.put("pageNum", "0");
 							params.put("pageSize", "10");
 							params.put("pos", "1");
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.STUDENT, params);
+						    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
 						}
 					}
 				});
@@ -795,27 +728,27 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setClassapageItemSeleted
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageId
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	private void setClassapageItemSeleted(final String classpageId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -835,52 +768,31 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			}
 		});
 	}
-	
+
+
 
 	/**
-	 * 
-	 * @function setClasspageSetSelected
-	 * 
-	 * @created_date : Aug 21, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageId
-	 * 
-	 * @return : void
-	 * 
-	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	private void setClasspageSetSelected(String classpageId) {
-	}
-
-	/**
-	 * 
+	 *
 	 * @function removeClasspageItem
-	 * 
+	 *
 	 * @created_date : Aug 15, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageId
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	public void removeClasspageItem(final String classpageId) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				String nextClasspageId = null;
@@ -903,7 +815,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 						nextClasspageId = listClasspage.get(0);
 					}
 				}
-				generateClasspageList();
 				if (nextClasspageId != null) {
 					OpenClasspageEdit(nextClasspageId);
 				} else {
@@ -913,27 +824,27 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		});
 	}
 	/**
-	 * 
-	 * @function setButtonStatus 
-	 * 
+	 *
+	 * @function setButtonStatus
+	 *
 	 * @created_date : 06-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param status
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	private void setButtonStatus(final String status) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 				if (status.equalsIgnoreCase("active")) {

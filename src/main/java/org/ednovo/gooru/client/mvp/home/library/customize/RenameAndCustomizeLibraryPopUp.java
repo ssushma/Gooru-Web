@@ -3,19 +3,19 @@ package org.ednovo.gooru.client.mvp.home.library.customize;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -42,7 +42,7 @@ import com.google.inject.Inject;
 
 /**
  * @author BLR Team
- * 
+ *
  */
 public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
@@ -57,7 +57,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 	@UiField
 	Button backtoLibrary, editCollection;
-	
+
 	@UiField
 	TextBox copycollectionTextbox;
 
@@ -65,7 +65,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 	private ResourceServiceAsync resourceService;
 
 	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
-	
+
 	CollectionDo collectionDo = new CollectionDo();
 
 	@UiTemplate("RenameAndCustomizeLibraryPopUp.ui.xml")
@@ -74,27 +74,27 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private boolean isCustomizePopup = false,isHavingBadWords;
-	
+
 
 	/**
-	 * 
+	 *
 	 */
 	public RenameAndCustomizeLibraryPopUp(String collectionId, final Boolean loginFlag, final String collectionTitle) {
 		super(false);
 		this.res = AssignPopUpCBundle.INSTANCE;
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
-		
+
 		copycollectionTextbox.setText(collectionTitle);
 		copycollectionTextbox.getElement().setId("txtCopycollectionTextbox");
 		copycollectionTextbox.getElement().setAttribute("alt",collectionTitle);
 		copycollectionTextbox.getElement().setAttribute("title",collectionTitle);
 		copycollectionTextbox.getElement().setAttribute("spellcheck","true");
-		
+
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
 
 			@Override
@@ -105,7 +105,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
 				LoginPluginView assignWidget = new LoginPluginView(result,collectionTitle) {
-						
+
 						@Override
 						public void closePoupfromChild() {
 
@@ -115,7 +115,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						@Override
 						public void showSuccessMsgfromChild(String collectionId,String collectionTitle) {
 							showSuccessMsg(collectionId,collectionTitle);
-							
+
 						}
 					};
 					loginCustom.add(assignWidget);
@@ -135,12 +135,12 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		customizeText.getElement().setId("pnlCustomizeText");
 		customizeText.getElement().setAttribute("alt",i18n.GL0743());
 		customizeText.getElement().setAttribute("title",i18n.GL0743());
-		
+
 		backtoLibrary.setText(i18n.GL0142());
 		backtoLibrary.getElement().setId("btnBacktoLibrary");
 		backtoLibrary.getElement().setAttribute("alt",i18n.GL0142());
 		backtoLibrary.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		editCollection.setText(i18n.GL0590());
 		editCollection.getElement().setId("btnEditCollection");
 		editCollection.getElement().setAttribute("alt",i18n.GL0590());
@@ -152,29 +152,29 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		this.getElement().getStyle().setZIndex(99999);
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-		
+
 		popupcontentCustomize.setVisible(false);
 		loadingImageLabel.setVisible(true);
-		
+
 		editCollection.getElement().setAttribute("collectionId", collectionId);
-		
+
 		assignDes.setText(i18n.GL0744());
 		assignDes.getElement().setId("lblAssignDes");
 		assignDes.getElement().setAttribute("alt",i18n.GL0744());
 		assignDes.getElement().setAttribute("title",i18n.GL0744());
-		
+
 		lblpopupTitle.setText(i18n.GL0743());
 		lblpopupTitle.getElement().setId("lblpopupTitle");
 		lblpopupTitle.getElement().setAttribute("alt",i18n.GL0743());
 		lblpopupTitle.getElement().setAttribute("title",i18n.GL0743());
-		
+
 		lbltxtBoxTitle.setText(i18n.GL0553());
 		lbltxtBoxTitle.getElement().setId("lbltxtBoxTitle");
 		lbltxtBoxTitle.getElement().setAttribute("alt",i18n.GL0553());
 		lbltxtBoxTitle.getElement().setAttribute("title",i18n.GL0553());
-		
+
 		copycollectionTextbox.addBlurHandler(new BlurHandler() {
-			
+
 			@Override
 			public void onBlur(BlurEvent event) {
 				Map<String, String> parms = new HashMap<String, String>();
@@ -199,7 +199,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		loginCustom.getElement().setId("pnlLoginCustom");
 		copyCollectionSuccess.getElement().setId("pnlCopyCollectionSuccess");
 		popupContentAssign.getElement().setId("pnlPopupContentAssign");
-		
+
 		this.center();
 
 	}
@@ -216,7 +216,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 	}
 
 	public void showSuccessMsg(String collectionId,String collectionTitle) {
-		
+
 		loginCustom.setVisible(false);
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
@@ -226,7 +226,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 	/**
 	 * Added click handler to hide the login popup.
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -242,7 +242,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 	@UiHandler("editCollection")
 	public void onEditcollectionbuttonClicked(ClickEvent clickEvent) {
-		
+
 		Storage stockStore = Storage.getLocalStorageIfSupported();
 
 		if (stockStore != null) {
@@ -257,7 +257,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						isHavingBadWords=value;
 						if(value){
 							SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
-						}else{	
+						}else{
 							String collectionTitle = copycollectionTextbox.getText();
 							if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
 							{
@@ -288,13 +288,13 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 								errorLabel.setText(i18n.GL0693());
 								errorLabel.getElement().setAttribute("alt",i18n.GL0693());
 								errorLabel.getElement().setAttribute("title",i18n.GL0693());
-								errorLabel.setVisible(true);	
+								errorLabel.setVisible(true);
 							}
 						}
 					}
 				});
 	}
-	
+
 
 	/**
 	 * @return instance of collectionDo after collection save
@@ -305,7 +305,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 				@Override
 				public void onSuccess(CollectionDo result) {
-					
+
 						AppClientFactory.getPlaceManager().revealPlace(
 							PlaceTokens.SHELF,
 							new String[] {
@@ -335,11 +335,11 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 				errorLabel.getElement().setAttribute("title","");
 				errorLabel.setVisible(false);
 			}
-			
+
 		}
 	}
 	public class OnkeyUp implements KeyUpHandler{
-			
+
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 				String collTitle=copycollectionTextbox.getText().trim();
@@ -354,7 +354,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 					errorLabel.getElement().setAttribute("title","");
 					errorLabel.setVisible(false);
 				}
-				
+
 			}
 		}
 }

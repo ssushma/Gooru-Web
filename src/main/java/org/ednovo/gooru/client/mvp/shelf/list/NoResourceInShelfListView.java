@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
