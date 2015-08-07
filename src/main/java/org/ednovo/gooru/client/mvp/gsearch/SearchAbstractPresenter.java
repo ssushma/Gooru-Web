@@ -233,7 +233,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			public void onCallSuccess(SearchDo<T>  result) {
 				setSearchDo(result);
 				getView().postSearch(result,false);
-				getView().setJsonResponseInStorage(result, false);
+				//getView().setJsonResponseInStorage(result, false);
 				if(getSearchDo().getPageNum()==1){
 					getSearchDo().setPageNum(2);
 					getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
