@@ -24,11 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.add;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -54,9 +54,9 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandlers> implements IsAddCollectionView,ClientConstants{
 
 
-	private static ResourceShareViewUiBinder uiBinder = GWT.create(ResourceShareViewUiBinder.class);
+	private static AddCollectionViewUiBinder uiBinder = GWT.create(AddCollectionViewUiBinder.class);
 
-	interface ResourceShareViewUiBinder extends UiBinder<Widget, AddCollectionView> {
+	interface AddCollectionViewUiBinder extends UiBinder<Widget, AddCollectionView> {
 
 	}
 	

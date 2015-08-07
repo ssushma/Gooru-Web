@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
 
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -11,10 +11,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,9 +27,9 @@
 package org.ednovo.gooru.shared.util;
 
 public interface ApiKeyParams {
-	
+
 	String APIKEY = "apiKey";
-	
+
 	/**
 	 * Search related parameters.
 	 */
@@ -41,7 +41,7 @@ public interface ApiKeyParams {
 	String XPOSITION ="xPosition";
 	String YPOSITION ="yPosition";
 	String CROPENGINE="cropEngine";
-	
+
 	String ACCESS_TYPE = "accessType";
 	String QUERY_TYPE = "queryType";
 	String ALLOW_DUPLICATES = "allowDuplicates";
@@ -61,7 +61,7 @@ public interface ApiKeyParams {
 	String LIMIT = "limit";
 	String INCLUDECIMETADATA="includeCIMetaData";
 	String PRETTY="pretty";
-	
+
 	/**
 	 * Library related parameters.
 	 */
@@ -71,6 +71,8 @@ public interface ApiKeyParams {
 	String MERGE = "merge";
 	String INCLUDE_CONTENT_PROVDER = "includeContentProvider";
 	String INCLUDE_CUSTOM_FIELDS = "includeCustomFields";
+	String INCLUDE_ITEM = "includeItems";
+	String INCLUDU_ITEMS = "includeItems";
 	String ROOT_NODE_ID = "rootNodeId";
 	String PAGE_NUM = "pageNum";
 	String PAGE_SIZE = "pageSize";
@@ -81,24 +83,26 @@ public interface ApiKeyParams {
 	String SHARING = "sharing";
 	String COLLECTION_TYPE = "collectionType";
 	String EXCLUDE_TYPE = "excludeType";
-	
+
+	String INCLUDE_LASTMODIFIED_USER = "includeLastModifiedUser";
+
 	/**
 	 * Collaborators related parameters.
 	 */
-	
+
 	String GROUP_BY_STATUS = "groupByStatus";
 	String DATA = "data";
-	
+
 	/**
 	 * Media service related parameters.
 	 */
 	String MEDIA_FILE_NAME = "mediaFileName";
 	String INCLUDE_ADDITIONAL_INFO = "includeAdditionalInfo";
-	
+
 	/**
 	 * Player service related parameters.
 	 */
-	
+
 	String ID = "id";
 	String REAL_URL = "realUrl";
 	String ADD_TO_SHELF = "addToShelf";
@@ -108,7 +112,7 @@ public interface ApiKeyParams {
 	String V = "v";
 	String ALT = "alt";
 	String PRETTY_PRINT = "prettyprint";
-	
+
 	/**
 	 * Profile service related parameters.
 	 */
@@ -134,12 +138,15 @@ public interface ApiKeyParams {
 	String DIRECTION = "direction";
 	String PLANNEDENDDATE="planedEndDate";
 	String SKIPPAGINATION="skipPagination";
-	
-	
-	
+
+
+
 	String CHECK_SHORTENED_URL = "checkShortenedUrl";
-	
+
 	String YOUTUBE_KEY="key";
 	String YOUTUBE_PART="part";
-	
+	String COURSE="Course";
+	String CONTRIBUTOR_QUERY="contributorQuery";
+	String EMAILID="email";
+	String EXCLUDE_COURSE_CLASSES="flt.exclude.empty.course";
 }

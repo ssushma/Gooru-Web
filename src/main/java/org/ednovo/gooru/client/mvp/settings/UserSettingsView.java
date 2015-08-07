@@ -46,11 +46,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.application.shared.model.code.ProfileCodeDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.application.shared.model.user.SettingDo;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.ForgotPwdSuccessVc;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingHandler;
@@ -66,14 +74,6 @@ import org.ednovo.gooru.client.uc.SettingEmailEditLabelUc;
 import org.ednovo.gooru.client.uc.SettingLastNameEditLabelUC;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -1591,10 +1591,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		uploadProfileImage.setUrl(imageUrl+"?p="+randomNumber);
 		uploadProfilImageButton.setText(i18n.GL0800());
 		try{
+			if(v2userDo!=null)
+			{
 			uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
 			uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
 			uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
 			uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
+			}
 		}catch(Exception exception){
 			AppClientFactory.printSevereLogger(exception.getMessage());
 		}

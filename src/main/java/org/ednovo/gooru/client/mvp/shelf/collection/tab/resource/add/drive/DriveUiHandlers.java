@@ -26,9 +26,9 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 
 public interface DriveUiHandlers extends BaseUiHandlers{
 

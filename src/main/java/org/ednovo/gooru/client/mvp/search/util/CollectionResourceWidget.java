@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
@@ -15,12 +20,8 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventH
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEventHandler;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.util.ImageUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ResourceCollDo;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -59,7 +60,7 @@ public class CollectionResourceWidget extends Composite {
 
 	@UiField Label lblResourcePublisher,resourceTitle,lblViewCount,lbladdCount;
 	@UiField InlineLabel lblUserCount;
-	@UiField HTMLPanel resourceDescription,imageOverlay;
+	@UiField HTMLPanel resourceDescription,imageOverlay, panelRatings;
 	@UiField Image resourseImage,relatedCollectionImage,creatorImage;
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	@UiField InlineLabel relatedCollectionTitle;
@@ -68,7 +69,7 @@ public class CollectionResourceWidget extends Composite {
 	String gooruOid;
 
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
-	
+
 	String resourceTitleText = "";
 
 	private boolean failedThumbnailGeneration = false;
@@ -76,12 +77,14 @@ public class CollectionResourceWidget extends Composite {
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
 	private static String DEFULT_COLLECTIONIMAGE = "images/default-collection-image.png";
-	
+
 	private static String DEFULT_ASSESSMENTIMAGE = "images/default-assessment-image.png";
 
 	private static final String NULL = "null";
 
 	private static final String PLAYER_NAME = "resource";
+	
+	private static final String ASSESSMENT = "assessment";
 
 	private int updateReviewCount = 0;
 
@@ -127,34 +130,29 @@ public class CollectionResourceWidget extends Composite {
 		}else{
 			lblUserCount.setText("");
 		}
-		
+
 		lbladdCount.setText(resourceSearchResultDo.getResourceAddedCount()+"");
 		if(String.valueOf(resourceSearchResultDo.getTotalViews()).length()>4){
 			lblViewCount.setText(String.valueOf(resourceSearchResultDo.getTotalViews()).substring(0,4));
 		}else{
 			lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
 		}
-		
+
 		Window.addResizeHandler(new ResizeHandler() {
-			
 			@Override
 			public void onResize(ResizeEvent event) {
-				if(Window.getClientWidth()<=768)
-				{
+				if(Window.getClientWidth()<=768){
 					if(resourceTitleText.length()>=15){
 						resourceTitleText=resourceTitleText.substring(0, 15)+"...";
 					}
+				}else{
+					if(resourceTitleText.length()>=25){
+						resourceTitleText=resourceTitleText.substring(0, 25)+"...";
+					}
 				}
-				else
-				{
-				if(resourceTitleText.length()>=25){
-					resourceTitleText=resourceTitleText.substring(0, 25)+"...";
-				}
-				}
-				
 			}
 		});
-		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
+		String category =  resourceSearchResultDo.getNewResourceFormat() != null && resourceSearchResultDo.getNewResourceFormat().getValue() != null ? resourceSearchResultDo.getNewResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		if(resourceSearchResultDo.getResourceType()!=null&&resourceSearchResultDo.getResourceType().getName().equalsIgnoreCase("video/youtube")) {
 			setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, true);
@@ -163,22 +161,23 @@ public class CollectionResourceWidget extends Composite {
 		}
 		SearchUiUtil.renderStandardsForresourceSearch(standardsDataPanel, resourceSearchResultDo);
 		ratingWidgetView=new RatingWidgetView();
-		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
+		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
 		Integer reviewCount = resourceSearchResultDo.getRatings().getReviewCount();
 		if (reviewCount == null) {
 			reviewCount = 0;
 		}
 
-		if(reviewCount!=0){
-			ratingWidgetView.getRatingCountLabel().setVisible(true);
-			if(reviewCount==1){
-				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL3006()); 
-			}else{
-				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024()); 
-			}
-		}else{
-			ratingWidgetView.getRatingCountLabel().setVisible(false);
-		}
+//		if(reviewCount!=0){
+//			ratingWidgetView.getRatingCountLabel().setVisible(true);
+//			if(reviewCount==1){
+//				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL3006());
+//			}else{
+//				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
+//			}
+//		}else{
+//			ratingWidgetView.getRatingCountLabel().setVisible(false);
+//		}
+		ratingWidgetView.getRatingCountLabel().setVisible(false);
 		ratingWidgetPanel.add(ratingWidgetView);
 
 		resourseImage.addClickHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()));
@@ -186,25 +185,29 @@ public class CollectionResourceWidget extends Composite {
 		imageOverlay.addDomHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()),ClickEvent.getType());
 
 		usedInSearchDo = new SearchDo<CollectionSearchResultDo>();
-		usedInSearchDo.setQuery(resourceSearchResultDo.getGooruOid());  
+		usedInSearchDo.setQuery(resourceSearchResultDo.getGooruOid());
 		usedInSearchDo.setPageSize(1);
 		AppClientFactory.getInjector().getResourceService().getResourceBasedUsersDetails(resourceSearchResultDo.getGooruOid(), 0, 1, new SimpleAsyncCallback<ArrayList<ResourceCollDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ResourceCollDo> userCollectionsList) {
 					//getView().displayContents(userCollectionsList,searchResultDo);
-				if(userCollectionsList.size()>0)
-				{
-					relatedCollectionImage.setVisible(true);
-					creatorImage.setVisible(true);
-
-						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid()));
-						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid()));
+				if(userCollectionsList.size()>0){
+						relatedCollectionImage.setVisible(true);
+						creatorImage.setVisible(true);
+						final String collectionType=StringUtil.isEmpty(userCollectionsList.get(0).getCollectionType())?null:userCollectionsList.get(0).getCollectionType();
+						relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid(),collectionType));
+						relatedCollectionImage.addClickHandler(new ResourceCollectionHandler(userCollectionsList.get(0).getGooruOid(),collectionType));
 						relatedCollectionTitle.setText(userCollectionsList.get(0).getTitle());
 						relatedCollectionTitle.setTitle(userCollectionsList.get(0).getTitle());
 						creatorImage.setUrl(userCollectionsList.get(0).getUser().getProfileImageUrl());
-						final String collectionType=StringUtil.isEmpty(userCollectionsList.get(0).getCollectionType())?null:userCollectionsList.get(0).getCollectionType();
 						setDefaultCollectionImage(collectionType);
-						relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
+						if(userCollectionsList.get(0).getThumbnails()!=null && userCollectionsList.get(0).getThumbnails().getUrl()!=null){
+							relatedCollectionImage.setUrl(userCollectionsList.get(0).getThumbnails().getUrl());
+						}
+						else
+						{
+							setDefaultCollectionImage(collectionType);
+						}
 						relatedCollectionTitle.setStyleName("collectionTitle");
 						relatedCollectionImage.addErrorHandler(new ErrorHandler() {
 							@Override
@@ -212,27 +215,21 @@ public class CollectionResourceWidget extends Composite {
 								setDefaultCollectionImage(collectionType);
 							}
 						});
-					
-				}
-				else
-				{
+				}else{
 					relatedCollectionImage.setVisible(false);
 					creatorImage.setVisible(false);
 					relatedCollectionTitle.setStyleName("collectionTitleNoCollection");
 					relatedCollectionTitle.setText(i18n.GL3212());
 				}
 			}
-		});		
-		
+		});
+
 		creatorImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
 				creatorImage.setUrl("images/profilepage/user-profile-pic.png");
 			}
 		});
-
-		
-		//relatedCollectionTitle.addClickHandler(new ResourceCollectionHandler());
 
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
 		StringUtil.setAttributes(ratingWidgetPanel.getElement(), "pnlRatings", "", "");
@@ -247,6 +244,10 @@ public class CollectionResourceWidget extends Composite {
 		StringUtil.setAttributes(btnAddResource.getElement(), "btnAddResource", "", "");
 		StringUtil.setAttributes(resourseImage.getElement(), "imgResoruce", "", "");
 
+		if (!BrowserAgent.isDevice()){
+			panelRatings.getElement().getStyle().setWidth(27, Unit.PCT);
+		}
+
 		AppClientFactory.getEventBus().addHandler(
 				UpdateResourceRatingCountEvent.TYPE, setRatingCount);
 		AppClientFactory.getEventBus().addHandler(
@@ -259,7 +260,7 @@ public class CollectionResourceWidget extends Composite {
 	 * @param collectionType {@link String}
 	 */
 	protected void setDefaultCollectionImage(String collectionType) {
-		if(collectionType!=null && collectionType.equals("assessment")){
+		if(collectionType!=null && collectionType.equals(ASSESSMENT)){
 			relatedCollectionImage.setUrl(DEFULT_ASSESSMENTIMAGE);
 			relatedCollectionImage.getElement().setAttribute("style", "border-left: 3px solid #feae29;");
 		}else{
@@ -288,7 +289,7 @@ public class CollectionResourceWidget extends Composite {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", resoruceId);
 					params.put("pn", PLAYER_NAME);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);	
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
 				}
 			});
 		}
@@ -303,7 +304,7 @@ public class CollectionResourceWidget extends Composite {
 	 */
 	public void setUrl(final String thumbnailUrl, final String realUrl, final String category, final String title, final boolean generateYoutube) {
 		failedThumbnailGeneration = false;
-		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category;
+		final String categoryString = category == null || category.startsWith(ASSESSMENT) ? ImageUtil.QUESTION : category;
 		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
 			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
 		} else {
@@ -315,9 +316,9 @@ public class CollectionResourceWidget extends Composite {
 				setDefaultThumbnail(thumbnailUrl, realUrl, categoryString, generateYoutube);
 				failedThumbnailGeneration = true;
 			}
-		});		
-		//resourseImage.setAltText(title);
+		});
 		resourseImage.setTitle(title);
+		imageOverlay.setTitle(title);
 	}
 	/**
 	 * This method will set the default image
@@ -362,7 +363,7 @@ public class CollectionResourceWidget extends Composite {
 			.setAttribute("style",
 					"cursor: none;text-decoration: none !important;color: #4e9746;");
 		}
-
+		ratingWidgetView.getRatingCountLabel().setVisible(false);
 	}
 	/**
 	 * @return the ratingWidgetView
@@ -398,10 +399,10 @@ public class CollectionResourceWidget extends Composite {
 		public void setReviewCount(String resourceId,Integer count) {
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
 				if(count!=0){
-					ratingWidgetView.getRatingCountLabel().setVisible(true); 
+					ratingWidgetView.getRatingCountLabel().setVisible(false);
 					setUpdateReviewCount(count);
 					if(count==1){
-						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL3006()); 
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL3006());
 					}else{
 						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
 					}
@@ -409,7 +410,7 @@ public class CollectionResourceWidget extends Composite {
 					ratingWidgetView.getRatingCountLabel().setVisible(false);
 				}
 				ratingWidgetView.getAverageRatingLabel().setVisible(false);
-
+				ratingWidgetView.getRatingCountLabel().setVisible(false);
 			}
 		}
 
@@ -421,6 +422,8 @@ public class CollectionResourceWidget extends Composite {
 				Integer count) {
 			if (resourceSearchResultDo.getGooruOid().equals(resourceId)) {
 				ratingWidgetView.setAvgStarRating(avg);
+				ratingWidgetView.getAverageRatingLabel().setVisible(false);
+				ratingWidgetView.getRatingCountLabel().setVisible(false);
 			}
 		}
 
@@ -431,22 +434,22 @@ public class CollectionResourceWidget extends Composite {
 		public void deleteStarRatings(String resourceGooruOid) {
 			if(resourceSearchResultDo.getGooruOid().equals(resourceGooruOid)){
 				if(ratingWidgetView!=null){
-					String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" "); 
+					String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" ");
 					if(Integer.parseInt(revCount[1].trim())==1){
 						ratingWidgetView.setAvgStarRating(0);
-						ratingWidgetView.getRatingCountLabel().setVisible(false);	
+						ratingWidgetView.getRatingCountLabel().setVisible(false);
 						/**
 						 * Commented the following code as 0 reviews we should not show.
 						 */
 						/*ratingWidgetView.getRatingCountLabel().setText(" "+ (Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024());
 						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);*/
 					}else{
-						ratingWidgetView.getRatingCountLabel().setVisible(true); 
+						ratingWidgetView.getRatingCountLabel().setVisible(true);
 						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
 						if((Integer.parseInt(revCount[1])-1)==1){
-							ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL3006());  
+							ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL3006());
 						}else{
-							ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
+							ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024());
 						}
 
 					}
@@ -457,8 +460,10 @@ public class CollectionResourceWidget extends Composite {
 	};
 	 public class ResourceCollectionHandler implements ClickHandler{
 	    String gooruOid;
-		public ResourceCollectionHandler(String gooruOid) {
+	    String collectionType;
+		public ResourceCollectionHandler(String gooruOid, String collectionType) {
 			this.gooruOid=gooruOid;
+			this.collectionType=collectionType;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
@@ -467,12 +472,17 @@ public class CollectionResourceWidget extends Composite {
 				public void onSuccess() {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", gooruOid);
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					PlaceRequest placeRequest;
+					if(collectionType.equalsIgnoreCase(ASSESSMENT)){
+						placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+					}else{
+						placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					}
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}
 				@Override
 				public void onFailure(Throwable reason) {
-					
+
 				}
 			});
 		}

@@ -27,17 +27,14 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 /**
  * 
  */
-import java.util.ArrayList;
-
+import org.ednovo.gooru.application.client.child.ChildPresenter;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ClasspageService;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildPresenter;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
-import org.ednovo.gooru.client.service.ClasspageService;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

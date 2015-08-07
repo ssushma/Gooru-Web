@@ -1,7 +1,8 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,7 +18,7 @@ public class NoResultsLibraryWidget extends Composite {
 
 	private static NoResultsLibraryWidgetUiBinder uiBinder = GWT
 			.create(NoResultsLibraryWidgetUiBinder.class);
-	
+
 	@UiField InlineLabel libName;
 	@UiField Label libImage;
 	@UiField HTMLEventPanel libOuterDiv;
@@ -29,15 +30,17 @@ public class NoResultsLibraryWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		libName.setText(libraryName);
 		libOuterDiv.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-			AppClientFactory.getPlaceManager().revealPlace(libraryClickUrl);				
+			AppClientFactory.getPlaceManager().revealPlace(libraryClickUrl);
 			}
 		});
 		//libImage.setUrl(libraryImageUrl);
 		libImage.setStyleName("libSprite");
-		libImage.addStyleName(className);
-		
+		if (!StringUtil.isEmpty(className)){
+			libImage.addStyleName(className);
+		}
+
 	}
 }

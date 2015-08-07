@@ -3,11 +3,11 @@ package org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ResourceCollDo;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.content.ResourceCollDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -95,18 +95,16 @@ public class ResourceCollectionUserWidget extends Composite {
 			}
 			relatedUserName.setText(resourceCollDo.getUser().getUsername());
 		}
-		
-		
-		collectionImage.setUrl(resourceCollDo.getThumbnails().getUrl());
 
 
+		collectionImage.setUrl(resourceCollDo.getThumbnails() != null && resourceCollDo.getThumbnails().getUrl() !=null ? resourceCollDo.getThumbnails().getUrl() : DEFULT_IMAGE);
 
 		relatedCollectionTitle.setText(resourceCollDo.getTitle());
 		relatedCollectionTitle.getElement().setAttribute("id", resourceCollDo.getGooruOid());
 		relatedCollectionTitle.getElement().getStyle().setColor("#1076bb");
 		relatedCollectionTitle.getElement().getStyle().setCursor(Cursor.POINTER);
 		relatedCollectionTitle.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				Map<String, String> params = new HashMap<String, String>();

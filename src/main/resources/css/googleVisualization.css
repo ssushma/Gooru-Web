@@ -633,12 +633,26 @@
 	cursor: pointer
 }
 
-.google-visualization-table-sortind {
+ .google-visualization-table-sortind {
 	color: #ccc;
 	font-size: 9px;
-	padding-left: 6px
+	padding-left: 6px;
 }
-
+.google-visualization-table-table .unsorted .google-visualization-table-sortind:after {
+  background-image: url("${cdn.endpoint}/images/sort_both.png")!important;
+  content: "\002003";
+  background-position: center;
+  cursor: pointer;
+  padding: 5px 0px;
+  background-repeat: no-repeat;
+  margin-top: 3px;
+}
+.google-visualization-table-table .sort-ascending .google-visualization-table-sortind:after {
+    content: "\0025b2"
+}
+.google-visualization-table-table .sort-descending .google-visualization-table-sortind:after {
+    content: "\0025bc"
+}
 .google-visualization-table-th {
 	border: 1px solid #eee;
 	padding: 6px
@@ -735,4 +749,83 @@
 	overflow:hidden;
 	min-height:80px !important;
 	height:auto !important;
+}
+
+/* New css for the Collection progress table */
+#pnlHtmlpnlProgress{
+	background: white;
+}
+#example thead tr th{
+	padding: 5px 20px;
+	border-left:1px solid #eee;
+	border-bottom: 1px solid #eee;
+	vertical-align: middle;
+}
+#example > tbody > tr > td{
+	padding:8px;
+	border-left:1px solid #eee;
+	border-bottom: 1px solid #eee;
+	vertical-align: middle;
+}
+#pnlHtmlpnlProgress .DTFC_LeftHeadWrapper{
+	background: white;
+}
+#pnlHtmlpnlProgress .DTFC_LeftBodyWrapper{
+	background: white;
+/* 	margin-top: 12px; */
+	height: auto !important;
+}
+/* #pnlHtmlpnlProgress .dataTables_scrollBody{
+	overflow-x: hidden !important;
+} */
+.dataTables_scrollBody::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+.dataTables_scrollBody::-webkit-scrollbar-thumb {
+	background-color: #bdbebd;
+	-webkit-border-radius: 2ex;
+}
+#pnlHtmlpnlProgress  .DTFC_LeftWrapper{
+	left: inherit !important;
+}
+#pnlHtmlpnlProgress  .DTFC_ScrollWrapper{
+	position: static !important;
+}
+#pnlHtmlpnlProgress .DTFC_LeftBodyLiner{
+	overflow:hidden !important;
+	width: 100% !important;
+	border-right: 1px solid #eee;
+	/* height: auto !important; */
+}
+#pnlHtmlpnlProgress .DTFC_LeftWrapper .DTFC_LeftHeadWrapper .DTFC_Cloned thead tr th div{
+	padding: 5px 20px;
+	border-bottom: 1px solid #eee;
+	border-right: 1px solid #eee;
+}
+#pnlHtmlpnlProgress .dataTables_scrollHeadInner thead tr th div{
+	padding: 5px 20px;
+	border-left: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+#pnlHtmlpnlProgress .DTFC_LeftBodyWrapper .DTFC_LeftBodyLiner .DTFC_Cloned > tbody > tr > td {
+	padding:8px;
+	border-left:1px solid #eee;
+	border-bottom: 1px solid #eee;
+	vertical-align: middle;
+}
+table.dataTable thead .sorting ,table.dataTable thead .sorting_asc,table.dataTable thead .sorting_desc{
+	background-repeat: no-repeat;
+	background-position: center right;
+	background-color: rgb(228, 233, 244);
+	cursor: pointer;
+}
+table.dataTable thead .sorting_asc {
+	background-image: url("${cdn.endpoint}/images/sort_asc.png");
+}
+table.dataTable thead .sorting_desc {
+	background-image: url("${cdn.endpoint}/images/sort_desc.png");
+}
+table.dataTable thead .sorting {
+	background-image: url("${cdn.endpoint}/images/sort_both.png");
 }

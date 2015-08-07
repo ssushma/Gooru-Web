@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
+	<ui:with type="org.ednovo.gooru.application.client.home.HomeCBundle"
 		field="res" />
 	<g:HTMLPanel>
 		<g:FlowPanel
@@ -20,4 +20,4 @@
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

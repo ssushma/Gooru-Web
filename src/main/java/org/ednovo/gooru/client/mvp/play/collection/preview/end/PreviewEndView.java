@@ -27,9 +27,11 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.end;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopupPlayerVc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
@@ -37,8 +39,6 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlaye
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -242,35 +242,24 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				{
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 				}
-				
-				Map<String,String> params = new HashMap<String,String>();
-				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
-					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
-					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
-					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
-					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("view")!=null)
-					params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
+
+				Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			}
 	}
 	/**
-	 * 
-	 * @function oncustomizeCollectionBtnClicked 
-	 * 
+	 *
+	 * @function oncustomizeCollectionBtnClicked
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param clickEvent
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>

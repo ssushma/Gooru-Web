@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,8 +27,9 @@ package org.ednovo.gooru.client.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.json.client.JSONArray;
@@ -40,7 +41,7 @@ import com.google.gwt.json.client.JSONString;
 
 
 public class PlayerDataLogEvents {
-	
+
 	public static final String COLLECTION_PLAY_EVENT_NAME="collection-play-dots";
 	public static final String COLLECTION_RESOUCE_PLAY_EVENT_NAME="collection-resource-play-dots";
 	public static final String COLLECTION_QUESTION_PLAY_EVENT_NAME="collection-question-resource-play-dots";
@@ -62,9 +63,10 @@ public class PlayerDataLogEvents {
 	public static final String CLOSE_SESSION_STATUS="close";
 	public static final String START_EVENT_TYPE="start";
 	public static final String STOP_EVENT_TYPE="stop";
-	
+	public static final String PAUSE_EVENT_TYPE="pause";
+
 	// new events implementation text
-	// Event Names 
+	// Event Names
 	public static final String COLLECTION_PLAY="collection.play";
 	public static final String COLLECTION_RESOURCE_PLAY="collection.resource.play";
 	public static final String RESOURCE_PLAY="resource.play";
@@ -82,7 +84,7 @@ public class PlayerDataLogEvents {
 	public static final String COMMENT_DELETE="comment.delete";
 	public static final String ITEM_RATE="item.rate";
 	public static final String ITEM_REVIEW="item.review";
-	
+
 	//event keys
 	public static final String EVENTID="eventId";
 	public static final String EVENTNAME="eventName";
@@ -97,17 +99,27 @@ public class PlayerDataLogEvents {
 	public static final String CONTEXT="context";
 	public static final String CONTENTGOORUID="contentGooruId";
 	public static final String PARENTGOORUID="parentGooruId";
+	public static final String CLASSGOORUID="classGooruId";
+
 	public static final String PARENTEVENTID="parentEventId";
 	public static final String TYPE="type";
 	public static final String CLIENTSOURCE="clientSource";
 	public static final String PATH="path";
 	public static final String PAGELOCATION="pageLocation";
+	public static final String COURSEID="courseGooruId";
+	public static final String UNITID="unitGooruId";
+	public static final String COLLECTIONTYPE = "collectionType";
+	public static final String TOTALQUESTIONSCOUNT = "totalQuestionsCount";
+	public static final String ISSTUDENT = "isStudent";
+
+	public static final String LESSONID="lessonGooruId";
 	public static final String MODE="mode";
 	public static final String VERSION="version";
 	public static final String LOGAPI="logApi";
 	public static final String METRICS="metrics";
 	public static final String TOTALTIMESPENTINMS="totalTimeSpentInMs";
 	public static final String SCORE="score";
+	public static final String VIEWSCOUNT="viewsCount";
 	public static final String RESOURCETYPE="resourceType";
 	public static final String PAYLOADOBJECT="payLoadObject";
 	public static final String QUESTIONTYPE="questionType";
@@ -151,30 +163,25 @@ public class PlayerDataLogEvents {
 	public static final String SEARCHTERM="searchTerm";
 	public static final String RATE="rate";
 	public static final String PREVIOUS_RATE="previousRate";
-	
-	
-	
-	
-	
+	public static final String EVIDENCE="evidence";
+	public static final String SCORE_IN_PERCENTAGE="scoreInPercentage";
+
 	public static void collectionStartStopEvent(JSONObject collectionDataLogEventMap){
-		AppClientFactory.printInfoLogger("--- "+collectionDataLogEventMap.get("eventName")+" event data --->> \n"+collectionDataLogEventMap.toString()+"\n");
-		AppClientFactory.printInfoLogger("--- All data is sent to trigger et.data push --- \n");
 		triggerDataLogCall(collectionDataLogEventMap);
-		AppClientFactory.printInfoLogger("--- Triggered "+collectionDataLogEventMap.get("eventName")+" event successfully --- \n\n");
 	}
 	public static void collectionItemStartStopEvent(){
-		
+
 	}
 	public static void resourceStartStopEvent(){
-		
+
 	}
 	public static void saveOeAnswerEvent(){
-		
+
 	}
 	public static void visitingClasspageEvent(){
-		
+
 	}
-	
+
 	public static JSONString getDataLogSessionObject(String sessionId){
 		JSONObject eventJsonObject=new JSONObject();
 		try{
@@ -183,13 +190,15 @@ public class PlayerDataLogEvents {
 			eventJsonObject.put(SESSIONTOKEN, new JSONString(AppClientFactory.getLoggedInUser().getToken()));
 			if(sessionId!=null){
 				eventJsonObject.put(SESSIONID, new JSONString(sessionId));
+			}else{
+				printLogs("getDataLogSessionObject",sessionId,null);
 			}
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(eventJsonObject.toString());
 	}
-	
+
 	public static JSONString getDataLogUserObject(){
 		JSONObject eventJsonObject=new JSONObject();
 		try{
@@ -199,16 +208,33 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(eventJsonObject.toString());
 	}
-	
+
 	public static JSONString getDataLogContextObject(String collectionId,String parentGooruId,String parentEventId,String eventType,String mode,
-							String resourceType,String reactionType,String path,String pageLocation){
+							String resourceType,String reactionType,String path,String pageLocation, int totalQuestionsCount){
 		JSONObject contextMap=new JSONObject();
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
+		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
+		String collectionType = null;
+
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+			collectionType = "assessment";
+		}else{
+			collectionType = "collection";
+		}
+
 		try{
 			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
 			parentGooruId=parentGooruId==null?"":parentGooruId;
 			if(parentGooruId!=null){
 				contextMap.put(PARENTGOORUID, new JSONString(parentGooruId));
 			}
+			if (cid!=null){
+				contextMap.put(CLASSGOORUID, new JSONString(cid));
+			}
+
 			if(parentEventId!=null){
 				contextMap.put(PARENTEVENTID, new JSONString(parentEventId));
 			}
@@ -220,20 +246,45 @@ public class PlayerDataLogEvents {
 			}
 			contextMap.put(PATH, new JSONString(path));
 			if(pageLocation!=null){
-				contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
+				contextMap.put(PAGELOCATION, new JSONString(pageLocation));
 			}else{
-				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation())); 
+				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
 			}
+			if(courseId!=null){
+				contextMap.put(COURSEID, new JSONString(courseId));
+			}
+			if(unitId!=null){
+				contextMap.put(UNITID, new JSONString(unitId));
+			}
+
+			if(lessonId !=null){
+				contextMap.put(LESSONID, new JSONString(lessonId));
+			}
+
+			if(collectionType !=null){
+				contextMap.put(COLLECTIONTYPE, new JSONString(collectionType));
+			}
+			if(isStudent !=null){
+				if ("true".equalsIgnoreCase(isStudent)){
+					contextMap.put(ISSTUDENT, JSONBoolean.getInstance(true));
+				}else{
+					contextMap.put(ISSTUDENT, JSONBoolean.getInstance(false));
+				}
+			}
+			contextMap.put(TOTALQUESTIONSCOUNT, new JSONNumber(totalQuestionsCount));
 			contextMap.put(MODE, new JSONString(mode));
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(contextMap.toString());
 	}
-	
-	
+
+
 	public static JSONString getDataLogContextObjectForItemLoad(String collectionId,String contentItemId,String parentEventId,String parentGooruOid,String parentItemId,
 			String mode,String path,String pageLocation,String url){
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
 		JSONObject contextMap=new JSONObject();
 		try{
 			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
@@ -249,20 +300,31 @@ public class PlayerDataLogEvents {
 			contextMap.put(CLIENTSOURCE, new JSONString(WEB));
 			contextMap.put(PATH, new JSONString(path));
 			if(pageLocation!=null){
-				contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
+				contextMap.put(PAGELOCATION, new JSONString(pageLocation));
 			}else{
 				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
 			}
 			if(mode!=null){
 				contextMap.put(MODE, new JSONString(mode));
 			}
+			if(courseId!=null){
+				contextMap.put(COURSEID, new JSONString(courseId));
+			}
+			if(unitId!=null){
+				contextMap.put(UNITID, new JSONString(unitId));
+			}
+
+			if(lessonId !=null){
+				contextMap.put(LESSONID, new JSONString(lessonId));
+			}
+
 			contextMap.put(URL, new JSONString(url));
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(contextMap.toString());
 	}
-	
+
 	public static JSONString getLibraryDataLogContext(String libaryGooruOid,String pageLocation){
 		JSONObject contextMap=new JSONObject();
 		try{
@@ -270,17 +332,17 @@ public class PlayerDataLogEvents {
 			contextMap.put(CONTENTGOORUID, new JSONString(libaryGooruOid));
 			contextMap.put(CLIENTSOURCE, new JSONString(WEB));
 			contextMap.put(PATH, new JSONString(libaryGooruOid));
-			contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
+			contextMap.put(PAGELOCATION, new JSONString(pageLocation));
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(contextMap.toString());
 	}
-	
+
 	public static  JSONString getDataLogVersionObject(){
 		JSONObject versionMap=new JSONObject();
 		try{
-			versionMap.put(LOGAPI, new JSONString("0.1")); 
+			versionMap.put(LOGAPI, new JSONString("0.1"));
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
@@ -295,17 +357,19 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(metricsMap.toString());
 	}
-	public static  JSONString getDataLogMetricsObject(Long totalTimesInSec,Integer score){
+	public static  JSONString getDataLogMetricsObject(Long totalTimesInSec,Integer score, int viewCount){
 		JSONObject metricsMap=new JSONObject();
 		try{
 			metricsMap.put(TOTALTIMESPENTINMS, new JSONNumber(totalTimesInSec));
 			metricsMap.put(SCORE,new JSONNumber(score));
+			metricsMap.put(VIEWSCOUNT, new JSONNumber(viewCount));
+
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(metricsMap.toString());
 	}
-	
+
 	public static  JSONString getDataLogPayLoadObject(String questionType,String oeAnswerText, List<Integer> attemptStatus, List<Integer> attemptTrySequence,
 										JSONObject answerIdsObject, JSONObject hintIdsObject,JSONObject explanationIdsObject,Integer attemptCount,List<List<JSONObject>> answerObjectArray,String searchTerm){
 		JSONObject payLoadMap=new JSONObject();
@@ -330,7 +394,7 @@ public class PlayerDataLogEvents {
 		payLoad = payLoad.replaceAll("\\\\\"\\[", "[").replaceAll("\\]\\\\\"", "]");
 		return new JSONString(payLoad);
 	}
-	
+
 	public static  JSONString getDataLogPayLoadObject(String reactionType){
 		JSONObject payLoadMap=new JSONObject();
 		try{
@@ -339,7 +403,7 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(payLoadMap.toString());
 	}
-	
+
 	public static  JSONString getItemLoadDataLogPayLoadObject(String itemType){
 		JSONObject payLoadMap=new JSONObject();
 		try{
@@ -375,7 +439,7 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(payLoadMap.toString());
 	}
-	
+
 	public static String getAnswerObjectArrayInString(List<List<JSONObject>> answerObjectArray){
 		JSONObject attemptedAnswersArray=new JSONObject();
 		for(int i=0;i<answerObjectArray.size();i++){
@@ -386,7 +450,7 @@ public class PlayerDataLogEvents {
 		tempArray = tempArray.replaceAll("\\\\", "");
 		return tempArray;
 	}
-	
+
 	public static JSONArray createJsniIntArray(List<Integer> attemptTrySequence){
 		JSONArray attemptTrySequenceArray=new JSONArray();
 		if(attemptTrySequence!=null&&attemptTrySequence.size()>0){
@@ -394,7 +458,7 @@ public class PlayerDataLogEvents {
 				attemptTrySequenceArray.set(i, new JSONNumber(attemptTrySequence.get(i)));
 			}
 		}
-		return attemptTrySequenceArray;	
+		return attemptTrySequenceArray;
 	}
 	public static JSONArray createJsniStringArray(List<String> attemptTrySequence){
 		JSONArray attemptTrySequenceArray=new JSONArray();
@@ -403,12 +467,12 @@ public class PlayerDataLogEvents {
 				attemptTrySequenceArray.set(i, new JSONString(attemptTrySequence.get(i)));
 			}
 		}
-		return attemptTrySequenceArray;	
+		return attemptTrySequenceArray;
 	}
 	public static native void triggerDataLogCall(JSONObject eventJsonObject) /*-{
 		$wnd._et.data.push(eventJsonObject);
  	}-*/;
-	
+
 	public static void collectionPlayStartEvent(String eventId,String eventName,
 			String sessionId,String sessionStaus,String contentGooruId,String type,Long startTime,
 			Long endTime,Long timeSpentInMs, String sessionToken,String gooruUId) {
@@ -416,6 +480,7 @@ public class PlayerDataLogEvents {
 			eventJsonObject.put("eventId", new JSONString(eventId));
 			eventJsonObject.put("eventName", new JSONString(eventName));
 			eventJsonObject.put("sessionId", new JSONString(sessionId));
+			printLogs("collectionPlayStartEvent", sessionId,eventId);
 			eventJsonObject.put("sessionStatus", new JSONString(sessionStaus));
 			eventJsonObject.put("contentGooruId", new JSONString(contentGooruId));
 			eventJsonObject.put("type", new JSONString(type));
@@ -425,7 +490,7 @@ public class PlayerDataLogEvents {
 			eventJsonObject.put("gooruUId", new JSONString(gooruUId));
 			eventJsonObject.put("sessionToken", new JSONString(sessionToken));
  	}
-	
+
 	public static void resourcePlayStartStopEvent(String eventId,String eventName,String parentEventId,
 			String contentGooruId,String parentGooruId,String type,Long startTime,
 			Long endTime, Long timeSpentInMs,String sessionToken,String gooruUId,List<Integer> attemptTrySequence,
@@ -448,7 +513,7 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
 	}
-	
+
 	public static  void explanationButtonDataLogEvent(String eventId,String eventName,String parentEventId,String contentGooruId,String parentGooruId,String type,Long startTime,
 			Long endTime,Long timeSpentInMs,String sessionToken,String gooruUId,boolean isExplanationUsed,List<Integer> attemptTrySequence,
 			List<Integer> attemptStatus,List<Integer> answerId,String openEndedText,int totalNoCharacters,int hintId) {
@@ -472,7 +537,7 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
 		eventJsonObject.put("hintId", new JSONNumber(hintId));
  	}
-	
+
 	public static  void hintsButtonDataLogEvent(String eventId,String eventName,String parentEventId,
 			String contentGooruId,String parentGooruId,String type,Long startTime,
 			Long endTime,Long timeSpentInMs,String sessionToken,String gooruUId,int attemptTrySequence,int hintId,List<Integer> answerAttemptTrySequence,
@@ -497,7 +562,7 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
 		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
  	}
-	
+
  	public static void submitOeAnswerDataLogEvent(String eventId,String eventName,String parentEventId,
 			String contentGooruId,Long startTime,
 			Long endTime, Long timeSpentInMs,String sessionToken,String gooruUId,List<Integer> attemptTrySequence,
@@ -528,11 +593,19 @@ public class PlayerDataLogEvents {
 				return "OE";
 			case 7:
 				return "MA";
+			case 8:
+				return "HT_HL";
+			case 9:
+				return "HT_RO";
+			case 10:
+				return "HS_TXT";
+			case 11:
+				return "HS_IMG";
 			default:
 				return "RES";
 		}
 	}
-	
+
 	public static JSONString getClassPagePayLoadObject(String codeId){
 		JSONObject payLoadMap=new JSONObject();
 		try{
@@ -542,23 +615,24 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(payLoadMap.toString());
 	}
-	
+
 	public static void triggerLibraryShareDataEvent( String collectionId, String libraryGooruOid){
 		libraryGooruOid=libraryGooruOid!=null?libraryGooruOid:"";
 		String path=libraryGooruOid+"/"+collectionId;
 		String parentEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
 		triggerItemShareDataLogEvent(collectionId,"",parentEventId,libraryGooruOid,"","","collection","gooru",false,null,path,"library");
 	}
-	
+
 	public static void triggerProfileCollectionShareDataEvent(String collectionId){
 		String path=collectionId;
 		triggerItemShareDataLogEvent(collectionId,"","","","","","collection","gooru",false,null,path,"profile");
-		
+
 	}
 
 	public static void triggerItemShareDataLogEvent(String itemGooruOid, String itemContentItemId,String parentEventId,String parentGooruOid,String parentContItemId,String sessionId,
 			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
-		JSONObject collectionDataLog=new JSONObject(); 
+
+		JSONObject collectionDataLog=new JSONObject();
 		Long startTime=PlayerDataLogEvents.getUnixTime();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_SHARE));
@@ -571,11 +645,11 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemShareDataLogPayLoadObject(itemType,shareType,confirmStatus));
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemContentItemId, parentEventId, parentGooruOid, parentContItemId, playerMode, path, pageLocation, PlayerDataLogEvents.COLLECTION_SHARE_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
-	}	
-	
+	}
+
 	public static void triggerItemShareDataLogEventForProfile(String itemGooruOid, String itemContentItemId,String parentGooruOid,String parentContItemId,String sessionId,
 			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
-		JSONObject collectionDataLog=new JSONObject(); 
+		JSONObject collectionDataLog=new JSONObject();
 		Long startTime=PlayerDataLogEvents.getUnixTime();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_SHARE));
@@ -589,7 +663,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemContentItemId, null, parentGooruOid, parentContItemId, playerMode, path, pageLocation, PlayerDataLogEvents.PROFILE_SHARE_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
-	
+
 	public static void triggerLibraryViewEvent(String libraryGooruOid){
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(!AppClientFactory.getPlaceManager().isLibaryEventTriggered(viewToken)){
@@ -599,7 +673,7 @@ public class PlayerDataLogEvents {
 			PlayerDataLogEvents.triggerLibarayViewEvent(libraryGooruOid, eventId, "library");
 		}
 	}
-	
+
 	public static void triggerLibarayViewEvent(String libararyGooruOid,String libraryEventId,String pageLocation){
 		JSONObject libarayViewData=new JSONObject();
 		Long startTime=PlayerDataLogEvents.getUnixTime();
@@ -615,7 +689,7 @@ public class PlayerDataLogEvents {
 		libarayViewData.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getLibraryDataLogContext(libararyGooruOid, pageLocation));
 		PlayerDataLogEvents.collectionStartStopEvent(libarayViewData);
 	}
-	
+
 	/**
 	 * This method is used to create data in JSON format and log <b>create comment, update comment and delete comment</b> data log events
 	 * @param collectionId specifies unique id of the collection.
@@ -630,11 +704,12 @@ public class PlayerDataLogEvents {
 	 */
 	public static void triggerCommentDataLogEvent(String collectionId, String commentGooruOid,String parentEventId,String parentGooruOid,String sessionId,
 			String path,String pageLocation,String commentText,String eventName){
-		JSONObject collectionDataLog=new JSONObject(); 
+		JSONObject collectionDataLog=new JSONObject();
 		Long startTime=PlayerDataLogEvents.getUnixTime();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(eventName));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		printLogs("triggerCommentDataLogEvent", sessionId, null);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -644,7 +719,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(collectionId, commentGooruOid, parentEventId, parentGooruOid, path, pageLocation));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
-	
+
 	/**
 	 *  This method is used to create data in JSON format and log user<b>star rating</b> data log events
 	 * @param resourceId specifies unique id of the collection item.
@@ -657,11 +732,12 @@ public class PlayerDataLogEvents {
 	 * @param previousRate specifies user previous given star rating for collection item.
 	 */
 	public static void triggerRatingDataLogEvent(String resourceId,String collectionId, String parentEventId,String sessionId,String path, String pageLocation,double currentRate,double previousRate){
-		JSONObject collectionDataLog=new JSONObject(); 
+		JSONObject collectionDataLog=new JSONObject();
 		Long startTime=PlayerDataLogEvents.getUnixTime();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_RATE));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		printLogs("triggerRatingDataLogEvent",sessionId, null);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -671,9 +747,9 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(resourceId,null,parentEventId, collectionId, path, pageLocation));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
-	
+
 	/**
-	 * This method is used to frame data in JSON format and log user <b>review</b> text data log event.  
+	 * This method is used to frame data in JSON format and log user <b>review</b> text data log event.
 	 * @param resourceId specifies unique id of the collection item.
 	 * @param collectionId specifies unique id of the collection.
 	 * @param parentEventId specifies event id of the collection play event id
@@ -683,11 +759,12 @@ public class PlayerDataLogEvents {
 	 * @param reviewText specifies the user entered review text.
 	 */
 	public static void triggerReviewDataLogEvent(String resourceId,String collectionId, String parentEventId,String sessionId,String path, String pageLocation,String reviewText){
-		JSONObject collectionDataLog=new JSONObject(); 
+		JSONObject collectionDataLog=new JSONObject();
 		Long startTime=PlayerDataLogEvents.getUnixTime();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_REVIEW));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		printLogs("triggerReviewDataLogEvent",sessionId, null);
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
@@ -697,7 +774,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(resourceId,null,parentEventId, collectionId, path, pageLocation));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
-	
+
 	/**
 	 * This method is used to frame comments payload JSON object and will return JSON object.
 	 * @param commentText specifies user entered comment text.
@@ -714,7 +791,7 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(payLoadMap.toString());
 	}
-	
+
 	/**
 	 *  This method is used to frame comments context JSON object and will return context JSON object.
 	 * @param collectionId specifies unique id of the collection.
@@ -725,7 +802,7 @@ public class PlayerDataLogEvents {
 	 * @param path specifies the hierarchy of the collection.
 	 * @param pageLocation specifies the page location of the event.
 	 * @return JSON object.
-	
+
 	 */
 	public static  JSONString getCommentDataLogContextObject(String collectionId,String commentGooruOid,String parentEventId, String parentGooruOid, String path, String pageLocation){
 		JSONObject contextMap=new JSONObject();
@@ -740,17 +817,17 @@ public class PlayerDataLogEvents {
 			contextMap.put(CLIENTSOURCE, new JSONString(WEB));
 			contextMap.put(PATH, new JSONString(path));
 			if(pageLocation!=null){
-				contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
+				contextMap.put(PAGELOCATION, new JSONString(pageLocation));
 			}else{
 				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
 			}
-			
+
 		}catch(Exception e){
 			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(contextMap.toString());
 	}
-	
+
 	/**
 	 * This method is used to frame rating payload JSON object and will return JSON object.
 	 * @param currentRate specifies user given star rating for collection item.
@@ -783,8 +860,8 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(payLoadMap.toString());
 	}
-	
-	
+
+
 	public static Long getUnixTime(){
 		return System.currentTimeMillis();
 	}
@@ -794,5 +871,12 @@ public class PlayerDataLogEvents {
 		return ""+unixTimeStamp;
 	}-*/;
 
-	
+	public static void printLogs(String from, String sessionId, String eventId){
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
+		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
+	}
+
 }

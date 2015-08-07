@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,12 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication.uc;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -44,10 +44,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 /**
- * 
+ *
  * @fileName : ThankPopUpForUpdateProfile.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -66,9 +66,9 @@ public class ThankPopUpForUpdateProfile extends PopupPanel{
 	interface ThankPopUpForUpdateProfileUiBinder extends
 			UiBinder<Widget, ThankPopUpForUpdateProfile> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
@@ -92,21 +92,21 @@ public class ThankPopUpForUpdateProfile extends PopupPanel{
 		setUiAndIds();
 	}
 	/**
-	 * 
-	 * @function setUiAndIds 
-	 * 
+	 *
+	 * @function setUiAndIds
+	 *
 	 * @created_date : 06-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -116,47 +116,47 @@ public class ThankPopUpForUpdateProfile extends PopupPanel{
 		lblTitle.getElement().setId("lblTitle");
 		lblTitle.getElement().setAttribute("alt",i18n.GL0481());
 		lblTitle.getElement().setAttribute("title",i18n.GL0481());
-		
+
 		lblCancel.getElement().setId("lblCancel");
-		
+
 		lblHeading.setText(i18n.GL0498()+i18n.GL_SPL_EXCLAMATION());
 		lblHeading.getElement().setId("lblHeading");
 		lblHeading.getElement().setAttribute("alt",i18n.GL0498());
 		lblHeading.getElement().setAttribute("title",i18n.GL0498());
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
-		
+
 		lblSubHeading.setText(i18n.GL0499());
 		lblSubHeading.getElement().setId("lblSubHeading");
 		lblSubHeading.getElement().setAttribute("alt",i18n.GL0499());
 		lblSubHeading.getElement().setAttribute("title",i18n.GL0499());
-		
+
 		btnOk.getElement().setId("btnOk");
 		btnOk.setText(i18n.GL0190());
 		btnOk.getElement().setAttribute("alt",i18n.GL0190());
 		btnOk.getElement().setAttribute("title",i18n.GL0190());
-		
+
 		queriesText.setText(i18n.GL1139()+i18n.GL_GRR_COMMA()+" ");
 		queriesText.getElement().setId("lblQuriesText");
 		queriesText.getElement().setAttribute("alt",i18n.GL1139());
 		queriesText.getElement().setAttribute("title",i18n.GL1139());
-		
+
 		contactText.setText(i18n.GL1145());
 		contactText.getElement().setId("spnContactText");
 		contactText.getElement().setAttribute("alt",i18n.GL1145());
 		contactText.getElement().setAttribute("title",i18n.GL1145());
-		
+
 		supportLink.setText(i18n.GL0299());
 		supportLink.getElement().setId("lnkSupportLink");
 		supportLink.getElement().setAttribute("alt",i18n.GL0299());
 		supportLink.getElement().setAttribute("title",i18n.GL0299());
-		supportLink.setHref(i18n.GL1055());		
+		supportLink.setHref(i18n.GL1055());
 	}
 
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
 		MixpanelUtil.close_signUp();
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-			
+
 		}else{
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -169,7 +169,7 @@ public class ThankPopUpForUpdateProfile extends PopupPanel{
 		MixpanelUtil.close_signUp();
 		this.hide();
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-			
+
 		}else{
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));

@@ -1,23 +1,10 @@
 @charset "utf-8";
 /* CSS Document */
 
-body {
-    background-image: url("../images/profileimages/background-image.png");
-    color: #515151;
-    font-family: Arial,sans-serif;
-    font-size: 12px;
-    line-height: 1.2;
-    margin: 50px;
-    padding: 0;
-}
-
-
-
-
-.clearfix:before, .clearfix:after, .container:before, .container:after,{
-  content: " ";
+.clearfix:before, .clearfix:after, .container:before, .container:after{
+  	content: " ";
     display: table;
-	 clear: both;
+	clear: both;
 }
 .clearfix{
 	clear:both;
@@ -260,7 +247,7 @@ body {
 	padding:3px 15px 3px 25px;
 	background:url(../images/profileimages/arrow.png)no-repeat 14px 7px;
 	text-decoration:none;
-	
+
 }
 .treeView ul li label:hover{
 background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 14px 7px;
@@ -319,7 +306,7 @@ background:#81c5e5 url(../images/profileimages/arrow1.png) no-repeat 14px 7px !i
 	padding:3px 30px 3px 40px;
 	background:url(../images/profileimages/arrow.png)no-repeat 28px 7px;
 	text-decoration:none;
-	
+
 }
 .treeView ul li ul li label:hover{
 background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 28px 7px;
@@ -335,7 +322,7 @@ background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 28px 7px;
 	background:#81c5e5 url(../images/profileimages/arrow1.png) no-repeat 28px 7px !important;
 }
 
-	
+
 
 .treeView ul li a{
 	display:block;
@@ -424,7 +411,7 @@ background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 28px 7px;
 	vertical-align:top;
 	border-left:1px solid #cccccc;
 }
-	
+
 .panelRatingLabels .ratingLabel {
     font-size: 16px;
     margin: 2px 0;
@@ -570,7 +557,7 @@ filter: progid;
 	background:#ffffff;
 	border:none;
 	width:95px;
-	
+
 			border:1px solid #e3e7e6;
 
 }
@@ -665,11 +652,11 @@ filter: progid;
 .oneLevel{
 	}
 .tree-toggler{
-	
+
 }
 .nav-header{
-	
+
 }
 .nav, .nav-list{
-	
+
 }

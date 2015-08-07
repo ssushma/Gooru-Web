@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,9 +25,10 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
-import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -38,7 +39,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class CollectionProgressPresenter extends PresenterWidget<IsCollectionProgressView> implements CollectionProgressUiHandlers,ClientConstants{
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
-	
+
 	String collectionId=null;
 	/**
 	 * Constructor
@@ -59,19 +60,22 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 		this.collectionId=collectionId;
 		getView().getFrame().setUrl("");
 		getView().getLoadingImage().setVisible(true);
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, null);
+
 		this.analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
-					
-					@Override
-					public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
-						getView().setData(result,isCollectionView,collectionTitle);
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						
-					}
-				});
+
+			@Override
+			public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
+				getView().setData(result,isCollectionView,collectionTitle);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+
+			}
+		});
+
+
 	}
 
 	/**
@@ -93,18 +97,19 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	@Override
 	public void exportCollectionProgress(String collectionId,String classpageId, String timeZone) {
 		String classpage=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+
 		this.analyticService.exportProgress(this.collectionId, classpage, timeZone, new AsyncCallback<String>() {
-			
+
 			@Override
 			public void onSuccess(String result) {
 				if(!StringUtil.isEmpty(result)){
 					getView().getFrame().setUrl(result);
 				}
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
-				
+
 			}
 		});
 	}

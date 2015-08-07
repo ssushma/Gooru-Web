@@ -1,14 +1,12 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 
@@ -20,6 +18,7 @@ public class LibraryImagesMap {
 		   mapObj.put(PlaceTokens.SAUSD_LIBRARY, Arrays.asList(i18n.GL3239(), PlaceTokens.SAUSD_LIBRARY,"sausdLogo"));
 		   mapObj.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList(i18n.GL3244(),PlaceTokens.ASPIRE_EPACS,"epacsLogo"));
 		   	mapObj.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList(i18n.GL3238(),PlaceTokens.RUSD_LIBRARY,"rusdLogo"));
+//		   	mapObj.put(PlaceTokens.YCGL_LIBRARY, Arrays.asList(i18n.GL3290_1(),PlaceTokens.YCGL_LIBRARY,"ycglLogo"));
 		   	mapObj.put(PlaceTokens.FINCAPINC, Arrays.asList(i18n.GL3250(),PlaceTokens.FINCAPINC,"cfciLogo"));		   	
 		   	mapObj.put(PlaceTokens.VALVERDE, Arrays.asList(i18n.GL3241(), PlaceTokens.VALVERDE,"valverdeLogo"));
 		   	mapObj.put(PlaceTokens.FTE, Arrays.asList(i18n.GL3246(),PlaceTokens.FTE,"fteLogo"));
@@ -28,6 +27,9 @@ public class LibraryImagesMap {
 		   	
 		   	mapObj.put(PlaceTokens.NGC, Arrays.asList(i18n.GL3249(),PlaceTokens.NGC,"ngcLogo"));	   	
 		   	mapObj.put(PlaceTokens.CORE_LIBRARY, Arrays.asList(i18n.GL3235(),PlaceTokens.CORE_LIBRARY,"coreLogo"));
+		   	
+//		   	mapObj.put(PlaceTokens.YESD_LIBRARY, Arrays.asList("YESD1",PlaceTokens.YESD_LIBRARY,""));
+		   	
 			mapObj.put(PlaceTokens.LPS, Arrays.asList(i18n.GL3237(), PlaceTokens.LPS,"lpsLogo"));
 			mapObj.put(PlaceTokens.LUSD, Arrays.asList(i18n.GL3236(), PlaceTokens.LUSD,"lusdLogo"));			
 			mapObj.put(PlaceTokens.SUSD, Arrays.asList(i18n.GL3240(), PlaceTokens.SUSD,"susdLogo"));		 

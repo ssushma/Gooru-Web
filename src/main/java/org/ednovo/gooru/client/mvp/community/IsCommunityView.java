@@ -1,16 +1,16 @@
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.mvp.community;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
 
 /**
- * 
+ *
  * @fileName : IsCommunityView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -29,44 +29,24 @@ public interface IsCommunityView extends IsViewWithHandlers<CommunityUiHandlers>
 	void loadFeaturedContributors(String callBack, String placeToken);
 
 	/**
-	 * @function resetPassword 
-	 * 
+	 * @function resetPassword
+	 *
 	 * @created_date : Jul 29, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param resetToken
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	*/
-	
-	void resetPassword(String resetToken);
 
-	/**
-	 * @function registerPopup 
-	 * 
-	 * @created_date : Jul 29, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void registerPopup();
+	void resetPassword(String resetToken);
 
 }

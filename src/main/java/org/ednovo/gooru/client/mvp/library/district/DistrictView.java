@@ -5,18 +5,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.library.district.metadata.LibraryMetaDataContentUc;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -178,7 +178,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				loadingPanel(true);
 				libraryUnitMenuView.addStyleName(districtStyleUc.unitLiActive());
 				unitListId = profileLibraryDoList.get(i).getGooruOid();
-				if(profileLibraryDoList.get(i).getType().equals("scollection")) {
+				if(profileLibraryDoList.get(i).getType().equals("collection")||profileLibraryDoList.get(i).getType().contains("assessment")) {
 					setTopicListData(profileLibraryDoList.get(i), unitListId,libraryGooruOid);
 				} else {
 					folderTopicTitleLbl.setText(profileLibraryDoList.get(i).getTitle());
@@ -320,6 +320,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				placeToken.equalsIgnoreCase(PlaceTokens.AUTODESK) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.SUSD) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.VALVERDE) || placeToken.equalsIgnoreCase(PlaceTokens.LUSD)){
@@ -361,6 +362,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			setLandingBannerMetaData("landingValverdeBanner", "250px", i18n.GL2075() + " " + i18n.GL0587(), districtStyleUc.valverdePartnerLogo(), true);
 		}else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.LUSD)) {
 			setLandingBannerMetaData("landingLusdBanner", "250px", i18n.GL2180(), districtStyleUc.lusdPartnerLogo(), true);
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY)) {
+			setLandingBannerMetaData("landingYcglBanner", "250px", i18n.GL3289_1(), districtStyleUc.ycglDistrictLogo(), true);
 		} else {
 			partnerLogo.setVisible(false);
 		}

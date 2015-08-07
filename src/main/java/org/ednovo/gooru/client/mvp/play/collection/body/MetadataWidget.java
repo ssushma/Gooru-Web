@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -33,8 +33,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.client.htmltags.AsideTag;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
@@ -42,11 +47,6 @@ import org.ednovo.gooru.client.uc.CollaboratorsUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -70,7 +70,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class MetadataWidget extends Composite {
-	
+
 	@UiField FlowPanel centuryContainer,rightPanelContainer,teamContainer,courseTitle,standardsContainer;
 	@UiField HTMLPanel teacherContainer,classInfoPanel,teacherProfileContainer,depthOfKnowledgePanel,learningAndInnovationSkillPanel,
 	                    audiencePanel,instructionalmethodPanel;
@@ -83,19 +83,25 @@ public class MetadataWidget extends Composite {
 	               lblDirectionsDesc,lblDirections,lblAuthor,userNameLabel,lblCourse,lblStandards,viewsCountLabel,lbllanguageObjectiveText,
 	               lbllanguageObjective,lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
 	@UiField CollectionPlayerStyleBundle playerStyle;
-	
+
 	private CollectionDo collectionDo=null;
-	
+
 	private Anchor usernameAnchor=null;
-	
+
 	private String languageObjectiveValue=null;
-	
+
     public static final String STANDARD_CODE = "code";
-	
+
 	public static final String STANDARD_DESCRIPTION = "description";
-	
+
+	public static final String YUMA_COUNTY_SCIENCE = "YumaCountyScience";
+	public static final String YUMA_COUNTY_MATH = "YumaCountyMath";
+	public static final String YUMA_COUNTY_SS = "YumaCountySS";
+	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
+	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static MetadataWidgetUiBinder uiBinder = GWT.create(MetadataWidgetUiBinder.class);
 
 	interface MetadataWidgetUiBinder extends UiBinder<Widget, MetadataWidget> {
@@ -113,9 +119,9 @@ public class MetadataWidget extends Composite {
 		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
 			 teamContainer.add(collaboratorsUc);
-			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsernameDisplay()!=null)?collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND():"");
+			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername() +" " + i18n.GL_GRR_AND():"");
 		}else{
-			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsernameDisplay()!=null)?collectionDo.getUser().getUsernameDisplay():"");
+			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
 		}
 		if(!StringUtil.isEmpty(collectionDo.getViews())){
 			setViewCount(collectionDo.getViews());
@@ -144,7 +150,7 @@ public class MetadataWidget extends Composite {
 			else{
 				authorPanel.getElement().getStyle().setHeight(100, Unit.PX);
 			}
-			teacherTipLabel.setHTML(""+collectionDo.getKeyPoints()+"");		
+			teacherTipLabel.setHTML(""+collectionDo.getKeyPoints()+"");
 			teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
 			teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
 		}
@@ -176,7 +182,7 @@ public class MetadataWidget extends Composite {
 					userNameLabel.getElement().setAttribute("title",userName);
 				}
 			}
-			
+
 		}
 	}
 	public void setViewCount(String viewCount){
@@ -194,7 +200,7 @@ public class MetadataWidget extends Composite {
 	public void setDefaultProfileImage(ErrorEvent event){
 		profileThumbnailImage.setUrl("images/settings/setting-user-image.png");
 	}
-	
+
 	public void renderCourseInfo(List<String> courseInfo){
 		courseTitle.clear();
 		if(courseInfo!=null&&courseInfo.size()>0){
@@ -207,7 +213,7 @@ public class MetadataWidget extends Composite {
 			courseSection.setVisible(false);
 		}
 	}
-	
+
 	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds,boolean isStandards){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
 		if(standareds!=null && standareds.size()>0){
@@ -287,15 +293,15 @@ public class MetadataWidget extends Composite {
 			}
 		}
 	}
-	
-	public void renderLanguageObjective(String languageObjective){	
+
+	public void renderLanguageObjective(String languageObjective){
 		lbllanguageObjective.getElement().setAttribute("style", "white-space: pre-line;");
 		if(!StringUtil.isEmpty(languageObjective)){
 			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
 			if(languageObjective.length()>=200){
-				seeMoreAnchor.setText(i18n.GL1728());	
+				seeMoreAnchor.setText(i18n.GL1728());
 				seeMoreAnchor.getElement().setAttribute("alt",i18n.GL1728());
 				seeMoreAnchor.getElement().setAttribute("title",i18n.GL1728());
 				seeMoreAnchor.setVisible(true);
@@ -318,13 +324,13 @@ public class MetadataWidget extends Composite {
 			depthOfKnowledgePanel.clear();
 			boolean depthofKnowledgeValue = false;
 			for(checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
-				if(checkboxSelectedDo.isSelected()){
+//				if(checkboxSelectedDo.isSelected()){
 					depthofKnowledgeValue = true;
-					Label depthofKnowledge = new Label(checkboxSelectedDo.getValue());
+					Label depthofKnowledge = new Label(checkboxSelectedDo.getName());
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
 					depthofKnowledge.getElement().setAttribute("style", "display:table");
 					depthOfKnowledgePanel.add(depthofKnowledge);
-				}
+//				}
 			}
 			if(depthofKnowledgeValue){
 				depthOfKnowledgeContainer.setVisible(true);
@@ -363,11 +369,11 @@ public class MetadataWidget extends Composite {
 			audiencePanel.clear();
 			boolean audience=false;
 			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
-				if(checkboxSelectedDo.isSelected()){
+//				if(checkboxSelectedDo.isSelected()){
 					audience = true;
-					Label lblaudience = new Label(checkboxSelectedDo.getValue());
+					Label lblaudience = new Label(checkboxSelectedDo.getName());
 					audiencePanel.add(lblaudience);
-				}
+//				}
 			}
 			if(audience){
 				audienceContainer.setVisible(true);
@@ -436,14 +442,14 @@ public class MetadataWidget extends Composite {
 			}
 		}
 	}
-	
+
 	public static String convertMillisecondsToDate(Long milliseconds){
 		Date currentDate = new Date(milliseconds);
 		DateTimeFormat fmt = DateTimeFormat.getFormat ("MM/dd/yyyy");
 		String date=fmt.format(currentDate);
 		return date;
 	}
-	
+
 	public void setDirectionText(String text){
 		if(!StringUtil.isEmpty(text)){
 			lblDirectionsDesc.setText(text);
@@ -460,23 +466,23 @@ public class MetadataWidget extends Composite {
 		lblAuthor.getElement().setId("lblAuthor");
 		lblAuthor.getElement().setAttribute("alt",i18n.GL0573());
 		lblAuthor.getElement().setAttribute("title",i18n.GL0573());
-		  
+
 		lblCourse.setText(i18n.GL0574());
 		lblCourse.getElement().setId("lblCourse");
 		lblCourse.getElement().setAttribute("alt",i18n.GL0574());
 		lblCourse.getElement().setAttribute("title",i18n.GL0574());
-		
+
 		lblStandards.setText(i18n.GL0575());
 		lblStandards.getElement().setId("lblStandards");
 		lblStandards.getElement().setAttribute("alt",i18n.GL0575());
 		lblStandards.getElement().setAttribute("title",i18n.GL0575());
-		
-		
+
+
 		lblcentury.setText(i18n.GL3199());
 		lblcentury.getElement().setId("lblCenturys");
 		lblcentury.getElement().setAttribute("alt",i18n.GL3199());
 		lblcentury.getElement().setAttribute("title",i18n.GL3199());
-		
+
 		previewFlagButton.setText(i18n.GL0556());
 		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
 		previewFlagButton.getElement().setAttribute("alt",i18n.GL0556());
@@ -519,17 +525,17 @@ public class MetadataWidget extends Composite {
 		lbldepthOfKnowledgeText.getElement().setId("lbldepthOfKnowledgeText");
 		lbldepthOfKnowledgeText.getElement().setAttribute("alt",i18n.GL1693());
 		lbldepthOfKnowledgeText.getElement().setAttribute("title",i18n.GL1693());
-		
+
 		lbllearningAndInnovationText.setText(i18n.GL1722());
 		lbllearningAndInnovationText.getElement().setId("lbllearningAndInnovationText");
 		lbllearningAndInnovationText.getElement().setAttribute("alt",i18n.GL1722());
 		lbllearningAndInnovationText.getElement().setAttribute("title",i18n.GL1722());
-		
+
 		lblAudienceText.setText(i18n.GL1723());
 		lblAudienceText.getElement().setId("lblAudienceText");
 		lblAudienceText.getElement().setAttribute("alt",i18n.GL1723());
 		lblAudienceText.getElement().setAttribute("title",i18n.GL1723());
-		
+
 		lblInstructionalmethodText.setText(i18n.GL1724());
 		lblInstructionalmethodText.getElement().setId("lblInstructionalmethodText");
 		lblInstructionalmethodText.getElement().setAttribute("alt",i18n.GL1724());
@@ -561,8 +567,14 @@ public class MetadataWidget extends Composite {
 		Anchor anchor = new Anchor();
 		String userName = userNameLabel.getText();
 		if(collectionDo!=null){
+
 			if(StringUtil.isPartnerUser((collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getUsername()))?collectionDo.getUser().getUsername():"")){
 				anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+			}else if(YUMA_COUNTY_SCIENCE.equals(collectionDo.getUser().getUsernameDisplay())|| YUMA_COUNTY_MATH.equals(collectionDo.getUser().getUsernameDisplay()) ||
+					YUMA_COUNTY_SS.equals(collectionDo.getUser().getUsernameDisplay()) || YUMA_COUNTY_ELA.equals(collectionDo.getUser().getUsernameDisplay())||
+					YUMA_COUNTY_PD.equals(collectionDo.getUser().getUsernameDisplay())){
+				anchor.setHref("#"+PlaceTokens.YCGL_LIBRARY);
+
 			}else{
 				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+((collectionDo.getUser()!=null && collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
 				anchor.setHref(token);
@@ -574,7 +586,7 @@ public class MetadataWidget extends Composite {
 			userNameLabel.getElement().appendChild(anchor.getElement());
 		}
 	}
-	
+
 	public void displayAuthorDetails(boolean isDisplayDetails) {
 		authorPanel.setVisible(isDisplayDetails);
 	}
@@ -595,13 +607,13 @@ public class MetadataWidget extends Composite {
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
-		
+
 	}
 
 	public Anchor getFlagButton() {
 		return previewFlagButton;
 	}
-	
+
 	public void hideCollectionDetails(boolean hide){
 		authorPanel.setVisible(!hide);
 		courseSection.setVisible(!hide);
@@ -609,40 +621,40 @@ public class MetadataWidget extends Composite {
 		viewSection.setVisible(!hide);
 		centurySection.setVisible(!hide);
 	}
-	
+
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
 		hideCollectionDetails(true);
 		teacherContainer.setVisible(true);
 		classTitleValue.setText(classpageItemDo.getTitle()!=null?classpageItemDo.getTitle():"");
 		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle()!=null?classpageItemDo.getTitle():"");
 		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle()!=null?classpageItemDo.getTitle():"");
-		
+
 		lblclassTitle.setText(i18n.GL1578());
 		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
 		lblclassTitle.getElement().setAttribute("title",i18n.GL1578());
-		
+
 		lblClassInfo.setText(i18n.GL1579());
 		lblClassInfo.getElement().setAttribute("alt",i18n.GL1579());
 		lblClassInfo.getElement().setAttribute("title",i18n.GL1579());
-		
+
 		lblTeacher.setText(i18n.GL1580());
 		lblTeacher.getElement().setAttribute("alt",i18n.GL1580());
 		lblTeacher.getElement().setAttribute("title",i18n.GL1580());
-		
+
 		lbldueDate.setText(i18n.GL1581());
 		lbldueDate.getElement().setAttribute("alt",i18n.GL1581());
 		lbldueDate.getElement().setAttribute("title",i18n.GL1581());
-		
+
 		lblDirections.setText(i18n.GL1582());
 		lblDirections.getElement().setAttribute("alt",i18n.GL1582());
 		lblDirections.getElement().setAttribute("title",i18n.GL1582());
-		
+
 		setDueDateText(classpageItemDo.getPlannedEndDate());
 		setDirectionText(classpageItemDo.getDirection());
 		teacherNameLabel.setText(classpageItemDo.getUserNameDispaly());
 		teacherNameLabel.getElement().setAttribute("alt",classpageItemDo.getUserNameDispaly());
 		teacherNameLabel.getElement().setAttribute("title",classpageItemDo.getUserNameDispaly());
-		
+
 		teacherProfileContainer.clear();
 		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
 	}

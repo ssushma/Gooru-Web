@@ -26,9 +26,10 @@ package org.ednovo.gooru.client.mvp.play.collection.end.study;
 
 
 
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -37,12 +38,14 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class CollectionHomeMetadataPresenter extends PresenterWidget<IsCollectionHomeMetadataView> implements CollectionHomeMetadataUiHandlers{
 
 	private PreviewPlayerPresenter previewPlayerPresenter=null;
+	ShelfMainPresenter shelfMainPresenter;
 	
 	private CollectionPlayerPresenter collectionPlayerPresenter=null;
 	@Inject
-	public CollectionHomeMetadataPresenter(EventBus eventBus, IsCollectionHomeMetadataView view) {
+	public CollectionHomeMetadataPresenter(EventBus eventBus, IsCollectionHomeMetadataView view,ShelfMainPresenter shelfMainPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.shelfMainPresenter=shelfMainPresenter;
 	}
 	public void setCollectionMetadata(CollectionDo collectionDo){
 		getView().setCollectionMetadata(collectionDo);
@@ -73,6 +76,10 @@ public class CollectionHomeMetadataPresenter extends PresenterWidget<IsCollectio
 	}
 	public void setCollectionPlayerPresenter(CollectionPlayerPresenter collectionPlayerPresenter) {
 		this.collectionPlayerPresenter = collectionPlayerPresenter;
+	}
+	@Override
+	public void setDefaultTypeAndVersion() {
+		shelfMainPresenter.SetDefaultTypeAndVersion();
 	}
 
 }

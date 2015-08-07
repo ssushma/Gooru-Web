@@ -40,14 +40,15 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
-import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
-import org.ednovo.gooru.shared.model.user.MediaUploadDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -88,5 +89,19 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	public void setCollectionDo(CollectionDo collectionDo);
 
 	void setPopupImageData(ResourceMetaInfoDo result);
-
+	
+	void clearQuestionSlot();
+	
+	void hidePopup();
+	
+	void questionMetadata(CollectionQuestionItemDo collectionQuestionItemDo);
+	
+	boolean checkQuestionSlot();
+	
+	void setDepthOfKnowledges(List<ListValuesDo> result);
+	
+	void hidePopUpStyle();
+	
+	void clearPopUpStyle();
+	
 }

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,9 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.image.upload;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.GooruCBundle;
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertForImageUpload;
@@ -35,8 +37,6 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.GlassPanelWithLoadingUc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -82,9 +82,9 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	interface ImageUploadViewUiBinder extends UiBinder<Widget, ImageUploadView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private boolean isUserUnder13=false;
 	private boolean isUploadProfileWidget=false;
 	private int selectedWidgetIndex=-1;
@@ -138,20 +138,20 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	ErrorLabelUc urlValidation;
 	@UiField
 	HTMLPanel notWorkingPanel;
-	
+
 	@UiField Label chooseText,uploadFromComputer,uploadLimitText,notWorkingLblText,
 	uploadFromWebText,imageURLLbl,typeImageurlText,infoUrlUploadText,chooseFromText;
-	
+
 	private static final String IMAGE_UPLOAD_URL = "/media?sessionToken={0}&uploadFileName={1}&resize=true&width=600&height=450";
-	
+
 	private static final String IMAGE_UPLOAD_URL_PATTERN = "(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|jpeg|png))(?:\\?([^#]*))?(?:#(.*))?";
-	
+
 	private static final String IMAGE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:jpg|gif|jpeg|png))$)";
-	
+
 
 	/**
 	 * See for more details  {@link PopupViewWithUiHandlers} for details.
-	 * 
+	 *
 	 * @param eventBus instance of {@link EventBus}
 	 */
 	@Inject
@@ -167,92 +167,92 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		chooseText.getElement().setId("lblChooseText");
 		chooseText.getElement().setAttribute("alt",i18n.GL1215()+i18n.GL_SPL_SEMICOLON()+" ");
 		chooseText.getElement().setAttribute("title",i18n.GL1215()+i18n.GL_SPL_SEMICOLON()+" ");
-		
+
 		imageUploadOnWebLbl.setText(i18n.GL1216());
 		imageUploadOnWebLbl.getElement().setId("lnkOnWeb");
 		imageUploadOnWebLbl.getElement().setAttribute("alt",i18n.GL1216());
 		imageUploadOnWebLbl.getElement().setAttribute("title",i18n.GL1216());
-		
+
 		imageUploadOnComputerLbl.setText(i18n.GL1217());
 		imageUploadOnComputerLbl.getElement().setId("lnkOnComputer");
 		imageUploadOnComputerLbl.getElement().setAttribute("alt",i18n.GL1217());
 		imageUploadOnComputerLbl.getElement().setAttribute("title",i18n.GL1217());
-		
+
 		uploadGooruImages.setText(i18n.GL1218());
 		uploadGooruImages.getElement().setId("lnkGooruImages");
 		uploadGooruImages.getElement().setAttribute("alt",i18n.GL1218());
 		uploadGooruImages.getElement().setAttribute("title",i18n.GL1218());
-		
+
 		uploadFromComputer.setText(i18n.GL1219());
 		uploadFromComputer.getElement().setId("lblUploadFromComputer");
 		uploadFromComputer.getElement().setAttribute("alt",i18n.GL1219());
 		uploadFromComputer.getElement().setAttribute("title",i18n.GL1219());
-		
+
 		uploadLimitText.setText(i18n.GL1220());
 		uploadLimitText.getElement().setId("lblUploadLimitText");
 		uploadLimitText.getElement().setAttribute("alt",i18n.GL1220());
 		uploadLimitText.getElement().setAttribute("title",i18n.GL1220());
-		
+
 		notWorkingLblText.setText(i18n.GL1221()+" "+i18n.GL_SPL_QUESTION());
 		notWorkingLblText.getElement().setId("lblNotWorkingLblText");
 		notWorkingLblText.getElement().setAttribute("alt",i18n.GL1221());
 		notWorkingLblText.getElement().setAttribute("title",i18n.GL1221());
-		
+
 		readThisLbl.setText(i18n.GL1222()+i18n.GL_SPL_EXCLAMATION());
 		readThisLbl.getElement().setId("lblReadThisLbl");
 		readThisLbl.getElement().setAttribute("alt",i18n.GL1222());
 		readThisLbl.getElement().setAttribute("title",i18n.GL1222());
-		
+
 		onSystemCancelBtn.setText(i18n.GL0142());
 		onSystemCancelBtn.getElement().setId("btnCancel");
 		onSystemCancelBtn.getElement().setAttribute("alt",i18n.GL0142());
 		onSystemCancelBtn.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		uploadFromWebText.setText(i18n.GL1223());
 		uploadFromWebText.getElement().setId("lblUploadFromWebText");
 		uploadFromWebText.getElement().setAttribute("alt",i18n.GL1223());
 		uploadFromWebText.getElement().setAttribute("title",i18n.GL1223());
-		
+
 		imageURLLbl.setText(i18n.GL1224());
 		imageURLLbl.getElement().setId("lblImageURLLbl");
 		imageURLLbl.getElement().setAttribute("alt",i18n.GL1224());
 		imageURLLbl.getElement().setAttribute("title",i18n.GL1224());
-		
+
 		uploadImageButtonOnWeb.setText(i18n.GL1225());
 		uploadImageButtonOnWeb.getElement().setId("btnUpload");
 		uploadImageButtonOnWeb.getElement().setAttribute("alt",i18n.GL1225());
 		uploadImageButtonOnWeb.getElement().setAttribute("title",i18n.GL1225());
-		
+
 		typeImageurlText.setText(i18n.GL1226());
 		typeImageurlText.getElement().setId("lblTypeImageurlText");
 		typeImageurlText.getElement().setAttribute("alt",i18n.GL1226());
 		typeImageurlText.getElement().setAttribute("title",i18n.GL1226());
-		
+
 		infoUrlUploadText.setText(i18n.GL1227());
 		infoUrlUploadText.getElement().setId("lblInfoUrlUploadText");
 		infoUrlUploadText.getElement().setAttribute("alt",i18n.GL1227());
 		infoUrlUploadText.getElement().setAttribute("title",i18n.GL1227());
-		
+
 		onWebCancelBtn.setText(i18n.GL0142());
 		onWebCancelBtn.getElement().setId("btnCancel");
 		onWebCancelBtn.getElement().setAttribute("alt",i18n.GL0142());
 		onWebCancelBtn.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		chooseFromText.setText(i18n.GL1228()+i18n.GL_SPL_SEMICOLON()+" ");
 		chooseFromText.getElement().setId("lblChooseFromText");
 		chooseFromText.getElement().setAttribute("alt",i18n.GL1228());
 		chooseFromText.getElement().setAttribute("title",i18n.GL1228());
-		
+
 		okButtonOnUploadGooruImages.setText(i18n.GL0190());
 		okButtonOnUploadGooruImages.getElement().setId("btnOkButtonOnUploadGooruImages");
 		okButtonOnUploadGooruImages.getElement().setAttribute("alt",i18n.GL0190());
 		okButtonOnUploadGooruImages.getElement().setAttribute("title",i18n.GL0190());
-		
+
 		cancelButtonOnUploadGooruImages.setText(i18n.GL0142());
 		cancelButtonOnUploadGooruImages.getElement().setId("btnCancelButtonOnUploadGooruImages");
 		cancelButtonOnUploadGooruImages.getElement().setAttribute("alt",i18n.GL0142());
 		cancelButtonOnUploadGooruImages.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		fileUpload.getElement().setAttribute("size", "25");
 		fileUpload.getElement().setId("fileUpload");
 		fileuploadForm.getElement().setId("fileUploadForm");
@@ -263,14 +263,14 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		gooruProfileDefaultImagesContainer.getElement().setId("fpnlGooruProfileDefaultImagesContainer");
 		imageCropFloPanel.getElement().setId("fpnlImageCropFloPanel");
 		glassPanelWithLoadingUc.getElement().setId("glassPanelWithLoadingUc");
-		
-		
+
+
 		imageUploadOnComputerLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
 		imageUploadOnWebLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
 		uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
 		uploadGooruImages.getElement().getStyle().setDisplay(Display.NONE);
 		imageWebUploadUrlTxtBox.getElement().setId("tbImageWebUploadUrl");
-		
+
 		urlValidation.setVisible(false);
 		imageWebUploadUrlTxtBox.addFocusHandler(new OnTextFocus());
 		urlValidation.setStyleName(GooruCBundle.INSTANCE.css().imageUrlError());
@@ -299,19 +299,19 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				}
 				if (!"".equalsIgnoreCase(fileUpload.getFilename())) {
 					String size=getFileNameSize();
-					  
+
 					double sizeOfImage=Double.parseDouble(size);
 					if(sizeOfImage>5){
 						new AlertForImageUpload(i18n.GL0061(),i18n.GL1229());
 						 glasspanelLoadingImage(false);
 						fileuploadForm.reset();
-						event.cancel(); 
+						event.cancel();
 				//		Window.enableScrolling(true);
 				//		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-						
-						 
+
+
 					}
-		
+
 				}
 				else{
 					event.cancel(); // cancel the event
@@ -321,7 +321,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 			}
 		});
-		
+
 		imagUploadFloPanel.getElement().setId("fpnlImagUploadFloPanel");
 		imageUploadOnWebFloPanel.getElement().setId("fpnlImageUploadOnWebFloPanel");
 	}
@@ -348,7 +348,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public void addClickEventToDefaultImages(){
 		int widgetsCount=gooruProfileDefaultImagesContainer.getWidgetCount();
 		for(int widgetIndex=0;widgetsCount>widgetIndex;widgetIndex++){
@@ -371,7 +371,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 		this.selectedWidgetIndex=widgetIndex;
 	}
-	
+
 	private void resetProfileImageSelected(){
 		this.selectedWidgetIndex=-1;
 		int widgetsCount=gooruProfileDefaultImagesContainer.getWidgetCount();
@@ -380,7 +380,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			gooruImagesView.profileGooruDefaultImage.setStyleName(GooruCBundle.INSTANCE.css().profileImageContainer());
 		}
 	}
-	
+
 
 	private class OnTextFocus implements FocusHandler {
 		@Override
@@ -389,7 +389,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			urlValidation.setVisible(false);
 		}
 	}
-	
+
 	public void showUploadTypeWidgets(boolean isUserUnder13){
 		this.isUserUnder13=isUserUnder13;
 		if(isUserUnder13){
@@ -456,7 +456,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		imageUploadOnUrlFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 		imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	
+
 	/**
 	 * Hide {@link AppPopUp}
 	 * @param clickEvent instance of {@link ClickEvent}
@@ -471,7 +471,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}
-		
+
 	}
 
 	@UiHandler("cancelButtonOnUploadGooruImages")
@@ -486,7 +486,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 	}
 
-	
+
 
 	/**
 	 * Hide {@link AppPopUp}
@@ -521,14 +521,14 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	}
 	/**
 	 * Validate web image url
-	 * @return true if upload image url is valid else false 
+	 * @return true if upload image url is valid else false
 	 */
 	private boolean hasValidateData() {
 		boolean isValid = true;
 		String url = imageWebUploadUrlTxtBox.getText();
 		try {
 			RegExp reg = RegExp.compile(IMAGE_UPLOAD_URL_PATTERN, "gi");
-			
+
 			if (url == null || (url != null && url.isEmpty())) {
 				urlValidation.setText(i18n.GL0080());
 				urlValidation.getElement().setAttribute("alt",i18n.GL0080());
@@ -546,10 +546,10 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 		return isValid;
 	}
-	
+
 	/**
 	 * validate image which uploaded from local machine
-	 * @return true if upload image file is valid else false 
+	 * @return true if upload image file is valid else false
 	 */
 	public boolean hasValidateImage(){
 		boolean isValid = true;
@@ -615,7 +615,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				}
 			};
 			imageCropView.cropImage(mediaUploadDo.getUrl(),aspectRatio);
-			imageCropView.addCanvasLoadHandler(new LoadHandler() {			
+			imageCropView.addCanvasLoadHandler(new LoadHandler() {
 				@Override
 				public void onLoad(LoadEvent event) {
 					imageCropPopup.center();
@@ -632,7 +632,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			appPopUp.hide();
 			imageCropPopup.hide();
 			Window.scrollTo(0, 0);
-			AppClientFactory.printInfoLogger("Name token::::::"+AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
 			if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
 				Window.enableScrolling(false);
 			}else{
@@ -648,7 +647,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		fileUpload.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
-				
+
 				if(hasValidateImage()){
 					glasspanelLoadingImage(true);
 					fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), fileUpload.getFilename()));
@@ -683,7 +682,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		glassPanelWithLoadingUc.setVisible(state);
 	}
 
-	@Override			
+	@Override
 	public void resetImageUploadWidget() {
 		imageCropFloPanel.clear();
 		imagUploadFloPanel.setVisible(true);
@@ -697,56 +696,56 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		imageCropPopup.hide();
 		notWorkingPanel.setVisible(false);
 		if(isEdit){
-			
+
 		}else{
 		  AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}
 	}
-	
-	
+
+
 	/**
 	 * To get the upload file size from client end
 	 * @return it will return the upload file size in mb
 	 */
-	 
+
 	public final native String getFileNameSize() /*-{
-	 
+
 	var fileSize;
-	      if ($wnd.$.browser.msie) 
+	      if ($wnd.$.browser.msie)
 	         {
-	   
+
 	     	 var objFSO = new ActiveXObject("Scripting.FileSystemObject");
 	        var sPath =   $wnd.$("#fileUpload")[0].value;
 	        var objFile = objFSO.getFile(sPath);
 	         var iSize = objFile.size;
 	        fileSize = iSize/ 1048576;
-	    
+
 	        }
-	    
-	     
-	     
-	        else 
+
+
+
+	        else
 	        {
-	  
+
 	       fileSize =  $wnd.$("#fileUpload")[0].files[0].size ;//size in kb
-	       
-	        fileSize = fileSize / 1048576; //size in mb 
-	 
+
+	        fileSize = fileSize / 1048576; //size in mb
+
 	         }
-	 
-	        
-	     
-	        
+
+
+
+
 	           return fileSize.toString();
-	   
-	                 
-	    
+
+
+
 	  }-*/;
-	
+
 	public static native String getUserAgent() /*-{
 	return navigator.userAgent.toLowerCase();
 	}-*/;
-	
+
 	public void setAspectRatio(float aspectRatio){
 		this.aspectRatio=aspectRatio;
 	}
@@ -755,6 +754,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	public void isFromEditQuestion(boolean isEdit) {
 		this.isEdit=isEdit;
 	}
-	
+
 
 }

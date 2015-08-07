@@ -24,12 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.framebreaker;
 
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
-import org.ednovo.gooru.shared.util.Constants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -114,7 +113,10 @@ public class ResourceFrameBreakerView extends Composite implements ClientConstan
 			}
 		}
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			if(collectionItemDo.getResource().getThumbnails()!=null)
+			{
 			imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnails().getUrl());
+			}
 			if(collectionItemDo.getResource().getResourceFormat()!=null){
 				defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():"";
 				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():""));
@@ -228,7 +230,16 @@ public class ResourceFrameBreakerView extends Composite implements ClientConstan
 	@UiHandler("btnResourceLink")
 	public void openResurceLink(ClickEvent event){
 		MixpanelUtil.mixpanelEvent("Player_Click_Linked_Out_Resource");
-		Window.open(collectionItemDo.getResource().getUrl(), "_blank", "");
+		String resourceplayUrl="";
+		if(collectionItemDo.getResource().getUrl()!=null && !collectionItemDo.getResource().getUrl().isEmpty() && !collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
+			resourceplayUrl = collectionItemDo.getResource().getUrl();
+			if(collectionItemDo.getResource().getAssetURI()!=null && collectionItemDo.getResource().getFolder()!=null){
+				resourceplayUrl=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+resourceplayUrl;
+			}
+		}else{
+			resourceplayUrl=collectionItemDo.getResource().getUrl();
+		}
+		Window.open(resourceplayUrl, "_blank", "");
 	}
 	
 	/**

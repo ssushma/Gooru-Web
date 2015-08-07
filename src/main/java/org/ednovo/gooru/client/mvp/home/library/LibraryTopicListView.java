@@ -45,9 +45,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.application.shared.model.library.ConceptDo;
+import org.ednovo.gooru.application.shared.model.library.LessonDo;
+import org.ednovo.gooru.application.shared.model.library.LibraryCollectionItemDo;
+import org.ednovo.gooru.application.shared.model.library.LibraryResourceDo;
+import org.ednovo.gooru.application.shared.model.library.PartnerConceptListDo;
+import org.ednovo.gooru.application.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.application.shared.model.library.TopicDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
@@ -60,7 +73,6 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
@@ -70,17 +82,6 @@ import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.folder.FolderTocDo;
-import org.ednovo.gooru.shared.model.library.ConceptDo;
-import org.ednovo.gooru.shared.model.library.LessonDo;
-import org.ednovo.gooru.shared.model.library.LibraryCollectionItemDo;
-import org.ednovo.gooru.shared.model.library.LibraryResourceDo;
-import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-import org.ednovo.gooru.shared.model.library.TopicDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -158,6 +159,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 	private String searchTitle="";
 	
 	private static LibraryTopicViewUiBinder uiBinder = GWT.create(LibraryTopicViewUiBinder.class);
+	
+	SearchAddResourceToCollectionPresenter remixPresenterWidget = AppClientFactory.getInjector().getRemixPresenterWidget();
 	
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 	
@@ -1640,30 +1643,39 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		if(params.containsKey(ASSIGN)){
 			params.remove(ASSIGN);
 		}
-		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
-		String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
+		final String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
+		
+		final String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
-			Boolean loginFlag = false;
-			if (AppClientFactory.isAnonymous()){
-				loginFlag = true;
-			}
-			else
-			{
-				loginFlag = false;
-			}
-			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
-
-				@Override
-				public void closePoup() {
-					Window.enableScrolling(true);
-					this.hide();	
-					isCustomizePopup = false;
-				}
-			};
 			Window.scrollTo(0, 0);
-			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+			if(AppClientFactory.isAnonymous()){
+				LoginPopupUc loginPopupUc=new LoginPopupUc() {
+					@Override
+					public	void onLoginSuccess(){
+						Window.enableScrolling(false);
+						remixPresenterWidget.DisableMyCollectionsPanelData(false);
+						remixPresenterWidget.getLoadingImage();
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+						remixPresenterWidget.getView().getAppPopUp().show();
+						isCustomizePopup = false;
+						remixPresenterWidget.getView().getAppPopUp().center();
+						remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+					}
+				};
+				loginPopupUc.show();
+				loginPopupUc.setGlassEnabled(true);
+			}else{
+				remixPresenterWidget.DisableMyCollectionsPanelData(false);
+				remixPresenterWidget.getLoadingImage();
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+				remixPresenterWidget.getView().getAppPopUp().show();
+				isCustomizePopup = false;
+				remixPresenterWidget.getView().getAppPopUp().center();
+				remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+			}
+			/*if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 				successPopupVc.setWidth("500px");
 				successPopupVc.setHeight("515px");
 			}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
@@ -1671,7 +1683,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				successPopupVc.setHeight("336px");
 			}
 			successPopupVc.show();
-			successPopupVc.center();
+			successPopupVc.center();*/
 			
 			params.put(CUSTOMIZE, "yes");
 			params.put("collectionId", collectionId);
@@ -1694,32 +1706,18 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
-		
+		final String collectionTitle=getConceptDo().getTitle();
 		if(customize!=null && customize.equals("yes") && emailId!=null){
 			if(colleId.equals(collectionId) && isVisible){
 				isVisible=false;
-				Boolean loginFlag = false;
-				if (AppClientFactory.isAnonymous()){
-					loginFlag = true;
-				}
-				else
-				{
-					loginFlag = false;
-				}
-				final Map<String, String> params = StringUtil.splitQuery(Window.Location
-						.getHref());
-				RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
-
-					@Override
-					public void closePoup() {
-						Window.enableScrolling(true);
-						this.hide();	
-						isCustomizePopup = false;
-					}
-				};
 				Window.scrollTo(0, 0);
-				successPopupVc.show();
-				successPopupVc.center();
+				remixPresenterWidget.DisableMyCollectionsPanelData(false);
+				remixPresenterWidget.getLoadingImage();
+				remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+				remixPresenterWidget.getView().getAppPopUp().show();
+				isCustomizePopup = false;
+				remixPresenterWidget.getView().getAppPopUp().center();
+				remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
 			}
 			
 		}

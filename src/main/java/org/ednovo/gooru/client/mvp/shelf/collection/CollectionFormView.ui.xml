@@ -9,18 +9,18 @@
 			margin: 0 10% 10px 3%;
 		}
 		</ui:style>
-		<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+		<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 		<g:HTMLPanel  ui:field="shelfItemContent">
 			<g:Label ui:field="collPopUpMainheading" styleName="{res.css.dontWorrkText}"></g:Label>
 			<g:Label ui:field="collPopUpSubheading" styleName="{res.css.contentDesc}"></g:Label>
-			
+
 			<g:HTMLPanel styleName="{createCollectionStyle.paddingSelection}" ui:field="pnlCreateNewAssessment">
 				<div class="{createCollectionStyle.logInput}  less-gutter">
 				<g:TextBox ui:field="hiddenTextField"></g:TextBox>
 					<div class="col-md-5 {createCollectionStyle.creatNew}">
 						<g:Button ui:field="btnNewAssessment" styleName="secondary" text="{i18n.GL3126}" title="{i18n.GL3126}"></g:Button>
 					</div>
-					<div class="col-md-1"><g:Label styleName="{createCollectionStyle.textMiddle}" text="{i18n.GL0466}"></g:Label></div> 
+					<div class="col-md-1"><g:Label styleName="{createCollectionStyle.textMiddle}" text="{i18n.GL0466}"></g:Label></div>
 					<div class="col-md-5 {createCollectionStyle.exstingURL}">
 						<g:Button ui:field="btnExistingAssessment" styleName="secondary" text="{i18n.GL3125}" title="{i18n.GL3125}"></g:Button>
 				    </div>
@@ -34,13 +34,13 @@
 				 		 	<uc:TextBoxWithPlaceholder ui:field="txtNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
 				 		 	<g:Label ui:field="lblNewAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 				 		</g:HTMLPanel>
-				 		
+
 						<g:HTMLPanel styleName="col-md-12 {createCollectionStyle.assessmentTextBoxContainer}">
 							<g:Label styleName="{createCollectionStyle.assessmentTextBoxText}" text="{i18n.GL0325}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0325} {i18n.GL_SPL_SEMICOLON}"></g:Label>
 							<g:HTMLPanel ui:field="assessmentGradeTxtBox" styleName="{createCollectionStyle.form_drop_control}"/>
 							<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
 						</g:HTMLPanel>
-						
+
 						<g:HTMLPanel styleName="col-md-12 {createCollectionStyle.assessmentTextBoxContainer}">
 							<g:Label text="{i18n.GL0326}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0326}{i18n.GL_SPL_SEMICOLON}" styleName="{createCollectionStyle.assessmentTextBoxText}"></g:Label>
 							<g:HTMLPanel styleName="{createCollectionStyle.form_drop_control}" ui:field="assessmentSimPanel"/>
@@ -89,9 +89,9 @@
 				 			</g:HTMLPanel>
 			 			</g:HTMLPanel>
 			 		</g:HTMLPanel>
-					</div>				
 					</div>
-				
+					</div>
+
 					<div class="{createCollectionStyle.formViewButtonContainer}">
 						<g:Button ui:field="btnCancelAssessment" styleName="secondary"></g:Button>
 						<g:Button ui:field="btnCreateAssessment" styleName="primary" text="{i18n.GL3024}" title="{i18n.GL3024}"></g:Button>
@@ -109,7 +109,7 @@
 					<g:SimplePanel ui:field="collectionGradeTxtBox" styleName="col-md-8 col-xs-8 col-sm-8"></g:SimplePanel>
 					<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
 				</g:HTMLPanel>
-				
+
 				<g:HTMLPanel  ui:field="courseContainer">
 					<g:Label ui:field="courseLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables} {createCollectionStyle.labelPadding}"></g:Label>
 					<g:SimplePanel styleName="col-md-8 col-xs-8 col-sm-8" ui:field="groupSimPanel"/>
@@ -145,7 +145,7 @@
 							<g:Label ui:field="lblPrivate" styleName="{createCollectionStyle.publicText}"></g:Label>
 							<g:Label ui:field="lblPrivateDesc" styleName="{createCollectionStyle.visibilityText}"></g:Label>
 						</g:FlowPanel>
-						
+
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{createCollectionStyle.clearStyle}"></g:HTMLPanel>
 				</g:FlowPanel>
@@ -157,5 +157,5 @@
 				<g:Label  styleName="{createCollectionStyle.formViewButtonContainer}" ui:field="loadingTextLbl"></g:Label>
 				</g:HTMLPanel>
 		</g:HTMLPanel>
-	
+
 </ui:UiBinder>

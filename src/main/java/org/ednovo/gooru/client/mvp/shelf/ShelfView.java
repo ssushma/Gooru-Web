@@ -29,10 +29,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderItemDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.home.FooterOrganizeUc;
@@ -60,16 +70,6 @@ import org.ednovo.gooru.client.uc.EditableTextAreaUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderItemDo;
-import org.ednovo.gooru.shared.model.folder.FolderTocDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -831,7 +831,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 						rbPublicPanel.setVisible(true);
 						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
 							if(collectionDo!=null){
-							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
+							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().equals("pending")){
 								rbPublic.setVisible(false);
 								lblPublishPending.setVisible(true);
 								publishedPanel.setVisible(false);
@@ -999,7 +999,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			searchRequest = AppClientFactory.getPlaceManager().getPreviousRequest();
 			if (searchRequest != null) {
 				String query = searchRequest.getParameter("query", null);
-				String classpageId=searchRequest.getParameter("classpageid", null);
+				String classpageId=searchRequest.getParameter("classpageId", null);
 				visible = searchRequest != null && query != null;
 				boolean 	isVisible = searchRequest != null && classpageId != null;
 				if (visible) {
@@ -1470,9 +1470,15 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					{
 						params.put("folderId", selectedFolderId);
 						params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
-						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-						AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+						if(collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, params);							
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+						}else{
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+							AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+						}
 						break;
 					}
 				}
@@ -1482,9 +1488,15 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 		else
 		{
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);			
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			if(collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, params);			
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);			
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}
 		}
 
 		

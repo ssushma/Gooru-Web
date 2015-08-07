@@ -27,6 +27,8 @@ public interface Constants {
 	
 	String CORE_BANNER = "../images/library/district/landing-image-rusd_orange.png";
 	
+	String YESD_BANNER = "../images/library/district/landing-image-yesd.png";
+	
 	String ESYP_BANNER = "../images/library/partners/esyp.jpg";
 	
 	String CCST_BANNER = "../images/library/partners/ccst.png";
@@ -39,7 +41,11 @@ public interface Constants {
 	
 	String CORE_LOGO = "../images/library/district/core-logo.png";
 	
+	String YESD_LOGO = "../images/library/district/yesd-logo.png";
+	
 	String RUSD_LOGO = "../images/library/district/rusd-logo.png";
+	
+	String YCGL_LOGO = "../images/library/district/ycgl-logo.png";
 	
 	String LPS_LOGO = "../images/library/district/lps-logo.png";
 
@@ -50,6 +56,8 @@ public interface Constants {
 	String SUSD_LOGO = "../images/library/district/susd-logo.png";
 	
 	String VALVERDE_LOGO = "../images/library/district/valverde-logo.png";
+	
+	String YUMA_ONE_LOGO = "../images/library/district/YumaOne-Logo.png";
 
 
 	String HTTPS = "https";

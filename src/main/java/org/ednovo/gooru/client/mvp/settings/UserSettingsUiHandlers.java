@@ -41,10 +41,10 @@ package org.ednovo.gooru.client.mvp.settings;
 
 import java.util.Set;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEventHandler;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 
 public interface UserSettingsUiHandlers extends BaseUiHandlers,SetUserProfileImageEventHandler{
 

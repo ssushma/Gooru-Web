@@ -3,7 +3,7 @@
 	xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
 	<g:FlowPanel styleName="{res.css.collectionMetaDataTabTitle}" ui:field="wrapperFloPanel">
-		<g:SimplePanel styleName="{res.css.userCollectionMetaAssignImage}" ui:field="imageSimPanel" />
-		<g:Label styleName="{res.css.userCollectionMetaShelfFtLft}" ui:field="labelLbl" />
+		<g:SimplePanel styleName="userCollectionMetaAssignImage" ui:field="imageSimPanel" />
+		<g:Label styleName="userCollectionMetaShelfFtLft" ui:field="labelLbl" />
 	</g:FlowPanel>
 </ui:UiBinder> 

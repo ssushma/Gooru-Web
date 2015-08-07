@@ -24,7 +24,7 @@
 									<uc:AppSuggestBox ui:field="editSearchTxtBox"
 										styleName="form-control" />
 									<!-- <g:Label ui:field="gooruLabel" styleName="goorusearchTextFont"></g:Label> -->
-									<g:Label styleName="arrowLable" ui:field="arrowLbl" visible="true"></g:Label>
+									<!-- <g:Label styleName="arrowLable" ui:field="arrowLbl" visible="true"></g:Label> DO-7870-->
 								</g:FlowPanel>
 								<g:Button styleName="primary" ui:field="editSearchBtn" />
 							</g:HTMLPanel>
@@ -42,7 +42,7 @@
 											<span class="icon-bar"></span>
 										</g:Button>
 										<g:HTMLPanel
-											styleName="collapse navbar-collapse navbar-collapse"
+											styleName="collapse navbar-collapse"
 											ui:field="mainInnerDotsPanel">
 											<uc:UlPanel ui:field="dotsPanel" styleName="nav navbar-nav">
 												<uc:LiPanel styleName="dropdown">
@@ -63,7 +63,7 @@
 														<event:HTMLEventPanel ui:field="organizeLinkContainer">
 															<g:Anchor ui:field="organizeLink" />
 														</event:HTMLEventPanel>
-														<g:HTMLPanel ui:field="myCollectionsPop"></g:HTMLPanel>
+												
 													</event:HTMLEventPanel>
 												</uc:LiPanel>
 												<uc:LiPanel styleName="noborder">

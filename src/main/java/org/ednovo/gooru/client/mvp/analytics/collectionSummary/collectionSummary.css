@@ -23,7 +23,7 @@
 .htmlpanlProgress {
 	overflow: hidden;
 	width: 100%;
-	margin: 2%;
+	/* margin: 2%; */
 	clear:both;
 	/* border-right: 1px solid #eee;
 	border-left: 1px solid #eee; */
@@ -76,7 +76,7 @@
 .left_container {
 	width: 100%;
 	float: left;
-	margin-left: 28px; 
+	margin-left: 28px;
 }
 
 .collection_teacher_img {
@@ -190,4 +190,14 @@
 	background-color: white;
 	padding: 20px 0px;
 	box-shadow: 0 2px 2px #ccc;
+}
+
+.arrowLable {
+	background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+	position: relative;
+	right: 21px;
+	width: 10px;
+	height: 17px;
+	cursor: pointer;
+	display: inline-block;
 }

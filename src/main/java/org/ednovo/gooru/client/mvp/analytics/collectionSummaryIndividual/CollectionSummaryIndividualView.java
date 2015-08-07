@@ -5,11 +5,19 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabContainer;
@@ -17,14 +25,8 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
-import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
-import org.ednovo.gooru.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -65,34 +67,34 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			UiBinder<Widget, CollectionSummaryIndividualView> {
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
+
+	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData, panelOverview;
 	@UiField ListBox filterDropDown;
-	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
+	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl,userInfo;
 	@UiField Frame downloadFile;
-	
+
 	AnalyticsTabContainer individualTabContainer;
 	DataView operationsView;
 	CollectionSummaryIndividualCBundle res;
 	private int collectionProgressCount=1;
 	ViewResponsesPopup popupPanel=null;
-	
+
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 	final List<Integer> resourceRowIndex=new ArrayList<Integer>();
-	
+
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
 	EmailPopup emailPopup=null;
 	String collectionTitle=null;
-	
+
 	//Used for print
 	HTMLPanel printScoredData=new HTMLPanel("");
 	HTMLPanel printOpendedData=new HTMLPanel("");
 	HTMLPanel printResourceData=new HTMLPanel("");
-	
+
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
-	
+
 	String style="";
 	String urlDomain = "";
 
@@ -116,10 +118,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	void setStaticData(){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
-
+				userInfo.setVisible(false);
+				panelOverview.setVisible(false);
 				StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
 				StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
 				StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
@@ -136,7 +139,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				StringUtil.setAttributes(lblTotalTimeSpent.getElement(), "lblTotalTimeSpent", i18n.GL2275(),  i18n.GL2275());
 				StringUtil.setAttributes(lblViews.getElement(), "lblViews", i18n.GL2276(),  i18n.GL2276());
 				StringUtil.setAttributes(lblAvgReaction.getElement(), "lblAvgReaction", i18n.GL2277(),  i18n.GL2277());
-			
+
 			}
 		});;
 	}
@@ -147,13 +150,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		individualScoredDatapnl.setVisible(false);
 		individualOpenendedData.setVisible(false);
 		individualResourceBreakdownDatapnl.setVisible(false);
+		userInfo.setVisible(false);
 	}
 	/**
 	 * Default method for initialization
 	 */
 	void setData(){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -166,6 +170,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						}else if(OPENENDED.equalsIgnoreCase(tabClicked)){
 							hideAllPanels();
 							individualOpenendedData.setVisible(true);
+							userInfo.setVisible(true);
 						}else if(BREAKDOWN.equalsIgnoreCase(tabClicked)){
 							hideAllPanels();
 							individualResourceBreakdownDatapnl.setVisible(true);
@@ -186,7 +191,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
 			    filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
 			    filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
-			
+
 			}
 		});
 	}
@@ -196,7 +201,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	@Override
 	public void setIndividualData(final ArrayList<UserDataDo> result,final HTMLPanel loadingImage) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -204,10 +209,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				maincontainer.setVisible(true);
 				individualTabContainer.clearStyles();
 				individualTabContainer.setScoredQuestionsHilight();
-				
+
 				hideAllPanels();
 				individualResourceBreakdownDatapnl.setVisible(true);
-				
+
 				individualScoredData.clear();
 				individualOpenendedData.clear();
 				individualResourceBreakdownData.clear();
@@ -225,7 +230,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	}
 		        });
 				for (UserDataDo userDataDo : result) {
-					if(userDataDo.getStatus()==0){
 						if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
 							if(!OE.equalsIgnoreCase(userDataDo.getType())){
 								questionsData.add(userDataDo);
@@ -237,7 +241,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 							resourceRowIndex.add(collectionProgressCount);
 						}
 						collectionProgressCount++;
-					}
 				}
 				setQuestionsData(questionsData);
 				setQuestionsPrintData(questionsData);
@@ -245,7 +248,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				setOpenendedQuestionsPrintData(openendedData);
 				setCollectionBreakDown(result,loadingImage);
 				setCollectionBreakDownPrintData(result);
-		
+
 			}
 		});
 	}
@@ -255,12 +258,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	void setCollectionBreakDownPrintData(final ArrayList<UserDataDo> result){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
 				try{
-						printResourceData.clear();			
+						printResourceData.clear();
 						UserDataDo maxAvgValue=Collections.max(result,new Comparator<UserDataDo>() {
 				        	public int compare(UserDataDo o1, UserDataDo o2) {
 				        		 Long obj1 = new Long(o1.getTimeSpent());
@@ -268,7 +271,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        	     return obj1.compareTo(obj2);
 				        	}
 				        });
-				     
+
 					    final DataTable data = DataTable.create();
 					    data.addColumn(ColumnType.NUMBER, i18n.GL3259());
 				        data.addColumn(ColumnType.STRING, i18n.GL3267());
@@ -278,15 +281,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        data.addColumn(ColumnType.STRING, i18n.GL3261());
 				        int rowCount=0,rowVal=0;
 				        for(int i=0;i<result.size();i++) {
-				        	if(result.get(i).getStatus()==0){
 				        		rowCount=rowCount+1;
-				        	}
 				        }
 				        data.addRows(rowCount);
-				        
+
 				        for(int i=0;i<result.size();i++) {
-				         	if(result.get(i).getStatus()==0){
-				        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
+				        	data.setCell(rowVal, 0,result.get(i).getSequence(), null, getPropertiesCell());
 				            //set Format
 				              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 				              String categoryStyle="";
@@ -318,14 +318,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            categorylbl.addStyleName(categoryStyle);
 				            categorylbl.addStyleName(res.css().setMarginAuto());
 				            data.setValue(rowVal, 1,categorylbl.toString());
-				            
+
 				            //Set Question Title
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 				            questionTitle.addStyleName(res.css().alignLeft());
-				            
+
 				            data.setValue(rowVal, 2, questionTitle.toString());
-				          
+
 				           //Set time spent
 				            HorizontalPanel timeSpentpnl=new HorizontalPanel();
 				            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
@@ -335,26 +335,25 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            double maxAvgVal = ((double) result.get(i).getTimeSpent())/((double) maxAvgValue.getTimeSpent());
 				            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
 				            data.setValue(rowVal, 3, timeSpentpnl.toString());
-				           
+
 				            //set Views label
 				            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
 				            viewlbl.setStyleName(res.css().alignCenterAndBackground());
 				            data.setValue(rowVal, 4, viewlbl.toString());
-				            
+
 				            //Set reactions
 				            int reaction=result.get(i).getReaction();
 				            data.setValue(rowVal, 5, new AnalyticsReactionWidget(reaction).toString());
 				            rowVal++;
-				        }
 				        }
 				        final Options options = Options.create();
 				        options.setAllowHtml(true);
 				        Table table = new Table(data, options);
 				        printResourceData.add(table);
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("setCollectionBreakDownPrintData :"+e.getMessage());
 				}
-			
+
 			}
 		});
 	}
@@ -365,15 +364,15 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	void setCollectionBreakDown(final ArrayList<UserDataDo> result,final HTMLPanel loadingImage){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
 				try{
-				
+
 				final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionRowIndex);
 				final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceRowIndex);
-				
+
 					UserDataDo maxAvgValue=Collections.max(result,new Comparator<UserDataDo>() {
 			        	public int compare(UserDataDo o1, UserDataDo o2) {
 			        		 Long obj1 = new Long(o1.getTimeSpent());
@@ -381,7 +380,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        	     return obj1.compareTo(obj2);
 			        	}
 			        });
-			      
+
 				    final DataTable data = DataTable.create();
 				    data.addColumn(ColumnType.NUMBER, i18n.GL3259());
 			        data.addColumn(ColumnType.STRING, i18n.GL3267());
@@ -391,15 +390,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        data.addColumn(ColumnType.STRING, i18n.GL3261());
 			        int rowCount=0,rowVal=0;
 			        for(int i=0;i<result.size();i++) {
-			        	if(result.get(i).getStatus()==0){
 			        		rowCount=rowCount+1;
-			        	}
 			        }
 			        data.addRows(rowCount);
-			        
+
 			        for(int i=0;i<result.size();i++) {
-			        	if(result.get(i).getStatus()==0){
-			        		data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+			        		data.setCell(rowVal, 0, result.get(i).getSequence(), null, getPropertiesCell());
 				            //set Format
 				              String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
 				              String categoryStyle="";
@@ -431,13 +427,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            categorylbl.addStyleName(categoryStyle);
 				            categorylbl.addStyleName(res.css().setMarginAuto());
 				            data.setValue(rowVal, 1,categorylbl.toString());
-				            
+
 				            //Set Question Title
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 				            questionTitle.addStyleName(res.css().alignLeft());
 				            data.setValue(rowVal, 2, questionTitle.toString());
-				          
+
 				           //Set time spent
 				            HorizontalPanel timeSpentpnl=new HorizontalPanel();
 				            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
@@ -447,16 +443,15 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            double maxAvgVal = ((double) result.get(i).getTimeSpent())/((double) maxAvgValue.getTimeSpent());
 				            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
 				            data.setValue(rowVal, 3, timeSpentpnl.toString());
-				           
+
 				            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
 				            viewlbl.setStyleName(res.css().alignCenterAndBackground());
 				            data.setValue(rowVal, 4, viewlbl.toString());
-				            
+
 				            //Set reactions
 				            int reaction=result.get(i).getReaction();
 				            data.setValue(rowVal, 5, new AnalyticsReactionWidget(reaction).toString());
 				        	rowVal++;
-			        	}
 			        }
 			        final Options options = Options.create();
 			        options.setAllowHtml(true);
@@ -464,31 +459,31 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        individualResourceBreakdownData.add(table);
 			        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 			        filterDropDown.addChangeHandler(new ChangeHandler() {
-			    		
+
 						@Override
 						public void onChange(ChangeEvent event) {
 							  individualResourceBreakdownData.clear();
 								int selectedIndex=filterDropDown.getSelectedIndex();
 							 	operationsView=DataView.create(data);
 								 if(selectedIndex==1){
-									 operationsView.hideRows(primitivesResources); 
+									 operationsView.hideRows(primitivesResources);
 								 }
 								 if(selectedIndex==2){
-									 operationsView.hideRows(primitivesQuestions); 
+									 operationsView.hideRows(primitivesQuestions);
 								 }
 								 Table table = new Table(operationsView, options);
 							     table.setStyleName("collectionProgressTable");
-							     individualResourceBreakdownData.add(table);	
+							     individualResourceBreakdownData.add(table);
 							     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 						}
 					});
-			    	
+
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("setCollectionBreakDown :"+e.getMessage());
 				}
 			        if(loadingImage!=null)
 			        loadingImage.setVisible(false);
-			
+
 			}
 		});
 	}
@@ -498,12 +493,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	void setOpenendedQuestionsPrintData(final ArrayList<UserDataDo> result){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
 				try{
-					printOpendedData.clear();		
+					printOpendedData.clear();
 				    DataTable data = DataTable.create();
 				    data.addColumn(ColumnType.NUMBER, i18n.GL3259());
 			        data.addColumn(ColumnType.STRING, i18n.GL0308());
@@ -513,15 +508,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        data.addColumn(ColumnType.STRING, i18n.GL3262());
 			        data.addRows(result.size());
 			        for(int i=0;i<result.size();i++) {
-			        	if(result.get(i).getStatus()==0){
-			        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-			        	
+			        	data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
+
 			            //Set Question Title
 			            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 			            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 			            questionTitle.addStyleName(res.css().alignLeft());
 			            data.setValue(i, 1, questionTitle.toString());
-			          
+
 			            //Set completion
 			            int noOfAttempts=result.get(i).getAttempts();
 			            Label completion=new Label();
@@ -532,19 +526,18 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			            	completion.setText(i18n.GL3263());
 			            }
 			            data.setValue(i, 2, completion.toString());
-			          
+
 			            //Set time spent
 			            data.setValue(i, 3, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
-			           
+
 			            //Set reactions
 			            int reaction=result.get(i).getReaction();
 			            data.setValue(i, 4, new AnalyticsReactionWidget(reaction).toString());
-			           
+
 			            //set View response label
 			            Label viewResponselbl=new Label(result.get(i).getText());
 			            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 			            data.setValue(i, 5, viewResponselbl.toString());
-			        	}
 			        }
 			        Options options = Options.create();
 			        options.setAllowHtml(true);
@@ -557,9 +550,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        	printOpendedData.add(erroeMsg);
 			        }
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("setOpenendedQuestionsPrintData : "+e.getMessage());
 				}
-			
+
 			}
 		});
 	}
@@ -568,9 +561,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 * @param result
 	 */
 	void setOpenendedQuestionsData(final ArrayList<UserDataDo> result){
-		
+
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -583,14 +576,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        data.addColumn(ColumnType.STRING, i18n.GL3262());
 		        data.addRows(result.size());
 		        for(int i=0;i<result.size();i++) {
-		        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-		        	
+		        	data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
+
 		            //Set Question Title
 		            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 		            questionTitle.addStyleName(res.css().alignLeft());
 		            data.setValue(i, 1, questionTitle.toString());
-		          
+
 		            //Set completion
 		            int noOfAttempts=result.get(i).getAttempts();
 		            Label completion=new Label();
@@ -601,20 +594,26 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            	completion.setText(i18n.GL_GRR_NO());
 		            }
 		            data.setValue(i, 2, completion.toString());
-		          
+
 		            //Set time spent
 		            data.setValue(i, 3, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
-		           
+
 		            //Set reactions
 		            int reaction=result.get(i).getReaction();
 		            data.setValue(i, 4, new AnalyticsReactionWidget(reaction).toString());
-		           
+
 		            //set View response label
+		        	if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 		            Label viewResponselbl=new Label(VIEWRESPONSE);
 		            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 		            viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
 	   	            viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+	   	            viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+     			    viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+     			    viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 		            data.setValue(i, 5, viewResponselbl.toString());
+		        	}
+		            
 		        }
 		        Options options = Options.create();
 		        options.setAllowHtml(true);
@@ -626,9 +625,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	erroeMsg.setText(i18n.GL3264());
 		        	individualOpenendedData.add(erroeMsg);
 		        }
-		        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+		       // table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 		        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
-		
+
 			}
 		});;
 	}
@@ -650,7 +649,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	void setQuestionsPrintData(final ArrayList<UserDataDo> result){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -665,28 +664,49 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        data.addColumn(ColumnType.STRING, i18n.GL3270());
 			        data.addColumn(ColumnType.STRING, i18n.GL2084());
 			        data.addColumn(ColumnType.STRING, i18n.GL3271());
-			        
+
 			        data.addRows(result.size());
 			        if(result.size()!=0){
 						        for(int i=0;i<result.size();i++) {
 						        	isTickdisplay=false;
-						            data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-						           
+						            data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
+
 						            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 						            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 						            questionTitle.setStyleName(res.css().alignLeft());
 						            data.setValue(i, 1, questionTitle.toString());
 						            int noOfAttempts=result.get(i).getAttempts();
-						           
-						            
+
+
 						            //Set Answer choices
 						            String questionType= result.get(i).getType();
-						            String correctAnser = null;
-						        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
+						            if(questionType.equalsIgnoreCase("HS")){
+						            	questionType= result.get(i).getQuestionType();
+						            }
+						            String scoreStatus= result.get(i).getStatus();
+						        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF) || questionType.equalsIgnoreCase(TSLASHF)){
 						        		Label anserlbl=new Label();
 						        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-						        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
-						        			 JSONObject authorObject = value.isObject();
+						        			 Map<String, Integer> authorObject = result.get(i).getOptions();
+
+						        			 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+											 {
+												 String userSelectedOption=entry.getKey();
+												 int ansStatus=entry.getValue();
+												 if(userSelectedOption!=null){
+													 anserlbl.setText(userSelectedOption);
+													 if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+														 anserlbl.getElement().getStyle().setColor(CORRECT);
+														 isTickdisplay=true;
+													 }else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+														 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+													 }else{
+														 anserlbl.getElement().getStyle().setColor(INCORRECT);
+													 }
+												 }
+											 }
+
+						        			/*
 						        			 if(authorObject.keySet().size()!=0){
 						        				 String userSelectedOption=authorObject.keySet().iterator().next();
 							        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
@@ -701,7 +721,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 							        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
 							        				 }
 							        			 }
-						        			 }
+						        			 }*/
 						        		}
 						        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
 						        		data.setValue(i, 3, anserlbl.toString());
@@ -713,8 +733,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        			ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
 											for (MetaDataDo metaDataDo : questionList) {
 												String answerText = "";
-												if((metaDataDo.getAnswer_text() != null)) {
-													answerText = metaDataDo.getAnswer_text();
+												if((metaDataDo.getAnswerText() != null)) {
+													String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+													answerText = text;
 												}
 												answerTextFormat += '[' + answerText +']';
 												if(questionList.size()  != metaDataDo.getSequence()){
@@ -728,7 +749,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 											}
 											if(answersArry!=null && userFibOption!=null){
 												boolean isCorrect=false;
-												for (int k = 0; k < answersArry.length; k++) { 
+												for (int k = 0; k < answersArry.length; k++) {
 													Label answerChoice=new Label();
 													if(answersArry[k]!=null && k<userFibOption.length){
 														if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
@@ -800,23 +821,35 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 						        		}
 						        		 answerspnl.setStyleName(res.css().setMarginAuto());
 						        		 data.setValue(i, 3, answerspnl.toString());
+						        	}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
+							        	VerticalPanel answerspnl=new VerticalPanel();
+						        		if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
+						        			Label viewResponselbl=new Label(VIEWRESPONSE);
+						        			viewResponselbl.setStyleName("summaryViewResponse");
+						        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+						        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+						        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+						        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+						        			answerspnl.add(viewResponselbl);
+						        		}
+						        		 answerspnl.setStyleName(res.css().setMarginAuto());
+						        		 data.setValue(i, 3, answerspnl.toString());
 						        	}
-						        	
-						        	Image correctImg=new Image();      	            
+						        	Image correctImg=new Image();
 						        	if(isTickdisplay){
 						        		 correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
-						        	}else{ 
-						        		correctImg.setUrl(urlDomain+"/images/analytics/wrong.png");				        		
+						        	}else{
+						        		correctImg.setUrl(urlDomain+"/images/analytics/wrong.png");
 						        	}
 						            data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
 						            //Set attempts
 						            Label attempts=new Label(Integer.toString(noOfAttempts));
 						            attempts.setStyleName(res.css().alignCenterAndBackground());
 						            data.setValue(i, 4, attempts.toString());
-						            
+
 						            //Set time spent
 						            data.setValue(i, 5,AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
-						            
+
 						            //Set reactions
 						            int reaction=result.get(i).getReaction();
 						            data.setValue(i, 6, new AnalyticsReactionWidget(reaction).toString());
@@ -833,9 +866,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        	printScoredData.add(erroeMsg);
 			        }
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("setQuestionsPrintData : "+e.getMessage());
 				}
-			
+
 			}
 		});
 	}
@@ -845,7 +878,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	void setQuestionsData(final ArrayList<UserDataDo> result){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -856,40 +889,43 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        data.addColumn(ColumnType.STRING, i18n.GL3270());
 		        data.addColumn(ColumnType.STRING, i18n.GL2084());
 		        data.addColumn(ColumnType.STRING, i18n.GL3271());
-		      
+
 		        data.addRows(result.size());
 		      if(result.size()!=0){
 					        for(int i=0;i<result.size();i++) {
-					            data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-					           
+					            data.setCell(i, 0, result.get(i).getSequence(), null, getPropertiesCell());
 					            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 					            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 					            questionTitle.setStyleName(res.css().alignLeft());
 					            data.setValue(i, 1, questionTitle.toString());
 					            int noOfAttempts=result.get(i).getAttempts();
-					           
+
 					            //Set Answer choices
 					            String questionType= result.get(i).getType();
-					            String correctAnser = null;
-					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
+					            if(questionType.equalsIgnoreCase("HS")){
+					            	questionType= result.get(i).getQuestionType();
+					            }
+					            String scoreStatus= result.get(i).getStatus();
+
+					        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
 					        		Label anserlbl=new Label();
 					        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-					        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
-					        			 JSONObject authorObject = value.isObject();
-					        			 if(authorObject.keySet().size()!=0){
-					        				 String userSelectedOption=authorObject.keySet().iterator().next();
-						        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
-						        			 if(userSelectedOption!=null && correctAnser!=null){
-						        				 anserlbl.setText(userSelectedOption);
-						        				 if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
-						        					 anserlbl.getElement().getStyle().setColor(CORRECT);
-						        				 }else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
-						        					 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-						        				 }else{
-						        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
-						        				 }
-						        			 }
-					        			 }
+					        			 Map<String, Integer> authorObject=result.get(i).getOptions();
+					        			 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
+										 {
+											 String userSelectedOption=entry.getKey();
+											 if(userSelectedOption!=null){
+													anserlbl.setText(userSelectedOption);
+													if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+														anserlbl.getElement().getStyle().setColor(CORRECT);
+													}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+														anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+													}else{
+														anserlbl.getElement().getStyle().setColor(INCORRECT);
+													}
+												}
+										 }
+
 					        		}
 					        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
 					        		data.setValue(i, 2, anserlbl.toString());
@@ -901,8 +937,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        			ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
 										for (MetaDataDo metaDataDo : questionList) {
 											String answerText = "";
-											if((metaDataDo.getAnswer_text() != null)) {
-												answerText = metaDataDo.getAnswer_text();
+											if((metaDataDo.getAnswerText() != null)) {
+												String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
+												answerText = text;
 											}
 											answerTextFormat += '[' + answerText +']';
 											if(questionList.size()  != metaDataDo.getSequence()){
@@ -915,7 +952,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 											userFibOption =result.get(i).getText().split(",");
 										}
 										if(answersArry!=null && userFibOption!=null){
-											for (int k = 0; k < answersArry.length; k++) { 
+											for (int k = 0; k < answersArry.length; k++) {
 												Label answerChoice=new Label();
 												if(answersArry[k]!=null && k<userFibOption.length){
 													if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
@@ -975,16 +1012,30 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        		}
 					        		 answerspnl.setStyleName(res.css().setMarginAuto());
 					        		 data.setValue(i, 2, answerspnl.toString());
+					        	}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType)){
+					        		VerticalPanel answerspnl=new VerticalPanel();
+					        		if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
+					        			Label viewResponselbl=new Label(VIEWRESPONSE);
+					        			viewResponselbl.setStyleName("summaryViewResponse");
+					        			viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+					        			viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
+					        			viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
+					        			viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
+					        			viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
+					        			answerspnl.add(viewResponselbl);
+					        		}
+					        		 answerspnl.setStyleName(res.css().setMarginAuto());
+					        		 data.setValue(i, 2, answerspnl.toString());
 					        	}
-					           
+
 					            //Set attempts
 					            Label attempts=new Label(Integer.toString(noOfAttempts));
 					            attempts.setStyleName(res.css().alignCenterAndBackground());
 					            data.setValue(i, 3, attempts.toString());
-					            
+
 					            //Set time spent
 					            data.setValue(i, 4, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
-					            
+
 					            //Set reactions
 					            int reaction=result.get(i).getReaction();
 					            data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
@@ -1002,7 +1053,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	individualScoredData.add(erroeMsg);
 		        }
 		        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
-		
+
 			}
 		});
 	}
@@ -1013,7 +1064,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
 		for (MetaDataDo metaDataDo : metaDataObj) {
-			if(metaDataDo.getIs_correct()==1){
+			if(metaDataDo.getIsCorrect()==1){
 				return AnalyticsUtil.getCharForNumber(metaDataDo.getSequence()-1);
 			}
 		}
@@ -1050,7 +1101,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	@Override
 	public void setViewResponseData(final ArrayList<OetextDataDO> result, final String resourceGooruId,final String collectionId,final String classpageId, final String pathwayId, final String questionType, final boolean isSummary, final String session, final ClasspageItemDo classpageItemDo) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -1067,7 +1118,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			    	 popupPanel.show();
 			    	 popupPanel.center();
 			     }
-			
+
 			}
 		});
 	}
@@ -1078,7 +1129,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	public void setPrintIndividualSummayData(final boolean isClickedOnSave, final boolean isClickedOnEmail){
 		GWT.runAsync(new SimpleRunAsyncCallback() {
-			
+
 			@Override
 			public void onSuccess() {
 
@@ -1089,7 +1140,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				collectionSummaryText.addStyleName("collectionSummaryText");
 				printWidget.add(collectionSummaryText);
 				printWidget.add(collectionSummaryWidget);
-				
+
 				//To add scored questions
 				Label scoredQuestionHeading=new Label();
 				scoredQuestionHeading.setText(i18n.GL2282());
@@ -1116,14 +1167,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					Print.it(style,printWidget);
 				    printWidget.clear();
 				}
-			
+
 			}
 		});
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setPdfForEmail(java.lang.String)
 	 */
-	@Override 
+	@Override
 	public void setPdfForEmail(String path){
 		if(emailPopup!=null){
 			emailPopup.setEmailData(collectionTitle,path);
@@ -1145,4 +1196,44 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	public Frame getFrame(){
 		return downloadFile;
 	}
+
+	private String removeHtmlTags(String html){
+		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
+        return html;
+	}
+
+
+	/**
+	 * This class is used to handle the click event on the table cell
+	 */
+	public class SummaryPopupClick implements ClickHandler{
+
+		String answerObj;
+		String questionType;
+		String attempts;
+		
+		public SummaryPopupClick(UserDataDo userDataDo) {
+			answerObj=userDataDo.getAnswerObject();
+			questionType=userDataDo.getType();
+			attempts=String.valueOf(userDataDo.getAttempts());
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+				JSONValue value = JSONParser.parseStrict(answerObj);
+				JSONObject answerObject = value.isObject();
+				Set<String> keys=answerObject.keySet();
+				Iterator<String> itr = keys.iterator();
+				JSONArray attemptsObj=null;
+				while(itr.hasNext()) {
+					attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+				}
+				if(attemptsObj!=null){
+					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, questionType,attempts);
+				}
+		}
+	};
+
+
 }

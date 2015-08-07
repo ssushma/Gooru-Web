@@ -188,8 +188,7 @@
 .addQuestionStandard {
 	color: rgb(112, 109, 109);
 	margin: 10px 0px 10px 0px;
-	width: 100%;
-	float:left;
+	display: inline-block;
 	font-size: 12px;
 	color: #515151;
 }
@@ -312,6 +311,7 @@
 .standardsCont {
 	float: left;
 	position: relative;
+	width: 100%;
 }
 .standardsEditResourceCont {
 	float: left;
@@ -352,9 +352,8 @@
 }
 .addResourceSuggestedBoxForQuestion {
 	color: #CCCCCC;
-	float: right;
+	/* float: right; */
 	font-size: 16px;
-    margin-right: 50px; 
 }
 .shelfVocabulary {
 	color: #cccccc;
@@ -1172,9 +1171,8 @@ transition: .5s;
 }
 .depthOfKnowledgeContainer
 {
-	float: left;
 	width: 100%;
-	clear: both;
+	margin-top: 10px;
 }
 .languageObjectiveTextArea
 {
@@ -1198,6 +1196,7 @@ height: 73px;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	width: 98%;
+	margin-left: 2px;
 }
 .checkBoxOuterContiner
 {
@@ -1332,11 +1331,10 @@ margin-top: 92px;
 position: relative;
 }
 .browseContainer{
- 	float: right;
-	right: -27%;
+	display: inline-block;
+	width: 13%;
 	position: relative;
-	margin-top: -12%;
-
+	text-align: right;
 }
 .charLimit{
 	float: right;
@@ -1415,4 +1413,12 @@ width: 100%;
 	color: #007BCF !important;
 	width: 100%;
 	font-size: 12px;
+}
+@media only screen and (min-width:768px) and (max-width:1024px){
+	.addResourceSuggestedBoxForQuestion {
+	  margin-right:  0px;
+	}
+	.standardsCont input[type="text"] {
+	width:79% !important;
+	}
 }

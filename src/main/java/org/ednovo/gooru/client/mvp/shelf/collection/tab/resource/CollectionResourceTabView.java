@@ -28,8 +28,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
@@ -47,12 +53,6 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.tooltip.AddResourceToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
-import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -304,7 +304,11 @@ public class CollectionResourceTabView extends
 				toolTipPopupPanel.clear();
 				buttonContainerForQuestionGreay.setVisible(false);
 				buttonContainerAddGray.setVisible(false);
-				buttonContainer.setVisible(true);
+				if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
+					buttonContainer.setVisible(false);
+				}else{
+					buttonContainer.setVisible(true);
+				}
 				buttonContainerForQuestion.setVisible(true);
 			}
 		}
@@ -324,7 +328,8 @@ public class CollectionResourceTabView extends
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 							getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
-						}else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
+						}else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")
+								|| collectionItemDo.getResource().getResourceType().getName().equals("vimeo/video")){
 							editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
 								@Override
@@ -369,7 +374,9 @@ public class CollectionResourceTabView extends
 									category = categoryStr;
 	 								thumbnailUrl = thumbnailUrlStr;
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
+									System.out.println("collectionid::"+collectionItemDo.getParentGooruOid());
+									System.out.println("collectiondo::"+collectionDo.getGooruOid());
+									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 								}
 								@Override
 								public void browseStandardsInfo(boolean val, boolean userResource) {
@@ -446,7 +453,11 @@ public class CollectionResourceTabView extends
 			toolTipPopupPanel.clear();
 			buttonContainerForQuestionGreay.setVisible(false);
 			buttonContainerAddGray.setVisible(false);
-			buttonContainer.setVisible(true);
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
+				buttonContainer.setVisible(false);
+			}else{
+				buttonContainer.setVisible(true);
+			}
 			buttonContainerForQuestion.setVisible(true);
 		}
 		if (newFlag) {
@@ -464,6 +475,7 @@ public class CollectionResourceTabView extends
 
 		} else {
 			collectionItemDo.setCollection(collectionDo);
+			collectionItemDo.setGooruUId(collectionDo.getUser().getGooruUId());
 			Label sequenceLbl = new Label(collectionItemDo.getItemSequence()+ "");
 			sequenceLbl.setStyleName(getCss().shelfResourceSequenceNumber());
 			int sequencePostion = collectionItemDo.getItemSequence();
@@ -483,7 +495,8 @@ public class CollectionResourceTabView extends
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 						getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
-					} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
+					} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube") || 
+							collectionItemDo.getResource().getResourceType().getName().equals("vimeo/video")){
 						editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
 							@Override
@@ -527,7 +540,7 @@ public class CollectionResourceTabView extends
 								category = categoryStr;
  								thumbnailUrl = thumbnailUrlStr;
 								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
+								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 							}
 							@Override
 							public void browseStandardsInfo(boolean val, boolean userResource) {
@@ -631,7 +644,8 @@ public class CollectionResourceTabView extends
 															.getCollectionItemId());
 										}
 									});
-						} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
+						} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")
+								|| collectionItemDo.getResource().getResourceType().getName().equals("vimeo/video")){
 							editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
 							@Override
@@ -678,7 +692,7 @@ public class CollectionResourceTabView extends
 									category = categoryStr;
 									thumbnailUrl = thumbnailUrlStr;
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
+									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 								}
 								@Override
 								public void browseStandardsInfo(boolean val, boolean userResource) {
@@ -838,7 +852,11 @@ public class CollectionResourceTabView extends
 			toolTipPopupPanel.clear();
 			buttonContainerForQuestionGreay.setVisible(false);
 			buttonContainerAddGray.setVisible(false);
-			buttonContainer.setVisible(true);
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
+				buttonContainer.setVisible(false);
+			}else{
+				buttonContainer.setVisible(true);
+			}
 			buttonContainerForQuestion.setVisible(true);
 		}
 		if (collectionDo.getCollectionItems().size() <= 0) {

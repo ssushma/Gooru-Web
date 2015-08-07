@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.devicesupport;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.client.mvp.search.event.SetDeviceDetailsEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetDeviceDetailsHandler;
 

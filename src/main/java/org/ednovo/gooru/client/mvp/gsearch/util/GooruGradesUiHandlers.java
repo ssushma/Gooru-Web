@@ -24,13 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch.util;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 /**
  * @author Search Team
  *
  */
 public interface GooruGradesUiHandlers extends BaseUiHandlers {
-
-	
+	public void setGradePanel(HTMLPanel panel);
 }

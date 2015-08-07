@@ -1,6 +1,6 @@
 
 /**
- * 
+ *
 */
 package org.ednovo.gooru.client.mvp.classpages.classlist;
 
@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.client.service.ClasspageServiceAsync;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -26,7 +26,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 /**
  * @fileName : ClassListPresenter.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -39,17 +39,17 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  */
 public class ClassListPresenter extends PresenterWidget<IsClassListView> implements ClassListUiHandlers{
 
-	
+
 	private SimpleAsyncCallback<StudentsAssociatedListDo> collabAsyncCallback;
-	
+
 	private SimpleAsyncCallback<StudentsAssociatedListDo> membersActiveAsyncCallback;
-	
+
 	private SimpleAsyncCallback<ArrayList<CollaboratorsDo>> addMembersAsyncCallback;
 
-	
+
 	@Inject
 	private ClasspageServiceAsync classpageServiceAsync;
-	
+
 	/**
 	 * @param eventBus
 	 * @param view
@@ -65,13 +65,13 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	public void setShareUrl(Map<String, String> shortenUrl){
 		getView().setShareUrl(shortenUrl);
 	}
-	
+
 	@Override
 	public void onReveal() {
 		super.onReveal();
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 	}
-	
+
 	@Override
 	protected void onBind() {
 		setAddMembersAsyncCallback(new SimpleAsyncCallback<ArrayList<CollaboratorsDo>>() {
@@ -99,9 +99,9 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 			public void onSuccess(CollectionDo result) {
 			}
 		});
-		
+
 	}
-	
+
 	@Override
 	public void removeUserFromClass(final ClasspageDo classpageDo, String emailId, final int pendingOffSet, final boolean pendingFlag,final MembersViewVc membersViewVc){
 		AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId,  new SimpleAsyncCallback<Void>() {
@@ -112,25 +112,25 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 		});
 	}
 	/**
-	 * 
-	 * @function insertUserAfterDeletionForPending 
-	 * 
+	 *
+	 * @function insertUserAfterDeletionForPending
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param gooruOid
 	 * @parm(s) : @param offSet
 	 * @parm(s) : @param pageSize
 	 * @parm(s) : @param statusType
 	 * @parm(s) : @param pendingFlag
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -138,7 +138,7 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
         this.classpageServiceAsync.getAssociatedStudentListByCode(gooruOid, offSet, 1, statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
                 @Override
                 public void onSuccess(StudentsAssociatedListDo result) {
-                	if(result.getSearchResults().size()>0){  
+                	if(result.getSearchResults().size()>0){
                 		if(pendingFlag)
                 		{
                 		getView().insertPendingUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0,false);
@@ -151,36 +151,36 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
                 }
         });
 }
-	
-	/** 
+
+	/**
 	 * This method is to get the collabAsyncCallback
 	 */
 	public SimpleAsyncCallback<StudentsAssociatedListDo> getCollabAsyncCallback() {
 		return collabAsyncCallback;
 	}
-	
-	/** 
+
+	/**
 	 * This method is to set the collabAsyncCallback
 	 */
 	public void setCollabAsyncCallback(SimpleAsyncCallback<StudentsAssociatedListDo> collabAsyncCallback) {
 		this.collabAsyncCallback = collabAsyncCallback;
 	}
-	/** 
+	/**
 	 * This method is to get the addMembersAsyncCallback
 	 */
 	public SimpleAsyncCallback<ArrayList<CollaboratorsDo>> getAddMembersAsyncCallback() {
 		return addMembersAsyncCallback;
 	}
-	/** 
+	/**
 	 * This method is to set the addMembersAsyncCallback
 	 */
 	public void setAddMembersAsyncCallback(SimpleAsyncCallback<ArrayList<CollaboratorsDo>> addMembersAsyncCallback) {
 		this.addMembersAsyncCallback = addMembersAsyncCallback;
 	}
-	
+
 	/**
 	 * @param collectionId
-	 * 
+	 *
 	 */
 	@Override
 	public void getMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType,final boolean increasePageNum) {
@@ -190,7 +190,7 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 			public void onSuccess(StudentsAssociatedListDo result) {
 				//Display all members in pending list.
 				getView().displayPendingMembersList(result.getSearchResults(), false, result.getTotalHitCount(),increasePageNum,false);
-				
+
 			}
 		});
 	}
@@ -199,13 +199,13 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	public void addMembers(String classpageId, List<String> emailIds){
 		getClasspageServiceAsync().inviteStudentToClass(classpageId, emailIds, getAddMembersAsyncCallback());
 	}
-	/** 
+	/**
 	 * This method is to get the classpageServiceAsync
 	 */
 	public ClasspageServiceAsync getClasspageServiceAsync() {
 		return classpageServiceAsync;
 	}
-	/** 
+	/**
 	 * This method is to set the classpageServiceAsync
 	 */
 	public void setClasspageServiceAsync(ClasspageServiceAsync classpageServiceAsync) {
@@ -227,18 +227,18 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 			}
 		});
 	}
-	/** 
+	/**
 	 * This method is to get the membersActiveAsyncCallback
 	 */
 	public SimpleAsyncCallback<StudentsAssociatedListDo> getMembersActiveAsyncCallback() {
 		return membersActiveAsyncCallback;
 	}
-	/** 
+	/**
 	 * This method is to set the membersActiveAsyncCallback
 	 */
 	public void setMembersActiveAsyncCallback(
 			SimpleAsyncCallback<StudentsAssociatedListDo> membersActiveAsyncCallback) {
 		this.membersActiveAsyncCallback = membersActiveAsyncCallback;
 	}
-	
+
 }

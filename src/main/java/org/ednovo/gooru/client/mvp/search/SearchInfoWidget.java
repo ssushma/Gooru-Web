@@ -33,28 +33,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.LicenseDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.customFieldValuesDO;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
-import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOutHideToolTip;
-import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOverShowToolTip;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.LiecenceTooltip;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.LicenseDo;
-import org.ednovo.gooru.shared.model.content.ResourceDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -1012,12 +1009,12 @@ public class SearchInfoWidget extends Composite {
 
 			if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 				depthofknowledgedetails = new ArrayList<String>();
-				if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
-					if(collectionItemDo.getResource().getDepthOfKnowledges().size()>0){
-						for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledges().size();i++){
-							if(collectionItemDo.getResource().getDepthOfKnowledges().get(i).isSelected())
+				if(collectionItemDo.getResource().getDepthOfKnowledge()!=null){
+					if(collectionItemDo.getResource().getDepthOfKnowledge().size()>0){
+						for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledge().size();i++){
+							if(collectionItemDo.getResource().getDepthOfKnowledge().get(i).isSelected())
 							{
-								depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledges().get(i).getValue());
+								depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledge().get(i).getValue());
 							}
 						}
 						if(depthofknowledgedetails.size()>0){

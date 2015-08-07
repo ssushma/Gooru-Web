@@ -24,8 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.end.study;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 
 public interface IsCollectionHomeMetadataView extends IsViewWithHandlers<CollectionHomeMetadataUiHandlers>{
 	public void setCollectionMetadata(CollectionDo collectionDo);

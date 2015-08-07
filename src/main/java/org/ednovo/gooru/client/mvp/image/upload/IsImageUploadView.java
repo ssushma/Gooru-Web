@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.image.upload;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.gwtplatform.mvp.client.PopupView;
 

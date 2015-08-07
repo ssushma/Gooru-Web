@@ -33,7 +33,7 @@
 	background: url(images/sprites.png) no-repeat;
 }
 .addResourceFormRightInnerMainDiv {
-	padding: 0px 0px 0px 10px;
+	padding: 0px 20px 0px 10px;
 }
 .addResourceArrowleftContainer {
 	float: right;
@@ -142,14 +142,14 @@ user agent stylesheetdiv {
 	padding: 8px 0px 5px 10px;
 }
 .addResourceFormRightOuterDiv {
-	float: left;
-	width: 75%;
+	/* float: left;
+	width: 75%; */
 	padding: 0px 0px 0px 10px;
 	border-left: 1px solid rgb(221,221,221);
 	background-color:white;
 	overflow-y: auto !important;
     overflow-x: hidden !important;
-	max-height: 567px;
+	max-height: 500px;
 	min-height:300px;
 }
 .addResourceEditFormOuterDiv {
@@ -164,10 +164,11 @@ user agent stylesheetdiv {
 }
 .addResourceFormTitle {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	color: rgb(81,81,81);
 	text-align: left;
-	padding: 0px 0px 2px 0px;
+	display: inline-block;
+	padding: 0px 0px 7px 0px;
 }
 .addResourceDepthOfKnoweldgeFormTitle{
 	font-family: Arial, Helvetica, sans-serif;
@@ -185,13 +186,12 @@ user agent stylesheetdiv {
 }
 .addResourceFormTitleChoiceContainer {
 margin: 20px 0px 0px 0px;
-float: left;
 width: 100%;
 }
 .addResourceFormTitleChoice {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	color: rgb(81,81,81);
 	text-align: left;
 }
@@ -202,7 +202,7 @@ width: 100%;
 	text-align: left;
 	position: static;
 	float: right;
-	margin-right: 22px;
+	margin-left: 160px;
 }
 .addResourceFormAnswerContainerOuter {
 	clear: both;
@@ -215,7 +215,7 @@ width: 100%;
 .addResourceFormAnswerContainer {
 	float: left;
 	width:100%;
-	margin: 20px 0px 0px 0px;
+	margin: 7px 0px 0px 0px;
 }
 .addResourceFormAnswerContainerAlign {
 	margin: 0px 0px 0px 0px;
@@ -242,7 +242,7 @@ width: 100%;
 }
 .addResourceFormAnswerInputControl {
 	float: left;
-	width: 75%;
+	width: 87%;
 	height: 30px;
 	border-color: rgb(221,221,221);
 	border-width: 1px;
@@ -252,7 +252,7 @@ width: 100%;
 }
 .addResourceMultipleAnswerInputControl {
 	float: left;
-	width: 60%;
+	width: 80%;
 	height: 30px;
 	border-color: rgb(221,221,221);
 	border-width: 1px;
@@ -275,7 +275,7 @@ width: 100%;
 }
 .addResourceFormAnswerMarkbg {
 	float: right;
-	margin-right: 28px;
+	margin-right: 1%;
 	padding: 3px 0px 0px 3px;
 }
 .addResourceFormAnswerMarker {
@@ -314,7 +314,8 @@ width: 100%;
 	border-style: solid;
 	height: 85px!important;
 	min-height: 85px!important;
-	width:305px !important;
+	width:100%;
+	margin-top: 5px;
 	box-sizing:content-box;
 
 }
@@ -364,7 +365,7 @@ width: 100%;
 	/* margin-right: 72px;
 	float: right;
 	width:230px; */
-	margin-right: 70px;
+	margin-right: 10%;
 	float: right;
 }
 .addResourceFormInputBottomTextAnswerChoice {
@@ -541,11 +542,11 @@ width: 100%;
 	margin: 4px 2px 2px 4px;
 }
 .addResourceButtonContainer {
-	float:left;
-	margin: 27px 0px 15px 105px;
+	text-align: right;
+	margin-top: 23px;
 }
 .addResourceOk {
-	float: left;
+	display: inline-block;
 }
 .addResourceAddTitle {
 
@@ -661,20 +662,33 @@ width: 100%;
 .addResourceFormInputBottomTextOuterdiv {
 	clear: both;
 }
+
+.addImageTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	float: left;
+	cursor: pointer;
+	color: #1076ba;
+	border: 1px solid #1076ba;
+	padding: 6px 12px;
+	margin: 11px 73px 0 0;
+	text-align: center;
+}
+
 .addResourceBottmTitle {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	float: right;
 	cursor: pointer;
 	color: rgb(16,118,186);
-	text-align: right;
+	text-align: left;
+	float:left;
 	padding: 0px 0px 0px 0px;
-	margin:11px 73px 0px 0px;
 }
 .addResourceBottmTitleAlign {
 }
 .addResourceThumbimgContainer {
 	width: 100%;
+	display: inline-block;
 }
 .addResourceThumbimgHeading {
 	font-family: Arial, Helvetica, sans-serif;
@@ -682,7 +696,8 @@ width: 100%;
 	line-height: 120%;
 	color: rgb(81,81,81);
 	text-align: left;
-	padding: 15px 0px 5px 0px;
+	padding: 0px 0px 5px 0px;
+	display: inline-block;
 }
 .addResourceThumbimg {
 	float: left;
@@ -736,7 +751,7 @@ width: 100%;
 }
 .addResourceThumbimgHeading {
 font-family: Arial, Helvetica, sans-serif;
-font-size: 12px;
+font-size: 13px;
 line-height: 120%;
 color: rgb(81,81,81);
 text-align: left;
@@ -776,8 +791,6 @@ width: 114px;
 /** Search Popup CSS **/
 .addResourceFormOuterDiv {
 	background-color: white;
-	width: 75%;
-	float: left;
 	padding: 15px 10px;
 	border-left: 1px solid rgb(221,221,221);
 	overflow-y: auto !important;
@@ -959,14 +972,12 @@ width: 114px;
 	margin: 25px 0px;
 	overflow: hidden;
 	/* width: 390px; */
-	float: left;
 	border-bottom: none;
 	border-left: none;
 	border-style: solid;
 	border-color: #ddd;
 	border-left: none;
 	border-bottom: none;
-	/*background: url(../images/core/background-image.png) !important; */
 	padding-bottom: 10px;
 	padding-right: 8px;
 }
@@ -996,7 +1007,7 @@ width: 114px;
 .questionTypeHeaderStyle{
 	margin-top: 10px;
 	font-family: Arial, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: bold;
 	color: #515151;
 }
@@ -1006,7 +1017,6 @@ width: 114px;
 	font-size: 12px;
 	font-style: italic;
 	color: #999;
-	width: 362px;
 }
 .tinyMceToolBarButton{
 	color: #1076BB;
@@ -1070,23 +1080,19 @@ width: 114px;
 }
 .resourceRightsCheckBox
 {
-	float: left;
-	margin-left: -3px;
-	margin-top: 30px;	
+	display: inline-block;
 }
 .resourceRightsCheckBox input[type="checkbox"]{
 margin: 1px 0;
 vertical-align: middle;
 }
 .resourceRightsContainer {
-	margin-left: 45px;
-	width: 100%;
-	margin-top:17px;
+	text-align: left;
+	margin-top:32px;
 	display: inline-block;
 }
 .ownResourceFormDeclarationText {
-	float: left;
-	margin-top: 29px;
+	display: inline-block;
 	font-size: 13px;
 }
 
@@ -1097,24 +1103,110 @@ vertical-align: middle;
 	text-align: center;
 	position: static;
 	float: left;
-	margin-left: 41px;
+	margin-left: 14px;
 }
 .charLimitStyle{
-	float: right;
-	margin-left: 108px;
-	margin-top:-17px;
+	display: inline-block;
+	margin-left: 10px;
 	color: #999;
 }
 .charLimitExplanationStyle{
-	display: inline-flex;	
-	float: right;
+	display: inline-flex;
 	color: #999;
-	margin-right: 87px;
+	margin-left: 10px;
 }
 .hintsErrorValidation{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: rgb(250,176,58);
-	margin-right: 70px;
+	margin-top: 5px;
 	float: right;
+}
+.marginDivBlock {
+	display: inline-block;
+}
+.advancedOptionsTabs {
+	color: #1076B8;
+	padding: 5px 18px;
+	border: 1px solid #DDDDDD;
+	background: #fff url(../images/NewResourcePopup/sprite-new-resource.png) no-repeat -4px 2px;
+	display: inline-block;
+    margin-top: 10px;
+}
+.advancedOptionsTabs:hover {
+	border-color: #1076bb;
+}
+.advancedOptions {
+	float: left;
+	margin-bottom: 3px;
+}
+.eHeader{
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#515151;
+	padding:0 0 0 18px;
+	/* margin-bottom:8px; */
+	background:#ffffff url(../images/NewResourcePopup/sprite-new-resourcenew.png) no-repeat -7px -70px;
+	height: 13px;
+	display: inline-block;
+	cursor: pointer;
+}
+.advancedOptionsTabActive {
+	background: #fff url(../images/NewResourcePopup/sprite-new-resource.png)
+		no-repeat -4px -24px;
+	position: relative;
+	padding: 5px 18px;
+    display: inline-block;
+    margin-top: 10px;
+	border: 1px solid #4c9645;
+	color: #4c9645;
+}
+.advancedOptionsTabActive:hover {
+	border-color: #4c9645;
+}
+.advancedOptionsContainer {
+	margin-top: 10px;
+}
+.advancedOptionsHeading {
+	text-align: left;
+	color: #999;
+	font-size: 11px;
+	width: 100%;
+	display: inline-block;
+	margin-bottom: 6px;
+}
+.addAdvancedHeaderTextContainer {
+	text-align: center;
+	position:relative;
+	color: #999;
+	font-size: 11px;
+	width: 100%;
+	display: inline-block;
+}
+.addAdvancedHeaderTextContainer > div {
+	padding: 6px 6px;
+	background: #fff;
+	display: inline-block;
+	position: relative;
+	z-index: 99;
+}
+
+.addAdvancedHeaderTextContainer:before{
+	position:absolute;
+	content:"";
+	height:1px;
+	background: #ddd;
+	width: 100%;
+	left: 0;
+	right: 0;
+	top: 11px;
+}
+.addblockHeaderContainer {
+	display: inline-block;
+	width:100%;
+}
+
+.addResourceContainer{
+	margin-left: 398px;
+	float: left;
 }

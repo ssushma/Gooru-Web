@@ -32,9 +32,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.ClasspageListPopupViewCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListHandler;
@@ -49,9 +52,6 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -344,7 +344,7 @@ public class StudyNowToolTip extends PopupPanel {
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
 							
-							StudentAssignmentView.setPrivatePageActive();
+							//StudentAssignmentView.setPrivatePageActive();
 
 						}
 						else if(result.getStatus().equalsIgnoreCase("pending")) 
@@ -364,7 +364,7 @@ public class StudyNowToolTip extends PopupPanel {
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
 							
-							StudentAssignmentView.setPrivatePagePending();
+							//StudentAssignmentView.setPrivatePagePending();
 
 						}
 						else 
@@ -397,7 +397,7 @@ public class StudyNowToolTip extends PopupPanel {
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
 						
-							if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+							/*if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 							{
 								StudentAssignmentView.setPublicPage();
 							}
@@ -408,7 +408,7 @@ public class StudyNowToolTip extends PopupPanel {
 							else 
 							{
 								StudentAssignmentView.setPublicPagePending();
-							}	
+							}	*/
 						
 				}
 					 setEnterLblVisbility(false);
@@ -461,7 +461,7 @@ public class StudyNowToolTip extends PopupPanel {
 							for(int i = 0; i<resultSize;i++) 
 							{
 //								Label className = new Label("classList "+i);
-								String classpageId = classpageListDo.getSearchResults().get(i).getGooruOid();
+								String classpageId = classpageListDo.getSearchResults().get(i).getClassUid();
 								classpageList.put(classpageId, classpageListDo.getSearchResults().get(i));
 								listClasspage.add(classpageId);
 								/*className.setStyleName("studyNowToolTipLbl");

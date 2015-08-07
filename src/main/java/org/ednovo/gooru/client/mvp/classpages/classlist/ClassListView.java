@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,10 +28,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
+import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -40,12 +45,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.Success
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.AutoSuggestForm;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
-import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -89,7 +88,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : ClassListView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -103,92 +102,92 @@ import com.google.gwt.user.client.ui.Widget;
 public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> implements IsClassListView, SelectionHandler<SuggestOracle.Suggestion> {
 
 	private static ClassListViewUiBinder uiBinder = GWT.create(ClassListViewUiBinder.class);
-	
 
-    
+
+
 	@UiField(provided = true)
 	ClasslistpageCBundle res;
-	
+
 	@UiField HTMLPanel publicAssignContainer, privateAssignContainer, panelSuggestBox, panelActions,privacyPolicyPanel;
-	
+
 	@UiField VerticalPanel panelActiveMembersList,panelPendingMembersList;
 
 	@UiField HTMLPanel panelCode,privateMsgPanel, publicMsgPanel, panelNoMembers, panelMembersList, panelPendingMembersContainer, panelActiveMembersContainter,assignHeader;
-	
+
 	@UiField Anchor ancPendingListSeeMore, ancActiveListSeeMore;
-	
+
 	@UiField HTMLPanel panelLoading,titleTxt,emailTxt,shareTxt,shareTitle,joinTxt,inviteTxt;
-	
+
 	@UiField TextBox txtClasspageLinkShare,txtClasspageCodeShare;
-	
+
 	@UiField Label visibilityTitle,openClassLabelTitle,openClassLabelDesc,openClosedLabelTitle,openClosedLabelDesc,lblMonitorDes;
-	
+
 	@UiField RadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
-	
+
 	@UiField HTMLPanel questionMarkPanel,questionMarkPanel1,questionMarkPanel2;
-	
+
 	@UiField Label manageHeader,manageTxt,trackTxt;
 
 	@UiFactory
 	public SimpleRadioButton createRadioButton() {
 	    return new SimpleRadioButton("");
 	}
-	
+
 	@UiField Button btnInvite;
-	
+
 	@UiField Label lblErrorMessage, lblPleaseWait, lblPendingMembers,lblActiveMembers,lblText, lblPendingPleaseWait, lblActivePleaseWait,lblActiveMembersDesc;
 	@UiField InlineHTML publicDescTxt;
 	AutoSuggestForm autoSuggetTextBox =null;
-	
+
 	@UiField InlineLabel lblPii,toUsText;
 	@UiField Anchor ancprivacy;
-		
+
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
     MessageProperties i18n = GWT.create(MessageProperties.class);
-    
+
 	private static int studentsLimitCount = 500;
 
 	int currentStudentsCount=0;
 
 	int overAllStudentsCount = 0;
-	
+
 	int pendingOffset = 0;
-	
+
 	int activeOffset = 0;
-	
+
 	int activeMemberCounter = 0;
-	
+
 	int pendingMemberCounter = 0;
-	
+
 	private int pageSize = 20;
-	
+
 	private int activeListTotalCount=0;
-	
+
 	private int  activeListPageNum=0;
-	
+
 	private int pendingListTotalCount=0;
-	
+
 	private int pendingListPageNum=0;
-	
+
 	private int pendingOffsetValue=0;
 
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-	
+
 	private ClasspageDo classpageDo;
-	
+
 	private SocialShareDo shareDo;
-	
+
 	private TermsOfUse termsOfUse;
-	
+
 	private static final String PUBLIC="public";
 	private static final String SHORTEN_URL = "shortenUrl";
-	
+
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
 	private PopupPanel toolTipPopupPanelNew1 = new PopupPanel();
 	private PopupPanel toolTipPopupPanelNew2 = new PopupPanel();
-	
 
-	
+
+
 	interface ClassListViewUiBinder extends UiBinder<Widget, ClassListView> {
 	}
 
@@ -196,207 +195,207 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		this.res = ClasslistpageCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		
+
 		setUiElements();
 		txtClasspageLinkShare.addClickHandler(new TextCopyHandler());
 		txtClasspageCodeShare.addClickHandler(new ClassCodeCopy());
 	}
 
 	/**
-	 * @function setTextAndIds 
-	 * 
+	 * @function setTextAndIds
+	 *
 	 * @created_date : Mar 16, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	*/
-	
+
 	private void setUiElements() {
 		panelLoading.getElement().setId("pnlLoadingPanel");
-		
+
 		txtClasspageCodeShare.setReadOnly(true);
 		txtClasspageCodeShare.getElement().setId("txtClassPageCodeShare");
 		StringUtil.setAttributes(txtClasspageCodeShare, true);
-		
+
 		txtClasspageLinkShare.setReadOnly(true);
 		txtClasspageLinkShare.getElement().setId("txtClassPageLinkShare");
 		StringUtil.setAttributes(txtClasspageLinkShare, true);
-		
+
 		btnInvite.setText(i18n.GL0944());
 		btnInvite.getElement().setId("btnInvite");
 		btnInvite.getElement().setAttribute("alt",i18n.GL0944());
 		btnInvite.getElement().setAttribute("title",i18n.GL0944());
 		btnInvite.setEnabled(true);
 		btnInvite.setVisible(true);
-		
+
 		visibilityTitle.setText(i18n.GL2019());
 		openClassLabelTitle.setText(i18n.GL2020());
 		openClassLabelDesc.setText(i18n.GL2021());
 		openClosedLabelTitle.setText(i18n.GL2022());
 		openClosedLabelDesc.setText(i18n.GL2023());
-		
+
 		lblMonitorDes.setText(i18n.GL2119());
 		lblMonitorDes.getElement().setId("lblMonitorDes");
 		lblMonitorDes.getElement().setAttribute("alt",i18n.GL2119());
 		lblMonitorDes.getElement().setAttribute("title",i18n.GL2119());
-		
+
 		manageTxt.setText(i18n.GL2120());
 		manageTxt.getElement().setId("lblmanageTxt");
 		manageTxt.getElement().setAttribute("alt",i18n.GL2120());
 		manageTxt.getElement().setAttribute("title",i18n.GL2120());
-	
+
 		privateMsgPanel.getElement().setId("pnlPrivateMsg");
 
 		publicDescTxt.getElement().setId("spnPublicDesc");
 		publicMsgPanel.getElement().setId("pnlPublicMsg");
 
-		
+
 		titleTxt.getElement().setInnerHTML(i18n.GL1590());
 		titleTxt.getElement().setId("pnlTitle");
 		titleTxt.getElement().setAttribute("alt",i18n.GL1590());
 		titleTxt.getElement().setAttribute("title",i18n.GL1590());
-		
+
 		emailTxt.getElement().setInnerHTML(i18n.GL1591());
 		emailTxt.getElement().setId("pnlEmail");
 		emailTxt.getElement().setAttribute("alt",i18n.GL1591());
 		emailTxt.getElement().setAttribute("title",i18n.GL1591());
-		
+
 		shareTxt.getElement().setInnerHTML(i18n.GL1592());
 		shareTxt.getElement().setId("pnlShare");
 		shareTxt.getElement().setAttribute("alt",i18n.GL1592());
 		shareTxt.getElement().setAttribute("title",i18n.GL1592());
-		
+
 		shareTitle.getElement().setInnerHTML(i18n.GL1594());
 		shareTitle.getElement().setId("pnlShareTitle");
 		shareTitle.getElement().setAttribute("alt",i18n.GL1594());
 		shareTitle.getElement().setAttribute("title",i18n.GL1594());
 
-		
+
 		joinTxt.getElement().setInnerHTML(i18n.GL1596());
 		joinTxt.getElement().setId("pnlJoinText");
 		joinTxt.getElement().setAttribute("alt",i18n.GL1596());
 		joinTxt.getElement().setAttribute("title",i18n.GL1596());
 
-		
+
 		manageHeader.setText(i18n.GL1597());
 		manageHeader.getElement().setId("pnlManageText");
 		manageHeader.getElement().setAttribute("alt",i18n.GL1597());
 		manageHeader.getElement().setAttribute("title",i18n.GL1597());
-		
+
 		trackTxt.setText(i18n.GL1598());
 		trackTxt.getElement().setId("pnlTrackText");
 		trackTxt.getElement().setAttribute("alt",i18n.GL1598());
 		trackTxt.getElement().setAttribute("title",i18n.GL1598());
-		
+
 		inviteTxt.getElement().setId("pnlInvite");
-		
+
 		assignHeader.getElement().setInnerText(i18n.GL1584());
 		assignHeader.getElement().setId("pnlAssignHeader");
 		assignHeader.getElement().setAttribute("alt",i18n.GL1584());
 		assignHeader.getElement().setAttribute("title",i18n.GL1584());
-		
+
 		lblPleaseWait.setText(i18n.GL1137());
 		lblPleaseWait.getElement().setId("lblPleaseWait");
 		lblPleaseWait.getElement().setAttribute("alt",i18n.GL1137());
 		lblPleaseWait.getElement().setAttribute("title",i18n.GL1137());
-		
+
 		lblText.setText(StringUtil.generateMessage(i18n.GL1528(), studentsLimitCount+""));
 		lblText.getElement().setId("lblText");
 		lblText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1528(), studentsLimitCount+""));
 		lblText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1528(), studentsLimitCount+""));
-		
+
 		lblPii.setText(i18n.GL1892());
 		lblPii.getElement().setId("spnPii");
 		lblPii.getElement().setAttribute("alt",i18n.GL1892());
 		lblPii.getElement().setAttribute("title",i18n.GL1892());
-		
+
 		ancprivacy.setText(i18n.GL1893());
 		ancprivacy.getElement().setId("lnkPrivacy");
 		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
 		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
-		
+
 		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnUsText");
 		toUsText.getElement().setAttribute("alt",i18n.GL1894());
 		toUsText.getElement().setAttribute("title",i18n.GL1894());
-		
+
 		privacyPolicyPanel.setVisible(false);
 		privacyPolicyPanel.getElement().setId("pnlPrivacyPolicy");
-		
+
 		lblPleaseWait.setVisible(false);
 		lblErrorMessage.setVisible(false);
 		lblErrorMessage.getElement().setId("errlblErrorMessage");
-		
+
 		panelNoMembers.setVisible(false);
 		panelNoMembers.getElement().setId("pnlNoMembers");
-		
+
 		panelMembersList.setVisible(false);
 		panelMembersList.getElement().setId("pnlMembersList");
-		
+
 		lblPendingMembers.setText(i18n.GL1525());
 		lblPendingMembers.getElement().setId("lblPendingMembers");
 		lblPendingMembers.getElement().setAttribute("alt",i18n.GL1525());
 		lblPendingMembers.getElement().setAttribute("title",i18n.GL1525());
-		
+
 		lblActiveMembers.setText(i18n.GL1526());
 		lblActiveMembers.getElement().setId("lblActiveMembers");
 		lblActiveMembers.getElement().setAttribute("alt",i18n.GL1526());
 		lblActiveMembers.getElement().setAttribute("title",i18n.GL1526());
-		
+
 		lblPendingPleaseWait.setVisible(false);
 		lblActivePleaseWait.setVisible(false);
-		
+
 		panelMembersList.setVisible(false);
 		lblPendingMembers.setVisible(false);
 		questionMarkPanel2.setVisible(false);
 		lblActiveMembers.setVisible(false);
-		
+
 		lblPendingPleaseWait.setText(i18n.GL0339().toLowerCase());
 		lblPendingPleaseWait.getElement().setId("lblPendingPleaseWait");
 		lblPendingPleaseWait.getElement().setAttribute("alt",i18n.GL0339().toLowerCase());
 		lblPendingPleaseWait.getElement().setAttribute("title",i18n.GL0339().toLowerCase());
-		
+
 		lblActivePleaseWait.setText(i18n.GL0339().toLowerCase());
 		lblActivePleaseWait.getElement().setId("lblActivePleaseWait");
 		lblActivePleaseWait.getElement().setAttribute("alt",i18n.GL0339().toLowerCase());
 		lblActivePleaseWait.getElement().setAttribute("title",i18n.GL0339().toLowerCase());
-		
+
 		ancPendingListSeeMore.setText(i18n.GL0508().toLowerCase());
 		ancPendingListSeeMore.getElement().setId("lnkPendingListSeeMore");
 		ancPendingListSeeMore.getElement().setAttribute("alt",i18n.GL0508().toLowerCase());
 		ancPendingListSeeMore.getElement().setAttribute("title",i18n.GL0508().toLowerCase());
-		
-		
+
+
 		ancActiveListSeeMore.setText(i18n.GL0508().toLowerCase());
 		ancActiveListSeeMore.getElement().setId("lnkActiveListSeeMore");
 		ancActiveListSeeMore.getElement().setAttribute("alt",i18n.GL0508().toLowerCase());
 		ancActiveListSeeMore.getElement().setAttribute("title",i18n.GL0508().toLowerCase());
-		
+
 		lblActiveMembersDesc.setText(i18n.GL1633());
 		lblActiveMembersDesc.getElement().setId("lblActiveMembersDesc");
 		lblActiveMembersDesc.getElement().setAttribute("alt",i18n.GL1633());
 		lblActiveMembersDesc.getElement().setAttribute("title",i18n.GL1633());
 		lblActiveMembersDesc.setVisible(false);
-		
+
 		panelActiveMembersList.getElement().setId("ActiveMembersList");
 		panelPendingMembersList.getElement().setId("PendingMembersList");
-		
+
 		panelSuggestBox.getElement().setId("pnlSuggestbox");
 		panelActions.getElement().setId("pnlActions");
 		panelCode.getElement().setId("pnlCode");
 		publicAssignContainer.getElement().setId("pnlPublicAssignContainer");
 		panelPendingMembersContainer.getElement().setId("pnlPendingMembersContainer");
 		panelActiveMembersContainter.getElement().setId("pnlActiveMembersContainter");
-		
+
 		final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 		imgNotFriendly.getElement().getStyle().setLeft(121, Unit.PX);
 		imgNotFriendly.getElement().getStyle().setMarginTop(-16, Unit.PX);
@@ -404,7 +403,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		imgNotFriendly.getElement().getStyle().setCursor(Cursor.POINTER);
 		imgNotFriendly.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
 		imgNotFriendly.addMouseOutHandler(new MouseOutHideToolTip1());
-		
+
 		final Image imgNotFriendly1 = new Image("images/mos/questionmark.png");
 		imgNotFriendly1.getElement().getStyle().setLeft(135, Unit.PX);
 		imgNotFriendly1.getElement().getStyle().setMarginTop(-16, Unit.PX);
@@ -412,7 +411,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		imgNotFriendly1.getElement().getStyle().setCursor(Cursor.POINTER);
 		imgNotFriendly1.addMouseOverHandler(new MouseOverShowClassCodeToolTip2());
 		imgNotFriendly1.addMouseOutHandler(new MouseOutHideToolTip2());
-		
+
 		final Image imgNotFriendly2 = new Image("images/mos/questionmark.png");
 		imgNotFriendly2.getElement().getStyle().setLeft(145, Unit.PX);
 		imgNotFriendly2.getElement().getStyle().setMarginTop(-26, Unit.PX);
@@ -431,21 +430,21 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	}
 
 	/**
-	 * @function createAutoSuggestBox 
-	 * 
+	 * @function createAutoSuggestBox
+	 *
 	 * @created_date : Jan 30, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	*/
 	@Override
 	public void createAutoSuggestBox() {
@@ -461,7 +460,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			public void dataObjectModel(String text) {
 				if (text.trim().length() > 0){
 					AppClientFactory.getInjector().getClasspageService().getSuggestionByName(text.trim(), new SimpleAsyncCallback<List<String>>() {
-	
+
 						@Override
 						public void onSuccess(List<String> lstOfSuggestedCollaborators) {
 							autoSuggetTextBox.clearAutoSuggestData();
@@ -495,10 +494,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		autoSuggetTextBox.getTxtInput().getTxtInputBox().setFocus(true);
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -523,10 +522,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -545,10 +544,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -573,10 +572,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -594,12 +593,12 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			toolTipPopupPanelNew1.hide();
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -624,10 +623,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -645,12 +644,12 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			toolTipPopupPanelNew2.hide();
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -665,7 +664,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
+
 			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<V2UserDo>() {
 
 				@Override
@@ -677,13 +676,13 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 				}
 			});
 		}
-		
+
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -701,13 +700,13 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			txtClasspageLinkShare.selectAll();
 			txtClasspageLinkShare.setFocus(true);
 		}
-		
+
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : ClassListView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -725,7 +724,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			txtClasspageCodeShare.selectAll();
 			txtClasspageCodeShare.setFocus(true);
 		}
-		
+
 	}
 
 	/**
@@ -734,7 +733,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@Override
 	public void setClassPageDo(ClasspageDo classpageDo) {
 		this.classpageDo = classpageDo;
-		
+
 		clearMembersListPanel();
 		setLoadingPanelVisibility(true);
 		txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
@@ -745,7 +744,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		pendingListTotalCount=0;
 		pendingOffsetValue=0;
 		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  pageSize*activeListPageNum, pageSize, "active",true,true);	//this will callback displayActiveMembersList method ....
-				
+
 		if(classpageDo.getSharing().equalsIgnoreCase(PUBLIC)){
 			visibilityRadioOpen.setChecked(true);
 			visibilityRadioInviteOnly.setChecked(false);
@@ -754,23 +753,23 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			visibilityRadioInviteOnly.setChecked(true);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function addShareClass 
-	 * 
+	 *
+	 * @function addShareClass
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -794,7 +793,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 		addShareClass();
 	}
-	
+
 	@UiHandler("ancPendingListSeeMore")
 	public void onClickPendingListSeeMore(ClickEvent event){
 		lblPendingPleaseWait.setVisible(true);
@@ -808,14 +807,14 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		int offset=(pageSize*activeListPageNum);
 		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  offset, pageSize, "active",true,false);	//this will callback displayActiveMembersList method ....
 	}
-	
+
 	@UiHandler("visibilityRadioOpen")
 	public void onvisibilityRadioOpenClicked(ClickEvent click){
 		visibilityRadioOpen.setChecked(true);
 		visibilityRadioInviteOnly.setChecked(false);
 		getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "public");
 	}
-	
+
 	@UiHandler("visibilityRadioInviteOnly")
 	public void onvisibilityRadioInviteOnlyClicked(ClickEvent click){
 		visibilityRadioOpen.setChecked(false);
@@ -823,29 +822,29 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "private");
 
 	}
-	
-	
-	
+
+
+
 	/**
-	 * 
-	 * @function showErrorMessage 
-	 * 
+	 *
+	 * @function showErrorMessage
+	 *
 	 * @created_date : Mar 16, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param errorMessage
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
-	
+
 	public void showErrorMessage(String errorMessage){
 		lblErrorMessage.setText(errorMessage);
 		lblErrorMessage.getElement().setAttribute("alt",errorMessage);
@@ -858,9 +857,9 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 */
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
-	
+
 	}
-	
+
 	//UI Handlers
 	@UiHandler("btnInvite")
 	public void OnClickInvite(ClickEvent event){
@@ -873,14 +872,14 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		String emailIds[] = studentsEmailIds.trim().split("\\s*,\\s*");
 		List<String> lstEmailID = new ArrayList<String>();
 		for (int i=0; i<emailIds.length; i++){
-			lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");	
+			lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");
 		}
 		if (studentsEmailIds != null && studentsEmailIds.equalsIgnoreCase("")){
 			lblPleaseWait.setVisible(false);
 			btnInvite.setVisible(true);
 			return;
 		}
-		
+
 		currentStudentsCount = emailIds.length + overAllStudentsCount;
 		if (currentStudentsCount > studentsLimitCount){
 			lblPleaseWait.setVisible(false);
@@ -888,7 +887,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			showErrorMessage(StringUtil.generateMessage(i18n.GL1523(), ""+studentsLimitCount));
 			return;
 		}
-				
+
 		//Check for Valid Email ID format
 		boolean from;
 		for (int i=0; i<emailIds.length; i++){
@@ -917,12 +916,12 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 				return;
 			}
 		}
-	
+
 		btnInvite.getElement().addClassName("disabled");
 		btnInvite.setEnabled(false);
 		//Call API to add the Student to the class.
 		getUiHandlers().addMembers(classpageDo.getClasspageId(), lstEmailID);	// this will callback the displayPendingMembersList method.
-		
+
 	}
 	@Override
 	public void setLoadingPanelVisibility(boolean visibility){
@@ -930,22 +929,22 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	}
 
 	/**
-	 * @function displayPendingMembersList 
-	 * 
+	 * @function displayPendingMembersList
+	 *
 	 * @created_date : Mar 17, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param lstPendingMembers
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	*/
 	@Override
 	public void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers, boolean isNew, int totalCount,boolean increasePageNum,boolean insertTop) {
@@ -1026,10 +1025,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 					delete.setPopupTitle(i18n.GL1548());
 					delete.setNotes(i18n.GL0748());
 					delete.setDescText(StringUtil.generateMessage(i18n.GL1547(), lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
-					delete.setPositiveButtonText(i18n.GL0190());						
+					delete.setPositiveButtonText(i18n.GL0190());
 					delete.setNegitiveButtonText(i18n.GL0142());
 					delete.setDeleteValidate("delete");
-					delete.setPixelSize(450, 353);		
+					delete.setPixelSize(450, 353);
 					delete.show();
 					delete.center();
 				}
@@ -1041,7 +1040,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			}
 	 }
 	/**
-	 * 
+	 *
 	 */
 	public void removePendiUserWidget(MembersViewVc membersViewVc,boolean isPendingList){
 		membersViewVc.removeFromParent();
@@ -1051,30 +1050,30 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
 		}
 	}
-	
-	
+
+
 	@Override
 	public Anchor getSeeMorePendingLabel() {
 		return ancPendingListSeeMore;
 	}
 
 	/**
-	 * @function displayActiveMembersList 
-	 * 
+	 * @function displayActiveMembersList
+	 *
 	 * @created_date : Mar 17, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param lstActiveMembers
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	*/
 	@Override
 	public void displayActiveMembersList(List<CollaboratorsDo> lstActiveMembers, boolean isNew, int totalCount,boolean increasePageNum) {
@@ -1093,6 +1092,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			Label noActiveStudents = new Label(i18n.GL1527());
 			panelActiveMembersContainter.setVisible(true);
 			noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
+			panelActiveMembersList.clear();
 			panelActiveMembersList.add(noActiveStudents);
 		}else{
 			for (int k=0; k<lstActiveMembers.size();k++){
@@ -1112,12 +1112,12 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 	}
 	/**
-	 * 
+	 *
 	 */
 	public void getPendingMembersList(){
 		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(), 0, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
 	}
-	
+
 	@Override
 	 public void insertActiveUserAfterDeletion(final CollaboratorsDo lstActiveMembers, boolean isNew, int totalCount, int intPos){
 		MembersViewVc membersViewVc = new MembersViewVc(AppClientFactory.getCurrentPlaceToken(), isNew, lstActiveMembers, classpageDo,intPos) {
@@ -1146,16 +1146,16 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 						Window.enableScrolling(true);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						hide();
-						
+
 					}
 				};
 				delete.setPopupTitle(i18n.GL1548());
 				delete.setNotes(i18n.GL0748());
 				delete.setDescText(StringUtil.generateMessage(i18n.GL1547(), lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
-				delete.setPositiveButtonText(i18n.GL0190());						
+				delete.setPositiveButtonText(i18n.GL0190());
 				delete.setNegitiveButtonText(i18n.GL0142());
 				delete.setDeleteValidate("delete");
-				delete.setPixelSize(450, 353);	
+				delete.setPixelSize(450, 353);
 				delete.show();
 				delete.center();
 			}
@@ -1167,21 +1167,21 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 }
 
 	/**
-	 * @function clearMembersListPanel 
-	 * 
+	 * @function clearMembersListPanel
+	 *
 	 * @created_date : Mar 17, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	*/
 	@Override
 	public void clearMembersListPanel() {
@@ -1196,7 +1196,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	public void enableInvite() {
 		lblPleaseWait.setVisible(false);
 		btnInvite.setVisible(true);
-		
+
 		if (overAllStudentsCount >= studentsLimitCount){
 			btnInvite.setEnabled(false);
 			btnInvite.getElement().addClassName("disabled");
@@ -1205,10 +1205,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}else{
 			btnInvite.setEnabled(true);
 			btnInvite.getElement().removeClassName("disabled");
-			
+
 			panelActions.getElement().removeClassName(res.css().buttonTooltip());
 		}
-		
+
 		createAutoSuggestBox();
 	}
 
@@ -1227,7 +1227,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 					Window.enableScrolling(true);
 				}
 			}
-			
+
 		};
 
 		success.setPopupTitle(i18n.GL1556());
@@ -1239,7 +1239,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		success.setPositiveButtonText(i18n.GL0190());
 		success.center();
 		success.show();
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -1263,7 +1263,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		createAutoSuggestBox();
         lblErrorMessage.setVisible(false);
 	}
-	
+
 	@UiHandler("ancprivacy")
 	public void onClickPrivacyAnchor(ClickEvent clickEvent){
 		Window.enableScrolling(false);
@@ -1275,7 +1275,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 			}
-			
+
 		};
 		termsOfUse.show();
 		termsOfUse.center();

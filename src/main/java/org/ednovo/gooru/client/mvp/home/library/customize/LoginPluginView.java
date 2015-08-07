@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,10 +26,15 @@ package org.ednovo.gooru.client.mvp.home.library.customize;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildView;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.ForgotPasswordVc;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEvent;
@@ -39,15 +44,11 @@ import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEve
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -57,8 +58,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -74,17 +73,17 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
- * 
+ *
  * @fileName : CollectionAssignViewTab.java
- * 
+ *
  * @description : This class is used to set the Editing collection to Assignment
  *              under Classpages.
- * 
+ *
  * @version : 1.0
- * 
+ *
  * @date: Jul 30, 2013
- * 
- * 
+ *
+ *
  * @Reviewer:
  */
 public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> implements
@@ -107,9 +106,9 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	@UiField
 	Label lblPleaseWait, collectionDescription,lblOr,lblLoginwithGooru;
-	
+
 	@UiField HTMLPanel hangOnText,signUpPanel;
-	
+
 	@UiField InlineLabel lblPii,toUsText,donotHaveAcount;
 	@UiField Anchor ancprivacy;
 
@@ -122,16 +121,16 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	CollectionDo collectionObject = new CollectionDo();
 	String collectionTitle="";
 	private TermsOfUse termsOfUse;
-	
+
 	private static final int HTTP_UNAUTHORISED_STATUS_CODE = 401;
 	private static final String UNAUTHORIZED_MSG ="Please double-check your password and try signing in again.";
 	private static final String USER_ID_WRONG_MSG = "Please double-check your email address and password, and then try logging in again.";
 
-	
+
 	private static final int HTTP_SUCCESS_STATUS_CODE = 200;
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
-	
-	
+
+
 	private static final String ERR_GL0078 = "401-GL0078";
 	private static final String ERR_GL0079 = "401-GL0079";
 	private static final String ERR_GL010501 = "401-GL010501";
@@ -144,7 +143,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	interface LoginPluginUiBinder extends UiBinder<Widget, LoginPluginView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
@@ -163,114 +162,114 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setLabelsAndIds
-	 * 
+	 *
 	 * @created_date : Jul 30, 2013
-	 * 
+	 *
 	 * @description To set the default values for labels, button and id for
 	 *              button.
-	 * 
+	 *
 	 * @parm(s) : NONE
-	 * 
+	 *
 	 * @return : void
-	 * 
+	 *
 	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	public void setLabelsAndIds() {
-		
+
 		lblPii.setText(i18n.GL1892());
 		lblPii.getElement().setId("lblPii");
 		lblPii.getElement().setAttribute("alt",i18n.GL1892());
 		lblPii.getElement().setAttribute("title",i18n.GL1892());
-		
+
 		ancprivacy.setText(i18n.GL1893());
 		ancprivacy.getElement().setId("lnkAncprivacy");
 		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
 		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
-		
+
 		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnToUsText");
 		toUsText.getElement().setAttribute("alt",i18n.GL1894());
 		toUsText.getElement().setAttribute("title",i18n.GL1894());
-		
+
 		hangOnText.getElement().setInnerText(i18n.GL0740());
 		hangOnText.getElement().setId("pnlHangOnText");
 		hangOnText.getElement().setAttribute("alt",i18n.GL0740());
 		hangOnText.getElement().setAttribute("title",i18n.GL0740());
 		signUpPanel.getElement().setId("pnlSignUpPanel");
-		
+
 		donotHaveAcount.setText(i18n.GL0634()+" ");
 		donotHaveAcount.getElement().setId("lblDonotHaveAcount");
 		donotHaveAcount.getElement().setAttribute("alt",i18n.GL0634()+" ");
 		donotHaveAcount.getElement().setAttribute("title",i18n.GL0634()+" ");
 		donotHaveAcount.getElement().setAttribute("style", "float: left;");
-		
+
 		ancSignUp.getElement().setAttribute("style", "float: left;padding: 0;margin-left: 5px;");
 		ancSignUp.setText(i18n.GL0207());
 		ancSignUp.getElement().setId("lnkAncSignUp");
 		ancSignUp.getElement().setAttribute("alt",i18n.GL0207());
 		ancSignUp.getElement().setAttribute("title",i18n.GL0207());
-		
+
 		collectionDescription.setText(i18n.GL0476());
 		collectionDescription.getElement().setId("lblCollectionDescription");
 		collectionDescription.getElement().setAttribute("alt",i18n.GL0476());
 		collectionDescription.getElement().setAttribute("title",i18n.GL0476());
-		
-	
+
+
 		loginTxtBox.setPlaceholder(i18n.GL0202());
 		loginTxtBox.getElement().setAttribute("placeholder",i18n.GL0202());
 		loginTxtBox.setFocus(true);
 		loginTxtBox.getElement().setId("tbLoginUsername");
-		
+
 		passwordTxtBox.setPlaceholder(i18n.GL0204());
 		passwordTxtBox.getElement().setId("tbLoginPassword");
-		
+
 		forgotPwd.setText(i18n.GL0205());
 		forgotPwd.getElement().setId("lnkForgotPwd");
 		forgotPwd.getElement().setAttribute("alt",i18n.GL0205());
 		forgotPwd.getElement().setAttribute("title",i18n.GL0205());
-		
+
 		loginButton.setText(i18n.GL0187());
 		loginButton.getElement().setId("btnLogin");
 		loginButton.getElement().setAttribute("alt",i18n.GL0187());
 		loginButton.getElement().setAttribute("title",i18n.GL0187());
-		
+
 		lblPleaseWait.setText(i18n.GL0242());
 		lblPleaseWait.getElement().setId("lblPleaseWait");
 		lblPleaseWait.getElement().setAttribute("alt",i18n.GL0242());
 		lblPleaseWait.getElement().setAttribute("title",i18n.GL0242());
-		
+
 		loginButton.setText(i18n.GL1185());
 
 		gmailButton.setText(i18n.GL0203());
 		gmailButton.getElement().setId("customizeGmailBtn");
 		gmailButton.getElement().setAttribute("alt",i18n.GL0203());
 		gmailButton.getElement().setAttribute("title",i18n.GL0203());
-		
+
 		lblOr.setText(i18n.GL0209());
 		lblOr.getElement().setId("lblOr");
 		lblOr.getElement().setAttribute("alt",i18n.GL0209());
 		lblOr.getElement().setAttribute("title",i18n.GL0209());
-		
+
 		lblLoginwithGooru.setText(i18n.GL0346());
 		lblLoginwithGooru.getElement().setId("lblLoginwithGooru");
 		lblLoginwithGooru.getElement().setAttribute("alt",i18n.GL0346());
 		lblLoginwithGooru.getElement().setAttribute("title",i18n.GL0346());
-		
+
 		lblPleaseWait.setVisible(false);
 
 	}
-	
+
 
 	/**
 	 * Added click handler to perform Login operation by taking entered user
 	 * name and password from the user.
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -279,10 +278,10 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	public void onLoginClicked(ClickEvent clickEvent) {
 
 		if (isCookieEnabled()) {
-			
+
 
 			String username = loginTxtBox.getText().trim();
-			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim()); 
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim());
 
 			if (username.length() > 1 && password.length() > 1) {
 
@@ -302,8 +301,8 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 											 errorCode = result.getResponseDo().getErrorCode();
 											 errorMessage = result.getResponseDo().getErrorMessage();
 										}
-										
-										if(statusCode==HTTP_SUCCESS_STATUS_CODE){ 
+
+										if(statusCode==HTTP_SUCCESS_STATUS_CODE){
 											lblPleaseWait.setText(i18n.GL0505());
 											AppClientFactory
 													.setLoggedInUser(result);
@@ -314,10 +313,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 													.fireEvent(new SetUserDetailsInCollectionPlayEvent(
 															result.getToken(),
 															result.getGooruUId()));
-											 if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
+											 if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 											    	AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
+											    	AppClientFactory.fireEvent(new AssessmentsSetPlayerLoginStatusEvent(true));
 											    }
-											
+
 											showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
 											MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
 										}else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
@@ -358,8 +358,8 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 			lblPleaseWait.setVisible(false);
 			new AlertMessageUc(i18n.GL0738(), new HTML(i18n.GL0348()));
 		}
-		
-		
+
+
 	}
 
 	private void setHandlers() {
@@ -369,7 +369,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	/**
 	 * creating inner class implementing KeyUpHandler interface.
-	 * 
+	 *
 	 */
 	public class LoginKeyupHandler implements KeyUpHandler {
 
@@ -381,7 +381,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		}
 
 	}
-	
+
 	@UiHandler("ancSignUp")
 	public void onSignUp(ClickEvent clickEvent){
 		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
@@ -410,7 +410,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	@UiHandler("forgotPwd")
 	public void onForgotPwdClicked(ClickEvent clickEvent) {
-		
+
 		ForgotPasswordVc forgotPasswordVc = new ForgotPasswordVc();
 		forgotPasswordVc.setGlassEnabled(true);
 		forgotPasswordVc.show();
@@ -418,11 +418,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		closePoupfromChild();
 
 	}
-	
+
 	/**
 	 * User login popup allows to sign in if correct credentials and set user
 	 * info on header view
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -430,17 +430,17 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	public void onGmailButtonClicked(ClickEvent clickEvent){
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) ||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
 			MixpanelUtil.mixpanelEvent("Customize_player_signin_google");
 		}else{
 			MixpanelUtil.mixpanelEvent("Customize_library_signin_google");
 		}
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
-		
+
 			@Override
 			public void onSuccess(String result) {
 				Window.Location.replace(result);
-			
+
 			}
 		});
 	}
@@ -462,14 +462,14 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 				@Override
 				public void onSuccess(CollectionDo result) {
-					
+
 					showSuccessMsgfromChild(result.getGooruOid(),collectionTitle);
 				}
 			};
 		}
 		return saveCollectionAsyncCallback;
 	}
-	
+
 	@UiHandler("ancprivacy")
 	public void onClickPrivacyAnchor(ClickEvent clickEvent){
 		Window.enableScrolling(false);
@@ -478,15 +478,15 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 			@Override
 			public void openParentPopup() {
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+				if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 					Window.enableScrolling(false);
-					
+
 				}else{
 					Window.enableScrolling(true);
 				}
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 			}
-			
+
 		};
 		termsOfUse.show();
 		termsOfUse.center();
@@ -497,9 +497,9 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 													return navigator.cookieEnabled;
 													}-*/;
 
-	
+
 	public abstract void closePoupfromChild();
-	
+
 	public abstract void showSuccessMsgfromChild(String collectionId,String collectionTitle );
-	
+
 }

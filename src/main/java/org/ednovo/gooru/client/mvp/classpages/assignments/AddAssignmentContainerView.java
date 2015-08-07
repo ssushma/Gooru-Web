@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,15 +27,15 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
 import java.util.Date;
 import java.util.List;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.DateBoxUcCustomizedForAssign;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -67,10 +67,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 /**
- * 
+ *
  * @fileName : AddAssignmentContainerView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -82,9 +82,9 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
  * @Reviewer:
  */
 public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssignmentContainerUiHandlers> implements IsAddAssignmentContainerView {
-	
+
 	private static AddAssignmentContainerViewUiBinder uiBinder = GWT.create(AddAssignmentContainerViewUiBinder.class);
-	
+
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AddAssignmentContainerViewUiBinder extends UiBinder<Widget, AddAssignmentContainerView> {
@@ -93,21 +93,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@UiField HTMLPanel floderTreeContainer,buttonsContainer;
 	@UiField Button addResourceBtnLbl,cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
-	@UiField Label addCollectionPopupHeader, addingText,emptyMsgLbl,subHeadingMsgLbl,displayCountLabel; 
-	
+	@UiField Label addCollectionPopupHeader, addingText,emptyMsgLbl,subHeadingMsgLbl,displayCountLabel;
+
 	@UiField FlowPanel popupContent;
-	
+
 	private int offset=0;
 	private int limit=20;
 	private int totalHitCount=0;
 	private int pageNum=1;
-	
+
 	private static final String ASSESSMENT = "assessment";
 
 	protected PopupPanel appPopUp;
 	private DateBoxUcCustomizedForAssign dateBoxUc;
 	/**
-	 * 
+	 *
 	 */
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
 		 @Override
@@ -122,9 +122,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	private CollectionTreeItem previousSelectedItem=null;
 	private FolderTreeItem currentFolderSelectedTreeItem=null;
 	private FolderTreeItem previousFolderSelectedTreeItem=null;
-	
-	
-	
+
+
+
 	@Inject
 	public AddAssignmentContainerView(EventBus eventBus) {
 		super(eventBus);
@@ -137,7 +137,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		addingText.setVisible(false);
 		appPopUp.setGlassEnabled(true);
 		appPopUp.setAutoHideOnHistoryEventsEnabled(true);
-		
+
 		dateBoxUc = new DateBoxUcCustomizedForAssign(false, false,false);
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -185,22 +185,22 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		folderTreePanel.addItem(loadingTreeItem());
 	}
 	/**
-	 * 
-	 * @function getCollectionCountFromFolder 
-	 * 
+	 *
+	 * @function getCollectionCountFromFolder
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param item
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : int
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -217,21 +217,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	    return collectionCount;
 	}
 	/**
-	 * 
-	 * @function setStaticTexts 
-	 * 
+	 *
+	 * @function setStaticTexts
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -240,27 +240,27 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		subHeadingMsgLbl.getElement().setId("lblSubHeadingMsg");
 		subHeadingMsgLbl.getElement().setAttribute("alt",i18n.GL1974());
 		subHeadingMsgLbl.getElement().setAttribute("title",i18n.GL1974());
-		
+
 		addCollectionPopupHeader.setText(i18n.GL1973());
 		addCollectionPopupHeader.getElement().setId("lblAddCollectionPopupHeader");
 		addCollectionPopupHeader.getElement().setAttribute("alt",i18n.GL1973());
 		addCollectionPopupHeader.getElement().setAttribute("title",i18n.GL1973());
-		
+
 		cancelResourcePopupBtnLbl.setText(i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setId("btnCancelResourcePoup");
 		cancelResourcePopupBtnLbl.getElement().setAttribute("alt",i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		addResourceBtnLbl.setText(i18n.GL0104());
 		addResourceBtnLbl.getElement().setId("btnAddResource");
 		addResourceBtnLbl.getElement().setAttribute("alt",i18n.GL0104());
 		addResourceBtnLbl.getElement().setAttribute("title",i18n.GL0104());
-		
+
 		addingText.setText(i18n.GL1172());
 		addingText.getElement().setId("lblAddText");
 		addingText.getElement().setAttribute("alt",i18n.GL1172());
 		addingText.getElement().setAttribute("title",i18n.GL1172());
-		
+
 		popupContent.getElement().setId("pnlPopupContent");
 		emptyMsgLbl.getElement().setId("lblEmptyMsg");
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
@@ -269,21 +269,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		buttonsContainer.getElement().setId("pnlButtonsContainer");
 	}
 	/**
-	 * 
-	 * @function setSelectedCollectionTitle 
-	 * 
+	 *
+	 * @function setSelectedCollectionTitle
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -296,21 +296,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		}
 	}
 	/**
-	 * 
-	 * @function setSelectedCollectionsCount 
-	 * 
+	 *
+	 * @function setSelectedCollectionsCount
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param count
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -321,7 +321,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			displayCountLabel.setText(label+" "+i18n.GL1975());
 			displayCountLabel.getElement().setAttribute("alt",label+" "+i18n.GL1975());
 			displayCountLabel.getElement().setAttribute("title",label+" "+i18n.GL1975());
-		
+
 		}else{
 			enableAssignButton(false);
 			displayCountLabel.setText("");
@@ -330,21 +330,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		}
 	}
 	/**
-	 * 
-	 * @function enableAssignButton 
-	 * 
+	 *
+	 * @function enableAssignButton
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param enable
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -360,21 +360,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		}
 	}
 	/**
-	 * 
-	 * @function removePreviousSelectedItem 
-	 * 
+	 *
+	 * @function removePreviousSelectedItem
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -387,21 +387,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
     	}
 	}
 	/**
-	 * 
-	 * @function closeDropDown 
-	 * 
+	 *
+	 * @function closeDropDown
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -409,28 +409,28 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		new CustomAnimation(dropdownListContainerScrollPanel).run(300);
 	}
 	/**
-	 * 
+	 *
 	 */
 	public void setFolderItems(TreeItem item,FolderListDo folderListDo){
 		displayWorkspaceData(item,folderListDo);
 	}
 	/**
-	 * 
-	 * @function getFolderItems 
-	 * 
+	 *
+	 * @function getFolderItems
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param item
 	 * @parm(s) : @param parentId
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -446,7 +446,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			addResourceBtnLbl.setEnabled(false);
 			addCollectionToAssign();
 		}
-		
+
 	}
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
@@ -454,21 +454,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 
 	/**
-	 * 
-	 * @function addCollectionToAssign 
-	 * 
+	 *
+	 * @function addCollectionToAssign
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -487,12 +487,12 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			addResourceBtnLbl.setEnabled(true);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : AddAssignmentContainerView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -551,12 +551,12 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			this.folerLevel = folerLevel;
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : AddAssignmentContainerView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -608,7 +608,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		public String getCollectionName(){
 			return collectionName;
 		}
-		
+
 	}
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel) {
@@ -616,7 +616,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		if(!dropdownListContainerScrollPanel.isVisible()){
 			dropdownListContainerScrollPanel.setVisible(true);
 		}
-		
+
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
@@ -641,22 +641,22 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		}
 	}
 	/**
-	 * 
-	 * @function displayWorkspaceData 
-	 * 
+	 *
+	 * @function displayWorkspaceData
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param item
 	 * @parm(s) : @param folderListDo
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -690,22 +690,22 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		}
 	}
 	/**
-	 * 
-	 * @function getTreeItemStyleName 
-	 * 
+	 *
+	 * @function getTreeItemStyleName
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param folderLevel
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -719,21 +719,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		}
 	}
 	/**
-	 * 
-	 * @function adjustTreeItemStyle 
-	 * 
+	 *
+	 * @function adjustTreeItemStyle
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param uiObject
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -755,54 +755,33 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	      }
  }
    	/**
-   	 * 
-   	 * @function setPagination 
-   	 * 
+   	 *
+   	 * @function setPagination
+   	 *
    	 * @created_date : 07-Dec-2014
-   	 * 
+   	 *
    	 * @description
-   	 * 
-   	 * 
+   	 *
+   	 *
    	 * @parm(s) : @param count
-   	 * 
+   	 *
    	 * @return : void
    	 *
    	 * @throws : <Mentioned if any exceptions>
    	 *
-   	 * 
+   	 *
    	 *
    	 *
    	 */
 	public void setPagination(int count){
 		totalHitCount=count;
 	}
+
 	/**
-	 * 
+	 *
 	 * @fileName : AddAssignmentContainerView.java
 	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	private class OnDropdownListPlaceHolderClick implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
-		}
-	}
-	
-	/**
-	 * 
-	 * @fileName : AddAssignmentContainerView.java
-	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -823,10 +802,10 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : AddAssignmentContainerView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -851,29 +830,27 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			}
 		}
 	}
-	
+
 	@Override
 	public Widget asWidget() {
 		return appPopUp;
 	}
-	
+
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public void onLoad() {
-		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public void onUnload() {
 		appPopUp.hide();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public void hide(){
 		resetEmptyCollMsg();
@@ -906,7 +883,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		Window.enableScrolling(false);
 		new SuccessMessagePopupView(collectionTitle);
 	}
-	
+
 	public TreeItem loadingTreeItem(){
 		Label loadingText=new Label(i18n.GL1452());
 		loadingText.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().loadingText());
@@ -918,7 +895,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		dropdownListContainerScrollPanel.setVisible(false);
 		enableAssignButton(true);
 		addResourceBtnLbl.setText(i18n.GL1964());
-		emptyMsgLbl.setText(i18n.GL1963()); 
+		emptyMsgLbl.setText(i18n.GL1963());
 		emptyMsgLbl.getElement().setAttribute("alt",i18n.GL1963());
 		emptyMsgLbl.getElement().setAttribute("title",i18n.GL1963());
 		subHeadingMsgLbl.setVisible(false);
@@ -928,21 +905,21 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		popupContent.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());
 	}
 	/**
-	 * 
-	 * @function resetEmptyCollMsg 
-	 * 
+	 *
+	 * @function resetEmptyCollMsg
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -951,7 +928,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		addResourceBtnLbl.setText(i18n.GL0104());
 		emptyMsgLbl.setVisible(false);
 		subHeadingMsgLbl.setVisible(true);
-		buttonsContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentButtonsContainer()); 
+		buttonsContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentButtonsContainer());
 		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
 		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
 		popupContent.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());

@@ -3,8 +3,8 @@ package org.ednovo.gooru.client.mvp.analytics.util;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.analytics.ChartMetaDataOptions;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.ChartMetaDataOptions;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -14,10 +14,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
+ *
  * @fileName : CollectionChartView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -38,7 +38,7 @@ public class LineChartView extends Composite {
 	interface LineChartViewUiBinder extends UiBinder<Widget, LineChartView> {
 	}
 	@UiField CollectionChartCBundle res;
-	
+
 	/**
 	 * Constructor
 	 */

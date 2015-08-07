@@ -1,10 +1,10 @@
 /**
- *  
+ *
  *****************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -12,10 +12,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,25 +26,25 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.preview.home.share;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.UserServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
+import org.ednovo.gooru.application.shared.model.user.SettingDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildView;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
-import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -63,9 +63,9 @@ import com.google.gwt.user.client.ui.Widget;
 /**
 * @fileName : SocialShareView.java
 *
-* @description : This file used to share the user data by using 
+* @description : This file used to share the user data by using
 *                     social web-sites or through email.
-* 
+*
 * @version : 5.4
 *
 * @date:  August, 2013.
@@ -81,7 +81,7 @@ IsSocialShareSmallView{
 
 	interface SocialShareSmallViewUiBinder extends UiBinder<Widget, SocialShareSmallView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 
@@ -104,7 +104,7 @@ IsSocialShareSmallView{
 
 	private String category;
 
-	private String description;	
+	private String description;
 
 	private static final String DEFULT_IMAGE = "images/default-collection-image.png";
 
@@ -117,18 +117,18 @@ IsSocialShareSmallView{
 	private static final String DEFULT_WIMAGE = "images/default-website.png";
 
 	private static final String DEFULT_OIMAGE = "images/default-other.png";
-	
+
 	private static final String DEFULT_ITYPEIMAGE = "images/default-image.png";
-	
+
 	private static final String DEFULT_AUDIOIMAGE = "images/default-audio.png";
-	
+
 	private static final String DEFULT_TEXTIMAGE = "images/default-text.png";
 
 	private boolean isProfilePageView = false;
 
 	/**
 	 * Class constructor
-	 * 
+	 *
 	 * @param collectionDo
 	 *            instance of {@link CollectionDo}
 	 */
@@ -143,8 +143,8 @@ IsSocialShareSmallView{
 			if(socialDo.getIsSearchShare()){
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
 			}
-		} catch (Exception e) {	
-			AppClientFactory.printSevereLogger(e.getMessage());
+		} catch (Exception e) {
+			AppClientFactory.printSevereLogger("SocialShareSmallView : "+e.getMessage());
 		}
 		if (socialDo.isOnlyIcon()) {
 			shareTextPanel.setVisible(false);
@@ -183,7 +183,7 @@ IsSocialShareSmallView{
 			panelTwitter.setStyleName(socialShareSmallStyle.twitterPageShareButtonsBg());
 			panelEmail.setStyleName(socialShareSmallStyle.classPageShareButtonsBg());
 		}
-		
+
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
 			isProfilePageView = true;
 		}
@@ -227,7 +227,7 @@ IsSocialShareSmallView{
 	@Override
 	public void onLoad(){
 		super.onLoad();
-		categoryImage.setUrl(StringUtil.formThumbnailName(socialDo.getThumbnailurl(), "."));	
+		categoryImage.setUrl(StringUtil.formThumbnailName(socialDo.getThumbnailurl(), "."));
 		if(!StringUtil.isEmpty(socialDo.getTitle())){
 			categoryImage.setAltText(socialDo.getTitle());
 			categoryImage.setTitle(socialDo.getTitle());
@@ -393,7 +393,7 @@ IsSocialShareSmallView{
 		if(PlaceTokens.PROFILE_PAGE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 			if(socialDo.getIsSearchShare()){
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 			}else{
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1085_1() +" "+i18n.GL_GRR_Hyphen()+" " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
@@ -428,7 +428,7 @@ IsSocialShareSmallView{
 			LoginPopupUc popup = new  LoginPopupUc() {
 				@Override
 				public void onLoginSuccess() {
-					
+
 				}
 			};
 			popup.setGlassEnabled(true);
@@ -482,9 +482,9 @@ IsSocialShareSmallView{
 	public SimpleAsyncCallback<SettingDo> getUserprofileAsyncCallback() {
 		return userProfileAsyncCallback;
 	}
-	
+
 	public void triggerShareDataEvent(String shareType,boolean confirmStatus){
-		
+
 	}
 
 	/**

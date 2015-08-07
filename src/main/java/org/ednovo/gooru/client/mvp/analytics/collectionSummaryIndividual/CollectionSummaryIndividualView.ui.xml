@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle" field="unitStyle" />
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel>
 		<g:HTMLPanel ui:field="maincontainer">
 			<g:HTMLPanel ui:field="tabContainer"/>
@@ -14,11 +14,12 @@
 			 </g:HTMLPanel>
 			<g:HTMLPanel ui:field="individualScoredData" styleName="{unitStyle.css.individualScore}"/>
 			</g:HTMLPanel>
+			<g:Label ui:field="userInfo" text="{i18n.GL3343}"></g:Label>
 			<g:HTMLPanel ui:field="individualOpenendedData"  styleName="{unitStyle.css.individualScore}" />
 			<g:HTMLPanel ui:field="individualResourceBreakdownDatapnl">
-				 <g:HTMLPanel styleName="{unitStyle.css.collectionOverViewpnl}">
+				 <g:HTMLPanel styleName="{unitStyle.css.collectionOverViewpnl}" ui:field="panelOverview">
 				 	   <g:Label styleName="{unitStyle.css.collectionOverviewText}" text="{i18n.GL2274}" title="{i18n.GL2274}" ui:field="lblCollectionOverview"></g:Label>
-					 
+
 					 	<div class="{unitStyle.css.collectionTimeSpentDetails} {unitStyle.css.no_gutter}">
 						 	<div class="col-md-4 col-sm-4">
 							   <div class="{unitStyle.css.collectionBreakDown_infobox}">
@@ -35,9 +36,9 @@
 						    <div class="col-md-4 col-sm-4">
 							   <div class="{unitStyle.css.collectionBreakDown_infobox}">
 							   <g:Label styleName="{unitStyle.css.collectionBreakDown_infobox_titles}"  text="{i18n.GL2277}" title="{i18n.GL2277}" ui:field="lblAvgReaction"></g:Label>
-							  <g:HTMLPanel styleName="{unitStyle.css.collectionBreakDown_infobox_titles}" ui:field="totalAvgReactionlbl"></g:HTMLPanel> 
+							  <g:HTMLPanel styleName="{unitStyle.css.collectionBreakDown_infobox_titles}" ui:field="totalAvgReactionlbl"></g:HTMLPanel>
 							  </div>
-						  </div>	
+						  </div>
 						  <div class="clearfix"></div>
 					   </div>
 				 </g:HTMLPanel>
@@ -50,4 +51,4 @@
 		<g:Label ui:field="noErrorMesage" styleName="{unitStyle.css.showEmptyMessage}" text="{i18n.GL3102}" title="{i18n.GL3102}"></g:Label>
 		<g:Frame ui:field="downloadFile"></g:Frame>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

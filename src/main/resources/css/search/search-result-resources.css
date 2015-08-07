@@ -7,9 +7,9 @@
 }
 
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes {
-     display: inline-block;
-  margin: 16px 0;
-  padding: 0;
+	display: inline-block;
+	margin: 7px 0;
+	padding: 0;
 }
 #gooruSearchMainContainer .resourceDetails .seachRightNavigation {
 	text-align: right;
@@ -19,10 +19,11 @@
 	padding-left:10px;
 }
 #pnlStandards .blueLink{
-display: inline-block;
-  float: left;
-  padding-left: 2px;
-  color: rgb(12, 116, 190);
+	display: inline-block;
+	float: left;
+	padding-left: 2px;
+	color: rgb(12, 116, 190);
+	padding-top: 4px;
 }
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li {
     display: inline-block;
@@ -101,12 +102,12 @@ margin:0 0 0 -20px !important;
     display: inline-block;
     font-size: 13px;
     min-height: 40px;
-    padding: 7px 9px;
+    padding: 7px 2px;
 }
 #gooruSearchMainContainer .gridToggle{
   display: inline-block;
   min-height: 40px;
-  padding: 3px 9px;
+  padding: 3px 2px;
   position: relative;
   vertical-align: top;
 }
@@ -187,7 +188,8 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .resourceDescription{
 	padding:10px 10px;
-	height:80px;
+	height:59px;
+	overflow: hidden;
 }
 #gooruSearchMainContainer .resourcesStanders{
 	text-align:center;
@@ -203,18 +205,26 @@ margin:0 0 0 -20px !important;
 	margin-right:10px;
 }
 #gooruSearchMainContainer .usedDetails{
-	padding:10px 10px;
+	padding:5px 0 5px 10px;
 	font-size:13px;
 	min-height: 36px;
 }
+
+#gooruSearchMainContainer .panel-heading .addResource{
+	width: 80px;
+  	/* margin-left: 8px; */
+}
+
 #gooruSearchMainContainer .usedDetails a:hover{
 	text-decoration:none;
 	opacity:0.75;
 }
 #gooruSearchMainContainer .userDetailsResources{
-	padding: 9px 9px;
-	border-top: 1px solid #ddd;
-	min-height: 51px;
+	padding: 11px 9px;
+	background: #ccc;
+	border-radius: 0px 0px 3px 3px;
+	min-height: 49px;
+	max-height: 49px;
 }
 #gooruSearchMainContainer .userDetailsResources  .user{
 	font-size:13px;
@@ -242,11 +252,15 @@ margin:0 0 0 -20px !important;
 	white-space: nowrap;
 	display: inline-block;
 	font-size: 13px;
-	padding-top: 9px;
+	padding: 3px 8px;
 	text-align:center;
 	color:grey;
 	width:142%;
 	margin-left:-3%;
+	margin-top: 0px;
+	min-height: 27px;
+	line-height: 21px;
+	vertical-align: middle;
 }
 #gooruSearchMainContainer .userDetailsResources .user img{
 	border-radius: 50px;
@@ -256,6 +270,7 @@ margin:0 0 0 -20px !important;
 }
 #gooruSearchMainContainer .collectionResources {
 	text-align:left;
+	/* min-height: 40px; */
 }
 #gooruSearchMainContainer .collectionResources .collectionTitle{
 	font-size: 13px;
@@ -287,13 +302,18 @@ margin:0 0 0 -20px !important;
     min-width: 300px;
 }
 #gooruSearchMainContainer .resourceDropdown{
-	padding:0 20px 20px 20px;
+	padding:20px;
 }
-#gooruSearchMainContainer .paddingBlock{
-	padding:20px 0 0 0;
+#gooruSearchMainContainer  .paddingBlock{
+
 }
+
+#gooruSearchMainContainer .resourceDetails .gridToggle .resourceDropdown .paddingBlock{
+	padding: 0 0;
+}
+
 #gooruSearchMainContainer .resourceDropdown P{
-	margin-bottom:8px;
+	margin-bottom:10px;
 }
 
 #gooruSearchMainContainer .resourceDropdown .form-control{
@@ -317,7 +337,7 @@ margin:0 0 0 -20px !important;
   min-height: 40px;
   font-size: 14px;
   color:green;
-  padding: 0px 7px;
+  padding: 0px 4px;
   vertical-align: top;
   cursor:pointer;
   line-height: 36px;
@@ -404,12 +424,12 @@ margin:0 0 0 -20px !important;
 }
 
 @media (min-width: 480px) and (max-width: 767px)  {
-	
+
 	    #gooruSearchMainContainer .resourceDesc1 {
 		    width: 95%;
 		    max-height:60px;
 		}
-		
+
 		#gooruSearchMainContainer .resourceDetails .seachRightNavigation{
 			text-align:center;
 		}
@@ -454,10 +474,11 @@ margin:0 0 0 -20px !important;
 		white-space: normal;
 		height: 31px;
 		margin-left: 10%;
+		margin-top: -4px;
 	}
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-	
+
 }
 /*Resource search end*/
 
@@ -500,7 +521,7 @@ margin:0 0 0 -20px !important;
 
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
-	
+
 }
 #addCollectionPopup .closeButton{
 	text-align:right;
@@ -620,6 +641,16 @@ margin:0 0 0 -20px !important;
 	margin: 0;
 	z-index: 9999;
 	height: 275px;
+	overflow-x:hidden !important;
+}
+#addCollectionPopup .dropdownListClassContainerScrollPanel{
+	/* border: 1px solid #ddd; */
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 9999;
+	height: 275px;
+	overflow-x:hidden !important;
 }
 #addResourcefolderTreePanel table{
 	width:100%;
@@ -651,4 +682,9 @@ margin:0 0 0 -20px !important;
 	color: #fab03a;
 	font: 12px arial;
 }
+
+#gooruSearchMainContainer .viewContainer a{
+	font-size: 12px;
+}
+
 /*Add Resource to collection popup end*/

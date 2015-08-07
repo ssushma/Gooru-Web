@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classlist;
 
-import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -40,10 +40,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 /**
- * 
+ *
  * @fileName : InviteStudentsPopup.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -59,7 +59,7 @@ public class InviteStudentsPopup extends PopupPanel {
 	private static final String AT_SYMBOL = "@";
 
 	private static InviteStudentsPopupUiBinder uiBinder = GWT.create(InviteStudentsPopupUiBinder.class);
-	
+
 	 MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface InviteStudentsPopupUiBinder extends
@@ -71,7 +71,7 @@ public class InviteStudentsPopup extends PopupPanel {
 	@UiField TextArea emailTextArea;
 
 	@UiField Label emailValidationLbl;
-	
+
 	@UiField HTMLPanel titlePanel,headerPanel;
 
 	private boolean isvalid;
@@ -81,7 +81,7 @@ public class InviteStudentsPopup extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		setPixelSize(456,224);
 		setStaticText();
-		emailTextArea.getElement().setAttribute("placeholder", "Separate email addresses with a comma or semicolon");
+		emailTextArea.getElement().setAttribute("placeholder", i18n.GL1184_1());
 		emailValidationLbl.setVisible(false);
 		setGlassEnabled(true);
 		center();
@@ -89,48 +89,40 @@ public class InviteStudentsPopup extends PopupPanel {
 		Window.enableScrolling(false);
 	}
 	/**
-	 * 
-	 * @function setStaticText 
-	 * 
+	 *
+	 * @function setStaticText
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	private void setStaticText() {
 		headerPanel.getElement().setInnerHTML(i18n.GL1522());
-		headerPanel.getElement().setId("pnlHeader");
-		headerPanel.getElement().setAttribute("alt",i18n.GL1522());
-		headerPanel.getElement().setAttribute("title",i18n.GL1522());
-		
+		StringUtil.setAttributes(headerPanel.getElement(), "pnlHeader", i18n.GL1522(), i18n.GL1522());
+
 		titlePanel.getElement().setInnerHTML(i18n.GL1521());
-		titlePanel.getElement().setId("pnlTitle");
-		titlePanel.getElement().setAttribute("alt",i18n.GL1521());
-		titlePanel.getElement().setAttribute("title",i18n.GL1521());
-		
+		StringUtil.setAttributes(titlePanel.getElement(), "pnlTitle", i18n.GL1522(), i18n.GL1521());
+
 		emailTextArea.getElement().setId("tatEmail");
 		StringUtil.setAttributes(emailTextArea, true);
 		emailValidationLbl.getElement().setId("errlblEmailValidation");
-		
+
 		cancelBtn.setText(i18n.GL0142());
-		cancelBtn.getElement().setId("btnCancel");
-		cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
-		cancelBtn.getElement().setAttribute("title",i18n.GL0142());
-		
+		StringUtil.setAttributes(cancelBtn.getElement(), "btnCancel", i18n.GL0142(), i18n.GL0142());
+
 		inviteBtn.setText(i18n.GL0944());
-		inviteBtn.getElement().setId("btnInvite");
-		inviteBtn.getElement().setAttribute("alt",i18n.GL0944());
-		inviteBtn.getElement().setAttribute("title",i18n.GL0944());
+		StringUtil.setAttributes(inviteBtn.getElement(), "btnInvite", i18n.GL0944(), i18n.GL0944());
 	}
 
 	@UiHandler("cancelBtn")

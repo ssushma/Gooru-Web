@@ -14,7 +14,7 @@
 		    	<g:Label styleName="{style.headerText} " ui:field="dueDateText"></g:Label>
 		    	<g:Label styleName="{style.headerDueDate}" ui:field="dueDate"></g:Label>
 		    </g:HTMLPanel>
-		    <g:FlowPanel styleName="{style.headerRight}"  ui:field="headerRightPanel">
+		    <!-- <g:FlowPanel styleName="{style.headerRight}"  ui:field="headerRightPanel">
 		      <g:Button styleName="{style.viewAnaytics}" ui:field="viewClassItemAnalyticsButton"></g:Button>
 		      	<g:FlowPanel styleName="{style.AnalyticsDropdown}" ui:field="dropdownPanelAnalyticsButton">
 		        <g:Label styleName="{style.AnalyticsDropdownLi}" ui:field="moniterProgress"></g:Label>
@@ -27,7 +27,7 @@
 		        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="editCollection"></g:Label>
 		        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="deleteItemButton"></g:Label>
 	     	  </g:FlowPanel>
-		    </g:FlowPanel>
+		    </g:FlowPanel> -->
 		  </g:FlowPanel>
 		  <g:FlowPanel styleName="{style.classpageContent}">
 		    <g:Label styleName="{style.classpageHeading}" ui:field="directionsLabel"></g:Label>

@@ -37,8 +37,13 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists;
 * @Reviewer 
 *
 */
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.application.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
@@ -46,11 +51,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListE
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.FlaggingPopUp;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
-import org.ednovo.gooru.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -190,8 +190,8 @@ public class ExistsResourceView extends AppPopUp {
 					hide();
 					Window.enableScrolling(true);
 			        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			        AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 					AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(result, RefreshType.INSERT));
-					AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 				}
 			});
 		}

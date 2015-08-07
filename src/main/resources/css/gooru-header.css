@@ -104,7 +104,7 @@
 #headerMainPanel .discoverDropDown {
 	width: 8px;
 	height: 4px;
-	background: url(images/library/partners/discover_arrow.png) no-repeat;
+	background: url(../images/library/partners/discover_arrow.png) no-repeat;
 	float: right;
 	margin-left: 7px;
 	margin-top: 6px;
@@ -519,7 +519,7 @@
 	padding-left: 11px;
 	width: 100%;
 	box-sizing: border-box;
-	
+
 }
 
 #headerMainPanel .logoutText:hover {
@@ -593,6 +593,9 @@
 		right: 6%;
 		text-align: center;
 		top: -13%;
+	}
+	#headerMainPanel .gooruLearningIcon {
+		margin: 10px;
 	}
 	#headerMainPanel .header-searchbox .navbar-form .form-control {
 		width: 88% !important;
@@ -715,14 +718,15 @@
 		float: left;
 		margin-top: 10px;
 	}
-	#headerMainPanel .header-mainmenu .container>.navbar-header,#headerMainPanel .header-mainmenu .container-fluid>.navbar-header,#headerMainPanel .header-mainmenu .container>.navbar-collapse,#headerMainPanel .header-mainmenu .container-fluid>.navbar-collapse
+	#headerMainPanel .header-mainmenu .container>.navbar-header, #headerMainPanel .header-mainmenu .container-fluid>.navbar-header,#headerMainPanel .header-mainmenu .container>.navbar-collapse,#headerMainPanel .header-mainmenu .container-fluid>.navbar-collapse
 		{
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 	}
-	#headerMainPanel .header-mainmenu .header-navbar-default .navbar-collapse,#headerMainPanel .header-mainmenu .header-navbar-default .navbar-form
+	#headerMainPanel .header-mainmenu .header-navbar-default .navbar-collapse, #headerMainPanel .header-mainmenu .header-navbar-default .navbar-form
 		{
 		border-color: #333333;
+		height:auto !importnat;
 	}
 	#headerMainPanel .header-mainmenu  .header-navbar-default .navbar-nav .open .dropdown-menu>li>a:hover,#headerMainPanel .header-mainmenu .header-navbar-default .navbar-nav .open .dropdown-menu>li>a:focus
 		{
@@ -832,7 +836,7 @@
 		right: 0;
 	}
 	/* Home Page CSS Sprite */
-	
+
 	#headerMainPanel .spacing {
 		margin-bottom: 7px !important;
 	}
@@ -853,7 +857,7 @@
 		display: block;
 	}
 	#headerMainPanel .spriteLandingPage {
-		
+
 	}
 	#headerMainPanel .spriteLandingPageFacebookIco {
 		width: 37px;
@@ -895,7 +899,9 @@
 	#headerMainPanel .displayRight {
 		right: 0;
 	}
-	
+	#headerMainPanel .gooruLearningIcon {
+		margin: 10px;
+	}
 	#headerMainPanel .spacing {
 		margin-bottom: 7px !important;
 	}
@@ -916,6 +922,9 @@
 	}
 	#headerMainPanel .banner {
 		/* margin-top: -36px; */
+	}
+	#headerMainPanel .gooruLearningIcon {
+		margin: 0px;
 	}
 	#headerMainPanel .bannerInner .caption {
 		left: 4%;
@@ -1036,7 +1045,7 @@
 		font-size: 35px;
 	}
 	#headerMainPanel .tooltipContainer {
-		
+
 	}
 	#headerMainPanel .menu {
 		padding: 18px 8px;
@@ -1069,8 +1078,8 @@
 	#headerMainPanel .displayRight {
 		right: 0;
 	}
-	
-	
+
+
 	#headerMainPanel .spacing {
 		margin-bottom: 7px !important;
 	}
@@ -1090,6 +1099,9 @@
 		display: block !important;
 		z-index: 999;
 	}
+	#headerMainPanel .gooruLearningIcon {
+		margin: 10px;
+	}
 	#headerMainPanel .header-searchbox .form-control {
 		height: 33px;
 	}
@@ -1108,7 +1120,7 @@
 	#headerMainPanel .displayRight {
 		right: 0;
 	}
-	
+
 	#headerMainPanel .spacing {
 		margin-bottom: 7px !important;
 	}

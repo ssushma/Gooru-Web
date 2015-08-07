@@ -28,13 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 
 import com.google.gwt.user.client.ui.Button;
 import com.gwtplatform.mvp.client.PopupView;

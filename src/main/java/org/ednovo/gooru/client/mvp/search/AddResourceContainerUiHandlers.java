@@ -39,10 +39,10 @@ package org.ednovo.gooru.client.mvp.search;
 */
 import java.util.HashMap;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.ui.Anchor;
@@ -73,5 +73,6 @@ public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHand
 			String currentsearchType);
 	public void addCollectionToFolder(String selectedFolderGooruOid,
 			String currentsearchType, String text, int folerLevel,HashMap<String, String> urlparams);
+	public boolean validateIsAssessments(String collectionType);
 	
 }

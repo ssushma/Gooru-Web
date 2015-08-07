@@ -29,12 +29,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.CssTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.search.IsSearchView;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -207,11 +207,11 @@ public class PreFilterPopup extends PopupPanel {
 			}
 		}
 		if(filterGrade!=null && !filterGrade.equals("")){
-			filterMap.put(IsSearchView.GRADE_FLT, filterGrade);
+			filterMap.put(IsGooruSearchView.GRADE_FLT, filterGrade);
 		}
 		String selectedSubject = getSelectedFilter(subjectPanelUc, "~~");
 		if (!selectedSubject.isEmpty()) {
-			filterMap.put(IsSearchView.SUBJECT_FLT, selectedSubject);
+			filterMap.put(IsGooruSearchView.SUBJECT_FLT, selectedSubject);
 		}
 		return filterMap;
 	}
@@ -349,11 +349,11 @@ public class PreFilterPopup extends PopupPanel {
 	 * Set search filters
 	 */
 	public void setFilter() {
-		String grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
+		String grade = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.GRADE_FLT);
 		
-		String subjects = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
+		String subjects = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.SUBJECT_FLT);
 		
-		String standards = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
+		String standards = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.STANDARD_FLT);
 		
 		
 		if(grade!=null){

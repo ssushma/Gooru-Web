@@ -1,0 +1,93 @@
+.nav-toc-container{
+
+	margin:0 auto;
+	background-color: #333333;
+/* 	height: 100px; */
+	overflow: hidden;
+	white-space: nowrap;
+	display: inline-block;
+	vertical-align: middle;
+	position:relative;
+}
+.nav-toc-wrapperContainerMain{
+	position: relative;
+	margin: 0 0px;
+}
+
+.nav-toc-wrapper{
+	/* width:900px; */
+	/* height: 100px; */
+	overflow: hidden;
+	white-space: nowrap;
+	display: inline-block;
+	vertical-align: middle;
+	/* margin-left: -10px; */
+}
+.nav-toc-wrapperContainer{
+	width:100%;
+	margin-top:50px;
+	background-color: #333333;
+	z-index:9;
+}
+
+ .leftArrow {
+   width: 21px;
+	height: 30px;
+   /*  border:15px solid transparent;
+    border-right:15px solid #ddd; */
+    background:url("/images/player/TopNav_LeftArrow.png") no-repeat;
+    display:inline-block;
+    margin-right:10px;
+    /* margin-left:-15px; */
+    vertical-align:middle;
+}
+
+ .leftArrow:hover {
+    cursor:pointer;
+    opacity:.6;
+}
+
+ .rightArrow:hover {
+    cursor:pointer;
+     opacity:.6;
+}
+
+.rightArrow {
+   width: 21px;
+	height: 30px;
+   /*  border:15px solid transparent;
+    border-left:15px solid #ddd; */
+    display:inline-block;
+    margin-left:10px;
+    margin-right:-15px;
+    vertical-align:middle;
+    background:url("/images/player/TopNav_RightArrow.png") no-repeat;
+}
+.resource-info-bottomImageContainer{
+	text-align: center;
+	padding-top: 10px;
+	cursor: pointer;
+	padding-bottom:5px;
+	width: 45px;
+	margin: 0 auto;
+}
+.resource-info-hideImage{
+	display: inline-block;
+	background-image: url("images/hide_arrow.png");
+	width: 10px;
+	color: #fff;
+	height:6px;
+}
+.resource-info-hideText{
+	display: inline-block;
+	vertical-align: top;
+	color: #fff;
+	margin-left: 4px;
+}
+.resourceCountStyle{
+	margin: 0 auto;
+	width: 940px;
+	font-size: 16px;
+	color: #fff;
+	line-height: 1.5;
+}

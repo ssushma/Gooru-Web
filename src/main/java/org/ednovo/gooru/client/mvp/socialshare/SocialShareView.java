@@ -1,9 +1,9 @@
 /**
  * *****************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -11,10 +11,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,24 +25,24 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.socialshare;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.UserServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
+import org.ednovo.gooru.application.shared.model.user.SettingDo;
+import org.ednovo.gooru.application.shared.model.user.V2UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
-import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -64,15 +64,15 @@ import com.google.gwt.user.client.ui.Widget;
 /**
 * @fileName : SocialShareView.java
 *
-* @description : This file used to share the user data by using 
+* @description : This file used to share the user data by using
 *                     social web-sites or through email.
-* 
+*
 * @version : 5.4
 *
 * @date:  August, 2013.
 *
 * @Author: Gooru Team
-* 
+*
 * @Reviewer: Gooru Team
 */
 
@@ -81,7 +81,7 @@ IsSocialShareView,ClientConstants{
 
 	private static SocialShareViewUiBinder uiBinder = GWT
 			.create(SocialShareViewUiBinder.class);
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SocialShareViewUiBinder extends UiBinder<Widget, SocialShareView> {
@@ -93,13 +93,13 @@ IsSocialShareView,ClientConstants{
 
 	@UiField
 	HTMLPanel shareTextPanel,shareIconPanel,panelfbIcon,panelTwIcon, panelEmailIcon,socialShareContainer;
-	
+
 	@UiField
 	Anchor facbookText,twitterText,emailText;
-	
+
 	@UiField
 	PPanel fbPanel,panelTwitter,panelEmail;
-	
+
 	private SocialShareDo socialDo;
 
 	private UserServiceAsync userService;
@@ -113,7 +113,7 @@ IsSocialShareView,ClientConstants{
 
 	private String category;
 
-	private String description;	
+	private String description;
 
 	public static final String DEFULT_IMAGE ="images/default-collection-image.png";
 
@@ -126,22 +126,22 @@ IsSocialShareView,ClientConstants{
 	public static final String DEFULT_WIMAGE ="images/default-website.png";
 
 	public static final String DEFULT_AIMAGE ="images/default-audio.png";
-	
+
 	public static final String DEFULT_ITYPEIMAGE ="images/default-image.png";
-	
+
 	public static final String DEFULT_OIMAGE ="images/default-other.png";
-	
+
 	public static final String DEFULT_TEXTIMAGE ="images/default-text.png";
-	
+
 	public static final String DEFAULT_PROFILEIMAGE="images/profilepage/user-profile-pic.png";
 
 	private boolean isProfilePageView = false;
-	
+
 	public HTML htmlName;
 
 	/**
 	 * Class constructor
-	 * 
+	 *
 	 * @param collectionDo
 	 *            instance of {@link CollectionDo}
 	 */
@@ -158,7 +158,7 @@ IsSocialShareView,ClientConstants{
 		panelEmail.getElement().setId("pnlPanelEmail");
 		emailText.getElement().setInnerHTML(i18n.GL0212());
 		emailText.getElement().setId("pnlEmailText");
-		
+
 		emailText.getElement().setAttribute("alt", i18n.GL0212());
 		emailText.getElement().setAttribute("title", i18n.GL0212());
 		twitterText.getElement().setInnerHTML(i18n.GL0647());
@@ -180,7 +180,7 @@ IsSocialShareView,ClientConstants{
 		emailIconPanel.getElement().setId("epnlEmailIconPanel");
 		panelEmailIcon.getElement().setId("pnlPanelEmailIcon");
 		categoryImage.getElement().setId("imgCategoryImage");
-		
+
 		category=socialDo.getCategoryType()!=null?socialDo.getCategoryType():COLLECTION;
 		description=socialDo.getDescription();
 		String title=socialDo.getTitle();
@@ -271,12 +271,12 @@ IsSocialShareView,ClientConstants{
 		categoryImage.setAltText(socialDo.getTitle());
 		categoryImage.setTitle(socialDo.getTitle());
 	}
-	
+
 	@Override
 	public void onLoad(){
 		setUrl(socialDo.getThumbnailurl());
 	}
-	
+
 	@UiHandler("categoryImage")
 	public void setDefaultImage(ErrorEvent event){
 		if (COLLECTION.equalsIgnoreCase(category)) {
@@ -314,7 +314,7 @@ IsSocialShareView,ClientConstants{
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) ||  AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickFacebookFromShareInCollectionplayer();
 				} else if (COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -336,7 +336,7 @@ IsSocialShareView,ClientConstants{
 				MixpanelUtil.Click_Facebook_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Facebook_FromCollection();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickFacebookFromShareInCollectionplayer();
 				} else if (COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -362,7 +362,7 @@ IsSocialShareView,ClientConstants{
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Email_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) ||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickEmailFromShareInCollectionplayer();
 				} else if (COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -385,7 +385,7 @@ IsSocialShareView,ClientConstants{
 				MixpanelUtil.Click_Email_FromCollection();
 
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) ||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickEmailFromShareInCollectionplayer();
 				} else if (COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -409,7 +409,7 @@ IsSocialShareView,ClientConstants{
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Twitter_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) ||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickTwitterFromShareInCollectionplayer();
 				} else if (COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -432,7 +432,7 @@ IsSocialShareView,ClientConstants{
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
 				MixpanelUtil.Click_Twitter_FromCollection();
 
-			}	else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+			}	else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) ||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickTwitterFromShareInCollectionplayer();
 				} else if (COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
@@ -475,7 +475,7 @@ IsSocialShareView,ClientConstants{
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			if(socialDo.getIsSearchShare()){
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + "Gooru - "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
+				Window.open("http://twitter.com/intent/tweet?text=" + "Gooru - "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 			}else{
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + getEncodedUrl(i18n.GL1085_1()) + socialDo.getBitlylink() , "_blank", "width=600,height=300");
@@ -509,7 +509,7 @@ IsSocialShareView,ClientConstants{
 			LoginPopupUc popup = new  LoginPopupUc() {
 				@Override
 				public void onLoginSuccess() {
-					
+
 				}
 			};
 			popup.setGlassEnabled(true);
@@ -598,29 +598,29 @@ IsSocialShareView,ClientConstants{
 				   +"&redirect_uri="+getEncodedUrl("https://www.facebook.com/");
 		   Window.open(faceBookFeedUrl,"_blank", "width=626,height=436");
 	   }
-	   
+
 	   public static native String getEncodedUrl(String url)/*-{
 			var encodeurl= $wnd.encodeURIComponent(url);
 			return encodeurl;
 		}-*/;
 	@Override
 	public void setPresenter(SocialSharePresenter childPresenter) {
-		
+
 	}
-	
+
 	public void setShareDo(SocialShareDo shareDo){
 		this.socialDo=shareDo;
 		setUrl(socialDo.getThumbnailurl());
 	}
 	public void triggerShareDataEvent(String shareType,boolean confirmStaus){
-		
+
 	}
-	
+
 	public String getAsHtml(String name){
 		htmlName=new HTML();
 		htmlName.getElement().setInnerHTML(name);
 		return htmlName.getHTML();
-		
+
 	}
-	
+
 }

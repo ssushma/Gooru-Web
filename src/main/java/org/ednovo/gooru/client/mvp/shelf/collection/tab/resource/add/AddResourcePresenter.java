@@ -41,26 +41,30 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
-import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
-import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
-import org.ednovo.gooru.shared.model.user.MediaUploadDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
 
 import com.google.gwt.event.shared.EventBus;
@@ -74,6 +78,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> implements AddResourceUiHandlers{
 	
 	private ImageUploadPresenter imageUploadPresenter;
+	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionItemDo> collectionItemAsyncCallback;
@@ -115,6 +120,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private static final String ID = "id";
 	
+	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
 	}
@@ -136,6 +142,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.drivePresenter = drivePresenter;
 	}
 
+	@Inject QuestionTypePresenter questionTypePresenter;
 
 	@Inject
 	private ResourceServiceAsync resourceService;
@@ -147,9 +154,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	AddStandardsPresenter addStandardsPresenter = null;
 	
 	@Inject
-	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter) {
+	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter,QuestionTypePresenter questionTypePresenter) {
 		super(eventBus, view);
 		this.setImageUploadPresenter(imageUploadPresenter);
+		this.questionTypePresenter=questionTypePresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(AddResouceImageEvent.TYPE, this);
 		
@@ -286,6 +294,12 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
                     isCollResourceTabView.insertData(result);
                     MixpanelUtil.AddQuestion();
             }
+            @Override
+            public void onFailure(Throwable caught) {
+            	// TODO Auto-generated method stub
+            	super.onFailure(caught);
+            	AppClientFactory.getClientLogger().log(Level.SEVERE, caught.getMessage(), caught);
+            }
 		});
 		setRemoveQuestionImageAsyncCallback(new SimpleAsyncCallback<Void>(){
 			@Override
@@ -316,8 +330,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             $wnd.location.reload();
     }-*/;
 	
-	public void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards, String hostName,List<String> tagList) {
-		getResourceService().addNewResource("", collectionDo.getGooruOid(), urlStr, titleStr, descriptionStr, categoryStr, thumbnailImgSrcStr, endTime,edcuationalUse,momentsOfLearning,standards,hostName,tagList, getCollectionItemAsyncCallback());
+	public void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,List<StandardFo> centurySkills, String hostName,List<String> tagList,Map<String,List<Integer>> hazardsMap,String mediaType) {
+		getResourceService().addNewResource("", collectionDo.getGooruOid(), urlStr, titleStr, descriptionStr, categoryStr, thumbnailImgSrcStr, endTime,edcuationalUse,momentsOfLearning,standards,centurySkills,hostName,tagList,hazardsMap,mediaType, getCollectionItemAsyncCallback());
 
 	}
 	
@@ -406,6 +420,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.clickType=clickType;
 		getView().setCollectionDo(collectionDo);
 		getView().setPopup(clickType);
+		getDepthOfKnowledges();
 	}
 
 	@Override
@@ -574,5 +589,48 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		getResourceService().v2UpdateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getV2UpdateQuestionResourceAsyncCallback());
 	}
 
+	@Override
+	public void addSelectedQuestionType(String type,CollectionQuestionItemDo collectionQuestionItemDo) {
+		if(type.equalsIgnoreCase("HS_TXT") || type.equalsIgnoreCase("HS_IMG")){
+		questionTypePresenter.getView().resetFields(type);
+		if(getView().checkQuestionSlot()){
+		addToSlot(SLOT_QUESTION_TYPE, questionTypePresenter);
+		}
+		questionTypePresenter.ImageUpload(imageUploadPresenter,getView(),collectionDo);
+		
+		if(collectionQuestionItemDo!=null){
+			questionTypePresenter.getView().setMetadata(collectionQuestionItemDo);
+		}
+		
+		}else {
+			CollectionQuestionItemDo questionMetadataDo=null;
+			if(!getView().checkQuestionSlot()){
+			 questionMetadataDo=questionTypePresenter.getView().getMetadata();
+			}
+			clearSlot(SLOT_QUESTION_TYPE);
+			getView().clearQuestionSlot();
+			getView().questionMetadata(questionMetadataDo);
+		}
+	}
+
+	@Override
+	public void setEditQuestionData(CollectionItemDo collectionItemDo) {
+		
+		questionTypePresenter.getView().editQuestion(collectionItemDo);
+	}
+
+	@Override
+	public void setHSEditData() {
+		questionTypePresenter.getView().setEditData();
+	}
+	@Override
+	public void getDepthOfKnowledges(){
+		AppClientFactory.getInjector().getfolderService().getDepthOfKnowledgesList(new SimpleAsyncCallback<List<ListValuesDo>>() {
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				getView().setDepthOfKnowledges(result);
+			}
+		});
+	}
 }
 

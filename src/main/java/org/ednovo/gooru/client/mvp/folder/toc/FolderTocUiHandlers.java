@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.folder.toc;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 
 import com.google.gwt.user.client.ui.TreeItem;
 /**

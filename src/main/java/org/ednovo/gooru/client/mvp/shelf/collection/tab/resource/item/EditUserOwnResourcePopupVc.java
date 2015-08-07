@@ -32,9 +32,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
@@ -57,14 +65,6 @@ import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -670,6 +670,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		descriptionTxtAera.getElement().setId("tatDescriptionTxtAera");
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		resourcePathTextBox.getElement().setId("txtResourcePathTextBox");
+		resourcePathTextBox.getElement().getStyle().setWidth(82, Unit.PCT);
 		StringUtil.setAttributes(resourcePathTextBox, true);
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
@@ -1388,7 +1389,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		}
 	}
 	public void setImage(String url, final String category){
-		if (thumbnailUrlStr.endsWith("null")) {
+		if (thumbnailUrlStr!=null && thumbnailUrlStr.endsWith("null")) {
 			if (url.indexOf("youtube") >0){
 				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
 				thumbnailUrlStr = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
@@ -1403,7 +1404,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				setThumbnailImage.setUrl(DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG);
 			}
 		});
-		setThumbnailImage.setUrl(thumbnailUrlStr);
+		setThumbnailImage.setUrl(thumbnailUrlStr!=null?thumbnailUrlStr:"");
 	}
 	public void updateUi() {
 		setThumbnailImage.setVisible(true);

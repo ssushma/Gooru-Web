@@ -27,15 +27,12 @@ package org.ednovo.gooru.client.mvp.gsearch.util;
 
 import java.util.HashMap;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.HighlightRemixedItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -73,6 +70,13 @@ public class SuccessPopupForResource extends PopupPanel {
 	private FolderDo folderDo;
 	public SuccessPopupForResource() {
 		setWidget(uiBinder.createAndBindUi(this));
+		if(AppClientFactory.getCurrentPlaceToken().contains("search")){
+			btnContinueSearching.setText(i18n.GL3191());
+			btnContinueSearching.setTitle(i18n.GL3191());
+		}else{
+			btnContinueSearching.setText(i18n.GL0460());
+			btnContinueSearching.setTitle(i18n.GL0460());
+		}
 		btnViewInMyCollections.addClickHandler(new ViewinMyCollection());
 	}
 	
@@ -89,20 +93,14 @@ public class SuccessPopupForResource extends PopupPanel {
 				element.removeAttribute("style");
 			}
 			hide();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, getParams()); 
-			AppClientFactory.fireEvent(new SetFolderParentNameEvent(getCollectionName()));
-			if("resource".equals(searchType)){
-				AppClientFactory.fireEvent(new SetFolderCollectionStyleEvent(params,"collection"));  
-			}else{
-				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
-				AppClientFactory.fireEvent(new HighlightRemixedItemEvent(getParams(),getSelectedGooruOid()));
-			}
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
 		}
 	}
 	public void setData(final String collectionName,String selectedGooruOid,HashMap<String, String> params,String type,FolderDo folderDo){
 		setCollectionName(collectionName);
 		setSelectedGooruOid(selectedGooruOid);
 		setParams(params);
+		this.params = params;
 		this.folderDo = folderDo;
 		this.searchType = type;
 		StringBuffer buffer = new StringBuffer();
@@ -137,6 +135,14 @@ public class SuccessPopupForResource extends PopupPanel {
 		this.hide();
 		enableTopFilters();
 		AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,null));
+		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )|| nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)
+			|| nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
+		
 	}
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void clickOnCloseBtn (ClickEvent clickevent){

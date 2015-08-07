@@ -25,11 +25,11 @@
 package org.ednovo.gooru.client.mvp.play.collection.info;
 
 
+import org.ednovo.gooru.application.client.service.PlayerAppServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
-import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.library.partner.autodesk;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.AppPlaceKeeper;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryPresenter;
@@ -44,11 +44,11 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibraryView, AutodeskLibraryPresenter.IsAutodeskLibraryProxy> implements AutodeskLibraryUiHandlers {
 
 	private PartnerLibraryPresenter partnerLibraryPresenter;
-	
+
 	private static final String CALLBACK = "callback";
-	
+
 	SignUpPresenter signUpViewPresenter = null;
-	
+
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.AUTODESK)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -62,21 +62,21 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 		this.partnerLibraryPresenter = partnerLibraryPresenter;
 		this.signUpViewPresenter = signUpViewPresenter;
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 	}
-	
+
 	@Override
 	public void onReveal() {
 		super.onReveal();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 	}
-	
+
 	@Override
 	public void onReset() {
 		super.onReset();
@@ -93,11 +93,9 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 		super.prepareFromRequest(request);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			long startTime = System.currentTimeMillis();
-			AppClientFactory.printInfoLogger("Entered into autodesk start time -- "+startTime);
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
-			AppClientFactory.printInfoLogger("Autodesk End time -- "+(System.currentTimeMillis() -startTime));
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
@@ -110,7 +108,7 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 				addToPopupSlot(signUpViewPresenter);
 			}
 		}
-		
+
 		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
@@ -120,7 +118,7 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 			update.center();
 		}
 	}
-	
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.DISCOVER;

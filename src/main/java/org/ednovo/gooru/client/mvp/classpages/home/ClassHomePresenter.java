@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,11 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.home;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter.IsClassHomeProxy;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
@@ -37,20 +43,19 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.service.ClasspageServiceAsync;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 /**
- * 
+ *
  * @fileName : ClassHomePresenter.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -62,33 +67,33 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @Reviewer:
  */
 public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsClassHomeProxy> implements ClassHomeUiHandlers {
-	
-	
+
+
 	@Inject
 	private ClasspageServiceAsync classpageServiceAsync;
-	
+
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
-	
+
 	private static final String CALLBACK = "callback";
-	
+
 	SignUpPresenter signUpViewPresenter = null;
-	
+
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.CLASSHOME)
 	public interface IsClassHomeProxy extends ProxyPlace<ClassHomePresenter> {
 	}
-	
-	
+
+
 	@Inject
 	public ClassHomePresenter(SignUpPresenter signUpViewPresenter,IsClassHomeView view,
 			IsClassHomeProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.signUpViewPresenter = signUpViewPresenter;
-		
+
 		//AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -96,21 +101,21 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 		Window.scrollTo(0, 0);
 	}
 	/**
-	 * 
-	 * @function callBackMethods 
-	 * 
+	 *
+	 * @function callBackMethods
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -136,8 +141,8 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 			update.center();
 		}
 	}
-	
-	
+
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -155,31 +160,31 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	public void prepareFromRequest(PlaceRequest request) {
 		callBackMethods();
 	}
-	
+
 	@Override
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 	}
-	
+
 	@Override
 	public String getViewToken() {
-		
+
 		return PlaceTokens.STUDY;
 	}
-	
+
 	public void setcollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
 	}
-	
-	/** 
+
+	/**
 	 * This method is to get the assignmentListAsyncCallback
 	 */
 	public SimpleAsyncCallback<CollectionDo> getcollectionAsyncCallback() {
 		return collectionAsyncCallback;
 	}
-	
+
 	public ClasspageServiceAsync getclasspageServiceAsync() {
 		return classpageServiceAsync;
 	}
@@ -187,7 +192,42 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	@Override
 	public void gotoStudentsView(String tbvalue) {
 		this.getclasspageServiceAsync().v2getClasspageByCode(tbvalue, getcollectionAsyncCallback());
-		
+
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpages.home.ClassHomeUiHandlers#getV1TeachStudy(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void getV1TeachStudy(String limit, String offset) {
+		AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+
+			@Override
+			public void onSuccess(ClasspageListDo result) {
+				getView().setClassVisiblityData(result);
+			}
+			
+		});
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpages.home.ClassHomeUiHandlers#getV2TeachStudy()
+	 */
+	@Override
+	public void getV2TeachStudy() {
+		AppClientFactory.getInjector().getClasspageService().v3GetAllClass(new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				getView().setClassesData(result);
+			}
+			
+		});
+	}
+
 }

@@ -5,16 +5,14 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="no-gutter">
-				<div class="col-md-7 col-sm-8 col-xs-8 ratings">
-					<div class="resultRating">
-						<g:FlowPanel ui:field="ratingWidgetPanel"/>
-					</div>
-				</div>
-				<div class="col-md-5 col-sm-4 col-xs-4 viewContainer">
-				<g:Label styleName="plus" title="Number of Times Added">+</g:Label><g:Label ui:field="lbladdCount" styleName="authorName"></g:Label>
+				<div class="col-md-5 col-sm-7 col-xs-6 viewContainer">
+					<g:Label styleName="plus" title="Number of Times Added">+</g:Label><g:Label ui:field="lbladdCount" styleName="authorName"></g:Label>
 					<span>
 						<img title="Number of Views" src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
 					</span>
+				</div>
+				<div class="col-md-7 col-sm-5 col-xs-6 buttonAddResource resourceViewsContainer">
+					<g:Button styleName="primary addResource" ui:field="btnAddResource">Add</g:Button>
 				</div>
 				<div class="clearfix"></div>
 			</div>
@@ -28,8 +26,8 @@
 					</a>
 				</div>
 				<div class="col-md-6 col-sm-6 resourceDesc1">
-					<g:Label styleName="collectionTitle" ui:field="resourceTitle"/>	
-					<g:Label styleName="resourceAuthorDetails" ui:field="lblResourcePublisher"/>	
+					<g:Label styleName="collectionTitle" ui:field="resourceTitle"/>
+					<g:Label styleName="resourceAuthorDetails" ui:field="lblResourcePublisher"/>
 				</div>
 				<div class="clearfix"></div>
 				<g:HTMLPanel styleName="resourceDescription" ui:field="resourceDescription"/>
@@ -39,12 +37,19 @@
 					<g:FlowPanel ui:field="standardsDataPanel"/>
 				</div>
 				<g:HTMLPanel styleName="usedDetails">
-				<g:InlineLabel ui:field="lblUserCount"></g:InlineLabel>
-					<g:Anchor ui:field="ancViewMore">View More</g:Anchor>
+				    <div class="col-md-7 col-sm-4 col-xs-4 viewContainer">
+						<g:InlineLabel ui:field="lblUserCount"></g:InlineLabel>
+						<g:Anchor ui:field="ancViewMore">View More</g:Anchor>
+					</div>
+					<g:HTMLPanel styleName="col-md-3 col-sm-8 col-xs-8 ratings resourceViewsContainer" ui:field="panelRatings">
+						<div class="resultRating">
+							<g:FlowPanel ui:field="ratingWidgetPanel"/>
+						</div>
+					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<div class="userDetailsResources no-gutter">
 					<div class="col-md-9 col-xs-9 col-sm-9 collectionResources">
-						<g:Image styleName="resourceCollectionImage" ui:field="relatedCollectionImage" />					
+						<g:Image styleName="resourceCollectionImage" ui:field="relatedCollectionImage" />
 						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitleforResource"></g:InlineLabel>
 					</div>
 					<div class="col-md-3 col-xs-3 col-sm-3 user">
@@ -57,12 +62,12 @@
 				<div class="clearfix"></div>
 			</div>
 		</div>
-		<div class="panel-footer no-gutter">
+		<!-- <div class="panel-footer no-gutter">
 			<div class="col-md-12 col-sm-12 remixButton">
-				<g:Button styleName="primary" ui:field="btnAddResource">Add</g:Button>
+
 			</div>
 			<div class="clearfix"></div>
-		</div>
+		</div> -->
 	</div>
 </g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

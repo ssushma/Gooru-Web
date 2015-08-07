@@ -1,13 +1,12 @@
 package org.ednovo.gooru.client.mvp.community;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
-import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -15,10 +14,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
+ *
  * @fileName : CommunityView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -32,10 +31,10 @@ import com.google.gwt.user.client.ui.Widget;
 public class CommunityView extends BaseViewWithHandlers<CommunityUiHandlers> implements IsCommunityView {
 
 	@UiField HTMLPanel landingpagePanel;
-	
+
 	LibraryView libraryView = null;
-	
-	
+
+
 	private static LandingPageViewUiBinder uiBinder = GWT.create(LandingPageViewUiBinder.class);
 
 	interface LandingPageViewUiBinder extends UiBinder<Widget, CommunityView> {
@@ -44,7 +43,7 @@ public class CommunityView extends BaseViewWithHandlers<CommunityUiHandlers> imp
 	/**
 	 * Class constructor
 	 */
-	public CommunityView() {		
+	public CommunityView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		libraryView = new LibraryView(PlaceTokens.DISCOVER);
 //		libraryView.getCourseTabs().setVisible(false);
@@ -59,14 +58,16 @@ public class CommunityView extends BaseViewWithHandlers<CommunityUiHandlers> imp
 		libraryView.loadContributorsPage(callBack,placeToken);
 	}
 	@Override
-	public void resetPassword(String resetToken) {
-		new ResetPasswordVc(resetToken);
-		
+	public void resetPassword(final String resetToken) {
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+
+			@Override
+			public void onSuccess() {
+
+				new ResetPasswordVc(resetToken);
+
+			}
+		});
 	}
-	@Override
-	public void registerPopup() {
-		RegisterVc registerVc = new RegisterVc();
-		registerVc.show();
-		registerVc.center();
-	}
+
 }

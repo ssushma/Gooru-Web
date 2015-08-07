@@ -25,14 +25,19 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
@@ -49,16 +54,13 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -94,6 +96,7 @@ import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -124,9 +127,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel centuryBrowseContainer,loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+	@UiField HTMLPanel hazardContainer, momentsOfLearningPanelOld,centuryBrowseContainer,loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText,educationalContainer,
-	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaDropdownArrowConatainer,panelCategoryInputDiv;
+	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaDropdownArrowConatainer,panelCategoryInputDiv,educationalUsePanelOld;
 	
 	@UiField
 	public Button cancelResourcePopupBtnLbl,uploadImageLbl,browseResourceBtn;
@@ -162,13 +165,13 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	defaultText,defaultMomentsOfLearningText;
 
 	@UiField
-	HTMLPanel categorypanel,texts,image,educationalTitle,activityText,educationalpanel,educationalUsePanel;
+	HTMLPanel categorypanel,texts,image,educationalTitle,activityText;
 
 	@UiField
-	HTMLPanel resourceTypePanel, resourceDescriptionContainer,panelAction,momentsOfLearningTitle,momentsOfLearningpanel,momentsOfLearningPanel;
+	HTMLPanel resourceTypePanel, resourceDescriptionContainer,panelAction,momentsOfLearningTitle;
 
 	@UiField
-	Label resoureDropDownLbl, resourceCategoryLabel,rightsLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords,resourcemomentsOfLearningLabel,momentsOfLearningDropDownLbl,mandatorymomentsOfLearninglLbl,resourceEducationalLabel;
+	Label resoureDropDownLbl, resourceCategoryLabel,rightsLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords,momentsOfLearningDropDownLbl,mandatorymomentsOfLearninglLbl;
 	
 	@UiField
 	FormPanel fileuploadForm;
@@ -198,6 +201,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	@UiField ScrollPanel spanelMediaFeaturePanel;
 	
 	@UiField InlineLabel advancedText;
+	@UiField Anchor resourceEducationalLabel,resourcemomentsOfLearningLabel;
+	@UiField UlPanel momentsOfLearningPanel,educationalUsePanel;
 	
 	public AddSetupAdvancedView addSetupAdvancedView;
 	private AppMultiWordSuggestOracle centurySuggestOracle;
@@ -396,6 +401,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		setEducationUse();
+		setMomentOfLeaning();
+		educationalUsePanelOld.setVisible(false);
+		momentsOfLearningPanelOld.setVisible(false);
+		resourceEducationalLabel.getElement().setAttribute("data-toggle", "dropdown");
+		resourcemomentsOfLearningLabel.getElement().setAttribute("data-toggle", "dropdown");
 		mandatoryCategoryLbl.setVisible(false);
 		mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
 		mandatoryCategoryLbl.getElement().getStyle().setTop(-10, Unit.PX);
@@ -427,8 +438,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningTitle.getElement().setId("pnlMomentsOfLearningTitle");
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
 		momentsOfLearningTitle.getElement().setAttribute("title", i18n.GL1678());
-		momentsOfLearningpanel.getElement().setId("pnlMomentsOfLearningPanel");
-		momentsOfLearningpanel.setVisible(false);
+	
 		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
 		resourcemomentsOfLearningLabel.getElement().setId("lblResourcemomentsOfLearningLabel");
 		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1684());
@@ -456,7 +466,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalTitle.getElement().setId("pnlEducationalTitle");
 		educationalTitle.getElement().setAttribute("alt", i18n.GL1664());
 		educationalTitle.getElement().setAttribute("title", i18n.GL1664());
-		educationalpanel.getElement().setId("pnlEducationalpanel");
 		resourceEducationalLabel.setText(i18n.GL1684());
 		resourceEducationalLabel.getElement().setId("lblResourceEducationalLabel");
 		resourceEducationalLabel.getElement().setAttribute("alt", i18n.GL1684());
@@ -693,7 +702,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
-		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
+		descriptionTxtAera.getElement().setAttribute("maxlength", "500");
 		resourceCategoryLabel.setText(i18n.GL0360());
 		resourceCategoryLabel.getElement().setId("lblResourceCategoryLabel");
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0360());
@@ -751,7 +760,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				OpenMediaFeatureDropdown();
 			}
 		});
-		List<String> mediaFeatureList = Arrays.asList(mediaFeatureStr.split(","));
+	/*	List<String> mediaFeatureList = Arrays.asList(mediaFeatureStr.split(","));
 		for(int n=0; n<mediaFeatureList.size(); n++)
 		{
 				String mediaTitleVal = mediaFeatureList.get(n);
@@ -773,7 +782,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					}
 				});
 				htmlMediaFeatureListContainer.add(titleLabel);
-		}
+		}*/
+		getMediaFeatures();
 		HTMLEventPanel defaultMediaFeaturePnl = new HTMLEventPanel("");
 		defaultMediaFeaturePnl.getElement().setClassName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFolderVideoOuterContainer());
 		HTMLPanel defaultMediaFeatureText = new HTMLPanel("");
@@ -1246,7 +1256,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 										
 										}
 										
-										String hazardArr[] = setAccessHazards();
+								/*		String hazardArr[] = setAccessHazards();
 										
 										if(hazardArr != null)
 										{
@@ -1254,7 +1264,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											{
 												tagList.add(hazardArr[i].toString());
 											}
-										}
+										}*/
 										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
 										{
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
@@ -1407,7 +1417,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			descCharcterLimit.setVisible(false);
 			resourceDescriptionContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
-			if (descriptionTxtAera.getText().length() >= 300) {
+			if (descriptionTxtAera.getText().length() >= 500) {
 				descCharcterLimit.setText(i18n.GL0143());
 				descCharcterLimit.getElement().setAttribute("alt", i18n.GL0143());
 				descCharcterLimit.getElement().setAttribute("title", i18n.GL0143());
@@ -2110,33 +2120,37 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	/*
 	 * method for select access hazards
 	 */
-	public String[] setAccessHazards()
+	public List<Integer> setAccessHazards()
 	{
 		String[] accessHazardsArr = null;
-		List<String> accessHazardsSelected = new ArrayList<String>();
-		
-		if(flashingHazard.getElement().getClassName().contains("select"))
-		{
+		List<Integer> accessHazardsSelected = new ArrayList<Integer>();
+		int size=hazardContainer.getWidgetCount();
+		for(int i=0;i<size;i++){
+			Label label=(Label)hazardContainer.getWidget(i);
+			if(label.getElement().getClassName().contains("select")){
+				accessHazardsSelected.add(Integer.parseInt(label.getElement().getId()));
+			}
+			
+		}
+
+/*		if(flashingHazard.getElement().getClassName().contains("select")){
 			String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
-			//String hazardsStr = flashingHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
 		if(motionSimulationHazard.getElement().getClassName().contains("select"))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
-			//String hazardsStr = motionSimulationHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
 		if(soundHazard.getElement().getClassName().contains("select"))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
-			//String hazardsStr = soundHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
-		
-		accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
-		setAdvancedAccessHazardStyles(accessHazardsArr.length);
-		return accessHazardsArr;
+*/
+		//accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
+		setAdvancedAccessHazardStyles(accessHazardsSelected.size());
+		return accessHazardsSelected;
 	}
 	
 	@UiHandler("flashingHazard")
@@ -2371,4 +2385,211 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		centuryPopup.center();
 		centuryPopup.getElement().getStyle().setZIndex(999999);
 	}
+	
+	public void setEducationUse(){
+		AppClientFactory.getInjector().getResourceService().getEducationalUseList(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				setData(result,"education");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
+	public void setData(List<ListValuesDo> listValuesDos,String type){
+	
+		if(type.equalsIgnoreCase("education")){
+			educationalUsePanel.clear();
+		}else if(type.equalsIgnoreCase("mLearning")){
+			momentsOfLearningPanel.clear();
+		}
+		
+		for(ListValuesDo listValuesDo:listValuesDos){
+			LiPanel liPanel=new LiPanel();
+			Anchor anchor=new Anchor();
+			anchor.setStyleName("educationUseText");
+			anchor.setText(listValuesDo.getName());
+			anchor.getElement().setId(listValuesDo.getId()+"");
+			liPanel.add(anchor);
+			if(type.equalsIgnoreCase("education")){
+				educationalUsePanel.add(liPanel);
+				liPanel.addDomHandler(new EducationClickHandler(liPanel, anchor), ClickEvent.getType());
+			}else if(type.equalsIgnoreCase("mLearning")){
+				liPanel.addDomHandler(new MomentOfLearingClickHandler(liPanel, anchor), ClickEvent.getType());
+				momentsOfLearningPanel.add(liPanel);
+			}
+			
+		}
+	}
+	public void setMomentOfLeaning(){
+		AppClientFactory.getInjector().getResourceService().getMomentOfLearning(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				setData(result, "mLearning");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
+	public class EducationClickHandler implements ClickHandler{
+		Anchor anchor;
+		LiPanel liPanel;
+		public EducationClickHandler(LiPanel liPanel,Anchor anchor) {
+			// TODO Auto-generated constructor stub
+			this.anchor=anchor;
+			this.liPanel=liPanel;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			resetSelection(educationalUsePanel);
+			liPanel.setStyleName("active");
+			resourceEducationalLabel.setText(anchor.getText());
+			resourceEducationalLabel.getElement().setId(anchor.getElement().getId());
+			resourceEducationalLabel.getElement().setAttribute("alt", anchor.getText());
+			resourceEducationalLabel.getElement().setAttribute("title", anchor.getText());
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+			mandatoryEducationalLbl.setVisible(false);
+			setAdvancedOptionsStyles();
+		}
+		
+	}
+	public class MomentOfLearingClickHandler implements ClickHandler{
+		Anchor anchor;
+		LiPanel liPanel;
+		public MomentOfLearingClickHandler(LiPanel liPanel,Anchor anchor) {
+			// TODO Auto-generated constructor stub
+			this.anchor=anchor;
+			this.liPanel=liPanel;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			resetSelection(momentsOfLearningPanel);
+			liPanel.setStyleName("active");
+			resourcemomentsOfLearningLabel.setText(anchor.getText());
+			resourcemomentsOfLearningLabel.getElement().setId(anchor.getElement().getId());
+			resourcemomentsOfLearningLabel.getElement().setAttribute("alt", anchor.getText());
+			resourcemomentsOfLearningLabel.getElement().setAttribute("title", anchor.getText());
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen = false;
+			mandatorymomentsOfLearninglLbl.setVisible(false);
+			setAdvancedOptionsStyles();
+		
+		}
+		
+	}
+	
+	public void resetSelection(UlPanel ulPanel){
+		int count=ulPanel.getWidgetCount();
+		for(int i=0;i<count;i++){
+			LiPanel liPanel=(LiPanel)ulPanel.getWidget(i);
+			liPanel.removeStyleName("active");
+		}
+	}
+
+	public void getMediaFeatures(){
+		AppClientFactory.getInjector().getResourceService().getMediaFeature(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+			
+				for(ListValuesDo listValuesDo:result){
+						String mediaTitleVal = listValuesDo.getName();
+						final Label titleLabel = new Label(mediaTitleVal);
+						titleLabel.setStyleName(CollectionAssignCBundle.INSTANCE.css().classpageTitleText());
+						titleLabel.getElement().setAttribute("id", listValuesDo.getId()+"");
+						titleLabel.setText(listValuesDo.getName());
+						//Set Click event for title
+						titleLabel.addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {		
+								String optionSelected = titleLabel.getText();
+								lblMediaPlaceHolder.setText(optionSelected);
+								spanelMediaFeaturePanel.setVisible(false);
+								lblMediaPlaceHolder.getElement().setId(titleLabel.getElement().getId());
+								lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
+								lblMediaPlaceHolder.setText(optionSelected);
+								setAdvancedOptionsStyles();
+							}
+						});
+						htmlMediaFeatureListContainer.add(titleLabel);
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	public void setHazardData(List<ListValuesDo> hazards){
+		if(hazards!=null){
+			hazardContainer.clear();
+			for(ListValuesDo do1:hazards){
+				final Label label=new Label();
+				label.setText(do1.getName());
+				label.getElement().setId(do1.getId()+"");
+				label.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+						if(label.getStyleName().toString().contains("select"))
+						{
+							label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+						}
+						else
+						{
+							label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+						}
+						setAccessHazards();
+					}
+				});
+				hazardContainer.add(label);
+			}
+		}
+		
+	}
+	public void setHazard(){
+		AppClientFactory.getInjector().getResourceService().getAccessHazards(new AsyncCallback<List<ListValuesDo>>() {
+			
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				// TODO Auto-generated method stub
+				if(result!=null){
+					setHazardData(result);
+				}
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+			}
+		});
+	}
+
+
+
 }
+

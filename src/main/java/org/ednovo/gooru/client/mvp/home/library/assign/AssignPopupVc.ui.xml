@@ -43,7 +43,7 @@
 					<!-- <g:HTMLPanel styleName="{res.css.sociaMediaText}">Share this link 
 						via </g:HTMLPanel> <g:HTMLPanel ui:field="socialSharePanel" styleName="{res.css.socialiconContainer}"> 
 						</g:HTMLPanel> -->
-					<g:HTMLPanel styleName="{res.css.contentBorder}"></g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.contentBorder}" ui:field="contentBorderPanel"></g:HTMLPanel>
 
 					<uc:HTMLEventPanel ui:field="htmlLoginPanel" styleName="{res1.css.loginShareContainer}">
 						<g:Label styleName="{res.css.popupTitle}" ui:field="lblLoginPopupTitle" />

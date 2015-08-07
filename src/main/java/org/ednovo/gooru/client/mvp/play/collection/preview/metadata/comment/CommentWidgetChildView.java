@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -30,9 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.player.CommentsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildView;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.events.SetCommentsOptionsEvent;
@@ -40,9 +43,6 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.even
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -70,58 +70,58 @@ import com.google.gwt.user.client.ui.Widget;
 public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresenter> implements IsCommentWidgetView,ClientConstants{
 
 	@UiField HTMLPanel authorBadge, editButton, messageInfo,tooltipDeletetext;
-	
+
 	@UiField Label userName, timestamp, successPostMsg,characterLimit;
-	
+
 	@UiField HTML commentHtml;
-	
+
 	@UiField HTMLEventPanel editPanel, deletePanel, deleteButton;
-	
+
 	@UiField Image userPhoto;
-	
+
 	@UiField TextArea commentField;
-	
+
 	@UiField Button postCommentBtn, postCommentCancel;
-	
+
 	private String commentUid;
-	
+
 	private static final String DELETE = "DELETE";
-	
+
 	private static final String EDIT = "EDIT";
-	
+
 	private static final String PNG = ".png";
 
 	private static final String PRIMARY_STYLE = "primary";
-	
+
 	private static final String SECONDARY_STYLE = "secondary";
-	
+
 	private static final String DISABLED_STYLE = "disabled";
-	
+
 	private static final String CONTENT_ADMIN_ROLE = "Content_Admin";
-	
+
 	private static final String SUPER_ADMIN_ROLE = "superadmin";
-	
+
 	private static boolean CHECK_COLLOBORATOR =false;
-	
+
 	private List<String> getPermissionsList = null;
-	
+
 	private static final String EDUCATOR_DEFAULT_IMG = "../images/settings/setting-user-image.png";
-	
+
 	private static final String DATE_FORMAT="MMMM dd, yyyy";
-	
+
 	private String collectionOwnerUid = null;
 	private String commentOwnerUid = null;
 	private String loggedInOwnerUid = null;
-	
+
 	private CommentsDo commentsDo;
 	private CollectionDo collectionDo;
-	
+
 	private DeleteConfirmationPopupVc deleteConfirmationPopupVc;
-	
+
 	private static CommentWidgetChildViewUiBinder uiBinder = GWT.create(CommentWidgetChildViewUiBinder.class);
 
 	interface CommentWidgetChildViewUiBinder extends UiBinder<Widget, CommentWidgetChildView> {}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public CommentWidgetChildView(CommentsDo commentsDo, CollectionDo collectionDo) {
@@ -136,49 +136,49 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		authorBadge.getElement().setId("pnlAuthorBadge");
 		authorBadge.getElement().setAttribute("alt",i18n.GL0573());
 		authorBadge.getElement().setAttribute("title",i18n.GL0573());
-		
+
 		editPanel.getElement().setInnerHTML(i18n.GL0140());
 		editPanel.getElement().setId("epnlEditPanel");
 		editPanel.getElement().setAttribute("alt",i18n.GL0140());
 		editPanel.getElement().setAttribute("title",i18n.GL0140());
-		
+
 		deletePanel.getElement().setInnerHTML(i18n.GL0558());
 		deletePanel.getElement().setId("epnlDeletePanel");
 		deletePanel.getElement().setAttribute("alt",i18n.GL0558());
 		deletePanel.getElement().setAttribute("title",i18n.GL0558());
-		
+
 		tooltipDeletetext.getElement().setInnerHTML(i18n.GL0558());
 		tooltipDeletetext.getElement().setId("epnlTooltipDeletetext");
 		tooltipDeletetext.getElement().setAttribute("alt",i18n.GL0558());
 		tooltipDeletetext.getElement().setAttribute("title",i18n.GL0558());
-		
+
 		postCommentBtn.setText(i18n.GL0571());
 		postCommentBtn.getElement().setId("btnPostCommentBtn");
 		postCommentBtn.getElement().setAttribute("alt",i18n.GL0571());
 		postCommentBtn.getElement().setAttribute("title",i18n.GL0571());
-		
+
 		postCommentCancel.setText(i18n.GL0142());
 		postCommentCancel.getElement().setId("btnPostCommentCancel");
 		postCommentCancel.getElement().setAttribute("alt",i18n.GL0142());
 		postCommentCancel.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		characterLimit.setText(i18n.GL0143());
 		characterLimit.getElement().setId("lblCharacterLimit");
 		characterLimit.getElement().setAttribute("alt",i18n.GL0143());
 		characterLimit.getElement().setAttribute("title",i18n.GL0143());
-		
+
 		successPostMsg.setText(i18n.GL0570());
 		successPostMsg.getElement().setId("lblSuccessPostMsg");
 		successPostMsg.getElement().setAttribute("alt",i18n.GL0570());
 		successPostMsg.getElement().setAttribute("title",i18n.GL0570());
-		
+
 		editButton.setVisible(false);
-		deleteButton.setVisible(false);		
+		deleteButton.setVisible(false);
 		AppClientFactory.getEventBus().addHandler(SetCommentsOptionsEvent.TYPE, setZindex);
-		
-		
+
+
 		setCommentData(commentsDo, collectionDo);
-	
+
 		userPhoto.getElement().setId("imgUserPhoto");
 		messageInfo.getElement().setId("pnlMessageInfo");
 		userName.getElement().setId("lblUserName");
@@ -189,30 +189,30 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		commentField.getElement().setId("tatCommentField");
 		StringUtil.setAttributes(commentField, true);
 	}
-	
+
 	/*
 	 * Event for options button to enable after successful login.
 	 */
 	SetCommentsOptionsHandler setZindex = new SetCommentsOptionsHandler() {
-		
+
 		@Override
 		public void setOptions() {
 			setOptionsButtons();
 		}
 	};
-	
+
 	/**
-	 * 
+	 *
 	 * @param collectionDo
-	 * 
-	 * @function setCommentData 
-	 * 
+	 *
+	 * @function setCommentData
+	 *
 	 * @created_date : 02-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param i
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -233,9 +233,9 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 				commentOwnerUid = commentsDo.getCommentorUid().getGooruUId() != null ? commentsDo.getCommentorUid().getGooruUId() : null;
 				userName.setText(commentsDo.getCommentorUid().getUsername()!= null ?commentsDo.getCommentorUid().getUsername():"");
 			}
-			
+
 			loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
-			
+
 			if(collectionDo.getMeta()!=null){
 				 CHECK_COLLOBORATOR = collectionDo.getMeta().isIsCollaborator();
 				 if(collectionDo.getMeta().getPermissions().size()>0){
@@ -250,7 +250,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 				}
 			});
 			setMixPanelEvent(collectionOwnerUid, loggedInOwnerUid);
-			
+
 			if(collectionOwnerUid.equalsIgnoreCase(commentOwnerUid)) {
 				authorBadge.setVisible(true);
 			} else {
@@ -260,7 +260,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			if (commentsDo.getLastModifiedOn() !=null){
 				commentTime = commentTime+ " "+i18n.GL_GRR_Hyphen()+" "+i18n.GL1434();
 			}
-			timestamp.setText(commentTime); 
+			timestamp.setText(commentTime);
 			timestamp.getElement().setAttribute("alt",commentTime);
 			timestamp.getElement().setAttribute("title",commentTime);
 			commentHtml.setHTML(commentsDo.getComment());
@@ -271,33 +271,31 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			commentField.getElement().setAttribute("title",commentsDo.getComment());
 			setOptionsButtons();
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("CommentWidgetChileView : setCommentData : "+e.getMessage());
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function setOptionsButtons 
-	 * 
+	 *
+	 * @function setOptionsButtons
+	 *
 	 * @created_date : 10-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	public void setOptionsButtons(){
 		loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
-		if(collectionDo.getSettings()!=null){
-			if(TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment())){
 				if(!AppClientFactory.isAnonymous() && (commentOwnerUid.equalsIgnoreCase(loggedInOwnerUid))) {
 					editButton.setVisible(true);
 					deleteButton.setVisible(false);
@@ -307,53 +305,48 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 				} else if(AppClientFactory.isAnonymous()){
 					editButton.setVisible(false);
 					deleteButton.setVisible(false);
-				} else if(!AppClientFactory.isAnonymous() && 
-						(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE) 
+				} else if(!AppClientFactory.isAnonymous() &&
+						(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)
 						|| AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(SUPER_ADMIN_ROLE))){
 					deleteButton.setVisible(false);
 					editButton.setVisible(true);
 				}else if(!AppClientFactory.isAnonymous() && (getPermissionsList!=null && getPermissionsList.toString().contains(ClientConstants.EDIT))){
 					deleteButton.setVisible(false);
 					editButton.setVisible(true);
-				}	
-			}else{
-				editButton.setVisible(false);
-				deleteButton.setVisible(false);
-			}
-		}
+				}
 	}
-	
 
-	/** 
+
+	/**
 	 * This method is to get the commentUid
 	 */
 	public String getCommentUid() {
 		return commentUid;
 	}
 
-	/** 
+	/**
 	 * This method is to set the commentUid
 	 */
 	public void setCommentUid(String commentUid) {
 		this.commentUid = commentUid;
 	}
-	
+
 	@UiHandler("deletePanel")
 	public void clickOnDeletePanel(ClickEvent event) {
 		deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(i18n.GL0558(),i18n.GL0559());
 	}
-	
+
 	@UiHandler("deleteButton")
 	public void clickOnDeleteButton(ClickEvent event) {
 		deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(i18n.GL0558(),i18n.GL0559());
 	}
-	
+
 	@UiHandler("editPanel")
 	public void clickOnEditPanel(ClickEvent event) {
 		AppClientFactory.fireEvent(new UpdateCommentChildViewEvent(getCommentUid(),EDIT));
 		enableEditFunction(true);
 	}
-	
+
 	@UiHandler("postCommentCancel")
 	public void clickOnPostCommentCancel(ClickEvent event) {
 		if(commentsDo.getComment()!=null){
@@ -368,7 +361,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		enableEditFunction(false);
 		characterLimit.setVisible(false);
 	}
-	
+
 	@UiHandler("postCommentBtn")
 	public void clickOnPostCommentBtn(ClickEvent event) {
 		if (commentField.getText().length() > 0){
@@ -402,7 +395,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 				            }
 				        };
 				        timer.schedule(1000);
-						characterLimit.setVisible(false);						
+						characterLimit.setVisible(false);
 					}
 				}
 			});
@@ -412,23 +405,23 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(i18n.GL0558(),i18n.GL0559());
 			enableEditFunction(true);
 		}
-	}	
+	}
 	/**
-	 * 
-	 * @function enableEditFunction 
-	 * 
+	 *
+	 * @function enableEditFunction
+	 *
 	 * @created_date : 10-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param isVisible
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -439,21 +432,21 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		postCommentCancel.setVisible(isVisible);
 	}
 	/**
-	 * 
-	 * @function displaySuccessMsg 
-	 * 
+	 *
+	 * @function displaySuccessMsg
+	 *
 	 * @created_date : 10-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param isVisible
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -462,21 +455,21 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		successPostMsg.setVisible(isVisible);
 	}
 	/**
-	 * 
-	 * @function getCommentField 
-	 * 
+	 *
+	 * @function getCommentField
+	 *
 	 * @created_date : 10-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : TextArea
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -484,9 +477,9 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		return commentField;
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : CommentWidgetChildView.java
-	 * 
+	 *
 	 * @function : OnCommentsFieldBlur
 	 *
 	 * @description : Validation for profanity check on validation.
@@ -508,11 +501,11 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		@Override
 		public void onBlur(BlurEvent event) {
 			if (commentField.getText().length() > 0){
-				
+
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", commentField.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-	
+
 					@Override
 					public void onSuccess(Boolean value) {
 						if (value){
@@ -522,14 +515,14 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 						}else{
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
-							characterLimit.setVisible(false);						
+							characterLimit.setVisible(false);
 						}
 					}
 				});
 			}
-		}		
+		}
 	}
-	
+
 	/**
 	 * @fileName : PreviewPlayerMetadataView.java
 	 *
@@ -561,10 +554,10 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @fileName : CommentWidgetChildView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -588,7 +581,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			Timer timer = new Timer(){
 	            @Override
 	            public void run(){
-	            	AppClientFactory.fireEvent(new UpdateCommentChildViewEvent(getCommentUid(),DELETE));		            
+	            	AppClientFactory.fireEvent(new UpdateCommentChildViewEvent(getCommentUid(),DELETE));
 	            	deleteConfirmationPopupVc.hide();
 	            }
 	        };
@@ -598,16 +591,16 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			 super.hide();
 		}
 	}
-	
+
 	/**
-	 * @function getCreatedTime 
-	 * 
+	 * @function getCreatedTime
+	 *
 	 * @created_date : 06-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentCreatedTime
-	 * 
+	 *
 	 * @return : String
 	 */
 	private String getCreatedTime(String commentCreatedTime) {
@@ -638,19 +631,19 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		}
 		return "";
 	}
-	
+
 	/**
-	 * @function getTimePrefix 
-	 * 
+	 * @function getTimePrefix
+	 *
 	 * @created_date : 06-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param count
 	 * @parm(s) : @param msg
 	 * @parm(s) : @param regex
 	 * @parm(s) : @param replacement
-	 * 
+	 *
 	 * @return : String
 	 *
 	 */
@@ -659,16 +652,16 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			msg = msg.replaceAll(regex, replacement);
 		}
 		return msg;
-	}	
+	}
 	/**
-	 * @function modifyEditControls 
-	 * 
+	 * @function modifyEditControls
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param isCommentsFieldClicked
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -687,22 +680,22 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		}
 	}
 	/**
-	 * 
-	 * @function setMixPanelEvent 
-	 * 
+	 *
+	 * @function setMixPanelEvent
+	 *
 	 * @created_date : 10-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param collectionAuthor
 	 * @parm(s) : @param loggedInUser
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -713,16 +706,16 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			MixpanelUtil.mixpanelEvent("Preview_User_Comments");
 		}
 	}
-	
+
 	/**
-	 * @function removeHtmlTags 
-	 * 
+	 * @function removeHtmlTags
+	 *
 	 * @created_date : 10-Nov-2014
-	 * 
+	 *
 	 * @description this method is used to remove the html tags in comment input box
-	 * 
-	 * @parm(s) : @param String 
-	 * 
+	 *
+	 * @parm(s) : @param String
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -735,21 +728,21 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	}
 
 	/**
-	 * 
-	 * @function getEditButton 
-	 * 
+	 *
+	 * @function getEditButton
+	 *
 	 * @created_date : 10-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : HTMLPanel
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -758,21 +751,21 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	}
 
 	/**
-	 * 
-	 * @function setEditButton 
-	 * 
+	 *
+	 * @function setEditButton
+	 *
 	 * @created_date : 10-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param editButton
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */

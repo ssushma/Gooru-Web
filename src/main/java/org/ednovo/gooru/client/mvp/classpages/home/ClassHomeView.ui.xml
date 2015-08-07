@@ -5,7 +5,7 @@
 	xmlns:txt="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 
 	<ui:style field="StudyStyle" src="StudyStyles.css" />
-	<g:HTMLPanel>
+	<!-- <g:HTMLPanel>
 		<g:HTMLPanel styleName="{StudyStyle.wrapper}">
 			<g:HTMLPanel styleName="{StudyStyle.content}">
 				<g:HTMLPanel styleName="{StudyStyle.content-inner}">
@@ -42,6 +42,71 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 
-		<sg:FooterUc />
+		
+	</g:HTMLPanel> -->
+<g:HTMLPanel styleName="gooruBodySupportContainer">
+   <div class="container">
+      <div class="row">
+       <g:HTMLPanel styleName="myClassesLanding"> 
+	  <g:HTMLPanel styleName="col-md-12 col-sm-12" ui:field="mainPanel">
+	      <div class="myClassesTabs"><g:Anchor ui:field="myClassesAnr">2015 - 2016</g:Anchor><g:Anchor ui:field="archivedAnr">2014 - 2015</g:Anchor> </div>
+	   </g:HTMLPanel> 
+	   <div class="clearfix"></div>
+	   <div class="col-md-12 col-sm-12">
+	      <g:HTMLPanel styleName="myClassesAlert" ui:field="notesPanel">
+	         <div class="alertIcon"> <img src="images/alertSuccessIcon.png"/> </div>
+	         <g:HTMLPanel styleName="alertText" >
+	            <txt:PPanel ui:field="schoolAlertPanel"></txt:PPanel>
+	         </g:HTMLPanel>
+	      </g:HTMLPanel>
+	   </div>
+	   <div class="clearfix"></div>
+	   <g:HTMLPanel ui:field="landingPagePanel">
+	   <div class="myClassesHeader">
+	      <div class="col-md-6 col-sm-6">
+	         <txt:H3Panel ui:field="joinedContainerTitle"></txt:H3Panel>
+	      </div>
+	      <g:HTMLPanel styleName="col-md-6 col-sm-6 classcodeBox" ui:field="classCodePanel">
+	               <txt:TextBoxWithPlaceholder name="" styleName="form-control" ui:field="txtCode"></txt:TextBoxWithPlaceholder>
+				   <g:Button styleName="primary"  ui:field="btnEnter"></g:Button>
+				   <g:Button styleName="primary disabled"  ui:field="disabledBtn"></g:Button>
+		  </g:HTMLPanel>
+	      <div class="clearfix"></div>
+	   </div>
+	   <div class="classBlocks">
+	        <txt:LoadingUc ui:field="studyLoading"/>
+	       <g:HTMLPanel ui:field="joinedClassesContainer"></g:HTMLPanel>
+	       <div class="col-md-12 text-center">
+	        	<g:Button styleName="secondary" ui:field="seeMorebtnJoined"></g:Button>
+	       </div>
+	      <div class="clearfix"></div>
+	   </div>
+	   <div class="myClassesHeader">
+	      <div class="col-md-6 col-sm-6">
+	         <txt:H3Panel ui:field="teachContainerTitle"></txt:H3Panel>
+	      </div>
+	      <g:HTMLPanel styleName="col-md-6 col-sm-6 classcodeBox" ui:field="createClassPanel">
+			   <g:Button styleName="primary" ui:field="btnCreateClass"></g:Button>
+		  </g:HTMLPanel>
+	      <div class="clearfix"></div>
+	   </div>
+	   <div class="classBlocks">
+	       <txt:LoadingUc ui:field="teachLoading"/>
+	       <g:HTMLPanel ui:field="ownerClassesContainer"></g:HTMLPanel>
+	       <div class="col-md-12 text-center">
+	           <g:Button styleName="secondary" ui:field="seeMorebtnOwner"></g:Button>
+	       </div>
+	      <div class="clearfix"></div>
+	   </div>
+	   </g:HTMLPanel>
+	   <div class="col-md-12 col-sm-12">
+	         <g:HTMLPanel styleName="myClassesGettingStartTopMenu" ui:field="emptyClassesPanel"></g:HTMLPanel>
+	   </div>
+	  <!--  <sg:FooterUc /> -->
 	</g:HTMLPanel>
+      </div>
+   </div>
+</g:HTMLPanel> 
+	
 </ui:UiBinder>
+

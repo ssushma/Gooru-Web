@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.profilepage.event;
 
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
 
 import com.google.gwt.event.shared.GwtEvent;
 

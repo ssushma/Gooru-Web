@@ -32,9 +32,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.search.SearchDo;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
@@ -48,12 +55,6 @@ import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.ScrollPopupUtil;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -65,7 +66,6 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -189,20 +189,14 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
 		lblMediaPlaceHolder.getElement().setAttribute("data-toggle","dropdown");
-		/*htmlMediaFeatureListContainer.setHeight("100px");
-		htmlMediaFeatureListContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);*/
+
 		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
-		//		this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+
 		}else{
-			
-			//	this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
-				//this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
-				this.getElement().setAttribute("style", "z-index:999999;");
+			this.getElement().setAttribute("style", "z-index:999999;");
 		}
 	
-		//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
-		this.center();
-		
+		this.center();		
 		
 		standardsPanel.getElement().setId("pnlStandards");
 		standardsPanel.getElement().setAttribute("alt","");
@@ -1324,58 +1318,82 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 */
 	public void removeClassNameForAllAds(){
-		noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+				modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+				aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			}
+		});
 	}
 	@UiHandler("noAds")
 	public void onnoAdsClick(ClickEvent click){
-		if(noAds.getStyleName().toString().contains("selected"))
-		{
-			noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		}
-		else if(modAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
-		{
-			removeClassNameForAllAds();
-			noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		}
-		else
-		{
-			noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		}
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				if(noAds.getStyleName().toString().contains("selected"))
+				{
+					noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+				}
+				else if(modAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
+				{
+					removeClassNameForAllAds();
+					noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+				}
+				else
+				{
+					noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+				}
+			}
+		} );
 	}
 	@UiHandler("modAds")
 	public void onmodAdsClick(ClickEvent click){
-		if(modAds.getStyleName().toString().contains("selected"))
-		{
-			modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		}
-		else if(noAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
-		{
-			removeClassNameForAllAds();
-			modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				if(modAds.getStyleName().toString().contains("selected"))
+				{
+					modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+				}
+				else if(noAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
+				{
+					removeClassNameForAllAds();
+					modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 
-		}
-		else
-		{
-			modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		}
+				}
+				else
+				{
+					modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+				}
+			}
+		});
 	}
 	@UiHandler("aggreAds")
 	public void onaggreAdsClick(ClickEvent click){
-		if(aggreAds.getStyleName().toString().contains("selected"))
-		{
-			aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		}
-		else if(noAds.getStyleName().toString().contains("selected") || modAds.getStyleName().toString().contains("selected"))
-		{
-			removeClassNameForAllAds();
-			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		}
-		else
-		{
-			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());		
-		}
+		GWT.runAsync(new SimpleRunAsyncCallback() {
+			
+			@Override
+			public void onSuccess() {
+				if(aggreAds.getStyleName().toString().contains("selected"))
+				{
+					aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+				}
+				else if(noAds.getStyleName().toString().contains("selected") || modAds.getStyleName().toString().contains("selected"))
+				{
+					removeClassNameForAllAds();
+					aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+				}
+				else
+				{
+					aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());		
+				}
+			}
+		});
 	}
 	/**
 	 * 

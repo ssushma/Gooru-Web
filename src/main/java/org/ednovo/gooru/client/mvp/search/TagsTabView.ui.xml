@@ -2,8 +2,8 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.mvp.profilepage.tab.content.tags">
 	<ui:style field="searchTagsTabStyle" src="searchTagsTabStyle.css" type="org.ednovo.gooru.client.mvp.search.SearchTabTagsStyleBundle"></ui:style>
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
-	
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
+
 	<g:HTMLPanel styleName="{searchTagsTabStyle.mainContainer}">
 	    <g:HTMLPanel styleName="{searchTagsTabStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
 	        	<g:Label styleName="{searchTagsTabStyle.loadingImageForSearchTagsTab}" />
@@ -14,4 +14,4 @@
 		</g:ScrollPanel>
 	</g:HTMLPanel>
 
-</ui:UiBinder> 
+</ui:UiBinder>

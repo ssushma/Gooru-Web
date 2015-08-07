@@ -262,7 +262,7 @@ margin-top: -2px;
 	text-align: left;
 	width: 440px;
 	color: #999999;
-	
+
 }
 
 .resourceNarrationEdit {
@@ -538,7 +538,7 @@ margin-top: -2px;
 
 /*.copyPopupResourcesDownArrow{
 	position:absolute; margin-top:-21px; margin-left:272px; cursor:pointer;
-	
+
 }*/
 .copyPopupResourcesDownArrow {
 	position: absolute;
@@ -795,7 +795,6 @@ user agent stylesheetdiv {
 }
 
 .myFolderCollectionPopup {
-	float: left;
 	background-color: #FFF;
 	border-color: rgb(221, 221, 221);
 	border-width: 1px;
@@ -803,7 +802,7 @@ user agent stylesheetdiv {
 	width: 100%;
 	/* height: 556px; */
 	margin-bottom: 6px;
-	background: url("../images/core/background-image.png");
+	background: url("../images/background-image.png");
 }
 
 .myFolderCollectionBlackBg {
@@ -828,8 +827,8 @@ user agent stylesheetdiv {
 }
 
 .myFolderCollectionUrlContent {
-	float: left;
-	width: 135px;
+	/* float: left;
+	width: 135px; */
 	/*height: 510px;*/
 	border-bottom: none;
 	border-left: none;
@@ -837,7 +836,7 @@ user agent stylesheetdiv {
 	border-color: rgb(221, 221, 221);
 	border-left: none;
 	border-bottom: none;
-	background: url("../images/core/background-image.png") !important;
+	background: url("../images/background-image.png") !important;
 }
 
 .myFolderCollectionUrlbg {
@@ -880,13 +879,10 @@ user agent stylesheetdiv {
 }
 
 .myFolderCollectionFormContainer {
-	float: left;
 	padding: 0px 10px 0px 10px;
-	width: 75%;
 	border-left: 1px solid #DDD;
 	/* height: 518px; */
 	background-color: white;
-	overflow:hidden !important;
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
 	max-height: 567px;
@@ -1119,7 +1115,7 @@ user agent stylesheetdiv {
 }
 .myFolderCollectionRefreshContainer {
 	/*padding: 0px 0px 0px 15px;*/
-	
+
 }
 
 .myFolderCollectionRefreshInnerContainer {
@@ -1244,7 +1240,7 @@ user agent stylesheetdiv {
 
 .myFolderCollectionButtonContainer {
 	float: left;
-	margin: 30px 0px 15px 99px;
+	margin: 30px 0px 15px 280px;
 }
 
 .myFolderEditButtonContainer {
@@ -1258,7 +1254,7 @@ user agent stylesheetdiv {
 }
 
 .myFolderCollectionAddTitle {
-	
+
 }
 
 .myFolderCollectionCancel {
@@ -1291,7 +1287,7 @@ user agent stylesheetdiv {
 /* 	background: url(images/NewResourcePopup/resource-icon-sprite.png)
 		no-repeat; */
 	background: url(../images/resource-type-icons.png) no-repeat transparent;
-	
+
 }
 
 .myFolderCollectionFolderVideoOuterContainer {
@@ -1343,7 +1339,7 @@ user agent stylesheetdiv {
 }
 
 .myFolderCollectionFolderspriteVideo {
-	background-position: 0px 1px;	
+	background-position: 0px 1px;
 	width: 28px;
 	height: 22px;
 	float: left;
@@ -1414,7 +1410,7 @@ user agent stylesheetdiv {
 	/*margin-top: -2px;*/
 }
 .myFolderCollectionFolderspriteAudio {
-	background-position: 0px -279px; 
+	background-position: 0px -279px;
 	width: 28px;
 	height: 22px;
 	float: left;
@@ -1522,8 +1518,6 @@ user agent stylesheetdiv {
 	height: 98%;
 	border: 0px;
 	font-size: 12px;
-	max-width: 376px;
-	max-height: 79px;
 }
 
 .newPopupTextAreaEdit {
@@ -1734,7 +1728,7 @@ input[type="text"] {
 }
 
 .resourceExistsResourceTypeSprite {
-	
+
 }
 
 .resourceExistsResourceTypeSpriteVideo {
@@ -2182,7 +2176,7 @@ margin-top: 18px; */
 .ownResourceFormInputTextBox {
 	outline: 0;
 	/* width: 308px; */
-	width: 79%;
+	width: 90%;
 	height: 28px;
 	color: rgb(81, 81, 81);
 	padding: 0px 0px 0px 5px;
@@ -2220,7 +2214,7 @@ margin-top: 18px; */
 	float: left;
 	margin-left: 85px;
 }
-/* 
+/*
 .ownResourceCancel {
 	float: left;
 } */
@@ -2305,14 +2299,14 @@ margin-top: 18px; */
 
 .ownResourceFormRightsContent {
 	position: relative;
-	float: left;
+	display: inline-block;
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
-	margin: 27px 10px 0px 3px;
 	background: url(images/Classpage/sprite-classpage-type.png) no-repeat
 		left top;
 	background-position: 0px -46px;
+	vertical-align: middle;
 }
 
 .ownResourceFormRightsContent:hover {
@@ -2384,7 +2378,6 @@ margin-top: 18px; */
 
 .ownResourceFormDeclarationText {
 	float: left;
-	margin-top: 29px;
 	font-size: 13px;
 }
 
@@ -2400,7 +2393,7 @@ margin-top: 18px; */
 	margin-right: 8px;
 	background-color: #fff;
 	position: absolute;
-	/* left: 653px; 
+	/* left: 653px;
 	top: 45px;*/
 	left: 484px;
     top: 45px;
@@ -2437,7 +2430,7 @@ margin-top: 18px; */
 	float: right;
 	margin-top: -29px;
 	position: absolute;
-	width: 349px;
+	width: 100%;
 	height: 19px;
 	margin-left: 0px;
 	padding: 5px;
@@ -2458,13 +2451,13 @@ margin-top: 18px; */
 .resourceRightsCheckBox {
 	float: left;
 	margin-left: -3px;
-	margin-top: 30px;
 }
 
 .resourceRightsContainer {
-	margin-left: 79px;
+	margin-left: 220px;
 	width: 100%;
 	float:left;
+	margin-top: 40px;
 }
 
 .resourceRightsContainerWeb {
@@ -2575,7 +2568,7 @@ margin-top: 18px; */
 
 .gEditButton {
 	margin-top: 2px;
-	/* 
+	/*
 	 Hot fix changes
 	margin-left: 16px; */
 	padding: 8px 65px 8px 10px;
@@ -2630,7 +2623,7 @@ margin-top: 18px; */
 	margin-bottom: 10px;
 	border: 1px solid #FF9900;
 	width: 80%;
-	height: 28px; 
+	height: 28px;
 }
 
 .fileActionPanel {
@@ -2688,7 +2681,7 @@ margin-top: 18px; */
 	font-style: normal;
 	margin: 2px 0px;
 	cursor: pointer;
-	float: left;
+	display: inline-block;
 }
 
 .fileContainer {
@@ -2762,7 +2755,7 @@ margin-top: 18px; */
 	margin-right: 65px; */
 }
 .updateTextStyle{
-	float: right;	
+	float: right;
 	position: relative;
 	top: -52px;
 	right: 10px;
@@ -2787,11 +2780,8 @@ margin-top: 18px; */
 	height: 38px;
 	width: 238px;
 	color: #999;
-	position: relative;
-	display: inline-block;
-	text-align: center;
-	margin-left: 300px;
-	margin-top: -265px;
+	margin-left: 582px;
+	margin-top: -42px;
 }
 .dDriveSlides{
 	background-position: 0px -55px;
@@ -2946,7 +2936,7 @@ margin-top: 18px; */
 
 
 
-/* 
+/*
  // hot fix changes
 .upDownBtn{
 	padding:10px 6px;
@@ -2973,7 +2963,6 @@ margin-top: 18px; */
 	margin-bottom: 6px;
 	max-height: 530px;
 	min-height: 400px;
-	/* background: url("../images/core/background-image.png"); */
 	overflow-x: hidden;
     overflow-y: auto;
 }
@@ -3028,7 +3017,7 @@ vertical-align: top;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:11px;
 	color:#999999;
-	width:360px;
+	width:707px;
 	text-align:center;
 	margin-top:15px;
 }

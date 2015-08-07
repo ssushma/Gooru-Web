@@ -25,7 +25,7 @@
 
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 /**
  * @fileName : SearchMainUiHandlers.java
  *

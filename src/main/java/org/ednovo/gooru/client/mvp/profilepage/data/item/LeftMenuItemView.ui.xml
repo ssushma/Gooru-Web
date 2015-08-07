@@ -2,5 +2,5 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="style" src="../ProfilePageLibraryStyle.css"/>
-      <g:Label styleName="{style.unitLi} {style.folderLevel}" ui:field="unitMenuItem"></g:Label>
+      <g:Label styleName="unitLi folderLevel" ui:field="unitMenuItem"></g:Label>
 </ui:UiBinder>

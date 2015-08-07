@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,15 +29,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.child.ChildView;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.application.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.LeftMenuItemView;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -57,43 +57,43 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Gooru Team
- * 
+ *
  */
 public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView {
 
 	@UiField HTMLPanel leftNav, contentScroll, emptyContainer, loadingIconPanel,folderListPanel;
-	
+
 	@UiField ProfilePageLibraryStyleBundle style;
-	
+
 	@UiField Label noCollectionsMsg, collectionsRedirectionMsg,folderTopicTitleLbl;
-	
+
 	@UiField Button myCollectionsBtn,listAllBtn;
-	
+
 	private static final String FOLDERID = "folderId";
 
 	private static final String ASSESSMENT = "assessment";
 
-	private static final String COLLECTION = "scollection";
-	
+	private static final String COLLECTION = "collection";
+
 	private String unitListId = "";
-	
+
 	ProfilePageLibraryPresenter profilePageLibraryPresenter = null;
-	
+
 	private int totalLeftPanelCount = 0;
-	
+
 	private boolean isApiProgress  = true;
-	
+
 	HandlerRegistration handlerRegistration = null;
-	
+
 	private static ProfilePageLibraryViewUiBinder uiBinder = GWT.create(ProfilePageLibraryViewUiBinder.class);
 
 	interface ProfilePageLibraryViewUiBinder extends UiBinder<Widget, ProfilePageLibraryView> {}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
-	 
+
 	 * @param collectionItem
 	 *            instance of {@link CollectionItemDo}
 	 */
@@ -104,18 +104,18 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		setMetaData();
 		Window.addWindowScrollHandler(new LeftPanelScroll());
 	}
-	
+
 	private void setMetaData() {
-		myCollectionsBtn.setText(i18n.GL1789());
+		myCollectionsBtn.setText(i18n.GL1752());
 		myCollectionsBtn.getElement().setId("btnMyCollectionsBtn");
-		myCollectionsBtn.getElement().setAttribute("alt",i18n.GL1789());
-		myCollectionsBtn.getElement().setAttribute("title",i18n.GL1789());
-		
+		myCollectionsBtn.getElement().setAttribute("alt",i18n.GL1752());
+		myCollectionsBtn.getElement().setAttribute("title",i18n.GL1752());
+
 		collectionsRedirectionMsg.setText(i18n.GL1788());
 		collectionsRedirectionMsg.getElement().setId("lblCollectionsRedirectionMsg");
 		collectionsRedirectionMsg.getElement().setAttribute("alt",i18n.GL1788());
 		collectionsRedirectionMsg.getElement().setAttribute("title",i18n.GL1788());
-		
+
 		emptyContainer.getElement().setId("pnlEmptyContainer");
 		listAllBtn.getElement().setId("btnViewAll");
 		noCollectionsMsg.getElement().setId("lblNoCollectionsMsg");
@@ -126,19 +126,19 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		folderListPanel.setVisible(false);
 		listAllBtn.setVisible(false);
 	}
-	
+
 	public void setData() {
 		leftNav.clear();
 		loadingPanel(true);
 		folderListPanel.setVisible(false);
 		getPresenter().getPartnerWorkspaceFolders(0);
 	}
-	
+
 	@Override
 	public void loadPartnersPage(String callBack, String placeToken) {
-		
+
 	}
-	
+
 	@Override
 	public void setUnitList(final ProfileLibraryListDo profileLibraryListDo) {
 		totalLeftPanelCount = profileLibraryListDo.getCount();
@@ -150,19 +150,20 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			leftNav.add(leftMenuItemView);
 			leftMenuItemView.setWidgetCount(leftNav.getWidgetCount()+1);
 			leftMenuItemView.setType(folderList.get(i).getType());
-			if(folderList.get(i).getCollectionType().contains(ASSESSMENT)) {
-				leftMenuItemView.addStyleName(style.assessment());
+			if(folderList.get(i).getType().contains(ASSESSMENT)) {
+				leftMenuItemView.addStyleName("assessment");
 			}else if(folderList.get(i).getType().equals(COLLECTION)){
-				leftMenuItemView.addStyleName(style.collection());
+				leftMenuItemView.addStyleName("collection");
 			}
 			if(firstWidgetCount==0&&folderId==null) {
 				firstWidgetCount++;
 				loadingPanel(true);
 				folderListPanel.setVisible(false);
-				leftMenuItemView.addStyleName(style.open());
+				leftMenuItemView.addStyleName("folderOpen");
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
-				if(folderList.get(i).getType().equals(COLLECTION)) {
+				if(folderList.get(i).getType().equals(COLLECTION) || folderList.get(i).getType().contains(ASSESSMENT)) {
+					leftMenuItemView.removeStyleName("folderOpen");
 					setTopicListData(folderList.get(i),  unitListId);
 					listAllBtn.setVisible(false);
 					folderListPanel.setVisible(false);
@@ -190,12 +191,13 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					while (widgetsPanel.hasNext()) {
 						final Widget widgetTxt = widgetsPanel.next();
 						widgetTxt.removeStyleName(style.active());
-						widgetTxt.removeStyleName(style.open());
+						widgetTxt.removeStyleName("folderOpen");
 					}
-					leftMenuItemView.addStyleName(style.open());
+					leftMenuItemView.addStyleName("folderOpen");
 					leftMenuItemView.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
-					if(leftMenuItemView.getType().equals(COLLECTION)) {
+					if(leftMenuItemView.getType().equals(COLLECTION) || leftMenuItemView.getType().contains(ASSESSMENT)) {
+						leftMenuItemView.removeStyleName("folderOpen");
 						getPresenter().getProfileLibraryCollection(unitListId, false);
 						listAllBtn.setVisible(false);
 						folderListPanel.setVisible(false);
@@ -207,7 +209,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 							handlerRegistration.removeHandler();
 						}
 						handlerRegistration=listAllBtn.addClickHandler(new ClickOnListAll(unitListId));
-						
+
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}
@@ -215,7 +217,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		}
 		isApiProgress = true;
 	}
-	
+
 	@Override
 	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId) {
 		contentScroll.clear();
@@ -224,7 +226,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
-			AppClientFactory.printSevereLogger(e.getMessage());
+			//e.printStackTrace();
+		    AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e.getMessage());
 		}
 	}
 
@@ -250,10 +253,11 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
-			AppClientFactory.printSevereLogger(e.getMessage());
+			//e.printStackTrace();
+			AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e.getMessage());
 		}
 	}
-	
+
 	@Override
 	public void loadingPanel(boolean isVisible) {
 		loadingIconPanel.setVisible(isVisible);
@@ -264,21 +268,21 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	@Override
 	public void clearPanels() {
 		leftNav.clear();
-	}	
-	
+	}
+
 	@Override
 	public void setPresenter(ProfilePageLibraryPresenter profilePageLibraryPresenter) {
 		this.profilePageLibraryPresenter = profilePageLibraryPresenter;
 	}
-	
+
 	@Override
 	public ProfilePageLibraryPresenter getPresenter() {
 		return profilePageLibraryPresenter;
 	}
-	
+
 	@UiHandler("myCollectionsBtn")
 	public void clickMyCollectionsBtn(ClickEvent event) {
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 	}
 
 	@Override
@@ -291,7 +295,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		}
 		loadingIconPanel.setVisible(false);
 	}
-	
+
 	private void setUserNoContentMsg() {
 		if(AppClientFactory.getPlaceManager().getRequestParameter("id").equals(AppClientFactory.getLoggedInUser().getGooruUId())) {
 			noCollectionsMsg.setText(i18n.GL1790());
@@ -308,7 +312,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			myCollectionsBtn.setVisible(false);
 		}
 	}
-	
+
 	public class LeftPanelScroll implements ScrollHandler{
 		@Override
 		public void onWindowScroll(ScrollEvent event) {
@@ -335,6 +339,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			params.put("userId", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 		}
-		
+
 	}
 }

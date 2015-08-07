@@ -27,9 +27,9 @@
  */
 package org.ednovo.gooru.client.mvp.folders.item;
 
-import org.ednovo.gooru.client.child.IsChildView;
+import org.ednovo.gooru.application.client.child.IsChildView;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 /**
  * @author SearchTeam

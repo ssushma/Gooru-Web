@@ -25,7 +25,7 @@
 
 package org.ednovo.gooru.client.mvp.library.partner.epapa;
 
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

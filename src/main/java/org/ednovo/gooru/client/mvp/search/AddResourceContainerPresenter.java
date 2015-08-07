@@ -29,23 +29,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderItemDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
-import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderItemDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
@@ -79,6 +78,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	String accessType =null;
 
 	CollectionItemDo collectionItemDo;
+	private static final String ASSESSMENT = "assessment";
 	boolean isPlayer=false;
 	HashMap<String,String> successparams = new HashMap<String, String>();
 	HashMap<String, String>  urlParameters;
@@ -211,7 +211,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 					@Override
 					public void onSuccess(CollectionDo result1) {
 						AppClientFactory.fireEvent(new RefreshFolderItemEvent(result, RefreshFolderType.INSERT, params,result1));
-						fireEvent(new RefreshDisclosurePanelForFoldersEvent(result1.getGooruOid()));
+						//fireEvent(new RefreshDisclosurePanelForFoldersEvent(result1.getGooruOid()));
 						getView().getButtonVisiblity();
 						successparams.put("o1", result.getGooruOid());
 						getView().enableSuccessView(result.getTitle(),result.getGooruOid(),successparams);
@@ -370,5 +370,20 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			folderDo.setCollectionItems(folderItems);
 		}
 		return folderDo;
+	}
+	
+	@Override
+	public boolean validateIsAssessments(String collectionType) {
+		boolean flag=false;
+		if(ASSESSMENT.equalsIgnoreCase(collectionType)){
+			if(QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getCategory()) && (collectionItemDo.getQuestionType()!=null && !(collectionItemDo.getQuestionType().equalsIgnoreCase("OE")))){
+				flag=true;
+			}else{
+				flag=false;
+			}
+		}else{
+			flag=true;
+		}
+		return flag;
 	}
 }

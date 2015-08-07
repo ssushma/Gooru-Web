@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="libraryStyle" src="library.css" type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	    <g:HTMLPanel styleName="{libraryStyle.topicBlock}" ui:field="topicBlock">
 	         <g:HTMLPanel styleName="{libraryStyle.topicTitle}">
 	            <g:Label ui:field="topicTitleLbl" styleName="{libraryStyle.topicListEllipsis}"></g:Label>
@@ -34,4 +34,4 @@
 	            <g:Label ui:field="noCollectionLbl" styleName="{libraryStyle.noCollectionLbl}"></g:Label>
 	         </g:HTMLPanel>
 	      </g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

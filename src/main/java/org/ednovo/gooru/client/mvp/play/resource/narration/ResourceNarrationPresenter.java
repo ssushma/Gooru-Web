@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.play.resource.narration;
 
 
 
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -31,39 +31,39 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.session;
+import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
+import org.ednovo.gooru.application.shared.model.library.ConceptDo;
+import org.ednovo.gooru.application.shared.model.player.CommentsDo;
+import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
-import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
-import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
-import org.ednovo.gooru.shared.model.library.ConceptDo;
-import org.ednovo.gooru.shared.model.player.CommentsDo;
-import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -114,16 +114,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel metadataContainer;
 	@UiField
-	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer;
-	
+	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer,scoreMainContainer;
+
 	@UiField SectionTag dataInsightsPanel;
-	
+
 	@UiField
 	FlowPanel frameContainer;
 
 
 	@UiField VerticalPanel commentsContainer;
-	
+
 
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
 					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments,headingText;
@@ -134,86 +134,89 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField Image userPhoto,collectionThumbnail,nextCollectionThumbnail;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn;
-	
+
 	@UiField InlineLabel requiredLabel,optionalLabel;
-	
+
 	@UiField SimpleCheckBox changeAssignmentStatusButton;
-	
+
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage,sessionsTooltip;
 	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
-	
+
 	private ToolTip toolTip;
-	
+
 	Map<String, Long> sessionData=new HashMap<String, Long>();
 	PrintUserDataDO printData=new PrintUserDataDO();
-	
+
 	@Inject
 	private ResourceServiceAsync resourceService;
-	
+
 	/*@UiField Frame insightsFrame;*/
 	private String languageObjectiveValue;
-	
+
 	private CollectionDo collectionDo=null;
-	
+
 	private CollectionDo nextCollectionDo = null;
-	
+
 	FolderWhatsNextCollectionDo folderCollectionWhatsNext = null;
-	
+
 	public static final String STANDARD_CODE = "code";
-	
+
 	public static final String STANDARD_DESCRIPTION = "description";
-	
+
 	private static final String COLLECTION_COMMENTS="COLLECTION_COMMENTS";
-	
+
 	private static final String INITIAL_COMMENT_LIMIT = "10";
-	
+
 	private static final String CREATE = "CREATE";
-	
+
 	private static final String DELETE = "DELETE";
-	
+
 	private static final String EDIT = "EDIT";
-	
+
 	private static final String PAGINATION = "page";
-	
-	
+
+
 	private static final String PRIMARY_STYLE = "primary";
-	
+
 	private static final String SECONDARY_STYLE = "secondary";
-	
+
 	private static final String DISABLED_STYLE = "disabled";
-	
+
 	private static final int INCREMENT_BY_ONE = 1;
-	
+
 	private static final int DECREMENT_BY_ONE = -1;
 
 	private static final String EDUCATOR_DEFAULT_IMG = "../images/settings/setting-user-image.png";
+	private static final String DEFAULT_COLLECTION_THUMBNAIL = "images/default-collection-image-160x120.png";
 	private Anchor usernameAnchor;
-	
+
 	private int totalCommentCount = 0;
-	
+
 	private int totalHitCount = 0;
-	
+
 	private int paginationCount = 0;
-	
+
 	private boolean isHavingBadWords;
-	
+
 	private boolean isCustomizePopup = false;
-	
+
 	private boolean isSharePopup = false;
-	
+
 	private HandlerRegistration whatsNextHandler;
-	
-	
+
+	SearchAddResourceToCollectionPresenter remixPresenterWidget = AppClientFactory.getInjector().getRemixPresenterWidget();
+
+
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
-	
+
 	private static CollectionPlayerMetadataViewUiBinder uiBinder = GWT.create(CollectionPlayerMetadataViewUiBinder.class);
 
 	interface CollectionPlayerMetadataViewUiBinder extends UiBinder<Widget, CollectionEndView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@Inject
 	public CollectionEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -229,38 +232,38 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		loginMessagingText.getElement().setId("lblLoginMessagingText");
 		loginMessagingText.getElement().setAttribute("alt",i18n.GL0568());
 		loginMessagingText.getElement().setAttribute("title",i18n.GL0568());
-		
+
 		orText.setText(i18n.GL0209());
 		orText.getElement().setId("lblOrText");
 		orText.getElement().setAttribute("alt",i18n.GL0209());
 		orText.getElement().setAttribute("title",i18n.GL0209());
-		
+
 		toCommentText.setText(" "+i18n.GL0569());
 		toCommentText.getElement().setId("lblToCommentText");
 		toCommentText.getElement().setAttribute("alt",i18n.GL0569());
 		toCommentText.getElement().setAttribute("title",i18n.GL0569());
-		
+
 		customizeCollectionBtn.setText(i18n.GL2037());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionEndBtn");
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
-		
+
 		shareCollectionBtn.setText(i18n.GL0536());
 		shareCollectionBtn.getElement().setId("btnShareCollectionEndBtn");
 		shareCollectionBtn.getElement().setAttribute("alt",i18n.GL0536());
 		shareCollectionBtn.getElement().setAttribute("title",i18n.GL0536());
-		
+
 		loginMessagingText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		orText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		toCommentText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		loginUrl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		signupUrl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
-		
+
 		commentField.addClickHandler(new OnCommentsFieldClicked());
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
 		seeMoreButton.setVisible(false);
-		
+
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		lblCharLimitComments.setText(value);
 		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
@@ -276,13 +279,15 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
-			 
+
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
 		  }
 			sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
+
+			StringUtil.loadVisualizationLibraries();
 	}
 	 public class StudentsSessionsChangeHandler implements ChangeHandler{
 			@Override
@@ -308,9 +313,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
+
 	}
-	
+
 	public class OncustomizeCollectionBtnMouseOut implements MouseOutHandler{
 
 		@Override
@@ -318,8 +323,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			toolTipPopupPanel.hide();
 		}
 
-		
-		
+
+
 	}
 	public class customizeCollectionBtnOnBlur implements BlurHandler
 	{
@@ -327,9 +332,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		@Override
 		public void onBlur(BlurEvent event) {
 			toolTipPopupPanel.hide();
-			
+
 		}
-		
+
 	}
 	public class OnshareCollectionBtnMouseOver implements MouseOverHandler{
 
@@ -342,9 +347,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
+
 	}
-	
+
 	public class OnshareCollectionBtnMouseOut implements MouseOutHandler{
 
 		@Override
@@ -352,10 +357,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			toolTipPopupPanel.hide();
 		}
 
-		
-		
+
+
 	}
-	
+
 	public class QuestionMarkHover implements MouseOverHandler{
 
 		@Override
@@ -369,19 +374,24 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			toolTip.show();
 		}
 	}
-	
+
 	public class QuestionMarkHoverOut implements MouseOutHandler{
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			toolTip.hide();	
+			toolTip.hide();
 		}
 	}
-	
+
 	@Override
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
-		setCollectionImage(collectionDo.getThumbnails().getUrl());
+		if(!"assessment".equals(collectionDo.getCollectionType())){
+			scoreMainContainer.setVisible(false);
+		}else{
+			scoreMainContainer.setVisible(true);
+		}
+		setCollectionImage(collectionDo.getThumbnails()!=null?collectionDo.getThumbnails().getUrl():DEFAULT_COLLECTION_THUMBNAIL);
 
 		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3044():i18n.GL2083();
 
@@ -392,12 +402,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		commentssection.setVisible(true);
 		commentssection.getElement().getStyle().setOpacity(1);
 		setReplyLink();
-		if (collectionDo.getMeta() !=null)
+		if (collectionDo!=null)
 		{
-			if(collectionDo.getMeta().getPermissions() != null)
+			if(collectionDo.getPermissions() != null)
 			{
 
-			if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
+			if (StringUtil.toString(collectionDo.getPermissions()).contains(ClientConstants.EDIT) || collectionDo.isIsCollaborator()){
 				switchContainer.setVisible(true);
 				if(collectionDo.getSettings() != null)
 				{
@@ -438,12 +448,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					commentssection.getElement().getStyle().setOpacity(1);
 					changeAssignmentStatusButton.setValue(true);
 				}
-				
-				
-				
+
+
+
 			}
 			else
-			{				
+			{
 				if(collectionDo.getSettings() != null)
 				{
 						if(TURNOFF.equalsIgnoreCase(collectionDo.getSettings().getComment()))
@@ -458,36 +468,36 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				else
 				{
 					commentssection.setVisible(true);
-				}			
-				
-				switchContainer.setVisible(false);	
+				}
+
+				switchContainer.setVisible(false);
 			}
 			}
 			else
 			{
-				switchContainer.setVisible(false);	
+				switchContainer.setVisible(false);
 			}
 		}
 		else
 		{
-			switchContainer.setVisible(false);	
+			switchContainer.setVisible(false);
 		}
-		
-		
+
+
 		setViewCount(collectionDo.getViews());
 		getAverageReaction();
-		
+
 	}
-	
+
 	/**
-	 * @function hideorShowEditButtonForAllCommentWidgets 
-	 * 
+	 * @function hideorShowEditButtonForAllCommentWidgets
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentUid
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -505,13 +515,13 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				}
 				else
 				{
-					commentWidgetChildView.getEditButton().setVisible(false);	
+					commentWidgetChildView.getEditButton().setVisible(false);
 				}
-			
+
 			}
 		}
 	}
-	
+
 
 	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
@@ -523,7 +533,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 		return standardsList;
 	}
-	
+
 	@Override
     public void setInSlot(Object slot, Widget content) {
 		if(slot==CollectionPlayerMetadataPresenter.METADATA_PRESENTER_SLOT){
@@ -538,7 +548,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			}
 		}
 	}
-	
+
 
 	public void setLabelAndIds() {
 
@@ -546,12 +556,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
 		insightsHeaderText.getElement().setAttribute("alt",i18n.GL1626());
 		insightsHeaderText.getElement().setAttribute("title",i18n.GL1626());
-		
+
 		insightsContentText.setText(i18n.GL1627());
 		insightsContentText.getElement().setId("lblInsightsContentText");
 		insightsContentText.getElement().setAttribute("alt",i18n.GL1627());
 		insightsContentText.getElement().setAttribute("title",i18n.GL1627());
-		
+
 		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
 		metadataContainer.getElement().setId("fpnlMetadataContainer");
 
@@ -568,27 +578,27 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		loginUrl.getElement().setId("lnkLoginUrl");
 		loginUrl.getElement().setAttribute("alt",i18n.GL0187().toLowerCase());
 		loginUrl.getElement().setAttribute("title",i18n.GL0187().toLowerCase());
-		
+
 		signupUrl.setText(i18n.GL0186().toLowerCase());
 		signupUrl.getElement().setId("lnkSignupUrl");
 		signupUrl.getElement().setAttribute("alt",i18n.GL0186().toLowerCase());
 		signupUrl.getElement().setAttribute("title",i18n.GL0186().toLowerCase());
-		
+
 		successPostMsg.setText(i18n.GL0570());
 		successPostMsg.getElement().setId("lblSuccessPostMsg");
 		successPostMsg.getElement().setAttribute("alt",i18n.GL0570());
 		successPostMsg.getElement().setAttribute("title",i18n.GL0570());
-		
+
 		postCommentBtn.setText(i18n.GL0571());
 		postCommentBtn.getElement().setId("btnPostCommentBtn");
 		postCommentBtn.getElement().setAttribute("alt",i18n.GL0571());
 		postCommentBtn.getElement().setAttribute("title",i18n.GL0571());
-		
+
 		postCommentCancel.setText(i18n.GL0142());
 		postCommentCancel.getElement().setId("btnPostCommentCancel");
 		postCommentCancel.getElement().setAttribute("alt",i18n.GL0142());
 		postCommentCancel.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		characterLimit.setText(i18n.GL0143());
 		characterLimit.getElement().setId("lblCharacterLimit");
 		characterLimit.getElement().setAttribute("alt",i18n.GL0143());
@@ -599,33 +609,33 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		StringUtil.setAttributes(commentField, true);
 		dataInsightsPanel.getElement().setId("pnlDataInsightsPanel");
 		messageContainer.getElement().setId("fpnlMessageContainer");
-		
+
 		replayCollection.setText(i18n.GL0632());
 		replayCollection.getElement().setId("lblReplayCollection");
 		replayCollection.getElement().setAttribute("alt",i18n.GL0632());
 		replayCollection.getElement().setAttribute("title",i18n.GL0632());
-		
-		
+
+
 		collectionSummaryText.getElement().setInnerText(i18n.GL1587());
 		StringUtil.setAttributes(collectionSummaryText.getElement(), "pnlCollectionSummaryText", i18n.GL1587(), i18n.GL1587());
-		
+
 		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
 		thumbnailContainer.getElement().setId("fpnlThumbnailContainer");
 	}
-	
+
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
 		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
 		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 	}
-	
+
 	@UiHandler("nextCollectionThumbnail")
 	public void nextThumbnailErrorImage(ErrorEvent event){
 		String collectionType=StringUtil.isEmpty(folderCollectionWhatsNext.getCollectionType())?null:folderCollectionWhatsNext.getCollectionType();
 		StringUtil.setDefaultImages(collectionType, nextCollectionThumbnail, "toc");
 		//nextCollectionThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
-	
+
 
 	public void setReplyLink(){
 		Anchor resourceAnchor=new Anchor();
@@ -641,7 +651,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		thumbnailContainer.clear();
 		thumbnailContainer.add(resourceAnchor);
 	}
-	
+
 	private class ReplayCollectionEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -661,16 +671,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		collectionThumbnail.setUrl(thumbnailUrl);
 	}
 	/**
-	 * 
-	 * @function oncustomizeCollectionBtnClicked 
-	 * 
+	 *
+	 * @function oncustomizeCollectionBtnClicked
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param clickEvent
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -678,28 +688,43 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	 */
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
-		
-		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
 
+		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+		final String collectionTitle = collectionDo.getTitle();
 				if(!isCustomizePopup){
-					isCustomizePopup=true;
-				Boolean loginFlag = false;
-				if (AppClientFactory.isAnonymous()){
-					loginFlag = true;
-				}
-				else
-				{
-					loginFlag = false;
-				}
-				RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag,collectionDo.getTitle()) {
-
-					@Override
-					public void closePoup() {
-						this.hide();	
+					Window.scrollTo(0, 0);
+					if(AppClientFactory.isAnonymous()){
+						LoginPopupUc loginPopupUc=new LoginPopupUc() {
+							@Override
+							public	void onLoginSuccess(){
+								Window.enableScrolling(false);
+								getUiHandlers().setDefaultTypeAndVersion();
+								remixPresenterWidget.DisableMyCollectionsPanelData(false);
+								remixPresenterWidget.getLoadingImage();
+								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+								remixPresenterWidget.getView().getAppPopUp().show();
+								isCustomizePopup = false;
+								remixPresenterWidget.getView().getAppPopUp().center();
+								remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+								remixPresenterWidget.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+							}
+						};
+						loginPopupUc.show();
+						loginPopupUc.setGlassEnabled(true);
+						loginPopupUc.setGlassStyleName("setGlassPanelZIndex");
+					}else{
+						getUiHandlers().setDefaultTypeAndVersion();
+						remixPresenterWidget.DisableMyCollectionsPanelData(false);
+						remixPresenterWidget.getLoadingImage();
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
+						remixPresenterWidget.getView().getAppPopUp().center();
+						remixPresenterWidget.getView().getAppPopUp().setGlassEnabled(true);
+						remixPresenterWidget.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
 					}
-				};
-				Window.scrollTo(0, 0);
+
+				/*Window.scrollTo(0, 0);
 				if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 					successPopupVc.setWidth("500px");
 					successPopupVc.setHeight("515px");
@@ -708,47 +733,47 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					successPopupVc.setHeight("336px");
 				}
 				successPopupVc.center();
-				successPopupVc.show();
-				
-				Map<String,String> params = new HashMap<String,String>();
+				successPopupVc.show();*/
+
+				Map<String,String> params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-				
+
 				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null){
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-					
+
 				}
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null){
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
 					params.put("customize", "yes");
-					
+
 
 				}
 				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null){
 					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
-				
+
 
 				}
 				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null){
 					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
-				
+
 
 				}
-				
+
 			}
-		
+
 	}
-	
+
 	/**
-	 * 
-	 * @function oncustomizeCollectionBtnClicked 
-	 * 
+	 *
+	 * @function oncustomizeCollectionBtnClicked
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param clickEvent
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -767,7 +792,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				}
 			};
 		successPopupVc.show();
-	    
+
 	    if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 			/*successPopupVc.setWidth("550px");
 			successPopupVc.setHeight("625px");
@@ -779,10 +804,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			successPopupVc.center();*/
 			successPopupVc.setPopupPosition(0, (Window.getClientHeight()-527)/2);
 		}
-	    //till here 
+	    //till here
 	    params.put("assign", "yes");
 	}
-	
+
 	public void resetMetadataFields(){
 		commentField.setText("");
 		commentField.getElement().setAttribute("alt","");
@@ -800,12 +825,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void setRelatedConceptsContent(ArrayList<ConceptDo> conceptDoList,
 			String coursePage, String subject, String lessonId,
 			String libraryName) {
-		
+
 	}
 
 	@Override
 	public void isConceptsContainerVisible(boolean isVisible) {
-		
+
 	}
 
 
@@ -821,7 +846,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 		}
 	}
-	
+
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
 		if(sessionId==null) {
 			sessionId = "";
@@ -838,7 +863,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 		}
 	}
-	
+
 	public void setDataInsightsSummaryUrl(String sessionId){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		frameContainer.setVisible(true);
@@ -852,7 +877,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 		}
 	}
-	
+
 	public class DataInsightsIframe extends Composite{
 		private Frame dataInsightsFrame=null;
 		private String insightsUrl="";
@@ -866,21 +891,21 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			dataInsightsFrame.setUrl(insightsUrl);
 		}
 	}
-	
+
 	public void clearDashBoardIframe(){
 	}
-	
 
-	
+
+
 	/**
-	 * @function setCommentsText 
-	 * 
+	 * @function setCommentsText
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentIncrement
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -892,16 +917,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		commentCount.getElement().setAttribute("alt",totalCommentCount+" "+i18n.GL1432());
 		commentCount.getElement().setAttribute("title",totalCommentCount+" "+i18n.GL1432());
 	}
-	
+
 	/**
-	 * @function setCommentsWidget 
-	 * 
+	 * @function setCommentsWidget
+	 *
 	 * @created_date : 02-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -914,16 +939,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		commentsContainer.add(new CommentWidgetChildView(commentsDo,collectionDo));
 		showSeeMoreButton();
 	}
-	
+
 	/**
-	 * @function deleteComment 
-	 * 
+	 * @function deleteComment
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentUid
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -958,16 +983,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			}
 		}
 	}
-	
+
 	/**
-	 * @function editComment 
-	 * 
+	 * @function editComment
+	 *
 	 * @created_date : 04-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentUid
-	 * 
+	 *
 	 * @return : void
 	 *
 	 */
@@ -983,9 +1008,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			}
 		}
 	}
-	
 
-	
+
+
 	public void clearCommentContainer(boolean isClear) {
 		if(isClear) {
 			commentsContainer.clear();
@@ -995,14 +1020,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 	}
 	/**
-	 * @function showSeeMoreButton 
-	 * 
+	 * @function showSeeMoreButton
+	 *
 	 * @created_date : 06-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 */
 	public void showSeeMoreButton() {
@@ -1012,16 +1037,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			seeMoreButton.setVisible(false);
 		}
 	}
-	
+
 	/**
-	 * @function clickOnSeeMoreButton 
-	 * 
+	 * @function clickOnSeeMoreButton
+	 *
 	 * @created_date : 06-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 */
 	@UiHandler("seeMoreButton")
@@ -1029,14 +1054,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		getUiHandlers().getPaginationResults(collectionDo.getGooruOid(), paginationCount+"", INITIAL_COMMENT_LIMIT);
 	}
 	/**
-	 * @function setCommentsData 
-	 * 
+	 * @function setCommentsData
+	 *
 	 * @created_date : 02-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>m
@@ -1052,7 +1077,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			int size = commentDoList.getSearchResults().size();
 			paginationCount=paginationCount+size;
 			if(size>0) {
-				
+
 				for(int i=0;i<size;i++) {
 					setCommentsWidget(commentDoList.getSearchResults().get(i),PAGINATION);
 				}
@@ -1068,21 +1093,21 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			noCommentsLbl.setVisible(false);
 		}
 	}
-	
+
 	/**
-	 * @function updateCommentChildView 
-	 * 
+	 * @function updateCommentChildView
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param commentUid, @param action
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 */	
+	 */
 	@Override
 	public void updateCommentChildView(String commentUid, String action) {
 		if(!commentUid.isEmpty() && action.equalsIgnoreCase(DELETE)) {
@@ -1095,17 +1120,17 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			addComment.setVisible(true);
 		}
 	}
-	
+
 
 	/**
-	 * @function clickOnLoginUrl 
-	 * 
+	 * @function clickOnLoginUrl
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1116,7 +1141,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		LoginPopupUc popup = new LoginPopupUc() {
 			@Override
 			public void onLoginSuccess() {
-				
+
 			}
 		};
 		popup.setWidgetMode(COLLECTION_COMMENTS);
@@ -1125,16 +1150,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		popup.center();
 		popup.show();
 	}
-	
+
 	/**
-	 * @function clickOnSignupUrl 
-	 * 
+	 * @function clickOnSignupUrl
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1145,7 +1170,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		params.put("callback", "signup");
 		params.put("type", "1");
-		PlaceRequest placeRequest = new PlaceRequest(AppClientFactory.getCurrentPlaceToken()); 
+		PlaceRequest placeRequest = new PlaceRequest(AppClientFactory.getCurrentPlaceToken());
 		if (params != null) {
 			for (String key : params.keySet()) {
 				placeRequest = placeRequest.with(key, params.get(key));
@@ -1155,12 +1180,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 
 	/**
-	 * @function setPlayerLoginStatus 
-	 * 
+	 * @function setPlayerLoginStatus
+	 *
 	 * @created_date : 02-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1190,17 +1215,17 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			postCommentBtn.setEnabled(false);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function clickOnPostCommentBtn 
-	 * 
+	 *
+	 * @function clickOnPostCommentBtn
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1208,7 +1233,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	 */
 	@UiHandler("postCommentBtn")
 	public void clickOnPostCommentBtn(ClickEvent event) {
-		
+
 		if (commentField.getText().trim().length() > 0){
 			if(postCommentBtn.getStyleName().contains(PRIMARY_STYLE)) {
 				//check for bad words first.
@@ -1216,7 +1241,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				parms.put("text", removeHtmlTags(commentField.getText()));
 				postCommentBtn.setEnabled(false);
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-	
+
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -1231,9 +1256,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
 							characterLimit.setVisible(false);
-							
+
 							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), removeHtmlTags(commentField.getText()));
-							
+
 							commentField.setText("");
 							commentField.getElement().setAttribute("alt","");
 							commentField.getElement().setAttribute("title","");
@@ -1252,18 +1277,18 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			modifyEditControls(false);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function clickOnPostCommentCancel 
-	 * 
+	 *
+	 * @function clickOnPostCommentCancel
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param event
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1277,14 +1302,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		characterLimit.setVisible(false);
 		modifyEditControls(false);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @fileName : PreviewPlayerMetadataView.java
 	 *
 	 * @function : OnCommentsFieldBlur
-	 * 
-	 * @description : 
+	 *
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -1298,12 +1323,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	private class OnCommentsFieldBlur implements BlurHandler{
 		@Override
 		public void onBlur(BlurEvent event) {
-		
+
 			if (commentField.getText().length() > 0){
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", commentField.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-	
+
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -1316,14 +1341,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						}else{
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
-							characterLimit.setVisible(false);	
+							characterLimit.setVisible(false);
 						}
 					}
 				});
 			}
-		}		
+		}
 	}
-	
+
 	/**
 	 * @fileName : PreviewPlayerMetadataView.java
 	 *
@@ -1340,7 +1365,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	private class OnCommentsFieldClicked implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-		
+
 			commentField.getElement().getStyle().clearBackgroundColor();
 			commentField.getElement().getStyle().setBorderColor("#ccc");
 			if(commentField.getText().trim().length()==0){
@@ -1350,11 +1375,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					modifyEditControls(true);
 				}
 			}
-			
-			
+
+
 		}
 	}
-	
+
 	/**
 	 * @fileName : PreviewPlayerMetadataView.java
 	 *
@@ -1390,14 +1415,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 	}
 	/**
-	 * @function modifyEditControls 
-	 * 
+	 * @function modifyEditControls
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param isCommentsFieldClicked
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1415,16 +1440,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			postCommentBtn.addStyleName(DISABLED_STYLE);
 		}
 	}
-	
+
 	/**
-	 * @function displaySuccessMsg 
-	 * 
+	 * @function displaySuccessMsg
+	 *
 	 * @created_date : 03-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param isVisible
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1435,7 +1460,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		commentField.setVisible(!isVisible);
 		successPostMsg.setVisible(isVisible);
 	}
-	
+
 	public static void onClosingAndriodorIpaddiv()
 	{
 		//studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
@@ -1444,25 +1469,25 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public void setViewCount(String viewCount) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setUserProfileName(String gooruUid) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setLikesCount(int likesCount) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void displayAuthorDetails(boolean isDisplayDetails) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -1474,7 +1499,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -1545,9 +1570,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			displayScore(collectionScore.toString(),noOfQuestions.toString());
 		}
 	}
-	
+
 	public void displayNextCollectionDetails(final CollectionDo nextCollectionDo,final String subjectId,final String lessonId,final String libraryType){
-		
+
 		if(nextCollectionDo!=null){
 			this.nextCollectionDo=nextCollectionDo;
 			hideNextCollectionContainer(true);
@@ -1594,22 +1619,22 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}else{
 			hideNextCollectionContainer(true);
 		}
-		
+
 
 	}
-	
+
 	public void displayWhatsNextContent(final FolderWhatsNextCollectionDo folderCollectionWhatsNext,final String urlValue)
 	{
 		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
 		this.folderCollectionWhatsNext=folderCollectionWhatsNext;
 		if(folderCollectionWhatsNext.getTitle()!=null)
 		{
-			hideNextCollectionContainer(false);	
+			hideNextCollectionContainer(false);
 			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle());
 			whatNextCollectionTitle.setTitle(folderCollectionWhatsNext.getTitle());
 			String collectionType=StringUtil.isEmpty(folderCollectionWhatsNext.getCollectionType())?null:folderCollectionWhatsNext.getCollectionType();
 			StringUtil.setDefaultImages(collectionType, nextCollectionThumbnail, "toc");
-			nextCollectionThumbnail.setUrl(folderCollectionWhatsNext.getThumbnails().getUrl());	
+			nextCollectionThumbnail.setUrl(folderCollectionWhatsNext.getThumbnails().getUrl());
 			int resourcesCounter = folderCollectionWhatsNext.getResourceCount();
 			int questionsCounter = folderCollectionWhatsNext.getQuestionCount();
 			if(resourcesCounter>0){
@@ -1630,9 +1655,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				whatsNextHandler = nextCollectionThumbnail.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-		
+
 						Window.open(urlValue, "_blank", "");
-						
+
 					}
 				});
 			}
@@ -1644,7 +1669,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				whatsNextHandler = nextCollectionThumbnail.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-	
+
 					Map<String,String> params = new LinkedHashMap<String,String>();
 					params.put("id", folderCollectionWhatsNext.getGooruOid());
 
@@ -1654,26 +1679,26 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					params.put("folderItemId", folderCollectionWhatsNext.getCollectionItemId());
 					}
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
-					
+
 				}
 			});
 			}
-	
+
 		}
 		else
 		{
-		hideNextCollectionContainer(true);	
+		hideNextCollectionContainer(true);
 		}
 	}
-	
+
 	public void hideNextCollectionContainer(boolean hide){
 		nextCollectionContainer.setVisible(!hide);
 	}
-	
+
 	public void  getAverageReaction(){
 		getUiHandlers().getAvgReaction();
 	}
-	
+
 	public void showAvgReaction(String reactionType){
 		if(AppClientFactory.isAnonymous()){
 			reactionType=null;
@@ -1705,7 +1730,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		getUiHandlers().updateCommentsStatus("turn-off");
 		}
 	}
-	
+
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;
 	}
@@ -1713,20 +1738,20 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-	
+
 	@Override
 	public void changeCommentsButton(CollectionDo result) {
 		if(result.getSettings()!=null)
 		{
 			if(result.getSettings().getComment()!=null)
 			{
-		
+
 				if(result.getSettings().getComment().equalsIgnoreCase("turn-on"))
 				{
 					hideorShowEditButtonForAllCommentWidgets(true);
 					requiredLabel.removeStyleName(playerStyle.mutedText());
-					optionalLabel.removeStyleName(playerStyle.mutedText());								
-					commentField.setEnabled(true);	
+					optionalLabel.removeStyleName(playerStyle.mutedText());
+					commentField.setEnabled(true);
 					postCommentBtn.setEnabled(true);
 					postCommentBtn.setStyleName(PRIMARY_STYLE);
 					commentssection.getElement().getStyle().setOpacity(1);
@@ -1736,7 +1761,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				{
 					hideorShowEditButtonForAllCommentWidgets(false);
 					requiredLabel.setStyleName(playerStyle.mutedText());
-					optionalLabel.setStyleName(playerStyle.mutedText());								
+					optionalLabel.setStyleName(playerStyle.mutedText());
 					commentField.setEnabled(false);
 					postCommentBtn.setEnabled(false);
 					postCommentBtn.removeStyleName(PRIMARY_STYLE);
@@ -1745,7 +1770,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					commentssection.getElement().getStyle().setOpacity(0.5);
 					changeAssignmentStatusButton.setChecked(false);
 				}
-				
+
 			}
 			else
 			{
@@ -1760,20 +1785,20 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			requiredLabel.setStyleName(playerStyle.mutedText());
 			optionalLabel.setStyleName(playerStyle.mutedText());
 		}
-		
+
 	}
 
 
 	@Override
-	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result) {
+	public void setSessionsData(ArrayList<session> result) {
 		sessionspnl.setVisible(true);
 		collectionMetaDataPnl.setVisible(true);
 		sessionsDropDown.clear();
 		sessionData.clear();
-		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
-			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), collectionSummaryUsersDataDo.getTimeStamp());
-			int day=collectionSummaryUsersDataDo.getFrequency();
-			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",collectionSummaryUsersDataDo.getSessionId());
+		for (session session : result) {
+			sessionData.put(session.getSessionId(), session.getEventTime());
+			int day=session.getSequence();
+			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",session.getSessionId());
 		}
 		setSessionStartTime(result.size()-1);
 	}
@@ -1803,10 +1828,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					collectionImage.setUrl("images/analytics/default-collection-image.png");
 				}
 			});
-			collectionResourcesCount.setText(result.get(0).getResourceCount()+" Resources | "+result.get(0).getNonResourceCount()+" Questions");
+			collectionResourcesCount.setText(result.get(0).getResourceCount()+" Resources | "+result.get(0).getQuestionCount()+" Questions");
 		}
 	}
-	
+
 	@Override
 	public void resetCollectionMetaData(){
 		collectionTitle.setText("");
@@ -1819,16 +1844,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public HTMLPanel getLoadingImageLabel() {
 		return loadingImageLabel;
 	}
-	
+
 	/**
-	 * @function removeHtmlTags 
-	 * 
+	 * @function removeHtmlTags
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description this method is used to remove the html tags in comment input box
-	 * 
-	 * @parm(s) : @param String 
-	 * 
+	 *
+	 * @parm(s) : @param String
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1856,4 +1881,5 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		loadingImageLabel.setVisible(false);
 		insightsContentText.setText(i18n.GL2038());
 	}
+
 }

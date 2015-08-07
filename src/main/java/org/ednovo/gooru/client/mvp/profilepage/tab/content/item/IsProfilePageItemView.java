@@ -27,7 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.item;
 
-import org.ednovo.gooru.client.child.IsChildView;
+import org.ednovo.gooru.application.client.child.IsChildView;
 
 /**
  * @author SearchTeam

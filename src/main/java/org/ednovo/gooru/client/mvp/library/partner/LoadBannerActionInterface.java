@@ -1,8 +1,8 @@
 package org.ednovo.gooru.client.mvp.library.partner;
 
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.shared.model.library.CourseDo;
-import org.ednovo.gooru.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.application.shared.model.library.CourseDo;
+import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
 
 public interface LoadBannerActionInterface {
 	
