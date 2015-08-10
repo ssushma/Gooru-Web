@@ -84,7 +84,6 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -94,7 +93,6 @@ import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
-import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -107,10 +105,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.seanchenxi.gwt.storage.client.StorageExt;
-import com.seanchenxi.gwt.storage.client.StorageKey;
-import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
-import com.seanchenxi.gwt.storage.client.StorageQuotaExceededException;
 
 /**
  * @author Search Team
@@ -206,8 +200,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private HandlerRegistration handlerRegistration=null;
 
 	//private Storage localStore = null;
-	
-	StorageExt localStorage = null;
 
 	InlineLabel cart = null;
 
@@ -271,8 +263,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFeildsIds();
 		standardsDropListValues.setVisible(false);
-		//localStore=Storage.getLocalStorageIfSupported();
-		localStorage = StorageExt.getLocalStorage();
 		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		//pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
@@ -526,26 +516,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		return 0;
 	}
-	public void removeFromLocalStorageForward(){
-		if(Storage.isLocalStorageSupported() && localStorage.size()>10){
-			int keyVal=pageCountForStorage-11;
-			localStorage.remove(getSerializableKey(keyVal+""));
-			//localStore.removeItem(keyVal+"");
-		}
-	}
-	public void removeFromLocalStorageBackword(){
-		if(Storage.isLocalStorageSupported() && localStorage.size()>10){
-			int keyVal;
-			if(pageCountForStorage>=10){
-				keyVal=pageCountForStorage;
-			}else{
-				keyVal=pageCountForStorage+7;
-			}
-			//localStore.removeItem(keyVal+"");
-			localStorage.remove(getSerializableKey(keyVal+""));
-		}
-	}
-
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
 	 * @author Gooru
@@ -725,6 +695,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		searchDoGbl = searchDo;
 		pnlBackToTop.setVisible(true);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
+			long startTime = System.currentTimeMillis();
 			searchResults.setVisible(true);
 			panelBorderBox.getElement().getStyle().clearBackgroundColor();
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
@@ -755,6 +726,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
 				}
+				long stopTime = System.currentTimeMillis();
+			    long elapsedTime = stopTime - startTime;
+			    AppClientFactory.printInfoLogger("FE render Difference time:"+elapsedTime);
 				if(pageNumber==1){
 					pnlFirstTempData=searchResultPanel.getWidget(0);
 				}
@@ -803,7 +777,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showReviewFilter();
 		setStyleForCollectionType();
 		showRatingsFilter();
-
 	}
 	/**
 	 * This method will set the search Filters
@@ -1771,8 +1744,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageNumber = 1;
 		previousCount=0;
 		pageCountForStorage=1;
-		//localStore.clear();
-		localStorage.clear();
 		isForwardScroll=true;
 		previousValue=0;
 		pageFlag=false;
@@ -1786,8 +1757,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageNumber = 1;
 		pageFlag=false;
 		pageCountForStorage=1;
-		//localStore.clear();
-		localStorage.clear();
 		isForwardScroll=true;
 		//getUiHandlers().resetLocalStorageData();
 		callAnimation();
@@ -2040,37 +2009,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		isClickOnMoreFilter=true;
 	}
-	@Override
-	public void setJsonResponseInStorage(SearchDo<T> data,boolean isApiCalled){
-		try{
-			if(Storage.isLocalStorageSupported() && !isApiCalled){
-				if(isForwardScroll){
-					if(pageNumber==1 && !pageFlag){
-						pageFlag = true;
-						//localStore.setItem((pageNumber)+"", data);
-						localStorage.put(getSerializableKey((pageNumber)+""), data);
-					}else{
-						pageFlag = false;
-						//localStore.setItem((pageNumber+1)+"", data);
-						localStorage.put(getSerializableKey((pageNumber+1)+""), data);
-					}
-					pageCountForStorage++;
-					removeFromLocalStorageForward();
-					isApiInProgressLoad=true;
-				}else{
-					isApiInProgressBackLoad=true;
-					//localStore.setItem((pageCountForStorage-10)+"", data);
-					localStorage.put(getSerializableKey((pageCountForStorage-10)+""), data);
-					removeFromLocalStorageBackword();
-				}
-				isBackToTopClicked=false;
-			}
-		} catch (SerializationException e) {
-			e.printStackTrace();
-		} catch (StorageQuotaExceededException e) {
-			e.printStackTrace();
-		}
-	}
 	@UiHandler("assessmentsBtn")
 	public void clickOnAssessments(ClickEvent clickEvent){
 		assessmentsBtn.addStyleName("active");
@@ -2210,30 +2148,5 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			 filtersMap.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
 		 }
 		 return filtersMap;
-	}
-	/**
-	 * This method will return the data for the stored key
-	 * @param key
-	 * @return
-	 */
-	public SearchDo<T> readDataFromLocalStorage(String key){
-		try{
-			StorageKey<SearchDo<T>> serializableKey = StorageKeyFactory.<SearchDo<T>>serializableKey(key);
-			if(localStorage!=null){
-				return localStorage.get(serializableKey);
-			}
-		}catch(Exception e){
-			
-		}
-		return null;
-	}
-	/**
-	 * This method will return the serializableKey
-	 * @param key
-	 * @return StorageKey<SearchDo<T>>
-	 */
-	public StorageKey<SearchDo<T>> getSerializableKey(String key){
-		StorageKey<SearchDo<T>> serializableKey = StorageKeyFactory.serializableKey(key);
-		return serializableKey;
 	}
 }
