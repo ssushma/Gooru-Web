@@ -659,7 +659,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}else{
 				searchResults.setText(i18n.GL3275()+"  "+"("+searchDo.getSearchHits()+")");
 			}
-			//searchDo.getSearchHits();
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
 					HTMLPanel widgetsContainer=new HTMLPanel("");
@@ -683,7 +682,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				long stopTime = System.currentTimeMillis();
 			    long elapsedTime = stopTime - startTime;
-			    AppClientFactory.printInfoLogger("FE render Difference time:"+elapsedTime);
+			    AppClientFactory.printInfoLogger("FE render Difference time:"+elapsedTime+" ms");
 				if(pageNumber==1){
 					pnlFirstTempData=searchResultPanel.getWidget(0);
 				}
