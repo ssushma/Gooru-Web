@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,17 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists;
 /**
-* @fileName : ExistsResourceView.java 
+* @fileName : ExistsResourceView.java
 *
 * @description :This file is responsible show view based on ExistsResourceView.ui.xml
 *
 * @version :5.1
 *
 * @date: Apr 6 2013
-   	
+
 * @Author  Gooru Team
-* 
-* @Reviewer 
+*
+* @Reviewer
 *
 */
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -71,44 +71,44 @@ import com.google.gwt.user.client.ui.Widget;
 public class ExistsResourceView extends AppPopUp {
 
 	private static ExistsResourceViewUiBinder uiBinder = GWT.create(ExistsResourceViewUiBinder.class);
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
 	private static final String PNG = ".png";
-	
+
 	CollectionDo collectionDo=null;
-	
+
 	interface ExistsResourceViewUiBinder extends UiBinder<Widget, ExistsResourceView> {
 	}
-	
+
 	@UiField Label cancelExistsResourcePopupBtnLbl, addExistsResourceBtnLbl;
-	
+
 	@UiField Label resourceUrlLbl,resourceTitleLbl,loadingTextLbl;
-	
+
 	@UiField Anchor reportResInfoLbl;
-	
+
 	@UiField Image resourceThumbnailImg,resourceIconImg;
-	
+
 	@UiField HTMLPanel buttonContainer,alreadyExistsText,resourceExistsText;
-	
+
 	AddResourceView appPopup=null;
-	
+
 	ExistsResourceDo existsResourceDo=null;
-	
+
 
 	String idStr=null, url=null, title=null, description=null, category=null, thumbnailUrl=null;
-	
+
 	interface NewResourcePopupViewUiBinder extends
 			UiBinder<Widget, ExistsResourceView> {
-		
+
 	}
-	
+
 	public ExistsResourceView() {
-		
+
 		setWidget(uiBinder.createAndBindUi(this));
-				
+
         setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
@@ -122,7 +122,7 @@ public class ExistsResourceView extends AppPopUp {
         resourceExistsText.getElement().setAttribute("title", i18n.GL0933());
         resourceThumbnailImg.getElement().setId("imgResourceThumbnailImg");
         resourceThumbnailImg.setUrl("images/thumbimg-I.png");
-        
+
         resourceTitleLbl.setText(i18n.GL0935());
         resourceTitleLbl.getElement().setId("lblResourceTitleLbl");
         resourceTitleLbl.getElement().setAttribute("alt", i18n.GL0935());
@@ -140,7 +140,7 @@ public class ExistsResourceView extends AppPopUp {
         addExistsResourceBtnLbl.getElement().setId("lblAdd");
         cancelExistsResourcePopupBtnLbl.getElement().setId("lblCancel");
 		cancelExistsResourcePopupBtnLbl.addClickHandler(new CloseExistsClickHandler());
-		addExistsResourceBtnLbl.addClickHandler(new AddExistsClickHandler());	
+		addExistsResourceBtnLbl.addClickHandler(new AddExistsClickHandler());
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		loadingTextLbl.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		buttonContainer.setVisible(true);
@@ -150,7 +150,7 @@ public class ExistsResourceView extends AppPopUp {
 		buttonContainer.getElement().setId("pnlButtonContainer");
 		reportResInfoLbl.getElement().setId("lnkReportResInfoLbl");
 		}
-	
+
 	@UiHandler("reportResInfoLbl")
 	public void onClickReport(ClickEvent event){
 		hide();
@@ -158,27 +158,27 @@ public class ExistsResourceView extends AppPopUp {
 		flagging.center();
 		flagging.show();
 	}
-		
+
 	//Click handler for Close/Cancel
-	
+
 	private class CloseExistsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			
+
 			appPopup.getAddWebResourceWidget().clearFields();
-			
+
 			appPopup.getAddWebResourceWidget().addResourceBtnLbl.setVisible(false);
 			appPopup.getAddWebResourceWidget().addResourceBtnPanel.setVisible(false);
 			appPopup.getAddWebResourceWidget().setThumbnailImage.setVisible(false);
-			
+
 			hide();
 			Window.enableScrolling(true);
 			appPopup.show();
-		}		
+		}
 	}
 	//Click event to handle Add existing resource/collection item to collection.
 	private class AddExistsClickHandler implements ClickHandler{
-		
+
 		@Override
 		public void onClick(ClickEvent event) {
 			buttonContainer.setVisible(false);
@@ -196,14 +196,14 @@ public class ExistsResourceView extends AppPopUp {
 			});
 		}
 	}
-	
+
 	public ExistsResourceDo getExistsResourceDo() {
 		return existsResourceDo;
 	}
 	public void setExistsResourceDo(ExistsResourceDo existsResourceDo) {
 		this.existsResourceDo = existsResourceDo;
 	}
-	
+
 	public CollectionDo getCollectionDo() {
 		return collectionDo;
 	}
@@ -211,17 +211,17 @@ public class ExistsResourceView extends AppPopUp {
 	public void setCollectionDo(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 	}
-	
+
 	public void displayResourceInformation(ExistsResourceDo existsResourceDo, CollectionDo collectionDo) {
 		this.existsResourceDo = existsResourceDo;
 		setCollectionDo(collectionDo);
-		
+
 		idStr = existsResourceDo.getGooruOid();
 		url = existsResourceDo.getUrl();
 		title = existsResourceDo.getTitle();
 		description = existsResourceDo.getDescription();
 		category = existsResourceDo.getCategory().toLowerCase();
-		thumbnailUrl = existsResourceDo.getThumbnails().getUrl();
+		thumbnailUrl = existsResourceDo != null && existsResourceDo.getThumbnails() != null ? existsResourceDo.getThumbnails().getUrl() : DEFULT_IMAGE_PREFIX+category+PNG;
 		resourceUrlLbl.setText(url);
 		resourceUrlLbl.getElement().setId("lblResourceUrlLbl");
 		resourceUrlLbl.getElement().setAttribute("alt", url);
@@ -241,7 +241,7 @@ public class ExistsResourceView extends AppPopUp {
 				thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
 			}else{
 				thumbnailUrl = DEFULT_IMAGE_PREFIX+category+PNG;
-				
+
 			}
 		}else if(thumbnailUrl.indexOf("youtube") > 0){
 			String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
@@ -250,10 +250,10 @@ public class ExistsResourceView extends AppPopUp {
 		}else{
 			thumbnailUrl = DEFULT_IMAGE_PREFIX+category+PNG;
 		}
-		
+
 		resourceThumbnailImg.setStyleName("thumbnailImageDec");
 		resourceThumbnailImg.setUrl(thumbnailUrl);
-		
+
 		setResourceIconStyle(category, resourceIconImg);
 		AppClientFactory.getInjector().getResourceService().getContentReport(idStr, new SimpleAsyncCallback<GetFlagContentDO>() {
 			@Override
@@ -265,7 +265,7 @@ public class ExistsResourceView extends AppPopUp {
 				}
 				else
 				{
-					reportResInfoLbl.setText(i18n.GL1498());	
+					reportResInfoLbl.setText(i18n.GL1498());
 					reportResInfoLbl.getElement().setAttribute("alt", i18n.GL1498());
 					reportResInfoLbl.getElement().setAttribute("title", i18n.GL1498());
 
@@ -273,7 +273,7 @@ public class ExistsResourceView extends AppPopUp {
 			}
 		});
 	}
-	
+
 	public void setResourceIconStyle(String categoryStr, Image resourceThumbnailImage){
 		if (categoryStr.equalsIgnoreCase("Video")){
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteVideo");
