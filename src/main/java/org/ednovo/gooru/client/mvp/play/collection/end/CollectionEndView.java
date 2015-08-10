@@ -47,9 +47,11 @@ import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport.AssessmentProgressReportChildView;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
@@ -69,6 +71,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -116,7 +119,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer,scoreMainContainer;
 
-	@UiField SectionTag dataInsightsPanel;
+	@UiField SectionTag dataInsightsPanel, summaryReportView;
 
 	@UiField
 	FlowPanel frameContainer;
@@ -222,7 +225,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
 		pnlCollectionLastAccessed.setVisible(false);
-
+		dataInsightsPanel.setVisible(false);
 		//teacherContainer.setVisible(false);
 		collectionImage.setSize("59px", "44px");
 		messageContainer.setVisible(false);
@@ -1880,6 +1883,18 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		frameContainer.setVisible(false);
 		loadingImageLabel.setVisible(false);
 		insightsContentText.setText(i18n.GL2038());
+	}
+
+	@Override
+	public void setReportContainer() {
+		summaryReportView.getElement().getStyle().setPaddingTop(50, Unit.PX);
+		summaryReportView.clear();
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter("cid");
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId");
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId");
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId");
+		summaryReportView.add(new AssessmentProgressReportChildView(id, classId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId, UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION));
 	}
 
 }
