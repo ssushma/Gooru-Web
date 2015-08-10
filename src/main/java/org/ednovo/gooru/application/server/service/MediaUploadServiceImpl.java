@@ -118,13 +118,13 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		createDo.setMediaFilename(fileName);
 		JsonRepresentation jsonRep1 = null;
 		String url1 = null;
-		
+
 		String filepath ="";
-	
+
 		if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
 			url1 = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COLLECTION, courseId,unitId,lessonId,collectionId);
 		}
-		
+
 		JSONObject courseObj=new JSONObject();
 		try {
 			courseObj.put(TITLE, createDo.getTitle());
@@ -141,12 +141,10 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlGet, getRestUsername(), getRestPassword());
 		jsonRep1 = jsonResponseRep.getJsonRepresentation();
 		collDo = deserializeCreatedCollInFolder(jsonRep1);
-		logger.info("collDo : "+collDo);
-		logger.info("collDo1 : "+collDo.getThumbnails().getUrl());
 		filepath = collDo.getThumbnailUrl();
 		return filepath;
-		
-		
+
+
 	}
 	public CollectionDo deserializeCreatedCollInFolder(JsonRepresentation jsonRep) {
 		try {

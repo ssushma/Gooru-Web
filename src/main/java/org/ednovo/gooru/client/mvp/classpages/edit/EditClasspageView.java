@@ -1513,7 +1513,7 @@ public class EditClasspageView extends
 				getUiHandlers().getAssignmentsByClasspageById(classpageId,
 						pageSize + "", pageNum + "");
 				getUiHandlers().generateShareLink(classpageId);
-				imgClasspageImage.setUrl(collectionDo.getThumbnails().getUrl());
+				imgClasspageImage.setUrl(collectionDo.getThumbnails() != null ? collectionDo.getThumbnails().getUrl() : "");
 
 		    }
 		}
