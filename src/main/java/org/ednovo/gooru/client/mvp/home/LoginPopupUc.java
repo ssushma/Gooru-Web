@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsShowCollectionTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.comment.events.AssessmentsSetCommentsOptionsEvent;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.StudentClassView;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
@@ -586,7 +587,9 @@ public abstract class LoginPopupUc extends PopupPanel{
 	    }
 	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT_VIEW))
 	    {
-	    	//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	    	if(!StudentClassView.getMainContainerStatus()){
+	    		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	    	}
 	    }
 		/*else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SETTINGS)){
 	    	if(AppClientFactory.getPlaceManager().getRequestParameter("newMailId")!=null){

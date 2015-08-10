@@ -31,7 +31,6 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
@@ -162,7 +161,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	public void setSearchService(SearchServiceAsync searchService) {
 		this.searchService = searchService;
 	}
-
 	@Override
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
 		getSearchDo().setPageSize(9);
@@ -175,10 +173,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		}else{
 			getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackLoadInStore());
 		}
-	}
-	@Override
-	protected void requestSearchFormJson(String result,SearchDo<ResourceSearchResultDo> searchDo2) {
-		getSearchService().descralizeResourceSearchResults(result, getSearchDo(), getSearchAsyncCallback());
 	}
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {

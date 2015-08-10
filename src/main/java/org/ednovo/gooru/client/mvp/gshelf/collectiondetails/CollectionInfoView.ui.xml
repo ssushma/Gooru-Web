@@ -25,10 +25,7 @@
 						<g:Button styleName="secondary btn-block" ui:field="uploadImageLbl"></g:Button>
 					</span>
 				</div>
-
-
 			</g:HTMLPanel>
-
 			<div class="learningObjective">
 				<ppanel:PPanel ui:field="learningObjPpanel"></ppanel:PPanel>
 				<p>
