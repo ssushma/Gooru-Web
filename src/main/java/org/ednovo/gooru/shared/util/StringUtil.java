@@ -994,4 +994,14 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		return categoryStyle;
 	}
 	
+	public static String getHotTextHiglightText(String text){
+		String HTText;
+		HTText=text.replaceAll(",", ", ");
+		HTText=HTText.replaceAll(";", "; ");
+		HTText=HTText.replaceAll("&nbsp;", " ");
+		HTText=HTText.replaceAll(":", ": ");
+		return HTText;
+		
+	}
+	
 }
