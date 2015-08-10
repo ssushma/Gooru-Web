@@ -298,51 +298,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				try{
 					String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
-						//With local storage
-						/*	//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top
-						if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/10) && previousScroll>event.getScrollTop()){
-							if(!isBackToTopClicked && pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
-								isApiInProgressBack=isApiInProgressBackLoad=false;
-								isInsertTems=true;
-								//lblLoadingTextPrevious.setVisible(true);
-								isForwardScroll = false;						
-								if(pageCountForStorage>11 && localStorage.get(getSerializableKey((pageCountForStorage-11)+"")) == null && (pageNumber-1)>=1){
-									if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
-										if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-											getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 9);
-										}else{
-											getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 8);
-										}
-									}
-									pageNumber--;
-									pageCountForStorage--;
-								}
-								if(Storage.isLocalStorageSupported()){
-									postSearch(readDataFromLocalStorage(((pageCountForStorage-9)+"")), true);
-								}
-							}
-						}
-						//This condition is used to check that the user is scrolling top to bottom
-						if(resultCountVal>=8 && isApiInProgress && isApiInProgressLoad && !isBackToTopClicked){
-							if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
-								isInsertTems=false;
-								isApiInProgress=isApiInProgressLoad=false;
-								lblLoadingText.setVisible(true);
-								pageNumber++;
-								isForwardScroll = true;								
-								if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStorage.get(getSerializableKey((pageNumber+1)+"")) == null){
-									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
-									}else{
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
-									}
-								}else{
-									isApiInProgress=isApiInProgressLoad=true;
-								}
-								postSearch(readDataFromLocalStorage(pageNumber+""), true);
-							}
-						}*/
-						//Without local storage
 						if(resultCountVal>=8 && isApiInProgress){
 							if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
 								lblLoadingText.setVisible(true);
