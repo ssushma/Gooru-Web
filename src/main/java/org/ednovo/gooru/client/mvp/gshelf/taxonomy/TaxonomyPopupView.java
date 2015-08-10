@@ -324,7 +324,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 					public void onScroll(ScrollEvent event) {						
 						if(domainPagination<=60)
 						{
-						getUiHandlers().getCoursespaginatedData(domainPaginationCourseId,domainPagination);
+						getUiHandlers().getDomainspaginatedData(domainPaginationCourseId,domainPagination);
 						}
 						domainPagination = domainPagination+20;
 						

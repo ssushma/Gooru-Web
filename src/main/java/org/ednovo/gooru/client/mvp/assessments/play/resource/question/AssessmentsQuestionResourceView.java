@@ -193,10 +193,9 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 	public void ClickOnHintButton(ClickEvent clickEvent){
 		if(hintsButton.getStyleName().equals("hintsActiveButton")){
 			if(collectionItemDo.getResource().getHints().size()>hintsLength){
-				startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
 				hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),"hintsText"));
 
-				if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9){
+				if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9 || collectionItemDo.getResource().getType()==10 || collectionItemDo.getResource().getType()==11){
 
 				}else{
 					startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
