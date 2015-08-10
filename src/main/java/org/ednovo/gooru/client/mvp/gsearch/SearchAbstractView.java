@@ -611,8 +611,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				@Override
 				public void onSuccess() {
-					isBackToTopClicked=true;
-					resetDataBacktoTop();
+					//isBackToTopClicked=true;
+					//resetDataBacktoTop();
+					Window.scrollTo(0,0);
 				}
 			});
 		}
@@ -1788,7 +1789,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		//localStore.clear();
 		localStorage.clear();
 		isForwardScroll=true;
-		getUiHandlers().resetLocalStorageData();
+		//getUiHandlers().resetLocalStorageData();
 		callAnimation();
 		searchResultPanel.clear();
 		if(pnlFirstTempData!=null){
