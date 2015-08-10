@@ -285,7 +285,7 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 		}catch(Exception e){
 			AppClientFactory.printSevereLogger("AssessmentsQuestionResourceView : getQuestionImage : "+e.getMessage());
 		}
-		return thumbnailImage;
+		return thumbnailImage != null ? thumbnailImage : "images/defaultRes.png";
 	}
 
 	public void startHintDataLogEvent(int hintId) {
