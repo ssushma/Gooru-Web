@@ -417,7 +417,7 @@ public class ResourceRequest implements ClickHandler{
 				assetName=collectionItemDo.getResource().getAssets().get(0).getAsset().getName();
 				thumbnailImage=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+assetName;
 			}else{
-				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
+				thumbnailImage=collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : "";
 			}
 		}catch(Exception e){
 			AppClientFactory.printSevereLogger("TocAssessmentsResourceView : getQuestionImage : "+e.getMessage());

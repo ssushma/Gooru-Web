@@ -33,9 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -68,7 +66,6 @@ import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -130,7 +127,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	String style="";
 
 	private String userId = null, contentType = null;
-
+	
+	String classId = "", lessonId = "", unitId = "", courseId = "", assessmentId = "";
+	
 	private CollectionDo collectionDo=null;
 	private boolean isCollection = false, isExternalAssessment = false;
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -165,6 +164,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		questionsBtn.addClickHandler(new ResourceDataCall(questionsBtn));
 		oeQuestionsBtn.addClickHandler(new ResourceDataCall(oeQuestionsBtn));
 		this.userId = userId;
+		this.classId = classId;
+		this.lessonId = lessonId;
+		this.unitId = unitId;
+		this.courseId = courseId;
+		this.assessmentId = assessmentId;
 		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
 	}
 
@@ -851,15 +855,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	}
 
 	private void getContentData(String type, boolean isRefresh, Label selectedLbl) {
-		String classpageId="";
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASS)) {
-			classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, "");
-		} else {
-			classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
-		}
-		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, "");
 		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
-			getPresenter().getCollectionScoreForSession(assessmentId, classpageId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);
+			getPresenter().getCollectionScoreForSession(assessmentId, classId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);
 		} else {
 			if(isRefresh) {
 				setPanelStyling(selectedLbl);
@@ -867,7 +864,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				setPanelStyling(collectionOverviewBtn);
 			}
 		}
-		getPresenter().setCollectionSummaryData(assessmentId, classpageId,userId,sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
+		getPresenter().setCollectionSummaryData(assessmentId, classId,userId,sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
 	}
 
 	private void setErrorData(HTMLPanel globalPanel) {

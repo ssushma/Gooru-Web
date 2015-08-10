@@ -110,7 +110,7 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 				resourceThumbnail=ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()),Window.Location.getProtocol());
 				resourceHiddenImage.setUrl(resourceThumbnail);
 			}else{
-				resourceThumbnail=collectionItemDo.getResource().getThumbnails().getUrl();
+				resourceThumbnail=collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : "";
 				resourceHiddenImage.setUrl(resourceThumbnail);
 			}
 		}

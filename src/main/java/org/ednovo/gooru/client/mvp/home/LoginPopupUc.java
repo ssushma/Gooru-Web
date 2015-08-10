@@ -322,9 +322,13 @@ public abstract class LoginPopupUc extends PopupPanel{
 			@Override
 			public void onSuccess(String result) {
 				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
-				Window.Location.replace(result);
-
-
+				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.STUDY)) {
+					Map<String,String> params = new HashMap<String,String>();
+					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
+				} else {
+					Window.Location.replace(result);
+				}
 			}
 		});
 	}
