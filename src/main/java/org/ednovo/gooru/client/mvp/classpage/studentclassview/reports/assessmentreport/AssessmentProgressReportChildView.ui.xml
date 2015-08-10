@@ -9,8 +9,8 @@
 	<g:FlowPanel styleName="LearningMapContainer" ui:field="PrintPnl">
 	    <uc:LoadingUc ui:field="cropImageLoading"/>
 		<g:FlowPanel styleName="studentAssessmentReportViewContainer" ui:field="reportViewContainer">
-			<g:FlowPanel styleName="container">
-				<g:FlowPanel styleName="row">
+			<g:FlowPanel>
+				<g:FlowPanel>
 					<g:FlowPanel styleName="headerLinksContainer" ui:field="headerLinksContainer">
 						<g:FlowPanel styleName="col-md-6 col-xs-8 col-sm-6 titleContainer">
 							<g:FlowPanel styleName="headerBackLinkBox">

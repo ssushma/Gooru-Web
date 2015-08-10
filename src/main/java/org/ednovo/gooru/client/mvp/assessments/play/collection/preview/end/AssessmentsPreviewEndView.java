@@ -145,7 +145,7 @@ public class AssessmentsPreviewEndView extends BaseViewWithHandlers<AssessmentsP
 	@Override
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 		showPopupAfterGmailSignin();
-		setCollectionImage(collectionDo.getThumbnails().getUrl());
+		setCollectionImage(collectionDo.getThumbnails() != null ? collectionDo.getThumbnails().getUrl() : "images/default-collection-image-160x120.png");
 		setCollectionGoal(collectionDo.getGoals());
 		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
