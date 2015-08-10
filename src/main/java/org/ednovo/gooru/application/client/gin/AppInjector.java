@@ -54,8 +54,6 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPrese
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
-import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
-import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
@@ -295,10 +293,6 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<TagsTabPresenter> getTagsTabPresenter();
 
-	AsyncProvider<UserDashBoardPresenter> getUserDashBoardPresenter();
-
-	AsyncProvider<PopupForAnalyticsPresenter> getPopupForAnalyticsPresenter();
-
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
 
 	AddCenturyPresenter getAddCenturyPresenterWidget();
@@ -330,11 +324,11 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EditClassContentPresenter> getEditClassContentPresenter();
 
 	AsyncProvider<EditClassStudentPresenter> getEditClassStudentPresenter();
-	
+
 	AsyncProvider<TeachStudentDashboardPresenter> getTeachStudentDashboardPresenter();
-	
+
 	AsyncProvider<AddCourseToClassPresenter> getAddCourseToClassPresenter();
-	
+
 	AsyncProvider<AssessmentsPreviewPlayerPresenter> getAssessmentsPreviewPlayerPresenter();
 
 	AsyncProvider<AssessmentsResourcePlayerPresenter> getAssessmentsResourcePlayerPresenter();

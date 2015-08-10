@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -153,10 +154,12 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 
 	@Override
 	protected void requestSearch(final SearchDo<CollectionSearchResultDo> searchDo,final SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
+		searchDo.setSearchResults(new ArrayList<CollectionSearchResultDo>());
 		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
 	}
 	@Override
 	protected void requestSearchLoad(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchResultsJsonAsyncCallback,boolean isBackTotop) {
+		searchDo.setSearchResults(new ArrayList<CollectionSearchResultDo>());
 		if(isBackTotop){
 			getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsBackToTop());
 		}else{
@@ -168,6 +171,7 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
+		getSearchDo().setSearchResults(new ArrayList<CollectionSearchResultDo>());
 		getSearchService().getCollectionSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallbackLoadInStore());
 	}
 	/**
