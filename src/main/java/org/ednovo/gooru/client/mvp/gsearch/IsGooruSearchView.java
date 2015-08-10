@@ -115,8 +115,6 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	void setAggregatorSuggestions(SearchDo<String> result);
 	
 	/*void setContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> result);*/
-	
-	void setJsonResponseInStorage(SearchDo<T> data,boolean isApiCalled);
 
 	void setCollectionContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> result);
 

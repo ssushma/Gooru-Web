@@ -197,13 +197,6 @@ import org.ednovo.gooru.client.mvp.community.IsCommunityView;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsView;
 import org.ednovo.gooru.client.mvp.community.contributors.IsContributorsView;
-import org.ednovo.gooru.client.mvp.dashboard.IsPopupForAnalyticsView;
-import org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView;
-import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
-import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsView;
-import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
-import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter.IsUserDashBoardProxy;
-import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardView;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter.IsDeviceSupportProxy;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportView;
@@ -751,8 +744,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(TicalLibraryPresenter.class, IsTicalLibraryView.class, TicalLibraryView.class,IsTicalLibraryProxy.class);
 		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
-		bindPresenter(UserDashBoardPresenter.class, IsUserDashBoardView.class,UserDashBoardView.class, IsUserDashBoardProxy.class);
-		bindPresenterWidget(PopupForAnalyticsPresenter.class,IsPopupForAnalyticsView.class, PopupForAnalyticsView.class);
 
 		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);
 		bindPresenterWidget(CollectionProgressPresenter.class,IsCollectionProgressView.class,CollectionProgressWidget.class);
@@ -772,7 +763,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionShareTabPresenter.class,IsCollectionShareTabView.class,CollectionShareTabView.class);
 		bindPresenterWidget(MyCollectionsRightClusterPresenter.class,IsMyCollectionsRightClusterView.class,MyCollectionsRightClusterView.class);
 		bindPresenterWidget(StandardsPopupPresenter.class,IsStandardsPopupView.class, StandardsPopupView.class);
-		
+
 		bindPresenterWidget(CollectionContentPresenter.class,IsCollectionContentView.class, CollectionContentView.class);
 		bindPresenterWidget(ExternalAssessmentInfoPresenter.class,IsExternalAssessmentView.class, ExternalAssessmentView.class);
 
@@ -795,7 +786,7 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenterWidget(StudentClassReportPresenter.class,IsStudentClassReportView.class, StudentClassReportView.class);
 		bindPresenterWidget(AddCourseToClassPresenter.class, IsAddCourseToClassView.class, AddCourseToClassView.class);
-		
+
 
 		bindPresenter(AssessmentsPlayerPresenter.class, IsAssessmentsPlayerView.class, AssessmentsPlayerView.class,IsAssessmentsPlayerProxy.class);
 		bindPresenterWidget(AddAssessmentsPresenter.class, IsAddAssessmentsView.class, AddAssessmentsView.class);

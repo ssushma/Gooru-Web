@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch.resource;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
@@ -163,11 +164,13 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 	@Override
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
+		getSearchDo().setSearchResults(new ArrayList<ResourceSearchResultDo>());
 		getSearchDo().setPageSize(9);
 		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
 	}
 	@Override
 	protected void requestSearchLoad(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchResultsJsonAsyncCallback,boolean isBackTotop) {
+		getSearchDo().setSearchResults(new ArrayList<ResourceSearchResultDo>());
 		if(isBackTotop){
 			getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsBackToTop());
 		}else{
@@ -176,6 +179,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
+		getSearchDo().setSearchResults(new ArrayList<ResourceSearchResultDo>());
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
 		getSearchService().getResourceSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallbackLoadInStore());

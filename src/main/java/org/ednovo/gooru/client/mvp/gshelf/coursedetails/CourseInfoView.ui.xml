@@ -68,5 +68,8 @@
 				<g:Button styleName="primary" ui:field="nextUnitBtn" text="{i18n.GL3361}" />
 			</div>
 		</div>
+		<g:HTMLPanel ui:field="spinnerIconContainer" styleName="spinnerContainer" visible="false">
+			<g:HTMLPanel styleName="loadingImage spinnerDisplayPosition"></g:HTMLPanel>
+		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
