@@ -428,7 +428,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			dropdownListContainerScrollPanel.setVisible(false);
 			lblEmptyErrorMessage.getElement().getStyle().clearPadding();
 			lblEmptyErrorMessage.setVisible(true);
-			/*lblEmptyErrorMessage.setText(i18n.GL3462_20());*/
+			lblEmptyErrorMessage.setText(i18n.GL3462_23());
 		}else if(COURSE.equalsIgnoreCase(searchType)){
 			disableAddButton();
 			dropdownListContainerScrollPanel.setVisible(false);

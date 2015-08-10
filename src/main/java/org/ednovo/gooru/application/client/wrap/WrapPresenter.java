@@ -54,7 +54,6 @@ import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
 import org.ednovo.gooru.client.mvp.home.event.PreFilterEventHandler;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkHandler;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
@@ -100,7 +99,7 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	}
 
 	@Inject
-	public WrapPresenter(IsWrapView view, IsWrapProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenter) {
+	public WrapPresenter(IsWrapView view, IsWrapProxy proxy) {
 		super(view, proxy);
 		addRegisteredHandler(InvokeLoginEvent.TYPE, this);
 		addRegisteredHandler(ActivateSearchBarEvent.TYPE, this);

@@ -374,7 +374,9 @@ public class CollectionResourceTabView extends
 									category = categoryStr;
 	 								thumbnailUrl = thumbnailUrlStr;
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
+									System.out.println("collectionid::"+collectionItemDo.getParentGooruOid());
+									System.out.println("collectiondo::"+collectionDo.getGooruOid());
+									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 								}
 								@Override
 								public void browseStandardsInfo(boolean val, boolean userResource) {
@@ -538,7 +540,7 @@ public class CollectionResourceTabView extends
 								category = categoryStr;
  								thumbnailUrl = thumbnailUrlStr;
 								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
+								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 							}
 							@Override
 							public void browseStandardsInfo(boolean val, boolean userResource) {
@@ -690,7 +692,7 @@ public class CollectionResourceTabView extends
 									category = categoryStr;
 									thumbnailUrl = thumbnailUrlStr;
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
+									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 								}
 								@Override
 								public void browseStandardsInfo(boolean val, boolean userResource) {

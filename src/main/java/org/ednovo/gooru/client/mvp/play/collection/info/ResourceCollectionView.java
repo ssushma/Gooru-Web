@@ -227,7 +227,11 @@ public class ResourceCollectionView extends Composite{
 	
 	@Override
 	public void onLoad(){
-		collectionThumbnail.setUrl(resourceSearchResultDo.getUrl());
+		if(resourceSearchResultDo.getUrl()==null){
+			collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+		}else{
+			collectionThumbnail.setUrl(resourceSearchResultDo.getUrl());
+		}
 	}
 	
 	public void setCollectionLink(){

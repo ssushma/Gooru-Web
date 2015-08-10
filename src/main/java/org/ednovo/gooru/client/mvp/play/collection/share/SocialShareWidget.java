@@ -110,7 +110,7 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 				resourceThumbnail=ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()),Window.Location.getProtocol());
 				resourceHiddenImage.setUrl(resourceThumbnail);
 			}else{
-				resourceThumbnail=collectionItemDo.getResource().getThumbnails().getUrl();
+				resourceThumbnail=collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : "";
 				resourceHiddenImage.setUrl(resourceThumbnail);
 			}
 		}
@@ -123,7 +123,7 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 				assetName=collectionItemDo.getResource().getAssets().get(0).getAsset()!=null?(collectionItemDo.getResource().getAssets().get(0).getAsset().getName()!=null?collectionItemDo.getResource().getAssets().get(0).getAsset().getName():""):"";
 				thumbnailImage=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+assetName;
 			}else{
-				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
+				thumbnailImage=collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : "";
 			}
 		}catch(Exception e){
 			AppClientFactory.printSevereLogger("SocialShareWidget : getQuestionImage : "+e.getMessage());

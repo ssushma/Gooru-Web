@@ -1442,16 +1442,24 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public CollectionItemDo updateUserOwnResource(String jsonString,String gooruOid) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_RESOURCE, gooruOid);
+	public CollectionItemDo updateUserOwnResource(String jsonString,String gooruOid,String collectionId) throws GwtException {
+		JsonRepresentation jsonRep = null, jsonResponseRepget=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_USER_RESOURCE, collectionId, gooruOid);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), jsonString);
 
 		getLogger().info("---- Updating User own resource -- "+url);
 		getLogger().info("--- payload -- "+jsonString);
 
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollectionItem(jsonRep);
+		try{
+		/*	logger.info("updateUserOwnResource v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri"));
+			String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+		*/	JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(url,getRestUsername(),getRestPassword());
+			jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
+		}catch(Exception e){
+			logger.error("Exception-------"+e);
+		}
+		return deserializeCollectionItem(jsonResponseRepget);
 	}
 
 	@Override
@@ -1691,12 +1699,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String limitSize = Integer.toString(limit);
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
+		Map<String, String> params = new LinkedHashMap<>();
 		if(GooruConstants.COURSE.equalsIgnoreCase(collectionType)){
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_USER_COURSES_LIST,getLoggedInUserUid());
 		}else{
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_WORKSPACE_FOLDER_LIST);
+			params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 		}
-		Map<String, String> params = new LinkedHashMap<>();
 		params.put(GooruConstants.OFFSET, offsetSize);
 		if(sharingType!=null){
 			params.put(GooruConstants.SHARING, sharingType);
@@ -1705,7 +1714,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
 		}
 		params.put(GooruConstants.LIMIT,limitSize);
-		//params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 
 		if(isExcludeAssessment){
 			params.put(GooruConstants.EXCLUDE_TYPE, "assessment/url");

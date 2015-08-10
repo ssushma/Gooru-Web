@@ -12,7 +12,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public abstract class SearchAsyncCallbackForString<T extends AbstractSearchDo<?>> implements AsyncCallback<T> {
+public abstract class SearchAsyncCallbackForString<T extends AbstractSearchDo<?>> implements AsyncCallback<T>{
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	boolean isApiCalled;
 
@@ -62,12 +62,12 @@ public abstract class SearchAsyncCallbackForString<T extends AbstractSearchDo<?>
 		onCallSuccess(result,this.isApiCalled);
 	}
 
-	public final void execute(boolean isApiCalled,String representation,T searchDo) {
+	public final void execute(boolean isApiCalled,T representation,T searchDo) {
 		this.isApiCalled=isApiCalled;
 		run(isApiCalled,representation,searchDo);
 	}
 
-	protected abstract void run(boolean isApiCalled,String representation,T searchDo);
+	protected abstract void run(boolean isApiCalled,T representation,T searchDo);
 
 	public abstract void onCallSuccess(T result,boolean isApiCalled);
 }

@@ -80,7 +80,9 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	@UiField SimplePanel learningMapContainer;
 	@UiField Image classImage, teacherImage, studentImage;
 	@UiField SimpleCheckBox switchCheckBox;
-	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel, planProgressBar, planProgressPanel, classpageMainContainer;
+	@UiField HTMLPanel editClassMetadataPanel, previewClassMetadataPanel, planProgressBar, planProgressPanel;
+	@UiField
+	static HTMLPanel classpageMainContainer;
 	@UiField Button joinClassBtn, teachViewBtn;
 	@UiField Label studentViewLbl;
 	@UiField LoadingUc cropImageLoading;
@@ -284,6 +286,9 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 				public void closePoup() {
 					hide();
 					Window.enableScrolling(true);
+					if(!classpageDo.isVisibility()){
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+					}
 				}
 			};
 			int windowHeight=Window.getClientHeight()/2; //I subtract 10 from the client height so the window isn't maximized.
@@ -337,5 +342,19 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	public void closeJoinPopup(boolean isVisible) {
 		//joinClassPopup.setVisible(isVisible);
 		joinClassPopup.hide();
+	}
+	
+	public static boolean getMainContainerStatus()
+	{
+		Boolean mainContainerStatus = false;
+		try
+		{
+			mainContainerStatus = classpageMainContainer.isVisible();
+		}
+		catch(Exception ex)
+		{
+			AppClientFactory.printSevereLogger("StudentAssignmentView : getMainContainerStatus : "+ex.getMessage());
+		}
+		return mainContainerStatus;
 	}
 }

@@ -84,7 +84,6 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -200,7 +199,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	private HandlerRegistration handlerRegistration=null;
 
-	private Storage localStore = null;
+	//private Storage localStore = null;
 
 	InlineLabel cart = null;
 
@@ -264,7 +263,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFeildsIds();
 		standardsDropListValues.setVisible(false);
-		localStore=Storage.getLocalStorageIfSupported();
 		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		//pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
@@ -293,65 +291,29 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	        	hidePopup(event);
 	          }
 	    });
-
-
 		lblLoadingTextPrevious.setVisible(false);
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
-				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
-					if(publisherSgstBox!=null && aggregatorSgstBox!=null){
-						publisherSgstBox.hideSuggestionList();
-						aggregatorSgstBox.hideSuggestionList();
-					}
-
-					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top
-					if(event.getScrollTop()<=(Document.get().getBody().getClientHeight()/10) && previousScroll>event.getScrollTop()){
-						if(!isBackToTopClicked && pageCountForStorage>=10 && isApiInProgressBack && isApiInProgressBackLoad && (searchResultPanel.getWidgetCount()>=10)){
-							isApiInProgressBack=isApiInProgressBackLoad=false;
-							isInsertTems=true;
-							//lblLoadingTextPrevious.setVisible(true);
-							isForwardScroll = false;
-							if(Storage.isLocalStorageSupported()){
-								getUiHandlers().setDataReterivedFromStorage(localStore.getItem((pageCountForStorage-10)+""),true);
-							}
-							if(pageCountForStorage>11 && localStore.getItem((pageCountForStorage-11)+"") == null && (pageNumber-1)>=1){
-								if(searchDoGbl.getTotalPages()>=(pageNumber-1)){
-									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 9);
-									}else{
-										getUiHandlers().getCollectionSearchResultsOnPageWise("",(pageCountForStorage-11), 8);
-									}
-								}
-								pageNumber--;
-								pageCountForStorage--;
-							}
-						}
-					}
-					//This condition is used to check that the user is scrolling top to bottom
-					if(resultCountVal>=8 && isApiInProgress && isApiInProgressLoad && !isBackToTopClicked){
-						if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
-							isInsertTems=false;
-							isApiInProgress=isApiInProgressLoad=false;
-							lblLoadingText.setVisible(true);
-							pageNumber++;
-							isForwardScroll = true;
-							getUiHandlers().setDataReterivedFromStorage(localStore.getItem(pageNumber+""),true);
-
-							if(searchDoGbl.getTotalPages()>=(pageNumber+1) && localStore.getItem((pageNumber+1)+"") == null){
+				try{
+					String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+					if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
+						if(resultCountVal>=8 && isApiInProgress){
+							if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
+								lblLoadingText.setVisible(true);
+								isApiInProgress=false;
+								pageNumber++;
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 								}else{
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
 								}
-							}else{
-								isApiInProgress=isApiInProgressLoad=true;
 							}
 						}
 					}
+						previousScroll=event.getScrollTop();
+					}catch(Exception e){
 				}
-				previousScroll=event.getScrollTop();
 			}
 		});
 		pnlBackToTop.getElement().setId("back-top");
@@ -414,7 +376,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}else{
 								moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
 							}
-
 						}else if(!isClickedOnDropDwn){
 							ulSubjectPanel.setVisible(false);
 							gradesPanel.setVisible(false);
@@ -427,9 +388,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				});
 			}
 		};
-
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
-
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			renderCheckBox(reviewPanelUc,"1", "Only Resources with Reviews");
@@ -512,24 +471,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		return 0;
 	}
-	public void removeFromLocalStorageForward(){
-		if(Storage.isLocalStorageSupported() && localStore.getLength()>10){
-			int keyVal=pageCountForStorage-11;
-			localStore.removeItem(keyVal+"");
-		}
-	}
-	public void removeFromLocalStorageBackword(){
-		if(Storage.isLocalStorageSupported() && localStore.getLength()>10){
-			int keyVal;
-			if(pageCountForStorage>=10){
-				keyVal=pageCountForStorage;
-			}else{
-				keyVal=pageCountForStorage+7;
-			}
-			localStore.removeItem(keyVal+"");
-		}
-	}
-
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
 	 * @author Gooru
@@ -595,8 +536,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				@Override
 				public void onSuccess() {
-					isBackToTopClicked=true;
-					resetDataBacktoTop();
+					//isBackToTopClicked=true;
+					//resetDataBacktoTop();
+					Window.scrollTo(0,0);
 				}
 			});
 		}
@@ -679,7 +621,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						if(widgetCount>removeableWidgetCount){
 							break;
 						}
-
 						final Widget widget = widgets.next();
 						searchResultPanel.remove(widget);
 						widgetCount++;
@@ -709,6 +650,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		searchDoGbl = searchDo;
 		pnlBackToTop.setVisible(true);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
+			long startTime = System.currentTimeMillis();
 			searchResults.setVisible(true);
 			panelBorderBox.getElement().getStyle().clearBackgroundColor();
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
@@ -717,7 +659,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}else{
 				searchResults.setText(i18n.GL3275()+"  "+"("+searchDo.getSearchHits()+")");
 			}
-			searchDo.getSearchHits();
+			//searchDo.getSearchHits();
 			if(isInsertTems){
 				if(Document.get().getElementById(searchDo.getSearchResults().get(0).getGooruOid())==null){
 					HTMLPanel widgetsContainer=new HTMLPanel("");
@@ -739,6 +681,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				for (T searchResult : searchDo.getSearchResults()) {
 						widgetsContainer.add(renderSearchResult(searchResult));
 				}
+				long stopTime = System.currentTimeMillis();
+			    long elapsedTime = stopTime - startTime;
+			    AppClientFactory.printInfoLogger("FE render Difference time:"+elapsedTime);
 				if(pageNumber==1){
 					pnlFirstTempData=searchResultPanel.getWidget(0);
 				}
@@ -746,7 +691,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			lblLoadingText.setVisible(false);
 			lblLoadingTextPrevious.setVisible(false);
-			removeTopWidgets(isInsertTems);
+			//removeTopWidgets(isInsertTems);
 		}else if(pageNumber==1){
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
@@ -787,7 +732,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showReviewFilter();
 		setStyleForCollectionType();
 		showRatingsFilter();
-
 	}
 	/**
 	 * This method will set the search Filters
@@ -1755,7 +1699,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageNumber = 1;
 		previousCount=0;
 		pageCountForStorage=1;
-		localStore.clear();
 		isForwardScroll=true;
 		previousValue=0;
 		pageFlag=false;
@@ -1769,9 +1712,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageNumber = 1;
 		pageFlag=false;
 		pageCountForStorage=1;
-		localStore.clear();
 		isForwardScroll=true;
-		getUiHandlers().resetLocalStorageData();
+		//getUiHandlers().resetLocalStorageData();
 		callAnimation();
 		searchResultPanel.clear();
 		if(pnlFirstTempData!=null){
@@ -2021,28 +1963,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void clickOnMorefilterPnl(ClickEvent clickEvent){
 		moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		isClickOnMoreFilter=true;
-	}
-	@Override
-	public void setJsonResponseInStorage(String data,boolean isApiCalled){
-		if(Storage.isLocalStorageSupported() && !isApiCalled){
-			if(isForwardScroll){
-				if(pageNumber==1 && !pageFlag){
-					pageFlag = true;
-					localStore.setItem((pageNumber)+"", data);
-				}else{
-					pageFlag = false;
-					localStore.setItem((pageNumber+1)+"", data);
-				}
-				pageCountForStorage++;
-				removeFromLocalStorageForward();
-				isApiInProgressLoad=true;
-			}else{
-				isApiInProgressBackLoad=true;
-				localStore.setItem((pageCountForStorage-10)+"", data);
-				removeFromLocalStorageBackword();
-			}
-			isBackToTopClicked=false;
-		}
 	}
 	@UiHandler("assessmentsBtn")
 	public void clickOnAssessments(ClickEvent clickEvent){

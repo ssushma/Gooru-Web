@@ -45,7 +45,6 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -604,6 +603,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            data.setValue(i, 4, new AnalyticsReactionWidget(reaction).toString());
 
 		            //set View response label
+		        	if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
 		            Label viewResponselbl=new Label(VIEWRESPONSE);
 		            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 		            viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
@@ -611,6 +611,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	   	            viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
      			    viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
 		            data.setValue(i, 5, viewResponselbl.toString());
+		        	}
 		            
 		        }
 		        Options options = Options.create();
@@ -857,7 +858,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			        Options options = Options.create();
 			        options.setAllowHtml(true);
 			        Table table = new Table(data, options);
-			        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 			        printScoredData.add(table);
 			        if(result.size()==0){
 			        	Label erroeMsg=new Label();
@@ -1043,7 +1043,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        Options options = Options.create();
 		        options.setAllowHtml(true);
 		        Table table = new Table(data, options);
-		        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 		        table.getElement().setId("individulaDataScored");
 		        individualScoredData.add(table);
 		        if(result.size()==0){
@@ -1052,6 +1051,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	erroeMsg.setText(i18n.GL3265());
 		        	individualScoredData.add(erroeMsg);
 		        }
+		        table.addDomHandler(new SummaryPopupClick(), ClickEvent.getType());
 		        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 
 			}
@@ -1209,21 +1209,22 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	public class SummaryPopupClick implements ClickHandler{
 
+
 		@Override
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
 			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId")) && !StringUtil.isEmpty(ele.getAttribute("answerObj"))){
-				 JSONValue value = JSONParser.parseStrict(ele.getAttribute("answerObj").toString());
-    			 JSONObject answerObject = value.isObject();
-    			 Set<String> keys=answerObject.keySet();
-    			 Iterator<String> itr = keys.iterator();
-    			 JSONArray attemptsObj=null;
-    		      while(itr.hasNext()) {
-    		         attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-    		       }
-    		      if(attemptsObj!=null){
-    		      SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
-    		      }
+				JSONValue value = JSONParser.parseStrict(ele.getAttribute("answerObj").toString());
+				JSONObject answerObject = value.isObject();
+				Set<String> keys=answerObject.keySet();
+				Iterator<String> itr = keys.iterator();
+				JSONArray attemptsObj=null;
+				while(itr.hasNext()) {
+					attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+				}
+				if(attemptsObj!=null){
+					SummaryAnswerStatusPopup summaryPopup=new SummaryAnswerStatusPopup(attemptsObj, ele.getAttribute("questionType"),ele.getAttribute("attempts"));
+				}
 			}
 		}
 	};

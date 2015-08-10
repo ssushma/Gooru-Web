@@ -239,7 +239,7 @@ public enum UrlToken {
 
 	V2_JOIN_CLASS("/v2/class/{0}/member/join?"),
 
-	V2_UPDATE_USER_RESOURCE("/v2/collection/resource/{0}?"),
+	V3_UPDATE_USER_RESOURCE("/v3/collection/{0}/resource/{1}?"),
 
 	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?"),
 
