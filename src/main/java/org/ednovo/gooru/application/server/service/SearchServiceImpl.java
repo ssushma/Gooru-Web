@@ -994,7 +994,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			filtersMap.put(GooruConstants.PROTOCOL_SUPPORTED, "http,https");
 			String url = AddQueryParameter.constructQueryParams(partialUrl, filtersMap);
 
-			getLogger().info("url search resource results:::::"+url);
+			getLogger().info("getResourceSearchResultsJson:::::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			return jsonRep.getJsonObject().toString();
