@@ -86,7 +86,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	String[] attemptAnsSequence;
 
 	private static String SPACE=" ";
-	private static String DELIMITER_SPACE="[,;\\s\\xA0]+";
+	private static String DELIMITER_SPACE="[\\s\\xA0]+";
 	private static String STYLE_HIGHLIGHT="htHiglightText";
 	private static String STYLE_CORRECT="correct";
 	private static String STYLE_INCORRECT="inCorrect";
