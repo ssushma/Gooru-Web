@@ -221,7 +221,11 @@ public class ExistsResourceView extends AppPopUp {
 		title = existsResourceDo.getTitle();
 		description = existsResourceDo.getDescription();
 		category = existsResourceDo.getCategory().toLowerCase();
-		thumbnailUrl = existsResourceDo.getThumbnails().getUrl();
+		if(existsResourceDo.getThumbnails()!=null && existsResourceDo.getThumbnails().getUrl()!=null){
+			thumbnailUrl = existsResourceDo.getThumbnails().getUrl();
+		}else{
+			thumbnailUrl=DEFULT_IMAGE_PREFIX+category+PNG;
+		}
 		resourceUrlLbl.setText(url);
 		resourceUrlLbl.getElement().setId("lblResourceUrlLbl");
 		resourceUrlLbl.getElement().setAttribute("alt", url);
