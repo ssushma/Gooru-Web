@@ -37,8 +37,6 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
-import org.ednovo.gooru.client.mvp.assessments.play.resource.question.event.ResetAssessmentDragDropEvent;
-import org.ednovo.gooru.client.mvp.assessments.play.resource.question.event.ResetAssessmentDragDropHandler;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
@@ -117,7 +115,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	@UiConstructor
 	public HotTextAnswersQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo,List randomList){
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(ResetAssessmentDragDropEvent.TYPE,resetReorderData);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo=collectionItemDo;
 		this.attemptedAnswerDo=attemptedAnswerDo;
@@ -524,17 +521,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		return text;
 	}
 
-	ResetAssessmentDragDropHandler resetReorderData=new ResetAssessmentDragDropHandler() {
-
-		@Override
-		public void resetAssessmentReorder() {
-
-			if(checkAnswer.getStyleName().contains(STYLE_INACTIVE_BUTTON)){
-				clearReorderAnswers();
-				enableCheckAnswerButton();
-			}
-		}
-	};
 
 	public abstract void createSesstionItemAttemptForHTDragDrop(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
 	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
