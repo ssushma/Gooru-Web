@@ -89,7 +89,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 	
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField HTMLPanel unitInfo,pnlGradeContainer,pnlGradeDescContainer;
+	@UiField HTMLPanel unitInfo,pnlGradeContainer,pnlGradeDescContainer,spinnerIconContainer;
 	@UiField PPanel unitNamePpanel, bigIdeasPPanel,essentialQuestPPanel,unitCoverPPanel;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveUnitBtn,nextCreateLessonBtn,taxonomyBtn;
@@ -483,6 +483,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		saveUnitBtn.addStyleName("disabled");
 		saveUnitBtn.setEnabled(false);
+		spinnerImageVisibility(true);
 		CreateDo createOrUpDate=new CreateDo();
 		createOrUpDate.setTitle(unitTitle.getText());
 		createOrUpDate.setIdeas(txaBigIdeas.getText());
@@ -499,6 +500,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			unitTitle.setStyleName("textAreaErrorMessage");
 			unitTitle.addStyleName("form-control");
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 	}
 	
@@ -508,6 +510,8 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		nextCreateLessonBtn.addStyleName("disabled");
 		nextCreateLessonBtn.setEnabled(false);
+		spinnerImageVisibility(true);
+		
 		CreateDo createOrUpDate=new CreateDo();
 		createOrUpDate.setTitle(unitTitle.getText());
 		createOrUpDate.setIdeas(txaBigIdeas.getText());
@@ -524,6 +528,7 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 			unitTitle.setStyleName("textAreaErrorMessage");
 			unitTitle.addStyleName("form-control");
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 	}
 	/**
@@ -536,12 +541,15 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(unitTitle, lblErrorMessage, result);
 			isCreateLessonClicked=true;
+			spinnerImageVisibility(false);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaBigIdeas, lblErrorMessageForBig, result);
 			isCreateLessonClicked=true;
+			spinnerImageVisibility(false);
 		}else if(result && index==2){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaEssentialQuestions, lblErrorMessageForEssential, result);
 			isCreateLessonClicked=true;
+			spinnerImageVisibility(false);
 		}else{
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getIdeas().trim(),isCreate,1,courseId,createOrUpDate,currentShelfTreeWidget);
@@ -765,5 +773,10 @@ public class UnitInfoView extends BaseViewWithHandlers<UnitInfoUiHandlers> imple
 		nextCreateLessonBtn.setEnabled(true);
 		saveUnitBtn.removeStyleName("disabled");
 		saveUnitBtn.setEnabled(true);
+	}
+	
+	@Override
+	public void spinnerImageVisibility(boolean isVisible){
+		spinnerIconContainer.setVisible(isVisible); 
 	}
 }

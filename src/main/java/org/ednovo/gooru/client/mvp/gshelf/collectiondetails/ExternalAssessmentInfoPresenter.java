@@ -147,6 +147,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 				}
 			});
 		}
+		getView().spinnerImageVisibility(false);
 		
 	}
 
@@ -188,6 +189,7 @@ public class ExternalAssessmentInfoPresenter extends PresenterWidget<IsExternalA
 			});
 		}
 		Window.scrollTo(0, 0);
+		getView().spinnerImageVisibility(false);
 	}
 	/**
 	 * This method is used to set the right cluster presenter
