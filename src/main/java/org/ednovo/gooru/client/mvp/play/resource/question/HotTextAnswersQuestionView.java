@@ -85,6 +85,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	String[] attemptAnsSequence;
 
 	private static String SPACE=" ";
+	private static String DELIMITER_SPACE="[\\s\\xA0]+";
 	private static String STYLE_HIGHLIGHT="htHiglightText";
 	private static String STYLE_CORRECT="correct";
 	private static String STYLE_INCORRECT="inCorrect";
@@ -257,7 +258,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 			String[] temp;
 			if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-				temp = text.split(SPACE);
+				temp = text.split(DELIMITER_SPACE);
 
 				for(int k=0;k<temp.length;k++){
 

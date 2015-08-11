@@ -71,4 +71,5 @@ public interface IsCourseInfoView extends IsViewWithHandlers<CourseInfoUiHandler
 	AudienceView getAudienceContainer();
 	FolderDo getCourseDetails();
 	void resetBtns();
+	void spinnerImageVisibility(boolean isVisible);
 }
