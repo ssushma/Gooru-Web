@@ -50,6 +50,7 @@ import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -68,6 +69,8 @@ public interface ClasspageService extends BaseService {
 	 */
 	public ClasspageDo createClass(String titlinviteStudentToClasse,String grades,boolean visiblity) throws GwtException,ServerDownException;
 
+	public ClasspageDo v3GetClassByCode(String classCode) throws GwtException,ServerDownException;
+	
 	public ClasspageDo v3GetClassById(String classpageId) throws GwtException,ServerDownException;
 	
 	public ClasspageListDo  v3GetUserClasses(String limit, String offSet, boolean isContainsCourse) throws GwtException, ServerDownException;

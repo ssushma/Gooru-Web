@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.assessments.play.resource.question;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.AppRepositionDragContainer;
 import org.ednovo.gooru.client.mvp.dnd.AppVerticalPanelDropController;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;

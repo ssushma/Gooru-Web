@@ -25,8 +25,6 @@
 package org.ednovo.gooru.client.mvp.assessments.play.resource.question;
 
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.assessments.play.resource.question.event.ResetAssessmentDragDropEvent;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 
@@ -117,7 +115,6 @@ public class HTAnswerChoiceOptionView extends Composite implements IsDraggable{
 		return 40;
 	}
 	public void reorderCollectionItem(int widgetIndex) {
-		AppClientFactory.fireEvent(new ResetAssessmentDragDropEvent());
 	}
 	public FlowPanel getHtAnsDragFpnl() {
 		return htAnsDragFpnl;

@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestion
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.BodyElement;
@@ -283,7 +284,12 @@ public class TinyMCE extends Composite{
 	}-*/;
 
     public void setContent(String text){
+    	try
+    	{
     	setContent(id, text);
+    	}
+    	 catch(JavaScriptException e) {
+    	 }
     }
     public void setEmptyContent(String text){
     	setEmptyContent(id,text);

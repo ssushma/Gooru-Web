@@ -495,13 +495,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					LblMember.setText(StudentAssignmentView.i18n.GL1549());
 					mainContainer.setVisible(true);
 				}
-			else if(classpageDo.getStatus().equalsIgnoreCase("pending"))
-			{
-					memberContainer.setStyleName("techerStyle");
-					LblMember.setVisible(false);
-					mainContainer.setVisible(false);
-			}else
-				{
+			else {
 					try
 					{
 					mainContainer.setVisible(false);
