@@ -151,6 +151,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, result);
 				}
 				Window.scrollTo(0, 0);
+				getView().spinnerImageVisibility(false);
 			}
 		});
 	}
@@ -176,6 +177,7 @@ public class UnitInfoPresenter extends PresenterWidget<IsUnitInfoView> implement
 					myCollectionsRightClusterPresenter.setTabItems(2, UNIT, folderDo);
 				}
 				Window.scrollTo(0, 0);
+				getView().spinnerImageVisibility(false);
 			}
 		});
 	}

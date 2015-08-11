@@ -1979,7 +1979,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}else if(getQuestionType().equalsIgnoreCase("HT_HL")){
 				QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
 				AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionHotTextAnswerChoiceContainer.getWidget(0);
-				questionAnswerDo.setAnswerText(addQuestionAnswerChoice.highlightTextArea.getRawContent());
+				questionAnswerDo.setAnswerText(StringUtil.getHotTextHiglightText(addQuestionAnswerChoice.highlightTextArea.getRawContent()));
 				questionAnswerDo.setAnswerType("text");
 				questionAnswerDo.setSequence(1);
 				questionAnswerDo.setIsCorrect(true);
@@ -2335,7 +2335,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						boolean isCorrect=false;
 						for(int k=0;k<temp.length;k++){
 							if(temp[k].contains("[") || temp[k].contains("]")){
-								if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith("]") || temp[k].endsWith("].")) && temp[k].trim().length()>0){
+								if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith("]") || temp[k].endsWith("].") || temp[k].endsWith("],") || temp[k].endsWith("];") || temp[k].endsWith("] ")) && temp[k].trim().length()>0){
 									isCorrect=true;
 								}else{
 									isCorrect=false;

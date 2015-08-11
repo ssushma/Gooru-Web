@@ -58,4 +58,6 @@ public interface IsLessonInfoView extends IsViewWithHandlers<LessonInfoUiHandler
 
 	void displaySelectedStandards(List<Map<String, String>> standListArray);
 
+	void spinnerImageVisibility(boolean isVisible);
+
 }
