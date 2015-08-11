@@ -87,4 +87,6 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 	Image getCollThumbnail();
 
 	void displaySelectedStandards(List<Map<String,String>> standListArray);
+
+	void spinnerImageVisibility(boolean isVisible); 
 }
