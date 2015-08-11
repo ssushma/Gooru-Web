@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -28,7 +29,11 @@ public class StudentEmptyClassContainer extends Composite {
 	}
 	
 	public void setUserName(String userName) {
-		String errorLblStr = StringUtil.generateMessage(i18n.GL3469_9(), userName != null ? userName : "");
-		errorLbl.setText(errorLblStr);
+		if(AppClientFactory.isAnonymous()) {
+			errorLbl.setText(i18n.GL3566());
+		} else {
+			String errorLblStr = StringUtil.generateMessage(i18n.GL3469_9(), userName != null ? userName : "");
+			errorLbl.setText(errorLblStr);
+		}
 	}
 }
