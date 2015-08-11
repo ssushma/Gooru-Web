@@ -69,5 +69,6 @@ public interface IsUnitInfoView extends IsViewWithHandlers<UnitInfoUiHandlers> {
 
 	void addTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArray, List<LiPanelWithClose> removedLiPanelWithCloseArray);
 	
-	void resetBtns(); 
+	void resetBtns();
+	void spinnerImageVisibility(boolean isVisible); 
 }
