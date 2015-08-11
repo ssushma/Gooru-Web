@@ -167,7 +167,7 @@ public class SentEmailSuccessVc extends Composite {
 	public void onBtnClick(ClickEvent clickEvent) {
 		appPopUp.hide();
 		String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(placeToken.equals(PlaceTokens.STUDENT_VIEW))
+		if(placeToken.equals(PlaceTokens.STUDENT_VIEW) || placeToken.equals(PlaceTokens.STUDENT))
 		{
 			Window.enableScrolling(true);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
