@@ -1000,6 +1000,7 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		HTText=HTText.replaceAll(";", "; ");
 		HTText=HTText.replaceAll("&nbsp;", " ");
 		HTText=HTText.replaceAll(":", ": ");
+		HTText=HTText.replaceAll(".", ". ");
 		HTText=HTText.replaceAll("\\]\\[", "\\] \\[");
 		return HTText;
 		
