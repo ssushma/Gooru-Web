@@ -192,6 +192,8 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	/** new class **/
 	
+	public void v3GetClassByCode(String classCode, AsyncCallback<ClasspageDo> callback);
+
 	public void v3GetClassById(String classpageId, AsyncCallback<ClasspageDo> callback);
 	
 	public void createClass(String title,String grade,boolean visiblity,AsyncCallback<ClasspageDo> callback);

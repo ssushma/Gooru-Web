@@ -42,6 +42,7 @@ public class MetaDO implements IsSerializable{
 	private List<String> permissions;
 	private Integer collaboratorCount;
 	private boolean isCollaborator;
+	private String status;
 	
 	public MetaDO(){}
 	
@@ -87,4 +88,16 @@ public class MetaDO implements IsSerializable{
 	public void setPermissions(List<String> permissions) {
 		this.permissions = permissions;
 	}
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 }

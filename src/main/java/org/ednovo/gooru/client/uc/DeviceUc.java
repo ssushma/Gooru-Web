@@ -42,65 +42,55 @@ public class DeviceUc extends Composite {
 
 	private static DeviceUcUiBinder uiBinder = GWT
 			.create(DeviceUcUiBinder.class);
-	
-	
+
+
 	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
 	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
-	
+
 	SimplePanel wrapperPanel= null;
 	HeaderUc headerUc= null;
-	
+
 	@UiField Anchor viewAnchor;
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface DeviceUcUiBinder extends UiBinder<Widget, DeviceUc> {
 	}
-	
+
 	Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 	Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 	Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		
+
 	public DeviceUc(SimplePanel wrapperPanel,HeaderUc headerUc) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.headerUc = headerUc;
 		this.wrapperPanel = wrapperPanel;
-		
+
 		androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
 		ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
-		
+
 		msglinkPanel.getElement().setId("pnlMsglinkPanel");
 		msgPanel.getElement().setId("pnlMsgPanel");
 		closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
-		
+
 		closeIpadBtn.getElement().setId("imgCloseIpadBtn");
 		gooruPanel.getElement().setId("pnlGooruPanel");
 		ednovoPanel.getElement().setId("pnlEdnovoPanel");
 		appstorePanel.getElement().setId("pnlAppstorePanel");
 		viewAnchor.getElement().setId("lnkViewAnchor");
-		
+
 		setUiText();
-		
-		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  ipadSectiondiv.setVisible(true);
-			  androidSectiondiv.setVisible(false);
-			  ipadSectiondiv.getElement().setAttribute("style", "margin-top:-20px;");
-			  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
-			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
-		  }
-		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  ipadSectiondiv.setVisible(false);
-			  androidSectiondiv.setVisible(true);
-			  androidSectiondiv.getElement().setAttribute("style", "margin-top:-20px;");
-			  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
-			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
-		  }
-		
+
+		if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
+			ipadSectiondiv.setVisible(false);
+			androidSectiondiv.setVisible(true);
+			androidSectiondiv.getElement().setAttribute("style", "margin-top:-20px;");
+			wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+			headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
+		}
 	}
-	
+
 	@UiHandler("closeIpadBtn")
 	public void onIpadCloseClick(ClickEvent clickEvent){
 		  ipadSectiondiv.setVisible(false);
