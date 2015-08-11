@@ -125,7 +125,7 @@ public class EmailShareUc extends PopupPanel{
 	@Inject
 	private ClasspageServiceAsync classpageServiceAsync;
 
-	private String cfm;
+	private String cfm = "no";
 
 	private String loggedEmailId;
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
@@ -438,7 +438,7 @@ public class EmailShareUc extends PopupPanel{
 									}else{
 										if(count==0){
 										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
-											if(cfm.equalsIgnoreCase("yes")){
+											if("yes".equalsIgnoreCase(cfm)){
 												 toTxt.setText(toTxt.getText()+","+AppClientFactory.getLoggedInUser().getEmailId());
 											}else{
 												toTxt.setText(toTxt.getText());
