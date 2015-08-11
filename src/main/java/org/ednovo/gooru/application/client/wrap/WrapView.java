@@ -90,15 +90,9 @@ public class WrapView extends BaseView implements IsWrapView {
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  if (BrowserAgent.isDevice()){
-			  panelDevice.add(new DeviceUc(wrapperPanel, headerUc));
-			  panelDevice.setVisible(true);
-			  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-			  {
-				  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
-				  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
-			  }
-			  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
-			  {
+			  if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
+				  panelDevice.add(new DeviceUc(wrapperPanel, headerUc));
+				  panelDevice.setVisible(true);
 				  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 				  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
 			  }

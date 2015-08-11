@@ -82,7 +82,7 @@ public class StudyClassCodePresenter extends ChildPresenter<StudyClassCodePresen
 	 */
 	@Override
 	public void getClassData(String classCodeText) {
-		AppClientFactory.getInjector().getClasspageService().v3GetClassById(classCodeText, new AsyncCallback<ClasspageDo>() {
+		AppClientFactory.getInjector().getClasspageService().v3GetClassByCode(classCodeText, new AsyncCallback<ClasspageDo>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
