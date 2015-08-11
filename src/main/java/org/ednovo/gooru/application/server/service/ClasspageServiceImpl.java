@@ -522,7 +522,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	
 	@Override
 	public ClasspageDo v3GetClassByCode(String classCode) throws GwtException, ServerDownException {
-		ClasspageDo classpageDo = null;
+		ClasspageDo classpageDo = new ClasspageDo();
 		JsonRepresentation jsonRep = null;
 		try{
 			String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classCode);
@@ -546,7 +546,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 
 	public ClasspageDo v2GetClassDetailsByCode(String classpageCode) throws GwtException{
 		JsonRepresentation jsonRep = null;
-		ClasspageDo classpageDo = null;
+		ClasspageDo classpageDo = new ClasspageDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode);
 		getLogger().info("v2getClasspageByCode:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
