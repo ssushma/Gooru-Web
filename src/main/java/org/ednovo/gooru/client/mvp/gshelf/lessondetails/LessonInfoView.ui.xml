@@ -75,6 +75,7 @@
 				<div class="filterTags">
 					<uc:UlPanel ui:field="ulSelectedItems" />
 				</div>
+				<g:Label styleName="col-sm-12 errorMessage" ui:field="lblLessonErrorMsg"/>
 			</div>
 		</div>
 

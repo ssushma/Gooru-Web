@@ -78,7 +78,7 @@
 							</g:FlowPanel>
 							<g:Label ui:field="updatePDFLabelText"></g:Label>
 						</g:FlowPanel>
-						<g:Label ui:field="lblError" styleName="errorMsgLabel"></g:Label>
+						<g:Label ui:field="lblError" styleName="errorMessage"></g:Label>
 						<div class="clearfix"></div>
 					</div>
 					<div class="clearfix"></div>
