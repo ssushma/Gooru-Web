@@ -289,15 +289,18 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	 */
 	public void callWorkspaceApi(){
 		getView().setNoDataForAnonymousUser(false);
+		int limit;
 		String view= AppClientFactory.getPlaceManager().getRequestParameter(VIEW,null);
 		String typeVal=type;
 		if(view!=null && view.equalsIgnoreCase(FOLDER)){
 			typeVal=null;//if we are passing as null we get all the folders and collections
 			type=view;
+			limit=20;
 		}else{
 			typeVal=type;
+			limit=50;
 		}
-		getResourceService().getFolderWorkspace(0, 20,null,typeVal,false,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace(0, limit,null,typeVal,false,getUserCollectionAsyncCallback(true));
 		getView().setDefaultOrganizePanel(view);
 	}
 	public ShelfServiceAsync getShelfService() {
