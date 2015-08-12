@@ -119,7 +119,7 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 			String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID);
 			String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID);
 			String contentType=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-			reportBodyBlock.add(new AssessmentProgressReportChildView(aId, cId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId, contentType));
+			reportBodyBlock.add(new AssessmentProgressReportChildView(aId, cId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId, contentType, null));
 		}
 	}
 	

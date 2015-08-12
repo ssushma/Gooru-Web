@@ -33,7 +33,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -141,7 +143,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	public boolean isTableToDestroy=false;
 
-	public AssessmentProgressReportChildView(String assessmentId, String classId, String userId, String courseId, String unitId, String lessonId, String contentType) {
+	public AssessmentProgressReportChildView(String assessmentId, String classId, String userId, String courseId, String unitId, String lessonId, String contentType, String sessionId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new AssessmentProgressReportChildPresenter(this));
 		selfReportPanel.setVisible(false);
@@ -169,7 +171,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		this.unitId = unitId;
 		this.courseId = courseId;
 		this.assessmentId = assessmentId;
-		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
+		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
 	}
 
 	private void setExternalAssessment() {
@@ -213,6 +215,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		errorPanelData(false, false);
 
 		PrintPnl.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-106)+"px");
+		
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)) {
+			PrintPnl.removeStyleName("LearningMapContainer");
+			PrintPnl.getElement().getStyle().setBackgroundColor("white");
+		}
+		
 		progressRadial.getElement().setId("fpnlprogressRadial");
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageLoading.getElement().setId("loadingUcCropImageLoadingInStudentSummaryView");
