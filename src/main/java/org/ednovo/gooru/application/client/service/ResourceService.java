@@ -305,6 +305,9 @@ public interface ResourceService extends BaseService {
 	
 	public CollectionItemDo updateUserOwnResource(String jsonString, String gooruOid, String collectionId)throws GwtException, ServerDownException; 
 	public CollectionItemDo updateNarrationMetadata(String collectionItemId, String narration, String narrationType)  throws GwtException, ServerDownException;
+	
+	public CollectionItemDo updateNarrationItemMetadata(String collectionId,String collectionItemId, String narration, String narrationType,String start,String stop)  throws GwtException, ServerDownException;
+	
 	//For Flag existing resources
 	//To create content report
   	public void createContentReport(String assocGooruOid,String targetValue,String typesvalue1,String typesvalue2,String typesvalue3, String typesvalue4,String otherDescription) throws GwtException, ServerDownException;
