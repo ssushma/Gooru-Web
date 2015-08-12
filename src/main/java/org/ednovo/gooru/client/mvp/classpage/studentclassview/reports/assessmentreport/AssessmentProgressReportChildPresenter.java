@@ -302,7 +302,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	}
 
 	@Override
-	public void getContentPlayAllSessions(final String gooruUid, final String classGooruId, final String lessonGooruId, final String unitGooruId, final String courseGooruId, final String assessmentId) {
+	public void getContentPlayAllSessions(final String gooruUid, final String classGooruId, final String lessonGooruId, final String unitGooruId, final String courseGooruId, final String assessmentId, final String currentSessionId) {
 		AppClientFactory.getInjector().getClasspageService().getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, new SimpleAsyncCallback<List<UserPlayedSessionDo>>() {
 			@Override
 			public void onSuccess(List<UserPlayedSessionDo> result) {
@@ -313,8 +313,20 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 					getSessionsDataByUser(assessmentId, classGooruId, gooruUid);
 					getView().setSessionsData(result);
 				} else {
-					getView().loaderVisibility(false);
-					getView().errorPanelData(true, false);
+					Timer timer = new Timer() {
+						@Override
+						public void run() {
+							if (count < 10){
+								getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, currentSessionId);
+								count++;
+							}else{
+								if (count >= 10){
+									getView().errorMsg();
+								}
+							}
+						}
+					};
+					timer.schedule(100);
 				}
 			}
 		});

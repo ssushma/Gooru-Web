@@ -103,17 +103,13 @@
 			</div>
 		</div>
 
-
 		<div class="tagCoursePanelFooter">
 			<div class="filterTags">
 				<uc:UlPanel ui:field="ulSelectedItems" />
 			</div>
-			<g:Label styleName="col-md-8 col-sm-7 mandatoryLabelError"
-				ui:field="lblGradeErrorMsg" />
+			<g:Label styleName="col-sm-12 errorMessage"	ui:field="lblGradeErrorMsg" />
 		</div>
 		<w:AudienceView ui:field="audienceContainer"></w:AudienceView>
-
-
 		<g:HTMLPanel styleName="addOptions">
 			<g:Anchor ui:field="dok" text="{i18n.GL_SPL_PLUS} {i18n.GL3376}">
 			</g:Anchor>
