@@ -54,8 +54,7 @@
 				<div class="filterTags">
 					<uc:UlPanel ui:field="ulSelectedItems" />
 				</div>
-				<g:Label styleName="col-md-8 col-sm-7 errorMessage"
-					ui:field="lblGradeErrorMsg" />
+				<g:Label styleName="col-md-8 col-sm-7 errorMessage" ui:field="lblGradeErrorMsg" />
 			</div>
 			<div class="clearfix"></div>
 			<div class="tagCourseOptions">

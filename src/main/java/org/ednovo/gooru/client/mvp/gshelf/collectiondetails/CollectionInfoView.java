@@ -107,12 +107,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer,pnlStandards;
+	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer,pnlStandards,spinnerIconContainer;
 
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl,taxonomyBtn;
 	@UiField TextArea learningObjective;
-	@UiField Label lblErrorMessage, lblErrorMessageForLO,newlbl;
+	@UiField Label lblGradeErrorMsg,lblErrorMessage, lblErrorMessageForLO,newlbl;
 	@UiField Image collThumbnail;
 	@UiField Anchor dok,centurySkills,languageObj;
 	@UiField HTMLEventPanel btnStandardsBrowse,taxonomyToggleBtn;
@@ -367,45 +367,45 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                     standardsCode.getWidgetContainer().addStyleName("active");
                 }
                 standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-
                     @Override
                     public void onClick(ClickEvent event) {
-                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
-                        {
-
-                            standardsCode.getWidgetContainer().addStyleName("active");
-                            standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
-
-                            if(!selValues.contains(domainStand.getCodeId().toString())){
-                                selectedValues.add(domainStand.getCodeId());
-                            }
-
-                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
-                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-                                @Override
-                                public void onClick(ClickEvent event) {
-                                    //This will remove the selected value when we are trying by close button
-                                    if(selValues.contains(domainStand.getCodeId().toString())){
-                                        selectedValues.remove(domainStand.getCodeId());
-                                    }
-                                    standardsCode.removeStyleName("active");
-                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-                                    liPanelWithClose.removeFromParent();
-                                }
-                            });
-                            //selectedValues.add(domainStand.getCodeId());
-                            liPanelWithClose.setId(domainStand.getCodeId());
-                            liPanelWithClose.setName(domainStand.getCode());
-                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
-                            liPanelWithClose.setDifferenceId(3);
-                            liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
-                            ulSelectedItems.add(liPanelWithClose);
-
-					}
-					else
-					{
+                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active")){
+                        	if(ulSelectedItems.getWidgetCount()>=15){
+                        		lblGradeErrorMsg.setVisible(true);
+	                    		lblGradeErrorMsg.setText(i18n.GL3569());
+		                	}else{
+		                		lblGradeErrorMsg.setVisible(false);
+	                            standardsCode.getWidgetContainer().addStyleName("active");
+	                            standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+	                            if(!selValues.contains(domainStand.getCodeId().toString())){
+	                                selectedValues.add(domainStand.getCodeId());
+	                            }
+	                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+	                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+	                                @Override
+	                                public void onClick(ClickEvent event) {
+	                                    //This will remove the selected value when we are trying by close button
+	                                    if(selValues.contains(domainStand.getCodeId().toString())){
+	                                        selectedValues.remove(domainStand.getCodeId());
+	                                    }
+	                                    standardsCode.removeStyleName("active");
+	                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+	                                    liPanelWithClose.removeFromParent();
+	                                    lblGradeErrorMsg.setVisible(false);
+	                                }
+	                            });
+	                            //selectedValues.add(domainStand.getCodeId());
+	                            liPanelWithClose.setId(domainStand.getCodeId());
+	                            liPanelWithClose.setName(domainStand.getCode());
+	                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
+	                            liPanelWithClose.setDifferenceId(3);
+	                            liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
+	                            ulSelectedItems.add(liPanelWithClose);
+		                	}
+					}else{
 						standardsCode.getWidgetContainer().removeStyleName("active");
 						removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+						lblGradeErrorMsg.setVisible(false);
 					}
 				}
 			});
@@ -525,49 +525,48 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
                     @Override
                     public void onClick(ClickEvent event) {
-                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
-                        {
-
-                            standardsCode.getWidgetContainer().addStyleName("active");
-
-
-                            if(!selValues.contains(domainStand.getCodeId().toString())){
-                                selectedValues.add(domainStand.getCodeId());
-                            }
-
-                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
-                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-                                @Override
-                                public void onClick(ClickEvent event) {
-                                    //This will remove the selected value when we are trying by close button
-                                    if(selValues.contains(domainStand.getCodeId().toString())){
-                                        selectedValues.remove(domainStand.getCodeId());
-                                    }
-                                    standardsCode.removeStyleName("active");
-                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-                                    liPanelWithClose.removeFromParent();
-                                }
-                            });
-                            //selectedValues.add(domainStand.getCodeId());
-                            liPanelWithClose.setId(domainStand.getCodeId());
-                            liPanelWithClose.setName(domainStand.getCode());
-                            liPanelWithClose.setDifferenceId(3);
-                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
-                            liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
-                            ulSelectedItems.add(liPanelWithClose);
-                        }
-                        else
-                        {
+                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active")){
+                        	if(ulSelectedItems.getWidgetCount()>=15){
+                        		lblGradeErrorMsg.setVisible(true);
+                        		lblGradeErrorMsg.setText(i18n.GL3569());
+		                	}else{
+		                		lblGradeErrorMsg.setVisible(false);
+	                            standardsCode.getWidgetContainer().addStyleName("active");
+	                            if(!selValues.contains(domainStand.getCodeId().toString())){
+	                                selectedValues.add(domainStand.getCodeId());
+	                            }
+	                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+	                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+	                                @Override
+	                                public void onClick(ClickEvent event) {
+	                                    //This will remove the selected value when we are trying by close button
+	                                    if(selValues.contains(domainStand.getCodeId().toString())){
+	                                        selectedValues.remove(domainStand.getCodeId());
+	                                    }
+	                                    standardsCode.removeStyleName("active");
+	                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+	                                    liPanelWithClose.removeFromParent();
+	                                	lblGradeErrorMsg.setVisible(false);
+	                                }
+	                            });
+	                            //selectedValues.add(domainStand.getCodeId());
+	                            liPanelWithClose.setId(domainStand.getCodeId());
+	                            liPanelWithClose.setName(domainStand.getCode());
+	                            liPanelWithClose.setDifferenceId(3);
+	                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
+	                            liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
+	                            ulSelectedItems.add(liPanelWithClose);
+		                	}
+                        }else{
                             standardsCode.getWidgetContainer().removeStyleName("active");
                             removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+                        	lblGradeErrorMsg.setVisible(false);
                         }
                     }
                 });
                 standardsUI.add(standardsCode);
                 displaySubSubStandardsList(standardsList1.getNode());
             }
-
-
 	}
 	public void displaySubSubStandardsList(final List<SubSubDomainStandardsDo> standardsList){
 			//standardsUI.clear();
@@ -581,51 +580,49 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                     standardsCode.getWidgetContainer().addStyleName("active");
                 }
                 standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-
                     @Override
                     public void onClick(ClickEvent event) {
-                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
-                        {
-
-                            standardsCode.getWidgetContainer().addStyleName("active");
-
-                            if(!selValues.contains(domainStand.getCodeId().toString())){
-                                selectedValues.add(domainStand.getCodeId());
-                            }
-
-                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
-                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-                                @Override
-                                public void onClick(ClickEvent event) {
-                                    //This will remove the selected value when we are trying by close button
-                                    if(selValues.contains(domainStand.getCodeId().toString())){
-                                        selectedValues.remove(domainStand.getCodeId());
-                                    }
-                                    standardsCode.removeStyleName("active");
-                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-                                    liPanelWithClose.removeFromParent();
-                                }
-                            });
-                            //selectedValues.add(domainStand.getCodeId());
-                            liPanelWithClose.setId(domainStand.getCodeId());
-                            liPanelWithClose.setName(domainStand.getCode());
-                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
-                            liPanelWithClose.setDifferenceId(3);
-                            liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
-                            ulSelectedItems.add(liPanelWithClose);
-                        }
-                        else
-                        {
+                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active")){
+                        	if(ulSelectedItems.getWidgetCount()>=15){
+                        		lblGradeErrorMsg.setVisible(true);
+                        		lblGradeErrorMsg.setText(i18n.GL3569());
+		                	}else{
+		                		lblGradeErrorMsg.setVisible(false);
+	                            standardsCode.getWidgetContainer().addStyleName("active");
+	                            if(!selValues.contains(domainStand.getCodeId().toString())){
+	                                selectedValues.add(domainStand.getCodeId());
+	                            }
+	                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+	                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+	                                @Override
+	                                public void onClick(ClickEvent event) {
+	                                    //This will remove the selected value when we are trying by close button
+	                                    if(selValues.contains(domainStand.getCodeId().toString())){
+	                                        selectedValues.remove(domainStand.getCodeId());
+	                                    }
+	                                    standardsCode.removeStyleName("active");
+	                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+	                                    liPanelWithClose.removeFromParent();
+	                                    lblGradeErrorMsg.setVisible(false);
+	                                }
+	                            });
+	                            //selectedValues.add(domainStand.getCodeId());
+	                            liPanelWithClose.setId(domainStand.getCodeId());
+	                            liPanelWithClose.setName(domainStand.getCode());
+	                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
+	                            liPanelWithClose.setDifferenceId(3);
+	                            liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
+	                            ulSelectedItems.add(liPanelWithClose);
+		                	}
+                        }else{
                             standardsCode.getWidgetContainer().removeStyleName("active");
                             removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+                            lblGradeErrorMsg.setVisible(false);
                         }
-
                     }
                 });
                 standardsUI.add(standardsCode);
             }
-
-
 	}
 	/**
 	 * This method will remove the widget based on the codeId in the UlPanel
@@ -706,7 +703,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 					for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
 						collectionLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
 					}
-
 					getUiHandlers().showStandardsPopup(standardsVal,standardsDesc, collectionLiPanelWithCloseArray);
 				}
 			});
@@ -758,11 +754,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 							    	 if(element!=null){
 							 			element.removeClassName("active");
 							 		}
-
 							     }
 							 }
 							removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
 							liPanelWithClose.removeFromParent();
+							lblGradeErrorMsg.setVisible(false);
 						}
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
@@ -772,17 +768,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 					ulSelectedItems.add(liPanelWithClose);
 				}
             }
-            
 			if(courseObj!=null && courseObj.getTaxonomyCourse()!=null){
 				for (final CourseSubjectDo courseSubjectDo : courseObj.getTaxonomyCourse()) {
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-
 						@Override
 						public void onClick(ClickEvent event) {
 							liPanelWithClose.removeFromParent();
+							lblGradeErrorMsg.setVisible(false);
 						}
-						
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
 					liPanelWithClose.setName(courseSubjectDo.getName());
@@ -791,17 +785,15 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 					ulSelectedItems.add(liPanelWithClose);
 				}
 			}
-			
 			if(courseObj!=null && courseObj.getSubdomain()!=null){
 				for (final CourseSubjectDo courseSubjectDo : courseObj.getSubdomain()) {
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-
 						@Override
 						public void onClick(ClickEvent event) {
 							liPanelWithClose.removeFromParent();
+							lblGradeErrorMsg.setVisible(false);
 						}
-						
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
 					liPanelWithClose.setName(courseSubjectDo.getName());
@@ -811,8 +803,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 					ulSelectedItems.add(liPanelWithClose);
 				}
 			}
-            
-            
         }
 		setStaticData(type);
         if (courseObj == null ) {
@@ -861,6 +851,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		saveCollectionBtn.addStyleName("disabled");
 		saveCollectionBtn.setEnabled(false);
+		spinnerImageVisibility(true);
 		if(validateInputs()){
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(collectionTitle.getText());
@@ -890,6 +881,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			collectionTitle.addStyleName("textAreaErrorMessage");
 			lblErrorMessage.setText("collection".equalsIgnoreCase(type)?"Please Enter Collection Title":"Please Enter Assessment Title");
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 	}
 
@@ -913,8 +905,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		String title=collectionTitle.getText().trim();
 		if((result && index==0)||(title.equalsIgnoreCase("")&&index==0)){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
+			spinnerImageVisibility(false);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
+			spinnerImageVisibility(false);
 		}else{
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),true,1,collectionType,createOrUpDate,currentShelfTreeWidget);
@@ -922,7 +916,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG,currentShelfTreeWidget);
 				}else{
-
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
 				}
 			}
@@ -1274,6 +1267,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			isCAAvailable = true;
 			isTEKSAvailable = false;
 		}
+	}
+	
+	@Override
+	public void spinnerImageVisibility(boolean isVisible){
+		spinnerIconContainer.setVisible(isVisible); 
 	}
 
 	

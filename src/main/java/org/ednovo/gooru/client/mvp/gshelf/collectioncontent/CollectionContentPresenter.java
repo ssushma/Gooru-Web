@@ -161,10 +161,22 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				collectionItem.setNarration(result.getNarration());
-				if("video/youtube".equalsIgnoreCase(collectionItem.getResource().getResourceType().getName())){
+				/*if("video/youtube".equalsIgnoreCase(collectionItem.getResource().getResourceType().getName())){*/
 					collectionItem.setStart(result.getStart());
-					collectionItem.setStop(result.getStop());				
-					}
+					collectionItem.setStop(result.getStop());
+					getView().setCollectionDetails(result);
+					/*}*/
+			}
+		});
+	}
+	@Override
+	public void updateNarrationItemMetaData(String collectionId,final CollectionItemDo collectionItem, String narration,String start, String stop){
+		AppClientFactory.getInjector().getResourceService().updateNarrationItemMetadata(collectionId,collectionItem.getCollectionItemId(), narration, null,start,stop, new SimpleAsyncCallback<CollectionItemDo>() {
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				collectionItem.setNarration(result.getNarration());
+				collectionItem.setStart(result.getStart());
+				collectionItem.setStop(result.getStop());
 			}
 		});
 	}
