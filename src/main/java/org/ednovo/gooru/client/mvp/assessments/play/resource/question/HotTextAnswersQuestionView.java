@@ -37,8 +37,6 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
-import org.ednovo.gooru.client.mvp.assessments.play.resource.question.event.ResetAssessmentDragDropEvent;
-import org.ednovo.gooru.client.mvp.assessments.play.resource.question.event.ResetAssessmentDragDropHandler;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
@@ -86,6 +84,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	String[] attemptAnsSequence;
 
 	private static String SPACE=" ";
+	private static String COMMA=",";
+	private static String SEMICOLUMN=";";
+	private static String DELIMITER_SPACE="[\\s\\xA0]+";
 	private static String STYLE_HIGHLIGHT="htHiglightText";
 	private static String STYLE_CORRECT="correct";
 	private static String STYLE_INCORRECT="inCorrect";
@@ -114,7 +115,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	@UiConstructor
 	public HotTextAnswersQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo,List randomList){
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(ResetAssessmentDragDropEvent.TYPE,resetReorderData);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo=collectionItemDo;
 		this.attemptedAnswerDo=attemptedAnswerDo;
@@ -227,13 +227,15 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 			String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(StringUtil.isEmpty(questionAnswerDo.getAnswerText())?"":questionAnswerDo.getAnswerText())));
 
 			String[] temp;
+			
+			
 			if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-				temp = text.split(SPACE);
-
+				temp = text.split(DELIMITER_SPACE);
+				
 				for(int k=0;k<temp.length;k++){
 
 					final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
-					if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT))){
+					if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT) || lbl.getText().trim().endsWith(END_DELIMITER+COMMA) || lbl.getText().trim().endsWith(END_DELIMITER+SEMICOLUMN))){
 						String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 						lbl.setText(lblText);
 						lbl.getElement().setId(STYLE_CORRECT);
@@ -519,17 +521,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		return text;
 	}
 
-	ResetAssessmentDragDropHandler resetReorderData=new ResetAssessmentDragDropHandler() {
-
-		@Override
-		public void resetAssessmentReorder() {
-
-			if(checkAnswer.getStyleName().contains(STYLE_INACTIVE_BUTTON)){
-				clearReorderAnswers();
-				enableCheckAnswerButton();
-			}
-		}
-	};
 
 	public abstract void createSesstionItemAttemptForHTDragDrop(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
 	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);

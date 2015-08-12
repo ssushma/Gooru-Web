@@ -16,5 +16,6 @@ public interface IsExternalAssessmentView extends IsViewWithHandlers<ExternalAss
 	 */
 	void setData(FolderDo folderObj);
 	void resetBtns();
+	void spinnerImageVisibility(boolean isVisible);
 
 }

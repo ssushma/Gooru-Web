@@ -212,6 +212,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final int EXPLAINATION_TEXT_LENGTH =500;
 	private static final int HT_ANSWER_CHOICE_HINTS_TEXT_LENGTH =500;
 	private static final int HT_QUESTION_TEXT_LENGTH =5000;
+	
+	private static String DELIMITER_SPACE="[\\s\\xA0]+";
 
 	public static int questionCharcterLimit=0;
 
@@ -1977,7 +1979,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}else if(getQuestionType().equalsIgnoreCase("HT_HL")){
 				QuestionAnswerDo questionAnswerDo = new QuestionAnswerDo();
 				AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionHotTextAnswerChoiceContainer.getWidget(0);
-				questionAnswerDo.setAnswerText(addQuestionAnswerChoice.highlightTextArea.getRawContent());
+				questionAnswerDo.setAnswerText(StringUtil.getHotTextHiglightText(addQuestionAnswerChoice.highlightTextArea.getRawContent()));
 				questionAnswerDo.setAnswerType("text");
 				questionAnswerDo.setSequence(1);
 				questionAnswerDo.setIsCorrect(true);
@@ -2314,13 +2316,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_HTANSWER_LENGTH);
 					addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
 				}else if(questionType.equalsIgnoreCase("HT_HL")){
+					answerChoiceValue=StringUtil.getHotTextHiglightText(answerChoiceValue);
 					String text=answerChoiceValue;
 					String[] temp;
 					String errorMsg;
 					String errorMsg2;
 
 					if(htType.equalsIgnoreCase(i18n.GL3219_1())){
-						temp = text.split(" ");
+						temp = text.split(DELIMITER_SPACE);
 						errorMsg=ERROR_MSG_HTHL_SYNTAX;
 						errorMsg2=ERROR_MSG_HTHL;
 					}else{
@@ -2328,12 +2331,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						errorMsg=ERROR_MSG_HTHL_SENTENCE;
 						errorMsg2=ERROR_MSG_HTHL_SENTENCE;
 					}
-
 					if(temp.length>1  && answerChoiceValue.contains("[") && answerChoiceValue.contains("]")){
 						boolean isCorrect=false;
 						for(int k=0;k<temp.length;k++){
 							if(temp[k].contains("[") || temp[k].contains("]")){
-								if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith("]") || temp[k].endsWith("].")) && temp[k].trim().length()>0){
+								if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith("]") || temp[k].endsWith("].") || temp[k].endsWith("],") || temp[k].endsWith("];") || temp[k].endsWith("] ")) && temp[k].trim().length()>0){
 									isCorrect=true;
 								}else{
 									isCorrect=false;

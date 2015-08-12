@@ -140,6 +140,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, result);
 				}
 				Window.scrollTo(0, 0);
+				getView().spinnerImageVisibility(false);
 			}
 		});
 	}
@@ -169,6 +170,7 @@ public class CourseInfoPresenter extends PresenterWidget<IsCourseInfoView> imple
 					Window.scrollTo(0, 0);
 					myCollectionsRightClusterPresenter.setTabItems(2, COURSE, folderDo);
 				}
+				getView().spinnerImageVisibility(false);
 			}
 		});
 	}

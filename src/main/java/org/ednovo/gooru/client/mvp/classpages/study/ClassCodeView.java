@@ -341,7 +341,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 			}
 			
 			MixpanelUtil.ClickOnStudyNow();
-			AppClientFactory.getInjector().getClasspageService().v3GetClassById(txtCode.getText().trim(), new SimpleAsyncCallback<ClasspageDo>(){
+			AppClientFactory.getInjector().getClasspageService().v3GetClassByCode(txtCode.getText().trim(), new SimpleAsyncCallback<ClasspageDo>(){
 
 //				@Override
 //				public void onFailure(Throwable caught) {
@@ -351,22 +351,41 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 				@Override
 				public void onSuccess(ClasspageDo result) {
 					 setEnterLblVisbility(false);
-					 if(result.getClassUid()==null){
-						 Window.enableScrolling(false);
-						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+					 
+					 String classUid = null;
+					 String status = null;
+					 boolean sharing = false;
+					 
+					 if(result.getClassType()!=null) {
+						 if(result.getClassType().equalsIgnoreCase("new-class")) {
+							 classUid = result.getClassUid();
+							 status = result.getStatus();
+							 sharing = result.isVisibility();
+						 } else if (result.getClassType().equalsIgnoreCase("old-class")) {
+							 classUid = result.getGooruOid();
+							 status = result.getMeta().getStatus();
+							 if(result.getSharing()!=null&&result.getSharing().equalsIgnoreCase("public")) {
+								 sharing = true;
+							 }
+						 }
+					 }
+					 
+					 if(classUid==null){
+						Window.enableScrolling(false);
+						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 						alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
 						ClickHandler alertHandler=new ClickHandler() {
 
 							@Override
 							public void onClick(ClickEvent event) {
 								isValid=false;
-								
+
 							}
 						};
 						alertMessageUc.appPopUp.addDomHandler(alertHandler, ClickEvent.getType());
-						
+
 						alertMessageUc.okButton.addClickHandler(new ClickHandler() {
-							
+
 							@Override
 							public void onClick(ClickEvent event) {
 								isValid=false;
@@ -374,71 +393,106 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 						});
 					}else if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 					{
-						
-						Map<String, String> params = new HashMap<String, String>();
-						params.put("id",result.getClassUid());
-						if(result.getCourseGooruOid() != null){
-							params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
-						}
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
+						 if(result.getClassType()!=null) {
+							 Map<String, String> params = new HashMap<String, String>();
+							 if(result.getClassType().equalsIgnoreCase("new-class")) {
+									params.put("id",classUid);
+									if(result.getCourseGooruOid() != null){
+										params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+									}
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
+							 } else if (result.getClassType().equalsIgnoreCase("old-class")) {
+									params.put("id",classUid);
+									params.put("pageSize","5");
+									params.put("pageNum","0");
+									params.put("pos","1");
+									params.put("b","true");
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							 }
+						 }
 						txtCode.setText("");
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();
-					}				 
-					 else if(!result.isVisibility()){
-					
+					}
+					 else if(!sharing){
 						if(result.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 						{
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 								MixpanelUtil.Click_Study_LandingPage();
 							}
 							
-							Map<String, String> params = new HashMap<String, String>();
-							params.put("id",result.getClassUid());
-							if(result.getCourseGooruOid() != null){
-								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
-							}
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
+							 if(result.getClassType()!=null) {
+								 Map<String, String> params = new HashMap<String, String>();
+								 if(result.getClassType().equalsIgnoreCase("new-class")) {
+										if(result.getCourseGooruOid() != null){
+											params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+										}
+										params.put("id",result.getClassUid());
+										AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
+								 } else if (result.getClassType().equalsIgnoreCase("old-class")) {
+										params.put("id",classUid);
+										params.put("pageSize","5");
+										params.put("pageNum","0");
+										params.put("pos","1");
+										params.put("b","true");
+										AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+								 }
+							 }
 							txtCode.setText("");
+							if(alertMessageUc!=null)
+							alertMessageUc.hide();
+						}
+						else if(status!=null&&status.equalsIgnoreCase("active"))
+						{
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+								MixpanelUtil.Click_Study_LandingPage();
+							}
+							
+							 if(result.getClassType()!=null) {
+								 Map<String, String> params = new HashMap<String, String>();
+								 if(result.getClassType().equalsIgnoreCase("new-class")) {
+										if(result.getCourseGooruOid() != null){
+											params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+										}
+										params.put("id",result.getClassUid());
+										AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
+								 } else if (result.getClassType().equalsIgnoreCase("old-class")) {
+										params.put("id",result.getGooruOid());
+										params.put("pageSize","5");
+										params.put("pageNum","0");
+										params.put("pos","1");
+										AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+								 }
+							 }
+							
+							txtCode.setText("");
+							if(alertMessageUc!=null)
+							alertMessageUc.hide();
+						}
+						else if(status!=null&&status.equalsIgnoreCase("pending"))
+						{
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+								MixpanelUtil.Click_Study_LandingPage();
+							}
+							
+							 if(result.getClassType()!=null) {
+								 Map<String, String> params = new HashMap<String, String>();
+								 if(result.getClassType().equalsIgnoreCase("new-class")) {
+										if(result.getCourseGooruOid() != null){
+											params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+										}
+										params.put("id",result.getClassUid());
+										AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
+								 } else if (result.getClassType().equalsIgnoreCase("old-class")) {
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
+								 }
+							 }
 
-							if(alertMessageUc!=null)
-							alertMessageUc.hide();
-						}
-						else if(result.getStatus().equalsIgnoreCase("active"))
-						{
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
-								MixpanelUtil.Click_Study_LandingPage();
-							}
-							
-							Map<String, String> params = new HashMap<String, String>();
-							if(result.getCourseGooruOid() != null){
-								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
-							}
-							params.put("id",result.getClassUid());
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
 							txtCode.setText("");
 							if(alertMessageUc!=null)
 							alertMessageUc.hide();
-							
 						}
-						else if(result.getStatus().equalsIgnoreCase("pending")) 
-						{
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
-								MixpanelUtil.Click_Study_LandingPage();
-							}
-							
-							Map<String, String> params = new HashMap<String, String>();
-							if(result.getCourseGooruOid() != null){
-								params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
-							}
-							params.put("id",result.getClassUid());
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
-							txtCode.setText("");
-							if(alertMessageUc!=null)
-							alertMessageUc.hide();
-							
-						}
-						else 
+						else
 						{
 							       if(AppClientFactory.isAnonymous()){
 							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
@@ -446,16 +500,28 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
 							       }
 						}
-						
+
 					}
 					else
-					{	
-						Map<String, String> params = new HashMap<String, String>();
-						if(result.getCourseGooruOid() != null){
-							params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
-						}
-						params.put("id",result.getClassUid());
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
+					{
+						
+						 if(result.getClassType()!=null) {
+							 Map<String, String> params = new HashMap<String, String>();
+							 if(result.getClassType().equalsIgnoreCase("new-class")) {
+									if(result.getCourseGooruOid() != null){
+										params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, result.getCourseGooruOid());
+									}
+									params.put("id",result.getClassUid());
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT_VIEW,params);
+							 } else if (result.getClassType().equalsIgnoreCase("old-class")) {
+									params.put("id",result.getGooruOid());
+									params.put("pageSize","5");
+									params.put("pageNum","0");
+									params.put("pos","1");
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							 }
+						 }
+						
 						txtCode.setText("");
 						if(alertMessageUc!=null)
 						alertMessageUc.hide();

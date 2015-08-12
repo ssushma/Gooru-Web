@@ -70,7 +70,10 @@ public class ClasspageDo implements IsSerializable{
 	private String mediaFilename;
 	private int minimumScore=0;
 	private ThumbnailDo thumbnails;
-
+	private String classType;
+	private String gooruOid;
+	private MetaDO meta;
+	
 	public ClasspageDo(){}
 
 	/**
@@ -392,13 +395,28 @@ public class ClasspageDo implements IsSerializable{
 		this.thumbnails = thumbnails;
 	}
 
-	
+	public String getClassType() {
+		return classType;
+	}
 
+	public void setClassType(String classType) {
+		this.classType = classType;
+	}
 
+	public String getGooruOid() {
+		return gooruOid;
+	}
 
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
 
+	public MetaDO getMeta() {
+		return meta;
+	}
 
-
-
+	public void setMeta(MetaDO meta) {
+		this.meta = meta;
+	}
 
 }

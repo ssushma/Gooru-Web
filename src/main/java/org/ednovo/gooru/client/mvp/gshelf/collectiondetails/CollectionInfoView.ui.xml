@@ -10,7 +10,8 @@
 		<div class="collectionTitleDetails">
 			<ppanel:PPanel ui:field="colltitle"></ppanel:PPanel>
 			<p>
-				<g:TextBox styleName="form-control" ui:field="collectionTitle" maxLength="50"/>
+				<g:TextBox styleName="form-control" ui:field="collectionTitle"
+					maxLength="50" />
 				<g:Label ui:field="lblErrorMessage" styleName="errorMessage text-right"></g:Label>
 			</p>
 		</div>
@@ -54,8 +55,10 @@
 						<div class="col-md-8">
 							<div class="dropDownRight">
 								<div class="btn-group">
-									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn" text="{i18n.GL3480}"></g:Button>
-									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="taxonomyToggleBtn">
+									<g:Button styleName="btn btn-primary" ui:field="taxonomyBtn"
+										text="{i18n.GL3480}"></g:Button>
+									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle"
+										ui:field="taxonomyToggleBtn">
 										<g:InlineLabel styleName="glyphicon gliphIconImage"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 									</panel:HTMLEventPanel>
@@ -94,7 +97,7 @@
 
 				<g:HTMLPanel styleName="lessonCover" ui:field="pnlStandards">
 					<div class="panel panel-default">
-						<g:HTMLPanel ui:field="standardsUI" styleName="panel-body"/>
+						<g:HTMLPanel ui:field="standardsUI" styleName="panel-body" />
 					</div>
 				</g:HTMLPanel>
 			</div>
@@ -108,7 +111,7 @@
 			<g:Label styleName="col-md-8 col-sm-7 mandatoryLabelError"
 				ui:field="lblGradeErrorMsg" />
 		</div>
-			<w:AudienceView ui:field="audienceContainer"></w:AudienceView>
+		<w:AudienceView ui:field="audienceContainer"></w:AudienceView>
 
 
 		<g:HTMLPanel styleName="addOptions">
@@ -131,6 +134,11 @@
 			<g:Button styleName="primary" ui:field="saveCollectionBtn"
 				text="{i18n.GL3368}" />
 		</div>
+		
+		<g:HTMLPanel ui:field="spinnerIconContainer" styleName="spinnerContainer" visible="false">
+			<g:HTMLPanel styleName="loadingImage spinnerDisplayPosition"></g:HTMLPanel>
+		</g:HTMLPanel>
+		
 		<div class="clearfix"></div>
 	</g:HTMLPanel>
 </ui:UiBinder>

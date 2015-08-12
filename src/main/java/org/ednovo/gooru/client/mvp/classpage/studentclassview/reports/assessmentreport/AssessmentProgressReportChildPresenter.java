@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildPresenter;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -223,7 +224,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 				questionsData.clear();
 				boolean isCollection = false;
 				String isContentType=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-				if(isContentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)||isContentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
 					isCollection = true;
 				}
 
@@ -295,36 +296,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			}
 		});
 	}
-
-	public void getAssessmentSummaryDetails(){
-
-		String classId=AppClientFactory.getPlaceManager().getRequestParameter("class");
-		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("course");
-		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unit");
-		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSON);
-		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter("assessment");
-
-		ClassDo classObj=new ClassDo();
-		classObj.setClassId(classId);
-		classObj.setCourseId(courseId);
-		classObj.setLessonId(lessonId);
-		classObj.setUnitId(unitId);
-		classObj.setAssessmentId(assessmentId);
-
-
-		AppClientFactory.getInjector().getAnalyticsService().getAssessmentSummary(classObj, new AsyncCallback<AssessmentSummaryStatusDo>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				throw new RuntimeException("Not implemented");
-			}
-
-			@Override
-			public void onSuccess(AssessmentSummaryStatusDo result) {
-				getView().displaySummaryMetadata(result);
-			}
-		});
-	}
+	
 	public void setSessionId(String sessionId){
 		this.sessionId=sessionId;
 	}

@@ -85,6 +85,9 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	String[] attemptAnsSequence;
 
 	private static String SPACE=" ";
+	private static String COMMA=",";
+	private static String SEMICOLUMN=";";
+	private static String DELIMITER_SPACE="[\\s\\xA0]+";
 	private static String STYLE_HIGHLIGHT="htHiglightText";
 	private static String STYLE_CORRECT="correct";
 	private static String STYLE_INCORRECT="inCorrect";
@@ -257,12 +260,12 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 			String[] temp;
 			if(collectionItemDo.getResource().getHlType().equalsIgnoreCase(i18n.GL3219_1())){
-				temp = text.split(SPACE);
+				temp = text.split(DELIMITER_SPACE);
 
 				for(int k=0;k<temp.length;k++){
 
 					final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
-					if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT))){
+					if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT)|| lbl.getText().trim().endsWith(END_DELIMITER+COMMA) || lbl.getText().trim().endsWith(END_DELIMITER+SEMICOLUMN))){
 						String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 						lbl.setText(lblText);
 						lbl.getElement().setId(STYLE_CORRECT);

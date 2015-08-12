@@ -96,7 +96,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	interface LessonViewUiBinder extends UiBinder<Widget, LessonInfoView> {
 	}
 
-	@UiField HTMLPanel lessonInfo,standardsUI,pnlStandards;
+	@UiField HTMLPanel lessonInfo,standardsUI,pnlStandards,spinnerIconContainer;
 	@UiField TextBox lessonTitle;
 	@UiField PPanel lessonNamePpanel;
 	@UiField UlPanel standardsDropListValues;
@@ -464,6 +464,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		saveLessonBtn.addStyleName("disabled");
 		saveLessonBtn.setEnabled(false);
+		spinnerImageVisibility(true);
 		if (validateInputs()) {
 			final CreateDo createOrUpDate=new CreateDo(); 
 			createOrUpDate.setTitle(lessonTitle.getText());
@@ -481,6 +482,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			lessonTitle.addStyleName("form-control");	
 			lblErrorMessage.setVisible(true);
 			resetBtns();
+			spinnerImageVisibility(false);
 
 		}
 	}
@@ -491,6 +493,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		btnSaveAndCreateCollection.addStyleName("disabled");
 		btnSaveAndCreateCollection.setEnabled(false);
+		spinnerImageVisibility(true);
 		if (validateInputs()) {
 			final CreateDo createOrUpDate=new CreateDo(); 
 			createOrUpDate.setTitle(lessonTitle.getText());
@@ -508,6 +511,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			lessonTitle.addStyleName("form-control");	
 			lblErrorMessage.setVisible(true);
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 
 	}
@@ -559,6 +563,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			assessmentPopup=new AssessmentPopupWidget() {
 				@Override
 				public void clickOnNoramlAssessmentClick() {
+					spinnerImageVisibility(true);
 					assessmentPopup.hide();
 					Window.enableScrolling(true);
 					//This will display the normal assessment info
@@ -566,6 +571,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				}
 				@Override
 				public void clickOnExternalAssessmentClick() {
+					spinnerImageVisibility(true);
 					assessmentPopup.hide();
 					Window.enableScrolling(true);
 					//This will display the external assessment info
@@ -588,6 +594,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public void callCreateAndUpdate(boolean isCreate,boolean result,String type,CreateDo createOrUpDate,String courseId,String unitId,TreeItem currentShelfTreeWidget){
 
 		if(result){
+			spinnerImageVisibility(false);
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, result);
 		}else{
 			if(courseObj!=null && courseObj.getGooruOid()!=null){
@@ -973,6 +980,11 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			isCAAvailable = true;
 			isTEKSAvailable = false;
 		}
+	}
+	
+	@Override
+	public void spinnerImageVisibility(boolean isVisible){
+		spinnerIconContainer.setVisible(isVisible); 
 	}
 
 }

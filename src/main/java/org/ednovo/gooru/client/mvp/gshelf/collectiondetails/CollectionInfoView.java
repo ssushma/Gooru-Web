@@ -107,7 +107,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer,pnlStandards;
+	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer,pnlStandards,spinnerIconContainer;
 
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl,taxonomyBtn;
@@ -861,6 +861,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		saveCollectionBtn.addStyleName("disabled");
 		saveCollectionBtn.setEnabled(false);
+		spinnerImageVisibility(true);
 		if(validateInputs()){
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setTitle(collectionTitle.getText());
@@ -890,6 +891,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			collectionTitle.addStyleName("textAreaErrorMessage");
 			lblErrorMessage.setText("collection".equalsIgnoreCase(type)?"Please Enter Collection Title":"Please Enter Assessment Title");
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 	}
 
@@ -913,8 +915,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		String title=collectionTitle.getText().trim();
 		if((result && index==0)||(title.equalsIgnoreCase("")&&index==0)){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(collectionTitle, lblErrorMessage, result);
+			spinnerImageVisibility(false);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(learningObjective, lblErrorMessageForLO, result);
+			spinnerImageVisibility(false);
 		}else{
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),true,1,collectionType,createOrUpDate,currentShelfTreeWidget);
@@ -922,7 +926,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG,currentShelfTreeWidget);
 				}else{
-
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
 				}
 			}
@@ -1274,6 +1277,11 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			isCAAvailable = true;
 			isTEKSAvailable = false;
 		}
+	}
+	
+	@Override
+	public void spinnerImageVisibility(boolean isVisible){
+		spinnerIconContainer.setVisible(isVisible); 
 	}
 
 	

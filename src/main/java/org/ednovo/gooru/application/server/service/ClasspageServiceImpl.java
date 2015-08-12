@@ -521,6 +521,48 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	}
 	
 	@Override
+	public ClasspageDo v3GetClassByCode(String classCode) throws GwtException, ServerDownException {
+		ClasspageDo classpageDo = new ClasspageDo();
+		JsonRepresentation jsonRep = null;
+		try{
+			String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classCode);
+			getLogger().info("V3_GET_CLASSPAGE_BY_CODE API Call "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep =jsonResponseRep.getJsonRepresentation();	
+			if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==200) {
+				classpageDo=deserializeV2Class(jsonRep);
+				classpageDo.setClassType("new-class");
+			} else if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==400) {
+				classpageDo=v2GetClassDetailsByCode(classCode);
+			} else {
+				classpageDo=new ClasspageDo();
+			}
+		}catch(Exception e){
+			getLogger().error("v3GetClassById ......:"+e.getMessage());
+		}
+		
+		return classpageDo;
+	}
+
+	public ClasspageDo v2GetClassDetailsByCode(String classpageCode) throws GwtException{
+		JsonRepresentation jsonRep = null;
+		ClasspageDo classpageDo = new ClasspageDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode);
+		getLogger().info("v2getClasspageByCode:"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		if(jsonRep!=null && jsonRep.getSize()!=1){
+			if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==200) {
+				classpageDo = deserializeV2Class(jsonRep);
+				classpageDo.setClassType("old-class");
+			}else {
+				classpageDo=new ClasspageDo();
+			}
+		}
+		return classpageDo;
+	}
+
+	@Override
 	public ClasspageDo v3GetClassById(String classpageId){
 		ClasspageDo classpageDo = null;
 		JsonRepresentation jsonRep = null;
@@ -2172,4 +2214,5 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return userPlayedSessions;
 	}
+
 }

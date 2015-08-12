@@ -35,8 +35,13 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ResourceFormatDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
@@ -45,12 +50,16 @@ import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -100,9 +109,17 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	
 	boolean isSuccess=true;
 	
+	public FolderDo folderMetaData = null;
+	
 	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback = null;
 	
+	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	private static final String CALLBACK = "callback";
+	
+	ErrorPopup errorPopup = null;
 	
 	String parentId;
 	
@@ -176,6 +193,33 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
+		setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
+
+			@Override
+			public void onSuccess(CollectionDo collection) {
+				isApiCalled= false;
+				if (collection.getStatusCode()==200){
+					FolderDo folderDo=getFolderDo(collection);
+					if(collection.getPermissions() != null){
+						if (!collection.getPermissions().toString().contains("edit")){
+							errorPopup = null;
+							invokeErrorPopup();
+						}else{
+							setCollectionContent(folderDo);
+						}
+					}
+				}else{
+					errorPopup = null;
+					invokeErrorPopup();
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
+				AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(null, RefreshType.OPEN));
+			}
+		});
 		
 	}
 	
@@ -196,6 +240,11 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
+		String id = getPlaceManager().getRequestParameter("id");
+		String o1 = getPlaceManager().getRequestParameter("o1");
+		String o2 = getPlaceManager().getRequestParameter("o2");
+		String o3 = getPlaceManager().getRequestParameter("o3");
+		
 		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		String isSuccessParm = AppClientFactory.getPlaceManager().getRequestParameter("isSuccess") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("isSuccess").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("isSuccess") : null;
 		if(isSuccessParm!=null && isSuccessParm.equalsIgnoreCase("true") && isSuccess){
@@ -212,9 +261,29 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				Window.scrollTo(0,0);
 				callWorkspaceApi();
 				version = AppClientFactory.getLoggedInUser().getToken();
+				if(o3!=null&&id==null) {
+					getFolderMetaData(o3);
+				} else if(o2!=null&&id==null) {
+					getFolderMetaData(o2);
+				} else if(o1!=null&&id==null) {
+					getFolderMetaData(o1);
+				}else if (idParm!=null && !isApiCalled){
+					isApiCalled= true;
+					getResourceService().getCollection(idParm, false, getCollectionAsyncCallback());
+				}
 			}
 		}
 	}
+	private void getFolderMetaData(final String folderId) {
+		AppClientFactory.getInjector().getfolderService().getFolderMetaData(folderId, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				folderMetaData=result;
+				getChildFolderItems(folderId,"folder", false,null);
+			}
+		});
+	}
+
 	/**
 	 * This method will call the workspace API
 	 */
@@ -309,14 +378,19 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 				@Override
 				public void onSuccess(FolderListDo result) {
 					searchResult.addAll(result.getSearchResult());
-					if(result.getSearchResult().size()==20) {
-						getView().setChildPageNumber(getView().getChildPageNumber()+1);
-						setPaginatedChildFolders(folderId,typeVal,isDataCalled,currentTreeItem);
-					} else {
-						getView().setChildPageNumber(1);
-						getView().getChildFolderItems(currentTreeItem,searchResult);
-						searchResult.clear();
+					if(currentTreeItem!=null){
+						if(result.getSearchResult().size()==20) {
+							getView().setChildPageNumber(getView().getChildPageNumber()+1);
+							setPaginatedChildFolders(folderId,typeVal,isDataCalled,currentTreeItem);
+						} else {
+							getView().setChildPageNumber(1);
+							getView().getChildFolderItems(currentTreeItem,searchResult);
+							searchResult.clear();
+						}
+					}else{
+						setRightPanelData(folderMetaData, typeVal, result.getSearchResult());
 					}
+					
 				}
 			});
 		}
@@ -432,6 +506,14 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public MyCollectionsListPresenter getMyCollectionsListPresenter(){
 		return  myCollectionsListPresenter;
 	}
+	
+	public void invokeErrorPopup(){
+		if (errorPopup == null){
+			errorPopup = new ErrorPopup(i18n.GL0340());
+			errorPopup.show();
+			errorPopup.center();
+		}
+	}
 
 	@Override
 	public void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel) {
@@ -463,9 +545,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}else{
 			setTileIcon((folderObj!=null&&folderObj.getGooruOid()!=null)?folderObj.getTitle():"",folderObj.getType());
 		}
-		
-		
-		
 		setInSlot(ShelfMainPresenter.RIGHT_SLOT, getMyCollectionsRightClusterPresenter(),false);	
 	}
 	/**
@@ -548,6 +627,18 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void setTileIcon(String title, String type) {
 		getView().setViewTitleWthIcon(title,type);
 	}
+	
+	public SimpleAsyncCallback<CollectionDo> getCollectionAsyncCallback() {
+		return collectionAsyncCallback;
+	}
+	
+	/**
+	 * @param collectionAsyncCallback
+	 *            instance of {@link CollectionDo}
+	 */
+	public void setCollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
+		this.collectionAsyncCallback = collectionAsyncCallback;
+	}
 
 	public TreeItem getEditingWidget() { 
 		return getView().getCurrentEditingWidget();
@@ -557,4 +648,36 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			boolean hasLastModifiedUser) {
 		getView().showLastEditCollaborater(lastEditedBy,hasLastModifiedUser);
 	}
+	/**
+	 * To convert collection do to FolderDo obj
+	 * @param collectionDo
+	 * @return folderDo
+	 */
+	public FolderDo getFolderDo(CollectionDo collectionDo) {
+		FolderDo folderDo = new FolderDo();
+		folderDo.setGooruOid(collectionDo.getGooruOid());
+		folderDo.setTitle(collectionDo.getTitle());
+		folderDo.setType(collectionDo.getCollectionType());
+		folderDo.setSharing(collectionDo.getSharing());
+		folderDo.setCollectionType(collectionDo.getCollectionType());
+		ThumbnailDo thumbnailDo = new ThumbnailDo();
+		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
+		folderDo.setThumbnails(thumbnailDo);
+		List<FolderItemDo> folderItems = new ArrayList<FolderItemDo>();
+		if(collectionDo.getCollectionItems()!=null) {
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++) {
+				CollectionItemDo collectionItemDo = collectionDo.getCollectionItems().get(i);
+				FolderItemDo folderItemDo = new FolderItemDo();
+				folderItemDo.setGooruOid(collectionItemDo.getGooruOid());
+				folderItemDo.setTitle(collectionItemDo.getResourceTitle());
+				folderItemDo.setType(collectionItemDo.getItemType());
+				ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
+				resourceFormatDo.setValue(collectionItemDo.getCategory());
+				folderItems.add(folderItemDo);
+			}
+			folderDo.setCollectionItems(folderItems);
+		}
+		return folderDo;
+	}
+	
 }

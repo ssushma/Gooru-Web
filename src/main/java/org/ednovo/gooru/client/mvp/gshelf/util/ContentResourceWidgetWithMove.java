@@ -117,6 +117,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
+	private static final String FOLDER = "Folder";
+	private static final String COURSE = "Course";
+	
 
 	boolean youtube,isPdf=false;
 	boolean isHavingBadWords=false;
@@ -942,12 +945,18 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,messageContent) {
 			@Override
 			public void onDelete(ClickEvent clickEvent) {
-				collectionContentPresenter.updateWidgetCount(collectionItem,true);
+				if(getViewType().equals(COURSE)){
+					collectionContentPresenter.updateWidgetCount(collectionItem,true);
+				}
 				collectionContentPresenter.deleteCollectionItem(collectionItem.getParentGooruOid(),collectionItem.getCollectionItemId(), collectionItem.getItemSequence());
 				deleteConfirmationPopupVc.hide();
 				ContentResourceWidgetWithMove.this.removeFromParent();
 			}
 		};
+	}
+	
+	private String getViewType() {
+		return AppClientFactory.getPlaceManager().getRequestParameter("view",COURSE);
 	}
 
 	public void isAssignedToClassPage(String o1CourseId) {

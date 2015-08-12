@@ -82,7 +82,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField HTMLPanel courseInfo,pnlGradeContainer;
+	@UiField HTMLPanel courseInfo,pnlGradeContainer,spinnerIconContainer;
 	@UiField PPanel courseTitlePpanel,tagCoursePpanel;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveCourseBtn,nextUnitBtn,btnK12,btnHigherEducation,btnProfessionalLearning;
@@ -295,6 +295,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		saveCourseBtn.addStyleName("disabled");
 		saveCourseBtn.setEnabled(false);
+		spinnerImageVisibility(true);
 		if(validateInputs()){
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
@@ -310,6 +311,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 
 	}
@@ -319,6 +321,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		TreeItem treeSelectedItem  = getUiHandlers().getSelectedWidget();
 		nextUnitBtn.addStyleName("disabled");
 		nextUnitBtn.setEnabled(false);
+		spinnerImageVisibility(true);
 		if(validateInputs()){
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
@@ -334,6 +337,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 	}
 	/**
@@ -344,6 +348,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Override
 	public void callCreateAndUpdate(boolean isCreate,boolean result,CreateDo createOrUpDate, TreeItem currentShelfTreeWidget){
 		if(result){
+			spinnerImageVisibility(false);
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, result);
 		}else{
 			List<Integer> taxonomyList=getSelectedCourseIds();
@@ -357,7 +362,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				}
 			}else{
 				lblGradeErrorMsg.setVisible(true);
-				lblGradeErrorMsg.setText("Select at least one Course");
+				lblGradeErrorMsg.setText("Select at least one Course"); 
 			}
 		}
 	}
@@ -466,5 +471,10 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		saveCourseBtn.setEnabled(true);
 		nextUnitBtn.removeStyleName("disabled");
 		nextUnitBtn.setEnabled(true);
+	}
+	
+	@Override
+	public void spinnerImageVisibility(boolean isVisible){
+		spinnerIconContainer.setVisible(isVisible); 
 	}
 }

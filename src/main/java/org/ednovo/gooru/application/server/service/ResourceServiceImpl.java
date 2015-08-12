@@ -367,7 +367,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
 
 				if(jsonRep.getJsonObject().has("settings")){
-					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionSettingsDo.class);
+					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("settings").toString(), CollectionSettingsDo.class);
 					obj.setSettings(settings);
 				}
 				if(jsonRep.getJsonObject().has("thumbnails")){
