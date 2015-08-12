@@ -197,7 +197,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 							.addStyleName(FolderContainerCBundle.INSTANCE
 									.css().selected());
 					TreeItem parent = item.getParentItem();
-					item.getTree().setSelectedItem(parent, false); 
+					item.getTree().setSelectedItem(null, false); 
 					if (!folderTreeItemWidget.isApiCalled()) {
 						folderTreeItemWidget.setApiCalled(true);
 						item.addItem(loadingTreeItem());
