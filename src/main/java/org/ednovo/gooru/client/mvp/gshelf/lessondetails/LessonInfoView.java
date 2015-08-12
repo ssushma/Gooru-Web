@@ -102,7 +102,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse, taxonomyToggleBtn;
 	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment,taxonomyBtn;
-	@UiField Label lblErrorMessage;
+	@UiField Label lblErrorMessage,lblLessonErrorMsg;
 	@UiField UlPanel ulSelectedItems;
 
 
@@ -183,7 +183,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				lblErrorMessage.setVisible(false);
 			}
 		});
-		
 		lessonNamePpanel.setText(i18n.GL3478());
 	}
 
@@ -206,82 +205,78 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
 		standardsUI.clear();
 		final String selValues = getSelectedStandards().toString();
-            for (DomainStandardsDo standardsList1 : standardsList) {
-                Boolean flgLevelOne = false;
-                if (standardsList1.getCode().contains("Math")) {
-                    flgLevelOne = true;
-                }
-                final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList1.getCode(), standardsList1.getLabel(), flgLevelOne);
-                final DomainStandardsDo domainStand = standardsList1;
-                if (domainStand.getTypeId()!=null && !(standardsList1.getCode().contains("ELA"))) {
-                    if(domainStand.getTypeId().equals(1))
-                    {
-                        
-                    }
-                    else if(domainStand.getTypeId().equals(2))
-                    {
-                        standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
-                    }
-                    else
-                    {
-                        standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
-                    }
-                }
-                standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
-                if (selValues.contains(standardsList1.getCodeId().toString())) {
-                    standardsCode.getWidgetContainer().addStyleName("active");
-                }
-                standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-                    
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
-                        {
-                            
-                            standardsCode.getWidgetContainer().addStyleName("active");
-                            standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
-                            
-                            if(!selValues.contains(domainStand.getCodeId().toString())){
-                                selectedValues.add(domainStand.getCodeId());
-                            }
-                            
-                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
-                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-                                @Override
-                                public void onClick(ClickEvent event) {
-                                    //This will remove the selected value when we are trying by close button
-                                    if(selValues.contains(domainStand.getCodeId().toString())){
-                                        selectedValues.remove(domainStand.getCodeId());
-                                    }
-                                    standardsCode.removeStyleName("active");
-                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-                                    liPanelWithClose.removeFromParent();
-                                }
-                            });
-                            //selectedValues.add(domainStand.getCodeId());
-                            liPanelWithClose.setId(domainStand.getCodeId());
-                            liPanelWithClose.setName(domainStand.getCode());
-                            liPanelWithClose.setDifferenceId(3);
-                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
-                            ulSelectedItems.add(liPanelWithClose);
-					}
-					else
-					{
+	        	for(DomainStandardsDo standardsList1 : standardsList){
+	            Boolean flgLevelOne = false;
+	            if (standardsList1.getCode().contains("Math")) {
+	                flgLevelOne = true;
+	            }
+	            final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList1.getCode(), standardsList1.getLabel(), flgLevelOne);
+	            final DomainStandardsDo domainStand = standardsList1;
+	            if (domainStand.getTypeId()!=null && !(standardsList1.getCode().contains("ELA"))) {
+	                if(domainStand.getTypeId().equals(1)){
+	                    
+	                }
+	                else if(domainStand.getTypeId().equals(2)){
+	                    standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
+	                }else{
+	                    standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
+	                }
+	            }
+	            standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+	            if (selValues.contains(standardsList1.getCodeId().toString())) {
+	                standardsCode.getWidgetContainer().addStyleName("active");
+	            }
+	            standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+	                @Override
+	                public void onClick(ClickEvent event) {
+	                    if(!standardsCode.getWidgetContainer().getStyleName().contains("active")){
+	                    	if(ulSelectedItems.getWidgetCount()>=15){
+	                    		lblLessonErrorMsg.setVisible(true);
+	                    		lblLessonErrorMsg.setText(i18n.GL3569());
+		                	}else{
+		                		lblLessonErrorMsg.setVisible(false);
+		                		standardsCode.getWidgetContainer().addStyleName("active");
+		                        standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+		                        if(!selValues.contains(domainStand.getCodeId().toString())){
+		                            selectedValues.add(domainStand.getCodeId());
+		                        }
+		                        final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+		                        liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+		                            @Override
+		                            public void onClick(ClickEvent event) {
+		                                //This will remove the selected value when we are trying by close button
+		                                if(selValues.contains(domainStand.getCodeId().toString())){
+		                                    selectedValues.remove(domainStand.getCodeId());
+		                                }
+		                                standardsCode.removeStyleName("active");
+		                                removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+		                                liPanelWithClose.removeFromParent();
+		                                lblLessonErrorMsg.setVisible(false);
+		                            }
+		                        });
+		                        //selectedValues.add(domainStand.getCodeId());
+		                        liPanelWithClose.setId(domainStand.getCodeId());
+		                        liPanelWithClose.setName(domainStand.getCode());
+		                        liPanelWithClose.setDifferenceId(3);
+		                        liPanelWithClose.setRelatedId(domainStand.getCodeId());
+		                        ulSelectedItems.add(liPanelWithClose);
+		                	}
+					}else{
 						standardsCode.getWidgetContainer().removeStyleName("active");
 						removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+						lblLessonErrorMsg.setVisible(false);
 					}
 				}
 			});
-                standardsUI.add(standardsCode);
-                displaySubStandardsList(standardsList1.getNode());
-            }
+	         standardsUI.add(standardsCode);
+	         displaySubStandardsList(standardsList1.getNode());
+	     }
 	}
 
 	public void displaySubStandardsList(final List<SubDomainStandardsDo> standardsList){
 		//	standardsUI.clear();
 		final String selValues = getSelectedStandards().toString();
-
-            for (SubDomainStandardsDo standardsList1 : standardsList) {
+            for (SubDomainStandardsDo standardsList1 : standardsList){
                 final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList1.getCode(), standardsList1.getLabel(), false);
                 final SubDomainStandardsDo domainStand = standardsList1;
                 standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(35, Unit.PX);
@@ -290,108 +285,104 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                     standardsCode.getWidgetContainer().addStyleName("active");
                 }
                 standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-                    
                     @Override
                     public void onClick(ClickEvent event) {
-                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
-                        {
-                            
-                            standardsCode.getWidgetContainer().addStyleName("active");
-                            
-                            
-                            if(!selValues.contains(domainStand.getCodeId().toString())){
-                                selectedValues.add(domainStand.getCodeId());
-                            }
-                            
-                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
-                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-                                @Override
-                                public void onClick(ClickEvent event) {
-                                    //This will remove the selected value when we are trying by close button
-                                    if(selValues.contains(domainStand.getCodeId().toString())){
-                                        selectedValues.remove(domainStand.getCodeId());
-                                    }
-                                    standardsCode.removeStyleName("active");
-                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-                                    liPanelWithClose.removeFromParent();
-                                }
-                            });
-                            //selectedValues.add(domainStand.getCodeId());
-                            liPanelWithClose.setId(domainStand.getCodeId());
-                            liPanelWithClose.setName(domainStand.getCode());
-                            liPanelWithClose.setDifferenceId(3);
-                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
-                            ulSelectedItems.add(liPanelWithClose);
-                        }
-                        else
-                        {
+                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active")){
+                        	if(ulSelectedItems.getWidgetCount()>=15){
+	                    		lblLessonErrorMsg.setVisible(true);
+	                    		lblLessonErrorMsg.setText(i18n.GL3569());
+		                	}else{
+		                		lblLessonErrorMsg.setVisible(false);
+	                            standardsCode.getWidgetContainer().addStyleName("active");
+	                            if(!selValues.contains(domainStand.getCodeId().toString())){
+	                                selectedValues.add(domainStand.getCodeId());
+	                            }
+	                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+	                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+	                                @Override
+	                                public void onClick(ClickEvent event) {
+	                                    //This will remove the selected value when we are trying by close button
+	                                    if(selValues.contains(domainStand.getCodeId().toString())){
+	                                        selectedValues.remove(domainStand.getCodeId());
+	                                    }
+	                                    standardsCode.removeStyleName("active");
+	                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+	                                    liPanelWithClose.removeFromParent();
+	                                    lblLessonErrorMsg.setVisible(false);
+	                                }
+	                            });
+	                            //selectedValues.add(domainStand.getCodeId());
+	                            liPanelWithClose.setId(domainStand.getCodeId());
+	                            liPanelWithClose.setName(domainStand.getCode());
+	                            liPanelWithClose.setDifferenceId(3);
+	                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
+	                            ulSelectedItems.add(liPanelWithClose);
+		                	}
+                        }else{
                             standardsCode.getWidgetContainer().removeStyleName("active");
                             removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+                            lblLessonErrorMsg.setVisible(false);
                         }
                     }
                 });
                 standardsUI.add(standardsCode);
                 displaySubSubStandardsList(standardsList1.getNode());
             }
-
-
 	}
 	public void displaySubSubStandardsList(final List<SubSubDomainStandardsDo> standardsList){
 		//standardsUI.clear();
 		final String selValues = getSelectedStandards().toString();
-            for (SubSubDomainStandardsDo standardsList1 : standardsList) {
-                final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList1.getCode(), standardsList1.getLabel(), false);
-                final SubSubDomainStandardsDo domainStand = standardsList1;
-                standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
-                standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
-                if (selValues.contains(standardsList1.getCodeId().toString())) {
-                    standardsCode.getWidgetContainer().addStyleName("active");
-                }
-                standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
-                    
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        if(!standardsCode.getWidgetContainer().getStyleName().contains("active"))
-                        {
-                            
-                            standardsCode.getWidgetContainer().addStyleName("active");
-                            
-                            if(!selValues.contains(domainStand.getCodeId().toString())){
-                                selectedValues.add(domainStand.getCodeId());
-                            }
-                            
-                            final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
-                            liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-                                @Override
-                                public void onClick(ClickEvent event) {
-                                    //This will remove the selected value when we are trying by close button
-                                    if(selValues.contains(domainStand.getCodeId().toString())){
-                                        selectedValues.remove(domainStand.getCodeId());
-                                    }
-                                    standardsCode.removeStyleName("active");
-                                    removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-                                    liPanelWithClose.removeFromParent();
-                                }
-                            });
-                            //selectedValues.add(domainStand.getCodeId());
-                            liPanelWithClose.setId(domainStand.getCodeId());
-                            liPanelWithClose.setName(domainStand.getCode());
-                            liPanelWithClose.setDifferenceId(3);
-                            liPanelWithClose.setRelatedId(domainStand.getCodeId());
-                            ulSelectedItems.add(liPanelWithClose);
-                        }
-                        else
-                        {
-                            standardsCode.getWidgetContainer().removeStyleName("active");
-                            removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
-                        }
-                        
-                    }
-                });
-                standardsUI.add(standardsCode);
+        for(SubSubDomainStandardsDo standardsList1 : standardsList) {
+            final StandardsCodeDecView standardsCode = new StandardsCodeDecView(standardsList1.getCode(), standardsList1.getLabel(), false);
+            final SubSubDomainStandardsDo domainStand = standardsList1;
+            standardsCode.getWidgetContainer().getElement().getStyle().setPaddingLeft(70, Unit.PX);
+            standardsCode.getWidgetContainer().getElement().setId(domainStand.getCodeId().toString());
+            if (selValues.contains(standardsList1.getCodeId().toString())) {
+                standardsCode.getWidgetContainer().addStyleName("active");
             }
-
-
+            standardsCode.getWidgetContainer().addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    if(!standardsCode.getWidgetContainer().getStyleName().contains("active")){
+                    	if(ulSelectedItems.getWidgetCount()>=15){
+                    		lblLessonErrorMsg.setVisible(true);
+                    		lblLessonErrorMsg.setText(i18n.GL3569());
+	                	}else{
+	                		lblLessonErrorMsg.setVisible(false);
+	                        standardsCode.getWidgetContainer().addStyleName("active");
+	                        if(!selValues.contains(domainStand.getCodeId().toString())){
+	                            selectedValues.add(domainStand.getCodeId());
+	                        }
+	                        final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(domainStand.getCode());
+	                        liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+	                            @Override
+	                            public void onClick(ClickEvent event) {
+	                                //This will remove the selected value when we are trying by close button
+	                                if(selValues.contains(domainStand.getCodeId().toString())){
+	                                    selectedValues.remove(domainStand.getCodeId());
+	                                }
+	                                standardsCode.removeStyleName("active");
+	                                removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+	                                liPanelWithClose.removeFromParent();
+	                                lblLessonErrorMsg.setVisible(false);
+	                            }
+	                        });
+	                        //selectedValues.add(domainStand.getCodeId());
+	                        liPanelWithClose.setId(domainStand.getCodeId());
+	                        liPanelWithClose.setName(domainStand.getCode());
+	                        liPanelWithClose.setDifferenceId(3);
+	                        liPanelWithClose.setRelatedId(domainStand.getCodeId());
+	                        ulSelectedItems.add(liPanelWithClose);
+	                	}
+                    }else{
+                        standardsCode.getWidgetContainer().removeStyleName("active");
+                        removeGradeWidget(ulSelectedItems,domainStand.getCodeId());
+                        lblLessonErrorMsg.setVisible(false);
+                    }
+                }
+            });
+            standardsUI.add(standardsCode);
+        }
 	}
 	public final void populateStandardValues(){
         for (String standardsTypesArray1 : standardsTypesArray) {
@@ -437,26 +428,23 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
                 headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
                 liPanel.add(headerDiv);
             }
-            if(liPanel.getElement().getAttribute("style")!=null && !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;"))
-            {
-            liPanel.addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-				String standardsVal = event.getRelativeElement().getAttribute("id");
-				String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
-
-				lessonLiPanelWithCloseArray.clear();
-				for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
-					lessonLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
-				}
-
-				getUiHandlers().showStandardsPopup(standardsVal,standardsDesc, lessonLiPanelWithCloseArray);
-			}
-		});
+            if(liPanel.getElement().getAttribute("style")!=null && !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;")){
+		            liPanel.addClickHandler(new ClickHandler() {
+		                @Override
+		                public void onClick(ClickEvent event) {
+						String standardsVal = event.getRelativeElement().getAttribute("id");
+						String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+						lessonLiPanelWithCloseArray.clear();
+						for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
+							lessonLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+						}
+						getUiHandlers().showStandardsPopup(standardsVal,standardsDesc, lessonLiPanelWithCloseArray);
+					}
+				});
             }
             standardsDropListValues.add(liPanel);
         }
-}
+	}
 	@UiHandler("saveLessonBtn")
 	public void clickOnSaveCourseBtn(ClickEvent saveCourseEvent){
 		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
@@ -471,11 +459,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			createOrUpDate.setStandardIds(getSelectedStandards());
 			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
 			createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
-			
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),false,null,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
-
 		}else{
 			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
 			lessonTitle.setStyleName("textAreaErrorMessage");
@@ -483,7 +469,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			lblErrorMessage.setVisible(true);
 			resetBtns();
 			spinnerImageVisibility(false);
-
 		}
 	}
 	@UiHandler("btnSaveAndCreateCollection")
@@ -504,7 +489,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			lblErrorMessage.setVisible(false);
 			lessonTitle.removeStyleName("textAreaErrorMessage");
 			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
-
 		}else{
 			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
 			lessonTitle.setStyleName("textAreaErrorMessage");
@@ -513,10 +497,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			resetBtns();
 			spinnerImageVisibility(false);
 		}
-
 	}
-	
-	
 	/**
 	 * This method is used to get the selected course id's
 	 * @return
@@ -545,9 +526,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 		return taxonomyCourseIds;
 	}
-	
-	
-	
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
 		final TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
@@ -604,7 +582,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		}
 	}
-	
 	
 	/**
 	 * This method is used to get the selected Std id's
@@ -678,7 +655,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				//Render the existing standards
 				for(final CourseSubjectDo courseSubjectDo : folderObj.getStandards()) {
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
-
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
@@ -693,6 +669,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 							}
 							removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
 							liPanelWithClose.removeFromParent();
+						    lblLessonErrorMsg.setVisible(false);
 						}
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
@@ -700,19 +677,16 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					liPanelWithClose.setDifferenceId(3);
 					ulSelectedItems.add(liPanelWithClose);
 				}
-
 			}
-			
 			if(folderObj!=null && folderObj.getTaxonomyCourse()!=null){
 				for (final CourseSubjectDo courseSubjectDo : folderObj.getTaxonomyCourse()) {
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-
 						@Override
 						public void onClick(ClickEvent event) {
 							liPanelWithClose.removeFromParent();
+						    lblLessonErrorMsg.setVisible(false);
 						}
-						
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
 					liPanelWithClose.setName(courseSubjectDo.getName());
@@ -721,17 +695,15 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					ulSelectedItems.add(liPanelWithClose);
 				}
 			}
-			
 			if(folderObj!=null && folderObj.getSubdomain()!=null){
 				for (final CourseSubjectDo courseSubjectDo : folderObj.getSubdomain()) {
 					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getName());
 					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-
 						@Override
 						public void onClick(ClickEvent event) {
 							liPanelWithClose.removeFromParent();
+						    lblLessonErrorMsg.setVisible(false);
 						}
-						
 					});
 					liPanelWithClose.setId(courseSubjectDo.getId());
 					liPanelWithClose.setName(courseSubjectDo.getName());
@@ -741,7 +713,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 					ulSelectedItems.add(liPanelWithClose);
 				}
 			}
-			
 		}
 		getUiHandlers().callCourseInfoTaxonomy();
 	}
@@ -780,7 +751,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}
 	}
 
-
 	/**
 	 * Adds the selected domains from the taxonomy popup into lesson info view.
 	 */
@@ -790,7 +760,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			if(isWidgetExists(liPanelWithCloseArray.get(i).getId())){
 				ulSelectedItems.add(liPanelWithCloseArray.get(i));
 			}
-
 			if(i<removedLiPanelWithCloseArray.size()){ 
 				removeFromUlSelectedItemsContainer(removedLiPanelWithCloseArray.get(i).getId());
 			}
@@ -855,8 +824,6 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		}else{
 			return true;
 		}
-
-
 	}
 
 	@UiHandler("lessonTitle")
@@ -933,10 +900,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 			}
 		}
 	}
-	
-public void checkStandarsList(List<String> standarsPreferencesList) {
-		
-		
+	public void checkStandarsList(List<String> standarsPreferencesList) {
 		if(standarsPreferencesList!=null){
 			if(standarsPreferencesList.contains("CCSS")){
 				isCCSSAvailable = true;
@@ -962,7 +926,6 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 
 		populateStandardValues();
 	}
-
 	public void getAddStandards() {
 		if(!AppClientFactory.isAnonymous()){
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
@@ -972,7 +935,6 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 					public void onSuccess(final ProfileDo profileObj) {
 						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
 					}
-
 				});
 		}else{
 			isCCSSAvailable = true;
@@ -986,5 +948,4 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 	public void spinnerImageVisibility(boolean isVisible){
 		spinnerIconContainer.setVisible(isVisible); 
 	}
-
 }
