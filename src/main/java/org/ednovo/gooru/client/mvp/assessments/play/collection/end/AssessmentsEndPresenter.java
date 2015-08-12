@@ -132,7 +132,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		setInSlot(METADATA_PRESENTER_SLOT, collectionHomeMetadataPresenter,false);
 	}
 	public void setCollectionSummaryBasedOnClasspageIdSessionId(){
-		System.out.println("sessionId "+sessionId);
 		getView().setReportContainer(sessionId);
 		//getSessionsDataByUser(collectionDo.getGooruOid(),classpageId!=null?classpageId:"",AppClientFactory.getLoggedInUser().getGooruUId());
 	}
@@ -195,7 +194,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	@Override
 	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
-		System.out.println("once");
+
 		ClassDo classObj=new ClassDo();
 		classObj.setAssessmentId(collectionId);
 		classObj.setClassId(classId);
@@ -217,16 +216,13 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		System.out.println("twice");
 
 		if (sessionId != null){
-			System.out.println("thrice");
 			this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 				@Override
 				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 
 					if(result!=null && result.size()!=0){
-						System.out.println("four");
 						count=0;
 						if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
 
@@ -248,12 +244,10 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 							@Override
 							public void run() {
 								if (count < 10){
-									System.out.println("five");
 									getSessionsDataByUser(collectionId, classId, userId);
 									count++;
 								}else{
 									if (count >= 10){
-										System.out.println("size");
 										getView().errorMsg();
 									}
 								}
@@ -276,7 +270,6 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 
 	@Override
 	public void getCollectionScoreForSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		System.out.println("seven");
 		this.analyticService.getCollectionMetaDataByUserAndSession(StringUtil.getClassObj(),collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
