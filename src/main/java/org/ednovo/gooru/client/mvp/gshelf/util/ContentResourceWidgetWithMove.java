@@ -29,6 +29,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -404,125 +405,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	 */
 	public void checkYoutubeResourceOrNot(CollectionItemDo collectionItemDo,boolean youtube){
 		if (youtube){
-			isPdf=false;
-			imgDisplayIcon.setUrl("images/timeIcon.png");
-			enableOrDisableYoutubeFields(true);
-			videoTimeField.setText(VIDEO_TIME);
-			videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
-			videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
-			String stopTime = (collectionItemDo.getStop() == null) ? "00:00:00": collectionItemDo.getStop();
-			String startTime = (collectionItemDo.getStart() == null) ? "00:00:00": collectionItemDo.getStart();
-			startTime = startTime.replaceAll("\\.", ":");
-			stopTime = stopTime.replaceAll("\\.", ":");
-			String youTubeVideoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl());
-			//This will set the end time of the video
-			AppClientFactory.getInjector().getResourceService().getYoutubeDuration(youTubeVideoId,new SimpleAsyncCallback<String>() {
-				@Override
-				public void onSuccess(String youtubeInfo) {
-					if (youtubeInfo != null) {
-						totalVideoLength = Integer.parseInt(youtubeInfo);
-						startStopTimeDisplayText.setVisible(false);
-						startStopTimeDisplayText.setText(i18n.GL0957()+checkForTwoDigits(totalVideoLength/60)+":"
-						+checkForTwoDigits(totalVideoLength%60));
-					}
-				}
-			});
-			//This if block will set the youtube resource time if already exists.
-			if (!"00:00:00".equalsIgnoreCase(stopTime) ||!"00:00:00".equalsIgnoreCase(startTime)) {
-					String[] VideoStartTime=startTime.split(":");
-					String[] VideoEndTime=stopTime.split(":");
-					String startMm=Integer.parseInt(VideoStartTime[0])*60+Integer.parseInt(VideoStartTime[1])+"";
-					String startSec =null;
-					String endSec = null;
-					if (VideoStartTime.length>2){
-						startSec=Integer.parseInt(VideoStartTime[2])+"";
-					}else{
-						startSec="00";
-					}
-					String endMm=Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1])+"";
-					if (VideoEndTime.length>2){
-						endSec=Integer.parseInt(VideoEndTime[2])+"";
-					}else{
-						endSec="00";
-					}
-					String displayTime=checkLengthOfSting(startMm)+":"+checkLengthOfSting(startSec)
-							+" "+i18n.GL_GRR_Hyphen()+" "+checkLengthOfSting(endMm)+":"+checkLengthOfSting(endSec);
-
-					setYoutubeTime(startMm,startSec,checkLengthOfSting(endMm),checkLengthOfSting(endSec));
-
-					fromLblDisplayText.setText(displayTime);
-					StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
-			}else{
-			   String videoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl());
-				if (videoId != null) {
-					AppClientFactory.getInjector().getResourceService().getYoutubeDuration(videoId, new SimpleAsyncCallback<String>() {
-						@Override
-						public void onSuccess(String youtubeInfo) {
-							if(youtubeInfo != null) {
-								totalVideoLength = Integer.parseInt(youtubeInfo);
-								String displayTime=START_MINUTE	+ ":"+ START_SEC+i18n.GL_GRR_Hyphen()
-										+checkForTwoDigits(totalVideoLength/60)+ ":"+ checkForTwoDigits(totalVideoLength%60);
-								setYoutubeTime(START_MINUTE,START_SEC,checkForTwoDigits(totalVideoLength/60),checkForTwoDigits(totalVideoLength%60));
-								fromLblDisplayText.setText(displayTime);
-								StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
-							}else{
-								String displayTime=START_MINUTE+":"+ START_SEC
-												+" "+i18n.GL_GRR_Hyphen()+" "
-												+ START_MINUTE+":"+ END_MINUTE+":"+END_SEC;
-								setYoutubeTime(START_MINUTE,START_SEC,END_MINUTE,END_SEC);
-								fromLblDisplayText.setText(displayTime);
-								StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
-							}
-						}
-					});
-				}
-			}
+			setYoutubeData();
 		}else if(collectionItemDo.getResource() !=null && collectionItemDo.getResource().getUrl() != null && collectionItemDo.getResource().getUrl().endsWith(".pdf")){
-			isPdf=true;
-			imgDisplayIcon.setUrl("images/note.png");
-
-			enableOrDisableYoutubeFields(true);
-			editVideoTimeLbl.setVisible(false);
-			videoTimeField.setVisible(false);
-
-			fromLblDisplayText.setVisible(true);
-			editStartPageLbl.setVisible(true);
-
-			String startPageNumber=collectionItemDo.getStart();
-			totalPages = collectionItemDo.getTotalPages();
-			if(totalPages == null){
-				fromLblDisplayText.setVisible(false);
-				editStartPageLbl.setVisible(false);
-				imgDisplayIcon.setVisible(false);
-			}else{
-				fromLblDisplayText.setVisible(true);
-				lblEditSartPageText.setText(i18n.GL2039() + totalPages);
-				editStartPageLbl.setVisible(true);
-				imgDisplayIcon.setVisible(true);
-			}
-			String endPageNumber=collectionItemDo.getStop();
-			if(startPageNumber==null){
-				startpdfPageNumber.setText("1");
-				StringUtil.setAttributes(startpdfPageNumber.getElement(), "1", "1");
-				fromLblDisplayText.setText(START_PAGE+DEFAULT_START_PAGE);
-				StringUtil.setAttributes(fromLblDisplayText.getElement(),START_PAGE+DEFAULT_START_PAGE, START_PAGE+DEFAULT_START_PAGE);
-			}else{
-				String pdfText = "";
-				if(endPageNumber!=null){
-					if(endPageNumber.equalsIgnoreCase("")){
-						pdfText=START_PAGE+startPageNumber+" - "+ i18n.GL2026()+totalPages;
-						fromLblDisplayText.setText(pdfText);
-						stoppdfPageNumber.setText(totalPages+"");
-					}else{
-						pdfText=START_PAGE+startPageNumber+" - "+i18n.GL2026()+endPageNumber;
-						fromLblDisplayText.setText(pdfText);
-						stoppdfPageNumber.setText(endPageNumber+"");
-					}
-				}
-				StringUtil.setAttributes(fromLblDisplayText.getElement(), pdfText, pdfText);
-				startpdfPageNumber.setText(startPageNumber);
-				StringUtil.setAttributes(startpdfPageNumber.getElement(), startPageNumber, startPageNumber);
-			}
+			setPDFData();
 		}else{
 			isPdf=false;
 			enableOrDisableYoutubeFields(false);
@@ -594,7 +479,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	 */
 	@UiHandler("btnCancel")
 	public void onclickcancelNarrationBtn(ClickEvent event){
-		resetNarrationDetails();
+		resetDetails();
 		enableOrDisableTimeEdit(true);
 		startStopTimeDisplayText.setVisible(false);
 	}
@@ -611,6 +496,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			fromLblDisplayText.setVisible(true);
 			pnlPdfEdiContainer.setVisible(false);
 			lblEditSartPageText.setVisible(false);
+			if(isPdf){
+				setPDFData();
+			}else if(youtube){
+				setYoutubeData();
+			}
+			errorMsgLabel.setVisible(false);
 			lblError.setVisible(false);
 		}else{
 			pnlTimeIcon.setVisible(false);
@@ -620,7 +511,24 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		lblCharLimit.setVisible(false);
 		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
-
+	public void resetDetails(){
+		String narrationText=trim(narrationTxtArea.getText());
+		narrationTxtArea.setText(narrationText);
+		StringUtil.setAttributes(narrationTxtArea.getElement(),narrationText, narrationText);
+		if(youtube || isPdf){
+			pnlTimeIcon.setVisible(true);
+			pnlYoutubeContainer.setVisible(true);
+			fromLblDisplayText.setVisible(true);
+			pnlPdfEdiContainer.setVisible(false);
+			lblEditSartPageText.setVisible(false);
+		}else{
+			pnlTimeIcon.setVisible(false);
+			pnlYoutubeContainer.setVisible(false);
+		}
+		enableDisableNarration(true);
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
+	}
 	/**
 	 * This method is used to enable and disable the narration fields
 	 * @param isValue
@@ -663,7 +571,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}else{
 				updateNarration();
 			}
-
 		}else if(isPdf){
 			updatePdfStartPage();
 		}else{
@@ -712,7 +619,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 
 
 				}else{
-
+					final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 					String narration = null;
 					MixpanelUtil.Organize_Click_Edit_Narration_Update();
 					if (resourceNarrationHtml.getHTML().length() > 0) {
@@ -721,9 +628,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 						pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
 					}
 					try{
-						updateNarration(collectionItem, narration);
+						collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, null, null);
+						resetNarrationDetails();
 						enableDisableNarration(true);
-						//getPresenter().updateNarrationItem(collectionItem.getCollectionItemId(), narration);
 					}catch(Exception e){
 						AppClientFactory.printSevereLogger("ContentResourceWidgetWithMove : updateNarration : "+e.getMessage());
 					}
@@ -747,11 +654,24 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		boolean isValid = this.validatePDF(start, enteredStopPage, totalPages);
 		if (isValid) {
 			MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
-			lblError.setText("");
+			lblError.setVisible(false);
 			fromLblDisplayText.setVisible(true);
 			actionVerPanel.setVisible(false);
-			collectionContentPresenter.updateCollectionItem(collectionItem, collectionItem.getNarration(), start, enteredStopPage);
-			enablePdfButtons(true);
+			final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String narration = null;
+			if (resourceNarrationHtml.getHTML().length() > 0) {
+				narration = trim(narrationTxtArea.getText());
+				collectionItem.setNarration(narration);
+				pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+			}
+			collectionItem.setStart(start);
+			collectionItem.setStop(enteredStopPage);
+			collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, start, enteredStopPage);
+			resetNarrationDetails();
+			setPDFData();
+		}else{
+			lblError.setVisible(true);
+			lblError.getElement().getStyle().setFloat(Float.LEFT);
 		}
 	}
 	/**
@@ -948,7 +868,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		actionVerPanel.setVisible(false);
 		lblUpdateTextMessage.setVisible(false);
 		enableOrDisableTimeEdit(true);
-		checkYoutubeResourceOrNot(itemDo,true);
+		String resourceType = collectionItem.getResource().getResourceType().getName();
+		youtube = resourceType.equalsIgnoreCase(ImageUtil.YOUTUBE);
+		checkYoutubeResourceOrNot(itemDo,youtube);
 		}
 	/**
 	 * To navigate to collection/assessment player
@@ -1051,6 +973,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		String narration = null;
 		String from = null;
 		String to = null;
+		final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		MixpanelUtil.Organize_Click_Edit_Narration_Update();
+		narration = trim(narrationTxtArea.getText());
+		collectionItem.setNarration(narration);
 		if((startMinTxt.getText().trim().length()>0)&&(startSecTxt.getText().trim().length()>0)&&(stopMinTxt.getText().trim().length()>0)&&(stopSecTxt.getText().trim().length()>0)){
 			if (collectionItem.getResource().getResourceType().getName()
 					.equalsIgnoreCase("video/youtube")) {
@@ -1120,8 +1046,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				this.youtubeValidation(narration, from, to);
 			}else {
 				startStopTimeDisplayText.setVisible(false);
-				updateVideoTime(collectionItem,from,to);
-				// setEditMode(false);
+				//updateVideoTime(collectionItem,from,to);
+				collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, from, to);
+				actionVerPanel.setVisible(false);
+				lblUpdateTextMessage.setVisible(false);
+				enableOrDisableTimeEdit(true);
+				setYoutubeData();
 				lblCharLimit.setVisible(false);
 				resourceNarrationHtml.getElement().getStyle().clearWidth();
 			}
@@ -1174,6 +1104,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 														.parseInt(endSplitTimeHours[1]) * 60)
 												+ (Integer
 														.parseInt(endSplitTimeHours[2]));
+										final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 										if (startTimeInSeconds < endTimeInSeconds && startTimeInSeconds <= totalVideoLengthInMin && endTimeInSeconds <= totalVideoLengthInMin
 												|| startTimeInSeconds <= totalVideoLengthInMin && endTimeInSeconds == 0
 												|| endTimeInSeconds <= totalVideoLengthInMin && startTimeInSeconds == 0
@@ -1181,15 +1112,17 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 											errorMsgLabel.setVisible(false);
 											collectionItem.setStart(start);
 											collectionItem.setStop(stop);
-											updateVideoTime(collectionItem,start,stop);
-											///setEditMode(false);
+											collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, start, stop);
+											actionVerPanel.setVisible(false);
+											lblUpdateTextMessage.setVisible(false);
+											enableOrDisableTimeEdit(true);
+											setYoutubeData();
 										} else {
 //											ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 											startMinTxt.setFocus(true);
 											errorMsgLabel.setVisible(true);
 											errorMsgLabel.setText("");
 											errorMsgLabel.setText(VALID_START_STOP_TIME);
-											//setEditMode(true);
 											/*new AlertContentUc(i18n.GL0061(),
 													VALID_START_STOP_TIME);*/
 										}
@@ -1201,5 +1134,130 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			{
 			}
 		}
+	public void setPDFData(){
+		isPdf=true;
+		imgDisplayIcon.setUrl("images/note.png");
 
+		enableOrDisableYoutubeFields(true);
+		editVideoTimeLbl.setVisible(false);
+		videoTimeField.setVisible(false);
+
+		fromLblDisplayText.setVisible(true);
+		editStartPageLbl.setVisible(true);
+
+		String startPageNumber=collectionItem.getStart();
+		totalPages = collectionItem.getTotalPages();
+		if(totalPages == null){
+			fromLblDisplayText.setVisible(false);
+			editStartPageLbl.setVisible(false);
+			imgDisplayIcon.setVisible(false);
+		}else{
+			fromLblDisplayText.setVisible(true);
+			lblEditSartPageText.setText(i18n.GL2039() + totalPages);
+			editStartPageLbl.setVisible(true);
+			imgDisplayIcon.setVisible(true);
+		}
+		String endPageNumber=collectionItem.getStop();
+		if(startPageNumber==null){
+			startpdfPageNumber.setText("1");
+			StringUtil.setAttributes(startpdfPageNumber.getElement(), "1", "1");
+			fromLblDisplayText.setText(START_PAGE+DEFAULT_START_PAGE);
+			StringUtil.setAttributes(fromLblDisplayText.getElement(),START_PAGE+DEFAULT_START_PAGE, START_PAGE+DEFAULT_START_PAGE);
+		}else{
+			String pdfText = "";
+			if(endPageNumber!=null){
+				if(endPageNumber.equalsIgnoreCase("")){
+					pdfText=START_PAGE+startPageNumber+" - "+ i18n.GL2026()+totalPages;
+					fromLblDisplayText.setText(pdfText);
+					stoppdfPageNumber.setText(totalPages+"");
+				}else{
+					pdfText=START_PAGE+startPageNumber+" - "+i18n.GL2026()+endPageNumber;
+					fromLblDisplayText.setText(pdfText);
+					stoppdfPageNumber.setText(endPageNumber+"");
+				}
+			}
+			StringUtil.setAttributes(fromLblDisplayText.getElement(), pdfText, pdfText);
+			startpdfPageNumber.setText(startPageNumber);
+			StringUtil.setAttributes(startpdfPageNumber.getElement(), startPageNumber, startPageNumber);
+		}
+	
+	}
+	
+	public void setYoutubeData(){
+		isPdf=false;
+		imgDisplayIcon.setUrl("images/timeIcon.png");
+		enableOrDisableYoutubeFields(true);
+		videoTimeField.setText(VIDEO_TIME);
+		videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
+		videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
+		System.out.println("collectionItem narration::::"+collectionItem.getNarration());
+		String stopTime = (collectionItem.getStop() == null) ? "00:00:00": collectionItem.getStop();
+		String startTime = (collectionItem.getStart() == null) ? "00:00:00": collectionItem.getStart();
+		startTime = startTime.replaceAll("\\.", ":");
+		stopTime = stopTime.replaceAll("\\.", ":");
+		String youTubeVideoId = ResourceImageUtil.getYoutubeVideoId(collectionItem.getResource().getUrl());
+		//This will set the end time of the video
+		AppClientFactory.getInjector().getResourceService().getYoutubeDuration(youTubeVideoId,new SimpleAsyncCallback<String>() {
+			@Override
+			public void onSuccess(String youtubeInfo) {
+				if (youtubeInfo != null) {
+					totalVideoLength = Integer.parseInt(youtubeInfo);
+					startStopTimeDisplayText.setVisible(false);
+					startStopTimeDisplayText.setText(i18n.GL0957()+checkForTwoDigits(totalVideoLength/60)+":"
+					+checkForTwoDigits(totalVideoLength%60));
+				}
+			}
+		});
+		//This if block will set the youtube resource time if already exists.
+		if (!"00:00:00".equalsIgnoreCase(stopTime) ||!"00:00:00".equalsIgnoreCase(startTime)) {
+				String[] VideoStartTime=startTime.split(":");
+				String[] VideoEndTime=stopTime.split(":");
+				String startMm=Integer.parseInt(VideoStartTime[0])*60+Integer.parseInt(VideoStartTime[1])+"";
+				String startSec =null;
+				String endSec = null;
+				if (VideoStartTime.length>2){
+					startSec=Integer.parseInt(VideoStartTime[2])+"";
+				}else{
+					startSec="00";
+				}
+				String endMm=Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1])+"";
+				if (VideoEndTime.length>2){
+					endSec=Integer.parseInt(VideoEndTime[2])+"";
+				}else{
+					endSec="00";
+				}
+				String displayTime=checkLengthOfSting(startMm)+":"+checkLengthOfSting(startSec)
+						+" "+i18n.GL_GRR_Hyphen()+" "+checkLengthOfSting(endMm)+":"+checkLengthOfSting(endSec);
+
+				setYoutubeTime(startMm,startSec,checkLengthOfSting(endMm),checkLengthOfSting(endSec));
+
+				fromLblDisplayText.setText(displayTime);
+				StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
+		}else{
+		   String videoId = ResourceImageUtil.getYoutubeVideoId(collectionItem.getResource().getUrl());
+			if (videoId != null) {
+				AppClientFactory.getInjector().getResourceService().getYoutubeDuration(videoId, new SimpleAsyncCallback<String>() {
+					@Override
+					public void onSuccess(String youtubeInfo) {
+						if(youtubeInfo != null) {
+							totalVideoLength = Integer.parseInt(youtubeInfo);
+							String displayTime=START_MINUTE	+ ":"+ START_SEC+i18n.GL_GRR_Hyphen()
+									+checkForTwoDigits(totalVideoLength/60)+ ":"+ checkForTwoDigits(totalVideoLength%60);
+							setYoutubeTime(START_MINUTE,START_SEC,checkForTwoDigits(totalVideoLength/60),checkForTwoDigits(totalVideoLength%60));
+							fromLblDisplayText.setText(displayTime);
+							StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
+						}else{
+							String displayTime=START_MINUTE+":"+ START_SEC
+											+" "+i18n.GL_GRR_Hyphen()+" "
+											+ START_MINUTE+":"+ END_MINUTE+":"+END_SEC;
+							setYoutubeTime(START_MINUTE,START_SEC,END_MINUTE,END_SEC);
+							fromLblDisplayText.setText(displayTime);
+							StringUtil.setAttributes(fromLblDisplayText.getElement(),displayTime, displayTime);
+						}
+					}
+				});
+			}
+		}
+	
+	}
 }
