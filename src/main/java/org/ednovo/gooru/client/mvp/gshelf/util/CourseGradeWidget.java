@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.gshelf.util;
 import java.util.List;
 
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
-import org.ednovo.gooru.application.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -90,11 +89,9 @@ public abstract class CourseGradeWidget extends Composite {
 							@Override
 							public void onSuccess() {
 								if(panel.getStyleName().contains(ACTIVE)){
-									panel.removeStyleName(ACTIVE);
-									setSelectedGrade(libraryObj,panel.getCodeId(),false);
+									setSelectedGrade(libraryObj,panel.getCodeId(),false,panel);
 								}else{
-									panel.addStyleName(ACTIVE);
-									setSelectedGrade(libraryObj,panel.getCodeId(),true);
+									setSelectedGrade(libraryObj,panel.getCodeId(),true,panel);
 								}
 							}
 						});
@@ -111,5 +108,5 @@ public abstract class CourseGradeWidget extends Composite {
 	public UlPanel getGradePanel(){
 		return ulGradePanel;
 	}
-	public abstract void setSelectedGrade(CourseSubjectDo libraryCodeDo,long codeId,boolean isAdd);
+	public abstract void setSelectedGrade(CourseSubjectDo libraryCodeDo,long codeId,boolean isAdd,LiPanel panel);
 }

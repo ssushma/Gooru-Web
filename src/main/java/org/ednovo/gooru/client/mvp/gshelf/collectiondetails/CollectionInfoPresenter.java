@@ -244,6 +244,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			});
 		}
 		Window.scrollTo(0, 0);
+		getView().spinnerImageVisibility(false);
 	}
 
 	/*private void createCollectionInFolder() {
@@ -310,6 +311,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			});
 		}
 		Window.scrollTo(0, 0);
+		getView().spinnerImageVisibility(false);
 	}
 
 	@Override
