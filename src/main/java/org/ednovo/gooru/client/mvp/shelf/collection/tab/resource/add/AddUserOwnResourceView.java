@@ -1474,7 +1474,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				return isValid = false;
 			}
 		}catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("AddUserOwnResourceView hasValidateResource:::"+e);
 		}
 		return isValid;
 	}

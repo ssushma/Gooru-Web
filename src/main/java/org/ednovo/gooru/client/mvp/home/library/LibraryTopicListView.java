@@ -245,7 +245,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			}
 		} catch(Exception e) {
 			setDefaultCollectionLbl();
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("LibraryTopicListView::::"+e);
 		}
 
 		addCollectionQuizTitleData(LESSON);
@@ -316,7 +316,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				}
 				
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryTopicListView getCode"+e);
 			}
 			return standPrefCode;
 			
@@ -416,7 +416,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
 			noCollectionLbl.setVisible(true);
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("LibraryTopicListView setConceptData:::"+e);
 		}
 		
 		
@@ -492,7 +492,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				setConceptData(partnerFolderDo.getCollections().get(0),topicId, null, null,null,libraryGooruOid);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryTopicListView setOnlyConceptData:::"+e);
 			}
 		} else {
 			setPartnerLibraryLessonData(partnerFolderDo.getFolderItems());
@@ -500,7 +500,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				setConceptData(partnerFolderDo.getFolderItems().get(0).getCollections().get(0),topicId, null, null,null,libraryGooruOid);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryTopicListView setPartnerLibraryLessonData"+e);
 			}
 		}
 		
@@ -850,7 +850,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,libraryGooruOid));
 				} catch (Exception e) {
 					collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("LibraryTopicListView setConceptData collectionImage:::"+e);
 				}
 
 				try{
@@ -871,7 +871,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					collectionDescriptionLbl.getElement().setAttribute("title",description);
 				}
 				catch(Exception ex){
-					AppClientFactory.printSevereLogger(ex.getMessage());
+					AppClientFactory.printSevereLogger("LibraryTopicListView setConceptData collectionTitleLbl:::"+ex.getMessage());
 				}
 				setMetaDataInfo(conceptDo); 
 				resourcesInside.clear();
@@ -916,7 +916,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 								String resourceTitle = libraryResourceDo.getTitle().replaceAll("\\<[^>]*>","");
 								libraryResourceDo.setTitle(resourceTitle);
 							} catch (Exception e){
-								AppClientFactory.printSevereLogger(e.getMessage());
+								AppClientFactory.printSevereLogger("LibraryTopicListView setConceptData resourceTitle::::::"+e);
 							}
 							resourceImage.setAltText(libraryResourceDo.getTitle());
 							resourceImage.setTitle(libraryResourceDo.getTitle());
@@ -1130,10 +1130,10 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 									String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr,Window.Location.getProtocol());
 									resourceImage.setUrl(thumbnailUrl);
 								} else {
-									if(libraryResourceDo.getThumbnails()!=null&&libraryResourceDo.getThumbnails().getUrl()!=null&&libraryResourceDo.getThumbnails().getUrl().isEmpty()) {
-										resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
-									} else {
+									if(libraryResourceDo.getThumbnails()!=null&&libraryResourceDo.getThumbnails().getUrl()!=null&&!(libraryResourceDo.getThumbnails().getUrl().isEmpty())) {
 										resourceImage.setUrl(libraryResourceDo.getThumbnails().getUrl());
+									} else {
+										resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
 									}
 								}
 								resourceImage.addErrorHandler(new ErrorHandler() {
@@ -1146,7 +1146,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 								resourceImage.setUrl(DEFULT_IMAGE_PREFIX + getDetaultResourceImage(category.toLowerCase()) + PNG);
 								resourceImage.setAltText(libraryResourceDo.getTitle());
 								resourceImage.setTitle(libraryResourceDo.getTitle());
-								AppClientFactory.printSevereLogger(e.getMessage());
+								AppClientFactory.printSevereLogger("LibraryTopicListView resourceImage:::"+e);
 							}
 
 							resourcePanel.addClickHandler(new ClickHandler() {
@@ -1283,7 +1283,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 							resourcePanel.add(resourceCategoryIcon);
 							resourcesInside.add(resourcePanel);
 						} catch (Exception e){
-							AppClientFactory.printSevereLogger(e.getMessage());
+							AppClientFactory.printSevereLogger("LibraryTopicListView resourcesSize:::"+e);
 						}
 					}
 				}
@@ -1959,7 +1959,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			try {
 				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryTopicListView loggedInUserStdPrefCode:::"+e);
 			}
 		}else{
 			standardsFloPanel.setVisible(true);
