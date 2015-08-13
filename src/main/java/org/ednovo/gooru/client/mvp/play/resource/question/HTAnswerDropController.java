@@ -36,7 +36,6 @@ import com.allen_sauer.gwt.dnd.client.util.DOMUtil;
 import com.allen_sauer.gwt.dnd.client.util.DragClientBundle;
 import com.allen_sauer.gwt.dnd.client.util.Location;
 import com.allen_sauer.gwt.dnd.client.util.LocationWidgetComparator;
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -93,7 +92,6 @@ public class HTAnswerDropController extends AppVerticalPanelDropController {
 	public void onEnter(DragContext context) {
 		super.onEnter(context);
 		int positionerIndex = dropTarget.getWidgetIndex(positioner);
-		GWT.log("postionIndex: " + positionerIndex );
 		if (positionerIndex == 0) {
 			dropTarget.insert(positioner, 2);
 		}

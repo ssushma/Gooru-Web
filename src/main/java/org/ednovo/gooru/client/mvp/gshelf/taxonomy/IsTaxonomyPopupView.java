@@ -38,6 +38,6 @@ public interface IsTaxonomyPopupView extends PopupView, IsViewWithHandlers<Taxon
 
 	void addEmptyCourses(Anchor title, int courseId, LiPanel liPanel, LiPanel previousSelectedCourseLiPanel);
 
-	void addEmptyDomains(int subDomainId, Anchor title, LiPanel liPanel,LiPanel previousSelDomainLiPanel);    
- 
+	void addEmptyDomains(int subDomainId, Anchor title, LiPanel liPanel,LiPanel previousSelDomainLiPanel);
+
 }

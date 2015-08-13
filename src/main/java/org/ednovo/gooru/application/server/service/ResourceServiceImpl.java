@@ -1486,7 +1486,32 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return deserializeCollectionItem(jsonRep);
 	}
 
-
+	@Override
+	public CollectionItemDo updateNarrationItemMetadata(String collectionId,String collectionItemId,
+			String narration, String narrationType,String start,String stop) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLLECTION_ITEM_METADATA,collectionId,collectionItemId);
+		getLogger().info("updateNarrationMetadata url put call:::::"+url);
+		JSONObject narrationObject = new JSONObject();
+		try {
+			if(start!=null){
+				narrationObject.put("start", start);
+			}
+			if(stop!=null){
+				narrationObject.put("stop", stop);
+			}
+			if(narration!=null){
+				narrationObject.put("narration", narration);
+			}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		getLogger().info("data url put call:::::"+narrationObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), narrationObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("response:::::"+jsonResponseRep.getStatusCode());
+		return deserializeCollectionItem(jsonRep);
+	}
 
 
 	@Override

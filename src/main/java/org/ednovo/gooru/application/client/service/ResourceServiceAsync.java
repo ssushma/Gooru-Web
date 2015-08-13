@@ -123,6 +123,8 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void updateUserOwnResource(String jsonString, String gooruOid, String collectionId,AsyncCallback<CollectionItemDo> simpleAsyncCallback);  
 	
 	void updateNarrationMetadata(String collectionItemId, String narration, String narrationType, AsyncCallback<CollectionItemDo> callback);
+	
+	void updateNarrationItemMetadata(String collectionId,String collectionItemId, String narration, String narrationType,String start,String stop, AsyncCallback<CollectionItemDo> callback);
 
 	void createContentReport(String assocGooruOid,String targetValue,String typesvalue1,String typesvalue2,String typesvalue3, String typesvalue4,String otherDescription,AsyncCallback<Void> callback);
 	

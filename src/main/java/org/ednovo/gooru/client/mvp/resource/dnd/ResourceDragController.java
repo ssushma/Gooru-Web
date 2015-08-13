@@ -95,7 +95,7 @@ public class ResourceDragController extends AppPickupDragController {
 			adjustLeft = ((Draggable) context.draggable).getDraggableUc().getDragLeftCorrection();
 			adjustTop = ((Draggable) context.draggable).getDraggableUc().getDragTopCorrection();
 		}
-		if(!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().toString().equals(PlaceTokens.ASSESSMENT_PLAY) || !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().toString().equals(PlaceTokens.COLLECTION_PLAY)) {
+		if(!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().toString().equals(PlaceTokens.ASSESSMENT_PLAY) || !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().toString().equals(PlaceTokens.COLLECTION_PLAY) || !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().toString().equals(PlaceTokens.RESOURCE_PLAY)) {
 			DOMUtil.fastSetElementPosition(context.draggable.getElement(), context.mouseX - context.draggable.getAbsoluteLeft() - adjustLeft, context.mouseY - context.draggable.getAbsoluteTop() - adjustTop);
 		}
 

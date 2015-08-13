@@ -44,11 +44,13 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
+import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.EmailPopup;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.SummaryAnswerStatusPopup;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport.AssessmentProgressReportChildView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
@@ -62,8 +64,6 @@ import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Clear;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -97,12 +97,8 @@ import com.google.gwt.visualization.client.visualizations.Table.Options;
 import com.google.inject.Inject;
 
 public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHandlers> implements IsAssessmentsEndView,ClientConstants{
-	@UiField
-	static FlowPanel PrintPnl;
-
-	@UiField
-
-	FlowPanel progressRadial;
+	@UiField FlowPanel PrintPnl, studentAssessmentReportViewContainer, assessmentReportContainer;
+	@UiField FlowPanel progressRadial;
 	@UiField HTMLPanel  collectionSummaryText,loadingImageLabel, questionsTable;
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage;
@@ -185,8 +181,11 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 
 	public void setLabelAndIds() {
-
-		PrintPnl.getElement().getStyle().setHeight(Window.getClientHeight()-106, Unit.PX);
+		studentAssessmentReportViewContainer.setVisible(false);
+		printWidget.setVisible(false);
+		downloadFile.setVisible(false);
+		
+		//PrintPnl.getElement().getStyle().setHeight(Window.getClientHeight()-106, Unit.PX);
 
 		progressRadial.getElement().setId("fpnlprogressRadial");
 
@@ -929,6 +928,19 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 
 	public void setQuestionsTable(HTMLPanel questionsTable) {
 		this.questionsTable = questionsTable;
+	}
+
+
+
+	@Override
+	public void setReportContainer(String sessionId) {
+		assessmentReportContainer.clear();
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id","");
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter("cid","");
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId","");
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId","");
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId","");
+		assessmentReportContainer.add(new AssessmentProgressReportChildView(id, classId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT, sessionId));
 	}
 
 }

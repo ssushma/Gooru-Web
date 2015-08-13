@@ -237,37 +237,6 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 	@Override
 	public void populateK12TaxonomyData(int classification,String taxonomyType,int offSet,int limit) { 
 		populateInitialTaxonomyData(classification,taxonomyType,offSet,limit);
-/*		AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(classification, taxonomyType, offSet, limit, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
-
-			@Override
-			public void onSuccess(List<CourseSubjectDo> result) {
-				getView().addTaxonomySubjects(result);
-				AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(result.get(0).getSubjectId(), "course", 0, 20, new SimpleAsyncCallback<List<CourseSubjectDo>>() {
-
-					@Override
-					public void onSuccess(List<CourseSubjectDo> taxonomyCourseList) {
-						getView().addTaxonomyCourses(taxonomyCourseList);
-						
-						AppClientFactory.getInjector().getTaxonomyService().getSubjectsList(taxonomyCourseList.get(0).getCourseId(),"domain", 0, 20,new SimpleAsyncCallback<List<CourseSubjectDo>>() {
-
-							@Override
-							public void onSuccess(List<CourseSubjectDo> taxonomyDomainList) {
-								getView().addTaxonomyDomains(taxonomyDomainList);
-								if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")){
-									AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
-
-										@Override
-										public void onSuccess(List<DomainStandardsDo> result) {
-											getView().addTaxonomyStandards(result);
-										}
-									});
-								}
-							}
-						});
-					}
-				});
-			}
-		});*/
 	}
 	
 	
@@ -299,8 +268,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 										if(taxonomyDomainList.size()>0){
 											getView().addTaxonomyDomains(taxonomyDomainList,taxonomyCourseList.get(0).getCourseId());
 											if("Unit".equalsIgnoreCase("Unit")){
-//												getView().displaySelectedTaxonomyData(ulSelectedItems);	
-												getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
+//												getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 											}
 											if(TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Lesson")||TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("Collection") || TaxonomyPopupPresenter.this.viewType.equalsIgnoreCase("assessment")){
 												AppClientFactory.getInjector().getTaxonomyService().getStandardsList(taxonomyDomainList.get(0).getSubdomainId(), new SimpleAsyncCallback<List<DomainStandardsDo>>() {
@@ -309,8 +277,7 @@ public class TaxonomyPopupPresenter extends PresenterWidget<IsTaxonomyPopupView>
 													public void onSuccess(List<DomainStandardsDo> result) {
 														if(result.size()>0){
 															getView().addTaxonomyStandards(result);
-//															getView().displaySelectedTaxonomyData(ulSelectedItems);
-															getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
+//															getView().displaySelectedTaxonomyData(liPanelWithCloseArrayData);
 														}
 													}
 												});

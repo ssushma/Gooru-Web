@@ -182,29 +182,38 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		pnlGradeContainer.clear();
 		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedId),"course") {
 			@Override
-			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd) {
+			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd,LiPanel panel){
 				if(isAdd){
-					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseObj.getName());
-					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-						@Override
-						public void onClick(ClickEvent event) {
-							//This will remove the selected value when we are trying by close button
-							for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
-								Map.Entry<Integer, ArrayList<String>> entry = it.next();
-								if(entry.getValue().contains(courseObj.getName())){
-									entry.getValue().remove(courseObj.getName());
+					if(ulSelectedItems.getWidgetCount()>=10){
+						lblGradeErrorMsg.setVisible(true);
+						lblGradeErrorMsg.setText(i18n.GL3567());
+					}else{
+						lblGradeErrorMsg.setVisible(false);
+						panel.addStyleName(ACTIVE);
+						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseObj.getName());
+						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								//This will remove the selected value when we are trying by close button
+								for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+									Map.Entry<Integer, ArrayList<String>> entry = it.next();
+									if(entry.getValue().contains(courseObj.getName())){
+										entry.getValue().remove(courseObj.getName());
+									}
 								}
+								removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
+								liPanelWithClose.removeFromParent();
+								lblGradeErrorMsg.setVisible(false);
 							}
-							removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
-							liPanelWithClose.removeFromParent();
-						}
-					});
-					selectedValues.get(selectedId).add(courseObj.getName());
-					liPanelWithClose.setId(codeId);
-					liPanelWithClose.setName(courseObj.getName());
-					liPanelWithClose.setRelatedId(selectedId);
-					ulSelectedItems.add(liPanelWithClose);
+						});
+						selectedValues.get(selectedId).add(courseObj.getName());
+						liPanelWithClose.setId(codeId);
+						liPanelWithClose.setName(courseObj.getName());
+						liPanelWithClose.setRelatedId(selectedId);
+						ulSelectedItems.add(liPanelWithClose);
+					}
 				}else{
+					panel.removeStyleName(ACTIVE);
 					if(selectedValues.get(selectedId).contains(courseObj.getName())){
 						selectedValues.get(selectedId).remove(courseObj.getName());
 					}
