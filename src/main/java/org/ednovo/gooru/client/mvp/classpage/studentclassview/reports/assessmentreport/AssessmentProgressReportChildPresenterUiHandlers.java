@@ -39,7 +39,7 @@ public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUi
 
 	public void setHtmltopdf(String string, String collectionTitle,boolean isClickedOnEmail);
 	
-	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId);
+	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId, String sessionId);
 
 	public void getCollectionScoreForSession(String collectionId, String classId, String userId, String sessionId, PrintUserDataDO printData);
 

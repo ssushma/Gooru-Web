@@ -31,21 +31,15 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePresenter;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter.IsWrapProxy;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.event.ActivateSearchBarEvent;
 import org.ednovo.gooru.client.event.ActivateSearchBarHandler;
-import org.ednovo.gooru.client.event.InvokeGooruGuideBubbleEvent;
-import org.ednovo.gooru.client.event.InvokeGooruGuideBubbleHandler;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.event.InvokeLoginHandler;
 import org.ednovo.gooru.client.event.InvokeRegisterHandler;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
-import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabCBundle;
-import org.ednovo.gooru.client.mvp.folder.toc.FolderContainerCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -54,11 +48,9 @@ import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
 import org.ednovo.gooru.client.mvp.home.event.PreFilterEventHandler;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkHandler;
-import org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.UserHeaderImageEventHandler;
-import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -81,7 +73,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  *
  */
 
-public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler{
+public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler{
 
 
 	private String  RESOURCE_SEARCH="resource-search";
@@ -103,7 +95,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 		super(view, proxy);
 		addRegisteredHandler(InvokeLoginEvent.TYPE, this);
 		addRegisteredHandler(ActivateSearchBarEvent.TYPE, this);
-		addRegisteredHandler(InvokeGooruGuideBubbleEvent.TYPE, this);
 		addRegisteredHandler(HomeEvent.TYPE, this);
 		addRegisteredHandler(SetDiscoverLinkEvent.TYPE, this);
 		addRegisteredHandler(PreFilterEvent.TYPE, this);
@@ -150,11 +141,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 		getView().activateSearchBar(activate);
 	}
 
-	@Override
-	public void invokeGooruGuideBubble() {
-//		getView().invokeGooruGuideBubble();
-
-	}
 
 	@Override
 	public void activateClassicButton(boolean activate) {
@@ -260,7 +246,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 					@Override
 					public void onSuccess(UserDo loggedInUser) {
 						AppClientFactory.setLoggedInUser(loggedInUser);
-						HomeCBundle.INSTANCE.css().ensureInjected();
 						AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 					}
 				});
@@ -285,7 +270,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 					@Override
 					public void onSuccess(UserDo loggedInUser) {
 						AppClientFactory.setLoggedInUser(loggedInUser);
-						HomeCBundle.INSTANCE.css().ensureInjected();
 						AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
 
@@ -302,17 +286,17 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	}
 
 	private void loadResponsiveCss(){
-		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:landscape){"+SearchCBundle.INSTANCE.getResponsive2Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsive3Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+SearchCBundle.INSTANCE.getResponsive4Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+SearchCBundle.INSTANCE.getResponsive5Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media screen and (min-width: 768px){"+SearchCBundle.INSTANCE.getResponsive6Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 1200px){"+SearchCBundle.INSTANCE.getResponsive7Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+SearchCBundle.INSTANCE.getResponsive8Style().getText()+"}");
-
-		SearchCBundle.INSTANCE.css().ensureInjected();
+//		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:landscape){"+SearchCBundle.INSTANCE.getResponsive2Style().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsive3Style().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+SearchCBundle.INSTANCE.getResponsive4Style().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+SearchCBundle.INSTANCE.getResponsive5Style().getText()+"}");
+//		StyleInjector.injectAtEnd("@media screen and (min-width: 768px){"+SearchCBundle.INSTANCE.getResponsive6Style().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (min-width: 1200px){"+SearchCBundle.INSTANCE.getResponsive7Style().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+SearchCBundle.INSTANCE.getResponsive8Style().getText()+"}");
+//
+//		SearchCBundle.INSTANCE.css().ensureInjected();
 
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+LoginPopUpCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+LoginPopUpCBundle.INSTANCE.getResponsive1Style().getText()+"}");
@@ -324,23 +308,23 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 
 		LoginPopUpCBundle.INSTANCE.css().ensureInjected();
 
-		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+AnalyticsTabCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+AnalyticsTabCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+AnalyticsTabCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+AnalyticsTabCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+//
+//		AnalyticsTabCBundle.INSTANCE.css().ensureInjected();
+//
+//		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+//
+//		CollectionSummaryIndividualCBundle.INSTANCE.css().ensureInjected();
 
-		AnalyticsTabCBundle.INSTANCE.css().ensureInjected();
+//		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+//
+//		CollectionPlaySummaryCBundle.INSTANCE.css().ensureInjected();
 
-		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-
-		CollectionSummaryIndividualCBundle.INSTANCE.css().ensureInjected();
-
-		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-
-		CollectionPlaySummaryCBundle.INSTANCE.css().ensureInjected();
-
-		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+FolderContainerCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-		FolderContainerCBundle.INSTANCE.css().ensureInjected();
+//		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+FolderContainerCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+//		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 	}
 
 }

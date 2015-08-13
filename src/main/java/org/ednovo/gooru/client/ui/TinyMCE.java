@@ -99,7 +99,7 @@ public class TinyMCE extends Composite{
         tinyMceTextArea = new TextArea();
         tinyMceTextArea.getElement().getStyle().setBorderStyle(BorderStyle.NONE);
         tinyMceTextArea.addStyleName("ta");
-        DOM.setElementAttribute(tinyMceTextArea.getElement(), "id", id);
+        tinyMceTextArea.getElement().setAttribute("id", id);
         panel.add(tinyMceTextArea);
         timymceWrapper.add(toolBarOpenButton);
         timymceWrapper.add(markAsBlankPanel);
@@ -447,7 +447,7 @@ public class TinyMCE extends Composite{
 				   Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
 			   }
 		   }catch(Exception e){
-			   AppClientFactory.printSevereLogger(e.getMessage());
+			   AppClientFactory.printSevereLogger("TinyMCE hideTinyMceToolBar:::"+e);
 		   }
 		   lastButtonId=id;
 	}
@@ -458,7 +458,7 @@ public class TinyMCE extends Composite{
 				 Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
 			}
 		}catch(Exception e){
-			 AppClientFactory.printSevereLogger(e.getMessage());
+			 AppClientFactory.printSevereLogger("TinyMCE hideTinyMceToolBar toolBarButtonVisible:::"+e);
 		}
 
 	}
@@ -473,7 +473,7 @@ public class TinyMCE extends Composite{
 			try{
 				Document.get().getElementById(lastButtonId+BUTTONID).getStyle().setDisplay(Display.NONE);
 			}catch(Exception e){
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("TinyMCE hideAllButtons:::"+e);
 			}
 		}
 	}
@@ -510,14 +510,14 @@ public class TinyMCE extends Composite{
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText("");
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("TinyMCE clearErrorMessage:::"+e);
 		}
 	}
 	public void setErrorMessage(String errorMessage,String tinyMceId){
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText(errorMessage);
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("TinyMCE setErrorMessage:::"+e);
 		}
 	}
 	public String getHiddenValue(String tinyMceId){

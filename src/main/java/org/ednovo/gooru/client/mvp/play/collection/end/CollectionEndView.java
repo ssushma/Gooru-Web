@@ -1886,15 +1886,15 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 
 	@Override
-	public void setReportContainer() {
+	public void setReportContainer(String sessionId) {
 		summaryReportView.getElement().getStyle().setPaddingTop(50, Unit.PX);
 		summaryReportView.clear();
-		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
-		String classId = AppClientFactory.getPlaceManager().getRequestParameter("cid");
-		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId");
-		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId");
-		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId");
-		summaryReportView.add(new AssessmentProgressReportChildView(id, classId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId, UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION));
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id","");
+		String classId = AppClientFactory.getPlaceManager().getRequestParameter("cid","");
+		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId","");
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId","");
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId","");
+		summaryReportView.add(new AssessmentProgressReportChildView(id, classId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId, UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION, sessionId));
 	}
 
 }

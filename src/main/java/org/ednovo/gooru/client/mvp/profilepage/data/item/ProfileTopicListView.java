@@ -541,6 +541,7 @@ public class ProfileTopicListView extends Composite{
 					final String collectionType=StringUtil.isEmpty(conceptDo.getType())?null:conceptDo.getType();
 					try {
 						StringUtil.setDefaultImages(conceptDo.getType(), collectionImage, "high");
+
 						//AppClientFactory.printSevereLogger("conceptDo.getThumbnails().getUrl()::"+conceptDo.getThumbnails().getUrl());
 						if(conceptDo.getThumbnails() != null && conceptDo.getThumbnails().getUrl() != null){
 							collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
@@ -554,6 +555,7 @@ public class ProfileTopicListView extends Composite{
 							StringUtil.setDefaultImages(collectionType, collectionImage, "high");
 						}
 						
+
 						if(imageHandler!=null) {
 							imageHandler.removeHandler();
 						}

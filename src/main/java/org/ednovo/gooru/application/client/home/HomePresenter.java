@@ -60,7 +60,6 @@ import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.home.SearchHomeFilterVc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
@@ -77,7 +76,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
@@ -104,9 +102,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 
 	@Inject
 	private UserServiceAsync userService;
-
-	@UiField
-	SearchHomeFilterVc searchHomeFilter;
 
 	public static final  Object CONTRIBUTORS_SLOT = new Object();
 
@@ -178,10 +173,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@ProxyCodeSplit
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
-
-
-
-//	PreFilterPopup preFilter = new PreFilterPopup();
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 

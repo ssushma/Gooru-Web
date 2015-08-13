@@ -66,18 +66,14 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
+						<g:Label styleName="errorMessage errorLblPosition" ui:field="errorMsgLbl" text="{i18n.GL3492}" visible="false"></g:Label>
 				</div>
+				
 				<div class="standarFooterContainer">
 					<div class="buttonGroupContainer">
 						<div class="col-md-10 col-sm-10 col-xs-10 filters">
 						    <div class="filterTags">
 						        <uc:UlPanel ui:field="selectedUlContainer"></uc:UlPanel>
-						     <!-- <ul>
-            					<li><a href="#">Earth Science:</a></li>
-            					<li><a href="#">Earth Science:</a></li>
-            					<li><a href="#">Earth Science</a></li>
-           						<li><a href="#">Engineering Design</a></li>
-          					</ul> -->
           					</div>
 						</div>
 

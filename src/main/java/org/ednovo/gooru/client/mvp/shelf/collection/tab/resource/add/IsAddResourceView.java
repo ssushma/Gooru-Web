@@ -100,8 +100,5 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	
 	void setDepthOfKnowledges(List<ListValuesDo> result);
 	
-	void hidePopUpStyle();
-	
-	void clearPopUpStyle();
 	
 }

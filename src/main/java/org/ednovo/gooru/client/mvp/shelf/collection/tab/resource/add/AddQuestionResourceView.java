@@ -2675,7 +2675,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 		}
 		catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("AddQuestionResourceView showEditQuestionResourceView:::"+e);
 		}
 
 		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();

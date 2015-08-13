@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -36,7 +36,6 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.effects.FontWeightEffect;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.EditAssessmentPopup;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
@@ -55,7 +54,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -66,12 +64,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class ShelfTreeWidget extends FocusPanel {
 
 	private static ShelfCollectionUiBinder uiBinder = GWT.create(ShelfCollectionUiBinder.class);
-	
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ShelfCollectionUiBinder extends UiBinder<Widget, ShelfTreeWidget> {
@@ -82,54 +80,54 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	@UiField
 	FocusPanel titleFocPanel;
-	
+
 	@UiField HTMLPanel panelToolTip;
-	
+
 	private String draggedCollectionId="";
-	
+
 	private FolderDo collectionDo;
-	
+
 	private List<FolderDo> folderListDoChild;
 
 	private ResourceDropController dropController;
-	
+
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
-	
+
 	private static ShelfTreeWidget shelfTreeWidget;
-	
+
 	private boolean isEditButtonSelected = false;
 
 	HTMLPanel htmlPanel;
 
 	private boolean isValue=true;
-	
+
 	private boolean isOpen=false;
-	
+
 	private int level = 1;
-	
+
 	private int position;
-	
+
 	private FolderDo folderDo;
 
 	private boolean folderIsOpened = false;
-	
+
 	private boolean collectionIsOpened = false;
-	
+
 	HashMap<String,String> urlParams = new HashMap<String,String>();
-	
+
 	HashMap<String,String> updateWidgetTitles = new HashMap<String,String>();
-	
+
 	private static final String O1_LEVEL = "o1";
-	
+
 	private static final String O2_LEVEL = "o2";
-	
+
 	private static final String O3_LEVEL = "o3";
-	
-	
+
+
 	private String widgetType;
-	
+
 	private static final String ID = "id";
-	
+
 	private static final String ASSESSMENT = "assessment";
 	private static final String FOLDER = "folder";
 	private static final String COURSE = "Course";
@@ -137,16 +135,16 @@ public class ShelfTreeWidget extends FocusPanel {
 	private static final String LESSON = "Lesson";
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT_URL = "assessment/url";
-	
+
 	EditAssessmentPopup editAssessmentPopup=null;
-	
+
 
 	/**
 	 * Class constructor , assign the {@link CollectionDo} instance
-	 * 
+	 *
 	 * @param collectionDo
 	 *            instance of {@link CollectionDo}
-	 * @param nextLevel 
+	 * @param nextLevel
 	 */
 	public ShelfTreeWidget(final FolderDo collectionDo, final int nextLevel, String type) {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -183,7 +181,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			showAssessmentUrlInfo(collectionDo);
 		}*/
 	}
-	
+
 	/**
 	 * Displays the updated info.
 	 * @param result {@link FolderDo}
@@ -191,7 +189,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	public void showAssessmentUrlInfo(FolderDo result) {
 		this.collectionDo = result;
 		if(result.getTitle()!=null){
-			titleLbl.setHTML(result.getTitle());	
+			titleLbl.setHTML(result.getTitle());
 		}
 		collectionDo.setGooruOid(result.getGooruOid());
 		collectionDo.setTitle(StringUtil.isEmpty(result.getTitle())?"":result.getTitle());
@@ -237,7 +235,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		}else{
 			panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		
+
 		if(collectionDo.getType()!=null)
 		{
 			if(collectionDo.getType().equalsIgnoreCase(COURSE)||collectionDo.getType().equalsIgnoreCase(UNIT)||collectionDo.getType().equalsIgnoreCase(LESSON)){
@@ -268,7 +266,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		}
 		}
 	}
-	
+
 	public void setData(String type,int nextLevel) {
 		if(type.equalsIgnoreCase(COURSE)){
 			titleFocPanel.addStyleName("course");
@@ -300,7 +298,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			//htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
 		}
 	}
-	
+
 	CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
 
 		@Override
@@ -326,7 +324,7 @@ public class ShelfTreeWidget extends FocusPanel {
    						}
    					}
    				}
-   			} 
+   			}
            }
 		}
 	};
@@ -341,7 +339,7 @@ public class ShelfTreeWidget extends FocusPanel {
 
 	/**
 	 * Update collection information
-	 * 
+	 *
 	 * @param collectionDo
 	 *            instance of {@link CollectionDo}
 	 */
@@ -361,11 +359,11 @@ public class ShelfTreeWidget extends FocusPanel {
 		//setOpenStatus(false);
 	}
 
-	
+
 	public boolean isOpen() {
 		return isOpen;
 	}
-	
+
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -380,11 +378,11 @@ public class ShelfTreeWidget extends FocusPanel {
 						isValue=true;
 					}
 					setOpen();
-				}  
+				}
 			}
 		}
 	}
-	
+
 	public void openFolderItem() {
 		String type=(collectionDo!=null&&collectionDo.getType()!=null)?collectionDo.getType():getTreeWidgetType();
 		if(FOLDER.equalsIgnoreCase(type) || COURSE.equalsIgnoreCase(type) || UNIT.equalsIgnoreCase(type)|| LESSON.equalsIgnoreCase(type)){
@@ -393,7 +391,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			}
 		}
 	}
-	
+
 	public void setOpen() {
 	    if (shelfTreeWidget == null || !shelfTreeWidget.equals(this)) {
             if (shelfTreeWidget != null) {
@@ -434,7 +432,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	public void glowTitle() {
 		new FontWeightEffect(titleLbl.getElement(), FontWeight.BOLD, FontWeight.NORMAL, 5000);
 	}
-	
+
 	public void setWidgetPositions(int level, int position, HashMap<String,String> urlParams) {
 		this.level = level;
 		this.position = position;
@@ -449,16 +447,16 @@ public class ShelfTreeWidget extends FocusPanel {
 			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			this.urlParams.put(O2_LEVEL, gooruoId);
 
-			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
+			this.urlParams.put(COURSE, urlParams.get(COURSE));
 			this.urlParams.put(UNIT, title);
 		}
 		if(level==3) {
 			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			this.urlParams.put(O3_LEVEL, gooruoId);
-			
-			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
-			this.urlParams.put(UNIT, urlParams.get(UNIT)); 
+
+			this.urlParams.put(COURSE, urlParams.get(COURSE));
+			this.urlParams.put(UNIT, urlParams.get(UNIT));
 			this.urlParams.put(LESSON, title);
 		}
 		if(level==4) {
@@ -466,42 +464,42 @@ public class ShelfTreeWidget extends FocusPanel {
 			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			this.urlParams.put(O3_LEVEL, urlParams.get(O3_LEVEL));
 			this.urlParams.put(ID, gooruoId);
-			
-			this.urlParams.put(COURSE, urlParams.get(COURSE)); 
-			this.urlParams.put(UNIT, urlParams.get(UNIT)); 
+
+			this.urlParams.put(COURSE, urlParams.get(COURSE));
+			this.urlParams.put(UNIT, urlParams.get(UNIT));
 			this.urlParams.put(LESSON, urlParams.get(LESSON));
 			this.urlParams.put(COLLECTION.equalsIgnoreCase(type)?COLLECTION:(ASSESSMENT.equalsIgnoreCase(type))?ASSESSMENT:ASSESSMENT_URL,  title);
-			
+
 //			this.urlParams.put("levelFourType", collectionDo.getTitle()+"#"+"Collection");
-			
-			
+
+
 		}
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	
+
 	public int getPosition() {
 		return position;
 	}
-	
+
 	public boolean getFolderOpenedStatus() {
 		return folderIsOpened;
 	}
-	
+
 	public void setFolderOpenedStatus(boolean folderIsOpened) {
 		this.folderIsOpened = folderIsOpened;
 	}
-	
+
 	public boolean getCollectionOpenedStatus() {
 		return collectionIsOpened;
 	}
-	
+
 	public void setCollectionOpenedStatus(boolean collectionIsOpened) {
 		this.collectionIsOpened = collectionIsOpened;
 	}
@@ -509,9 +507,9 @@ public class ShelfTreeWidget extends FocusPanel {
 	public void setCollectionItems(List<FolderDo> folderDo) {
 		setAllResources(folderDo);
 	}
-	
-	public void setAllResources(List<FolderDo> folderDo) { 
-		if (folderDo.size() > 0) { 
+
+	public void setAllResources(List<FolderDo> folderDo) {
+		if (folderDo.size() > 0) {
 			for(FolderDo folderItemDo : folderDo) {
 				//addCollectionItem(folderItemDo, false);
 			}
@@ -527,12 +525,12 @@ public class ShelfTreeWidget extends FocusPanel {
 		}
 	}
 
-	
+
 	public HashMap<String,String> getUrlParams() {
 		return urlParams;
 	}
-	
-	
+
+
 	public void setActiveStyle(boolean isActive) {
 		if(isActive){
 			titleFocPanel.addStyleName("active");
@@ -545,7 +543,7 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(docElement.length>0 && !(titleFocPanel.getStyleName().contains("folderStyle-collection"))){
 			if(subElementsCount == 0){
 				if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("block")){
-					docElement[0].getStyle().setDisplay(Display.NONE);	
+					docElement[0].getStyle().setDisplay(Display.NONE);
 				}
 			}
 			if(subElementsCount > 0){
@@ -571,30 +569,30 @@ public class ShelfTreeWidget extends FocusPanel {
 		} else if(getLevel()==2) {
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			params.put(O2_LEVEL, gooruoId);
-			
+
 			widgetTitles.put(COURSE, urlParams.get(COURSE));
 			widgetTitles.put(UNIT, title);
-			
+
 		} else if(getLevel()==3) {
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			params.put(O3_LEVEL, gooruoId);
-			
+
 			widgetTitles.put(COURSE, urlParams.get(COURSE));
 			widgetTitles.put(UNIT, urlParams.get(UNIT));
 			widgetTitles.put(LESSON, title);
-			
+
 		}
-		params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view")); 
+		params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 //		AppClientFactory.fireEvent(new SetFolderParentNameEvent(title));
-		
+
 	}
-	
+
 	public void openCollectionInShelf() {
     	Map<String,String> params = new HashMap<String,String>();
     	String gooruoId = collectionDo==null?null:collectionDo.getGooruOid();
-    	
+
     	if(getLevel()==2) {
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 		} else if(getLevel()==3) {
@@ -606,7 +604,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			params.put(O3_LEVEL, urlParams.get(O3_LEVEL));
 		}
     	params.put(ID, gooruoId);
-    	params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view")); 
+    	params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 	}
 //This methods not using
@@ -626,7 +624,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			});
 		}
 	}
-	
+
 	UpdateShelfFolderNameHandler updateShelfFolderName = new UpdateShelfFolderNameHandler(){
 		@Override
 		public void updateShelfFolderName(String folderName,String folderId) {
@@ -658,15 +656,15 @@ public class ShelfTreeWidget extends FocusPanel {
 	public void setTreeWidgetType(String widgetType) {
 		this.widgetType = widgetType;
 	}
-	
+
 	public String getTreeWidgetType(){
 		return widgetType;
 	}
-	
+
 	public void setUpdatedWidgetsTitleType( HashMap<String,String> updateWidgetTitles) {
 		this.updateWidgetTitles = updateWidgetTitles;
 	}
-	
+
 	public HashMap<String,String> getUpdatedWidgetsTitleType() {
 		return updateWidgetTitles;
 	}
@@ -678,7 +676,7 @@ public class ShelfTreeWidget extends FocusPanel {
 	public void setFolderListDo(List<FolderDo> folderListDoChild) {
 		this.folderListDoChild = folderListDoChild;
 	}
-	
+
 
 	public List<FolderDo> getFolderListDo() {
 		return folderListDoChild;

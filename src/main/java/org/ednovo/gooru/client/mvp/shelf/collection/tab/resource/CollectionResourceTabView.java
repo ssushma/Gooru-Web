@@ -964,7 +964,7 @@ public class CollectionResourceTabView extends
 
 		@Override
 		public void onClick(ClickEvent event) {
-			try{
+			try{ 
 			MixpanelUtil.Click_On_AddQuestion();
 			clickType = "Question";
 			hidePopup();
@@ -976,7 +976,7 @@ public class CollectionResourceTabView extends
 				displayNewResourcePopup();
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("CollectionResourceTabView collectionitems size:::"+e);
 		}
 			
 

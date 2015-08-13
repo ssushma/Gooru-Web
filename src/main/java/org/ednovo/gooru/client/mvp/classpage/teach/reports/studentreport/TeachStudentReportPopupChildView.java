@@ -85,7 +85,7 @@ public class TeachStudentReportPopupChildView extends ChildView<TeachStudentRepo
 				reportBodyBlock.add(new SlnUnitReportView(dataList.get(i),i+1));
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
-			reportBodyBlock.add(new AssessmentProgressReportChildView(assessmentId, classId, userId, courseId, unitId, lessonId, collectionType));
+			reportBodyBlock.add(new AssessmentProgressReportChildView(assessmentId, classId, userId, courseId, unitId, lessonId, collectionType, null));
 		}
 	}
 }

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -41,9 +41,7 @@ import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
@@ -57,10 +55,10 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
 /**
- * 
+ *
  * @fileName : AddAssignmentContainerPresenter.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -72,7 +70,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  * @Reviewer: Gooru Team
  */
 public class AddResourceContainerPresenter extends PresenterWidget<IsAddResourceContainerView> implements AddResourceContainerUiHandlers,ClientConstants{
-	
+
 	ResourceSearchResultDo searchResultDo =null;
 	String type =null;
 	String accessType =null;
@@ -82,21 +80,19 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	boolean isPlayer=false;
 	HashMap<String,String> successparams = new HashMap<String, String>();
 	HashMap<String, String>  urlParameters;
-	CollectionFormPresenter collectionFormPresenter;
 	private String parentId=null;
 	 private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	@Inject
-	public AddResourceContainerPresenter(EventBus eventBus, IsAddResourceContainerView view,CollectionFormPresenter collectionFormPresenter) {
+	public AddResourceContainerPresenter(EventBus eventBus, IsAddResourceContainerView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		this.collectionFormPresenter = collectionFormPresenter;
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
 	}
-	
+
 	@Override
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
 		if(COLLECTION.equalsIgnoreCase(searchType)){
@@ -132,7 +128,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			}
 		});
 	}
-	
+
 	@Override
 	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType) {
 		// TODO Auto-generated method stub
@@ -149,7 +145,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		getWorkspaceData(0,20,true,searchType);
 		//getView().setCollectionSearchResultDo(this.collectionsearchResultDo);
 	}
-	
+
 	@Override
 	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title) {
 		if(searchType.equalsIgnoreCase("resource")){
@@ -172,7 +168,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 									// TODO Auto-generated method stub
 								}
 							});
-							//	AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,collectionItemDo.getResource().getGooruOid()));	
+							//	AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,collectionItemDo.getResource().getGooruOid()));
 						}
 						else{
 							AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
@@ -185,7 +181,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 					}
 					}
     		});
-			
+
 				}else{
 					getView().restrictionToAddResourcesData("Please select collection");
 					getView().getButtonVisiblity();
@@ -206,8 +202,8 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 				params.put("from", "AddResourcePresenter");
 				final CollectionDo collection = new CollectionDo();
 				collection.setGooruOid(searchResultDo.getGooruOid());
-				
-				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),result.getGooruOid(),false,new SimpleAsyncCallback<CollectionDo>() { 
+
+				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),result.getGooruOid(),false,new SimpleAsyncCallback<CollectionDo>() {
 					@Override
 					public void onSuccess(CollectionDo result1) {
 						AppClientFactory.fireEvent(new RefreshFolderItemEvent(result, RefreshFolderType.INSERT, params,result1));
@@ -217,10 +213,10 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 						getView().enableSuccessView(result.getTitle(),result.getGooruOid(),successparams);
 					}
 				});
-				//AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),result.getGooruOid())); 
+				//AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),result.getGooruOid()));
 			}
 		});
-		
+
 	}
 	@Override
 	public Anchor getAddButton() {
@@ -243,14 +239,14 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	public void setplayerStyle() {
 		isPlayer=true;
 		getView().setPlayerStyle(isPlayer);
-		
+
 	}
 
 	@Override
 	public void removePlayerStyle() {
 		isPlayer=false;
 		getView().removePlayerStyle(isPlayer);
-		
+
 	}
 
 	public void cleartheSelecteGooruOid() {
@@ -262,7 +258,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		getView().clearSelectedFolderId();
 		getView().getButtonVisiblity();
 	}
-	
+
 	@Override
 	public Button getCancelButton() {
 		// TODO Auto-generated method stub
@@ -287,7 +283,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		final CollectionDo collection = new CollectionDo();
 		if(currentsearchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(searchResultDo.getGooruOid());
-			collectionFormPresenter.copyCollection(this.searchResultDo.getResourceTitle(), searchResultDo.getGooruOid());
+//			collectionFormPresenter.copyCollection(this.searchResultDo.getResourceTitle(), searchResultDo.getGooruOid());
 			getView().getButtonVisiblity();
 	}
 }
@@ -297,7 +293,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		getView().hideNoCollectionsMsg();
 		getView().showAndHideMyCollections();
 	}
-	
+
 	@Override
 	public void addCollectionToFolder(final String selectedFolderOrCollectionid,String searchType, final String title, final int folerLevel,HashMap<String, String> urlparams) {
 		this.urlParameters=urlparams;
@@ -310,7 +306,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			O1_LEVEL_VALUE = urlparams.get("o1");
 			O2_LEVEL_VALUE = urlparams.get("o2");
 			O3_LEVEL_VALUE = urlparams.get("o3");
-			
+
 			if(O3_LEVEL_VALUE!=null){
 				parentId=O3_LEVEL_VALUE;
 			}else if(O2_LEVEL_VALUE!=null){
@@ -318,7 +314,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			}else if(O1_LEVEL_VALUE!=null){
 				parentId=O1_LEVEL_VALUE;
 			}
-			AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
+			AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),parentId,false,new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					FolderDo folderDo=getFolderDo(result);
@@ -332,19 +328,19 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 					if(O1_LEVEL_VALUE!=null) {
 						params.put("o1", O1_LEVEL_VALUE);
 					}
-					AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
+//					AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
 					getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
 				}
 			});
-			
+
 		}else{
 			getView().restrictionToAddResourcesData("Please select a folder to add collection");
 			getView().getButtonVisiblity();
 		}
 	}
-		
+
 	}
-	
+
 	public FolderDo getFolderDo(CollectionDo collectionDo) {
 		FolderDo folderDo = new FolderDo();
 		folderDo.setGooruOid(collectionDo.getGooruOid());
@@ -371,7 +367,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		}
 		return folderDo;
 	}
-	
+
 	@Override
 	public boolean validateIsAssessments(String collectionType) {
 		boolean flag=false;
