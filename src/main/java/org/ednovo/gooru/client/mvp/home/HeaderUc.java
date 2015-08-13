@@ -270,8 +270,6 @@ public class HeaderUc extends Composite
 
 	//OrganizeToolTip organizeToolTip;
 
-	static PreFilterPopup prefilter=null;
-
 	static String stadardCode="";
 
 	boolean isGooruGuidePanelOpen = false;
@@ -408,10 +406,6 @@ public class HeaderUc extends Composite
 					getEditSearchTxtBox().hideSuggestionList();
 				}
 
-				/*arrowLbl.setVisible(true);*/
-				if(prefilter!=null){
-					prefilter.hide();
-				}
 				if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 					getEditSearchTxtBox().hideSuggestionList();
 				}
@@ -457,7 +451,7 @@ public class HeaderUc extends Composite
 						else
 						{
 							//else is for * query search.
-							if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+							if(getEditSearchTxtBox().getText().isEmpty())
 							{
 								getEditSearchTxtBox().setText("");
 								Map<String, String> params = new HashMap<String, String>();
@@ -1396,9 +1390,6 @@ public class HeaderUc extends Composite
 						Map<String, String> map = params;
 						map.put("query", queryVal);
 						editSearchTxtBox.setText(queryVal);
-						if(prefilter!=null){
-							prefilter.hide();
-						}
 
 						AppClientFactory.getPlaceManager().revealPlace(
 								PlaceTokens.SEARCH_COLLECTION, params);
@@ -1488,36 +1479,6 @@ public class HeaderUc extends Composite
 	 */
 	public Map<String, String> updateParams(Map<String, String> params) {
 		params.clear();
-		if(prefilter!=null){
-			params=prefilter.getFilter();
-			String subject = params.get(IsGooruSearchView.SUBJECT_FLT);
-
-			if (subject != null) {
-				params.put(IsGooruSearchView.SUBJECT_FLT, subject);
-			}else{
-				if(AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.SUBJECT_FLT)!=null)
-				{
-					subject = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.SUBJECT_FLT);
-				}
-				else
-				{
-				params.remove(IsGooruSearchView.SUBJECT_FLT);
-				}
-			}
-			String grade = params.get(IsGooruSearchView.GRADE_FLT);
-			if (grade != null) {
-				params.put(IsGooruSearchView.GRADE_FLT, grade);
-			}else{
-				if(AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.GRADE_FLT)!=null)
-				{
-					grade = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.GRADE_FLT);
-				}
-				else
-				{
-				params.remove(IsGooruSearchView.GRADE_FLT);
-				}
-			}
-		}
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		String collectionType = AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT,null);
@@ -1662,10 +1623,6 @@ public class HeaderUc extends Composite
 				@Override
 				public void onSuccess() {
 
-					//arrowLbl.setVisible(true);
-					if(prefilter!=null){
-						prefilter.hide();
-					}
 					if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 						if (getEditSearchTxtBox().getText() != null
 								&& getEditSearchTxtBox().getText().length() > 0) {
@@ -2078,7 +2035,7 @@ public class HeaderUc extends Composite
 		else
 		{
 			//else is for * query search.
-			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			if(getEditSearchTxtBox().getText().isEmpty())
 			{
 				getEditSearchTxtBox().setText("");
 				Map<String, String> params = new HashMap<String, String>();
@@ -2092,15 +2049,6 @@ public class HeaderUc extends Composite
 
 		hasAutoSelected=true;
 		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
-	}
-
-
-	/*public  Label getArrowLbl() {
-		return arrowLbl;
-	}*/
-
-	public static void setPrefilterObj(PreFilterPopup prefilterObj) {
-		prefilter=prefilterObj;
 	}
 
 	public void updateHeaderProfileImage(String imageUrl) {

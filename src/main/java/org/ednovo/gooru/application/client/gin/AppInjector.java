@@ -54,7 +54,6 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPrese
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
-import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
@@ -181,8 +180,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<StudentAssignmentPresenter> getStudentAssignmentPresenter();
 
 	AsyncProvider<ProfilePagePresenter> getProfilePagePresenter();
-
-	AsyncProvider<DeviceSupportPresenter> getDeviceSupportPresenter();
 
 	AsyncProvider<CollectionAssignTabPresenter> getCollectionAssignViewTabPresenter();
 
