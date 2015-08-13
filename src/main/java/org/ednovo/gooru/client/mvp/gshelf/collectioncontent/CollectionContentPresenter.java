@@ -125,14 +125,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		super.onReveal();
 		getView().onLoad();
 	}
-	
-	@Override
-	public void loadAddResourcePopup(){
-		addResourcePresenter.setCollectionDo(new CollectionDo());
-    	addResourcePresenter.setCollectionDoAndType(new CollectionDo(), "Question");
-    	addToPopupSlot(addResourcePresenter);
-    	addResourcePresenter.getView().hidePopUpStyle();
-	}
 
 	@Override
 	public void setData(final FolderDo folderDo) {
@@ -223,7 +215,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
     public void addResourcePopup(CollectionDo collectionDo, String clickType) {
-		addResourcePresenter.getView().clearPopUpStyle();
     	addResourcePresenter.setCollectionDo(collectionDo);
     	addResourcePresenter.setCollectionDoAndType(collectionDo, clickType);
         addToPopupSlot(addResourcePresenter);
@@ -383,7 +374,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 	@Override
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo) {
-		 addResourcePresenter.getView().clearPopUpStyle();
 		 addResourcePresenter.setCollectionItemDo(collectionItemDo);
 		 addResourcePresenter.setCollectionDoAndType(null, "QuestionEdit");
 		 addToPopupSlot(addResourcePresenter);

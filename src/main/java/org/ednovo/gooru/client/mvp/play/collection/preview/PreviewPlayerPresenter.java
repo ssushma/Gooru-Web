@@ -66,7 +66,6 @@ import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPres
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPreviewPlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -109,8 +108,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
     private CollectionPlayerTocPresenter collectionPlayerTocPresenter;
 
     private ResourceNarrationPresenter resourceNarrationPresenter;
-
-    private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
 
     private CollectionSharePresenter collectionSharePresenter;
 
@@ -383,7 +380,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			CollectionPlayerTocPresenter collectionPlayerTocPresenter,CollectionSharePresenter collectionSharePresenter,
 			ResourceInfoPresenter resourceInfoPresenter,ResourceNarrationPresenter resourceNarrationPresenter,
 			EventBus eventBus,IsPreviewPlayerView view, IsPreviewPlayerProxy proxy, AddResourceCollectionPresenter addResourcePresenter,
-     		AddCollectionPresenter addCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,CollectionFlagPresenter collectionFlagPresenter,
+     		AddCollectionPresenter addCollectionPresenter,CollectionFlagPresenter collectionFlagPresenter,
      		ResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
@@ -395,7 +392,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		this.resourceInfoPresenter=resourceInfoPresenter;
 		this.addCollectionPresenter=addCollectionPresenter;
 		this.addResourcePresenter=addResourcePresenter;
-		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.collectionFlagPresenter=collectionFlagPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
 		this.signUpViewPresenter=signUpViewPresenter;
@@ -408,7 +404,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		collectionPlayerTocPresenter.setPreviewPlayerPresenter(this);
 		addResourcePresenter.getAddCollectionViewButton().setVisible(false);
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
-		addResourcePresenter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
 	}
 
 	@ProxyCodeSplit
@@ -1425,16 +1420,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		};
 		popup.setWidgetMode(widgetMode);
 		popup.setGlassEnabled(true);
-	}
-
-	public class ShowNewCollectionWidget implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			String resourceId=collectionItemDo.getResource().getGooruOid();
-			addToPopupSlot(collectionFormInPlayPresenter);
-			collectionFormInPlayPresenter.setResourceUid(resourceId);
-			collectionFormInPlayPresenter.setPlayerType(PREVIEW);
-		}
 	}
 
 	public void updateAddResourceCollectionWidget(String collectionId){

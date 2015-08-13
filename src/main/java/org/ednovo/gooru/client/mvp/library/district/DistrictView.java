@@ -141,7 +141,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 					widget.addStyleName(ACTIVE_STYLE);
 				}
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("DistrictView setFeaturedCourseWidgets:::"+e);
 			}
 			districtFeaturedView.getfeaturedCoursePanel().addClickHandler(new ClickHandler() {
 				@Override
@@ -261,7 +261,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("DistrictView setTopicListData:::"+e);
 		}
 	}
 
@@ -287,7 +287,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("DistrictView setTopicListData:::"+e);
 		}
 	}
 	
@@ -487,7 +487,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 						loadingPanel(false);
 					} catch (Exception e) {
 						loadingPanel(false);
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("DistrictView getLibraryPaginationWorkspace:::"+e);
 					}
 				}
 			});

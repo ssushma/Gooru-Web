@@ -200,7 +200,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 				selectedProfilePageCollectionChild.setOpenFolderStyle(true);
 			}
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("ProfilePageListView refreshProfileList:::"+e);
 		}
 	}
 	
