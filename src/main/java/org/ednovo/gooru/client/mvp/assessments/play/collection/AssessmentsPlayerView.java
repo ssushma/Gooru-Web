@@ -88,13 +88,13 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 	@UiField StudyPlayerFooterView footerView;
 
-	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
+	@UiField HTMLPanel androidSectiondiv;
 
-	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
+	@UiField com.google.gwt.user.client.ui.Image closeAndriodBtn;
 
-	@UiField Anchor viewAnchor,menuButton;
+	@UiField Anchor menuButton;
 
-	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+	@UiField HTMLPanel msgPanel,msglinkPanel;
 
 	@UiField Label lblSeeMore;
 
@@ -174,18 +174,15 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			 ipadSectiondiv.setVisible(true);
 			 androidSectiondiv.setVisible(false);
 
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
 		  }
 		  else
 		  {
-			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
 
 		  }
@@ -215,17 +212,10 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 
 
 
-	@UiHandler("closeIpadBtn")
-	public void onIpadCloseClick(ClickEvent clickEvent){
-		 ipadSectiondiv.setVisible(false);
-		  androidSectiondiv.setVisible(false);
-		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		  AssessmentsResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
-	}
+
 
 	@UiHandler("closeAndriodBtn")
 	public void onAndriodCloseClick(ClickEvent clickEvent){
-		 ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
 		  AssessmentsResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
@@ -809,8 +799,6 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		  menuButton.getElement().setId("toggle-menu");
 		  androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
 		  closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
-		  ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
-		  closeIpadBtn.getElement().setId("imgCloseIpadBtn");
 		  headerView.getElement().setId("studnetPlayerHeaderHeaderView");
 		  navigationContainer.getElement().setId("fpnlNavigationContainer");
 		  playerBodyContainer.getElement().setId("fpnlPlayerBodyContainer");
@@ -824,26 +812,6 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		  msgPanel.getElement().setId("pnlMsgPanel");
 		  msgPanel.getElement().setAttribute("alt",i18n.GL1983());
 		  msgPanel.getElement().setAttribute("title",i18n.GL1983());
-
-		  gooruPanel.getElement().setInnerHTML(i18n.GL0733());
-		  gooruPanel.getElement().setId("pnlGooruPanel");
-		  gooruPanel.getElement().setAttribute("alt",i18n.GL0733());
-		  gooruPanel.getElement().setAttribute("title",i18n.GL0733());
-
-		  ednovoPanel.getElement().setInnerHTML(i18n.GL1985());
-		  ednovoPanel.getElement().setId("pnlEdnovoPanel");
-		  ednovoPanel.getElement().setAttribute("alt",i18n.GL1985());
-		  ednovoPanel.getElement().setAttribute("title",i18n.GL1985());
-
-		  appstorePanel.getElement().setInnerHTML(i18n.GL1986());
-		  appstorePanel.getElement().setId("pnlAppstorePanel");
-		  appstorePanel.getElement().setAttribute("alt",i18n.GL1986());
-		  appstorePanel.getElement().setAttribute("title",i18n.GL1986());
-
-		  viewAnchor.setText(i18n.GL1428());
-		  viewAnchor.getElement().setId("lnkViewAnchor");
-		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
-		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
 	}
 
 

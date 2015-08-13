@@ -1,8 +1,5 @@
 @charset "utf-8";
 /* CSS Document */
-body{
-	font-family:Arial, Helvetica, sans-serif !important;
-}
 .wrapper {
 	overflow: hidden;
 	position: relative;
@@ -864,7 +861,7 @@ footer ul li a {
 }
 
 #gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a, #gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a:hover, #gooruSearchMainContainer .subjectContainer .dropdown-menu>.active>a:focus {
-	background: #87badd url(../images/checkmark.png) no-repeat 95% 5px;
+	background: #87badd url(${cdn.endpoint}/images/checkmark.png) no-repeat 95% 5px;
 	color: #fff;
 }
 

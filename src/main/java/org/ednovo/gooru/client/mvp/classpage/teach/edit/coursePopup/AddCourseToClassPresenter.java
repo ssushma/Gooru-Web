@@ -37,7 +37,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.shared.GWT;
@@ -69,28 +68,26 @@ public class AddCourseToClassPresenter extends PresenterWidget<IsAddCourseToClas
 	String accessType =null;
 	String collectionId = null;
 	HashMap<String, String>  urlParameters;
-	CollectionFormPresenter collectionFormPresenter;
 	CollectionResourceWidget collectionResourceWidget=null;
 	CollectionSearchWidget collectionSearchWidget=null;
 	HashMap<String,String> successparams = new HashMap<String, String>();
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	String classId;
 
 	@Inject
-	public AddCourseToClassPresenter(EventBus eventBus, IsAddCourseToClassView view, CollectionFormPresenter collectionFormPresenter) {
+	public AddCourseToClassPresenter(EventBus eventBus, IsAddCourseToClassView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.classId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
-		this.collectionFormPresenter = collectionFormPresenter;
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
 	}
-	
+
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
 		getView().clearUrlParams();
 		if(searchType.equalsIgnoreCase("class")){
@@ -105,7 +102,7 @@ public class AddCourseToClassPresenter extends PresenterWidget<IsAddCourseToClas
 			}
 		});
 	}
-	
+
 	@Override
 	public Anchor getAddButton() {
 		return getView().getAddButton();
@@ -127,7 +124,7 @@ public class AddCourseToClassPresenter extends PresenterWidget<IsAddCourseToClas
 	@Override
 	public void connectCourseToClass(final String classId, final String courseId) {
 		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId,null,null,null,null,null,courseId, new AsyncCallback<ClasspageDo>() {
-			
+
 			@Override
 			public void onSuccess(ClasspageDo result) {
 				HashMap<String, String> params = new HashMap<String, String>();
@@ -137,10 +134,10 @@ public class AddCourseToClassPresenter extends PresenterWidget<IsAddCourseToClas
 				params.put(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE);
 				getView().displaySuccessPopup("Class", classId, params);
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
-				
+
 			}
 		});
 	}

@@ -49,7 +49,6 @@ import org.ednovo.gooru.application.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerPresenter.BackToClassHandler;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
@@ -76,11 +75,9 @@ import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
@@ -117,7 +114,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
-public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPlayerView, CollectionPlayerPresenter.IsCollectionPlayerProxy> implements CollectionPlayerUiHandlers,RefreshDisclosurePanelHandler,ClientConstants{
+public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPlayerView, CollectionPlayerPresenter.IsCollectionPlayerProxy> implements CollectionPlayerUiHandlers,ClientConstants{
 
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -135,8 +132,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
     private ResourceNarrationPresenter resourceNarrationPresenter;
 
-    private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
-
     private CollectionSharePresenter collectionSharePresenter;
 
     private ResourceInfoPresenter resourceInfoPresenter;
@@ -152,8 +147,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     private ResourceFlagPresenter resourceFlagPresenter;
 
     private SignUpPresenter signUpViewPresenter = null;
-
-    private AddResourceContainerPresenter addResourceContainerPresenter;
 
     SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
 
@@ -427,8 +420,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			CollectionPlayerTocPresenter collectionPlayerTocPresenter,CollectionSharePresenter collectionSharePresenter,
 			ResourceInfoPresenter resourceInfoPresenter,ResourceNarrationPresenter resourceNarrationPresenter,
 			EventBus eventBus,IsCollectionPlayerView view, IsCollectionPlayerProxy proxy, AddResourceCollectionPresenter addResourcePresenter,
-     		AddCollectionPresenter addCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,CollectionFlagPresenter collectionFlagPresenter,
-     		ResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter,CollectionEndPresenter collectionEndPresenter,AddResourceContainerPresenter addResourceContainerPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ShelfMainPresenter shelfMainPresenter) {
+     		AddCollectionPresenter addCollectionPresenter,CollectionFlagPresenter collectionFlagPresenter,
+     		ResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter,CollectionEndPresenter collectionEndPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ShelfMainPresenter shelfMainPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.metadataPresenter=metadataPresenter;
@@ -439,12 +432,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.resourceInfoPresenter=resourceInfoPresenter;
 		this.addCollectionPresenter=addCollectionPresenter;
 		this.addResourcePresenter=addResourcePresenter;
-		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.collectionFlagPresenter=collectionFlagPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
 		this.signUpViewPresenter=signUpViewPresenter;
 		this.collectionEndPresenter=collectionEndPresenter;
-		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.shelfMainPresenter=shelfMainPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
@@ -462,11 +453,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		addResourcePresenter.getAddCollectionViewButton().setVisible(false);
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
 
-		addResourceContainerPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget());
 		getView().removeStudentViewButton();
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
-		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
 		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
@@ -1764,16 +1753,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		popup.setGlassEnabled(true);
 	}
 
-	public class ShowNewCollectionWidget implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-
-			String resourceId=collectionItemDo.getResource().getGooruOid();
-			addToPopupSlot(collectionFormInPlayPresenter);
-			collectionFormInPlayPresenter.setResourceUid(resourceId);
-			collectionFormInPlayPresenter.setPlayerType("collection");
-		}
-	}
 
 	public void updateAddResourceCollectionWidget(String collectionId){
 		addResourcePresenter.updateWorkSpaceLink(collectionId);
@@ -2516,13 +2495,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 	}
 
-	@Override
-	public void refreshDisclosurePanelinSearch(String collectionId) {
-
-		addResourceContainerPresenter.getfolderTreePanel().clear();
-
-		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(getPlaceManager().getRequestParameter("rid", null)));
-	}
 	public void getResourceTagsToDisplay(String resourceId){
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.getResourceTagsToDisplay(resourceId);
