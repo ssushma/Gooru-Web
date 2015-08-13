@@ -2393,7 +2393,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public ArrayList<ResourceCollDo> getResourceBasedUsersDetails(String resourceId, int offSet, int limit) {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_RESOURCE_BASED_USERS,resourceId, getLoggedInSessionToken(),String.valueOf(offSet),String.valueOf(limit));
-		//getLogger().info("getResourceBasedUsersDetails::"+url);
+		logger.info("getResourceBasedUsersDetails::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation= jsonResponseRep.getJsonRepresentation();
 		return deserializeUserCollections(jsonRepresentation);
