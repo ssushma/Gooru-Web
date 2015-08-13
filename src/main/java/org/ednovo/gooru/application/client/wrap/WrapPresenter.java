@@ -37,14 +37,9 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.event.ActivateSearchBarEvent;
 import org.ednovo.gooru.client.event.ActivateSearchBarHandler;
-import org.ednovo.gooru.client.event.InvokeGooruGuideBubbleEvent;
-import org.ednovo.gooru.client.event.InvokeGooruGuideBubbleHandler;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.event.InvokeLoginHandler;
 import org.ednovo.gooru.client.event.InvokeRegisterHandler;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
-import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabCBundle;
-import org.ednovo.gooru.client.mvp.folder.toc.FolderContainerCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -53,11 +48,9 @@ import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
 import org.ednovo.gooru.client.mvp.home.event.PreFilterEventHandler;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkHandler;
-import org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.UserHeaderImageEventHandler;
-import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -80,7 +73,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  *
  */
 
-public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler{
+public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler{
 
 
 	private String  RESOURCE_SEARCH="resource-search";
@@ -102,7 +95,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 		super(view, proxy);
 		addRegisteredHandler(InvokeLoginEvent.TYPE, this);
 		addRegisteredHandler(ActivateSearchBarEvent.TYPE, this);
-		addRegisteredHandler(InvokeGooruGuideBubbleEvent.TYPE, this);
 		addRegisteredHandler(HomeEvent.TYPE, this);
 		addRegisteredHandler(SetDiscoverLinkEvent.TYPE, this);
 		addRegisteredHandler(PreFilterEvent.TYPE, this);
@@ -149,11 +141,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 		getView().activateSearchBar(activate);
 	}
 
-	@Override
-	public void invokeGooruGuideBubble() {
-//		getView().invokeGooruGuideBubble();
-
-	}
 
 	@Override
 	public void activateClassicButton(boolean activate) {

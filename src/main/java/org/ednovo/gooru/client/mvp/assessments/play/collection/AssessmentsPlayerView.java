@@ -30,12 +30,10 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePopupViewWithHandlers;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceEvent;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.footer.StudyPlayerFooterView;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.header.StudyPlayerHeaderView;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
@@ -677,7 +675,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 				if(resourcePlayerFirstTimeUser==null){
 					logOutToolTip=new GlobalTooltipWithButton(i18n.GL1614(),i18n.GL1615(), i18n.GL0543());
 					logOutToolTip.getCloseButton().addClickHandler(new StoreCookieHandler());
-					logOutToolTip.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
+					logOutToolTip.setGlassStyleName("playerAddToolTipGlassStyle");
 					logOutToolTip.setStyleName("");
 					logOutToolTip.getElement().getStyle().setZIndex(999999);
 					logOutToolTip.getElement().getStyle().clearLeft();

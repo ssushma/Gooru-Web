@@ -42,7 +42,6 @@ import org.ednovo.gooru.application.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.application.shared.model.library.SubjectDo;
 import org.ednovo.gooru.application.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
-import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -51,13 +50,11 @@ import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
-import org.ednovo.gooru.client.mvp.home.PreFilterPopup;
 import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 import org.ednovo.gooru.client.mvp.home.SampleReportView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -137,18 +134,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	String jsonDataString = null;
 
 	boolean isGetLibApiCalling = false;
-
-	private static final String USER_META_ACTIVE_FLAG = "0";
-
-	PreFilterPopup preFilter =	null;
-
-	private boolean isCCSSAvailable =false;
-	private boolean isNGSSAvailable =false;
-	private boolean isTEKSAvailable =false;
-	private boolean isCAAvailable =false;
-
-	private boolean isArrowIcon = false;
-	private boolean isOpenPrefilterPopup = true;
 
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
@@ -982,53 +967,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public void setBtnSignUp(Button btnSignUp) {
 		this.btnSignUp = btnSignUp;
 	}
-
-
-	/**
-	 * @description This class is used to show the pre-filter search popup
-	 * @author search team
-	 * @date 27-Nov-2014
-	 */
-	public class showPrefilterPopup implements ClickHandler{
-
-
-		@Override
-		public void onClick(ClickEvent event) {
-			GWT.runAsync(new SimpleRunAsyncCallback() {
-
-				@Override
-				public void onSuccess() {
-
-					if(preFilter!=null && preFilter.isShowing()){
-						preFilter.hide();
-						isArrowIcon=true;
-					}else{
-						isArrowIcon=true;
-						//if(preFilter==null){
-						//}
-						/*HeaderUc.setPrefilterObj(preFilter);
-					//	preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+40);
-						preFilter.setFilter();
-						preFilter.show();
-						preFilter.hidePlanels();
-						ClickHandler handler = new ClickHandler() {
-							@Override
-							public void onClick(ClickEvent event) {
-								preFilter.show();
-								isArrowIcon = true;
-							}
-						};
-						preFilter.addDomHandler(handler, ClickEvent.getType());*/
-
-					}
-
-
-				}
-			});
-		}
-
-	}
-   
 }
 
 
