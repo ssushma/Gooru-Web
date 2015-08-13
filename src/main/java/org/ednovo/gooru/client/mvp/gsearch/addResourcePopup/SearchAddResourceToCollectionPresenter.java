@@ -45,7 +45,6 @@ import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
@@ -87,7 +86,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	private String unitId=null;
 	private String lessonId=null;
 	private String collectionTitle="";
-	CollectionFormPresenter collectionFormPresenter;
 	CollectionResourceWidget collectionResourceWidget=null;
 	CollectionSearchWidget collectionSearchWidget=null;
 	private static final String ASSESSMENT = "assessment";
@@ -103,10 +101,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Inject
-	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view, CollectionFormPresenter collectionFormPresenter) {
+	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		this.collectionFormPresenter = collectionFormPresenter;
 	}
 
 	@Override
@@ -137,8 +134,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		getView().setDefaultPanelVisibility(false);
 		getWorkspaceData(0,20,true,searchType);
 	}
-	
-	
+
+
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
 		if(clearShelfPanel){
 			getView().clearUrlParams();
@@ -442,7 +439,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 						getView().hidePopup();
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 					}else{
 						getView().displaySuccessPopup("My Content", result.getGooruOid(),params ,"collection",folderDo);
 					}
@@ -491,7 +488,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 						getView().hidePopup();
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 					}else{
 						getView().displaySuccessPopup("My Content", result.getGooruOid(),params ,"collection",folderDo);
 					}
@@ -532,7 +529,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 						getView().hidePopup();
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 					}else{
 						getView().displaySuccessPopup("My Content", getCollectionGooruId(),params ,"collection",folderDo);
 					}
@@ -568,7 +565,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 						getView().hidePopup();
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 					}else{
 						getView().displaySuccessPopup("My Content", getCollectionGooruId(),params ,"collection",folderDo);
 					}
@@ -580,7 +577,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			}
 		});
 	}
-	
+
 	public void selectedCopyOrMoveStatus(boolean isCopySelected,boolean isMoveSelected) {
 		getView().setCopyAndMoveStatus(isCopySelected,isMoveSelected);
 	}
@@ -602,7 +599,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			getView().getMycollectionsDefaultLbl().getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
-	
+
 	public void setCollectionTitle(String collectionTitle) {
 		this.collectionTitle=collectionTitle;
 	}

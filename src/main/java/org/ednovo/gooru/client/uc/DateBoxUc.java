@@ -235,7 +235,7 @@ public class DateBoxUc extends FlowPanel{
 					}
 				}
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("DateBoxUc onDateChange::::"+e);
 			}
 		}
 	}

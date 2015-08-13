@@ -1,7 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:with type="org.ednovo.gooru.application.client.home.HomeCBundle" field="res" />
 	<ui:style>
 		.guideInfoArrow{
 			background: url("images/Collection-Search/standards-arrow.png") repeat scroll -96px -98px transparent;

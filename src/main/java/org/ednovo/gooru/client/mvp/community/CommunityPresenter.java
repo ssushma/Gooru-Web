@@ -30,7 +30,6 @@ import org.ednovo.gooru.client.mvp.authentication.uc.StudentSignUpUc;
 import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.home.SearchHomeFilterVc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
@@ -51,7 +50,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
@@ -97,9 +95,6 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 
 	@Inject
 	private UserServiceAsync userService;
-
-	@UiField
-	SearchHomeFilterVc searchHomeFilter;
 
 	SignUpCompleteProfilePresenter signUpCompletePresenter = null;
 

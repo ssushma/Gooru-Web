@@ -704,8 +704,6 @@ public abstract class LoginPopupUc extends PopupPanel{
 				popupview.show();
 				popupview.center();*/
 
-				//new TryItOutVc();
-
 				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo newUser) {
