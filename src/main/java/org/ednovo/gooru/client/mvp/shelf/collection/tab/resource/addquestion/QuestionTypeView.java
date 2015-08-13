@@ -2142,7 +2142,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 			}catch(Exception e){
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("QuestionTypeView setEditData:::"+e.getMessage());
 			}
 	}
 

@@ -177,7 +177,7 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 									}
 								});
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("SettingEmailEditLabelUc switchToLabel:::"+e);
 			}
 		}
 

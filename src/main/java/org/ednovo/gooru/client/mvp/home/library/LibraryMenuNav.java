@@ -225,7 +225,7 @@ public class LibraryMenuNav extends Composite{
 			try {
 				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryMenuNav :::"+e);
 			}
 		}
 		
@@ -342,7 +342,7 @@ public class LibraryMenuNav extends Composite{
 					getStandardPrefCode(standPrefCode);
 				}
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryMenuNav getCode:::"+e);
 			}
 			return standPrefCode;
 			
@@ -872,7 +872,7 @@ public class LibraryMenuNav extends Composite{
 				try {
 					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
 				} catch (Exception e) {
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("LibraryMenuNav setTaxonomyDataforStandards::::"+e);
 				}
 			} else {
 				getStandardPrefCode(null);

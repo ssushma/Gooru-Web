@@ -320,7 +320,7 @@ public class ResetPasswordVc extends Composite{
 			}
 
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("ResetPasswordVc validatePassword:::"+e);
 		}
 		return isValid;
 	}
