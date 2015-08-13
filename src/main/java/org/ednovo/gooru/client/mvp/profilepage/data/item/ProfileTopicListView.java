@@ -237,7 +237,7 @@ public class ProfileTopicListView extends Composite{
 				setConceptData(profileFolderDo.getCollectionItems().get(0),topicId, null, null,null,libraryGooruOid);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
-				AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+				AppClientFactory.printSevereLogger("ProfileTopicListView ...."+e.getMessage());
 			}
 		} else {
 			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems(), profileFolderDo.getGooruOid(),libraryGooruOid);
@@ -353,7 +353,7 @@ public class ProfileTopicListView extends Composite{
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
 			noCollectionLbl.setVisible(true);
-			AppClientFactory.printSevereLogger("ProfileTopicListView:"+e.getMessage());
+			AppClientFactory.printSevereLogger("ProfileTopicListView  rrrrr:"+e.getMessage());
 			
 		}
 		
@@ -541,14 +541,19 @@ public class ProfileTopicListView extends Composite{
 					final String collectionType=StringUtil.isEmpty(conceptDo.getType())?null:conceptDo.getType();
 					try {
 						StringUtil.setDefaultImages(conceptDo.getType(), collectionImage, "high");
-						AppClientFactory.printSevereLogger("conceptDo.getThumbnails().getUrl()::"+conceptDo.getThumbnails().getUrl());
-						collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
-						collectionImage.addErrorHandler(new ErrorHandler() {
-							@Override
-							public void onError(ErrorEvent event) {
-								StringUtil.setDefaultImages(collectionType, collectionImage, "high");
-							}
-						});
+						//AppClientFactory.printSevereLogger("conceptDo.getThumbnails().getUrl()::"+conceptDo.getThumbnails().getUrl());
+						if(conceptDo.getThumbnails() != null && conceptDo.getThumbnails().getUrl() != null){
+							collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
+							collectionImage.addErrorHandler(new ErrorHandler() {
+								@Override
+								public void onError(ErrorEvent event) {
+									StringUtil.setDefaultImages(collectionType, collectionImage, "high");
+								}
+							});
+						}else{
+							StringUtil.setDefaultImages(collectionType, collectionImage, "high");
+						}
+						
 						if(imageHandler!=null) {
 							imageHandler.removeHandler();
 						}
@@ -559,7 +564,7 @@ public class ProfileTopicListView extends Composite{
 						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid,conceptDo));
 					  } catch (Exception e) {
 						StringUtil.setDefaultImages(collectionType, collectionImage, "high");
-						AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+						AppClientFactory.printSevereLogger("ProfileTopicListView 3333...."+e.getMessage());
 					}
 					
 					try {
@@ -575,7 +580,7 @@ public class ProfileTopicListView extends Composite{
 						}
 						collectionDescriptionLbl.setHTML(description);
 					} catch(Exception ex) {
-						AppClientFactory.printSevereLogger(ex.getMessage());
+						AppClientFactory.printSevereLogger("exception222 "+ex.getMessage());
 					}
 					setMetaDataInfo(conceptDo); 
 					resourcesInside.clear();
@@ -754,7 +759,7 @@ public class ProfileTopicListView extends Composite{
 									resourceImage.setAltText(profileLibraryItem.getTitle());
 									resourceImage.setTitle(profileLibraryItem.getTitle());
 									//e.printStackTrace();
-									AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+									AppClientFactory.printSevereLogger("ProfileTopicListView 222"+e.getMessage());
 								}
 								
 								resourcePanel.addClickHandler(new ClickHandler() {
@@ -1047,7 +1052,7 @@ public class ProfileTopicListView extends Composite{
 								resourcesInside.add(resourcePanel);
 							} catch (Exception e){
 								//e.printStackTrace();
-								AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+								AppClientFactory.printSevereLogger("ProfileTopicListView"+e);
 							}
 						}
 					}
