@@ -459,10 +459,6 @@ import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListView;
 import org.ednovo.gooru.client.mvp.rating.IsRatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
-import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
-import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
 import org.ednovo.gooru.client.mvp.search.IsTagsTabView;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabView;
@@ -705,7 +701,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
 		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);
 		bindPresenter(TicalLibraryPresenter.class, IsTicalLibraryView.class, TicalLibraryView.class,IsTicalLibraryProxy.class);
-		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
 
 		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);

@@ -43,7 +43,6 @@ import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainer
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -105,7 +104,7 @@ public class AddResourceAssessmentsView extends BaseViewWithHandlers<AddResource
 	private String collectionId=null;
 
 	private String resourceId=null;
-	
+
 	private String questionType=null;
 
 	private String category = null;
@@ -481,7 +480,6 @@ public class AddResourceAssessmentsView extends BaseViewWithHandlers<AddResource
 							}
 						}
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametesMap);
-						AppClientFactory.fireEvent(new ActivateCollectionStyleEvent());
 					}
 				}
 			});

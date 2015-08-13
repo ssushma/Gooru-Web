@@ -62,6 +62,7 @@ import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToC
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -97,7 +98,6 @@ import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -268,8 +268,6 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
 
-	AsyncProvider<AnalyticsInfoContainerPresenter> getAnalyticsInfoContainerPresenter();
-
 	AsyncProvider<TagsTabPresenter> getTagsTabPresenter();
 
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
@@ -311,4 +309,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<AssessmentsPreviewPlayerPresenter> getAssessmentsPreviewPlayerPresenter();
 
 	AsyncProvider<AssessmentsResourcePlayerPresenter> getAssessmentsResourcePlayerPresenter();
+
+	AsyncProvider<ShelfMainPresenter> getShelfMainPresenter();
  }
