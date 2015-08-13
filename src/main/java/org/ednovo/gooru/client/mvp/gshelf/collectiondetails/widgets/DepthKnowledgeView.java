@@ -73,7 +73,7 @@ public class DepthKnowledgeView extends Composite {
 	public void setCollectionDo(CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
 		if(collectionDo!=null){
-		//	setSelectedValues(collectionDo.getDepthOfKnowledges());
+			setSelectedValues(collectionDo.getDepthOfKnowledges());
 		}
 	}
 
