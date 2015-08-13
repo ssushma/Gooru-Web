@@ -336,7 +336,6 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers ,UpdateEditR
 	public void showResourcePopup(CollectionItemDo collectionItem);
 	public void disableCollabaratorOptions(boolean b);
 	
-	void loadAddResourcePopup();
 	public void showLastEditCollaborater(String lblLastEditedBy,
 			boolean hasLastModifiedUser);
 	

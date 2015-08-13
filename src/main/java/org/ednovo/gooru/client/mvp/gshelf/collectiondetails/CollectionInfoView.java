@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -1272,6 +1273,39 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@Override
 	public void spinnerImageVisibility(boolean isVisible){
 		spinnerIconContainer.setVisible(isVisible); 
+	}
+	
+	@Override
+	public void setStandardsValue(List<StandardFo> standardFoObj)
+	{
+        if(standardFoObj!=null && standardFoObj.size()>0){
+            //Render the existing standards
+        	for(final StandardFo courseSubjectDo : standardFoObj) {
+				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseSubjectDo.getCode());
+				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						for(int i=0;i<selectedValues.size();i++) {
+						     if((selectedValues.get(i)).equals(courseSubjectDo.getId())){
+						    	 selectedValues.remove(courseSubjectDo.getId());
+						    	 Element element = Document.get().getElementById(courseSubjectDo.getId().toString());
+						    	 if(element!=null){
+						 			element.removeClassName("active");
+						 		}
+						     }
+						 }
+						removeGradeWidget(ulSelectedItems,courseSubjectDo.getId());
+						liPanelWithClose.removeFromParent();
+						lblGradeErrorMsg.setVisible(false);
+					}
+				});
+				liPanelWithClose.setId(courseSubjectDo.getId());
+				liPanelWithClose.setName(courseSubjectDo.getCode());
+				liPanelWithClose.setDifferenceId(3);
+				liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
+				ulSelectedItems.add(liPanelWithClose);
+			}
+        }
 	}
 
 	
