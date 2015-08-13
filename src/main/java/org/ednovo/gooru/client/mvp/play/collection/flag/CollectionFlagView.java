@@ -457,22 +457,24 @@ public class CollectionFlagView extends
 	
 	@UiHandler("flagCollections")
 	public void onClickOfflagCollections(ClickEvent event) {
-		flagResources.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
-		flagCollections.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
-		collectionFlagContainer.setVisible(true);
-		resourceFlagContainer.setVisible(false);
+		callFlagThisCollection();
 	}
 
 	@UiHandler("flagResources")
 	public void onClickOfflagResources(ClickEvent event) {
 		flagResources.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
-		
 		flagCollections.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
-		
 		collectionFlagContainer.setVisible(false);
 		resourceFlagContainer.setVisible(true);
 	}
 
+	public void callFlagThisCollection(){
+		flagResources.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagCollections.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		collectionFlagContainer.setVisible(true);
+		resourceFlagContainer.setVisible(false);
+	}
+	
 	@Override
 	public void reset() {
 
@@ -495,6 +497,7 @@ public class CollectionFlagView extends
 
 	@Override
 	public void getDisplayData(CollectionDo collectionDo) {
+		callFlagThisCollection();
 		collectionTitle = collectionDo.getTitle();
 		collectionGooruOid=collectionDo.getGooruOid();
 		dropdownListContainer.clear();
