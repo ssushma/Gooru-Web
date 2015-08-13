@@ -302,12 +302,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
 								lblLoadingText.setVisible(true);
 								isApiInProgress=false;
-								pageNumber++;
 								if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 9);
 								}else{
 									getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber+1, 8);
 								}
+								pageNumber++;
 							}
 						}
 					}

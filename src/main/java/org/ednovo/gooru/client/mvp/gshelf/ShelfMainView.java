@@ -199,7 +199,11 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				String o1=AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
 				String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null && shelfFolderTree.getItemCount()>=20){
+				int limit = 20;
+				if(getViewType().equalsIgnoreCase(COURSE)){
+					limit = 50;
+				}
+				if(placeToken.equals(PlaceTokens.MYCONTENT) && o1==null && id==null && shelfFolderTree.getItemCount()>=limit){
 					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
 						executeScroll(false);
 					}
@@ -622,6 +626,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
                         floderTreeContainer.add(shelfFolderTree);
                     }
 		}
+		AppClientFactory.printInfoLogger("treeItemcount-"+shelfFolderTree.getItemCount());
+		if(shelfFolderTree.getItemCount()>=50 && getViewType().equalsIgnoreCase(COURSE)){
+			setCreateCourse(false);
+		}
 		lnkMyCourses.setEnabled(true);
 		lnkMyCourses.removeStyleName("disabled");
 		lnkMyFoldersAndCollecctions.setEnabled(true);
@@ -733,7 +741,9 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	@UiHandler("createNewCourse")
 	public void createNewCourseOrCollection(ClickEvent event) {
-		createTopLevelTemplate(COURSE);
+		if(isCreateCourse()){
+			createTopLevelTemplate(COURSE);
+		}
 	}
 	/**
 	 * This method is used to display create course template
@@ -907,18 +917,22 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 	@Override
 	public void executeScroll(boolean isLeftScroll){
+		int limit=20;
 		lnkMyCourses.setEnabled(false);
 		lnkMyCourses.addStyleName("disabled");
 		lnkMyFoldersAndCollecctions.setEnabled(false);
 		lnkMyFoldersAndCollecctions.addStyleName("disabled");
+		if(getViewType().equalsIgnoreCase(COURSE)){
+			limit=50;
+		}
 		if(isLeftScroll){
-			if(collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= 20) {
+			if(collectionListScrollpanel.getVerticalScrollPosition() == collectionListScrollpanel.getMaximumVerticalScrollPosition() && collectionItemDoSize >= limit) {
 				pageNumber = pageNumber + 1;
-				getUiHandlers().getMoreListItems(20, pageNumber, false);
+				getUiHandlers().getMoreListItems(limit, pageNumber, false);
 			}
-		}else{
+		}else if(collectionItemDoSize >= limit){
 			pageNumber = pageNumber + 1;
-			getUiHandlers().getMoreListItems(20, pageNumber, false);
+			getUiHandlers().getMoreListItems(limit, pageNumber, false);
 		}
 	}
    	@Override
@@ -1172,6 +1186,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	@Override
 	public void enableDisableCourseButton(boolean isEnable) {
+		AppClientFactory.printInfoLogger("enable-Itemcount"+shelfFolderTree.getItemCount());
 		if(isEnable){
 			//createNewCourse.getElement().getFirstChildElement().getStyle().setBackgroundColor("#4d99cd");
 			createNewCourse.getElement().getFirstChildElement().getStyle().setCursor(Cursor.POINTER);
