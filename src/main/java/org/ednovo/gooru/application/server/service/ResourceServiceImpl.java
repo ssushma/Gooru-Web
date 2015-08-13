@@ -2519,8 +2519,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			try{
-				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri"));
 				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+				logger.info("copy collection v3 uri here:::::::"+getURL);
 				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
 				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
 					if(jsonResponseRepresentation1.getStatusCode()==200){
@@ -2552,8 +2552,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			try{
-				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri"));
 				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+				logger.info("copy collection v3 uri here:::::::"+getURL);
 				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
 				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
 					if(jsonResponseRepresentation1.getStatusCode()==200){
