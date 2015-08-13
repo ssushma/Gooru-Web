@@ -103,11 +103,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		  ClickHandler rootClick = new ClickHandler(){
 				@Override
 				public void onClick(ClickEvent event) {
-					if(!isArrowIcon && preFilter!=null){
-						preFilter.hide();
-					}else{
-						isArrowIcon=false;
-					}
+
 				}
 			};
 
