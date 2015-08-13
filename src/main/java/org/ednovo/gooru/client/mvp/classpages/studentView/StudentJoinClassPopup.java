@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -43,10 +43,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 /**
- * 
+ *
  * @fileName : StudentJoinClassPopup.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -61,7 +61,7 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 
 	private static StudentJoinClassPopupUiBinder uiBinder = GWT
 			.create(StudentJoinClassPopupUiBinder.class);
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface StudentJoinClassPopupUiBinder extends
@@ -69,19 +69,18 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 	}
 	ClasspageDo classpageDo;
 	@UiField Label closeLbl,lblJoining;
-	
+
 	@UiField Button joinClassBtn,joinLaterBtn;
-	
+
 	@UiField HTMLPanel headerPanel,welcomePanel,descPanel,classNamePanel,joinBtnPanel;//termsPanel, descPanel, welcomePanel
-	
+
 	@UiField HTML htmlInformation,htmlAgree;
 
 	public StudentJoinClassPopup(ClasspageDo classpageDo) {
 		setWidget(uiBinder.createAndBindUi(this));
-//		setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
-		
+
 		this.classpageDo = classpageDo;
-		
+
 		//String userName = classpageDo.getCreatorUsername();
 		setStaticData(classpageDo);
 
@@ -91,21 +90,21 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 	}
 	/**
-	 * 
-	 * @function setStaticData 
-	 * 
+	 *
+	 * @function setStaticData
+	 *
 	 * @created_date : 07-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param classpageDo
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -130,27 +129,27 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 			classNamePanel.setVisible(true);
 			descPanel.setVisible(true);
 			joinLaterBtn.setVisible(true);
-		
+
 		welcomePanel.getElement().setInnerHTML(i18n.GL1540());
 		welcomePanel.getElement().setId("pnlWelcome");
 		welcomePanel.getElement().setAttribute("alt",i18n.GL1540());
 		welcomePanel.getElement().setAttribute("title",i18n.GL1540());
-		
+
 		classNamePanel.getElement().setInnerHTML(classpageDo.getTitle() +"!");
 		classNamePanel.getElement().setId("pnlClassName");
 		classNamePanel.getElement().setAttribute("alt",classpageDo.getTitle() +"!");
 		classNamePanel.getElement().setAttribute("title",classpageDo.getTitle() +"!");
-		
+
 		descPanel.getElement().setInnerHTML(i18n.GL1541());
 		descPanel.getElement().setId("pnlDesc");
 		descPanel.getElement().setAttribute("alt",i18n.GL1541());
 		descPanel.getElement().setAttribute("title",i18n.GL1541());
-		
+
 		joinLaterBtn.setText(i18n.GL1738());
 		joinLaterBtn.getElement().setId("pnlJoinLater");
 		joinLaterBtn.getElement().setAttribute("alt",i18n.GL1738());
 		joinLaterBtn.getElement().setAttribute("title",i18n.GL1738());
-		
+
 		}
 		else
 		{
@@ -175,31 +174,31 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 		htmlAgree.getElement().setId("htmlAgree");
 		htmlAgree.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1543(), userName != null ? userName : ""));
 		htmlAgree.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1543(), userName != null ? userName : ""));
-		
+
 		htmlInformation.setHTML(StringUtil.generateMessage(i18n.GL1558(), userName != null ? userName : ""));
 		htmlInformation.getElement().setId("htmlInformation");
 		htmlInformation.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1558(), userName != null ? userName : ""));
 		htmlInformation.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1558(), userName != null ? userName : ""));
-		
+
 		joinBtnPanel.getElement().setId("pnlJoin");
 		joinClassBtn.setText(i18n.GL1536());
 		joinClassBtn.getElement().setId("pnlJoinClass");
 		joinClassBtn.getElement().setAttribute("alt",i18n.GL1536());
 		joinClassBtn.getElement().setAttribute("title",i18n.GL1536());
 		}
-		
+
 	}
 
 	@UiHandler("closeLbl")
 	public void clickOnCloseBtn(ClickEvent clickEvent){
 		closePoup();
 	}
-	
+
 	@UiHandler("joinLaterBtn")
 	public void clickOnJoinLaterBtn(ClickEvent clickEvent){
 		closePoup();
 	}
-	
+
 	@UiHandler("joinClassBtn")
 	public void clickOnJoinClassBtn(ClickEvent clickEvent){
 		joinIntoClass();
@@ -213,11 +212,11 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 				@Override
 				public void onSuccess(ClasspageDo result) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 		}*/
-		
+
 	}
 	/**
 	 * @return the lblJoining

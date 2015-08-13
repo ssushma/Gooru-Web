@@ -216,10 +216,10 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				setSearchDo(result);
 				getView().postSearch(result,false);
 				//getView().setJsonResponseInStorage(result, false);
-				if(getSearchDo().getPageNum()==1){
+				/*if(getSearchDo().getPageNum()==1){
 					getSearchDo().setPageNum(2);
 					getSearchResultsJsonAsyncCallbackFirstLoad().execute(getSearchDo());
-				}
+				}*/
 			}
 		});
 		//Next time it will add to local store

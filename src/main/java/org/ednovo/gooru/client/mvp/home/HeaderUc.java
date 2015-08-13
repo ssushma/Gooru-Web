@@ -25,16 +25,13 @@
 package org.ednovo.gooru.client.mvp.home;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.client.home.HomePresenter;
 import org.ednovo.gooru.application.client.home.HomeUiHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
@@ -68,7 +65,6 @@ import org.ednovo.gooru.client.uc.HeaderPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.DashBoardToolTip;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTipUc;
-import org.ednovo.gooru.client.uc.tooltip.OrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -502,9 +498,6 @@ public class HeaderUc extends Composite
 				hide();
 			}
 		};
-
-		// mainDotsPanel.setVisible(false);
-		//logoutPanelVc.setStyleName(HomeCBundle.INSTANCE.css().logoutPanel());
 
 		editSearchInputFloPanel.setVisible(false);
 		LoginLinkContainer.setVisible(false);
@@ -945,14 +938,13 @@ public class HeaderUc extends Composite
 				try {
 					Document.get()
 							.getElementById("LinkheaderElement" + i)
-							.removeClassName(
-									HomeCBundle.INSTANCE.css().menuActive());
+							.removeClassName("menuActive");
 					Document.get()
 							.getElementById("LinkheaderElement" + i)
-							.removeClassName(HomeCBundle.INSTANCE.css().menu());
+							.removeClassName("menu");
 
 					Document.get().getElementById("LinkheaderElement" + i)
-							.addClassName(HomeCBundle.INSTANCE.css().menu());
+							.addClassName("menu");
 				} catch (Exception e) {
 					AppClientFactory.printSevereLogger("HeaderUc manageDotsMenuSelection:::"+e);
 				}
@@ -967,20 +959,16 @@ public class HeaderUc extends Composite
 
 		} else {
 
-			dotsLink.getParent().setStyleName(
-					HomeCBundle.INSTANCE.css().menuActive());
+			dotsLink.getParent().setStyleName("menuActive");
 		}
 	}
 
 	public void activateOnlyDiscover() {
-		organizeLink.getParent().setStyleName(
-				HomeCBundle.INSTANCE.css().menu());
-		teachLink.getParent().setStyleName(HomeCBundle.INSTANCE.css().menu());
-		studyLink.getParent().setStyleName(HomeCBundle.INSTANCE.css().menu());
-		loggedInfoLbl.getParent().setStyleName(
-				HomeCBundle.INSTANCE.css().menu());
-		discoverLink.getParent().setStyleName(
-				HomeCBundle.INSTANCE.css().menu());
+		organizeLink.getParent().setStyleName("menu");
+		teachLink.getParent().setStyleName("menu");
+		studyLink.getParent().setStyleName("menu");
+		loggedInfoLbl.getParent().setStyleName("menu");
+		discoverLink.getParent().setStyleName("menu");
 		if (logoutPanelVc != null) {
 			if (logoutPanelVc.isShowing()) {
 				logoutPanelVc.hide();
@@ -998,14 +986,11 @@ public class HeaderUc extends Composite
 	}
 
 	public void activateAllMenu() {
-		discoverLink.getParent().setStyleName(
-				HomeCBundle.INSTANCE.css().menu());
-		organizeLink.getParent().setStyleName(
-				HomeCBundle.INSTANCE.css().menu());
-		teachLink.getParent().setStyleName(HomeCBundle.INSTANCE.css().menu());
-		studyLink.getParent().setStyleName(HomeCBundle.INSTANCE.css().menu());
-		loggedInfoLbl.getParent().setStyleName(
-				HomeCBundle.INSTANCE.css().menu());
+		discoverLink.getParent().setStyleName("menu");
+		organizeLink.getParent().setStyleName("menu");
+		teachLink.getParent().setStyleName("menu");
+		studyLink.getParent().setStyleName("menu");
+		loggedInfoLbl.getParent().setStyleName("menu");
 	}
 
 	/**

@@ -77,13 +77,9 @@ import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
@@ -121,7 +117,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
-public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessmentsPlayerView, AssessmentsPlayerPresenter.IsAssessmentsPlayerProxy> implements AssessmentsPlayerUiHandlers,RefreshDisclosurePanelHandler,ClientConstants{
+public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessmentsPlayerView, AssessmentsPlayerPresenter.IsAssessmentsPlayerProxy> implements AssessmentsPlayerUiHandlers,ClientConstants{
 
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -143,8 +139,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
     private AssessmentsResourceNarrationPresenter resourceNarrationPresenter;
 
-    private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
-
     private AssessmentsSharePresenter collectionSharePresenter;
 
     private AssessmentsResourceInfoPresenter resourceInfoPresenter;
@@ -160,8 +154,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
     private AssessmentsResourceFlagPresenter resourceFlagPresenter;
 
     private SignUpPresenter signUpViewPresenter = null;
-
-    private AddResourceContainerPresenter addResourceContainerPresenter;
 
     private CollectionDo collectionDo=null;
 
@@ -450,8 +442,8 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 			AssessmentsPlayerTocPresenter collectionPlayerTocPresenter,AssessmentsSharePresenter collectionSharePresenter,
 			AssessmentsResourceInfoPresenter resourceInfoPresenter,AssessmentsResourceNarrationPresenter resourceNarrationPresenter,
 			EventBus eventBus,IsAssessmentsPlayerView view, IsAssessmentsPlayerProxy proxy, AddResourceAssessmentsPresenter addResourcePresenter,
-     		AddAssessmentsPresenter addCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,AssessmentsFlagPresenter collectionFlagPresenter,
-     		AssessmentsResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter,AssessmentsEndPresenter collectionEndPresenter,AddResourceContainerPresenter addResourceContainerPresenter,ShelfMainPresenter shelfMainPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
+     		AddAssessmentsPresenter addCollectionPresenter, AssessmentsFlagPresenter collectionFlagPresenter,
+     		AssessmentsResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter,AssessmentsEndPresenter collectionEndPresenter, ShelfMainPresenter shelfMainPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.metadataPresenter=metadataPresenter;
@@ -462,12 +454,10 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		this.resourceInfoPresenter=resourceInfoPresenter;
 		this.addCollectionPresenter=addCollectionPresenter;
 		this.addResourcePresenter=addResourcePresenter;
-		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.collectionFlagPresenter=collectionFlagPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
 		this.signUpViewPresenter=signUpViewPresenter;
 		this.collectionEndPresenter=collectionEndPresenter;
-		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		this.shelfMainPresenter=shelfMainPresenter;
 		this.searchAddResourceToCollectionPresenter= searchAddResourceToCollectionPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
@@ -485,11 +475,9 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		addResourcePresenter.getAddCollectionViewButton().setVisible(false);
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
 
-		addResourceContainerPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget());
 		getView().removeStudentViewButton();
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
-		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
 
 		courseGooruId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
@@ -1824,17 +1812,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		popup.setGlassEnabled(true);
 	}
 
-	public class ShowNewCollectionWidget implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-
-			String resourceId=collectionItemDo.getResource().getGooruOid();
-			addToPopupSlot(collectionFormInPlayPresenter);
-			collectionFormInPlayPresenter.setResourceUid(resourceId);
-			collectionFormInPlayPresenter.setPlayerType("collection");
-		}
-	}
-
 	public void updateAddResourceCollectionWidget(String collectionId){
 		addResourcePresenter.updateWorkSpaceLink(collectionId);
 	}
@@ -2567,14 +2544,6 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
 
-
-	@Override
-	public void refreshDisclosurePanelinSearch(String collectionId) {
-
-		addResourceContainerPresenter.getfolderTreePanel().clear();
-
-		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(getPlaceManager().getRequestParameter("rid", null)));
-	}
 	public void getResourceTagsToDisplay(String resourceId){
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.getResourceTagsToDisplay(resourceId);
@@ -2583,35 +2552,12 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 
 
 	public void addFixedPostionForNavigation(){
-		//collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
 	}
 	public void adjustCollectionMetadaBody(boolean isHome){
-		if(isHome){
-			  /*Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
-			  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-			  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-			  if(isIpad)
-			  {
-				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(0, Unit.PX);
-			  }
-			  else if(isAndriod)
-			  {
-				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(0, Unit.PX);
-			  }
-			  else
-			  {
-				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX);
-			  }*/
 
-		}else{
-			//addFixedPositionNavArrows();
-		}
 	}
 	public void addFixedPositionNavArrows(){
 		resoruceMetadataPresenter.getWidget().getElement().getStyle().setPaddingTop(38+50, Unit.PX);
-		/*resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);*/
-		//int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
-		//resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
 	}
 
 	public void updateReviewAndRatings(String gooruOid,Integer reviewCount) {

@@ -555,43 +555,33 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					adTable.setWidget(i, 2,anserlbl);
 				}else if (FIB.equalsIgnoreCase(questionType)){
 					VerticalPanel answerspnl=new VerticalPanel();
-					if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-						String answerTextFormat = "";
-						String[] answersArry = null;
-						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
-						for (MetaDataDo metaDataDo : questionList) {
-							String answerText = "";
-							if((metaDataDo.getAnswerText() != null)) {
-								String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
-								answerText = text;
-							}
-							answerTextFormat += '[' + answerText +']';
-							if(questionList.size()  != metaDataDo.getSequence()){
-								answerTextFormat += ",";
-							}
-						}
-						String[] userFibOption = null;
-						if(result.get(i).getText() != null) {
-							answersArry=answerTextFormat.split(",");
-							userFibOption =result.get(i).getText().split(",");
-						}
-						if(answersArry!=null && userFibOption!=null){
-							for (int k = 0; k < answersArry.length; k++) {
+					
+					if(result.get(i).getAnswerObject()!=null) {
+						JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+						JSONObject answerObject = value.isObject();
+						Set<String> keys=answerObject.keySet();
+						Iterator<String> itr = keys.iterator();
+						while(itr.hasNext()) {
+							answerspnl.clear();
+							JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+							for(int j=0;j<attemptsObj.size();j++){
 								Label answerChoice=new Label();
-								if(answersArry[k]!=null && k<userFibOption.length){
-									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
-										answerChoice.setText(userFibOption[k]);
-										answerChoice.getElement().getStyle().setColor(CORRECT);
-									}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
-										answerChoice.setText(userFibOption[k]);
-										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-									}else{
-										answerChoice.setText(userFibOption[k]);
+								boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+								String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+								String fibtext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+								if(skip == false)
+								{
+									answerChoice.setText(fibtext);
+									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 										answerChoice.getElement().getStyle().setColor(INCORRECT);
+									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+										answerChoice.getElement().getStyle().setColor(CORRECT);
+									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
 									}
-									answerChoice.setStyleName(STYLE_TABLE_CENTER);
-									answerspnl.add(answerChoice);
 								}
+								answerChoice.setStyleName(STYLE_TABLE_CENTER);
+								answerspnl.add(answerChoice);
 							}
 						}
 					}

@@ -550,11 +550,11 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		bookText.getElement().setAttribute("alt", i18n.GL1677());
 		bookText.getElement().setAttribute("title", i18n.GL1677());
 		spanelMediaFeaturePanel.setVisible(false);
+		
 		accessHazard.setText(i18n.GL1804());
 		accessHazard.getElement().setId("lblAccessHazard");
 		accessHazard.getElement().setAttribute("alt",i18n.GL1804());
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
-		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
 		flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");

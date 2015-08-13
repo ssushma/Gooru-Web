@@ -4,78 +4,49 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
-	
+
 	<g:HTMLPanel ui:field="gShelfMainContainer">
 		<g:HTMLPanel ui:field="pnlMainContainer" styleName="gradeContainer greyBackground">
 			<div class="container">
 				<div class="row no-gutter equifier">
 					<div class="col-md-3 col-sm-3">
 						<div class="floderLeftContainer">
-				<!-- 			<div class="createMenu no-gutter animate fadeInLeft animated"
-								data-animate="fadeInLeft">
-								<div class="col-md-10 col-xs-10 col-sm-10">
-									Split button
-									<div class="btn-group btn-block">
-									
-										<button type="button"
-											class="btn btn-default btn-right dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">
-											<span class="caret"></span>
-											<span class="sr-only">Toggle Dropdown</span>
-										</button>
-										<ul class="dropdown-menu" role="menu">
-											<li>
-												<g:Anchor ui:field="lnkMyCourses" text="{i18n.GL3335}" title="{i18n.GL3335}"/>
-											</li>
-											<li>
-												<g:Anchor ui:field="lnkMyFoldersAndCollecctions" text="{i18n.GL0180}" title="{i18n.GL0180}" />
-											</li>
-										</ul>
-									</div>
-								</div>
-								<panel:HTMLEventPanel styleName="col-md-2 col-xs-2 col-sm-2" ui:field="createNewCourse">
-									<span class="plus">+</span>
-								</panel:HTMLEventPanel>
-								<div class="clearfix"></div>
-							</div> -->
-							
 							<div class="myCousesTabMenu">
 								<g:Anchor ui:field="lnkMyCourses" styleName="mycourseMenu" text="{i18n.GL3335}" title="{i18n.GL3335}"/>
-								
+
 								<g:Anchor styleName="mycollectionMenu" ui:field="lnkMyFoldersAndCollecctions" text="{i18n.GL0180}" title="{i18n.GL0180}" />
-								
-								
-								
-								
+
+
+
+
 								</div>
-								
-								
+
+
 								<panel:HTMLEventPanel styleName="myCoursesLeftMainHeader" ui:field="createNewCourse">
 								<g:InlineLabel text="{i18n.GL3471}"></g:InlineLabel>
-								
+
 								<span class="plus">+</span>
 								<div class="clearfix"></div>
 								</panel:HTMLEventPanel>
 								<panel:HTMLEventPanel styleName="myCoursesLeftMainHeader createCollectionColor" ui:field="createNewCollection">
 								<g:InlineLabel text="{i18n.GL1451}"></g:InlineLabel>
-								
+
 								<span class="plus">+</span>
 								<div class="clearfix"></div>
 								</panel:HTMLEventPanel>
 								<panel:HTMLEventPanel styleName="myCoursesLeftMainHeader createassessmentColor" ui:field="createNewAssessment">
 								<span>Create Assessment</span>
-								
+
 								<span class="plus">+</span>
 								<div class="clearfix"></div>
 								</panel:HTMLEventPanel>
 
 							<div class="folderListBlock">
-								<!-- <ul> <li class="active"> <a href="">Untitled Course</a> </li> 
-									<li> <a href="">Course 2</a> </li> <li> <a href="">Course 3</a> </li> </ul> -->
+
 						<panel:HTMLEventPanel styleName="folderLeftMainHeader"
 									ui:field="organizeRootPnl">
 									<g:Label ui:field="organizelbl" text="{i18n.GL0180}"></g:Label>
-								</panel:HTMLEventPanel> 
+								</panel:HTMLEventPanel>
 								<g:ScrollPanel ui:field="collectionListScrollpanel"
 									styleName="collectionScrlPanel">
 									<g:HTMLPanel ui:field="floderTreeContainer" />
@@ -85,7 +56,7 @@
 					</div>
 					<div class="col-md-9 col-sm-9">
 					    <g:HTMLPanel ui:field="titleIconContainer" styleName="lblCollectionTitle">
-						    <g:InlineLabel ui:field="imgIconLbl"></g:InlineLabel> 
+						    <g:InlineLabel ui:field="imgIconLbl"></g:InlineLabel>
 							<g:Label ui:field="lblCollectionTitle" styleName="lblCollectionSubTitle"/>
 							 <g:Label ui:field="lblLastEditedBy" styleName="lastEditedBy"/>
 					    </g:HTMLPanel>
@@ -97,4 +68,4 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="pnlNoDataContainer"></g:HTMLPanel>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

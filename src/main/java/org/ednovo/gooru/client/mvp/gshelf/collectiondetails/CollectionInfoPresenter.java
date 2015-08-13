@@ -377,6 +377,16 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
+					FolderDo folderDoObj = new FolderDo();
+					folderDoObj.setTitle(result.getTitle());
+					folderDoObj.setLanguageObjective(result.getLanguageObjective());
+					folderDoObj.setAudience(result.getAudience());
+					folderDoObj.setType(result.getCollectionType());
+					folderDoObj.setDescription(result.getDescription());
+					folderDoObj.setDepthOfKnowledge(result.getDepthOfKnowledge());
+					folderDoObj.setSkills(result.getMetaInfo().getSkills());		
+					getView().setCouseData(folderDoObj,result.getCollectionType());
+					getView().setStandardsValue(result.getMetaInfo().getStandards());
 					centurySkillsPresenter.getView().setCollectionDo(result);
 					getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
 					getView().getAudienceContainer().setCollectonDetails(result);
