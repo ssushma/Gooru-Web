@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResource
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -95,6 +96,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@UiField Anchor ancAddResource, ancAddQuestion;
 	@UiField InlineLabel lblSpanOr;
 	@UiField Label lblTitle;
+	@UiField TinyMCE testTextArea;
 
 	CollectionContentPresenter collectionContentPresenter;
 	CollectionDo listOfContent=null;
@@ -142,6 +144,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 		ancAddResource.addClickHandler(new NewResourceClickEvent());
 		ancAddQuestion.addClickHandler(new NewQuestionClickEvent());
+		testTextArea.setVisible(false);
 
 	}
 
@@ -690,10 +693,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}
 	}
 	
-	@Override
-	public void onLoad() {
-		getUiHandlers().loadAddResourcePopup();
-	}
 	/**
 	 * @function getCreatedTime 
 	 * 
