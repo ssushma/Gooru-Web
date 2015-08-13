@@ -31,7 +31,6 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePresenter;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.client.wrap.WrapPresenter.IsWrapProxy;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -260,7 +259,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 					@Override
 					public void onSuccess(UserDo loggedInUser) {
 						AppClientFactory.setLoggedInUser(loggedInUser);
-						HomeCBundle.INSTANCE.css().ensureInjected();
 						AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 					}
 				});
@@ -285,7 +283,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 					@Override
 					public void onSuccess(UserDo loggedInUser) {
 						AppClientFactory.setLoggedInUser(loggedInUser);
-						HomeCBundle.INSTANCE.css().ensureInjected();
 						AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
 

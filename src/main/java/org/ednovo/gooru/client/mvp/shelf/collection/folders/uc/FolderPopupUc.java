@@ -45,54 +45,54 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 public abstract class FolderPopupUc extends PopupPanel {
-	
+
 	@UiField HTMLPanel folderStructureTree, buttonsContainer,mainContainer;
 	@UiField Button cancelBtn, okBtn;
 	@UiField FolderPopupStyleBundle folderPopupStyle;
 	@UiField TextBox folderTitle;
 	@UiField Label validationTitleLbl, addingLbl, popupHeaderTitleLbl,inputTitleLbl,inputDescLbl;
-	
+
 	private Tree folderTreePanel = new Tree(new TreeMenuImages());
 	TreeItem treeChildSelectedItem = new TreeItem();
 	TreeItem previousTreeChildSelectedItem = new TreeItem();
-	
+
 	String selectedParentItem = "";
-	
+
 	String destinationFolderName = "";
-	
+
 	String selectedSourceItem = "";
-	
+
 	@UiField HTMLPanel loadingImageLabel;
-	
+
 	private boolean isCollectionMove = false;
-	
+
 	private static final String COLLECTION_MOVE = "collectionMove";
-	
+
 	private static final String O1_LEVEL = "o1";
-	
+
 	private static final String O2_LEVEL = "o2";
-	
+
 	private static final String O3_LEVEL = "o3";
 
 	private HashMap<String,String> params = new HashMap<String,String>();
-	
+
 	private boolean isPaginated = false;
-	
+
 	private Integer pageNumber = 0;
-	
+
 	private String selectedGooruOid = "";
-	
+
 	private String type="";
-	
+
 	private String FOLDER = "folder";
-	
+
 	private static FolderPopupUcUiBinder uiBinder = GWT.create(FolderPopupUcUiBinder.class);
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderPopupUcUiBinder extends UiBinder<Widget, FolderPopupUc> {}
 
-	public FolderPopupUc(final String moveType, boolean isFolderType) { 
+	public FolderPopupUc(final String moveType, boolean isFolderType) {
 		setWidget(uiBinder.createAndBindUi(this));
 		setStaticText(moveType);
 		setPageNumber(0);
@@ -105,11 +105,11 @@ public abstract class FolderPopupUc extends PopupPanel {
 		        folderTitle.setFocus(true);
 		    }
 		});
-		
+
 		if(isFolderType || moveType.equalsIgnoreCase(COLLECTION_MOVE)) {
-			
+
 			loadingImageLabel.setVisible(true);
-		
+
 		} else {
 			loadingImageLabel.setVisible(false);
 		}
@@ -144,9 +144,9 @@ public abstract class FolderPopupUc extends PopupPanel {
 		this.setGlassEnabled(true);
 		this.show();
 		this.center();
-		
+
 	}
-	
+
 	public void setCollectionType(String collectionType){
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			addAttributesToWidget(inputDescLbl,i18n.GL3036());
@@ -164,9 +164,9 @@ public abstract class FolderPopupUc extends PopupPanel {
 	private void modifyPopup(boolean isFolderType, String moveType) {
 		if(isFolderType){
 			inputDescLbl.setVisible(true);
-		
+
 			folderStructureTree.setVisible(true);
-			
+
 			if(!moveType.equalsIgnoreCase(COLLECTION_MOVE)) {
 				inputDescLbl.setText(i18n.GL1329());
 				inputDescLbl.getElement().setAttribute("alt",i18n.GL1329());
@@ -178,21 +178,21 @@ public abstract class FolderPopupUc extends PopupPanel {
 			setTokenParameter();
 		}
 	}
-	
+
 	private void setStaticText(String moveType) {
-		if(moveType.equalsIgnoreCase(COLLECTION_MOVE)){ 
+		if(moveType.equalsIgnoreCase(COLLECTION_MOVE)){
 			isCollectionMove = true;
 			inputTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 			folderTitle.getElement().getStyle().setDisplay(Display.NONE);
-			
+
 			addingLbl.setText(i18n.GL1362());
 			addingLbl.getElement().setAttribute("alt",i18n.GL1362());
 			addingLbl.getElement().setAttribute("title",i18n.GL1362());
-			
+
 			okBtn.setText(i18n.GL1261());
 			okBtn.getElement().setAttribute("alt",i18n.GL1261());
 			okBtn.getElement().setAttribute("title",i18n.GL1261());
-			
+
 			cancelBtn.setText(i18n.GL0142());
 			cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
 			cancelBtn.getElement().setAttribute("title",i18n.GL0142());
@@ -210,23 +210,23 @@ public abstract class FolderPopupUc extends PopupPanel {
 			popupHeaderTitleLbl.setText(i18n.GL1266);
 			popupHeaderTitleLbl.getElement().setAttribute("alt",i18n.GL1266);
 			popupHeaderTitleLbl.getElement().setAttribute("title",i18n.GL1266);
-			
+
 			inputTitleLbl.setText(i18n.GL1262());
 			inputTitleLbl.getElement().setAttribute("alt",i18n.GL1262());
 			inputTitleLbl.getElement().setAttribute("title",i18n.GL1262());
-			
+
 			inputDescLbl.setText(i18n.GL1263());
 			inputDescLbl.getElement().setAttribute("alt",i18n.GL1263());
 			inputDescLbl.getElement().setAttribute("title",i18n.GL1263());
-			
+
 			addingLbl.setText(i18n.GL0591().toLowerCase());
 			addingLbl.getElement().setAttribute("alt",i18n.GL0591().toLowerCase());
 			addingLbl.getElement().setAttribute("title",i18n.GL0591().toLowerCase());
-			
+
 			okBtn.setText(i18n.GL0190());
 			okBtn.getElement().setAttribute("alt",i18n.GL0190());
 			okBtn.getElement().setAttribute("title",i18n.GL0190());
-			
+
 			cancelBtn.setText(i18n.GL0142());
 			cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
 			cancelBtn.getElement().setAttribute("title",i18n.GL0142());
@@ -237,7 +237,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 		String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 		String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-		
+
 		if(level==1&&o1!=null) {
 			selectedGooruOid = o1;
 			iterateTopLevelFolders(o1, level, isRefresh);
@@ -249,15 +249,15 @@ public abstract class FolderPopupUc extends PopupPanel {
 			getSecondLevelFolderItems(o3, level, isRefresh);
 		}
 	}
-	
+
 	private void iterateTopLevelFolders(String gooruOid, int level, boolean isRefresh){
-		for(int i = 0; i < folderTreePanel.getItemCount(); i++) { 
+		for(int i = 0; i < folderTreePanel.getItemCount(); i++) {
 			TreeItem item = folderTreePanel.getItem(i);
-			getTopLevelFolders(item, gooruOid, level, isRefresh); 
+			getTopLevelFolders(item, gooruOid, level, isRefresh);
 		}
 	}
 
-	private void getTopLevelFolders(TreeItem item, String gooruOid, int level, boolean isRefresh) { 
+	private void getTopLevelFolders(TreeItem item, String gooruOid, int level, boolean isRefresh) {
 		FolderPopupChildItem updatedItem = (FolderPopupChildItem) item.getWidget();
 		if(gooruOid.equalsIgnoreCase(updatedItem.getGooruOid())) {
 			treeChildSelectedItem = item;
@@ -269,11 +269,11 @@ public abstract class FolderPopupUc extends PopupPanel {
 	private void getSecondLevelFolderItems(String gooruOid, int level, boolean isRefresh) {
 		for(int i=0;i<treeChildSelectedItem.getChildCount();i++){
 			TreeItem item = treeChildSelectedItem.getChild(i);
-			getTopLevelFolders(item, gooruOid, level, isRefresh); 
+			getTopLevelFolders(item, gooruOid, level, isRefresh);
 		}
 	}
 
-	private void openMatchedFolder(int folderNavigation, boolean isRefresh) { 
+	private void openMatchedFolder(int folderNavigation, boolean isRefresh) {
 		FolderPopupChildItem folderPopupChildItem = (FolderPopupChildItem) treeChildSelectedItem.getWidget();
 		TreeItem parent = treeChildSelectedItem.getParentItem();
         treeChildSelectedItem.getTree().setSelectedItem(parent, false);
@@ -303,7 +303,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 				okBtn.getElement().removeClassName("disabled");
 				okBtn.setEnabled(true);
 			}
-			
+
 		}
 		if(folderPopupChildItem.getLevel()!=folderNavigation || isRefresh) {
 			if(folderPopupChildItem.getLevel()!=0) {
@@ -316,7 +316,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 			folderPopupChildItem.setSelectedStyle(true);
 			previousTreeChildSelectedItem = treeChildSelectedItem;
 		}
-		
+
 	}
 
 
@@ -327,14 +327,14 @@ public abstract class FolderPopupUc extends PopupPanel {
 			hide();
 		}
 	}
-	
+
 	private void setData(List<FolderDo> folders, String moveType) {
 		if(getPageNumber()==0) {
 			FolderDo organizeDo = new FolderDo();
 			organizeDo.setTitle(i18n.GL1752());
 			setOrganizeStaticData(organizeDo, 0, 0, 0);
 		}
-		
+
 		int folderCount = 0;
 		if(folders.size()>0) {
 			for (FolderDo folderDo : folders) {
@@ -362,7 +362,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 		}
 		setPaginatedResults(null, moveType);
 	}
-	
+
 	private void setOrganizeStaticData(FolderDo folderDo, int folderCount, int position, int folderLevel) {
 		FolderPopupChildItem folderPopupChildItem = new FolderPopupChildItem(folderDo, folderLevel){
 			@Override
@@ -393,9 +393,9 @@ public abstract class FolderPopupUc extends PopupPanel {
 			}
 		});
 	}
-	
+
 	private class TitleKeyUpHandler implements KeyUpHandler {
-		
+
 		public void onKeyUp(KeyUpEvent event) {
 			folderTitle.removeStyleName(ShelfCBundle.INSTANCE.css().folderBorderColor());
 			if (folderTitle.getText().length() >= 50) {
@@ -404,7 +404,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 				validationTitleLbl.getElement().setAttribute("title",i18n.GL0143());
 				validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTitle.addStyleName(ShelfCBundle.INSTANCE.css().folderBorderColor());
-				folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
+				folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");
 			}else if(folderTitle.getText().equalsIgnoreCase("") && validationTitleLbl.isVisible()){
 				validationTitleLbl.setText(i18n.GL0173());
 				validationTitleLbl.getElement().setAttribute("alt",i18n.GL0173());
@@ -412,11 +412,11 @@ public abstract class FolderPopupUc extends PopupPanel {
 				folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");
 			}else{
 				validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
-				folderTitle.getElement().setAttribute("style", "border-color:#E3E3E3 !important");	
+				folderTitle.getElement().setAttribute("style", "border-color:#E3E3E3 !important");
 			}
 		}
 	}
-	
+
 	private class CheckProfanityForFolders implements BlurHandler{
 
 		@Override
@@ -430,7 +430,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 				@Override
 				public void onSuccess(Boolean result) {
 					if (result){
-						folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
+						folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");
 						validationTitleLbl.setText(i18n.GL0554());
 						validationTitleLbl.getElement().setAttribute("alt",i18n.GL0554());
 						validationTitleLbl.getElement().setAttribute("title",i18n.GL0554());
@@ -442,11 +442,11 @@ public abstract class FolderPopupUc extends PopupPanel {
 							validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 					}
 				}
-				
+
 			});
 		}
 	}
-	
+
 	public void getCollectionItems(String collectionOid,boolean collectionOpenedStatus, final int folderNavigation, final boolean isRefresh) {
 		if(collectionOpenedStatus) {
 			setChildFolderItems(null, 0, false);
@@ -459,7 +459,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 			});
 		}
 	}
-	
+
 	public void setChildFolderItems(List<FolderDo> folderListDo, int folderNavigation, boolean isRefresh) {
 		FolderPopupChildItem folderPopupChildItem = (FolderPopupChildItem) treeChildSelectedItem.getWidget();
 		if(folderListDo!=null) {
@@ -475,7 +475,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 				/** As Level three folders will not be having folders as child, because of this only for third level selected parent item is assigned here. **/
 				selectedParentItem=params.get(O3_LEVEL);
 			}
-			
+
 			for(int i=0;i<folderListDo.size();i++) {
 				if(folderListDo.get(i).getType().equals(FOLDER)) {
 					FolderPopupChildItem shelfCollection = new FolderPopupChildItem(folderListDo.get(i), nextLevel){
@@ -523,7 +523,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 	         }
 	      }
    	}
-   	
+
 	@UiHandler("okBtn")
 	public void onPositiveClickEvent(final ClickEvent event){
 		if(isCollectionMove){
@@ -540,7 +540,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 					public void onSuccess(Boolean result) {
 						if(result){
 							showAddingMsg(true);
-							folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
+							folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");
 							validationTitleLbl.setText(i18n.GL0554());
 							validationTitleLbl.getElement().setAttribute("alt",i18n.GL0554());
 							validationTitleLbl.getElement().setAttribute("title",i18n.GL0554());
@@ -558,7 +558,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 			}
 		}
 	}
-	
+
 	private boolean folderTitleValidations() {
 		String title=folderTitle.getText().trim();
 		if(title==null || title.equals("")){
@@ -573,14 +573,14 @@ public abstract class FolderPopupUc extends PopupPanel {
 			folderTitle.getElement().getStyle().setBorderColor("#ccc");
 			return true;
 		}
-		
+
 	}
 
 	private void setTokenParameter() {
 		String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 		String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2");
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3");
-		
+
 		if(o3!=null) {
 			selectedParentItem = o3;
 		} else if(o2!=null) {
@@ -589,14 +589,14 @@ public abstract class FolderPopupUc extends PopupPanel {
 			selectedParentItem = o1;
 		}
 	}
-	
+
 	public abstract void onClickPositiveButton(ClickEvent event, String folderTitle, String parentId, HashMap<String,String> params);
-	
+
 	private void showAddingMsg(boolean isVisible) {
 		addingLbl.setVisible(!isVisible);
 		buttonsContainer.setVisible(isVisible);
 	}
-	
+
 	private void displayDefaultImage(String moveType) {
 		if(moveType.equalsIgnoreCase(COLLECTION_MOVE)) {
 			folderStructureTree.addStyleName(folderPopupStyle.emptyCollection());
@@ -617,18 +617,18 @@ public abstract class FolderPopupUc extends PopupPanel {
             		if(parentId==null) {
             			getFolderData(moveType);
             		} else {
-            			
+
             		}
             	}
             }
         };
         timer.schedule(3000);
 	}
-	
+
 	public Integer getPageNumber() {
 		return pageNumber;
 	}
-	
+
 	public void setPageNumber(Integer pageNumber) {
 		this.pageNumber = pageNumber;
 	}

@@ -62,7 +62,6 @@ import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToC
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -98,23 +97,17 @@ import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
-import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -167,17 +160,9 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<ErrorPresenter> getErrorPresenter();
 
-	AsyncProvider<ShelfPresenter> getShelfPresenter();
-
-	AsyncProvider<ShelfMainPresenter> getShelfMainPresenter();
-
 	AsyncProvider<CollectionResourceTabPresenter> getCollectionResourceTabPresenter();
 
 	AsyncProvider<CollectionInfoTabPresenter> getCollectionInfoTabPresenter();
-
-	AsyncProvider<ShelfListPresenter> getShelfTabPresenter();
-
-	AsyncProvider<CollectionFormPresenter> getCollectionFormPresenter();
 
 	AsyncProvider<ImageUploadPresenter> getImageUploadPresenter();
 
@@ -194,8 +179,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<ClassHomePresenter> getClassHomePresenter();
 
 	AsyncProvider<StudentAssignmentPresenter> getStudentAssignmentPresenter();
-
-	AsyncProvider<CollectionFormInPlayPresenter> getCollectionFormInPlayPresenter();
 
 	AsyncProvider<ProfilePagePresenter> getProfilePagePresenter();
 
@@ -223,8 +206,6 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<CollectionCollaboratorsTabPresenter> getCollectionCollaboratorsTabPresenter();
 
-	AsyncProvider<FolderItemTabPresenter> getFolderItemTabPresenter();
-
 	AsyncProvider<ClassListPresenter> getclassListPresenter();
 
 	AsyncProvider<FteLibraryPresenter> getFteLibraryPresenter();
@@ -248,8 +229,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<DistrictPresenter> getDistrictPresenter();
 
 	AsyncProvider<DrivePresenter> getDrivePresenter();
-
-	AsyncProvider<AddResourceContainerPresenter> getAddResourceContainerPresenter();
 
 	AsyncProvider<NatGeoLibraryPresenter> getNatGeoLibraryPresenter();
 

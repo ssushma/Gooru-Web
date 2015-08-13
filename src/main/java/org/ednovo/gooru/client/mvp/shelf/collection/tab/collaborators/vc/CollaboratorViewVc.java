@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -43,7 +43,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetCollabCountEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetPanelVisibilityEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -72,64 +71,64 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class CollaboratorViewVc extends Composite {
 
 	private static CollaboratorViewVcUiBinder uiBinder = GWT.create(CollaboratorViewVcUiBinder.class);
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollaboratorViewVcUiBinder extends UiBinder<Widget, CollaboratorViewVc> {
 	}
-	
-	
+
+
 	List<ClassPageCollectionDo> classpageTitles = new ArrayList<ClassPageCollectionDo>();
 
 	CollaboratorsDo collaboratorsDo = null;
 	CollectionDo collectionDo = null;
-	
+
 	/* HTML5 Storage implementation for tab persistance */
 	private Storage stockStore = null;
-	
+
 	boolean isYou = false;
 	boolean isCreator = false;
 	boolean isNew = false;
-	
+
 	int defaultCollabCount = 5;
-	
+
 	@UiField HTMLEventPanel panelYou, panelCollaborators;
-	
+
 	@UiField HTMLPanel panelCollaboratorsListContainer;
-	
+
 	@UiField Button btnRemoveFromList; // Remove yourselves from Collaborators list.
-	
+
 	@UiField Button btnRemoveCollab; // Remove other collaborators from list.
-	
+
 	@UiField Label lblYou, lblUserName, lblEmailId, lblRadioButton;
-	
+
 	@UiField Image imgProfileImage, imgYourPhoto;
-	
+
 	String defaultProfileImage = "images/settings/setting-user-image.png";
-	
+
 	public CollaboratorViewVc(String placeToken, final CollaboratorsDo collaboratorsDo, final CollectionDo collectionDo, boolean isYou, final boolean isCreator, boolean isNew) {
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
 		this.collaboratorsDo = collaboratorsDo;
 		this.collectionDo = collectionDo;
 		this.isYou = isYou;
 		this.isCreator = isCreator;
 		this.isNew = isNew;
-			
+
 		panelCollaborators.addMouseOverHandler(new MouseOverHandler() {
-			
+
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if (!collectionDo.isIsCollaborator()){
 					btnRemoveCollab.setVisible(true);
 					panelCollaborators.getElement().getStyle().setBackgroundColor("#F0F0F0");
 				}
-				
+
 			}
 		});
-		
+
 		panelCollaborators.addMouseOutHandler(new MouseOutHandler() {
-			
+
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
 				if (!collectionDo.isIsCollaborator()){
@@ -138,18 +137,18 @@ public abstract class CollaboratorViewVc extends Composite {
 				}
 			}
 		});
-		
-		
+
+
 		DeselectRadioButtonHandler handlerDeselect = new DeselectRadioButtonHandler() {
-			
+
 			@Override
 			public void setDeSelection() {
 				deselectRadioButton();
 			}
 		};
-		
+
 		RemoveCollaboratorObjectHandler handlerRemove = new RemoveCollaboratorObjectHandler() {
-			
+
 			@Override
 			public void removeFromParentByEmailId(String emailId) {
 				if (emailId.trim().equalsIgnoreCase(lblEmailId.getText().trim())){
@@ -159,13 +158,13 @@ public abstract class CollaboratorViewVc extends Composite {
 				}
 			}
 		};
-		
+
 		lblRadioButton.setVisible(false);
 		btnRemoveCollab.setVisible(false);
-		
+
 		AppClientFactory.getEventBus().addHandler(DeselectRadioButtonEvent.TYPE, handlerDeselect);
 		AppClientFactory.getEventBus().addHandler(RemoveCollaboratorObjectEvent.TYPE, handlerRemove);
-		
+
 		setDebugId();
 		if (isNew){
 			new BackgroundColorEffect(panelCollaboratorsListContainer.getElement(),"#E7F1F8" ,"white", 5000);
@@ -173,16 +172,16 @@ public abstract class CollaboratorViewVc extends Composite {
 		if (collaboratorsDo !=null && collaboratorsDo.getGooruUid() != null){
 			//Getting all the List of Classpages for the particular(collaborator) user
 			/*AppClientFactory.getInjector().getClasspageService().getClasspagesListByCollectionId(collectionDo.getGooruOid(), collaboratorsDo.getGooruUid(), new SimpleAsyncCallback<ArrayList<ClassPageCollectionDo>>() {
-	
+
 				@Override
 				public void onSuccess(ArrayList<ClassPageCollectionDo> result) {
 					classpageTitles = result;
 				}
-				
+
 			});*/
 		}
 	}
-	
+
 	@Override
 	public void onLoad() {
 		setDebugId();
@@ -191,7 +190,7 @@ public abstract class CollaboratorViewVc extends Composite {
 	public void setDebugId() {
 		panelYou.getElement().setId("divYou");
 		panelCollaborators.getElement().setId("divCollaborators");
-		
+
 		btnRemoveFromList.setText(i18n.GL0937());
 		btnRemoveFromList.getElement().setAttribute("alt",i18n.GL0937());
 		btnRemoveFromList.getElement().setAttribute("title",i18n.GL0937());
@@ -208,12 +207,12 @@ public abstract class CollaboratorViewVc extends Composite {
 		}else{
 			panelCollaboratorsListContainer.getElement().setId(collaboratorsDo !=null && collaboratorsDo.getGooruUid() !=null ? collaboratorsDo.getGooruUid() : "divListActiveCollaborators");
 		}
-		
-		
+
+
 		panelYou.setVisible(isYou ? true : false);
 		panelCollaborators.setVisible(!isYou ? true : false);
 		if (isYou){
-			
+
 			panelCollaborators.getElement().getStyle().setMarginLeft(0, Unit.PX);
 			imgYourPhoto.setUrl((collaboratorsDo.getProfileImageUrl() !=null ) ? collaboratorsDo.getProfileImageUrl() : defaultProfileImage);
 		}else{
@@ -232,7 +231,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			lblRadioButton.getElement().setAttribute("userName", lblUserName.getText());
 			btnRemoveCollab.getElement().setId(lblEmailId.getText());
 			btnRemoveCollab.getElement().setAttribute("username", lblUserName.getText());
-			
+
 		}else if (collaboratorsDo != null && !isCreator){
 			imgProfileImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+collaboratorsDo.getGooruUid()+".png");
 			lblUserName.setText((collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
@@ -246,13 +245,13 @@ public abstract class CollaboratorViewVc extends Composite {
 			btnRemoveCollab.getElement().setId(lblEmailId.getText());
 			btnRemoveCollab.getElement().setAttribute("username", (collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : lblEmailId.getText());
 		}
-		
+
 		if (collectionDo!=null &&  collectionDo.isIsCollaborator()){
 			btnRemoveCollab.setVisible(false);
 		}else{
 			lblUserName.getElement().getStyle().setDisplay(lblUserName.getText() !=null && !lblUserName.getText().equalsIgnoreCase("") ? Display.INLINE_BLOCK : Display.NONE);
 		}
-		//TODO - This should be managed from css class 
+		//TODO - This should be managed from css class
 		if (collaboratorsDo!=null){
 			if (collaboratorsDo.getStatus().equalsIgnoreCase("pending")){
 				imgProfileImage.getElement().getStyle().setDisplay(Display.NONE);
@@ -271,14 +270,14 @@ public abstract class CollaboratorViewVc extends Composite {
 			}
 		}
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
-			
+
 			@Override
 			public void onError(ErrorEvent event) {
 				imgProfileImage.setUrl(defaultProfileImage);
 			}
 		});
 		imgYourPhoto.addErrorHandler(new ErrorHandler() {
-			
+
 			@Override
 			public void onError(ErrorEvent event) {
 				imgYourPhoto.setUrl(defaultProfileImage);
@@ -290,13 +289,13 @@ public abstract class CollaboratorViewVc extends Composite {
 		lblUserName.getElement().setId("lblUserName");
 		lblEmailId.getElement().setId("lblEmailId");
 	}
-	
+
 	@UiHandler("btnRemoveCollab")
 	public void clickOnRemoveCollab(ClickEvent event){
 		final String toRemove =  lblEmailId.getText();
 		final String emailId = lblEmailId.getText();
 		final String collectionId = collectionDo.getGooruOid();
-		DeletePopupViewVc delete = new DeletePopupViewVc() {				
+		DeletePopupViewVc delete = new DeletePopupViewVc() {
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 				AppClientFactory.getInjector().getCollaboratorsService().removeCollaboratorsFromListByEmailIds(collectionId, "[\"" + toRemove +"\"]", new SimpleAsyncCallback<Void>() {
@@ -317,7 +316,7 @@ public abstract class CollaboratorViewVc extends Composite {
 					}
 				});
 			}
-			
+
 			@Override
 			public void onClickNegitiveButton(ClickEvent event) {
 				Window.enableScrolling(true);
@@ -341,15 +340,15 @@ public abstract class CollaboratorViewVc extends Composite {
 		delete.center();
 		delete.show();
 	}
-	
+
 	@UiHandler("lblRadioButton")
 	public void onSelect(ClickEvent event){
 	}
-	
+
 	public void deselectRadioButton(){
 		lblRadioButton.getElement().removeClassName("radio-selected-icon");
 	}
-	
+
 	public List<String> getSelectedObjectId(){
 		List<String> list = new ArrayList<String>();
 		if (lblRadioButton.getStyleName().toString().contains("radio-selected-icon")){
@@ -360,16 +359,16 @@ public abstract class CollaboratorViewVc extends Composite {
 		}
 		return list;
 	}
-	
-	private void removeThisFromParent(){		
+
+	private void removeThisFromParent(){
 		this.removeFromParent();
 	}
-	
+
 	@UiHandler("btnRemoveFromList")
 	public void onClickRemoveMySelf(ClickEvent event){
 		final String toRemove =  collaboratorsDo.getEmailId();
 		final String collectionId = collectionDo.getGooruOid();
-		DeletePopupViewVc delete = new DeletePopupViewVc() {				
+		DeletePopupViewVc delete = new DeletePopupViewVc() {
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 				AppClientFactory.getInjector().getCollaboratorsService().removeCollaboratorsFromListByEmailIds(collectionId, "[\"" + toRemove +"\"]", new SimpleAsyncCallback<Void>() {
@@ -386,11 +385,10 @@ public abstract class CollaboratorViewVc extends Composite {
 						}else{
 							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
 						}
-						AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(collectionId)); 
 					}
 				});
 			}
-			
+
 			@Override
 			public void onClickNegitiveButton(ClickEvent event) {
 				Window.enableScrolling(true);
@@ -398,12 +396,12 @@ public abstract class CollaboratorViewVc extends Composite {
 				hide();
 			}
 		};
-		delete.setPopupTitle(i18n.GL0748());		
+		delete.setPopupTitle(i18n.GL0748());
 		if (classpageTitles.size()>0){
 			StringBuffer sb = new StringBuffer();
 			String anchString = "<a href=\"{0}\" target=\"_blank\">{1}</a>";
 			String classpageUrl = "#teach&pageSize=10&classpageId={0}&pageNum=0&pos=1";
-			int count = classpageTitles.size() >= defaultCollabCount ? defaultCollabCount : classpageTitles.size(); 
+			int count = classpageTitles.size() >= defaultCollabCount ? defaultCollabCount : classpageTitles.size();
 			for (int i=0; i<count;i++){
 				String url = StringUtil.generateMessage(classpageUrl, classpageTitles.get(i).getClasspageId());
 				if (classpageTitles.size()==1){
@@ -436,7 +434,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			}else{
 				delete.setDescText(i18n.GL1157()+ " "+i18n.GL1154()+i18n.GL_SPL_EXCLAMATION()+".");
 			}
-			
+
 		}else{
 			delete.setDescText(i18n.GL1125());
 		}
@@ -452,7 +450,7 @@ public abstract class CollaboratorViewVc extends Composite {
 	}
 	/**
 	 * Sets the incoming tabFlag into Persistant store
-	 * 
+	 *
 	 * @param flag
 	 *            generated when tabs are being switched
 	 */
@@ -462,7 +460,7 @@ public abstract class CollaboratorViewVc extends Composite {
 			stockStore.setItem("tabKey", flag);
 		}
 	}
-	
+
 	public abstract void setCollabCount(int count, String type);
-	
+
 }
