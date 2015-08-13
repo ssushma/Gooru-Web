@@ -1864,7 +1864,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				return isValid = false;
 			}
 		}catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("EditUserOwnResourcePopupVc hasValidateResource:::"+e);
 		}
 		return isValid;
 	}

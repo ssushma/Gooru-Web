@@ -966,7 +966,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
                 hotTextHLTabButton.setStyleName(res.css().buttonDeSelected());
             	questionTypePresenter.getView().editQuestion(null);
 			}catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("AddResourceView setPopup:::"+e);
 			}
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
 			try{
@@ -1025,7 +1025,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("AddResourceView:::"+e);
 			}
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);

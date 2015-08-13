@@ -579,7 +579,7 @@ public class UserRegistrationView extends
 				isValid = false;
 			}
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("UserRegistrationView hasValidateData:::"+e);
 		}
 
 		if ((getRegistartionType().equalsIgnoreCase(i18n.GL0074()) || getRegistartionType()

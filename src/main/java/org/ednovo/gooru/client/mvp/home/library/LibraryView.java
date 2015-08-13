@@ -387,7 +387,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			loadingPanel(false);
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("LibraryView setLibraryTopicListData:::"+e);
 		}
 	}
 	
@@ -417,7 +417,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			loadingPanel(false);
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("LibraryView setLibraryConceptOnlyData::"+e);
 		}
 	}
 	
@@ -631,7 +631,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				try {
 					params = StringUtil.splitQuery(Window.Location.getHref());
 				} catch (Exception e) {
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("LibraryView getFeaturedCourses:::"+e);
 				}
 				
 				if(stockStore!=null&&stockStore.getItem(libraryToken+COURSEMAPDATASERIALIZEDSTR)!=null&&params.size()==0){
@@ -796,7 +796,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 					widget.addStyleName(ACTIVE_STYLE);
 				}
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryView setFeaturedCourseWidgets:::"+e);
 			}
 			featuredCourseListView.getfeaturedCoursePanel().addClickHandler(new ClickHandler() {
 				@Override
@@ -902,7 +902,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 					}
 				}
 			} catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryView setUnitListData:::"+e);
 			}
 			
 			libraryUnitMenuView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
@@ -1218,7 +1218,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 					} catch (Exception e) {
 						educatorPhoto.setVisible(false);
 						featuredContributor.setVisible(false);
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("LibraryView setCourseData:::"+e);
 					}
 				}
 				
@@ -1531,7 +1531,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			getContentScroll().setVisible(true);
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("LibraryView setTopicListData:::"+e);
 		}
 	}
 
