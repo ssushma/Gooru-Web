@@ -1667,7 +1667,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					listI.add(k);
 				} catch (Exception e) {
 					listS.add(newst[i]);
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("UserSettingsView setGradeList:::"+e);
 				}
 			}
 			Collections.sort(listS, Collections.reverseOrder());

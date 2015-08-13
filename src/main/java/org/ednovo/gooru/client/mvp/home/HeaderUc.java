@@ -192,14 +192,14 @@ public class HeaderUc extends Composite
 							doc.getElementById("headerMainPanel").getStyle()
 									.clearZIndex();
 						} catch (Exception ex) {
-							AppClientFactory.printSevereLogger(ex.getMessage());
+							AppClientFactory.printSevereLogger("HeaderUc setHeaderZIndex:::"+ex.getMessage());
 						}
 					} else {
 						try {
 							doc.getElementById("headerMainPanel").getStyle()
 									.setZIndex(value);
 						} catch (Exception e) {
-							AppClientFactory.printSevereLogger(e.getMessage());
+							AppClientFactory.printSevereLogger("HeaderUc setHeaderZIndex:::"+e);
 						}
 					}
 				}
@@ -940,7 +940,7 @@ public class HeaderUc extends Composite
 					Document.get().getElementById("LinkheaderElement" + i)
 							.addClassName("menu");
 				} catch (Exception e) {
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("HeaderUc manageDotsMenuSelection:::"+e);
 				}
 
 			} else {
@@ -1589,7 +1589,7 @@ public class HeaderUc extends Composite
 				addedAccounts = true;
 			}
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("HeaderUc setLoggedInUser:::::"+e);
 		}
 	}
 

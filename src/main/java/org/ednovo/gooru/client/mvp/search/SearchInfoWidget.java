@@ -448,7 +448,7 @@ public class SearchInfoWidget extends Composite {
 						listI.add(k);
 					} catch (Exception e) {
 						listS.add(newst[i]);
-						AppClientFactory.printSevereLogger(e.getMessage());
+						AppClientFactory.printSevereLogger("SearchinfoWidget setGeneralResourceInfo:::"+e);
 					}
 				}
 				Collections.sort(listS, Collections.reverseOrder());
