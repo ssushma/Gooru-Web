@@ -209,10 +209,11 @@ public abstract class DistrictMenuNav extends Composite {
 		learnText.getElement().setId("lblLearnText");
 		learnText.getElement().setAttribute("alt","Elementary");
 		learnText.getElement().setAttribute("title","Elementary");
-
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 			learnText.setText(i18n.GL2077());
 			setGooruAnrText(i18n.GL1899(), i18n.GL1900(),true);
+			learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
+			learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)) {
 			setGooruAnrText(i18n.GL2063(), i18n.GL2064(),false);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
@@ -221,6 +222,8 @@ public abstract class DistrictMenuNav extends Composite {
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
 			learnText.setText(i18n.GL2077());
 			setGooruAnrText(i18n.GL2069(), i18n.GL2070(),false);
+			learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
+			learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)) {
 			setGooruAnrText(i18n.GL2071(), i18n.GL2072(),false);
 		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
