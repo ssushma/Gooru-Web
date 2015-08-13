@@ -350,10 +350,13 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 						if(clrPanel){
 							if(result !=null)
 							{
+							if(result.getSearchResult() !=null)
+							{
 							if(result.getSearchResult().size()>0){
 								setRightListData(result.getSearchResult(),null);
 							}else{
 								setInSlot(RIGHT_SLOT, null);
+							}
 							}
 							}
 						}else{
