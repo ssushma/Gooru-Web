@@ -1,14 +1,3 @@
-@charset "utf-8";
-/* CSS Document */
-@font-face {
-	font-family: 'rock';
-	src: url('../fonts/rock.eot');
-	src: local('rock'), url('../fonts/rock.woff') format('woff'), url('../fonts/rock.ttf') format('truetype');
-}
-/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_9786">Text with this font applied</p> */
-.fontsforweb_fontid_9786 {
-	font-family: 'rock' !important;
-}
 
 a {
 }

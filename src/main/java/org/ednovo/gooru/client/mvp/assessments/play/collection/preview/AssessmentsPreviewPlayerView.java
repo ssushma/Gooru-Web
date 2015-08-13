@@ -67,13 +67,12 @@ public class AssessmentsPreviewPlayerView extends BasePopupViewWithHandlers<Asse
 
 	@UiField AssessmentsPlayerHeaderView headerView;
 
-	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn, closeAndriodBtn;
+	@UiField com.google.gwt.user.client.ui.Image closeAndriodBtn;
 
-	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
+	@UiField HTMLPanel androidSectiondiv;
 
-	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+	@UiField HTMLPanel msgPanel,msglinkPanel;
 
-	@UiField Anchor viewAnchor;
 
 	private PopupPanel appPopUp;
 
@@ -131,17 +130,14 @@ public class AssessmentsPreviewPlayerView extends BasePopupViewWithHandlers<Asse
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  ipadSectiondiv.setVisible(true);
 			  androidSectiondiv.setVisible(false);
 		  }
 		  else if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
 		  }
 		  else
 		  {
-			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
 		  }
 		  setUiText();
@@ -190,20 +186,9 @@ public class AssessmentsPreviewPlayerView extends BasePopupViewWithHandlers<Asse
 		headerView.enableButtons(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable, isNarrationButtonEnable, isNavigationButtonEnable,isFlagButtonActive);
 	}
 
-	@UiHandler("closeIpadBtn")
-	public void onIpadCloseClick(ClickEvent clickEvent){
-
-		  ipadSectiondiv.setVisible(false);
-		  androidSectiondiv.setVisible(false);
-		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		  AssessmentsPreviewPlayerMetadataView.onClosingAndriodorIpaddiv();
-		  AssessmentsResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
-	}
-
 	@UiHandler("closeAndriodBtn")
 	public void onAndriodCloseClick(ClickEvent clickEvent){
 
-		  ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
 		  AssessmentsPreviewPlayerMetadataView.onClosingAndriodorIpaddiv();
@@ -413,8 +398,6 @@ public class AssessmentsPreviewPlayerView extends BasePopupViewWithHandlers<Asse
 	{
 		  androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
 		  closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
-		  ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
-		  closeIpadBtn.getElement().setId("imgCloseIpadBtn");
 		  headerView.getElement().setId("collectionPlayerHeaderView");
 		  navigationContainer.getElement().setId("fpnlNavigationContainer");
 		  playerBodyContainer.getElement().setId("fpnlPlayerBodyContainer");
@@ -429,25 +412,6 @@ public class AssessmentsPreviewPlayerView extends BasePopupViewWithHandlers<Asse
 		  msglinkPanel.getElement().setAttribute("alt",i18n.GL1984());
 		  msglinkPanel.getElement().setAttribute("title",i18n.GL1984());
 
-		  gooruPanel.getElement().setInnerHTML(i18n.GL0733());
-		  gooruPanel.getElement().setId("pnlGooruPanel");
-		  gooruPanel.getElement().setAttribute("alt",i18n.GL0733());
-		  gooruPanel.getElement().setAttribute("title",i18n.GL0733());
-
-		  ednovoPanel.getElement().setInnerHTML(i18n.GL1985());
-		  ednovoPanel.getElement().setId("pnlEdnovoPanel");
-		  ednovoPanel.getElement().setAttribute("alt",i18n.GL1985());
-		  ednovoPanel.getElement().setAttribute("title",i18n.GL1985());
-
-		  appstorePanel.getElement().setInnerHTML(i18n.GL1986());
-		  appstorePanel.getElement().setId("pnlAppstorePanel");
-		  appstorePanel.getElement().setAttribute("alt",i18n.GL1986());
-		  appstorePanel.getElement().setAttribute("title",i18n.GL1986());
-
-		  viewAnchor.setText(i18n.GL1428());
-		  viewAnchor.getElement().setId("lnkViewAnchor");
-		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
-		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
 	}
 
 }

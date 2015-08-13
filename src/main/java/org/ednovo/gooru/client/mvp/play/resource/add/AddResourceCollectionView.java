@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -43,7 +43,6 @@ import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainer
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -87,7 +86,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	interface AddResourceCollectionViewUiBinder extends UiBinder<Widget, AddResourceCollectionView> {
 
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel dropdownListContainer,createCollectionLabelContainer,resourceImageContainerInAddResource,
@@ -99,26 +98,26 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 					sizeMessage,successMessageLabelText,addCollectionInsteadLabelText,hideText,resourceAdditionErrorStyle;
 	@UiField FlowPanel resourceAddedSuccessMessageContainer;
 	@UiField Label addNewCollectionLabel;
-	
+
 	@UiField HTMLEventPanel hideButton;
-	
+
 	private String collectionId=null;
-	
+
 	private String resourceId=null;
-	
+
 	private String category = null;
-	
+
 	private String questionType=null;
-	
+
 	private boolean isAllUserShelfCollectionsLoaded=false;
-	
+
 	private int limit=20;
 	private int totalHitCount=0;
 	private int pageNum=1;
-	
+
 	private String FOLDER = "folder";
 	private String SCOLLECTION = "scollection";
-	
+
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
 		 @Override
 		 public void onBrowserEvent(Event event) {
@@ -130,7 +129,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	};
 	private CollectionTreeItem cureentcollectionTreeItem=null;
 	private CollectionTreeItem previousSelectedItem=null;
-	
+
 	@Inject
 	public AddResourceCollectionView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -140,17 +139,17 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		hideText.getElement().setId("lblHideText");
 		hideText.getElement().setAttribute("alt",i18n.GL0592());
 		hideText.getElement().setAttribute("title",i18n.GL0592());
-		
+
 		addresourceText.getElement().setInnerHTML(i18n.GL0698());
 		addresourceText.getElement().setId("pnlAddresourceText");
 		addresourceText.getElement().setAttribute("alt",i18n.GL0592());
 		addresourceText.getElement().setAttribute("title",i18n.GL0592());
-		
+
 		dropdownListPlaceHolder.getElement().setInnerHTML(i18n.GL0105());
 		dropdownListPlaceHolder.getElement().setId("spnDropdownListPlaceHolder");
 		dropdownListPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
 		dropdownListPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
-		
+
 		dropdownListContainerScrollPanel.getElement().getStyle().setDisplay(Display.NONE);
 		dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
@@ -160,12 +159,12 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		addNewCollectionLabel.getElement().setId("lblAddNewCollectionLabel");
 		addNewCollectionLabel.getElement().setAttribute("alt",i18n.GL0696());
 		addNewCollectionLabel.getElement().setAttribute("title",i18n.GL0696());
-		
+
 		resourceAdditionErrorStyle.setText(i18n.GL0659());
 		resourceAdditionErrorStyle.getElement().setId("lblResourceAdditionErrorStyle");
 		resourceAdditionErrorStyle.getElement().setAttribute("alt",i18n.GL0659());
 		resourceAdditionErrorStyle.getElement().setAttribute("title",i18n.GL0659());
-		
+
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
@@ -355,11 +354,11 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 											 {
 												 if(folderItem.getElement().getFirstChildElement().getFirstChildElement().hasChildNodes())
 												 {
-													 folderItem.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setDisplay(Display.NONE); 
+													 folderItem.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setDisplay(Display.NONE);
 												 }
-												 
+
 											 }
-											 
+
 										 }
 									 }
 									 folderTreePanel.addItem(folderItem);
@@ -377,7 +376,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			 }
 		}
 	}
-	
+
 	public void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
@@ -400,11 +399,11 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 										 {
 											 if(folderItem.getElement().getFirstChildElement().getFirstChildElement().hasChildNodes())
 											 {
-												 folderItem.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setDisplay(Display.NONE); 
+												 folderItem.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setDisplay(Display.NONE);
 											 }
-											 
+
 										 }
-										 
+
 									 }
 								 }
 								 item.addItem(folderItem);
@@ -464,7 +463,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public Label getAddNewCollectionLabel(){
 		return addNewCollectionLabel;
 	}
-	
+
 	@UiHandler("workSpaceBtn")
 	public void workSpaceBtnClickEvent(ClickEvent event){
 		AppClientFactory.getPlaceManager().setRefreshPlace(true);
@@ -481,7 +480,6 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 							}
 						}
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametesMap);
-						AppClientFactory.fireEvent(new ActivateCollectionStyleEvent());
 					}
 				}
 			});
@@ -531,7 +529,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public ScrollPanel getDropdownListContainerScrollPanel() {
 		return dropdownListContainerScrollPanel;
 	}
-	
+
 
 	public void setDropdownListContainerScrollPanel(
 			ScrollPanel dropdownListContainerScrollPanel) {
@@ -549,36 +547,36 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public Label getErrorMessage() {
 		return errorMessage;
 	}
-	
+
 	public void setErrorMessage(Label errorMessage) {
 		this.errorMessage = errorMessage;
 	}
 	public Label getSizeMessage() {
 		return sizeMessage;
 	}
-	
-	
+
+
 	public void getUserShelfCollections(int dropdownListContainertWidgetCount){
 		if(!isAllUserShelfCollectionsLoaded){
-			
+
 		}
 	}
-	
 
-	/** 
+
+	/**
 	 * This method is to get the addToExistingColl
 	 */
 	public Label getAddCollectionViewButton() {
 		return addToExistingColl;
 	}
 
-	/** 
+	/**
 	 * This method is to set the addToExistingColl
 	 */
 	public void setAddToExistingColl(Label addToExistingColl) {
 		this.addToExistingColl = addToExistingColl;
 	}
-	
+
 	private class OnDropdownListPlaceHolderClick implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -602,7 +600,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
 		}
 	}
-	
+
 
 	public HTMLPanel getResourceImageContainerInAddResource() {
 		return resourceImageContainerInAddResource;
@@ -673,9 +671,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		colletionIsteadButton.getElement().setAttribute("alt",i18n.GL0664());
 		colletionIsteadButton.getElement().setAttribute("title",i18n.GL0664());
 		colletionIsteadButton.getElement().getStyle().setMarginRight(138, Unit.PX);
-	
+
 		addCollectionInsteadLabelContainer.add(colletionIsteadButton);
-		
+
 	}
 	public void showSuccessWidget(boolean showWidget){
 		resourceAddedSuccessMessageContainer.setVisible(showWidget);
@@ -761,11 +759,11 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			}
 		}
 	}
-	
+
 	public void copyCollectionItem(String collectionItemId,String collectionId){
 		getUiHandlers().copyCollectionItem(collectionItemId, collectionId);
 	}
-	
+
 	public void addCollectionItems(ArrayList<CollectionItemsList> userCollectionsList,boolean isClearPanel) {
 			if (isClearPanel) {
 				getDropdownListContainer().clear();
@@ -774,27 +772,27 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 				for (CollectionItemsList userCollection : userCollectionsList) {
 					addDropDownListItem(userCollection.getCollectionTitle(),userCollection.getCollectionId(),userCollection.getCollectionItemsListSize());
 				}
-			} 
+			}
 	}
-	
+
 	/**
-	 * 
-	 * @function onhideBtnClicked 
-	 * 
+	 *
+	 * @function onhideBtnClicked
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param clickEvent
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
 	@UiHandler("hideButton")
-	public void onhideBtnClicked(ClickEvent clickEvent) 
+	public void onhideBtnClicked(ClickEvent clickEvent)
 	{
 		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 		String collectionId = collectionRequest.getParameter("id", null);
@@ -804,7 +802,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("id", collectionId);
 		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-		
+
 	if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.RESOURCE_PLAY))
 	{
 		PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).

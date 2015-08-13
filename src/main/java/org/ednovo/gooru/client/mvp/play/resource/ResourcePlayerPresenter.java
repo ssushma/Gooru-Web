@@ -60,7 +60,6 @@ import org.ednovo.gooru.client.mvp.play.resource.share.ResourceSharePresenter;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayEvent;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -106,9 +105,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
     private ResourceInfoPresenter resourceInfoPresenter;
 
     private AddResourceCollectionPresenter addResourceCollectionPresnter;
-
-    private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
-
 
     private CollectionItemDo collectionItemDo;
 
@@ -177,7 +173,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	private static String Star_Rating_Widget = "ratingWidget";
 
 	private static final int CHILD_AGE=13;
-	
+
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
 
     ShelfMainPresenter shelfMainPresenter;
@@ -311,7 +307,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 
 	@Inject
 	public ResourcePlayerPresenter(ResourcePlayerMetadataPresenter resoruceMetadataPresenter,ResourceSharePresenter resourceSharePresenter,
-			ResourceInfoPresenter resourceInfoPresenter,EventBus eventBus, CollectionFormInPlayPresenter collectionFormInPlayPresenter,
+			ResourceInfoPresenter resourceInfoPresenter,EventBus eventBus,
 			IsResourcePlayerView view, IsResourcePlayerProxy proxy,AddResourceCollectionPresenter addResourceCollectionPresnter,ResourceFlagPresenter resourceFlagPresenter,
 			SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ShelfMainPresenter shelfMainPresenter) {
 		super(view, proxy);
@@ -320,8 +316,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		this.resourceSharePresenter=resourceSharePresenter;
 		this.resourceInfoPresenter=resourceInfoPresenter;
 		this.addResourceCollectionPresnter=addResourceCollectionPresnter;
-		addResourceCollectionPresnter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
-		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
 		this.searchAddResourceToCollectionPresenter= searchAddResourceToCollectionPresenter;
 		this.shelfMainPresenter=shelfMainPresenter;
@@ -892,15 +886,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
 		getView().getPlayerBodyContainer().add(new ResourceNonExitView());
-	}
-
-	public class ShowNewCollectionWidget implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			String resourceId=collectionItemDo.getResource().getGooruOid();
-			addToPopupSlot(collectionFormInPlayPresenter);
-			collectionFormInPlayPresenter.setResourceUid(resourceId);
-		}
 	}
 
 	public void updateAddResourceCollectionWidget(String collectionId){
