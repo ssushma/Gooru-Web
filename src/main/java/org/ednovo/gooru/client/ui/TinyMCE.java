@@ -99,7 +99,7 @@ public class TinyMCE extends Composite{
         tinyMceTextArea = new TextArea();
         tinyMceTextArea.getElement().getStyle().setBorderStyle(BorderStyle.NONE);
         tinyMceTextArea.addStyleName("ta");
-        DOM.setElementAttribute(tinyMceTextArea.getElement(), "id", id);
+        tinyMceTextArea.getElement().setAttribute("id", id);
         panel.add(tinyMceTextArea);
         timymceWrapper.add(toolBarOpenButton);
         timymceWrapper.add(markAsBlankPanel);

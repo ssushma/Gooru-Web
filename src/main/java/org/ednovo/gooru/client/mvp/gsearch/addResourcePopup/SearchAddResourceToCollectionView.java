@@ -97,7 +97,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";
 
-
 	boolean isTopMostSelected =false,isAddingInProgress=true;
 
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
