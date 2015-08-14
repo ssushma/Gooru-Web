@@ -686,7 +686,14 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	 */
 	public boolean validatePDF(String startpage,String stopPage,Integer totalPage){
 		boolean isValid;
-		Integer enteredStopPage =	Integer.parseInt(stopPage);
+
+		Integer enteredStopPage =null;
+		if(stopPage!=null && !stopPage.equalsIgnoreCase("")){
+		enteredStopPage = Integer.parseInt(stopPage);
+		}else {
+		enteredStopPage = totalPage;
+		}
+		
 		Integer startpdfpage = Integer.parseInt(startpage);
 		if(enteredStopPage > totalPage){
 			lblError.setText(VALID_END_PAGE);
@@ -1199,7 +1206,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		videoTimeField.setText(VIDEO_TIME);
 		videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
 		videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
-		System.out.println("collectionItem narration::::"+collectionItem.getNarration());
 		String stopTime = (collectionItem.getStop() == null) ? "00:00:00": collectionItem.getStop();
 		String startTime = (collectionItem.getStart() == null) ? "00:00:00": collectionItem.getStart();
 		startTime = startTime.replaceAll("\\.", ":");
