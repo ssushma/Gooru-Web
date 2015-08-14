@@ -42,6 +42,7 @@ import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMeta
 import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
@@ -171,7 +172,13 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		this.unitId = unitId;
 		this.courseId = courseId;
 		this.assessmentId = assessmentId;
-		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
+		if(sessionId==null) {
+			getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
+		} else {
+			getPresenter().setSessionId(sessionId);
+			getPresenter().setSession(false);
+			getPresenter().getSessionsDataByUser(assessmentId,classId,courseId, unitId, lessonId, userId);
+		}
 	}
 
 	private void setExternalAssessment() {
@@ -302,7 +309,23 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		}
 	}
 
+	@Override
+	public void setAttemptsData(ArrayList<session> result) {
+		sessionsDropDown.clear();
+		sessionData.clear();
+		for (session session : result) {
+			sessionData.put(session.getSessionId(), session.getEventTime());
+			int day=session.getSequence();
 
+			String attemptType = " Attempt";
+			if(isCollection) {
+				attemptType = " Session";
+			}
+			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+attemptType,session.getSessionId());
+		}
+		setSessionStartTime(result.size()-1);
+	}
+	
 	@Override
 	public void setSessionsData(List<UserPlayedSessionDo> result) {
 		sessionsDropDown.clear();
@@ -319,6 +342,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		}
 		setSessionStartTime(0);
 	}
+	
 	public void setSessionStartTime(int selectedIndex) {
 		if(sessionData.size()!=0){
 			if(isCollection) {
@@ -327,9 +351,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				lastModifiedTime.setText(i18n.GL4005()+" "+AnalyticsUtil.getSessionsCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 			}
 			sessionsDropDown.setSelectedIndex(selectedIndex);
-			printData.setUserName(null);
-			printData.setSession(sessionsDropDown.getItemText(selectedIndex));
-			printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 		}
 	}
 
