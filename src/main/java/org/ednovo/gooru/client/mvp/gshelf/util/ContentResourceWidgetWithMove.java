@@ -667,6 +667,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				collectionItem.setNarration(narration);
 				pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
 			}
+			if(start!=null&& !start.equalsIgnoreCase("")){
+				start = startpdfPageNumber.getText();
+				}else{
+				start=Integer.toString(1);
+			}
+			
 			collectionItem.setStart(start);
 			collectionItem.setStop(enteredStopPage);
 			collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, start, enteredStopPage);
@@ -686,8 +692,23 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	 */
 	public boolean validatePDF(String startpage,String stopPage,Integer totalPage){
 		boolean isValid;
-		Integer enteredStopPage =	Integer.parseInt(stopPage);
-		Integer startpdfpage = Integer.parseInt(startpage);
+
+		Integer enteredStopPage =null;
+		Integer startpdfpage =null;
+		
+		if(stopPage!=null && !stopPage.equalsIgnoreCase("")){
+		enteredStopPage = Integer.parseInt(stopPage);
+		}else {
+		enteredStopPage = totalPage;
+		}
+		
+		
+		if(startpage!=null&& !startpage.equalsIgnoreCase("")){
+			startpdfpage = Integer.parseInt(startpage);
+			}else{
+			startpdfpage=1;
+			}
+		
 		if(enteredStopPage > totalPage){
 			lblError.setText(VALID_END_PAGE);
 			isValid = false;
@@ -1199,7 +1220,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		videoTimeField.setText(VIDEO_TIME);
 		videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
 		videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
-		System.out.println("collectionItem narration::::"+collectionItem.getNarration());
 		String stopTime = (collectionItem.getStop() == null) ? "00:00:00": collectionItem.getStop();
 		String startTime = (collectionItem.getStart() == null) ? "00:00:00": collectionItem.getStart();
 		startTime = startTime.replaceAll("\\.", ":");

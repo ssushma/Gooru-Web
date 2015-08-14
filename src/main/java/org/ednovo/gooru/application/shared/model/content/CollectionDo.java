@@ -27,7 +27,7 @@ package org.ednovo.gooru.application.shared.model.content;
 import java.util.Date;
 import java.util.List;
 
-
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 
@@ -85,6 +85,8 @@ public class CollectionDo extends ResourceDo implements IsSerializable{
 	private String courseGooruOid;
 	private boolean isCollaborator;
 	private List<String> permissions;
+	private List<CourseSubjectDo> taxonomyCourse;
+	private List<CourseSubjectDo> subdomain;
 	
 	private String type;
 	
@@ -501,4 +503,21 @@ public class CollectionDo extends ResourceDo implements IsSerializable{
 	public void setPermissions(List<String> permissions) {
 		this.permissions = permissions;
 	}
+
+	public List<CourseSubjectDo> getTaxonomyCourse() {
+		return taxonomyCourse;
+	}
+
+	public void setTaxonomyCourse(List<CourseSubjectDo> taxonomyCourse) {
+		this.taxonomyCourse = taxonomyCourse;
+	}
+
+	public List<CourseSubjectDo> getSubdomain() {
+		return subdomain;
+	}
+
+	public void setSubdomain(List<CourseSubjectDo> subdomain) {
+		this.subdomain = subdomain;
+	}
+	
 }

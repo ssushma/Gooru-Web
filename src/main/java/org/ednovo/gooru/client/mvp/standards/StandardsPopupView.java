@@ -62,6 +62,8 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -89,6 +91,8 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	@UiField UlPanel ulSelectedItems;
 	@UiField FlowPanel imageLoader;
 	@UiField LoadingUc imageLoadingIcon;
+	@UiField Label errorLbl;
+	@UiField ScrollPanel scrollPaneUIObj;
 
 
 	private boolean scienceCodeVal, instantVal = false;
@@ -105,6 +109,8 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	List<Map<String, String>> standListArray= new ArrayList<Map<String,String>>();
 
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	String standardsErrorMsg = "Standard limit reached.";
 
 	boolean isHavingBadWords;
 
@@ -122,9 +128,10 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	public StandardsPopupView(EventBus eventBus) {
 		super(eventBus);
 
-
 		appPopUp = new AppPopUpStandards();
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
+		errorLbl.setVisible(false);
+		scrollPaneUIObj.setHeight("80"+Unit.PX);
 		imageLoader.setVisible(true);
 		imageLoader.setHeight("350"+Unit.PX);
 		standardsContainer.setVisible(false);
@@ -141,6 +148,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 		appPopUp.setViewTitle(i18n.GL0575());
 		appPopUp.setGlassEnabled(true);
+		appPopUp.setHeight("580"+Unit.PX);
 		//appPopUp.setGlassStyleName(AddStandardsBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
 
@@ -153,6 +161,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		addBtn.setText(i18n.GL0590());
 		StringUtil.setAttributes(addBtn.getElement(), "btnAddStandards", i18n.GL0590(), i18n.GL0590());
 		addBtn.setEnabled(false);
+		errorLbl.setVisible(false);
 		addBtn.removeStyleName("primary");
 		addBtn.addStyleName("secondary");
 
@@ -169,7 +178,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		liPanel.getElement().setAttribute("id", levelOneData.getCodeId().toString());
 
 		appPopUp.setViewTitle(titleVal);
-
+		errorLbl.setVisible(false);
 		if(levelOneData.getCode()!= null){
 			if(levelOneData.getCode().equalsIgnoreCase("CA.SCI") && !scienceCodeVal){
 				scienceStrCode = levelOneData.getCodeId().toString();
@@ -335,20 +344,38 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 													}
 												}
 												if(!flagVal){
+													if(standListArray.size()<=14)
+													{
+													errorLbl.setVisible(false);
 													LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 													liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 													liPanelWithClose.setId(codeIdVal);
 													liPanelWithClose.setDifferenceId(3);
 													ulSelectedItems.add(liPanelWithClose);
 													standListArray.add(selectedStadDetails);
+													}
+													else
+													{
+														errorLbl.setVisible(true);
+														errorLbl.setText(standardsErrorMsg);
+													}
 												}
 											}else{
+												if(standListArray.size()<=14)
+												{
+												errorLbl.setVisible(false);
 												standListArray.add(selectedStadDetails);
 												LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 												liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 												liPanelWithClose.setId(codeIdVal);
 												liPanelWithClose.setDifferenceId(3);
 												ulSelectedItems.add(liPanelWithClose);
+												}
+												else
+												{
+													errorLbl.setVisible(true);
+													errorLbl.setText(standardsErrorMsg);	
+												}
 											}
 
 
@@ -535,20 +562,38 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 														}
 													}
 													if(!flagVal){
+														if(standListArray.size()<=14)
+														{
+														errorLbl.setVisible(false);
 														LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 														liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 														liPanelWithClose.setId(codeIdVal);
 														liPanelWithClose.setDifferenceId(3);
 														ulSelectedItems.add(liPanelWithClose);
 														standListArray.add(selectedStadDetails);
+														}
+														else
+														{
+															errorLbl.setVisible(true);
+															errorLbl.setText(standardsErrorMsg);
+														}
 													}
 												}else{
+													if(standListArray.size()<=14)
+													{
+													errorLbl.setVisible(false);
 													standListArray.add(selectedStadDetails);
 													LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 													liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 													liPanelWithClose.setId(codeIdVal);
 													liPanelWithClose.setDifferenceId(3);
 													ulSelectedItems.add(liPanelWithClose);
+													}
+													else
+													{
+														errorLbl.setVisible(true);
+														errorLbl.setText(standardsErrorMsg);
+													}
 												}
 
 												clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
@@ -674,20 +719,38 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 												}
 											}
 											if(!flagVal){
+												if(standListArray.size()<=14)
+												{
+												errorLbl.setVisible(false);
 												LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 												liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 												liPanelWithClose.setId(codeIdVal);
 												liPanelWithClose.setDifferenceId(3);
 												ulSelectedItems.add(liPanelWithClose);
 												standListArray.add(selectedStadDetails);
+												}
+												else
+												{
+													errorLbl.setVisible(true);
+													errorLbl.setText(standardsErrorMsg);
+												}
 											}
 										}else{
+											if(standListArray.size()<=14)
+											{
+											errorLbl.setVisible(false);
 											standListArray.add(selectedStadDetails);
 											LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 											liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 											liPanelWithClose.setId(codeIdVal);
 											liPanelWithClose.setDifferenceId(3);
 											ulSelectedItems.add(liPanelWithClose);
+											}
+											else
+											{
+												errorLbl.setVisible(true);
+												errorLbl.setText(standardsErrorMsg);
+											}
 										}
 
 										clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
@@ -784,20 +847,38 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 										}
 									}
 									if(!flagVal){
+										if(standListArray.size()<=14)
+										{
+										errorLbl.setVisible(false);
 										LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 										liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 										liPanelWithClose.setId(codeIdVal);
 										liPanelWithClose.setDifferenceId(3);
 										ulSelectedItems.add(liPanelWithClose);
 										standListArray.add(selectedStadDetails);
+										}
+										else
+										{
+											errorLbl.setVisible(true);
+											errorLbl.setText(standardsErrorMsg);
+										}
 									}
 								}else{
+									if(standListArray.size()<=14)
+									{
+									errorLbl.setVisible(false);
 									standListArray.add(selectedStadDetails);
 									LiPanelWithClose liPanelWithClose=new LiPanelWithClose(codeVal);
 									liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 									liPanelWithClose.setId(codeIdVal);
 									liPanelWithClose.setDifferenceId(3);
 									ulSelectedItems.add(liPanelWithClose);
+									}
+									else
+									{
+										errorLbl.setVisible(true);
+										errorLbl.setText(standardsErrorMsg);
+									}
 								}
 
 								clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
@@ -881,6 +962,9 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	public void setSelectedItmes(
 			List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
 		for (int i=0;i<collectionLiPanelWithCloseArray.size();i++){
+			if(standListArray.size()<=14)
+			{
+			errorLbl.setVisible(false);
 			LiPanelWithClose liPanelWithClose = new LiPanelWithClose("x");
 			liPanelWithClose = collectionLiPanelWithCloseArray.get(i);
 			liPanelWithClose.setId(liPanelWithClose.getId());
@@ -893,6 +977,12 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 			selectedStadDetails.put("selectedDifferenceId", String.valueOf(liPanelWithClose.getDifferenceId()));
 			selectedStadDetails.put("selectedCodeDesc", "");
 			standListArray.add(selectedStadDetails);
+			}
+			else
+			{
+				errorLbl.setVisible(true);
+				errorLbl.setText(standardsErrorMsg);
+			}
 
 		}
 	}

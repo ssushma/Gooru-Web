@@ -29,9 +29,9 @@ import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 
 public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUiHandlers{
 
-	public void getSessionsDataByUser(String collectionId, String classId, String userId);
+	public void getSessionsDataByUser(String collectionId, String classId, String courseId, String unitId, String lessonId, String userId);
 
-	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId,PrintUserDataDO printData);
+	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String courseId, String unitId, String lessonId, String userId, String sessionId,PrintUserDataDO printData);
 
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData, String type);
 
