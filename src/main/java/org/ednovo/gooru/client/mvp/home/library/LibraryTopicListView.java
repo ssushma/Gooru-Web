@@ -1977,7 +1977,9 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 	private void loggedInUserStdPrefCode() {
 		if(!AppClientFactory.isAnonymous()){
 			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() !=null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() != null){
+					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				}
 			} catch (Exception e) {
 				AppClientFactory.printSevereLogger("LibraryTopicListView loggedInUserStdPrefCode:::"+e);
 			}

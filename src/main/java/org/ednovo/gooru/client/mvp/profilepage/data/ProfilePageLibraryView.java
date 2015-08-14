@@ -222,12 +222,15 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId) {
 		contentScroll.clear();
 		try {
-			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), COLLECTION,null));
-			loadingPanel(false);
+			if(profileLibraryDo != null){
+				contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), COLLECTION,null));
+				loadingPanel(false);
+			}
+			
 		} catch (Exception e) {
 			loadingPanel(false);
 			//e.printStackTrace();
-		    AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e.getMessage());
+		    AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e);
 		}
 	}
 
@@ -254,7 +257,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		} catch (Exception e) {
 			loadingPanel(false);
 			//e.printStackTrace();
-			AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e.getMessage());
+			AppClientFactory.printSevereLogger("ProfilePageLibraryView-setTopicListData"+e);
 		}
 	}
 

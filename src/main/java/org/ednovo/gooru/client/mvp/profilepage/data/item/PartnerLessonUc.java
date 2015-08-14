@@ -254,7 +254,9 @@ public class PartnerLessonUc extends Composite{
 		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryCollection(gooruOid, false, new SimpleAsyncCallback<ProfileLibraryDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryDo profileLibraryDo) {
-				AppClientFactory.fireEvent(new OpenProfileCollectionEvent(profileLibraryDo,topicId,lessonId+"",lessonLabel,lessonCode,libraryGooruOid));
+				if(profileLibraryDo != null){
+					AppClientFactory.fireEvent(new OpenProfileCollectionEvent(profileLibraryDo,topicId,lessonId+"",lessonLabel,lessonCode,libraryGooruOid));
+				}
 			}			
 		});
 	}

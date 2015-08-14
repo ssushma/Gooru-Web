@@ -122,7 +122,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 
 				@Override
 				public void onSuccess(ProfileDo profileObj) {
-				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+				if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
 							getView().getStandardContainer().setVisible(true);
 							isBrowseTooltip = true;
@@ -297,8 +297,10 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
 					public void onSuccess(final ProfileDo profileObj) {
-					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
 					}
 					public void checkStandarsList(List<String> standarsPreferencesList) {
 						

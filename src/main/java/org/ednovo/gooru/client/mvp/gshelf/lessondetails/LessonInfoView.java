@@ -933,7 +933,9 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
 					public void onSuccess(final ProfileDo profileObj) {
-						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+						if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+							checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+						}
 					}
 				});
 		}else{
