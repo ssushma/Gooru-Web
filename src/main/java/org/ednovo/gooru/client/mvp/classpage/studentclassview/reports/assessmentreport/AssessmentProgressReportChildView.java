@@ -104,7 +104,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class AssessmentProgressReportChildView extends ChildView<AssessmentProgressReportChildPresenter> implements IsAssessmentProgressReportView,ClientConstants {
 
-	@UiField FlowPanel PrintPnl, printOptions, reportViewContainer;
+	@UiField FlowPanel PrintPnl, printOptions, reportViewContainer, scoreObject;
 	@UiField FlowPanel progressRadial,scoreRoundPanel, thumbnailImage, timeSpentPanel, headerLinksContainer, attemptPanel, selfReportPanel;
 	@UiField HTMLPanel  collectionSummaryText, questionsTable, collectionOverviewPanel;
 	@UiField ListBox sessionsDropDown;
@@ -172,12 +172,20 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		this.unitId = unitId;
 		this.courseId = courseId;
 		this.assessmentId = assessmentId;
-		if(sessionId==null) {
-			getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
+		if(AppClientFactory.isAnonymous()) {
+			loaderVisibility(false);
+			errorPanelData(false, true);
+			errorMsg();
+			printOptions.setVisible(false);
+			scoreObject.setVisible(false);
 		} else {
-			getPresenter().setSessionId(sessionId);
-			getPresenter().setSession(false);
-			getPresenter().getSessionsDataByUser(assessmentId,classId,courseId, unitId, lessonId, userId);
+			if(sessionId==null) {
+				getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
+			} else {
+				getPresenter().setSessionId(sessionId);
+				getPresenter().setSession(false);
+				getPresenter().getSessionsDataByUser(assessmentId,classId,courseId, unitId, lessonId, userId);
+			}
 		}
 	}
 
