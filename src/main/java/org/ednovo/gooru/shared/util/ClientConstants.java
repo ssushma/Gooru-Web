@@ -275,6 +275,7 @@ public interface ClientConstants {
 	String PNG = ".png";
 	String SMALL = "Small";
 	String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
+	String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 	String PAGE = "page";
 	String COURSE_PAGE = "course-page";
 	String STANDARD_CODE = "code";

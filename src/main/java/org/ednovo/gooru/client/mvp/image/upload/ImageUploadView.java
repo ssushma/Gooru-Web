@@ -542,7 +542,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				return isValid = false;
 			}
 		}catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("ImageUploadView hasValidateData:::"+e);
 		}
 		return isValid;
 	}
@@ -561,7 +561,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				return isValid = false;
 			}
 		}catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("ImageUploadView hasValidateImage:::"+e);
 		}
 		return isValid;
 	}

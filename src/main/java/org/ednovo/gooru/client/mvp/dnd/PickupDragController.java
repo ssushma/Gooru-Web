@@ -194,7 +194,7 @@ public class PickupDragController extends AbstractDragController {
 				}
 
 				restoreSelectedWidgetsLocation();
-				new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(750);
+				//new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(750);
 			}
 		} else {
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
@@ -216,7 +216,7 @@ public class PickupDragController extends AbstractDragController {
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
 			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(10000);
 		}
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_PLAY)){
 			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(10000);
 		}
 

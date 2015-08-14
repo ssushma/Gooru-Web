@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
@@ -88,5 +89,7 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 
 	void displaySelectedStandards(List<Map<String,String>> standListArray);
 
-	void spinnerImageVisibility(boolean isVisible); 
+	void spinnerImageVisibility(boolean isVisible);
+
+	void setStandardsValue(List<StandardFo> standardFoObj); 
 }

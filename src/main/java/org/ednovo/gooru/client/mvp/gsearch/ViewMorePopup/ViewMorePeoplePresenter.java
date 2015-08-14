@@ -74,19 +74,17 @@ public class ViewMorePeoplePresenter extends PresenterWidget<IsViewMorePeopleVie
 	@Override
 	public void getResourceDataByResource(ResourceSearchResultDo searchResultDo,String searchType) {
 		this.searchResultDo =searchResultDo;		
-		getWorkspaceData(0,20,searchResultDo.getGooruOid());
+		getWorkspaceData(0,searchResultDo.getResourceUsedUserCount(),searchResultDo.getGooruOid());
 	}
 	
 	public void getWorkspaceData(int offset,int limit, String resourceId){
 		AppClientFactory.getInjector().getResourceService().getResourceBasedUsersDetails(resourceId, offset, limit, new SimpleAsyncCallback<ArrayList<ResourceCollDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ResourceCollDo> userCollectionsList) {
-					getView().displayContents(userCollectionsList,searchResultDo);
+				getView().displayContents(userCollectionsList,searchResultDo);
 			}
 		});
 	}
-
-
 
 	@Override
 	public void hidePopup() {

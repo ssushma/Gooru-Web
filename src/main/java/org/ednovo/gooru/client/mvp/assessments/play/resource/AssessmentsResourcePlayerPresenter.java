@@ -60,7 +60,6 @@ import org.ednovo.gooru.client.mvp.assessments.play.resource.share.AssessmentsRe
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayEvent;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -106,8 +105,6 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
     private AssessmentsResourceInfoPresenter resourceInfoPresenter;
 
     private AddResourceAssessmentsPresenter addResourceCollectionPresnter;
-
-    private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
 
      SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
 
@@ -310,7 +307,7 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 
 	@Inject
 	public AssessmentsResourcePlayerPresenter(AssessmentsResourcePlayerMetadataPresenter resoruceMetadataPresenter,AssessmentsResourceSharePresenter resourceSharePresenter,
-			AssessmentsResourceInfoPresenter resourceInfoPresenter,EventBus eventBus, CollectionFormInPlayPresenter collectionFormInPlayPresenter,
+			AssessmentsResourceInfoPresenter resourceInfoPresenter,EventBus eventBus,
 			SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,IsAssessmentsResourcePlayerView view, IsAssessmentsResourcePlayerProxy proxy,AddResourceAssessmentsPresenter addResourceCollectionPresnter,AssessmentsResourceFlagPresenter resourceFlagPresenter,ShelfMainPresenter shelfMainPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
@@ -318,8 +315,6 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 		this.resourceSharePresenter=resourceSharePresenter;
 		this.resourceInfoPresenter=resourceInfoPresenter;
 		this.addResourceCollectionPresnter=addResourceCollectionPresnter;
-		addResourceCollectionPresnter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
-		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.shelfMainPresenter = shelfMainPresenter;
@@ -881,14 +876,6 @@ public class AssessmentsResourcePlayerPresenter extends BasePlacePresenter<IsAss
 		getView().getPlayerBodyContainer().add(new ResourceNonExitView());
 	}
 
-	public class ShowNewCollectionWidget implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			String resourceId=collectionItemDo.getResource().getGooruOid();
-			addToPopupSlot(collectionFormInPlayPresenter);
-			collectionFormInPlayPresenter.setResourceUid(resourceId);
-		}
-	}
 
 	public void updateAddResourceCollectionWidget(String collectionId){
 		addResourceCollectionPresnter.updateWorkSpaceLink(collectionId);

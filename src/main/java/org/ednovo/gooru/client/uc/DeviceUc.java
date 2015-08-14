@@ -1,13 +1,11 @@
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
-import org.ednovo.gooru.client.mvp.shelf.ShelfView;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -24,10 +22,10 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
+ *
  * @fileName : DeviceUc.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -99,8 +97,6 @@ public class DeviceUc extends Composite {
 		  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 		  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  LibraryView.onClosingAndriodorIpaddiv();
-		  ShelfListView.onClosingAndriodorIpaddiv();
-		  ShelfView.onClosingAndriodorIpaddiv();
 		  DiscoverToolTip.onclickOfAndriodorIpadcloseDiv();
 	}
 	@UiHandler("closeAndriodBtn")
@@ -111,27 +107,25 @@ public class DeviceUc extends Composite {
 		  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 		  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  LibraryView.onClosingAndriodorIpaddiv();
-		  ShelfListView.onClosingAndriodorIpaddiv();
-		  ShelfView.onClosingAndriodorIpaddiv();
 		  DiscoverToolTip.onclickOfAndriodorIpadcloseDiv();
 	}
-	
+
 	/**
-	 * 
-	 * @function setUiText 
-	 * 
+	 *
+	 * @function setUiText
+	 *
 	 * @created_date : 26-Feb-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -154,6 +148,6 @@ public class DeviceUc extends Composite {
 		  viewAnchor.setText(i18n.GL1428());
 		  viewAnchor.getElement().setAttribute("alt", i18n.GL1428());
 		  viewAnchor.getElement().setAttribute("title", i18n.GL1428());
-		  
+
 	}
 }

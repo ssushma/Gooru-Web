@@ -197,10 +197,6 @@ import org.ednovo.gooru.client.mvp.community.IsCommunityView;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsView;
 import org.ednovo.gooru.client.mvp.community.contributors.IsContributorsView;
-import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
-import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter.IsDeviceSupportProxy;
-import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportView;
-import org.ednovo.gooru.client.mvp.devicesupport.IsDeviceSupportView;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter.IsErrorProxy;
 import org.ednovo.gooru.client.mvp.error.ErrorView;
@@ -459,12 +455,6 @@ import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListView;
 import org.ednovo.gooru.client.mvp.rating.IsRatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerView;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
-import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
-import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
 import org.ednovo.gooru.client.mvp.search.IsTagsTabView;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabView;
@@ -478,20 +468,6 @@ import org.ednovo.gooru.client.mvp.settings.IsUserSettingsView;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter.IsUserSettingProxy;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsView;
-import org.ednovo.gooru.client.mvp.shelf.IsShelfView;
-import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
-import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter.IsShelfProxy;
-import org.ednovo.gooru.client.mvp.shelf.ShelfView;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayView;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter.IsCollectionFormProxy;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormView;
-import org.ednovo.gooru.client.mvp.shelf.collection.IsCollectionFormInPlayView;
-import org.ednovo.gooru.client.mvp.shelf.collection.IsCollectionFormView;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.IsFolderItemTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.IsCollectionAssignTab;
@@ -514,9 +490,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.IsDri
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.IsQuestionTypeView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypeView;
-import org.ednovo.gooru.client.mvp.shelf.list.IsShelfListView;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.mvp.standards.IsStandardsPopupView;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupView;
@@ -585,8 +558,6 @@ public class AppModule extends AppPresenterModule {
 				IsSearchResourceProxy.class);
 		bindPresenter(ErrorPresenter.class, IsErrorView.class, ErrorView.class,
 				IsErrorProxy.class);
-		bindPresenter(ShelfPresenter.class, IsShelfView.class, ShelfView.class,
-				IsShelfProxy.class);
 		bindPresenter(ShelfMainPresenter.class, IsShelfMainView.class, ShelfMainView.class,
 				IsShelfMainProxy.class);
 		bindPresenter(UserSettingsPresenter.class, IsUserSettingsView.class,
@@ -605,11 +576,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionInfoTabPresenter.class,
 				IsCollectionInfoTabView.class, CollectionInfoTabView.class);
 
-		bindSingletonPresenterWidget(ShelfListPresenter.class,
-				IsShelfListView.class, ShelfListView.class);
-		bindPresenter(CollectionFormPresenter.class,
-				IsCollectionFormView.class, CollectionFormView.class,
-				IsCollectionFormProxy.class);
 		bindPresenterWidget(ImageUploadPresenter.class,
 				IsImageUploadView.class, ImageUploadView.class);
 		bindPresenterWidget(AddResourcePresenter.class,
@@ -640,34 +606,21 @@ public class AppModule extends AppPresenterModule {
 				IsStudentAssignmentView.class, StudentAssignmentView.class,
 				IsStudentAssignmentProxy.class);
 
-		/*bindPresenterWidget(ProfilePageInfoTabPresenter.class,
-				IsProfilePageInfoTabView.class, ProfilePageInfoTabView.class);
-*/
-		bindPresenter(DeviceSupportPresenter.class, IsDeviceSupportView.class,
-				DeviceSupportView.class, IsDeviceSupportProxy.class);
-
 		bindPresenterWidget(ProfilePageListPresenter.class,
 				IsProfilePageListView.class, ProfilePageListView.class);
-
-		bindPresenterWidget(UserRegistrationPresenter.class,
-				IsUserRegistrationView.class, UserRegistrationView.class);
 
 		bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class);
 
 		bindConstant().annotatedWith(GaAccount.class).to(GA_ACCOUNT);
 		bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
 
-//		bind(GoogleAnalyticsHpNavigationTracker.class).asEagerSingleton();
-
-		bindPresenterWidget(CollectionFormInPlayPresenter.class,
-				IsCollectionFormInPlayView.class,
-				CollectionFormInPlayView.class);
-
 		bindPresenterWidget(CollectionAssignTabPresenter.class,
 				IsCollectionAssignTab.class, CollectionAssignTabView.class);
 		bindPresenterWidget(SignUpPresenter.class, IsSignUpView.class,SignUpView.class);
 		bindPresenter(CollectionPlayerPresenter.class, IsCollectionPlayerView.class, CollectionPlayerView.class,IsCollectionPlayerProxy.class);
 		bindPresenter(FolderTocPresenter.class, IsFolderTocView.class, FolderTocView.class,IsFolderTocProxy.class);
+		bindPresenterWidget(UserRegistrationPresenter.class,
+				IsUserRegistrationView.class, UserRegistrationView.class);
 		bindPresenter(ResourcePlayerPresenter.class, IsResourcePlayerView.class, ResourcePlayerView.class,IsResourcePlayerProxy.class);
 		bindPresenterWidget(CollectionPlayerMetadataPresenter.class, IsCollectionPlayerMetadataView.class, CollectionPlayerMetadataView.class);
 		bindPresenterWidget(CollectionPlayerTocPresenter.class, IsCollectionPlayerTocView.class, CollectionPlayerTocView.class);
@@ -696,8 +649,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionCollaboratorsTabPresenter.class,
 				IsCollectionCollaboratorsTab.class, CollectionCollaboratorsTabView.class);
 
-		bindPresenterWidget(FolderItemTabPresenter.class,IsFolderItemTabView.class, FolderItemTabView.class);
-
 		bindPresenterWidget(ClassListPresenter.class, IsClassListView.class, ClassListView.class);
 
 		bindPresenter(FteLibraryPresenter.class, IsFteLibraryView.class, FteLibraryView.class,IsFteLibraryProxy.class);
@@ -714,9 +665,6 @@ public class AppModule extends AppPresenterModule {
 
 
 		bindPresenter(DrivePresenter.class, IsDriveView.class, DriveView.class,IsDriveyProxy.class);
-
-		bindPresenterWidget(AddResourceContainerPresenter.class, IsAddResourceContainerView.class, AddResourceContainerView.class);
-
 
 		bindPresenterWidget(CollectionHomeMetadataPresenter.class, IsCollectionHomeMetadataView.class, CollectionHomeMetadataView.class);
 
@@ -742,7 +690,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
 		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);
 		bindPresenter(TicalLibraryPresenter.class, IsTicalLibraryView.class, TicalLibraryView.class,IsTicalLibraryProxy.class);
-		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
 
 		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);

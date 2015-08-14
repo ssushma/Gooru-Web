@@ -30,10 +30,8 @@ import java.util.logging.Logger;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.AppInjector;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.uc.UcCBundle;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -85,8 +83,8 @@ public class AppEntry implements EntryPoint {
 			DelayedBindRegistry.bind(appInjector);
 			AppClientFactory.setAppGinjector(appInjector);
 
-			UcCBundle.INSTANCE.css().ensureInjected();
-			HomeCBundle.INSTANCE.css().ensureInjected();
+//			UcCBundle.INSTANCE.css().ensureInjected();
+//			HomeCBundle.INSTANCE.css().ensureInjected();
 
 			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override

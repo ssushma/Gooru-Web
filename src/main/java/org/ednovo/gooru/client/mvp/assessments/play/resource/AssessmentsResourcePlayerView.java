@@ -65,15 +65,13 @@ public class AssessmentsResourcePlayerView extends BasePopupViewWithHandlers<Ass
 
 	@UiField FlowPanel playerBodyContainer,navigationContainer;
 
-	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
+	@UiField HTMLPanel androidSectiondiv;
 
-	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
+	@UiField com.google.gwt.user.client.ui.Image closeAndriodBtn;
 
 	@UiField ResourcePlayerHeaderView headerView;
 
-	@UiField Anchor viewAnchor;
-
-	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+	@UiField HTMLPanel msgPanel,msglinkPanel;
 
 	private PopupPanel appPopUp;
 	private boolean isInfoButtonActive=false;
@@ -123,19 +121,16 @@ public class AssessmentsResourcePlayerView extends BasePopupViewWithHandlers<Ass
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  headerView.getElement().setAttribute("style", "position:relative;");
-			 ipadSectiondiv.setVisible(true);
 			 androidSectiondiv.setVisible(false);
 
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  headerView.getElement().setAttribute("style", "position:relative;");
-			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
 		  }
 		  else
 		  {
-			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
 			  headerView.getElement().setAttribute("style", "position:fixed;");
 
@@ -327,23 +322,8 @@ public class AssessmentsResourcePlayerView extends BasePopupViewWithHandlers<Ass
 	}
 
 
-	@UiHandler("closeIpadBtn")
-	public void onIpadCloseClick(ClickEvent clickEvent){
-		 ipadSectiondiv.setVisible(false);
-		  androidSectiondiv.setVisible(false);
-		  headerView.getElement().setAttribute("style", "position:fixed;");
-		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		  int count=navigationContainer.getWidgetCount();
-		  if(count>0){
-			  getNavigationContainer().getWidget(0).getElement().getStyle().setMarginTop(50, Unit.PX);
-		  }
-		 // CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
-		  AssessmentsResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
-	}
-
 	@UiHandler("closeAndriodBtn")
 	public void onAndriodCloseClick(ClickEvent clickEvent){
-		 ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
 		  headerView.getElement().setAttribute("style", "position:fixed;");
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
@@ -372,8 +352,6 @@ public class AssessmentsResourcePlayerView extends BasePopupViewWithHandlers<Ass
 	{
 		  androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
 		  closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
-		  ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
-		  closeIpadBtn.getElement().setId("imgCloseIpadBtn");
 		  headerView.getElement().setId("collectionPlayerHeaderView");
 		  navigationContainer.getElement().setId("fpnlNavigationContainer");
 		  playerBodyContainer.getElement().setId("fpnlPlayerBodyContainer");
@@ -387,26 +365,5 @@ public class AssessmentsResourcePlayerView extends BasePopupViewWithHandlers<Ass
 		  msglinkPanel.getElement().setId("pnlMsglinkPanel");
 		  msglinkPanel.getElement().setAttribute("alt",i18n.GL1984());
 		  msglinkPanel.getElement().setAttribute("title",i18n.GL1984());
-
-		  gooruPanel.getElement().setInnerHTML(i18n.GL0733());
-		  gooruPanel.getElement().setId("pnlGooruPanel");
-		  gooruPanel.getElement().setAttribute("alt",i18n.GL0733());
-		  gooruPanel.getElement().setAttribute("title",i18n.GL0733());
-
-		  ednovoPanel.getElement().setInnerHTML(i18n.GL1985());
-		  ednovoPanel.getElement().setId("pnlEdnovoPanel");
-		  ednovoPanel.getElement().setAttribute("alt",i18n.GL1985());
-		  ednovoPanel.getElement().setAttribute("title",i18n.GL1985());
-
-		  appstorePanel.getElement().setInnerHTML(i18n.GL1986());
-		  appstorePanel.getElement().setId("pnlAppstorePanel");
-		  appstorePanel.getElement().setAttribute("alt",i18n.GL1986());
-		  appstorePanel.getElement().setAttribute("title",i18n.GL1986());
-
-		  viewAnchor.setText(i18n.GL1428());
-		  viewAnchor.getElement().setId("lnkViewAnchor");
-		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
-		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
-
 	}
 }
