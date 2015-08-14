@@ -357,7 +357,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			saveCollectionAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
-					System.out.println("asdfasdf");
 					FolderDo folderDo=getFolderDo(result);
 					AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),"collection", new SimpleAsyncCallback<HashMap<String,String>>() {
 						@Override

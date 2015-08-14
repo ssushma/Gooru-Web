@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.settings;
 
+import java.io.UnsupportedEncodingException;
 /**
  * @fileName : UserSettingsPresenter.java 
  *
@@ -193,30 +194,35 @@ public class UserSettingsPresenter
 //					StringUtil.consoleLog("access_token : Success : "+access_token);
 					if (access_token !=null ){
 						
-						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
-							@Override
-							public void onSuccess(GoogleDriveDo googleDriveDo) {
-								if(googleDriveDo!=null){
-									if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+						try {
+							AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+								@Override
+								public void onSuccess(GoogleDriveDo googleDriveDo) {
+									if(googleDriveDo!=null){
+										if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
 //										StringUtil.consoleLog("access_token : 401");
-										getView().googleDirveStatus(false);
-									}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+											getView().googleDirveStatus(false);
+										}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
 //										StringUtil.consoleLog("access_token : 403");
-										getView().googleDirveStatus(false);
-									}else{
+											getView().googleDirveStatus(false);
+										}else{
 //										StringUtil.consoleLog("access_token : no error");
-										UserDo user = AppClientFactory.getLoggedInUser();
-										user.setAccessToken(access_token);
-										AppClientFactory.setLoggedInUser(user);
-										
-										getView().googleDirveStatus(true);
-									}
-								}else{
+											UserDo user = AppClientFactory.getLoggedInUser();
+											user.setAccessToken(access_token);
+											AppClientFactory.setLoggedInUser(user);
+											
+											getView().googleDirveStatus(true);
+										}
+									}else{
 //									StringUtil.consoleLog("google drive file list empty");
-									getView().googleDirveStatus(false);
+										getView().googleDirveStatus(false);
+									}
 								}
-							}
-						});
+							});
+						} catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}else{
 //						StringUtil.consoleLog("refresh token null");
 						getView().googleDirveStatus(false);
@@ -1204,26 +1210,31 @@ public class UserSettingsPresenter
 					UserDo user = AppClientFactory.getLoggedInUser();
 					user.setAccessToken(access_token);
 					AppClientFactory.setLoggedInUser(user);
-					AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
-						@Override
-						public void onSuccess(GoogleDriveDo googleDriveDo) {
-							if(googleDriveDo!=null){
-								if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
-									getView().googleDirveStatus(false);
-								}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-									getView().googleDirveStatus(false);
+					try {
+						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+							@Override
+							public void onSuccess(GoogleDriveDo googleDriveDo) {
+								if(googleDriveDo!=null){
+									if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+										getView().googleDirveStatus(false);
+									}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+										getView().googleDirveStatus(false);
+									}else{
+										UserDo user = AppClientFactory.getLoggedInUser();
+										user.setAccessToken(access_token);
+										AppClientFactory.setLoggedInUser(user);
+										getView().googleDirveStatus(true);
+										getView().setConnectedAs(connectedEmailId);
+									}
 								}else{
-									UserDo user = AppClientFactory.getLoggedInUser();
-									user.setAccessToken(access_token);
-									AppClientFactory.setLoggedInUser(user);
-									getView().googleDirveStatus(true);
-									getView().setConnectedAs(connectedEmailId);
+									getView().googleDirveStatus(false);
 								}
-							}else{
-								getView().googleDirveStatus(false);
 							}
-						}
-					});
+						});
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}else{
 					getView().googleDirveStatus(false);
 				}

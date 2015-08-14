@@ -58,7 +58,7 @@ public class WebService {
 	} // Use this method to do a HttpPost\WebInvoke on a Web Service
 
 
-	public String postWebservice(String methodName, String data, String contentType,String accessToken) {
+	public String postWebservice(String methodName, String data, String contentType,String accessToken) throws UnsupportedEncodingException {
 		ret = null;
 
 		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
@@ -79,11 +79,7 @@ public class WebService {
 			httpPost.setHeader("Content-Type",
 					"application/x-www-form-urlencoded");
 		}
-		try {
-			tmp = new StringEntity(data, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-
-		}
+		tmp = new StringEntity(data, "UTF-8");
 		httpPost.setEntity(tmp);
 
 		try {
@@ -100,7 +96,7 @@ public class WebService {
 	}
 
 	public String webInvokefordelete(String methodName, String data,
-			String contentType) {
+			String contentType) throws UnsupportedEncodingException {
 		ret = null;
 
 		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
@@ -121,11 +117,7 @@ public class WebService {
 			httpDelete.setHeader("Content-Type",
 					"application/x-www-form-urlencoded");
 		}
-		try {
-			tmp = new StringEntity(data, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-
-		}
+		tmp = new StringEntity(data, "UTF-8");
 
 		try {
 			response = httpClient.execute(httpDelete, localContext);
@@ -141,7 +133,7 @@ public class WebService {
 	}
 
 	public String webInvokeforput(String methodName, String data,
-			String contentType) {
+			String contentType) throws UnsupportedEncodingException {
 		ret = null;
 
 		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
@@ -164,12 +156,7 @@ public class WebService {
 					"application/x-www-form-urlencoded; charset=UTF-8");
 		}
 
-		try {
-			tmp = new StringEntity(data, "UTF-8");
-
-		} catch (UnsupportedEncodingException e) {
-
-		}
+		tmp = new StringEntity(data, "UTF-8");
 		httpPut.setEntity(tmp);
 
 		try {
@@ -187,7 +174,7 @@ public class WebService {
 	}
 
 	public String webInvokeforget(String methodName, String data,
-			String contentType, String accessToken) {
+			String contentType, String accessToken) throws UnsupportedEncodingException {
 		ret = null;
 
 		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
@@ -210,12 +197,7 @@ public class WebService {
 				httpGet.setHeader("Content-Type",
 						"application/x-www-form-urlencoded; charset=UTF-8");
 			}
-			try {
-				tmp = new StringEntity(data, "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-
-
-			}
+			tmp = new StringEntity(data, "UTF-8");
 			try {
 				response = httpClient.execute(httpGet, localContext);
 //				response = httpConn.getResponseCode();
