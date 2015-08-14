@@ -344,7 +344,12 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		getLogger().info("getProfileLibraryCollection:"+url);
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
-		return deserializeConcept(jsonRepresentation);
+		if(jsonResponseRep != null && jsonResponseRep.getStatusCode()==200){
+			return deserializeConcept(jsonRepresentation);
+		}else{
+			return null;
+		}
+		
 	}
 
 	public ProfileLibraryDo deserializeConcept(JsonRepresentation jsonRep) {

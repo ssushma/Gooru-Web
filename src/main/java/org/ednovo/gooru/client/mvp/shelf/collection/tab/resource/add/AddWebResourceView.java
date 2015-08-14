@@ -852,7 +852,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 			@Override
 			public void onSuccess(ProfileDo profileObj) {
-			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+			if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
 						standardContainer.setVisible(true);
 						isBrowseTooltip = true;

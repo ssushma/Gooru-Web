@@ -617,15 +617,15 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 						PlayerDataLogEvents.triggerItemShareDataLogEventForProfile(AppClientFactory.getLoggedInUser().getGooruUId(), "", "", "", "", PlayerDataLogEvents.PROFILE, shareType, confirmStaus, "", AppClientFactory.getLoggedInUser().getGooruUId(), "profile");
 					}
 				};
+				socialButtonContainer.clear();
+				socialButtonContainer.add(socialView);
+				if(privatePublic.equalsIgnoreCase("private")) {
+					gooruSocialButtonsContainer.getElement().getStyle().setOpacity(0.6);
+				} else {
+					gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
+				}
 			}
 			
-			socialButtonContainer.clear();
-			socialButtonContainer.add(socialView);
-			if(privatePublic.equalsIgnoreCase("private")) {
-				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(0.6);
-			} else {
-				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
-			}
 		} catch (Exception e) {
 			 AppClientFactory.printSevereLogger("profilePageView setPublicShareDo :"+e);
 		}
