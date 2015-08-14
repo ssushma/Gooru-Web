@@ -228,8 +228,8 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		MediaUploadDo mediaUploadDo = null;
 		if (response != null) {
 			try {
-				JSONArray responseJson = new JSONArray(response);
-				mediaUploadDo = JsonDeserializer.deserialize(responseJson.get(0).toString(), MediaUploadDo.class);
+				JSONObject responseJson = new JSONObject(response);
+				mediaUploadDo = JsonDeserializer.deserialize(responseJson.toString(), MediaUploadDo.class);
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
