@@ -384,7 +384,10 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					folderDoObj.setType(result.getCollectionType());
 					folderDoObj.setDescription(result.getDescription());
 					folderDoObj.setDepthOfKnowledge(result.getDepthOfKnowledge());
-					folderDoObj.setSkills(result.getMetaInfo().getSkills());		
+					folderDoObj.setSkills(result.getMetaInfo().getSkills());	
+					folderDoObj.setThumbnails(result.getThumbnails());	
+					folderDoObj.setTaxonomyCourse(result.getTaxonomyCourse());
+					folderDoObj.setSubdomain(result.getSubdomain());
 					getView().setCouseData(folderDoObj,result.getCollectionType());
 					getView().setStandardsValue(result.getMetaInfo().getStandards());
 					centurySkillsPresenter.getView().setCollectionDo(result);
