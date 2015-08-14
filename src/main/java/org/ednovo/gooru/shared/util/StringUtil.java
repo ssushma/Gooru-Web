@@ -995,13 +995,13 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 	}
 	
 	public static String getHotTextHiglightText(String text){
-		String HTText;
+		String HTText="";
 		HTText=text.replaceAll(",", ", ");
-		HTText=HTText.replaceAll(";", "; ");
-		HTText=HTText.replaceAll("&nbsp;", " ");
-		HTText=HTText.replaceAll(":", ": ");
-		HTText=HTText.replaceAll(".", ". ");
-		HTText=HTText.replaceAll("\\]\\[", "\\] \\[");
+		HTText=text.replaceAll(";", "; ");
+		HTText=text.replaceAll("&nbsp;", " ");
+		HTText=text.replaceAll(":", ": ");
+		HTText=text.replaceAll(".", ". ");
+		HTText=text.replaceAll("\\]\\[", "\\] \\[");
 		return HTText;
 		
 	}
