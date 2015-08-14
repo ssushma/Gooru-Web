@@ -60,11 +60,10 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormHandler;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
-import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -647,7 +646,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		fileUpload.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
-
 				if(hasValidateImage()){
 					glasspanelLoadingImage(true);
 					fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), fileUpload.getFilename()));
@@ -657,19 +655,13 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				}
 			}
 		});
-
-		fileuploadForm.addFormHandler(new FormHandler() {
-			public void onSubmitComplete(FormSubmitCompleteEvent event) {
+		fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
+			@Override
+			public void onSubmitComplete(SubmitCompleteEvent event) {
 				glasspanelLoadingImage(false);
 				getUiHandlers().imageFileUpload(event.getResults());
 			}
-
-			@Override
-			public void onSubmit(FormSubmitEvent event) {
-
-			}
 		});
-
 	}
 
 	@Override
