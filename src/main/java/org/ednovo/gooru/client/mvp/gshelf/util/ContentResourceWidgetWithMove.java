@@ -667,6 +667,12 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				collectionItem.setNarration(narration);
 				pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
 			}
+			if(start!=null&& !start.equalsIgnoreCase("")){
+				start = startpdfPageNumber.getText();
+				}else{
+				start=Integer.toString(1);
+			}
+			
 			collectionItem.setStart(start);
 			collectionItem.setStop(enteredStopPage);
 			collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, start, enteredStopPage);
@@ -688,13 +694,21 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		boolean isValid;
 
 		Integer enteredStopPage =null;
+		Integer startpdfpage =null;
+		
 		if(stopPage!=null && !stopPage.equalsIgnoreCase("")){
 		enteredStopPage = Integer.parseInt(stopPage);
 		}else {
 		enteredStopPage = totalPage;
 		}
 		
-		Integer startpdfpage = Integer.parseInt(startpage);
+		
+		if(startpage!=null&& !startpage.equalsIgnoreCase("")){
+			startpdfpage = Integer.parseInt(startpage);
+			}else{
+			startpdfpage=1;
+			}
+		
 		if(enteredStopPage > totalPage){
 			lblError.setText(VALID_END_PAGE);
 			isValid = false;
