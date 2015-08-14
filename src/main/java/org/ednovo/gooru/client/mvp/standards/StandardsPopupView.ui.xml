@@ -36,8 +36,9 @@
 	<div class="col-md-10 col-sm-10 col-xs-10 filters">
 	
 	<div class="filterTags">
-
-<uc:UlPanel ui:field="ulSelectedItems"/>
+<g:Label ui:field="errorLbl" styleName="errorMessage"></g:Label>
+<g:ScrollPanel ui:field="scrollPaneUIObj">
+<uc:UlPanel ui:field="ulSelectedItems"/></g:ScrollPanel>
 </div>
 	
 	</div>

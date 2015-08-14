@@ -181,7 +181,14 @@ public class TinyMCE extends Composite{
 			@Override
 			public void execute() {
 				setWidth("100%");
+				try
+				{
                 setTextAreaToTinyMCE(id);
+				}
+				catch(JavaScriptException ex)
+				{
+					
+				}
                 setMarkAsBlankLabel();
 			}
         });

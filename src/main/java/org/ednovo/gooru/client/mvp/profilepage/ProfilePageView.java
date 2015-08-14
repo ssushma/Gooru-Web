@@ -610,12 +610,15 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	private void setPublicShareDo(String privatePublic) {
 		try {
-			shareDo.setShareType(privatePublic);
-			socialView = new SocialShareView(shareDo){
-				public void triggerShareDataEvent(String shareType,boolean confirmStaus){
-					PlayerDataLogEvents.triggerItemShareDataLogEventForProfile(AppClientFactory.getLoggedInUser().getGooruUId(), "", "", "", "", PlayerDataLogEvents.PROFILE, shareType, confirmStaus, "", AppClientFactory.getLoggedInUser().getGooruUId(), "profile");
-				}
-			};
+			if(shareDo != null){
+				shareDo.setShareType(privatePublic);
+				socialView = new SocialShareView(shareDo){
+					public void triggerShareDataEvent(String shareType,boolean confirmStaus){
+						PlayerDataLogEvents.triggerItemShareDataLogEventForProfile(AppClientFactory.getLoggedInUser().getGooruUId(), "", "", "", "", PlayerDataLogEvents.PROFILE, shareType, confirmStaus, "", AppClientFactory.getLoggedInUser().getGooruUId(), "profile");
+					}
+				};
+			}
+			
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
 			if(privatePublic.equalsIgnoreCase("private")) {
@@ -624,7 +627,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
 			}
 		} catch (Exception e) {
-			 AppClientFactory.printSevereLogger(e.toString());
+			 AppClientFactory.printSevereLogger("profilePageView setPublicShareDo :"+e);
 		}
 		
 

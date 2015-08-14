@@ -197,10 +197,6 @@ import org.ednovo.gooru.client.mvp.community.IsCommunityView;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsView;
 import org.ednovo.gooru.client.mvp.community.contributors.IsContributorsView;
-import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
-import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter.IsDeviceSupportProxy;
-import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportView;
-import org.ednovo.gooru.client.mvp.devicesupport.IsDeviceSupportView;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter.IsErrorProxy;
 import org.ednovo.gooru.client.mvp.error.ErrorView;
@@ -610,17 +606,8 @@ public class AppModule extends AppPresenterModule {
 				IsStudentAssignmentView.class, StudentAssignmentView.class,
 				IsStudentAssignmentProxy.class);
 
-		/*bindPresenterWidget(ProfilePageInfoTabPresenter.class,
-				IsProfilePageInfoTabView.class, ProfilePageInfoTabView.class);
-*/
-		bindPresenter(DeviceSupportPresenter.class, IsDeviceSupportView.class,
-				DeviceSupportView.class, IsDeviceSupportProxy.class);
-
 		bindPresenterWidget(ProfilePageListPresenter.class,
 				IsProfilePageListView.class, ProfilePageListView.class);
-
-		bindPresenterWidget(UserRegistrationPresenter.class,
-				IsUserRegistrationView.class, UserRegistrationView.class);
 
 		bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class);
 
@@ -632,6 +619,8 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(SignUpPresenter.class, IsSignUpView.class,SignUpView.class);
 		bindPresenter(CollectionPlayerPresenter.class, IsCollectionPlayerView.class, CollectionPlayerView.class,IsCollectionPlayerProxy.class);
 		bindPresenter(FolderTocPresenter.class, IsFolderTocView.class, FolderTocView.class,IsFolderTocProxy.class);
+		bindPresenterWidget(UserRegistrationPresenter.class,
+				IsUserRegistrationView.class, UserRegistrationView.class);
 		bindPresenter(ResourcePlayerPresenter.class, IsResourcePlayerView.class, ResourcePlayerView.class,IsResourcePlayerProxy.class);
 		bindPresenterWidget(CollectionPlayerMetadataPresenter.class, IsCollectionPlayerMetadataView.class, CollectionPlayerMetadataView.class);
 		bindPresenterWidget(CollectionPlayerTocPresenter.class, IsCollectionPlayerTocView.class, CollectionPlayerTocView.class);
