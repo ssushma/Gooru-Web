@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.child.IsChildView;
 import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
@@ -55,6 +56,8 @@ public interface IsAssessmentProgressReportView extends IsChildView<AssessmentPr
 	public void displayScoreCount(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
 
 	public void setSessionsData(List<UserPlayedSessionDo> result);
+
+	public void setAttemptsData(ArrayList<session> result);
 
 	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> result);
 
