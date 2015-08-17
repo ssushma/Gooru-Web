@@ -4,13 +4,13 @@
 	<ui:style field="flagPopUpstyle" src="player-flag-popup.css"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res" />
-	<g:HTMLPanel styleName="{res.css.PopupMainVVSmall}">
-		<div class="{res.css.popupInnerGrey}">
-		   	<div class="{res.css.popupgreyHeader}">
+	<g:HTMLPanel styleName="PopupMainVVSmall">
+		<div class="popupInnerGrey">
+		   	<div class="popupgreyHeader">
 		   	    <g:HTMLPanel styleName="row">
 		   			<g:Label styleName="col-md-8 col-xs-8" ui:field="flagHeaderText"></g:Label>
-	           		<panel:HTMLEventPanel ui:field="closeButton" styleName="col-md-4 col-xs-4 {res.css.closeContainer}">
-	        	    	<g:Anchor ui:field="popUpCloseButton" styleName="{res.css.closeButton}"/>
+	           		<panel:HTMLEventPanel ui:field="closeButton" styleName="col-md-4 col-xs-4 closeContainer">
+	        	    	<g:Anchor ui:field="popUpCloseButton" styleName="closeButton"/>
 	        		</panel:HTMLEventPanel>
 		   	    </g:HTMLPanel>
 		   	    <g:HTMLPanel styleName="clearfix"/>
@@ -18,7 +18,7 @@
 
 	        <div class="{flagPopUpstyle.playerflagcontentcontainerThankYou}">
 	        	<g:Label styleName="{flagPopUpstyle.playerflagcontentthankyou}" ui:field="thanksSubmitText"></g:Label>
-	             <g:HTMLPanel styleName="{res.css.formViewButtonContainer}">
+	             <g:HTMLPanel styleName="formViewButtonContainer">
 	             	<g:Button ui:field="okButton" styleName="primary"/>
 	             </g:HTMLPanel>
 
