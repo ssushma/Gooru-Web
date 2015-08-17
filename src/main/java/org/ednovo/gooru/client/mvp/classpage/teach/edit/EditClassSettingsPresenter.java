@@ -38,7 +38,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
@@ -97,6 +96,7 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setClassPageImage(true);
 		imageUploadPresenter.setEditResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 		imageUploadPresenter.setClasspageId(classpageId);
 		addToPopupSlot(imageUploadPresenter);
 	}

@@ -174,6 +174,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 	
@@ -185,6 +186,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
 		imageUploadPresenter.setUserOwnResourceImage(true);
+		imageUploadPresenter.setAnswerImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 	@Override
@@ -195,6 +197,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 	
@@ -208,6 +211,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
         imageUploadPresenter.setQuestionImage(false);
         imageUploadPresenter.setUserOwnResourceImage(false);
         imageUploadPresenter.setEditUserOwnResourceImage(false);
+        imageUploadPresenter.setAnswerImage(false);
         imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 

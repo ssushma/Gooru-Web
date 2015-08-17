@@ -227,6 +227,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
         imgUploadPresenter.setUpdateQuestionImage(true);
         imgUploadPresenter.setCollectionItemId(collectionItemId);
         imgUploadPresenter.setEditResourceImage(false);
+        imgUploadPresenter.setAnswerImage(false);
 
 	}
 	@Override
@@ -282,6 +283,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
          imgUploadPresenter.setEditResourceImage(true);
          imgUploadPresenter.setCollectionImage(false);
          imgUploadPresenter.setQuestionImage(false);
+         imgUploadPresenter.setAnswerImage(false);
 	}
 
 	@Override
@@ -355,6 +357,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
          imgUploadPresenter.setEditResourceImage(false);
          imgUploadPresenter.setCollectionImage(false);
          imgUploadPresenter.setQuestionImage(false);
+         imgUploadPresenter.setAnswerImage(false);
          imgUploadPresenter.getView().isFromEditQuestion(true);
 	}
 
