@@ -2083,7 +2083,9 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
 					public void onSuccess(final ProfileDo profileObj) {
-						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+						if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+							checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+						}
 					}
 
 				});

@@ -14,10 +14,13 @@
 		</div>
 		<div class="addCourse">
 <!-- 			<span>+</span> Add new <a href="">resource</a> or  <a href="">question</a>
- -->		<g:InlineLabel text="{i18n.GL_SPL_PLUS} {i18n.GL0590}"></g:InlineLabel>
+ -->	  <g:HTMLPanel ui:field="bottomPanel">
+ 			<g:InlineLabel text="{i18n.GL_SPL_PLUS} {i18n.GL0590}"></g:InlineLabel>
 			<g:Anchor text="{i18n.GL3217}" ui:field="ancAddResource"></g:Anchor>
 			<g:InlineLabel text="{i18n.GL0209}" ui:field="lblSpanOr"></g:InlineLabel>
 			<g:Anchor text="{i18n.GL3218}" ui:field="ancAddQuestion"></g:Anchor>
+		  </g:HTMLPanel>	
+		  <g:Label styleName="courseTextAdd" ui:field="lblLimitReached" />
 		</div>
 		<g:HTMLPanel ui:field="emptyContainerdiv"></g:HTMLPanel>
 	</g:HTMLPanel>

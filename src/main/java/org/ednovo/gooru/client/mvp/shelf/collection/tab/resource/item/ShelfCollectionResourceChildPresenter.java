@@ -37,10 +37,8 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 
 import com.google.gwt.user.client.ui.TreeItem;
-import com.google.inject.Inject;
 
 /**
  * @author Search Team
@@ -63,7 +61,6 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	private SimpleAsyncCallback<List<CollectionDo>> getMyUserCollectionsAsyncCallback;
 	
 	
-	@Inject private ImageUploadPresenter imageUploadPresenter;
 
 	/**
 	 * Class constructor

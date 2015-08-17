@@ -443,6 +443,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		imageUploadPresenter.setPublicProfileImage(true);
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setEditResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 	}
 
 	@Override

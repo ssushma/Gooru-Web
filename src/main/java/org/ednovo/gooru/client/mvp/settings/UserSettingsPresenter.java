@@ -560,7 +560,10 @@ public class UserSettingsPresenter
 									public void onSuccess(ProfileDo profileObj) {
 										getView().setProfileData(profileObj);
 										//getView().getUserCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
-										AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+										if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+											AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+										}
+										
 									}
 
 								});
@@ -1049,6 +1052,7 @@ public class UserSettingsPresenter
 		imageUploadPresenter.setProfileImage(true);
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setEditResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 	}
 
 	@Override
@@ -1170,7 +1174,9 @@ public class UserSettingsPresenter
 
 								@Override
 								public void onSuccess(final ProfileDo profileObj) {
-									AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+									if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+										AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+									}
 								//	getView().getUserCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
 								}
 
