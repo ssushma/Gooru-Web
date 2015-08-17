@@ -23,6 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.library.district;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -77,8 +78,11 @@ public class DistrictFeaturedView extends Composite {
 		courseTitle.getElement().setAttribute("alt",profileLibraryDo.getTitle());
 		courseTitle.getElement().setAttribute("title",profileLibraryDo.getTitle());
 		courseAuthor.getElement().setId("lblCourseAuthor");
-		
-		featuredCourseImage.setUrl(StringUtil.formThumbnailName(profileLibraryDo.getThumbnails().getUrl(),COURSE_100_75_CROP));
+		if(profileLibraryDo.getThumbnails()!=null && profileLibraryDo.getThumbnails().getUrl()!=null){
+			featuredCourseImage.setUrl(StringUtil.formThumbnailName(profileLibraryDo.getThumbnails().getUrl(),COURSE_100_75_CROP));
+		}else{
+			featuredCourseImage.setUrl(COURSE_100_75_IMG);
+		}
 		featuredCourseImage.setWidth("100px");
 		featuredCourseImage.setHeight("75px");
 
