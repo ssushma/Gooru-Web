@@ -378,14 +378,8 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		Window.enableScrolling(true);
 		this.fileNameWithoutRepository=fileName;
 		this.fileNameWithRepository=imageUrl;
-		//if(isCollectionImage||isQuestionImage){
-
-		if(isCollectionImage||isUpdateQuestionImage||isClassPageImage){
-			this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
-		}
-		else{
-			this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
-		}
+		this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
+		
 	}
 
 	@Override
