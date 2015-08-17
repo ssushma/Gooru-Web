@@ -348,7 +348,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 					lblRequiresYes.addStyleName(SELECTEDSTYLE);
 				}
 			}else{
-				lblRequiresYes.addStyleName(SELECTEDSTYLE);
+				lblRequiresNo.addStyleName(SELECTEDSTYLE);
 			}
 		}else{
 			txtAssessmentTitle.getElement().setAttribute("placeHolder", "UntitledExternalAssessment");
