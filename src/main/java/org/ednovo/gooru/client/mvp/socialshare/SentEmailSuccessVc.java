@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.socialshare;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.AppPopUp;
@@ -86,9 +85,8 @@ public class SentEmailSuccessVc extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
-/*		appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUp());
-*/		appPopUp.getElement().getStyle().setZIndex(999999);
-		appPopUp.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
+		appPopUp.getElement().getStyle().setZIndex(999999);
+		appPopUp.setGlassStyleName("loginPopupGlassStyle");
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
 		appPopUp.center();
@@ -123,7 +121,7 @@ public class SentEmailSuccessVc extends Composite {
 		appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUp());
 		appPopUp.getElement().getStyle().setZIndex(999999);
 		appPopUp.setPixelSize(480, 208);
-		appPopUp.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
+		appPopUp.setGlassStyleName("loginPopupGlassStyle");
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
 		appPopUp.center();
