@@ -78,6 +78,7 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setUdateProfileImage(true);
+		imageUploadPresenter.setAnswerImage(false);
 	}
 	@Override
 	public void displayView(){

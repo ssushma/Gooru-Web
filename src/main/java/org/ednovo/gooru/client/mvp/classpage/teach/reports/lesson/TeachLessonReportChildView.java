@@ -173,8 +173,10 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			        			  if(isCollection) {
 			        				  if(attemptCount>1&&scoreValue>=1){
 			        					  color = COLLECTION_ORANGE;
+			        					  score++;
 			        				  } else if(attemptCount==1&&scoreValue==1) {
 			        					  color = COLLECTION_GREEN;
+			        					  score++;
 			        				  } else if(attemptCount>=1&&scoreValue==0) {
 			        					  color=COLLECTION_RED;
 			        				  } else {
@@ -183,6 +185,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			        			  } else {
 			        				  if(attemptCount>=1&&scoreValue>=1){
 			        					  color = ASSESSMENT_GREEN;
+			        					  score++;
 			        				  } else if(attemptCount>=1&&scoreValue==0) {
 			        					  color = ASSESSMENT_ORANGE;
 			        				  } else {
