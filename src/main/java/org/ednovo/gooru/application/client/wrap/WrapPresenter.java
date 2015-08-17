@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.event.ActivateSearchBarHandler;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.event.InvokeLoginHandler;
 import org.ednovo.gooru.client.event.InvokeRegisterHandler;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.HomeHandler;
@@ -54,7 +53,6 @@ import org.ednovo.gooru.client.mvp.profilepage.event.UserHeaderImageEventHandler
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Cookies;
