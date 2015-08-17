@@ -1129,39 +1129,33 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 
 	@Override
 	public void updateWidgetsCount(CollectionItemDo collectionItem,boolean isDelete) {
+		try{
 		ShelfTreeWidget collectionShelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
 		String type=collectionItem!=null?collectionItem.getResource()!=null?(collectionItem.getResource().getResourceFormat()!=null?collectionItem.getResource().getResourceFormat().getDisplayName():""):"":"";
-		if("Question".equalsIgnoreCase(type)){
-			int count;
-			if(isDelete){
-				count=collectionShelfTreeWidget.getCollectionDo().getSummary().getQuestionCount()-1;
+		if(collectionShelfTreeWidget.getCollectionDo() !=null && collectionShelfTreeWidget.getCollectionDo().getSummary()!=null)
+		{		
+			if("Question".equalsIgnoreCase(type)){
+				//question count increment and decrement
+				int count;
+				if(isDelete){
+					count=collectionShelfTreeWidget.getCollectionDo().getSummary().getQuestionCount()-1;
+				}else{
+					count=collectionShelfTreeWidget.getCollectionDo().getSummary().getQuestionCount()+1;	
+				}
+				collectionShelfTreeWidget.getCollectionDo().getSummary().setQuestionCount(count);
 			}else{
-				try
-				{
-				if(collectionShelfTreeWidget.getCollectionDo().getSummary().getQuestionCount()==null)
-				{
-					collectionShelfTreeWidget.getCollectionDo().getSummary().setQuestionCount(0);
+				//resource count increment and decrement
+				int count;			
+				if(isDelete){
+					count=collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()-1;
+				}else{
+					count=collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()+1;
 				}
-				count=collectionShelfTreeWidget.getCollectionDo().getSummary().getQuestionCount()+1;
-				}
-				catch(Exception e)
-				{
-					count=1;
-				}
+				collectionShelfTreeWidget.getCollectionDo().getSummary().setResourceCount(count);		
 			}
-			collectionShelfTreeWidget.getCollectionDo().getSummary().setQuestionCount(count);
-		}else{
-			int count;
-			try{
-					if(isDelete){
-						count=collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()-1;
-					}else{
-						count=collectionShelfTreeWidget.getCollectionDo().getSummary().getResourceCount()+1;
-					}
-					collectionShelfTreeWidget.getCollectionDo().getSummary().setResourceCount(count);
-			}catch(Exception e){
-				AppClientFactory.printSevereLogger("Exception------"+e);
-			}
+		}
+		}catch(Exception e){
+			AppClientFactory.printSevereLogger("Exception------"+e);
 		}
 	}
 	private HashMap<String,String> getTreeParentIds(FolderDo courseDo) {
