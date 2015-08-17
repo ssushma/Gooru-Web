@@ -195,6 +195,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}
 		if(listOfContent.getCollectionItems()!=null && listOfContent.getCollectionItems().size()>0){
 			index=0;
+			pnlReosurceList.clear();
 			for (CollectionItemDo collectionItem : listOfContent.getCollectionItems()) {
 				setDisplayResourceItem(collectionItem, type, index);
 				index++;
@@ -241,9 +242,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		if (tmpIndex ==-1){
 			index = pnlReosurceList.getWidgetCount()>0 ? pnlReosurceList.getWidgetCount() : 0;
 			listOfContent.getCollectionItems().add(collectionItem);
-		}
-		if(index == 0){
-			pnlReosurceList.clear();
 		}
 		if (type.equals(RefreshType.INSERT)){
 			final ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem,folderDo.getType()) {
@@ -522,7 +520,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			emptyContainerdiv.setVisible(true);
 		}
 		if(listOfContent.getCollectionItems().size()>0){
-			listOfContent.getCollectionItems().remove(itemSequence);
+			listOfContent.getCollectionItems().remove(itemSequence-1);
 		}
 		resetWidgetPositions();
 	}

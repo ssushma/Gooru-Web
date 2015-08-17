@@ -150,7 +150,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			public void onSuccess(String filename) {
 
 				if(isCollectionImage){
-					//saveImageCollection(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
 					getShelfView().setCollectionImage(fileNameWithRepository,fileNameWithoutRepository);
 					getView().closeImageUploadWidget();
 					getView().resetImageUploadWidget();
@@ -379,14 +378,8 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		Window.enableScrolling(true);
 		this.fileNameWithoutRepository=fileName;
 		this.fileNameWithRepository=imageUrl;
-		//if(isCollectionImage||isQuestionImage){
-
-		if(isCollectionImage||isUpdateQuestionImage||isClassPageImage){
-			this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,null, getCropImageAsyncCallback());
-		}
-		else{
-			this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
-		}
+		this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
+		
 	}
 
 	@Override
