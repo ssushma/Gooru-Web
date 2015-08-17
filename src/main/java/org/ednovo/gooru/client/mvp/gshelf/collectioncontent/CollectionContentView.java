@@ -522,7 +522,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			emptyContainerdiv.setVisible(true);
 		}
 		if(listOfContent.getCollectionItems().size()>0){
-			listOfContent.getCollectionItems().remove(itemSequence);
+			listOfContent.getCollectionItems().remove(itemSequence-1);
 		}
 		resetWidgetPositions();
 	}
