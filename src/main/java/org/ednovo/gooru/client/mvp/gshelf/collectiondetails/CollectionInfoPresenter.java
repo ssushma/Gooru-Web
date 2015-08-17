@@ -379,6 +379,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 				@Override
 				public void onSuccess(CollectionDo result) {
 					FolderDo folderDoObj = new FolderDo();
+					folderDoObj.setGooruOid(result.getGooruOid());
 					folderDoObj.setTitle(result.getTitle());
 					folderDoObj.setLanguageObjective(result.getLanguageObjective());
 					folderDoObj.setAudience(result.getAudience());
