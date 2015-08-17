@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.client.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -173,9 +174,9 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 	//void getfolderList(String id, AsyncCallback<List<DriveDo>> asyncCallback);
 
-	void getGoogleDriveFilesList(String folderId,String nextPageToken,AsyncCallback<GoogleDriveDo> callback);
+	void getGoogleDriveFilesList(String folderId,String nextPageToken,AsyncCallback<GoogleDriveDo> callback) throws UnsupportedEncodingException;
 	
-    void updateFileShareToAnyoneWithLink(String driveFileId,AsyncCallback<GoogleDriveDo> callback);
+    void updateFileShareToAnyoneWithLink(String driveFileId,AsyncCallback<GoogleDriveDo> callback) throws UnsupportedEncodingException;
 
 	//void updatePermissions(DriveDo driveObject,AsyncCallback<DriveDo> simpleAsyncCallback);
     void refreshGoogleAccessToken(String refreshToken, AsyncCallback<GoogleToken> callback);

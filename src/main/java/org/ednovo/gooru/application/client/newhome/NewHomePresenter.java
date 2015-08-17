@@ -170,8 +170,10 @@ public class NewHomePresenter extends BasePlacePresenter<IsNewHomeView, IsEditCl
 		}
 
 		Document doc = Document.get();
-		doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
-
+		if(doc.getElementById("uvTab") != null){
+			doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
+		}
+		
 	}
 
 	@Override

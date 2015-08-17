@@ -66,7 +66,7 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
-						<g:Label styleName="errorMessage errorLblPosition" ui:field="errorMsgLbl" text=" Domain limit reached." visible="false"></g:Label>
+						<g:Label styleName="errorMessage errorLblPosition" ui:field="errorMsgLbl" text="{i18n.GL3492}" visible="false"></g:Label>
 				</div>
 				
 				<div class="standarFooterContainer">

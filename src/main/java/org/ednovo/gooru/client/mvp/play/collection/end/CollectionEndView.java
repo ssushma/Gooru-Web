@@ -840,11 +840,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void setDataInsightsUrl(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		frameContainer.setVisible(true);
+		clearsummaryReportViewPanel();
 		if(AppClientFactory.isAnonymous()){
+			dataInsightsPanel.setVisible(true);
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
 			loadingImageLabel.setVisible(false);
 		}else{
+			dataInsightsPanel.setVisible(false);
 			messageContainer.setVisible(false);
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 		}
@@ -856,12 +859,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		frameContainer.setVisible(true);
+		clearsummaryReportViewPanel();
 		if(AppClientFactory.isAnonymous()){
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
-
+			dataInsightsPanel.setVisible(true);
 			loadingImageLabel.setVisible(false);
 		}else{
+			dataInsightsPanel.setVisible(false);
 			messageContainer.setVisible(false);
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 		}
@@ -870,11 +875,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void setDataInsightsSummaryUrl(String sessionId){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		frameContainer.setVisible(true);
+		clearsummaryReportViewPanel();
 		if(AppClientFactory.isAnonymous()){
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
 			loadingImageLabel.setVisible(false);
-		}else{
+			dataInsightsPanel.setVisible(true);
+ 		}else{
+			dataInsightsPanel.setVisible(false);
 			messageContainer.setVisible(false);
 			sessionId=sessionId!=null?sessionId:"";
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
@@ -1889,6 +1897,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void setReportContainer(String sessionId) {
 		summaryReportView.getElement().getStyle().setPaddingTop(50, Unit.PX);
 		summaryReportView.clear();
+		dataInsightsPanel.setVisible(false);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id","");
 		String classId = AppClientFactory.getPlaceManager().getRequestParameter("cid","");
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId","");
@@ -1897,4 +1906,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		summaryReportView.add(new AssessmentProgressReportChildView(id, classId, AppClientFactory.getGooruUid(), courseId, unitId, lessonId, UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION, sessionId));
 	}
 
+	@Override
+	public void clearsummaryReportViewPanel() {
+		summaryReportView.clear();
+	}
 }
