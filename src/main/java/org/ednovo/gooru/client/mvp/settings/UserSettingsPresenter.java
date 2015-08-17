@@ -1052,6 +1052,7 @@ public class UserSettingsPresenter
 		imageUploadPresenter.setProfileImage(true);
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setEditResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 	}
 
 	@Override
