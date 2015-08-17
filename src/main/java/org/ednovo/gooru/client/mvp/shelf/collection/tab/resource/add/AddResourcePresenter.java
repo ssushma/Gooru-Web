@@ -174,6 +174,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 	
@@ -185,6 +186,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
 		imageUploadPresenter.setUserOwnResourceImage(true);
+		imageUploadPresenter.setAnswerImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 	@Override
@@ -195,6 +197,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
+		imageUploadPresenter.setAnswerImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 	
@@ -208,6 +211,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
         imageUploadPresenter.setQuestionImage(false);
         imageUploadPresenter.setUserOwnResourceImage(false);
         imageUploadPresenter.setEditUserOwnResourceImage(false);
+        imageUploadPresenter.setAnswerImage(false);
         imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 
@@ -529,8 +533,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
 					public void onSuccess(final ProfileDo profileObj) {
-					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
 					}
 					public void checkStandarsList(List<String> standarsPreferencesList) {
 						

@@ -374,8 +374,6 @@ public class CollectionResourceTabView extends
 									category = categoryStr;
 	 								thumbnailUrl = thumbnailUrlStr;
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-									System.out.println("collectionid::"+collectionItemDo.getParentGooruOid());
-									System.out.println("collectiondo::"+collectionDo.getGooruOid());
 									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 								}
 								@Override

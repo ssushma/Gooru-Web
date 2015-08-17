@@ -1447,7 +1447,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 									params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
 //									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);	
 									PlaceRequest placeRequest;
-									if(collectionType.equalsIgnoreCase(ASSESSMENT)){
+									if(ASSESSMENT.equalsIgnoreCase(collectionType)){
 										placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
 									}else{
 										placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -1476,7 +1476,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 								if(standardId!=null){
 									params.put("rootNodeId", standardId);
 								}
-								if(collectionType.equalsIgnoreCase(ASSESSMENT)){
+								if(ASSESSMENT.equalsIgnoreCase(collectionType)){
 									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, params);
 								}else{
 									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
@@ -1504,7 +1504,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 								if(standardId!=null){
 									params.put("rootNodeId", standardId);
 								}
-								if(collectionType.equalsIgnoreCase(ASSESSMENT)){
+								if(ASSESSMENT.equalsIgnoreCase(collectionType)){
 									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, params);
 								}else{
 									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
@@ -1535,7 +1535,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				if(standardId!=null){
 					params.put("rootNodeId", standardId);
 				}
-				if(collectionType.equalsIgnoreCase(ASSESSMENT)){
+				if(ASSESSMENT.equalsIgnoreCase(collectionType)){
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, params);
 				}else{
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
@@ -1974,7 +1974,9 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 	private void loggedInUserStdPrefCode() {
 		if(!AppClientFactory.isAnonymous()){
 			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() !=null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() != null){
+					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				}
 			} catch (Exception e) {
 				AppClientFactory.printSevereLogger("LibraryTopicListView loggedInUserStdPrefCode:::"+e);
 			}

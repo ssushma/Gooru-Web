@@ -411,7 +411,9 @@ public abstract class LoginPopupUc extends PopupPanel{
 						    AppClientFactory.fireEvent(new SetHeaderEvent(result));
 
 						    AppClientFactory.setUserflag(true);
-							AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
+						    if(result.getMeta() != null && result.getMeta().getTaxonomyPreference() != null && result.getMeta().getTaxonomyPreference().getCode() != null){
+						    	AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
+						    }
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
 						    }

@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.client.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -377,9 +378,9 @@ public interface ResourceService extends BaseService {
 	
 	public void deleteTagsServiceRequest(String resourceId, String addedTags)throws GwtException, ServerDownException;
 
-	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws GwtException, ServerDownException;
+	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws GwtException, ServerDownException, UnsupportedEncodingException;
 	
-	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws GwtException, ServerDownException;
+	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws GwtException, ServerDownException, UnsupportedEncodingException;
 
 	/**
 	 * @function refreshGoogleAccessToken 

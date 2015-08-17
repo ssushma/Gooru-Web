@@ -112,5 +112,6 @@ public interface IsCollectionEndView extends IsViewWithHandlers<CollectionEndUiH
 	public void displayWhatsNextContent(FolderWhatsNextCollectionDo result, String urlValue);
 	
 	public void setReportContainer(String sessionId);
-
+	
+	public void clearsummaryReportViewPanel();
 }

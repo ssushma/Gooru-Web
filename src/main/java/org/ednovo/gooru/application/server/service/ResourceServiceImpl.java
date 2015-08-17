@@ -2122,7 +2122,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) {
+	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws UnsupportedEncodingException {
 		GoogleDriveDo googleDriveDo=new GoogleDriveDo();
 		String contentType="application/json";
 		String access_token = getLoggedInAccessToken() != null ? getLoggedInAccessToken() : null;
@@ -2151,7 +2151,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 
         @Override
-	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId){
+	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws UnsupportedEncodingException{
 		GoogleDriveDo googleDriveDo=new GoogleDriveDo();
 		String contentType="application/json";
 		String access_token = getLoggedInAccessToken() != null ? getLoggedInAccessToken() : null;

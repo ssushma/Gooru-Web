@@ -120,6 +120,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
+		StringUtil.setAttributes(btnCreate.getElement(),"btnCreate", "", "");
+		StringUtil.setAttributes(btnCreateQuestion.getElement(),"btnCreateQuestion", "", "");
+		StringUtil.setAttributes(btnCreateResource.getElement(),"btnCreateResource", "", "");
 		createCollectionBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL1451());
 		createAssessmentBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL3024());
 		courseListContainer.getElement().setAttribute("style","min-height:"+Window.getClientHeight()+"px");
@@ -318,6 +321,8 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				createPanel.setVisible(false);
 				pnlCreate.setVisible(false);
 				lblLimitReached.setVisible(true);
+				btnCreate.setEnabled(false);
+				btnCreate.getElement().addClassName("disabled");
 				if(type.equalsIgnoreCase(COURSE)){
 					lblLimitReached.setText(UNIT_LIMIT_MSG);
 				}else if(type.equalsIgnoreCase(UNIT)){
@@ -328,6 +333,10 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 				createPanel.setVisible(false);
 				pnlCreate.setVisible(false);
 				lblLimitReached.setVisible(true);
+				btnCreateQuestion.setEnabled(false);
+				btnCreateResource.setEnabled(false);
+				btnCreateQuestion.getElement().addClassName("disabled");
+				btnCreateResource.getElement().addClassName("disabled");
 				lblLimitReached.setText(COLLECTION_LIMIT_MSG);
 			}
 		}else{
@@ -420,6 +429,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	public void setCreateText(String type){
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		btnCreate.setEnabled(true);
+		btnCreateQuestion.setEnabled(true);
+		btnCreateResource.setEnabled(true);
+		
+		btnCreate.getElement().removeClassName("disabled");
+		btnCreateQuestion.getElement().removeClassName("disabled");
+		btnCreateResource.getElement().removeClassName("disabled");
+		
 		if(COURSE.equalsIgnoreCase(type) && courseId!=null){
 			enableCreateButtons(false);
 			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());

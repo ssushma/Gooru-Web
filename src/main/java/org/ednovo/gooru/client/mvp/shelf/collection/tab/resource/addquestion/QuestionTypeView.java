@@ -399,7 +399,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 				@Override
 				public void onSuccess(ProfileDo profileObj) {
-					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+					if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference()!= null && profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
 							isBrowseTooltip = true;
 							DisableStandars();

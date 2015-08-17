@@ -665,6 +665,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		imageUploadPresenter.setClassPageImage(true);
 		imageUploadPresenter.setEditResourceImage(false);
 		imageUploadPresenter.setClasspageId(classpageId);
+		imageUploadPresenter.setAnswerImage(false);
 		addToPopupSlot(imageUploadPresenter);
 	}
 

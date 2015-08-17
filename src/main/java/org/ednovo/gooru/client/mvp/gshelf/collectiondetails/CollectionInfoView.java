@@ -1072,7 +1072,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void setCollectionImage(String url, String mediaFileName) {
 		Element element=Document.get().getElementById("mycollectionUploadImage");
 		element.removeAttribute("src");
-		element.setAttribute("src", url);
+		element.setAttribute("src", url+"?id="+Math.random());
 		element.setAttribute("filename", mediaFileName);
 	}
 
@@ -1258,7 +1258,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
 					public void onSuccess(final ProfileDo profileObj) {
-						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+						if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+							checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+						}
 					}
 
 				});

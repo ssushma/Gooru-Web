@@ -23,6 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
@@ -162,25 +163,30 @@ public class DrivePresenter extends
 						AppClientFactory.setLoggedInUser(user);
 						
 						
-						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
-							@Override
-							public void onSuccess(GoogleDriveDo googleDriveDo) {
-								if(isPanelClear){
-									getView().getPanelFileList().clear();
-								}
-								if(googleDriveDo!=null){
-									if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
-										getView().showNoDriveAccess(401);
-									}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-										getView().showNoDriveAccess(403);
-									}else{
-										getView().driveContentList(googleDriveDo);
+						try {
+							AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
+								@Override
+								public void onSuccess(GoogleDriveDo googleDriveDo) {
+									if(isPanelClear){
+										getView().getPanelFileList().clear();
 									}
-								}else{
-									getView().showNoDriveAccess(401);
+									if(googleDriveDo!=null){
+										if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+											getView().showNoDriveAccess(401);
+										}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+											getView().showNoDriveAccess(403);
+										}else{
+											getView().driveContentList(googleDriveDo);
+										}
+									}else{
+										getView().showNoDriveAccess(401);
+									}
 								}
-							}
-						});
+							});
+						} catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}else{
 						getView().showNoDriveAccess(401);
 					}
