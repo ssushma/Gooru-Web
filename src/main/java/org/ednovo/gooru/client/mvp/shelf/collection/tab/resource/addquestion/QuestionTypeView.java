@@ -1839,6 +1839,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestImgContainer.getWidget(0);
 				thumbnailUrl=addQuestionImage.getFileName();
 			}
+			collectionQuestionItemDo.setMediaFilename(thumbnailUrl);
 			getUiHandlers().v2UpdateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
 		}else{
 			getUiHandlers().addHSQuestionResource(mediaFileName,collectionQuestionItemDo);

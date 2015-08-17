@@ -338,6 +338,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setProfileImage(false);
 		imgUploadPresenter.setEditResourceImage(false);
+		imgUploadPresenter.setAnswerImage(false);
 /*		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setClassPageImage(false);
 		imgUploadPresenter.setUpdateQuestionImage(false);
