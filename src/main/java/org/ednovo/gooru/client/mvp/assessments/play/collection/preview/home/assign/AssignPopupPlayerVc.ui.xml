@@ -5,8 +5,6 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.assign.AssignPopUpCBundle"
 		field="res" />
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
 	<g:HTMLPanel styleName="PopupMainVSmall">
 		<g:HTMLPanel styleName="popupInnerGrey">
 			<g:HTMLPanel styleName="popupgreyHeader">

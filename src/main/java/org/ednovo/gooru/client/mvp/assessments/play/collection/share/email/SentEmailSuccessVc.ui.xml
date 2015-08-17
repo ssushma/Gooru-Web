@@ -2,8 +2,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" >
 	<ui:style field="SocialShare" src="SocialShareStyles.css" />
-<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res" />
 	<g:HTMLPanel styleName="PopupMainVVSmall">
 		<g:HTMLPanel styleName="popupInnerGrey">
 			<g:HTMLPanel styleName="popupgreyHeader">

@@ -2,8 +2,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="cpEmailStyle" src="emailshare.css" />
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
 	<g:HTMLPanel styleName="PopupMainVSmall">
 	    <g:HTMLPanel styleName="popupInnerGrey">
 	        <g:HTMLPanel  styleName="popupgreyHeader">
