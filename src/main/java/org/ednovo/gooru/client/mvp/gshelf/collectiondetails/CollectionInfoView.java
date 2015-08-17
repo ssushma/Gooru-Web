@@ -1072,7 +1072,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	public void setCollectionImage(String url, String mediaFileName) {
 		Element element=Document.get().getElementById("mycollectionUploadImage");
 		element.removeAttribute("src");
-		element.setAttribute("src", url);
+		element.setAttribute("src", url+"?id="+Math.random());
 		element.setAttribute("filename", mediaFileName);
 	}
 
