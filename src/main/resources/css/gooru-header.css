@@ -45,7 +45,6 @@ header {
 	cursor: pointer;
 	padding: 18px 10px;
 	cursor: pointer;
-	float: left;
 }
 
 #headerMainPanel .menuActive a, #headerMainPanel .menu a {
@@ -743,6 +742,7 @@ header {
 	#headerMainPanel .header-mainmenu {
 		width: 100% !important;
 		z-index: 5;
+		background: #333;
 	}
 	#headerMainPanel .header-mainmenu .navbar-collapse {
 		width: 100%;

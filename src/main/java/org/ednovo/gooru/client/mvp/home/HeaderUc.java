@@ -186,15 +186,17 @@ public class HeaderUc extends Composite
 					Document doc = Document.get();
 					if (isClearZIndex) {
 						try {
-							doc.getElementById("headerMainPanel").getStyle()
-									.clearZIndex();
+							if(doc.getElementById("headerMainPanel") != null){
+								doc.getElementById("headerMainPanel").getStyle().clearZIndex();
+							}
 						} catch (Exception ex) {
 							AppClientFactory.printSevereLogger("HeaderUc setHeaderZIndex:::"+ex.getMessage());
 						}
 					} else {
 						try {
-							doc.getElementById("headerMainPanel").getStyle()
-									.setZIndex(value);
+							if(doc.getElementById("headerMainPanel") != null){
+								doc.getElementById("headerMainPanel").getStyle().setZIndex(value);
+							}
 						} catch (Exception e) {
 							AppClientFactory.printSevereLogger("HeaderUc setHeaderZIndex:::"+e);
 						}
