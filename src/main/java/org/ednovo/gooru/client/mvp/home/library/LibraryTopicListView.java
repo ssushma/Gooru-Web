@@ -833,9 +833,12 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				resourcesInside.setVisible(true);
 				noCollectionLbl.setVisible(false);
 				final String collectionType=StringUtil.isEmpty(conceptDo.getCollectionType())?null:conceptDo.getCollectionType();
-				try {
-					StringUtil.setDefaultImages(conceptDo.getCollectionType(), collectionImage, "high");
+					if(conceptDo.getThumbnails()!=null && conceptDo.getThumbnails().getUrl()!=null){
 					collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
+					}else{
+						collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
+						StringUtil.setDefaultImages(collectionType, collectionImage, "high");
+					}
 					collectionImage.addErrorHandler(new ErrorHandler() {
 						@Override
 						public void onError(ErrorEvent event) {
@@ -851,12 +854,6 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					}
 					imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,libraryGooruOid));
 					titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,libraryGooruOid));
-				} catch (Exception e) {
-					collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
-					AppClientFactory.printSevereLogger("LibraryTopicListView setConceptData collectionImage:::"+e);
-					StringUtil.setDefaultImages(collectionType, collectionImage, "high");
-				}
-
 				try{
 					collectionTitleLbl.setHTML(conceptDo.getTitle());
 					collectionTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
@@ -1977,7 +1974,9 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 	private void loggedInUserStdPrefCode() {
 		if(!AppClientFactory.isAnonymous()){
 			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() !=null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() != null){
+					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				}
 			} catch (Exception e) {
 				AppClientFactory.printSevereLogger("LibraryTopicListView loggedInUserStdPrefCode:::"+e);
 			}

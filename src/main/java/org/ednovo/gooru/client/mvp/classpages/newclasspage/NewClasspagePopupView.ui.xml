@@ -4,11 +4,9 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupCBundle"
 		field="res" />
-		<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
-		<g:HTMLPanel styleName="{res1.css.PopupMainVVSmall}">
-			<g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
-			    <g:HTMLPanel  styleName="{res1.css.popupgreyHeader}">
+		<g:HTMLPanel styleName="PopupMainVVSmall">
+			<g:HTMLPanel styleName="popupInnerGrey">
+			    <g:HTMLPanel  styleName="popupgreyHeader">
 			        <g:HTMLPanel styleName="row">
 			            <g:HTMLPanel styleName="col-md-12 col-xs-12" ui:field="headerPanel" />
 			            <g:HTMLPanel styleName="clearfix"/>
@@ -18,7 +16,7 @@
 					<g:HTMLPanel styleName="col-md-12 col-xs-12" ui:field="titlePanel"></g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					<g:HTMLPanel styleName="col-md-12 col-xs-12">
-						<g:TextBox styleName="form-control {res1.css.form_control}" ui:field="classpageTitleTxt" />
+						<g:TextBox styleName="form-control form_control" ui:field="classpageTitleTxt" />
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					<g:HTMLPanel styleName="col-md-12 col-xs-12">
@@ -26,7 +24,7 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res1.css.formViewButtonContainer}">
+				<g:HTMLPanel styleName="formViewButtonContainer">
 				    <g:HTMLPanel ui:field="panelPleaseWait">
 						<g:Label styleName="{res.css.creating}" ui:field="panelLoading"></g:Label>
 					</g:HTMLPanel>

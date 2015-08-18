@@ -112,10 +112,6 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	@UiField Button  loginButton,gmailButton;
 
-
-	@UiField(provided = true)
-	LoginPopUpCBundle res;
-
 	private HeaderUc headerUc;
 
 	protected UserDo userDo;
@@ -166,9 +162,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 	public LoginPopupUc(){
 		super(false);
-        this.res = LoginPopUpCBundle.INSTANCE;
-        res.css().ensureInjected();
-        this.setGlassStyleName(LoginPopUpCBundle.INSTANCE.css().loginPopupGlassStyle());
+        this.setGlassStyleName("loginPopupGlassStyle");
         this.setGlassEnabled(true);
        	this.getElement().getStyle().setZIndex(99999);
 
@@ -193,12 +187,10 @@ public abstract class LoginPopupUc extends PopupPanel{
 	 */
 	public LoginPopupUc(HeaderUc headerUc) {
 		super(false);
-		this.res = LoginPopUpCBundle.INSTANCE;
-		res.css().ensureInjected();
 		this.headerUc = headerUc;
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		this.setGlassStyleName(LoginPopUpCBundle.INSTANCE.css().loginPopupGlassStyle());
+		this.setGlassStyleName("loginPopupGlassStyle");
 		this.getElement().getStyle().setZIndex(99999);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
@@ -411,7 +403,9 @@ public abstract class LoginPopupUc extends PopupPanel{
 						    AppClientFactory.fireEvent(new SetHeaderEvent(result));
 
 						    AppClientFactory.setUserflag(true);
-							AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
+						    if(result.getMeta() != null && result.getMeta().getTaxonomyPreference() != null && result.getMeta().getTaxonomyPreference().getCode() != null){
+						    	AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
+						    }
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
 						    }

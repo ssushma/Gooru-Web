@@ -4,8 +4,6 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupCBundle"
 		field="res" />
-		<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
 		<g:HTMLPanel ui:field="popupHeader" styleName="{res.css.PopupMainVVSmall}">
 			  <g:HTMLPanel styleName="modal-dialog">
 					<g:HTMLPanel styleName="modal-content">
@@ -16,7 +14,7 @@
 					      <g:HTMLPanel styleName="modal-body">
 						 	  <uc:PPanel ui:field="titlePanel"></uc:PPanel>
 						      <uc:PPanel>
-						          <g:TextBox styleName="form-control {res1.css.form_control}" ui:field="classpageTitleTxt" />
+						          <g:TextBox styleName="form-control form_control" ui:field="classpageTitleTxt" />
 						      </uc:PPanel>
 						      <uc:PPanel>
 								<g:Label styleName="{res.css.popupMandatoryTitleText}" ui:field="mandatoryClasspageTitleLbl"></g:Label>

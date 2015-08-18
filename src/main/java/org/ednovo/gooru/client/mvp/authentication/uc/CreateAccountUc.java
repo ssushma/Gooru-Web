@@ -34,7 +34,6 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.home.register.NewRegisterCBundle;
 import org.ednovo.gooru.client.mvp.home.register.ParentRegisterVc;
 import org.ednovo.gooru.client.mvp.home.register.RegistrationConfirmationVc;
@@ -1051,13 +1050,13 @@ public abstract class CreateAccountUc extends PopupPanel{
 				lblSelectRole.setVisible(false);
 				if (rbTeacher.getValue()){
 					//Remove normal and Set Selected Image
-					panelTeacher.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
+					panelTeacher.getElement().addClassName("teacherRoleSelected");
 				}
 				//Remove selected image and set normal
-				panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
+				panelOther.getElement().removeClassName("otherRoleSelected");
 //				panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
-				panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
-				panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
+				panelStudent.getElement().removeClassName("studentRoleSelected");
+				panelParent.getElement().removeClassName("parentRoleSelected");
 			}
 		});
 		rbStudent.addClickHandler(new ClickHandler() {
@@ -1069,13 +1068,12 @@ public abstract class CreateAccountUc extends PopupPanel{
 				lblSelectRole.setVisible(false);
 				if (rbStudent.getValue()){
 					//Remove normal and Set Selected Image
-					panelStudent.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
+					panelStudent.getElement().addClassName("studentRoleSelected");
 				}
 				//Remove selected image and set normal
-				panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
-				panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
-//				panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
-				panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
+				panelOther.getElement().removeClassName("otherRoleSelected");
+				panelTeacher.getElement().removeClassName("teacherRoleSelected");
+				panelParent.getElement().removeClassName("parentRoleSelected");
 			}
 		});
 		rbParent.addClickHandler(new ClickHandler() {
@@ -1087,13 +1085,12 @@ public abstract class CreateAccountUc extends PopupPanel{
 				lblSelectRole.setVisible(false);
 				if (rbParent.getValue()){
 					//Remove normal and Set Selected Image
-					panelParent.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
+					panelParent.getElement().addClassName("parentRoleSelected");
 				}
 				//Remove selected image and set normal
-				panelOther.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
-				panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
-				panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
-				//panelParent.getElement().removeClassName(res.css().parentRoleSelected());
+				panelOther.getElement().removeClassName("otherRoleSelected");
+				panelTeacher.getElement().removeClassName("teacherRoleSelected");
+				panelStudent.getElement().removeClassName("studentRoleSelected");
 			}
 		});
 		rbOther.addClickHandler(new ClickHandler() {
@@ -1105,13 +1102,12 @@ public abstract class CreateAccountUc extends PopupPanel{
 				lblSelectRole.setVisible(false);
 				if (rbOther.getValue()){
 					//Remove normal and Set Selected Image
-					panelOther.getElement().addClassName(LoginPopUpCBundle.INSTANCE.css().otherRoleSelected());
+					panelOther.getElement().addClassName("otherRoleSelected");
 				}
 				//Remove selected image and set normal
-				//panelOther.getElement().removeClassName(res.css().otherRoleSelected());
-				panelTeacher.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().teacherRoleSelected());
-				panelStudent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().studentRoleSelected());
-				panelParent.getElement().removeClassName(LoginPopUpCBundle.INSTANCE.css().parentRoleSelected());
+				panelTeacher.getElement().removeClassName("teacherRoleSelected");
+				panelStudent.getElement().removeClassName("studentRoleSelected");
+				panelParent.getElement().removeClassName("parentRoleSelected");
 			}
 		});
 
@@ -1512,8 +1508,8 @@ public abstract class CreateAccountUc extends PopupPanel{
 					dob = dateBoxUc.getDate();
 					underThirtheen = true;
 					panelBelowThirteen.setVisible(true);
-					popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
-					userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+					popupbody.setStyleName("childUserInfoContainer");
+					userDetailscontainer.setStyleName("firstInputGroup");
 					if (panelAboveThirteen.isVisible()) {
 						btnSignUp.setText(i18n.GL0460());
 					}
@@ -1521,9 +1517,9 @@ public abstract class CreateAccountUc extends PopupPanel{
 				}else{
 					underThirtheen = false;
 					panelBelowThirteen.setVisible(false);
-					popupbody.removeStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
-					popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().userInfoContainer());
-					userDetailscontainer.removeStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+					popupbody.removeStyleName("childUserInfoContainer");
+					popupbody.setStyleName("userInfoContainer");
+					userDetailscontainer.removeStyleName("firstInputGroup");
 
 					panelAboveThirteen.setVisible(true);
 					btnSignUp.setText(i18n.GL0186());
@@ -1598,8 +1594,8 @@ public abstract class CreateAccountUc extends PopupPanel{
 								// TODO set the parent user details.
 								underThirtheen = true;
 								panelBelowThirteen.setVisible(true);
-								popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
-								userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+								popupbody.setStyleName("childUserInfoContainer");
+								userDetailscontainer.setStyleName("firstInputGroup");
 								if (panelAboveThirteen.isVisible()) {
 									btnSignUp.setText(i18n.GL0460());
 								}
@@ -1651,8 +1647,8 @@ public abstract class CreateAccountUc extends PopupPanel{
 						// TODO set the parent user details.
 						underThirtheen = true;
 						panelBelowThirteen.setVisible(true);
-						popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
-						userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+						popupbody.setStyleName("childUserInfoContainer");
+						userDetailscontainer.setStyleName("firstInputGroup");
 						if (panelAboveThirteen.isVisible()) {
 							btnSignUp.setText(i18n.GL0460());
 						}
@@ -1834,6 +1830,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 				@Override
 				public void onSuccess(Boolean value) {
 					btnSignUp.setEnabled(true);
+					panelAboveThirteen.getElement().setAttribute("style", "margin-top:25px;");
 					SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
 					if(textBox!=null){
 						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -1841,27 +1838,23 @@ public abstract class CreateAccountUc extends PopupPanel{
 						errorLblForFirstName.getElement().getStyle().setTop(-3, Unit.PX);
 					}
 
-					if(userNameValidUc.isVisible() && errorLblForUsername.isVisible())
-					{
+					if(userNameValidUc.isVisible() && errorLblForUsername.isVisible()){
 						userNameValidUc.setVisible(false);
 						label.getElement().getStyle().clearPosition();
-					}
-					else
-					{
+					}else{
 						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
 					}
 
-					if(errorLblForLastName.isVisible()|| errorLblForFirstName.isVisible())
-					{
+					if(errorLblForLastName.isVisible()|| errorLblForFirstName.isVisible()){
 						emailFieldContainer.getElement().setAttribute("style", "margin-top:30px;");
-					}
-					else
-					{
+					}else{
 						emailFieldContainer.getElement().removeAttribute("style");
 					}
 					if(errorLblForUsername.isVisible()){
 						errorLblForUsername.getElement().getStyle().setTop(-8, Unit.PX);
 						errorLblForUsername.getElement().getStyle().setLeft(16,  Unit.PX);
+					}else{
+						panelAboveThirteen.getElement().removeAttribute("style");
 					}
 				}
 			});

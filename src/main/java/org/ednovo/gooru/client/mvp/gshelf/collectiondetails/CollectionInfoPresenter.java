@@ -127,10 +127,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	protected void onReset() {
 		// TODO Auto-generated method stub
 		super.onReset();
-		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);
-		if(view!=null && view.equalsIgnoreCase("Folder")){
-			getCollectionDo();	
-		}
 		
 	
 	}
@@ -260,6 +256,16 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		if(!getViewType().equalsIgnoreCase(FOLDER)){
 			callCourseInfoTaxonomy();
 		}
+		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);	
+		String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
+		if(view!=null && view.equalsIgnoreCase("Folder")){
+			if(idVal!=null){
+			if(folderObj!=null && folderObj.getGooruOid()!=null)
+			{
+			getCollectionDo(idVal);
+			}
+			}
+		}
 	}
 	@Override
 	public void showStandardsPopup(String standardVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
@@ -338,6 +344,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setProfileImage(false);
 		imgUploadPresenter.setEditResourceImage(false);
+		imgUploadPresenter.setAnswerImage(false);
 /*		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setClassPageImage(false);
 		imgUploadPresenter.setUpdateQuestionImage(false);
@@ -371,19 +378,19 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		});
 	}
 
-	public void getCollectionDo(){
-		String collectionUid=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id", null);
-		if(collectionUid!=null){
+	public void getCollectionDo(String collectionUid){
+
 			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					FolderDo folderDoObj = new FolderDo();
+					folderDoObj.setGooruOid(result.getGooruOid());
 					folderDoObj.setTitle(result.getTitle());
 					folderDoObj.setLanguageObjective(result.getLanguageObjective());
 					folderDoObj.setAudience(result.getAudience());
 					folderDoObj.setType(result.getCollectionType());
 					folderDoObj.setDescription(result.getDescription());
-					folderDoObj.setDepthOfKnowledge(result.getDepthOfKnowledge());
+					folderDoObj.setDepthOfKnowledge(result.getDepthOfKnowledges());
 					folderDoObj.setSkills(result.getMetaInfo().getSkills());	
 					folderDoObj.setThumbnails(result.getThumbnails());	
 					folderDoObj.setTaxonomyCourse(result.getTaxonomyCourse());
@@ -395,7 +402,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					getView().getAudienceContainer().setCollectonDetails(result);
 				}
 			});
-		}
+		
 	}
 
 	@Override

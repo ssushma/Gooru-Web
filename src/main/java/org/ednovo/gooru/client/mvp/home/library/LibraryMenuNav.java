@@ -223,7 +223,9 @@ public class LibraryMenuNav extends Composite{
 		
 		if(!AppClientFactory.isAnonymous()){
 			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() !=null){
+					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				}
 			} catch (Exception e) {
 				AppClientFactory.printSevereLogger("LibraryMenuNav :::"+e);
 			}
@@ -870,7 +872,9 @@ public class LibraryMenuNav extends Composite{
 			}
 			if(!AppClientFactory.isAnonymous()){
 				try {
-					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+					if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() != null){
+						getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+					}
 				} catch (Exception e) {
 					AppClientFactory.printSevereLogger("LibraryMenuNav setTaxonomyDataforStandards::::"+e);
 				}

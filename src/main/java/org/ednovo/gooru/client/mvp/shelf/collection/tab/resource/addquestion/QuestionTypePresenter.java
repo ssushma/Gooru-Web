@@ -155,6 +155,7 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 	        imageUploadPresenter.setQuestionImage(false);
 	        imageUploadPresenter.setUserOwnResourceImage(false);
 	        imageUploadPresenter.setEditUserOwnResourceImage(false);
+	        imageUploadPresenter.setAnswerImage(false);
 	        imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
 
@@ -174,12 +175,18 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 	public void answerImageUpload() {
 		addToPopupSlot(imageUploadPresenter);
 		imageUploadPresenter.setCollectionImage(false);
-		imageUploadPresenter.setQuestionImage(false);
 		imageUploadPresenter.setEditResourceImage(false);
-		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
-		imageUploadPresenter.setAnswerImage(true);
+		imageUploadPresenter.setQuestionImage(false);
+		imageUploadPresenter.setUpdateQuestionImage(false);
+		imageUploadPresenter.setProfileImage(false);
+		imageUploadPresenter.setPublicProfileImage(false);
+		imageUploadPresenter.setUserOwnResourceImage(false);
+		imageUploadPresenter.setUdateProfileImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(false);
+		imageUploadPresenter.setAnswerImage(true);
+		
+		
 	}
 
 	@Override
@@ -189,8 +196,10 @@ public class QuestionTypePresenter extends PresenterWidget<IsQuestionTypeView> i
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
 					public void onSuccess(final ProfileDo profileObj) {
-					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
 					}
 					public void checkStandarsList(List<String> standarsPreferencesList) {
 

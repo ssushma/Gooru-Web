@@ -1001,7 +1001,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getView().makeButtonActive(false,false, false, false, false,true,false);
 			}
 		}else{
-			System.out.println("---else loop-----");
 		}
 	}
 

@@ -9,7 +9,6 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -126,7 +125,7 @@ public class AssessmentsFlagView extends
 		provideMoreDetails.getElement().getStyle().setMarginTop(25, Unit.PX);
 		provideMore.getElement().getStyle().setMarginTop(25, Unit.PX);
 
-		flagCollectionText.getElement().setInnerHTML(i18n.GL0601());
+		flagCollectionText.getElement().setInnerHTML(i18n.GL3494());
 		flagCollectionText.getElement().setId("pnlFlagCollectionText");
 		flagCollectionText.getElement().setAttribute("alt",i18n.GL0601());
 		flagCollectionText.getElement().setAttribute("title",i18n.GL0601());
@@ -137,20 +136,20 @@ public class AssessmentsFlagView extends
 		flagResourceText.getElement().setAttribute("alt",i18n.GL0602());
 		flagResourceText.getElement().setAttribute("title",i18n.GL0602());
 
-		incorporateText.setText(i18n.GL0603());
+		incorporateText.setText(i18n.GL3495());
 		incorporateText.getElement().setId("lblIncorporateText");
-		incorporateText.getElement().setAttribute("alt",i18n.GL0603());
-		incorporateText.getElement().setAttribute("title",i18n.GL0603());
+		incorporateText.getElement().setAttribute("alt",i18n.GL3495());
+		incorporateText.getElement().setAttribute("title",i18n.GL3495());
 
-		notAppropriateText.setText(i18n.GL0604());
+		notAppropriateText.setText(i18n.GL3496());
 		notAppropriateText.getElement().setId("lblNotAppropriateText");
-		notAppropriateText.getElement().setAttribute("alt",i18n.GL0604());
-		notAppropriateText.getElement().setAttribute("title",i18n.GL0604());
+		notAppropriateText.getElement().setAttribute("alt",i18n.GL3496());
+		notAppropriateText.getElement().setAttribute("title",i18n.GL3496());
 
-		inaccurateText.setText(i18n.GL0605());
+		inaccurateText.setText(i18n.GL3497());
 		inaccurateText.getElement().setId("lblInaccurateText");
-		inaccurateText.getElement().setAttribute("alt",i18n.GL0605());
-		inaccurateText.getElement().setAttribute("title",i18n.GL0605());
+		inaccurateText.getElement().setAttribute("alt",i18n.GL3497());
+		inaccurateText.getElement().setAttribute("title",i18n.GL3497());
 
 		otherReasonText.setText(i18n.GL0606());
 		otherReasonText.getElement().setId("lblOtherReasonText");
@@ -282,7 +281,7 @@ public class AssessmentsFlagView extends
 			collectionTitleField.getElement().setAttribute("alt",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
 			collectionTitleField.getElement().setAttribute("title",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
 		}
-		flagCollections.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagCollections.addStyleName("flagbuttonDeSelected");
 		// To get content report
 		getUiHandlers().getContentReport(collectionGooruOid);
 	}
@@ -457,17 +456,17 @@ public class AssessmentsFlagView extends
 
 	@UiHandler("flagCollections")
 	public void onClickOfflagCollections(ClickEvent event) {
-		flagResources.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
-		flagCollections.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagResources.removeStyleName("flagbuttonDeSelected");
+		flagCollections.addStyleName("flagbuttonDeSelected");
 		collectionFlagContainer.setVisible(true);
 		resourceFlagContainer.setVisible(false);
 	}
 
 	@UiHandler("flagResources")
 	public void onClickOfflagResources(ClickEvent event) {
-		flagResources.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagResources.addStyleName("flagbuttonDeSelected");
 
-		flagCollections.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagCollections.removeStyleName("flagbuttonDeSelected");
 
 		collectionFlagContainer.setVisible(false);
 		resourceFlagContainer.setVisible(true);
