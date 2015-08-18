@@ -75,22 +75,21 @@ public class DateBoxUc extends FlowPanel{
 	public DateBoxUc(boolean isRegistration,boolean isSmall,boolean isStudent) {
 		super();
 		this.isRegistration = isRegistration;
-		UcCBundle.INSTANCE.css().ensureInjected();
 
 		calendarIcon = new Label();
-		calendarIcon.setStyleName(UcCBundle.INSTANCE.css().gooruCalendarIcon());
+		calendarIcon.setStyleName("Uc-gooruCalendarIcon");
 
 		dateBox = new TextBox();
 		dateBox.getElement().setId("tbBirthday");
 		dateBox.getElement().getStyle().setWidth(100, Unit.PCT);
 		dateBox.setReadOnly(true);
 		if (!isRegistration){
-				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBoxAssignment());
+				this.setStyleName("Uc-gooruDateBoxAssignment");
 				dateBox.getElement().getStyle().setWidth(271, Unit.PX);
 		}else{
 			dateBox.getElement().setAttribute("Placeholder", i18n.GL0211());
 			if (!isSmall){
-				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBox());
+				this.setStyleName("Uc-gooruDateBox");
 			}else{
 				calendarIcon.addStyleName(SignUpCBundle.INSTANCE.css().iconPosition());
 			}
@@ -102,7 +101,7 @@ public class DateBoxUc extends FlowPanel{
         }
 
 		datePickerUc = new DatePickerUc(isRegistration);
-		dateBox.setStyleName(UcCBundle.INSTANCE.css().gooruDateText());
+		dateBox.setStyleName("Uc-gooruDateText");
 		if(!isStudent){
 		calendarIcon.addClickHandler(new OnIconClick());
 		}

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -61,7 +61,7 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 	interface ProfileBiographyEditUCUiBinder extends
 			UiBinder<Widget, ProfilePageDescriptionEditUc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
@@ -82,11 +82,8 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 	private Label biographyEditImage;
 	public boolean isHavingBadWordsInTextbox;
 	protected String text;
-	@UiField(provided = true)
-	UcCBundle res;
 
 	public ProfilePageDescriptionEditUc() {
-		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		focusPanel.getElement().setId("focuspnlFocusPanel");
 		deckPanel.getElement().setId("dpnlDeckPanel");
@@ -98,9 +95,9 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 		errorLabel.getElement().setAttribute("title", i18n.GL1043());
 		biographyLabel = new Label();
 		biographyLabel.getElement().setAttribute("style", "float: left; max-width: 709px; min-height: 33px;");
-		
+
 		biographyEditImage = new Label(i18n.GL1786());
-		biographyEditImage.setStyleName(res.css().editImage());
+		biographyEditImage.setStyleName("Uc-editImage");
 		errorLabel.setVisible(false);
 		errorLabelForEditText.getElement().setId("lblErrorLabelForEditText");
 		errorLabelForEditText.getElement().setAttribute("style", "float: left;text-align: right;width: 76%;");
@@ -124,13 +121,13 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 				});
 			}
 		});
-		
+
 	}
 
 	public Label getBiographyEditImage() {
 		return biographyEditImage;
 	}
-	
+
 	private class ValidateConfirmText implements KeyUpHandler {
 
 		@Override
@@ -151,7 +148,7 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
-		
+
 	}
 
 	/**
@@ -256,8 +253,8 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 		return editTextBox;
 	}
 
-	
-	
-	
+
+
+
 
 }
