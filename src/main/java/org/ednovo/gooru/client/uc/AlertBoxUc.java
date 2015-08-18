@@ -41,7 +41,6 @@ public class AlertBoxUc extends DialogBoxUc{
 		super();
 		this.setStyleName("PopupMainVVSmall");
 		this.addStyleName("loginFailureAlert");
-		this.addStyleName("tableDivStyles");
 	}
 
 	/**
