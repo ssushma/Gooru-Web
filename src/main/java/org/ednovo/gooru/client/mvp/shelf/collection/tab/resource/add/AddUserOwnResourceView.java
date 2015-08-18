@@ -104,6 +104,8 @@ import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormHandler;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -1285,10 +1287,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 											loadingImagePanel.clear();
 											loadingImagePanel.add(setLoadingPanel());
-											fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
-											fileuploadForm.addFormHandler(new FormHandler() {
-												
-												public void onSubmitComplete(FormSubmitCompleteEvent event) {
+											fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
+											fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
+												@Override
+												public void onSubmitComplete(SubmitCompleteEvent event) {
 													panelAction.getElement().getStyle().setDisplay(Display.NONE);
 													lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
 													loadingImagePanel.setVisible(false);
@@ -1300,11 +1302,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 															parseUploadFileDetails(event.getResults(),false,tagList);
 														}
 													}
-												}
-												
-												@Override
-												public void onSubmit(FormSubmitEvent event) {
-												
+													
 												}
 											});
 											fileuploadForm.submit();

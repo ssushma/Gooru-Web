@@ -1830,6 +1830,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 				@Override
 				public void onSuccess(Boolean value) {
 					btnSignUp.setEnabled(true);
+					panelAboveThirteen.getElement().setAttribute("style", "margin-top:25px;");
 					SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
 					if(textBox!=null){
 						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -1837,27 +1838,23 @@ public abstract class CreateAccountUc extends PopupPanel{
 						errorLblForFirstName.getElement().getStyle().setTop(-3, Unit.PX);
 					}
 
-					if(userNameValidUc.isVisible() && errorLblForUsername.isVisible())
-					{
+					if(userNameValidUc.isVisible() && errorLblForUsername.isVisible()){
 						userNameValidUc.setVisible(false);
 						label.getElement().getStyle().clearPosition();
-					}
-					else
-					{
+					}else{
 						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
 					}
 
-					if(errorLblForLastName.isVisible()|| errorLblForFirstName.isVisible())
-					{
+					if(errorLblForLastName.isVisible()|| errorLblForFirstName.isVisible()){
 						emailFieldContainer.getElement().setAttribute("style", "margin-top:30px;");
-					}
-					else
-					{
+					}else{
 						emailFieldContainer.getElement().removeAttribute("style");
 					}
 					if(errorLblForUsername.isVisible()){
 						errorLblForUsername.getElement().getStyle().setTop(-8, Unit.PX);
 						errorLblForUsername.getElement().getStyle().setLeft(16,  Unit.PX);
+					}else{
+						panelAboveThirteen.getElement().removeAttribute("style");
 					}
 				}
 			});
