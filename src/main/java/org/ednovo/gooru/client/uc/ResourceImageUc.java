@@ -305,7 +305,6 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
 			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
 		} else {
-		
 			image.setUrl(thumbnailUrl);
 		}
 		image.setAltText(title);

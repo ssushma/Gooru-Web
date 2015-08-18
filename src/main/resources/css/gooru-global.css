@@ -1002,7 +1002,10 @@ textarea {
 		margin-right:10px;
 	}
 }
-
+#suggestedResourceImageUc #imgImage{
+	width: 80px;
+	height: 62px;
+}
 
 
 
