@@ -142,10 +142,10 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 	 * @see org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsViewUiHandler#updateClass(org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
 	@Override
-	public void updateClass(final String title,String grade,String sharing) {
+	public void updateClass(final String title,String grade,String sharing,String fileName) {
 		String classId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		if(classId != null){
-			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, title,grade,null,sharing,null,null, new AsyncCallback<ClasspageDo>() {
+			AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, title,grade,fileName,sharing,null,null, new AsyncCallback<ClasspageDo>() {
 
 				@Override
 				public void onSuccess(ClasspageDo result) {
