@@ -31,13 +31,16 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.SlmExternalAssessmentForm;
+import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapCircle;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -51,6 +54,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -78,7 +82,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	@UiField Image contentImage;
 
-	@UiField HTMLEventPanel viewReport;
+	@UiField HTMLEventPanel viewReport, leftArrow, rightArrow;
 
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 
@@ -94,6 +98,16 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	private PlanContentDo planContentDo = null;
 
+	ArrayList<PlanContentDo> dataList = new ArrayList<PlanContentDo>();
+	
+	int start = 0, end = 0;
+
+	private final static int CAROUSEL_LIMIT = 11;
+
+	private String collectionType = null;
+	
+	private String status = null;
+	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
@@ -112,13 +126,13 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		contentName.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				redirectPlayer(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status);
+				redirectPlayer(planContentDo.getGooruOid(),null,planContentDo.getCollectionType(), status);
 			}
 		});
 		contentImage.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				redirectPlayer(planContentDo.getGooruOid(),planContentDo.getCollectionType(), status);
+				redirectPlayer(planContentDo.getGooruOid(),null,planContentDo.getCollectionType(), status);
 			}
 		});
 		final String collectionType = planContentDo.getCollectionType();
@@ -169,7 +183,26 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment/url")) {
 			resourceImgContainer.setVisible(false);
 		} else {
-			setResourceData(planContentDo.getItems(),collectionType);
+			int size = planContentDo.getItems().size();
+			this.collectionType = collectionType;
+			this.status = status;
+			if(size>0) {
+				dataList = planContentDo.getItems();
+				start = 0;
+				if(size < CAROUSEL_LIMIT+1) {
+					end = size;
+				} else {
+					end = CAROUSEL_LIMIT;
+				}
+				setData(start,end);
+			} else {
+				setArrowVisibility(false,false);
+				if(collectionType!=null&&collectionType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+					resourceImgContainer.add(new Label(i18n.GL3466_1()));
+				} else {
+					resourceImgContainer.add(new Label(i18n.GL3466_2()));
+				}
+			}
 		}
 	}
 
@@ -202,7 +235,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 	}
 
-	private void redirectPlayer(String gooruOid, String type, String status) {
+	private void redirectPlayer(String gooruOid, String rId, String type, String status) {
 		if(!type.equalsIgnoreCase("assessment/url")) {
 			String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
 			String courseGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
@@ -217,6 +250,10 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			PlaceRequest placeRequest=new PlaceRequest(token);
 			placeRequest = placeRequest.with("id", gooruOid);
 			placeRequest = placeRequest.with("cid", classUId);
+			if(rId!=null) {
+				placeRequest = placeRequest.with("rid", rId);
+			}
+			
 			placeRequest = placeRequest.with("courseId", courseGooruOid);
 			placeRequest = placeRequest.with("unitId", unitId);
 			placeRequest = placeRequest.with("lessonId", lessonId);
@@ -233,136 +270,173 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 	}
 
-	private void setResourceData(ArrayList<PlanContentDo> resourceList, String collectionType) {
-		int size = resourceList.size();
-		if(size>0) {
-			if(size>10) {
-				size = 10;
+	private void setResourceData(final PlanContentDo resourceDo, String collectionType, final String status) {
+		try {
+			String categoryString = "";
+			if(resourceDo.getResourceFormat()!=null){
+				categoryString = resourceDo.getResourceFormat().getDisplayName();
 			}
-			for(int i=0;i<size;i++) {
-				try {
-					final PlanContentDo resourceDo = resourceList.get(i);
-					String categoryString = "";
-					if(resourceDo.getResourceFormat()!=null){
-						categoryString = resourceDo.getResourceFormat().getDisplayName();
-					}
-					final String category = categoryString;
-					final HTMLEventPanel resourcePanel = new HTMLEventPanel("");
-					//resourcePanel.setStyleName(libraryStyle.resourceImage());
+			final String category = categoryString;
+			final HTMLEventPanel resourcePanel = new HTMLEventPanel("");
+			//resourcePanel.setStyleName(libraryStyle.resourceImage());
 
-					final Image resourceImage = new Image();
-					String resourceTitle = null;
+			final Image resourceImage = new Image();
+			String resourceTitle = null;
+			try {
+				resourceTitle = resourceDo.getTitle().replaceAll("\\<[^>]*>","");
+				resourceDo.setTitle(resourceTitle);
+			} catch (Exception e){
+				AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 1 : "+e.getMessage());
+			}
+			resourceImage.setAltText(resourceTitle);
+			resourceImage.setTitle(resourceTitle);
+
+			final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
+			resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
 					try {
-						resourceTitle = resourceDo.getTitle().replaceAll("\\<[^>]*>","");
-						resourceDo.setTitle(resourceTitle);
-					} catch (Exception e){
-						AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 1 : "+e.getMessage());
+						toolTipPopupPanel.clear();
+						toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(resourceDo.getTitle()));
+						toolTipPopupPanel.setStyleName("");
+						toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
+						toolTipPopupPanel.show();
+					} catch(Exception ex) {
+						AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 2 : "+ex.getMessage());
 					}
-					resourceImage.setAltText(resourceTitle);
-					resourceImage.setTitle(resourceTitle);
-
-					final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
-					resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
-						@Override
-						public void onMouseOver(MouseOverEvent event) {
-							try {
-								toolTipPopupPanel.clear();
-								toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(resourceDo.getTitle()));
-								toolTipPopupPanel.setStyleName("");
-								toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
-								toolTipPopupPanel.show();
-							} catch(Exception ex) {
-								AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 2 : "+ex.getMessage());
-							}
-						}
-					});
-					resourceCategoryIcon.addMouseOutHandler(new MouseOutHandler() {
-						@Override
-						public void onMouseOut(MouseOutEvent event) {
-							toolTipPopupPanel.hide();
-						}
-					});
-
-					resourceCategoryIcon.addClickHandler(new ClickHandler() {
-						@Override
-						public void onClick(ClickEvent event) {
-
-						}
-					});
-
-					resourceImage.addMouseOverHandler(new MouseOverHandler() {
-						@Override
-						public void onMouseOver(MouseOverEvent event) {
-							try
-							{
-								toolTipPopupPanel.clear();
-								toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(resourceDo.getTitle()));
-								toolTipPopupPanel.setStyleName("");
-								toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
-								toolTipPopupPanel.show();
-							}
-							catch(Exception ex)
-							{
-								AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 3 : "+ex.getMessage());
-							}
-						}
-					});
-
-					resourceImage.addMouseOutHandler(new MouseOutHandler() {
-						@Override
-						public void onMouseOut(MouseOutEvent event) {
-							toolTipPopupPanel.hide();
-						}
-					});
-					try {
-						if(resourceDo.getThumbnails()!=null&&resourceDo.getThumbnails().getUrl()!=null&&!resourceDo.getThumbnails().getUrl().isEmpty()) {
-							resourceImage.setUrl(resourceDo.getThumbnails().getUrl());
-						} else {
-							resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
-						}
-
-						resourceImage.addErrorHandler(new ErrorHandler() {
-							@Override
-							public void onError(ErrorEvent event) {
-								resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
-							}
-						});
-					} catch (Exception e){
-						e.printStackTrace();
-						resourceImage.setUrl(DEFULT_IMAGE_PREFIX + getDetaultResourceImage(category.toLowerCase()) + PNG);
-						resourceImage.setAltText(resourceDo.getTitle());
-						resourceImage.setTitle(resourceDo.getTitle());
-						AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 4 : "+e.getMessage());
-					}
-
-					resourcePanel.addClickHandler(new ClickHandler() {
-						@Override
-						public void onClick(ClickEvent event) {
-
-						}
-					});
-
-					resourceCategoryIcon.addStyleName("resourceName");
-					resourceCategoryIcon.addStyleName(getDetaultResourceImage(category.toLowerCase()) + SMALL);
-					resourcePanel.add(resourceImage);
-					resourcePanel.add(resourceCategoryIcon);
-					resourceImgContainer.add(resourcePanel);
-				} catch (Exception e){
-					e.printStackTrace();
 				}
+			});
+			resourceCategoryIcon.addMouseOutHandler(new MouseOutHandler() {
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					toolTipPopupPanel.hide();
+				}
+			});
+
+			resourceCategoryIcon.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					redirectPlayer(planContentDo.getGooruOid(),resourceDo.getCollectionItemId(),planContentDo.getCollectionType(), status);
+				}
+			});
+
+			resourceImage.addMouseOverHandler(new MouseOverHandler() {
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					try
+					{
+						toolTipPopupPanel.clear();
+						toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(resourceDo.getTitle()));
+						toolTipPopupPanel.setStyleName("");
+						toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
+						toolTipPopupPanel.show();
+					}
+					catch(Exception ex)
+					{
+						AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 3 : "+ex.getMessage());
+					}
+				}
+			});
+
+			resourceImage.addMouseOutHandler(new MouseOutHandler() {
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					toolTipPopupPanel.hide();
+				}
+			});
+			try {
+				if(resourceDo.getResourceType()!=null&&resourceDo.getResourceType().getName().equalsIgnoreCase("video/youtube")) {
+					String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(resourceDo.getUrl());
+					String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr,Window.Location.getProtocol());
+					resourceImage.setUrl(thumbnailUrl);
+				} else {
+					if(resourceDo.getThumbnails()!=null&&resourceDo.getThumbnails().getUrl()!=null&&!resourceDo.getThumbnails().getUrl().isEmpty()) {
+						resourceImage.setUrl(resourceDo.getThumbnails().getUrl());
+					} else {
+						resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
+					}
+				}
+
+				resourceImage.addErrorHandler(new ErrorHandler() {
+					@Override
+					public void onError(ErrorEvent event) {
+						resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
+					}
+				});
+			} catch (Exception e){
+				e.printStackTrace();
+				resourceImage.setUrl(DEFULT_IMAGE_PREFIX + getDetaultResourceImage(category.toLowerCase()) + PNG);
+				resourceImage.setAltText(resourceDo.getTitle());
+				resourceImage.setTitle(resourceDo.getTitle());
+				AppClientFactory.printSevereLogger("SimAssessmentChileView : setResourceData 4 : "+e.getMessage());
 			}
-		} else {
-			if(collectionType!=null&&collectionType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
-				resourceImgContainer.add(new Label(i18n.GL3466_1()));
-			} else {
-				resourceImgContainer.add(new Label(i18n.GL3466_2()));
-			}
+
+			resourcePanel.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+
+				}
+			});
+
+			resourceCategoryIcon.addStyleName("resourceName");
+			resourceCategoryIcon.addStyleName(getDetaultResourceImage(category.toLowerCase()) + SMALL);
+			resourcePanel.add(resourceImage);
+			resourcePanel.add(resourceCategoryIcon);
+			resourceImgContainer.add(resourcePanel);
+		} catch (Exception e){
+			e.printStackTrace();
 		}
 	}
-
+	
 	public String getDetaultResourceImage(String category){
 		String categoryIcon=StringUtil.getEquivalentCategory(category==null?"":category.toLowerCase());
 		return categoryIcon ;
+	}
+
+	private void setData(int startPoint, int endPoint) {
+		resourceImgContainer.clear();
+		for(int z=startPoint;z<endPoint;z++) {
+			setResourceData(dataList.get(z),collectionType,status);
+		}
+		setArrows();
+	}
+	
+	private void setArrows() {
+		boolean leftArrowVisibile = false, rightArrowVisible = false;
+		if(end>CAROUSEL_LIMIT) {
+			leftArrowVisibile = true;
+		}
+		if(end<dataList.size()) {
+			rightArrowVisible = true;
+		}
+		setArrowVisibility(leftArrowVisibile,rightArrowVisible);
+	}
+	
+	private void setArrowVisibility(boolean leftArrowVisibile, boolean rightArrowVisible) {
+		leftArrow.setVisible(leftArrowVisibile);
+		rightArrow.setVisible(rightArrowVisible);
+	}
+	
+	@UiHandler("leftArrow")
+	public void clickLeftArrow(ClickEvent event) {
+		end = start;
+		if(start-CAROUSEL_LIMIT<0) {
+			start = 0;
+		} else {
+			start = start - CAROUSEL_LIMIT;
+		}
+		setData(start, end);
+	}
+	
+	@UiHandler("rightArrow")
+	public void clickRightArrow(ClickEvent event) {
+		start = end;
+		if((dataList.size())-end > CAROUSEL_LIMIT) {
+			end = end + CAROUSEL_LIMIT;
+		} else {
+			end = (dataList.size());
+		}
+		setData(start, end);
 	}
 
 }

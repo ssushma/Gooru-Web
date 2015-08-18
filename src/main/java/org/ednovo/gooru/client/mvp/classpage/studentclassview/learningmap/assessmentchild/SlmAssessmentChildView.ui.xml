@@ -52,7 +52,10 @@
 	        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	     </g:HTMLPanel>
 	     <g:HTMLPanel styleName="lesson-view-data rowContainer no-gutter">
-	        <g:HTMLPanel styleName="resourceImgContainer" ui:field="resourceImgContainer"></g:HTMLPanel>
+				<panel:HTMLEventPanel styleName="scrollLeftArrow cursorArrows cursorPointer" ui:field="leftArrow"></panel:HTMLEventPanel> 
+		        <g:HTMLPanel styleName="resourceImgContainer" ui:field="resourceImgContainer"></g:HTMLPanel>
+				<div class="clearfix"></div>
+				<panel:HTMLEventPanel styleName="scrollRightArrow cursorArrows cursorPointer" ui:field="rightArrow"></panel:HTMLEventPanel>
 	     </g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
