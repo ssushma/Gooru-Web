@@ -1,4 +1,4 @@
-/* ******************************************************************************
+/*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
@@ -199,7 +199,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		contentPanel.getElement().setId("fpnlContentPanel");
 		resourceHeaderPanel.getElement().setId("fpnlResourceHeaderPanel");
-		resourceImageUc.getElement().setId("resourceImageUc");
+		resourceImageUc.getElement().setId("suggestedResourceImageUc");
 		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
 		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
