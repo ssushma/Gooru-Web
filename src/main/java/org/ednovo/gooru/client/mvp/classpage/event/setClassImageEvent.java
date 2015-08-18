@@ -7,16 +7,18 @@ import com.google.gwt.event.shared.HasHandlers;
 public class setClassImageEvent extends GwtEvent<setClassImageHandler> {
 	
 	String fileName;
+	String mediaName;
 	
 	public static Type<setClassImageHandler> TYPE = new Type<setClassImageHandler>();
 
-	public setClassImageEvent(String fileName){
+	public setClassImageEvent(String fileName,String mediaName){
 		this.fileName=fileName;
+		this.mediaName=mediaName;
 	}
 	
 	@Override
 	protected void dispatch(setClassImageHandler handler) {
-		handler.setImage(fileName);
+		handler.setImage(fileName,mediaName);
 	}
 
 	@Override
