@@ -2235,7 +2235,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		    try {
 		    	RegExp reg = RegExp.compile(pattern, "gi");
 		    	MatchResult res = reg.exec(youtubeUrl);
-		    	videoId = res.getGroup(7);
+		    	if(res != null){
+		    		videoId = res.getGroup(7);
+		    	}
 		    } catch (Exception e) {
 		    	AppClientFactory.printSevereLogger("AddWebResourceView getYoutubeVideoId:::"+e);
 			}
