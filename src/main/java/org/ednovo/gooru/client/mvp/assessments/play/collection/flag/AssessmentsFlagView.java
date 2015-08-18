@@ -126,7 +126,7 @@ public class AssessmentsFlagView extends
 		provideMoreDetails.getElement().getStyle().setMarginTop(25, Unit.PX);
 		provideMore.getElement().getStyle().setMarginTop(25, Unit.PX);
 
-		flagCollectionText.getElement().setInnerHTML(i18n.GL0601());
+		flagCollectionText.getElement().setInnerHTML(i18n.GL3494());
 		flagCollectionText.getElement().setId("pnlFlagCollectionText");
 		flagCollectionText.getElement().setAttribute("alt",i18n.GL0601());
 		flagCollectionText.getElement().setAttribute("title",i18n.GL0601());
@@ -137,20 +137,20 @@ public class AssessmentsFlagView extends
 		flagResourceText.getElement().setAttribute("alt",i18n.GL0602());
 		flagResourceText.getElement().setAttribute("title",i18n.GL0602());
 
-		incorporateText.setText(i18n.GL0603());
+		incorporateText.setText(i18n.GL3495());
 		incorporateText.getElement().setId("lblIncorporateText");
-		incorporateText.getElement().setAttribute("alt",i18n.GL0603());
-		incorporateText.getElement().setAttribute("title",i18n.GL0603());
+		incorporateText.getElement().setAttribute("alt",i18n.GL3495());
+		incorporateText.getElement().setAttribute("title",i18n.GL3495());
 
-		notAppropriateText.setText(i18n.GL0604());
+		notAppropriateText.setText(i18n.GL3496());
 		notAppropriateText.getElement().setId("lblNotAppropriateText");
-		notAppropriateText.getElement().setAttribute("alt",i18n.GL0604());
-		notAppropriateText.getElement().setAttribute("title",i18n.GL0604());
+		notAppropriateText.getElement().setAttribute("alt",i18n.GL3496());
+		notAppropriateText.getElement().setAttribute("title",i18n.GL3496());
 
-		inaccurateText.setText(i18n.GL0605());
+		inaccurateText.setText(i18n.GL3497());
 		inaccurateText.getElement().setId("lblInaccurateText");
-		inaccurateText.getElement().setAttribute("alt",i18n.GL0605());
-		inaccurateText.getElement().setAttribute("title",i18n.GL0605());
+		inaccurateText.getElement().setAttribute("alt",i18n.GL3497());
+		inaccurateText.getElement().setAttribute("title",i18n.GL3497());
 
 		otherReasonText.setText(i18n.GL0606());
 		otherReasonText.getElement().setId("lblOtherReasonText");
