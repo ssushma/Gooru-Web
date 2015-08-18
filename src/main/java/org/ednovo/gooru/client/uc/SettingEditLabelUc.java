@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -45,16 +45,16 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : SettingEditLabelUc.java
- * 
+ *
  * @description :This class is used to change first name in setting page.
- * 
- * 
+ *
+ *
  * @version : 5.9
- * 
+ *
  * @date: Sep 20, 2013
- * 
+ *
  * @Author Gooru Team
- * 
+ *
  * @Reviewer:
  */
 public class SettingEditLabelUc extends Composite implements HasValue<String> {
@@ -66,9 +66,9 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 	interface SettingEditLabelUcUiBinder extends
 			UiBinder<Widget, SettingEditLabelUc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField
 	protected Label editLabel,errorLabel;
 
@@ -81,19 +81,16 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 	@UiField
 	protected FocusPanel focusPanel;
 	protected String text;
-	
-	@UiField(provided = true)
-	UcCBundle res;
+
 	private static final String FNAME = "firstname";
 	public SettingEditLabelUc() {
-		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		focusPanel.getElement().setId("focuspnlFocusPanel");
 		deckPanel.getElement().setId("dpnlDeckPanel");
 		editLabel.getElement().setId("lblEditLabel");
 		errorLabel.getElement().setId("errlblErrorLabel");
 		deckPanel.showWidget(0);
-		
+
 		editTextBox.getElement().setAttribute("maxlength", "25");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setId("txtName");
@@ -117,7 +114,7 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
-		editTextBox.setText(getValue());	
+		editTextBox.setText(getValue());
 		editTextBox.getElement().setAttribute("alt", getValue());
 		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
@@ -159,7 +156,7 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 		}
 
 	}
-	
+
 	public void cancel() {
 		deckPanel.showWidget(0);
 		editTextBox.setText(editLabel.getText());
@@ -183,7 +180,7 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 	public void checkCharacterLimit(String text) {
 
 	}
-	
+
 	@Override
 	public HandlerRegistration addValueChangeHandler(
 			ValueChangeHandler<String> handler) {
@@ -210,7 +207,7 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 	/**
 	 * @return placeholder
 	 */
-	
+
 
 	public String getText() {
 		return text;
