@@ -45,7 +45,6 @@ header {
 	cursor: pointer;
 	padding: 18px 10px;
 	cursor: pointer;
-	float: left;
 }
 
 #headerMainPanel .menuActive a, #headerMainPanel .menu a {
@@ -709,17 +708,8 @@ header {
 		height: 42px;
 		font-size: 18px;
 	}
-	#headerMainPanel .mission p,.yourSupport p {
-		font-size: 16px;
-	}
-	#headerMainPanel .yourSupport {
-		text-align: center;
-	}
-	#headerMainPanel .badgepadd {
-		display: block;
-		height: auto;
-		margin: 25px 0;
-	}
+
+
 	#headerMainPanel .social {
 		padding-left: 0;
 		padding-right: 0;
@@ -752,6 +742,7 @@ header {
 	#headerMainPanel .header-mainmenu {
 		width: 100% !important;
 		z-index: 5;
+		background: #333;
 	}
 	#headerMainPanel .header-mainmenu .navbar-collapse {
 		width: 100%;
@@ -889,40 +880,12 @@ header {
 		margin-top: 10PX;
 		margin-bottom: 10PX;
 	}
-	#headerMainPanel .spriteLandingPageGooruBadge {
-		width: 162px;
-		height: 162px;
-		background: url(../images/landing-page/landingpageSprite.png) -104px -2px
-			no-repeat;
-		display: block;
-	}
+
 	#headerMainPanel .spriteLandingPage {
 
 	}
-	#headerMainPanel .spriteLandingPageFacebookIco {
-		width: 37px;
-		height: 37px;
-		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -22px -2px
-			no-repeat;
-	}
-	#headerMainPanel .spriteLandingPageGooglePlusIco {
-		width: 37px;
-		height: 37px;
-		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -63px -2px
-			no-repeat;
-	}
-	#headerMainPanel .spriteLandingPageTwitterIco {
-		width: 37px;
-		height: 37px;
-		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -438px -2px
-			no-repeat;
-	}
-	#headerMainPanel .spriteLandingPageYoutubeIco {
-		width: 37px;
-		height: 37px;
-		background: url("${cdn.endpoint}/images/landing-page/landingpageSprite.png") -479px -2px
-			no-repeat;
-	}
+
+
 }
 
 @media ( min-width : 480px) and (max-width: 767px) {
@@ -1014,23 +977,14 @@ header {
 	#headerMainPanel .getInnerRight p {
 		font-size: 17px;
 	}
-	#headerMainPanel .getStartedIMG .getCaption {
-		font-size: 40px;
-	}
-	#headerMainPanel .getStartedIMG img {
-		width: 100%;
-	}
-	#headerMainPanel .mission p,#headerMainPanel .yourSupport p {
+
+	#headerMainPanel .mission p {
 		font-size: 17px;
 	}
 	#headerMainPanel .margin {
 		margin: 15px 0;
 	}
-	#headerMainPanel .badgepadd {
-		display: block;
-		height: auto;
-		margin: 25px 0;
-	}
+
 	#headerMainPanel .social {
 		text-align: center;
 	}

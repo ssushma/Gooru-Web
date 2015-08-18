@@ -6,62 +6,60 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle"
 		field="res" />
-		<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
-	<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}" ui:field="assignContainer">
-		<g:HTMLPanel  styleName="{res1.css.popupInnerGrey}">
-			<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
+	<g:HTMLPanel styleName="PopupMainVSmall" ui:field="assignContainer">
+		<g:HTMLPanel  styleName="popupInnerGrey">
+			<g:HTMLPanel styleName="popupgreyHeader">
 			    <g:HTMLPanel styleName="row">
 			        <g:HTMLPanel styleName="col-md-8 col-xs-8">
-			        	<g:Label ui:field="lblAssignTitle" styleName="{res.css.assignTitle}" />    
+			        	<g:Label ui:field="lblAssignTitle" styleName="{res.css.assignTitle}" />
 			        </g:HTMLPanel>
-					<g:HTMLPanel styleName="col-md-4 col-xs-4 {res1.css.closeContainer}">
-						<g:Label ui:field="cancelButton"	styleName="{res1.css.closeButton}"></g:Label>    
+					<g:HTMLPanel styleName="col-md-4 col-xs-4 closeContainer">
+						<g:Label ui:field="cancelButton"	styleName="closeButton"></g:Label>
 					</g:HTMLPanel>
 			    </g:HTMLPanel>
-				<g:HTMLPanel styleName="clearfix"/>		
+				<g:HTMLPanel styleName="clearfix"/>
 			</g:HTMLPanel>
-			<g:HTMLPanel ui:field="assignPopupContent" styleName="{res1.css.shareSelection}">
+			<g:HTMLPanel ui:field="assignPopupContent" styleName="shareSelection">
 				<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}"
 					ui:field="loadingImageLabel">
 					<g:Label styleName="{res.css.loadingImageForSelfEdit}" />
 				</g:HTMLPanel>
 				<g:HTMLPanel 		ui:field="popupContentAssign">
-					<g:Label ui:field="lblpopupTitle" styleName="{res1.css.dontWorrkText}" />
-					<g:Label styleName="{res1.css.contentDesc}" ui:field="assignDes" />
-					<g:HTMLPanel styleName="{res1.css.popupcornerBg}">
-						<g:TextArea styleName="form-control {res1.css.form_control} shareTextarea readonly"
+					<g:Label ui:field="lblpopupTitle" styleName="dontWorrkText" />
+					<g:Label styleName="contentDesc" ui:field="assignDes" />
+					<g:HTMLPanel styleName="popupcornerBg">
+						<g:TextArea styleName="form-control form_control shareTextarea readonly"
 							ui:field="shareLinkTxtBox">
 						</g:TextArea>
 					</g:HTMLPanel>
 
-					<g:HTMLPanel styleName="{res1.css.sharenEmbedContainer}">
+					<g:HTMLPanel styleName="sharenEmbedContainer">
 						<g:Anchor  ui:field="swithUrlLbl" />
-						<g:Anchor  ui:field="swithToEmbedLbl" />    
+						<g:Anchor  ui:field="swithToEmbedLbl" />
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
-					<!-- <g:HTMLPanel styleName="{res.css.sociaMediaText}">Share this link 
-						via </g:HTMLPanel> <g:HTMLPanel ui:field="socialSharePanel" styleName="{res.css.socialiconContainer}"> 
+					<!-- <g:HTMLPanel styleName="{res.css.sociaMediaText}">Share this link
+						via </g:HTMLPanel> <g:HTMLPanel ui:field="socialSharePanel" styleName="{res.css.socialiconContainer}">
 						</g:HTMLPanel> -->
 					<g:HTMLPanel styleName="{res.css.contentBorder}" ui:field="contentBorderPanel"></g:HTMLPanel>
 
-					<uc:HTMLEventPanel ui:field="htmlLoginPanel" styleName="{res1.css.loginShareContainer}">
+					<uc:HTMLEventPanel ui:field="htmlLoginPanel" styleName="loginShareContainer">
 						<g:Label styleName="{res.css.popupTitle}" ui:field="lblLoginPopupTitle" />
 						<g:Label styleName="{res.css.popupDesc}" ui:field="lblAssignPopDes" />
 						<g:HTMLPanel styleName="{res.css.loginPopupStyle}">
-							
+
 						<g:Label styleName="{res.css.loginWithGooru}" ui:field="lblLoginwithGooru"></g:Label>
-						
+
 						<g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
-						
+
 							<g:HTMLPanel styleName="{res.css.divider}">
 								<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
 							</g:HTMLPanel>
-							
+
 							<g:HTMLPanel styleName="{res.css.inputBlockOuter}">
 
 								<gg:TextBoxWithPlaceholder ui:field="loginTxtBox"
-									setFocus="true" styleName="form-control {res1.css.form_control}" />
+									setFocus="true" styleName="form-control form_control" />
 								<g:HTMLPanel styleName="{res.css.privacyText}">
 									<g:InlineLabel styleName="{res.css.popupDesc}"
 										ui:field="lblPii"></g:InlineLabel>
@@ -71,22 +69,22 @@
 										ui:field="toUsText"></g:InlineLabel>
 							    </g:HTMLPanel>
 								<gg:TextBoxWithPlaceholder ui:field="passwordTxtBox"
-									password="true" styleName="form-control {res1.css.form_control}"/>
+									password="true" styleName="form-control form_control"/>
 							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{res1.css.forgotPasswordLink} {res1.css.forgotPwdMargin}">
+							<g:HTMLPanel styleName="forgotPasswordLink forgotPwdMargin">
 									<g:Anchor ui:field="forgotPwd"></g:Anchor>
 								</g:HTMLPanel>
-							<g:HTMLPanel styleName="{res1.css.loginPopupbtnContainer}">
+							<g:HTMLPanel styleName="loginPopupbtnContainer">
 								<g:Button ui:field="loginButton" styleName="primary"></g:Button>
 								<g:Label ui:field="lblPleaseWait" styleName="{res.css.processing}"></g:Label>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res1.css.haveAccountContainer}" ui:field="signUpStyles">
-						    <g:HTMLPanel styleName="{res1.css.haveAccount}">
+						<g:HTMLPanel styleName="haveAccountContainer" ui:field="signUpStyles">
+						    <g:HTMLPanel styleName="haveAccount">
 						    	<g:InlineLabel ui:field="donothaveAC"></g:InlineLabel>
-								<g:Anchor ui:field="ancSignUp"></g:Anchor>    
+								<g:Anchor ui:field="ancSignUp"></g:Anchor>
 						    </g:HTMLPanel>
-						</g:HTMLPanel>		
+						</g:HTMLPanel>
 					</uc:HTMLEventPanel>
 
 					<uc:HTMLEventPanel ui:field="htmlEvenPanelContainer"	styleName="{res.css.heightClasspagecontainer}">
@@ -101,4 +99,4 @@
 		<g:HTMLPanel styleName="clearfix"/>
 	</g:HTMLPanel>
 
-</ui:UiBinder> 
+</ui:UiBinder>

@@ -132,9 +132,9 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 	 * This method is used to set the message for FIll in the blanks
 	 */
 	public void setQuestionTypeCaption(){
-		messageBodyText.setText(i18n.GL1454());
-		messageBodyText.getElement().setAttribute("alt",i18n.GL1454());
-		messageBodyText.getElement().setAttribute("title",i18n.GL1454());
+		messageBodyText.setText(i18n.GL3499()+i18n.GL_SPL_FULLSTOP());
+		messageBodyText.getElement().setAttribute("alt",i18n.GL3499());
+		messageBodyText.getElement().setAttribute("title",i18n.GL3499());
 	}
 	/**
 	 * This method is used to render the FIB data
@@ -242,7 +242,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 					  	AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 						answerAttemptDo.setText(StringUtil.replaceSpecial(textBoxAnswerDoAnswerText));
 						answerAttemptDo.setAnswerId(questionAnswerDo.getAnswerId());
-						answerAttemptDo.setOrder(i+1+"");
+						answerAttemptDo.setOrder((i+1)+"");
 						userAttemptedOptionsList.add(answerAttemptDo);
 						if(StringUtil.isEmpty(textBoxAnswerDoAnswerText)){
 							answerAttemptDo.setSkip(true);

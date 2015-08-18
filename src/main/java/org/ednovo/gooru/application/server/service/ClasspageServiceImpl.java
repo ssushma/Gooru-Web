@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.ClasspageService;
 import org.ednovo.gooru.application.server.ArrayListSorter;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
@@ -68,10 +67,8 @@ import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
 import org.ednovo.gooru.application.shared.model.content.TaskResourceAssocDo;
-import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.application.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
@@ -81,7 +78,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.StringRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,7 +191,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return new CollectionDo();
 	}
-	
+
 	public ClasspageDo deserializeClass(JsonRepresentation jsonRep){
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -435,14 +431,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
-	
+
 	@Override
 	public ClasspageListDo v3GetUserClasses(String limit, String offSet, boolean isContainsCourse) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V3_GET_LISTTEACHCLASSES);
-		
+
 		Map<String,String> params = new HashMap<String, String>();
 		params.put(GooruConstants.LIMIT, limit);
 		params.put(GooruConstants.OFFSET, offSet);
@@ -519,7 +515,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeV2Classpage(jsonRep);
 	}
-	
+
 	@Override
 	public ClasspageDo v3GetClassByCode(String classCode) throws GwtException, ServerDownException {
 		ClasspageDo classpageDo = new ClasspageDo();
@@ -528,7 +524,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V3_GET_CLASSPAGE_BY_ID, classCode);
 			getLogger().info("V3_GET_CLASSPAGE_BY_CODE API Call "+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-			jsonRep =jsonResponseRep.getJsonRepresentation();	
+			jsonRep =jsonResponseRep.getJsonRepresentation();
 			if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==200) {
 				classpageDo=deserializeV2Class(jsonRep);
 				classpageDo.setClassType("new-class");
@@ -540,7 +536,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}catch(Exception e){
 			getLogger().error("v3GetClassById ......:"+e.getMessage());
 		}
-		
+
 		return classpageDo;
 	}
 
@@ -572,7 +568,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			getLogger().info("V3_GET_CLASSPAGE_BY_ID API Call 11::::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 					getRestPassword());
-			jsonRep =jsonResponseRep.getJsonRepresentation();	
+			jsonRep =jsonResponseRep.getJsonRepresentation();
 			if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==200) {
 				classpageDo=deserializeV2Class(jsonRep);
 			}else{
@@ -581,7 +577,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}catch(Exception e){
 			getLogger().error("v3GetClassById ......:"+e.getMessage());
 		}
-		
+
 		return classpageDo;
 	}
 
@@ -628,7 +624,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return collectionDo;
 	}
-	
+
 	public ClasspageDo deserializeV2Class(JsonRepresentation jsonRep) {
 		ClasspageDo classpageDo = new ClasspageDo();
 		try {
@@ -951,10 +947,10 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return deserializeCollection(jsonRep);
 	}
-	
+
 	public ClasspageDo createClass(String classTitle,String grades,boolean visibility){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CRETAE_CLASS_V3); 
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CRETAE_CLASS_V3);
 		JSONObject classJsonObject = new JSONObject();
 		try{
 			if(!grades.isEmpty()){
@@ -1029,15 +1025,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	@Override
 	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String collectionOrFolderId,String dueDate,String direction){
 		ArrayList<ClasspageItemDo> classpageItemDoList=new ArrayList<ClasspageItemDo>();
-			if(direction != null)
-			{
-			direction = direction;
-			}
-			else
-			{
+			if(direction == null){
 				direction = "";
 			}
-
 			if(dueDate == null)
 			{
 				dueDate = "";
@@ -1222,8 +1212,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return classpagesList;
 	}
-	
-	
+
+
 	public ArrayList<ClasspageDo> deserializeArrayListClasses(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -1235,7 +1225,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return new ArrayList<ClasspageDo>();
 	}
-	
+
 	protected ClasspageDo deserializeClassPage(JSONObject classpageJsonObject){
 		ClasspageDo classpageDo=new ClasspageDo();
 			try {
@@ -1492,7 +1482,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 
 		return deserializeStudentsList(jsonRep);
 	}
-	
+
 	@Override
 	public StudentsAssociatedListDo getAssociatedPendingStudentListByCode(String classCode,  int offSet, int pageSize, String statusType)
 			throws GwtException {
@@ -1521,41 +1511,41 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 
 	}
-	
+
 	@Override
 	public void removePendingStudentFromClass(String classCode, boolean type, String emailIds)	throws GwtException {
 
 		try{
-			
+
 			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_PENDINGMEMBER_LIST_BY_CODE, classCode);
 			Map<String, String> params = new HashMap<String, String>();
 			params.put(GooruConstants.EMAILID, emailIds);
 			String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 			getLogger().info("###delete pending users api:"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
-			
+
 		}catch(Exception e){
 			logger.error("removePendingStudentFromClass Exception::", e);
 		}
-		
+
 		/*if(jsonResponseRep.getStatusCode()==200){
-			
+
 		}*/
-		
+
 	}
-	
+
 	@Override
 	public void removeActiveStudentFromClass(String classUid, boolean type, String gooruUid)	throws GwtException {
-		
+
 		getLogger().info("classUId:"+classUid);
 		getLogger().info("gooruUid:"+gooruUid);
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_DLETE_ACTIVE_USERS_CLASS, classUid,gooruUid);
 		getLogger().info("###delete active  users api:"+url);
 		ServiceProcessor.delete(url,"", "");
-		
+
 	}
-	
-	
+
+
 	/**
 	 *
 	 * @function deserializeCollaborators
@@ -1618,8 +1608,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return classpageDo;
 	}
-	
-	
+
+
 	@Override
 	public Boolean v3StudentJoinIntoClass(String classCode)	throws GwtException {
 		boolean isJoined = false;
@@ -1692,7 +1682,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 
 		return deserializeStudentsList(jsonRep);
 	}
-	
+
 	@Override
 	public StudentsAssociatedListDo getActiveAssociatedStudentInClassListByCode(String classCode, int offSet, int pageSize, String statusType)
 			throws GwtException {
@@ -1725,7 +1715,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
-	
+
 	@Override
 	public ClasspageListDo v3GetAllClass(String limit, String offSet) throws GwtException {
 
@@ -1741,7 +1731,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.application.client.service.ClasspageService#v3GetAllClass()
 	 */
@@ -1762,8 +1752,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return hasTeachStudy;
 	}
-	
-	
+
+
 	@Override
 	public ArrayList<ClasspageDo> getClassesAssociatedWithCourse(String o1CourseId) throws GwtException, ServerDownException {
 
@@ -1785,7 +1775,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return classPagesList;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.application.client.service.ClasspageService#v3UpdateClass(java.lang.String, org.ednovo.gooru.application.shared.model.content.ClasspageDo)
 	 */
@@ -1831,7 +1821,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			getLogger().info("payload:"+jsonRep.toString());
 			if(jsonResponseRep.getStatusCode()==200){
 				updateClassDO=classDo;
-				
+
 			}else{
 				updateClassDO=new ClasspageDo();
 			}
@@ -1840,7 +1830,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return updateClassDO;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.application.client.service.ClasspageService#updateClassLessonVisiblity(java.lang.String, java.lang.String, java.lang.String, org.ednovo.gooru.application.shared.model.content.ClassLessonDo)
 	 */
@@ -1870,7 +1860,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return classLessonDos;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.application.client.service.ClasspageService#getClassUnitList(java.lang.String, java.lang.String)
 	 */
@@ -1888,7 +1878,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeUnitListForClass(jsonRep);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.application.client.service.ClasspageService#getClassLessonCollectionList(java.lang.String, java.lang.String, java.lang.String, int, int)
 	 */
@@ -1906,7 +1896,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		logger.info("getClassLessonCollectionList service : "+url);
 		return deserializeLessonListForClass(jsonRep);
 	}
-	
+
 	public List<ClassLessonDo> deserializeLessonListForClass(JsonRepresentation jsonRep) {
 		List<ClassLessonDo> listObj=new ArrayList<ClassLessonDo>();
 		try {
@@ -1919,7 +1909,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return listObj;
 	}
-	
+
 	public List<FolderDo> deserializeUnitListForClass(JsonRepresentation jsonRep) {
 		List<FolderDo> listObj=new ArrayList<FolderDo>();
 		try {
@@ -1933,8 +1923,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return listObj;
 	}
-		
-	
+
+
 	@Override
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence) throws GwtException {
 		JsonRepresentation jsonRep = null;
@@ -1955,7 +1945,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	@Override
 	public ArrayList<PlanProgressDo> getStudentPlanProgressData(String classpageId, String courseId, String unitId, String lessonId, String type, Map<String,String> queryParams) throws GwtException, ServerDownException {
 		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
-		
+
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
@@ -1965,11 +1955,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		} else {
 			userId = getLoggedInUserUid();
 		}
-		
+
 		Map<String, String> params = new LinkedHashMap<String, String>();
-		
+
 		String endPoint = getAnalyticsEndPoint();
-		
+
 		if(type.equalsIgnoreCase("plan")) {
 			if(unitId!=null&&lessonId!=null) {
 				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_LESSON_PLAN, classpageId, courseId, unitId, lessonId);
@@ -1992,14 +1982,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			} else {
 				partialUrl = UrlGenerator.generateUrl(endPoint, UrlToken.V1_GET_STUDENT_COURSE_PROGRESS, classpageId, courseId);
 				params.put("userUid", userId);
-			} 
+			}
 		}
-		
+
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info(url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		
+
 		JSONObject resourceObj;
 		try {
 			if(jsonRep!=null && jsonRep.getSize()!=1){
@@ -2036,7 +2026,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		getLogger().info(partialUrl);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		
+
 		JSONObject resourceObj;
 		try {
 			if(jsonRep!=null && jsonRep.getSize()!=1){
@@ -2045,7 +2035,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					if(resourceObj.optJSONArray("content") != null){
 						getLogger().info(resourceObj.getJSONArray("content").toString());
 						dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
-						if(dataList!=null&dataList.size()>1) {
+						if(dataList!=null && dataList.size()>1) {
 							for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 								if(dataList.get(unitCount).getUsageData()!=null&&dataList.get(unitCount).getUsageData().size()>0) {
 									Collections.sort(dataList.get(unitCount).getUsageData(), new ArrayListSorter("sequence", true));
@@ -2069,16 +2059,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
 		partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_UNIT_PROGRESS, classpageId, courseId, unitId);
-		
+
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put("collectionType", collectionType);
 		params.put("getUsageData", "true");
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
-		
+
 		getLogger().info(url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		
+
 		JSONObject resourceObj;
 		try {
 			if(jsonRep!=null && jsonRep.getSize()!=1){
@@ -2087,7 +2077,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					if(resourceObj.optJSONArray("content") != null){
 						getLogger().info(resourceObj.getJSONArray("content").toString());
 						dataList = JsonDeserializer.deserialize(resourceObj.getJSONArray("content").toString(), new TypeReference<ArrayList<PlanProgressDo>>(){});
-						if(dataList!=null&dataList.size()>0) {
+						if(dataList!=null && dataList.size()>0) {
 							for(int unitCount=0;unitCount<dataList.size();unitCount++) {
 								if(dataList.get(unitCount).getUsageData()!=null&&dataList.get(unitCount).getUsageData().size()>0) {
 									Collections.sort(dataList.get(unitCount).getUsageData(), new ArrayListSorter("sequence", true));
@@ -2112,7 +2102,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return dataList;
 	}
-	
+
 	@Override
 	public ArrayList<MasterReportDo> getCollectionMasteryReport(String classpageId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType) throws GwtException, ServerDownException {
 		ArrayList<MasterReportDo> dataList = new ArrayList<MasterReportDo>();
@@ -2124,11 +2114,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		} else {
 			partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_MASTERY_ALL_COLLECTION_PROGRESS, classpageId, courseId, unitId, lessonId, assessmentId);
 		}
-		
+
 		getLogger().info(partialUrl);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		
+
 		JSONObject resourceObj;
 		try {
 			if(jsonRep!=null && jsonRep.getSize()!=1){
@@ -2162,22 +2152,22 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
 		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASS_COLLECTIONS, classpageId, courseId, unitId, lessonId);
-		
+
 		getLogger().info(partialUrl);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		
+
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				getLogger().info(jsonRep.getJsonObject().toString());
-				collectionList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<PlanContentDo>(){});			
+				collectionList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<PlanContentDo>(){});
 			}
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}
 		return collectionList;
 	}
-	
+
 	@Override
 	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId){
 		List<UserPlayedSessionDo> userPlayedSessions = null;

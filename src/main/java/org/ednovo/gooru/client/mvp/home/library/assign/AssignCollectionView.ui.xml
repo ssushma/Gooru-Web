@@ -5,8 +5,6 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle"
 		field="res" />
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
 	<g:HTMLPanel ui:field="mainContainer">
 		<g:HTMLPanel ui:field="panelTitleContainer">
 			<g:Label ui:field="lblAssignCollectionTitle" styleName="{res.css.labelTitleText}"></g:Label>
@@ -48,9 +46,9 @@
 			<g:Label ui:field="lblDirectionsOptional" styleName="{res.css.directionsDivLabel}"></g:Label>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="col-md-8 col-sm-8 {res.css.marginTop}">
-			<g:TextArea ui:field="textAreaVal" styleName="form-control {res1.css.form_control}"></g:TextArea>
-			<g:Label ui:field="directionsErrorLbl" styleName="{res.css.directionsErrorLbl}"></g:Label>    
-		</g:HTMLPanel>    
+			<g:TextArea ui:field="textAreaVal" styleName="form-control form_control"></g:TextArea>
+			<g:Label ui:field="directionsErrorLbl" styleName="{res.css.directionsErrorLbl}"></g:Label>
+		</g:HTMLPanel>
 		<g:HTMLPanel styleName="clearfix">
 		</g:HTMLPanel>
 	<!-- 		<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
@@ -71,11 +69,11 @@
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 		<g:HTMLPanel ui:field="assignContainer">
-				<uc:BlueButtonUc ui:field="btnAssign"></uc:BlueButtonUc>    
+				<uc:BlueButtonUc ui:field="btnAssign"></uc:BlueButtonUc>
 			</g:HTMLPanel>
-			
+
 			<g:HTMLPanel ui:field="assignMoreCpContainer">
-				<g:InlineLabel ui:field="assignMoreCpLbl"	styleName="{res.css.labelTextSucees} {res.css.cpSuccessMsg}"></g:InlineLabel> 
+				<g:InlineLabel ui:field="assignMoreCpLbl"	styleName="{res.css.labelTextSucees} {res.css.cpSuccessMsg}"></g:InlineLabel>
 					<g:InlineLabel ui:field="ancClasspageTitle" styleName="{res.css.assignmentLabel}"/>
 					<g:HTMLPanel styleName="{res.css.buttonWidth}">
 					<g:Button styleName="primary {res.css.assignClassPageBtn}"		ui:field="classPageBtn"></g:Button>
@@ -83,4 +81,4 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

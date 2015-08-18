@@ -7,11 +7,8 @@
 	ui:generateLocales='default'>
 <ui:style field="Settings" src="Setting-page.css" type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle"/>
 
-<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res" />
-
-<g:HTMLPanel styleName="{res.css.PopupMainVVSmall}"> 
-<g:HTMLPanel styleName="{res.css.popupInnerGrey}">         
+<g:HTMLPanel styleName="PopupMainVVSmall">
+<g:HTMLPanel styleName="popupInnerGrey">
 <g:HTMLPanel styleName="{Settings.content}">
 <g:HTMLPanel styleName="{Settings.settingsSuccessPopUpContainer}">
 	<g:HTMLPanel styleName="{Settings.settingsSuccessHeaderTitleDiv}">
@@ -22,7 +19,7 @@
 	   <!--  <g:HTMLPanel styleName="{Settings.settingsSuccessText}">You get a gold star for updating your profile information.</g:HTMLPanel> -->
 		<g:HTMLPanel styleName="{Settings.settingsSuccessText}" ui:field="checkMailLbl"></g:HTMLPanel>
 	</g:HTMLPanel>
-	
+
 	<g:HTMLPanel styleName="{Settings.successFormButtonDiv}">
 		<g:Label styleName="{Settings.settingsSucessOkButton}" ui:field="lbOk"></g:Label>
 	</g:HTMLPanel>

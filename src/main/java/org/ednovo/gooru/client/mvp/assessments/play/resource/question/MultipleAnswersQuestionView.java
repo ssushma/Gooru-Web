@@ -246,7 +246,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 				AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 				answerAttemptDo.setText(checkBoxAnswerOptionView.getAnswerText());
 				answerAttemptDo.setAnswerId(checkBoxAnswerOptionView.getAnswerId());
-				answerAttemptDo.setOrder(i+1+"");
+				answerAttemptDo.setOrder((i+1)+"");
 				answerIds.add(checkBoxAnswerOptionView.getAnswerId());
 				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
 					answerAttemptDo.setText("1");
