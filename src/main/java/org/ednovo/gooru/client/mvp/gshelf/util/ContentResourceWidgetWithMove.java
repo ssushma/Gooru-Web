@@ -572,7 +572,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			if(timeEditContainer.isVisible()){
 				editAndUpdateVideoTime();
 			}else{
-				updateNarration();
+				updateYoutubeNarrationWithTime();
 			}
 		}else if(isPdf){
 			updatePdfStartPage();
@@ -647,7 +647,120 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		});
 
 	}
+	private void updateYoutubeNarrationWithTime(){
+		String narration = null;
+		MixpanelUtil.Organize_Click_Edit_Narration_Update();
+		narration = trim(narrationTxtArea.getText());
+		collectionItem.setNarration(narration);
+		lblUpdateTextMessage.setVisible(true);
+		actionVerPanel.setVisible(false);
+		Map<String, String> parms = new HashMap<>();
+		parms.put("text", narrationTxtArea.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				isHavingBadWords = value;
+				if (value){
+					narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
+					narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
+					narrationTxtArea.getElement().getStyle().setBorderColor("orange");
+					narrationAlertMessageLbl.setText(i18n.GL0554());
+					StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
+					narrationAlertMessageLbl.setVisible(true);
+					actionVerPanel.setVisible(true);
+					lblUpdateTextMessage.setVisible(true);
+					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+				}else{
+					final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+					String narration = null;
+					MixpanelUtil.Organize_Click_Edit_Narration_Update();
+					if (resourceNarrationHtml.getHTML().length() > 0) {
+						narration = trim(narrationTxtArea.getText());
+						collectionItem.setNarration(narration);
+						pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+					}
+					try{
+						String from = null;
+						String to = null;
+						if((startMinTxt.getText().trim().length()>0)&&(startSecTxt.getText().trim().length()>0)&&(stopMinTxt.getText().trim().length()>0)&&(stopSecTxt.getText().trim().length()>0)){
+							if (collectionItem.getResource().getResourceType().getName()
+									.equalsIgnoreCase("video/youtube")) {
+								from = FROM_START_TIME;
+								to = FROM_STOP_TIME;
+							}
+							/*
+							 * if (resourceNarrationHtml.getHTML().length() > 0) { narration =
+							 * narrationTxtArea.getHTML(); collectionItemDo.setNarration(narration);
+							 * }
+							 */
+							if (startMinTxt.getText().length() > 0 && startSecTxt.getText().length() > 0) {
+								from = startMinTxt.getText();
+								startMinTxt.setText(from);
+								startMinTxt.getElement().setAttribute("alt", from);
+								startMinTxt.getElement().setAttribute("title", from);
+								from = startSecTxt.getText();
+								startSecTxt.setText(from);
+								startSecTxt.getElement().setAttribute("alt", from);
+								startSecTxt.getElement().setAttribute("title", from);
+								String startTimeTxtMin = null;
+								String startTimeTxtSec = null;
+								if (startMinTxt.getText().length() < 2) {
+									startTimeTxtMin = "0" + startMinTxt.getText();
 
+								} else {
+									startTimeTxtMin = startMinTxt.getText();
+								}
+								if (startSecTxt.getText().length() < 2) {
+									startTimeTxtSec = "0" + startSecTxt.getText();
+								} else {
+									startTimeTxtSec = startSecTxt.getText();
+								}
+								from = "00:" + startTimeTxtMin + ":" + startTimeTxtSec;
+								// collectionItemDo.setStart(from);
+
+							}
+							if (stopMinTxt.getText().length() > 0
+									&& stopSecTxt.getText().length() > 0) {
+								to = stopMinTxt.getText();
+								stopMinTxt.setText(to);
+								stopMinTxt.getElement().setAttribute("alt", to);
+								stopMinTxt.getElement().setAttribute("title", to);
+								to = stopSecTxt.getText();
+								stopSecTxt.setText(to);
+								stopSecTxt.getElement().setAttribute("alt", to);
+								stopSecTxt.getElement().setAttribute("title", to);
+								String EndTimeTxtMin = null;
+								String EndTimeTxtSec = null;
+								if (stopMinTxt.getText().length() < 2) {
+									EndTimeTxtMin = "0" + stopMinTxt.getText();
+
+								} else {
+									EndTimeTxtMin = stopMinTxt.getText();
+								}
+								if (stopSecTxt.getText().length() < 2) {
+									EndTimeTxtSec = "0" + stopSecTxt.getText();
+								} else {
+									EndTimeTxtSec = stopSecTxt.getText();
+								}
+								to = "00:" + EndTimeTxtMin + ":" + EndTimeTxtSec;
+								// collectionItemDo.setStop(to);
+							}
+						}
+						collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, from, to);
+						enableDisableNarration(true);
+					}catch(Exception e){
+						AppClientFactory.printSevereLogger("ContentResourceWidgetWithMove : updateNarration : "+e.getMessage());
+					}
+					lblUpdateTextMessage.setVisible(false);
+					lblCharLimit.setVisible(false);
+					resourceNarrationHtml.getElement().getStyle().clearWidth();
+					enableOrDisableTimeEdit(true);
+					startStopTimeDisplayText.setVisible(false);
+				}
+			}
+		});
+
+	}
 	/**
 	 * This method is used to update the pdf start and end page
 	 */
