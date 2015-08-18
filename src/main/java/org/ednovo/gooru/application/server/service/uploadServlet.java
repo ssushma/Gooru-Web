@@ -25,12 +25,15 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
@@ -91,8 +94,7 @@ public class uploadServlet extends UploadAction{
 					String stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
 
 					String requestData = "uploadFileName=" + fileName + "&imageURL=&sessionToken=" + stoken;
-
-					String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT), UrlToken.FILE_UPLOAD_GET_URL, fileName, stoken);
+					
 
 					try {
 						fileName=URLEncoder.encode(uploadedFileItem.getName(), "UTF-8");
@@ -100,6 +102,9 @@ public class uploadServlet extends UploadAction{
 						System.out.println("UploadServlet : URLEncoder.encode : "+e);
 					}
 
+
+					String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT), UrlToken.FILE_UPLOAD_GET_URL, fileName, stoken);
+					
 					try {
 
 						responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
@@ -154,23 +159,21 @@ public class uploadServlet extends UploadAction{
 
 
 		public String testUpload(byte[] bytes, String data, String fileName,Long fileSize, String urlVal)
-				throws Exception {
-			String ret = "";
-			HttpParams myParams = new BasicHttpParams();
-			DefaultHttpClient httpClient =  new DefaultHttpClient(myParams);
-			HttpPost httppost = new HttpPost(urlVal);
-			MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-			reqEntity.addPart("string_field", new StringBody("field value"));
-			ByteArrayBody bab = new ByteArrayBody(bytes, fileName);
-			reqEntity.addPart("image", bab);
-			httppost.setEntity(reqEntity);
-			HttpResponse response = httpClient.execute(httppost);
-			HttpEntity resEntity = response.getEntity();
-			if (resEntity != null) {
-				ret = EntityUtils.toString(resEntity);
-			}
-			return ret;
-		}
+                throws Exception {
+            String ret = "";
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            HttpPost httppost = new HttpPost(urlVal);
+            MultipartEntityBuilder reqEntity=MultipartEntityBuilder.create();
+            ByteArrayBody bab = new ByteArrayBody(bytes, fileName);
+            reqEntity.addPart("image", bab);
+            httppost.setEntity(reqEntity.build());
+            HttpResponse response = httpClient.execute(httppost);
+            HttpEntity resEntity = response.getEntity();
+            if (resEntity != null) {
+                ret = EntityUtils.toString(resEntity);
+            }
+            return ret;
+        }
 
 		  /**
 		   * Override this method if you want to check the request before it is passed
