@@ -50,7 +50,6 @@ public interface EditClassSettingsViewUiHandler extends BaseUiHandlers{
 	
 	void generateShareLink(String classUid);
 
-
-	void updateClass(String title,String grade,String sharing);
+	void updateClass(String title, String grade, String sharing, String fileName);
 
 }

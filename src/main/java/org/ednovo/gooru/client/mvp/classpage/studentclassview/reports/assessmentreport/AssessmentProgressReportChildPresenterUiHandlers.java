@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.reports.assessmentreport;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
 
 public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUiHandlers{
 
@@ -42,5 +45,7 @@ public interface AssessmentProgressReportChildPresenterUiHandlers extends BaseUi
 	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId, String sessionId);
 
 	public void getCollectionScoreForSession(String collectionId, String classId, String userId, String sessionId, PrintUserDataDO printData);
+	
+	public ArrayList<UserDataDo> getPrintDataDo();
 
 }
