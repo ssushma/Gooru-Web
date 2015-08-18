@@ -195,7 +195,7 @@
 		</dependency>
 
 		<!-- Google Web Toolkit (GWT) -->
-		
+
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -537,11 +537,11 @@
 					<!-- <module>org.ednovo.gooru.Gooru</module> -->
 					<module>org.ednovo.gooru.application.Application</module>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<logLevel>INFO</logLevel>
-					<style>DETAILED</style>
+					<logLevel>ERROR</logLevel>
+					<style></style>
 					<!-- <extraJvmArgs>-XX:MaxPermSize=1024m -Xmx4024m</extraJvmArgs> -->
 					<extraJvmArgs>-XX:MaxPermSize=2048m -Xmx4096m</extraJvmArgs>
-					<localWorkers>8</localWorkers>
+					<localWorkers>3</localWorkers>
 					<!-- <extraJvmArgs>-Xmx896M -Xms2048m -XX:PermSize=64m -XX:MaxPermSize=128m</extraJvmArgs> -->
 					<copyWebapp>true</copyWebapp>
 				</configuration>
