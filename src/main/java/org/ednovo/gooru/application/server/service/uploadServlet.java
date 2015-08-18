@@ -1,5 +1,10 @@
 package org.ednovo.gooru.application.server.service;
 
+import gwtupload.server.UploadAction;
+import gwtupload.server.exceptions.UploadActionException;
+import gwtupload.server.exceptions.UploadSizeLimitException;
+import gwtupload.shared.UConsts;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,11 +42,6 @@ import org.ednovo.gooru.application.server.request.UrlToken;
 import org.json.JSONArray;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import gwtupload.server.UploadAction;
-import gwtupload.server.exceptions.UploadActionException;
-import gwtupload.server.exceptions.UploadSizeLimitException;
-import gwtupload.shared.UConsts;
 
 public class uploadServlet extends UploadAction{
 	private static final long serialVersionUID = -4035393951562844790L;
@@ -98,7 +98,9 @@ public class uploadServlet extends UploadAction{
 
 					try {
 						fileName=URLEncoder.encode(uploadedFileItem.getName(), "UTF-8");
-					} catch (Exception e) {}
+					} catch (Exception e) {
+						System.out.println("UploadServlet : URLEncoder.encode : "+e);
+					}
 
 
 					String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT), UrlToken.FILE_UPLOAD_GET_URL, fileName, stoken);
@@ -109,6 +111,7 @@ public class uploadServlet extends UploadAction{
 						jsonArray = new JSONArray(responsedata);
 
 					} catch (UnsupportedEncodingException e) {
+						System.out.println("UploadServlet : UnsupportedEncodingException : "+e);
 					}
 
 
@@ -117,6 +120,7 @@ public class uploadServlet extends UploadAction{
 					response.getOutputStream().flush();
 				}
 				catch (FileUploadBase.FileSizeLimitExceededException e) {
+					System.out.println("UploadServlet : FileSizeLimitExceededException : "+e);
 					responsedata = "file size error" ;
 					response.setContentType("text/html");
 					response.getOutputStream().print(responsedata);
@@ -135,6 +139,7 @@ public class uploadServlet extends UploadAction{
 			try {
 					ret = testUpload(bytes, data, fileName,fileSize,urlVal);
 			} catch (Exception e) {
+				System.out.println("webInvokeForImage : Upload : "+e);
 			}
 			return ret;
 		}
@@ -178,17 +183,16 @@ public class uploadServlet extends UploadAction{
 		   * @throws RuntimeException
 		   */
 		  @Override
-		  public void checkRequest(HttpServletRequest request) {
-			  try
-			  {
-		    if (request.getContentLength() > 10 * 1024 * 1024) {
-		      throw new UploadSizeLimitException(maxSize, request.getContentLength());
-		    }
-			  }
-			  catch(Exception ex)
-			  {
-			  }
-		  }
+		public void checkRequest(HttpServletRequest request) {
+			try {
+				if (request.getContentLength() > 10 * 1024 * 1024) {
+					throw new UploadSizeLimitException(maxSize,
+							request.getContentLength());
+				}
+			} catch (Exception ex) {
+				System.out.println("checkRequest  : " + ex);
+			}
+		}
 
 		/**
 	     * Get the content of an uploaded file.

@@ -23,10 +23,8 @@
 					styleName="{res.css.ownResourceFormInputTextBox}" readOnly="true" />
 				<g:Button ui:field="browseResourceBtn"
 					styleName="secondary {res.css.ownResourceFormBrowsePosition}"></g:Button>
-				<g:FormPanel ui:field="fileuploadForm" encoding="multipart/form-data"
-					method="post">
-					<g:FileUpload ui:field="chooseResourceBtn" name="resourceUpload"
-						styleName="{res.css.resourceUploadPosition}" />
+				<g:FormPanel ui:field="fileuploadForm" encoding="multipart/form-data" method="post">
+					<g:FileUpload ui:field="chooseResourceBtn" name="resourceUpload" styleName="{res.css.resourceUploadPosition}" />
 				</g:FormPanel>
 			</g:HTMLPanel>
 

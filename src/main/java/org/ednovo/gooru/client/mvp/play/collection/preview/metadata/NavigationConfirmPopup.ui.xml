@@ -3,11 +3,9 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle" field="res"></ui:with>
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />	
-		<g:FlowPanel styleName="{res1.css.PopupMainVSmall}">
-		    <g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
-			<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
+		<g:FlowPanel styleName="PopupMainVSmall">
+		    <g:HTMLPanel styleName="popupInnerGrey">
+			<g:HTMLPanel styleName="popupgreyHeader">
 			    <g:HTMLPanel styleName="row">
 			        <g:Label styleName="col-md-12 col-xs-12" ui:field="popupHeader"></g:Label>
 			     </g:HTMLPanel>
@@ -27,4 +25,4 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="clearfix"/>
 	</g:FlowPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

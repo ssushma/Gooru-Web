@@ -131,62 +131,65 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		return addWebResourceWidget;
 	}
 	protected AppPopUp appPopUp;
-	
+
 	public UserOwnResourcePreview userOwnResourcePreview;
-	
+
 	public WebResourcePreview webResourcePreview;
-	
+
 	@UiField HTMLPanel tabViewContainer,addResourceTabContainer,popUpMain;
-	
+
 	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive,multipleAnswerAnc,hotSpotImg,hotSpotWord,hotTextRO,hotTextHL;
 
 	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton,myDriveButton,hotSpotImageTabButton,hotSpotWordTabButton,hotTextROTabButton,hotTextHLTabButton;
 
-	
+
 	@UiField Label titleLbl,addResourceCloseButton;
-	
+
 	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,multipleAnswerRadioButton,fillInTheBlankRadioButton,hotSpotImgRadioButton,hotSpotWordRadioButton,hotTextRORadioButton,hotTextHLRadioButton;
-	
+
 	//@UiField HTMLEventPanel singleCorrectResponseButton,multipleSelectButton,evidenceBasedResponseButton,hotTextButton,reorderTextButton,matchingTablesButton/*,shortTextResponseButton,writtenResponseButton*/;
 //	@UiField RadioButton singleCorrectResponseRadioButton,multipleSelectRadioButton,evidenceBasedResponseRadioButton,hotTextRadioButton,reorderTextRadioButton,matchingTablesRadioButton/*,shortTextResponseRadioButton,writtenResponseRadioButton*/;
 //	@UiField Anchor singleCorrectResponseText,multipleSelectText,evidenceBasedResponseText,hotTextRadioText,reorderTextText,matchingTablesText/*,shortTextResponseText,writtenResponseText*/;
-	
+
 	@UiField SimplePanel questionContainerPnl;
 	private ResourceMetaInfoDo resMetaInfo;
-	
+
 	private ExistsResourceView existsResource=null;
-	
+
 	@UiField CollectionEditResourceCBundle res;
-	
+
 	CollectionDo collectionDo=null;
 	String title,desc,category,mediaFilename,originalFileName;
-	
+
 	String webResourceId;
 	String webResourceUrl;
 	String webResourceTitle;
 	String webResourceDescription;
 	String webResourceCategory;
 	String webResourceThumbnail;
-	Integer webResourceEnd; 
-	
+	Integer webResourceEnd;
+
 	private CollectionItemDo collectionItemDo=null;
-	
+
 	private HandlerRegistration handlerRegistration=null;
-	
+
 	private boolean isQuestion =false;
-	
+
 	private boolean isUserResource =false;
-	
+
 	private boolean isEdit =false;
-	
+
 	@Inject
 	QuestionTypePresenter questionTypePresenter;
-	
+
 	@Inject
 	public AddResourceView(EventBus eventBus) {
 		super(eventBus);
 		appPopUp = new AppPopUp("type");
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
+
+		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
+
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		tabViewContainer.clear();
 		fromweb.setText(i18n.GL0887());

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
@@ -41,7 +40,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class AppPopUp extends PopupPanel {
-	
+
 	private FlowPanel mainPanel;
 	private FlowPanel innerPanel;
 	private FlowPanel headerPanel;
@@ -52,21 +51,20 @@ public class AppPopUp extends PopupPanel {
 
 
 	/**
-	 * Class constructor 
+	 * Class constructor
 	 */
 	public AppPopUp() {
 		super(false);
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 
-		LoginPopUpCBundle.INSTANCE.css().ensureInjected();
 		mainPanel=new FlowPanel();
 		innerPanel=new FlowPanel();
-		mainPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVVSmall());
-		innerPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().popupInnerGrey());
+		mainPanel.addStyleName("PopupMainVVSmall");
+		innerPanel.addStyleName("popupInnerGrey");
 		headerPanel = new FlowPanel();
-		headerPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().popupgreyHeader());
+		headerPanel.addStyleName("popupgreyHeader");
 		FlowPanel row=new FlowPanel();
-		row.addStyleName("row");	
+		row.addStyleName("row");
 		content = new FlowPanel();
 		labletitle = new Label();
 		labletitle.addStyleName("col-md-11 col-xs-11");
@@ -76,9 +74,9 @@ public class AppPopUp extends PopupPanel {
 		row.add(clearfix);
 		closeBtn = new HTMLEventPanel("");
 
-		closeBtn.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeButton());
+		closeBtn.addStyleName("closeButton");
 		closeBtn.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
@@ -105,7 +103,7 @@ public class AppPopUp extends PopupPanel {
 	}
 	/**
 	 * Class constructor with one parameter
-	 * @param type 
+	 * @param type
 	 */
 	public AppPopUp(String type){
 		super(false);
@@ -114,10 +112,10 @@ public class AppPopUp extends PopupPanel {
 			this.setWidget(content);
 			setGlassEnabled(true);
 	}
-	
+
 	/**
 	 * Class constructor with one parameter
-	 * @param type 
+	 * @param type
 	 */
 	public AppPopUp(String type,boolean isAutoHide){
 		super(isAutoHide);
@@ -153,7 +151,7 @@ public class AppPopUp extends PopupPanel {
 	public void setContent(Widget content) {
 		this.content.add(content);
 	}
-	
+
 	public void setViewTitle(String title) {
 		labletitle.setText(title);
 		labletitle.getElement().setAttribute("alt",title);
@@ -166,5 +164,5 @@ public class AppPopUp extends PopupPanel {
 	public void setCloseBtn(HTMLEventPanel closeBtn) {
 		this.closeBtn = closeBtn;
 	}
-	
+
 }

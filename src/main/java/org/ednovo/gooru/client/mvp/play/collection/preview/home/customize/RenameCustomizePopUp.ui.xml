@@ -3,18 +3,16 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle"
 		field="res" />
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
 
-	<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}" ui:field="panelAssign">
-		<g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
-			<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
+	<g:HTMLPanel styleName="PopupMainVSmall" ui:field="panelAssign">
+		<g:HTMLPanel styleName="popupInnerGrey">
+			<g:HTMLPanel styleName="popupgreyHeader">
 			    <g:HTMLPanel styleName="row">
 			        <g:HTMLPanel styleName="col-md-8 col-xs-8">
-			        	<g:HTMLPanel  ui:field="customizeText"></g:HTMLPanel>    
+			        	<g:HTMLPanel  ui:field="customizeText"></g:HTMLPanel>
 			        </g:HTMLPanel>
-					<g:HTMLPanel styleName="col-md-4 col-xs-4 {res1.css.closeContainer}">
-						<g:Label ui:field="cancelButton" styleName="{res1.css.closeButton}"></g:Label>    
+					<g:HTMLPanel styleName="col-md-4 col-xs-4 closeContainer">
+						<g:Label ui:field="cancelButton" styleName="closeButton"></g:Label>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
@@ -22,21 +20,21 @@
 			<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}"	ui:field="loadingImageLabel">
 				<g:Label ui:field="loadingLbl" styleName="{res.css.loadingImageForSelfEditCustomize}" />
 			</g:HTMLPanel>
-			
-			<g:HTMLPanel ui:field="popupcontentCustomize" styleName="{res1.css.shareSelection}">
+
+			<g:HTMLPanel ui:field="popupcontentCustomize" styleName="shareSelection">
 				<g:HTMLPanel ui:field="loginCustom" ></g:HTMLPanel>
 				<g:HTMLPanel ui:field="copyCollectionSuccess">
-					<g:Label ui:field="lblpopupTitle" styleName="{res1.css.dontWorrkText}" />
-					<g:Label styleName="{res1.css.contentDesc}" ui:field="assignDes" />
-					<g:HTMLPanel styleName="{res1.css.remixContainer}"	ui:field="popupContentAssign">
-						<g:Label styleName="col-md-12 {res1.css.labels}" ui:field="lbltxtBoxTitle" />
+					<g:Label ui:field="lblpopupTitle" styleName="dontWorrkText" />
+					<g:Label styleName="contentDesc" ui:field="assignDes" />
+					<g:HTMLPanel styleName="remixContainer"	ui:field="popupContentAssign">
+						<g:Label styleName="col-md-12 labels" ui:field="lbltxtBoxTitle" />
 						<g:HTMLPanel styleName="col-md-12">
-							<g:TextBox 	ui:field="copycollectionTextbox" styleName="form-control"></g:TextBox>  
-							<g:Label styleName="{res.css.txtboxerrorColor}" ui:field="errorLabel" />  
+							<g:TextBox 	ui:field="copycollectionTextbox" styleName="form-control"></g:TextBox>
+							<g:Label styleName="{res.css.txtboxerrorColor}" ui:field="errorLabel" />
 						</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					</g:HTMLPanel>
-					<g:HTMLPanel ui:field="buttonsContainer" styleName="text-center {res1.css.addButtonContainer}">
+					<g:HTMLPanel ui:field="buttonsContainer" styleName="text-center addButtonContainer">
 						<g:Button ui:field="backtoLibrary" styleName="secondary"></g:Button>
 						<g:Button ui:field="editCollection" styleName="primary"></g:Button>
 					</g:HTMLPanel>
@@ -45,4 +43,4 @@
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 
-</ui:UiBinder> 
+</ui:UiBinder>

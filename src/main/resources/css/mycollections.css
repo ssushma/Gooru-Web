@@ -186,7 +186,7 @@
 	color:#515151;
 }
 #gShelfMainContainer .folderBlock  .folderMainHeading span.folderIcon{
-		background:url(../images/gooru-sprite.png) no-repeat -226px -372px;
+		background:url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -372px;
 		width:40px;
 		height:25px;
 		display:inline-block;
@@ -424,7 +424,7 @@ button.btn-disabled{
 
 #gShelfMainContainer .folderListBlock  ul li a{
 	padding:15px 15px 15px 55px;
-			background:#f0f0f0 url(../images/gooru-sprite.png) no-repeat -215px -360px;
+			background:#f0f0f0 url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -215px -360px;
 			display:block;
 			color:#515151;
 			font-size:13px;
@@ -433,14 +433,14 @@ button.btn-disabled{
 
 
 #gShelfMainContainer .folderListBlock ul li a:hover, #gShelfMainContainer .folderListBlock ul li a:focus{
-		background:#ffffff url(../images/gooru-sprite.png) no-repeat -215px -316px;
+		background:#ffffff url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -215px -316px;
 	color:#515151;
 	text-decoration:none;
 	opacity:1;
 
 }
 #gShelfMainContainer .folderListBlock ul li.active a{
-		background:#ffffff url(../images/gooru-sprite.png) no-repeat -215px -318px;
+		background:#ffffff url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -215px -318px;
 	color:#515151;
 	text-decoration:none;
 }
@@ -526,96 +526,61 @@ button.btn-disabled{
 
 
 #gShelfMainContainer .folderLevel { /* grandparent level - default */
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 23px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/folders/panel/folder-icon.png') no-repeat 23px 13px;
 }
 
 #gShelfMainContainer .folderLevel.course {
-    background: #f0f0f0 url('../images/folders/panel/c-close.png') no-repeat 23px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/folders/panel/c-close.png') no-repeat 23px 13px;
 }
 #gShelfMainContainer .folderLevel.unit {
-    background: #f0f0f0 url('../images/folders/panel/u-close.png') no-repeat 51px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/folders/panel/u-close.png') no-repeat 51px 13px;
 }
 #gShelfMainContainer .folderLevel.lesson {
-    background: #f0f0f0 url('../images/folders/panel/l-close.png') no-repeat 79px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/folders/panel/l-close.png') no-repeat 79px 13px;
 }
 
 #gShelfMainContainer .folderLevel.parent {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 51px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/folders/panel/folder-icon.png') no-repeat 51px 13px;
 }
 
 #gShelfMainContainer .folderLevel.child {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 79px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/folders/panel/folder-icon.png') no-repeat 79px 13px;
 }
 
 #gShelfMainContainer .folderLevel.collectionChild {
-    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 107px 13px;
+    background: #f0f0f0 url('${cdn.endpoint}/images/folders/panel/folder-icon.png') no-repeat 107px 13px;
 }
 
 /*////////////////////// other images ///////////////////*/
 
 
 #gShelfMainContainer .folderLevel.open {
-    background-image: url('../images/folders/panel/folder-icon-open.png');
+    background-image: url('${cdn.endpoint}/images/folders/panel/folder-icon-open.png');
 }
 #gShelfMainContainer .folderLevel.course.open {
-    background-image: url('../images/folders/panel/c-open.png')!important;
+    background-image: url('${cdn.endpoint}/images/folders/panel/c-open.png')!important;
 }
 #gShelfMainContainer .folderLevel.unit.open {
-    background-image: url('../images/folders/panel/u-open.png')!important;
+    background-image: url('${cdn.endpoint}/images/folders/panel/u-open.png')!important;
 }
 #gShelfMainContainer .folderLevel.lesson.open {
-    background-image: url('../images/folders/panel/l-open.png')!important;
+    background-image: url('${cdn.endpoint}/images/folders/panel/l-open.png')!important;
 }
 #gShelfMainContainer .folderLevel.collection {
-    background-image: url('../images/folders/panel/collection-icon.png') !important;
+    background-image: url('${cdn.endpoint}/images/folders/panel/collection-icon.png') !important;
 }
 
 #gShelfMainContainer .folderLevel.assessment {
-    background-image: url('../images/folders/panel/assessment-type.png') !important;
+    background-image: url('${cdn.endpoint}/images/folders/panel/assessment-type.png') !important;
 }
 
 #gShelfMainContainer .folderLevel.publicIcon.collection {
-    background-image: url('../images/folders/panel/collection-icon-public.png') !important;
+    background-image: url('${cdn.endpoint}/images/folders/panel/collection-icon-public.png') !important;
 }
 
 #gShelfMainContainer .folderLevel.assesstpublicIcon.assessment {
-    background-image: url('../images/folders/panel/assessment-icon-public.png') !important;
+    background-image: url('${cdn.endpoint}/images/folders/panel/assessment-icon-public.png') !important;
 }
-/* #gShelfMainContainer .folderLevel .arrow {
-    width:25px;
-    height:25px;
-    border-radius:2px;
-    position:absolute;
-    top:12px;
-    background: url('../images/folders/panel/arrow-closed.png') no-repeat center;
-    display:none;
-}
-
-#gShelfMainContainer .folderLevel .arrow:hover {
-    background-color:#f0f0f0;
-    cursor:pointer;
-}
-
-#gShelfMainContainer .folderLevel.open .arrow {
-    background-image: url('../images/folders/panel/arrow-open.png');
-    display:block;
-}
-
-#gShelfMainContainer .folderLevel .arrow { grandparent level - default
-    left:5px;
-}
-
-#gShelfMainContainer .folderLevel.parent .arrow {
-    left:33px;
-}
-
-#gShelfMainContainer .folderLevel.child .arrow {
-    left:61px;
-}
-
-#gShelfMainContainer .folderLevel.collectionChild .arrow {
-    left:88px;
-} */
 
 #gShelfMainContainer .folderLevel .editButton {
     position: absolute;
@@ -633,8 +598,10 @@ button.btn-disabled{
 }
 
 #gShelfMainContainer .folderLevel:hover {
-    background-color:white;
-    cursor:pointer;
+	background-color: white !important;
+	cursor: pointer !important;
+	margin: 0px;
+	color: #515151 !important;
 }
 
 #gShelfMainContainer .folderLevel:hover .arrow {
@@ -916,49 +883,49 @@ button.btn-disabled{
 	width:6%;
 }
 #gShelfCousesList .tableColumn .courseImage{
-	background: #f9fcfe url('../images/folders/panel/c-close.png') no-repeat 0px 0px;
+	background: #f9fcfe url('${cdn.endpoint}/images/folders/panel/c-close.png') no-repeat 0px 0px;
 	height: 25px;
 	width: 45px;
 	float: left;
 	margin-top: 4%;
 }
 #gShelfCousesList .tableColumn .unitImage{
-	background: #f9fcfe url('../images/folders/panel/u-close.png') no-repeat 0px 0px;
+	background: #f9fcfe url('${cdn.endpoint}/images/folders/panel/u-close.png') no-repeat 0px 0px;
 	height: 25px;
 	width: 45px;
 	float: left;
 	margin-top: 4%;
 }
 #gShelfCousesList .tableColumn .lessonImage{
-	background: #f9fcfe url('../images/folders/panel/l-close.png') no-repeat 0px 0px;
+	background: #f9fcfe url('${cdn.endpoint}/images/folders/panel/l-close.png') no-repeat 0px 0px;
 	height: 25px;
 	width: 45px;
 	float: left;
 	margin-top: 4%;
 }
 #gShelfCousesList .tableColumn .courseImage{
-	background: #f9fcfe url('../images/folders/panel/c-close.png') no-repeat 0px 0px;
+	background: #f9fcfe url('${cdn.endpoint}/images/folders/panel/c-close.png') no-repeat 0px 0px;
 	height: 25px;
 	width: 45px;
 	float: left;
 	margin-top: 4%;
 }
 #gShelfCousesList .tableColumn .unitImage{
-	background: #f9fcfe url('../images/folders/panel/u-close.png') no-repeat 0px 0px;
+	background: #f9fcfe url('${cdn.endpoint}/images/folders/panel/u-close.png') no-repeat 0px 0px;
 	height: 25px;
 	width: 45px;
 	float: left;
 	margin-top: 4%;
 }
 #gShelfCousesList .tableColumn .folderImage{
-	background: #f9fcfe url('../images/folders/panel/folder-icon.png') no-repeat 0px 0px;
+	background: #f9fcfe url('${cdn.endpoint}/images/folders/panel/folder-icon.png') no-repeat 0px 0px;
 	height: 25px;
 	width: 45px;
 	float: left;
 	margin-top: 4%;
 }
 #gShelfCousesList .tableColumn .collectionImage{
-	background: #f9fcfe url('../images/folders/panel/collection-icon.png') no-repeat 0px 0px;
+	background: #f9fcfe url('${cdn.endpoint}/images/folders/panel/collection-icon.png') no-repeat 0px 0px;
 	height: 25px;
 	width: 45px;
 	float: left;
@@ -966,7 +933,7 @@ button.btn-disabled{
 	border: 0;
 }
 #gShelfCousesList .tableColumn .assessmentImage{
-	background: #f9fcfe url('../images/folders/panel/assessment-type.png') no-repeat 0px 0px;
+	background: #f9fcfe url('${cdn.endpoint}/images/folders/panel/assessment-type.png') no-repeat 0px 0px;
 	height: 25px;
 	width: 45px;
 	float: left;
@@ -987,7 +954,7 @@ button.btn-disabled{
 	color:#515151;
 }
 #gShelfCousesList .tableListOrder .topArrow {
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -360px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -360px;
 	width:16px;
 	height:10px;
 	display:inline-block;
@@ -1012,7 +979,7 @@ button.btn-disabled{
 	text-align: center;
 }
 #gShelfCousesList .tableListOrder .bottomArrow {
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -381px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -381px;
 	width:16px;
 	height:10px;
 	display:inline-block;
@@ -1156,7 +1123,7 @@ button.btn-disabled{
 }
 
 #gShelfCourseInfo .folderBlock  .folderMainHeading span.folderIcon {
-	background: url(../images/gooru-sprite.png) no-repeat -226px -372px;
+	background: url(${cdn.endpoint}/images/gooru-sprite.png) no-repeat -226px -372px;
 	width: 40px;
 	height: 25px;
 	display: inline-block;
@@ -1486,7 +1453,7 @@ button.btn-disabled {
 }
 
 #gShelfCourseInfo .courseFolderOpenIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -230px
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -230px
 		-449px;
 	width: 36px;
 	height: 24px;
@@ -1495,7 +1462,7 @@ button.btn-disabled {
 }
 
 #gShelfCourseInfo .unitFolderOpenIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -230px
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -230px
 		-484px;
 	width: 36px;
 	height: 24px;
@@ -1504,7 +1471,7 @@ button.btn-disabled {
 }
 
 #gShelfCourseInfo .courseFolderCloseIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -278px
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px
 		-449px;
 	width: 36px;
 	height: 28px;
@@ -1513,7 +1480,7 @@ button.btn-disabled {
 }
 
 #gShelfCourseInfo .unitFolderCloseIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -278px
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px
 		-484px;
 	width: 36px;
 	height: 24px;
@@ -1531,7 +1498,7 @@ button.btn-disabled {
 }
 
 #gShelfCourseInfo .breadcrumbsCollectionIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -519px;
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -229px -519px;
 	width: 36px;
 	height: 24px;
 	display: inline-block;
@@ -1539,7 +1506,7 @@ button.btn-disabled {
 }
 
 .breadcrumbsCollectionIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -519px;
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -229px -519px;
 	width: 36px;
 	height: 24px;
 	display: inline-block;
@@ -1547,7 +1514,7 @@ button.btn-disabled {
 }
 
 #gShelfCourseInfo .breadcrumbsAssessmentIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -554px;
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -229px -554px;
 	width: 36px;
 	height: 24px;
 	display: inline-block;
@@ -1555,7 +1522,7 @@ button.btn-disabled {
 }
 
 .breadcrumbsAssessmentIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -229px -554px;
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -229px -554px;
 	width: 36px;
 	height: 24px;
 	display: inline-block;
@@ -1639,7 +1606,7 @@ button.btn-disabled {
 	background:#f0f0f0;
 }
 #pnlLessonInfo .gliphIconImage {
-  background: url("../images/gridicon.png") no-repeat scroll 0 0 transparent;
+  background: url("${cdn.endpoint}/images/gridicon.png") no-repeat scroll 0 0 transparent;
   width: 11px;
   height: 12px;
 }
@@ -2249,7 +2216,7 @@ padding-bottom: 10px;
 }
 
 #resourceEdit .courseFolderOpenIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -230px -449px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -230px -449px;
 	width:36px;
 	height:24px;
 	display:inline-block;
@@ -2257,7 +2224,7 @@ padding-bottom: 10px;
 }
 
 #resourceEdit .unitFolderOpenIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -230px -484px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -230px -484px;
 	width:36px;
 	height:24px;
 	display:inline-block;
@@ -2265,7 +2232,7 @@ padding-bottom: 10px;
 }
 
 #resourceEdit .courseFolderCloseIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -449px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -449px;
 	width:36px;
 	height:24px;
 	display:inline-block;
@@ -2273,7 +2240,7 @@ padding-bottom: 10px;
 }
 
 #resourceEdit .unitFolderCloseIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -484px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -484px;
 	width:36px;
 	height:24px;
 	display:inline-block;
@@ -2281,7 +2248,7 @@ padding-bottom: 10px;
 }
 
 #resourceEdit .lessonFolderCloseIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -520px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -520px;
 	width:36px;
 	height:24px;
 	display:inline-block;
@@ -2501,53 +2468,53 @@ vertical-align:middle;
 	height:25px;
 	vertical-align:middle;
 	float:left;
-	background:url("../images/resource-type-icons.png") no-repeat scroll 0px -220px;
+	background:url("${cdn.endpoint}/images/resource-type-icons.png") no-repeat scroll 0px -220px;
 }
 #resourceEdit .tableMainHeader .resourceNameBlock span.videoIcon{
 	width:25px;
 	height:25px;
 	vertical-align:middle;
 	float:left;
-	background:url("../images/resource-type-icons.png") no-repeat scroll 0px 4px;
+	background:url("${cdn.endpoint}/images/resource-type-icons.png") no-repeat scroll 0px 4px;
 }
 #resourceEdit .tableMainHeader .resourceNameBlock span.textIcon{
 	width:25px;
 	height:25px;
 	vertical-align:middle;
 	float:left;
-	background:url("../images/resource-type-icons.png") no-repeat scroll 0px -53px;
+	background:url("${cdn.endpoint}/images/resource-type-icons.png") no-repeat scroll 0px -53px;
 }
 #resourceEdit .tableMainHeader .resourceNameBlock span.interactiveIcon{
 	width:25px;
 	height:25px;
 	vertical-align:middle;
 	float:left;
-	background:url("../images/resource-type-icons.png") no-repeat scroll 0 -27px;
+	background:url("${cdn.endpoint}/images/resource-type-icons.png") no-repeat scroll 0 -27px;
 }
 #resourceEdit .tableMainHeader .resourceNameBlock span.questionIcon{
 	width:25px;
 	height:25px;
 	vertical-align:middle;
 	float:left;
-	background:url("../images/resource-type-icons.png") no-repeat scroll -1px -140px;
+	background:url("${cdn.endpoint}/images/resource-type-icons.png") no-repeat scroll -1px -140px;
 }
 #resourceEdit .tableMainHeader .resourceNameBlock span.imageIcon{
 	width:25px;
 	height:25px;
 	vertical-align:middle;
 	float:left;
-	background:url("../images/resource-type-icons.png") no-repeat scroll -1px -251px;
+	background:url("${cdn.endpoint}/images/resource-type-icons.png") no-repeat scroll -1px -251px;
 }
 #resourceEdit .tableMainHeader .resourceNameBlock span.audioIcon{
 	width:25px;
 	height:25px;
 	vertical-align:middle;
 	float:left;
-	background:url("../images/resource-type-icons.png") no-repeat scroll 0px -275px;
+	background:url("${cdn.endpoint}/images/resource-type-icons.png") no-repeat scroll 0px -275px;
 }
 
 #resourceEdit .tableListOrder .topArrow {
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -360px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -360px;
 	width:16px;
 	height:10px;
 	display:inline-block;
@@ -2568,7 +2535,7 @@ vertical-align:middle;
 	border-radius: 4px;
 }
 #resourceEdit .tableListOrder .bottomArrow {
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -381px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -381px;
 	width:16px;
 	height:10px;
 	display:inline-block;
@@ -2863,7 +2830,7 @@ vertical-align:middle;
 }
 
 .courseFolderOpenIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -230px -449px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -230px -449px;
 	width:36px;
 	height:24px;
 	display:inline-block;
@@ -2871,7 +2838,7 @@ vertical-align:middle;
 }
 
 .unitFolderOpenIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -230px -484px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -230px -484px;
 	width:36px;
 	height:24px;
 	display:inline-block;
@@ -2879,7 +2846,7 @@ vertical-align:middle;
 }
 
 .courseFolderCloseIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -449px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -449px;
 	width:36px;
 	height:28px;
 	display:inline-block;
@@ -2887,7 +2854,7 @@ vertical-align:middle;
 }
 
 .unitFolderCloseIcon{
-	background:url("../images/gooru-sprite.png") no-repeat scroll -278px -484px;
+	background:url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -278px -484px;
 	width:36px;
 	height:24px;
 	display:inline-block;
@@ -2895,7 +2862,7 @@ vertical-align:middle;
 }
 
 .lessonFolderCloseIcon {
-	background: url("../images/gooru-sprite.png") no-repeat scroll -279px
+	background: url("${cdn.endpoint}/images/gooru-sprite.png") no-repeat scroll -279px
 		-520px;
 	width: 36px;
 	height: 24px;
@@ -2912,7 +2879,7 @@ vertical-align:middle;
 	padding:15px 15px 15px 15px;
 }
 #unitinfo .gliphIconImage {
-    background: url("../images/gridicon.png") no-repeat scroll 0px 0px transparent;
+    background: url("${cdn.endpoint}/images/gridicon.png") no-repeat scroll 0px 0px transparent;
     width: 11px;
     height: 12px;
 }
@@ -3526,7 +3493,7 @@ overflow: hidden;
 	background:#f0f0f0;
 }
 #pnlCollectionInfo .gliphIconImage {
-  background: url("../images/gridicon.png") no-repeat scroll 0 0 transparent;
+  background: url("${cdn.endpoint}/images/gridicon.png") no-repeat scroll 0 0 transparent;
   width: 11px;
   height: 12px;
 }
@@ -4250,7 +4217,7 @@ right:1px;
 	background-position: 0 -18px !important;
 }
 #pnlExternalAssessmentContainter div.css-label {
-	background-image: url(../images/radioButtons.png);
+	background-image: url(${cdn.endpoint}/images/radioButtons.png);
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -4381,7 +4348,7 @@ right:1px;
 	padding:15px 15px;
 }
 .shareMainContainer .assign2Class .assignCourseBlock{
-	border-left: 1px solid #ddd; 
+	border-left: 1px solid #ddd;
 	padding: 15px 15px !important;
 }
 
@@ -4435,7 +4402,7 @@ right:1px;
 	text-align: center;
 }
 #coursesGetting .gettingStartedMain .emptyClass {
-	background: url("../images/GettingStarted.png") repeat;
+	background: url("${cdn.endpoint}/images/GettingStarted.png") repeat;
 	border-radius: 4px;
 	box-shadow: 0 0 4px #cccccc;
 	margin: 0 auto 50px;
@@ -4622,7 +4589,7 @@ right:1px;
 }
 
 #gShelfMainContainer .courseLevel { /* grandparent level - default */
-    /* background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px; */
+    /* background: #f0f0f0 url('${cdn.endpoint}/images/folders/panel/folder-icon.png') no-repeat 33px 13px; */
     background:#f0f0f0 url('${cdn.endpoint}/g-folder-small.png') no-repeat 33px 13px; ;
 }
 
@@ -4798,7 +4765,7 @@ right:1px;
     padding-right: 15px;
 }
 .myAllCoursesBackground {
-    background: #ffffff url("../images/myclassesGettingStarted-bg.png") no-repeat center bottom;
+    background: #ffffff url("${cdn.endpoint}/images/myclassesGettingStarted-bg.png") no-repeat center bottom;
     padding-bottom: 50px;
     border-bottom: 1px solid #dddddd;
 }
@@ -4910,5 +4877,5 @@ right:1px;
         text-align: center;
     }
 }
-    @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {} 
-   
+    @media (min-width: 992px) and (max-width: 1199px) {} @media (min-width: 1200px) {}
+

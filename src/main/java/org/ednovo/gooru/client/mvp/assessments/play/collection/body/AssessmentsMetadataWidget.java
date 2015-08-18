@@ -483,7 +483,7 @@ public class AssessmentsMetadataWidget extends Composite {
 		lblcentury.getElement().setAttribute("alt",i18n.GL3199());
 		lblcentury.getElement().setAttribute("title",i18n.GL3199());
 
-		previewFlagButton.setText(i18n.GL0556());
+		previewFlagButton.setText(i18n.GL3493());
 		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
 		previewFlagButton.getElement().setAttribute("alt",i18n.GL0556());
 		previewFlagButton.getElement().setAttribute("title",i18n.GL0556());

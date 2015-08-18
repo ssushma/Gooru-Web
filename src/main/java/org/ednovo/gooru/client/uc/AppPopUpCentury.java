@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 
 import com.google.gwt.user.client.ui.Anchor;
@@ -39,11 +38,11 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class AppPopUpCentury extends PopupPanel {
-	
+
 	private FlowPanel mainPanel;
 	private FlowPanel innerPanel;
 	private FlowPanel headerPanel;
-	
+
 	private FlowPanel row;
 	private FlowPanel content;
 	private Label labletitle;
@@ -51,30 +50,30 @@ public class AppPopUpCentury extends PopupPanel {
 	private Anchor close;
 
 	/**
-	 * Class constructor 
+	 * Class constructor
 	 */
 	public AppPopUpCentury() {
 		super(false);
 		ShelfCBundle.INSTANCE.css().ensureInjected();
-		
+
 		mainPanel=new FlowPanel();
 		innerPanel=new FlowPanel();
 		row=new FlowPanel();
 		close=new Anchor();
-		mainPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupCenturyLarge());
-		innerPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().popupInnerGrey());
+		mainPanel.setStyleName("PopupCenturyLarge");
+		innerPanel.setStyleName("popupInnerGrey");
 		row.setStyleName("row");
 		headerPanel = new FlowPanel();
 		content = new FlowPanel();
 		closeBtn = new FlowPanel();
-		headerPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().popupgreyHeader());
+		headerPanel.setStyleName("popupgreyHeader");
 		labletitle = new Label();
 		labletitle.setStyleName("col-md-8 col-xs-8");
 		closeBtn.addStyleName("col-md-4 col-xs-4");
-		closeBtn.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeContainer());
-		close.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeButton());
+		closeBtn.addStyleName("closeContainer");
+		close.addStyleName("closeButton");
 		closeBtn.add(close);
-		
+
 		row.add(labletitle);
 		row.add(closeBtn);
 		HTMLPanel htmlPanel=new HTMLPanel("");
@@ -84,7 +83,7 @@ public class AppPopUpCentury extends PopupPanel {
 		innerPanel.add(headerPanel);
 		mainPanel.add(innerPanel);
 		innerPanel.add(content);
-		
+
 		this.setWidget(mainPanel);
 		setGlassEnabled(true);
 		setAutoHideOnHistoryEventsEnabled(true);
@@ -98,7 +97,7 @@ public class AppPopUpCentury extends PopupPanel {
 	}
 	/**
 	 * Class constructor with one parameter
-	 * @param type 
+	 * @param type
 	 */
 	public AppPopUpCentury(String type){
 		super(false);
@@ -108,10 +107,10 @@ public class AppPopUpCentury extends PopupPanel {
 			this.setWidget(content);
 			setGlassEnabled(true);
 	}
-	
+
 	/**
 	 * Class constructor with one parameter
-	 * @param type 
+	 * @param type
 	 */
 	public AppPopUpCentury(String type,boolean isAutoHide){
 		super(isAutoHide);
@@ -142,7 +141,7 @@ public class AppPopUpCentury extends PopupPanel {
 	public void setContent(Widget content) {
 		this.content.add(content);
 	}
-	
+
 	public void setViewTitle(String title) {
 		labletitle.setText(title);
 		labletitle.getElement().setAttribute("alt",title);
@@ -154,6 +153,6 @@ public class AppPopUpCentury extends PopupPanel {
 	public void setCloseBtn(Anchor close) {
 		this.close = close;
 	}
-	
-	
+
+
 }

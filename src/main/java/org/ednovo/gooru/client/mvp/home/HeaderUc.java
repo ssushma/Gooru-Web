@@ -29,8 +29,6 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.home.HomePresenter;
-import org.ednovo.gooru.application.client.home.HomeUiHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
@@ -124,7 +122,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
@@ -189,15 +186,17 @@ public class HeaderUc extends Composite
 					Document doc = Document.get();
 					if (isClearZIndex) {
 						try {
-							doc.getElementById("headerMainPanel").getStyle()
-									.clearZIndex();
+							if(doc.getElementById("headerMainPanel") != null){
+								doc.getElementById("headerMainPanel").getStyle().clearZIndex();
+							}
 						} catch (Exception ex) {
 							AppClientFactory.printSevereLogger("HeaderUc setHeaderZIndex:::"+ex.getMessage());
 						}
 					} else {
 						try {
-							doc.getElementById("headerMainPanel").getStyle()
-									.setZIndex(value);
+							if(doc.getElementById("headerMainPanel") != null){
+								doc.getElementById("headerMainPanel").getStyle().setZIndex(value);
+							}
 						} catch (Exception e) {
 							AppClientFactory.printSevereLogger("HeaderUc setHeaderZIndex:::"+e);
 						}
@@ -304,12 +303,6 @@ public class HeaderUc extends Composite
 	private ClasspageListVc classpageListVc;
 
 	private SaveSharePanel saveSharePanel;
-
-	@Inject
-	HomeUiHandlers homeUiHandlers;
-
-	@Inject
-	HomePresenter homePresenter;
 
 	@UiField
 	AnchorElement gooruLearning;
