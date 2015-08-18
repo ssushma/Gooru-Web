@@ -482,7 +482,7 @@ public class MetadataWidget extends Composite {
 		lblcentury.getElement().setId("lblCenturys");
 		lblcentury.getElement().setAttribute("alt",i18n.GL3199());
 		lblcentury.getElement().setAttribute("title",i18n.GL3199());
-		previewFlagButton.setText("collection".equalsIgnoreCase(collectionDo.getCollectionType())?i18n.GL0556():i18n.GL3493());
+		previewFlagButton.setText(i18n.GL0556());
 		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
 		previewFlagButton.getElement().setAttribute("alt",i18n.GL0556());
 		previewFlagButton.getElement().setAttribute("title",i18n.GL0556());

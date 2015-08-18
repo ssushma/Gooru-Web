@@ -129,7 +129,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 		messageBodyText.setText(i18n.GL3466_4()+i18n.GL_SPL_FULLSTOP());
 		optionsContainerFpnl.clear();
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null && collectionItemDo.getResource().getType()==9){
-			messageBodyText.setText(i18n.GL3234_1()+i18n.GL_SPL_FULLSTOP());
+			messageBodyText.setText(i18n.GL3500()+i18n.GL_SPL_FULLSTOP());
 			optionsContainerFpnl.addStyleName("drapDropContainer");
 			optionsContainer=new HTAnswerDragPanelVc();
 			optionsContainerFpnl.add(optionsContainer);
