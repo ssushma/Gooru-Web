@@ -976,10 +976,13 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0304());
 				int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
+				
 				if(type==10){
-					getUiHandlers().addSelectedQuestionType("HS_TXT",getAddResourceMetadata());
+					getUiHandlers().addSelectedQuestionType("HS_TXT",null);
 				}else if(type==11){
-					getUiHandlers().addSelectedQuestionType("HS_IMG",getAddResourceMetadata());
+					getUiHandlers().addSelectedQuestionType("HS_IMG",null);
+				}else{
+					getUiHandlers().addSelectedQuestionType("MC",null);
 				}
 				getUiHandlers().setEditQuestionData(collectionItemDo);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
