@@ -259,6 +259,72 @@ height:auto;
 	box-shadow:none;
 	outline:none;
 }
+
+
+
+
+#gettingstartedmycollections {
+    padding-left:70px;
+    padding-right:70px;
+}
+#gettingstartedmycollections .gettingStartedHeader {
+    margin-bottom: 45px;
+}
+#gettingstartedmycollections .gettingStartedHeader h2 {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: "Arvo", serif;
+    margin: 30px 0 10px 0;
+    text-align: center;
+    color: #515151;
+}
+#gettingstartedmycollections .gettingStartedHeader h4 {
+    color: #4e9746;
+    font-size: 18px;
+    font-family: "Arvo", serif;
+    text-align: center;
+    margin-bottom: 40px;
+}
+#gettingstartedmycollections .gettingStartedHeader p.lead {
+    font-size: 16px;
+    color: #515151;
+    font-family: "Arvo", serif;
+    margin: 0 62px;
+    text-align: center;
+}
+#gettingstartedmycollections .learningCollectionsFormativeAssessments {
+    text-align: center;
+}
+#gettingstartedmycollections .learningCollectionsFormativeAssessments h3 {
+    font-size: 18px;
+    font-family: "Arvo", serif;
+    color: #515151;
+    margin: 15px 0;
+}
+#gettingstartedmycollections .learningCollectionsFormativeAssessments .img-responsive {
+    display: inline-block;
+}
+#gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText {
+    margin: 20px 8px;
+    min-height: 85px;
+    font-family: "Arvo", serif;
+    color: #515151;
+}
+#gettingstartedmycollections .bottomLink {
+    margin-top: 40px;
+    text-align: center;
+}
+#gettingstartedmycollections .bottomLink a {
+    color: #0074be;
+}
+#gettingstartedmycollections .bottomLink a:hover,
+#gettingstartedmycollections .bottomLink a:focus {
+    text-decoration: none;
+}
+#gettingstartedmycollections .LearningCollections {
+    border-right: 1px solid #979797;
+}
+
 @media (min-width: 240px) and (max-width: 319px){
 	#taxonomyStructureSelectionPopup .listGroup .border-right{
 		min-height:inherit;
@@ -275,13 +341,24 @@ height:auto;
 	#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default{
 		font-size:13px;
 	}
+	#gettingstartedmycollections {
+	    padding-left: 25px;
+	    padding-right: 25px;
+	}
+	#gettingstartedmycollections .gettingStartedHeader p.lead {
+	    margin: 0 20px;
+	}
+	#gettingstartedmycollections .LearningCollections {
+	    border-right: none;
+	    border-bottom: 1px solid #979797;
+	    margin-bottom: 15px;
+	    padding-bottom: 15px;
+	}
 }
 
 
-
-
 @media (min-width: 320px) and (max-width: 479px) {
-#taxonomyStructureSelectionPopup .listGroup .border-right{
+	#taxonomyStructureSelectionPopup .listGroup .border-right{
 		min-height:inherit;
 	}
 	#taxonomyStructureSelectionPopup .listGroup .border-right{
@@ -296,6 +373,19 @@ height:auto;
 	#taxonomyStructureSelectionPopup .taxonomyMenu .btn-default{
 		font-size:12px;
 	}
+	#gettingstartedmycollections {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+    #gettingstartedmycollections .gettingStartedHeader p.lead {
+        margin: 0 20px;
+    }
+    #gettingstartedmycollections .LearningCollections {
+        border-right: none;
+        border-bottom: 1px solid #979797;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
 }
 
 @media (min-width: 480px) and (max-width: 767px)  {
@@ -306,176 +396,38 @@ height:auto;
 		border-right:none;
 		border-bottom:1px solid #cccccc;
 	}
-}
-
-
-	@media (min-width: 768px) and (max-width: 991px) {
-
-	}
-
-
-
-		@media (min-width: 992px) and (max-width: 1199px) {
-
-
-
-		}
-
-
-
-
-
-@media (min-width: 1200px) {
-
-
-
-
-
-
-}
-
-
- 
-    #gettingstartedmycollections {
-        padding-left:70px;
-        padding-right:70px;
-    }
-    #gettingstartedmycollections .gettingStartedHeader {
-        margin-bottom: 45px;
-    }
-    #gettingstartedmycollections .gettingStartedHeader h2 {
-        font-size: 24px;
-        font-weight: bold;
-        font-family: "Arvo", serif;
-        margin: 30px 0 10px 0;
-        text-align: center;
-        color: #515151;
-    }
-    #gettingstartedmycollections .gettingStartedHeader h4 {
-        color: #4e9746;
-        font-size: 18px;
-        font-family: "Arvo", serif;
-        text-align: center;
-        margin-bottom: 40px;
+	#gettingstartedmycollections {
+        padding-left: 40px;
+        padding-right: 40px;
     }
     #gettingstartedmycollections .gettingStartedHeader p.lead {
-        font-size: 16px;
-        color: #515151;
-        font-family: "Arvo", serif;
-        margin: 0 62px;
-        text-align: center;
-    }
-    #gettingstartedmycollections .learningCollectionsFormativeAssessments {
-        text-align: center;
-    }
-    #gettingstartedmycollections .learningCollectionsFormativeAssessments h3 {
-        font-size: 18px;
-        font-family: "Arvo", serif;
-        color: #515151;
-        margin: 15px 0;
-    }
-    #gettingstartedmycollections .learningCollectionsFormativeAssessments .img-responsive {
-        display: inline-block;
-    }
-    #gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText {
-        margin: 20px 8px;
-        min-height: 85px;
-        font-family: "Arvo", serif;
-        color: #515151;
-    }
-    #gettingstartedmycollections .bottomLink {
-        margin-top: 40px;
-        text-align: center;
-    }
-    #gettingstartedmycollections .bottomLink a {
-        color: #0074be;
-    }
-    #gettingstartedmycollections .bottomLink a:hover,
-    #gettingstartedmycollections .bottomLink a:focus {
-        text-decoration: none;
+        margin: 0 20px;
     }
     #gettingstartedmycollections .LearningCollections {
-        border-right: 1px solid #979797;
+        border-right: none;
+        border-bottom: 1px solid #979797;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
     }
-    @media (min-width: 240px) and (max-width: 319px) {
-        #gettingstartedmycollections {
-            padding-left: 25px;
-            padding-right: 25px;
-        }
-        #gettingstartedmycollections .gettingStartedHeader p.lead {
-            margin: 0 20px;
-        }
-        #gettingstartedmycollections .LearningCollections {
-            border-right: none;
-            border-bottom: 1px solid #979797;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-        }
+    #gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText {
+        min-height: inherit;
     }
-    @media (min-width: 320px) and (max-width: 479px) {
-        #gettingstartedmycollections {
-            padding-left: 25px;
-            padding-right: 25px;
-        }
-        #gettingstartedmycollections .gettingStartedHeader p.lead {
-            margin: 0 20px;
-        }
-        #gettingstartedmycollections .LearningCollections {
-            border-right: none;
-            border-bottom: 1px solid #979797;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-        }
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+    #gettingstartedmycollections {
+        padding-left: 20px;
+        padding-right: 20px;
     }
-    @media (min-width: 480px) and (max-width: 767px) {
-        #gettingstartedmycollections {
-            padding-left: 40px;
-            padding-right: 40px;
-        }
-        #gettingstartedmycollections .gettingStartedHeader p.lead {
-            margin: 0 20px;
-        }
-        #gettingstartedmycollections .LearningCollections {
-            border-right: none;
-            border-bottom: 1px solid #979797;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-        }
-        #gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText {
-            min-height: inherit;
-        }
+    #gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText {
+        min-height: 105px;
     }
-    @media (min-width: 768px) and (max-width: 991px) {
-        #gettingstartedmycollections {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        #gettingstartedmycollections .learningCollectionsFormativeAssessments .contentText {
-            min-height: 105px;
-        }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    #gettingstartedmycollections {
+        padding-left: 50px;
+        padding-right: 50px;
     }
-    @media (min-width: 992px) and (max-width: 1199px) {
-        #gettingstartedmycollections {
-            padding-left: 50px;
-            padding-right: 50px;
-        }
-    }
-    @media (min-width: 1200px) {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
+@media (min-width: 1200px) {}

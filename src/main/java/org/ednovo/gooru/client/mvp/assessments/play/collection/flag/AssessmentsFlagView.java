@@ -9,7 +9,6 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -282,7 +281,7 @@ public class AssessmentsFlagView extends
 			collectionTitleField.getElement().setAttribute("alt",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
 			collectionTitleField.getElement().setAttribute("title",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
 		}
-		flagCollections.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagCollections.addStyleName("flagbuttonDeSelected");
 		// To get content report
 		getUiHandlers().getContentReport(collectionGooruOid);
 	}
@@ -457,17 +456,17 @@ public class AssessmentsFlagView extends
 
 	@UiHandler("flagCollections")
 	public void onClickOfflagCollections(ClickEvent event) {
-		flagResources.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
-		flagCollections.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagResources.removeStyleName("flagbuttonDeSelected");
+		flagCollections.addStyleName("flagbuttonDeSelected");
 		collectionFlagContainer.setVisible(true);
 		resourceFlagContainer.setVisible(false);
 	}
 
 	@UiHandler("flagResources")
 	public void onClickOfflagResources(ClickEvent event) {
-		flagResources.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagResources.addStyleName("flagbuttonDeSelected");
 
-		flagCollections.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagCollections.removeStyleName("flagbuttonDeSelected");
 
 		collectionFlagContainer.setVisible(false);
 		resourceFlagContainer.setVisible(true);

@@ -34,7 +34,6 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -91,7 +90,7 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 		addDomHandler(this, ClickEvent.getType());
 		this.profileDo = profileDo;
-		this.addStyleName(LoginPopUpCBundle.INSTANCE.css().courseOption());
+		this.addStyleName("courseOption");
 
 		final Image courseImage = new Image(imageUrl);
 		courseImage.setAltText(codeName);
@@ -121,7 +120,7 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 
 		this.add(courseImage);
 		HTMLPanel coursePanel = new HTMLPanel("");
-		coursePanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().title());
+		coursePanel.addStyleName("title");
 
 		codeName = codeName.contains("English Language Arts") ? codeName.replaceAll("English Language Arts", "ELA") : codeName;
 		Label courseLabel = new Label(codeName.trim().length() >= 20 ? codeName.trim().substring(0, 17) + "..." : codeName.trim());
@@ -163,14 +162,14 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 	public void onClick(ClickEvent event) {
 		if(this.getStyleName().toString().contains("collectionSelected")){
 			deleteCourse(codeDo);
-			this.removeStyleName(LoginPopUpCBundle.INSTANCE.css().collectionSelected());
+			this.removeStyleName("collectionSelected");
 			selectCourseLabel(false);
 			showErrorMessage(false);
 		} else {
 			if(getCourseCount()<5) {
 				selectCourseLabel(true);
 				addCourse(profileCodeDoSet);
-				this.addStyleName(LoginPopUpCBundle.INSTANCE.css().collectionSelected());
+				this.addStyleName("collectionSelected");
 				showErrorMessage(false);
 			} else {
 				showErrorMessage(true);

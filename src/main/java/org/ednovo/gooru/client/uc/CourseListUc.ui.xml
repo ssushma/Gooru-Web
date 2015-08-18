@@ -72,11 +72,8 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
 		field="res"></ui:with>
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
-
 	<g:FlowPanel>
-		<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}">
+		<g:HTMLPanel styleName="PopupMainVSmall">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupContainer}">
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
 					<g:Label styleName="{res.css.myFolderCollectionTitle}"
