@@ -35,9 +35,7 @@ import org.ednovo.gooru.application.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.application.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
-import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ContentReportDo;
@@ -46,7 +44,6 @@ import org.ednovo.gooru.application.shared.model.library.ConceptDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -62,7 +59,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
@@ -93,7 +89,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	private CollectionHomeMetadataPresenter collectionHomeMetadataPresenter;
 
-	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
+	//private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
 
 	public static final  Object METADATA_PRESENTER_SLOT = new Object();
 
@@ -125,13 +121,13 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view,PreviewHomePresenter previewHomePresenter,
-			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter,ShelfMainPresenter shelfMainPresenter) {
+			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,/*CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter,*/ShelfMainPresenter shelfMainPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
-		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
+		//this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 		this.shelfMainPresenter= shelfMainPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
 	}
@@ -180,15 +176,15 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		if(AppClientFactory.isAnonymous()){
 			getView().getLoadingImageLabel().setVisible(false);
 		}
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
+/*		collectionSummaryIndividualPresenter.setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
 		collectionSummaryIndividualPresenter.setTeacherImage(classpageItemDo);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
-	}
+*/	}
 	public void clearslot(){
 		getView().resetData();
 		getView().resetCollectionMetaData();
-		clearSlot(COLLECTION_REPORTS_SLOT);
-		setInSlot(COLLECTION_REPORTS_SLOT,null,false);
+		//clearSlot(COLLECTION_REPORTS_SLOT);
+		//setInSlot(COLLECTION_REPORTS_SLOT,null,false);
 	}
 
 	public void setViewCount(String viewCount){
@@ -396,7 +392,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		return previewHomePresenter.getBackToClassButton();
 	}
 	public void clearDashBoardIframe(){
-		collectionSummaryIndividualPresenter.clearFrame();
+		//collectionSummaryIndividualPresenter.clearFrame();
 		getView().clearDashBoardIframe();
 	}
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
@@ -569,7 +565,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 						convertMilliSecondsToTime(result.get(0).getTimeSpent());
 						displayScoreCountData(result.get(0).getScore(),Integer.parseInt(result.get(0).getQuestionCount()));
 						getView().setCollectionMetaDataByUserAndSession(result);
-						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
+						getView().setReportContainer(sessionId);
+						//setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 					}else{
 						Timer timer = new Timer() {
 
@@ -582,7 +579,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 									if (count >= 10){
 										getView().hidePanel();
 										getView().showMessageWhenDataNotFound();
-										collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
+										getView().setReportContainer(null);
+										//collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
 									}
 								}
 							}
@@ -597,11 +595,12 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 				}
 			});
 		}else{
-			clearSlot(COLLECTION_REPORTS_SLOT);
+			//clearSlot(COLLECTION_REPORTS_SLOT);
 			getView().hidePanel();
-			collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
+			getView().setReportContainer(sessionId);
+			/*			collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
 			setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
-		}
+*/		}
 	}
 
 	public void getNextCollectionItem(String folderId,String folderItemId,final String urlVal) {

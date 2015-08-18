@@ -266,8 +266,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
-		getLogger().info("forgot password url post::::"+url);
-		getLogger().info("forgot password url request data::::"+forgotPasswordObject.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),forgotPasswordObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";

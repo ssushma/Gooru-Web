@@ -506,13 +506,13 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		try {
 			resourceQuestion.setText(collectionItemDo.getResource().getTitle());
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("EditQuestionPopupVc displayQuestionResource title:::"+e);
 		}
 		try {
 			explainationTextArea.setText(collectionItemDo.getResource()
 					.getExplanation());
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("EditQuestionPopupVc displayQuestionResource explanation:::"+e);
 		}
 		listQuestionType.getElement().getStyle().setDisplay(Display.NONE);
 		

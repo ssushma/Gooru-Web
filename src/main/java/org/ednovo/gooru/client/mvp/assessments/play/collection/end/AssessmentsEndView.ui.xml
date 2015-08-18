@@ -7,8 +7,9 @@
 	<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 
-	<g:FlowPanel ui:field="PrintPnl">
-		<g:FlowPanel styleName="studentAssessmentReportViewContainer">
+	<g:FlowPanel ui:field="PrintPnl" styleName="container">
+	    <g:FlowPanel ui:field="assessmentReportContainer" styleName="row"></g:FlowPanel>
+		<g:FlowPanel styleName="studentAssessmentReportViewContainer" ui:field="studentAssessmentReportViewContainer">
 			<g:FlowPanel styleName="container">
 				<g:FlowPanel styleName="row">
 
@@ -117,6 +118,5 @@
 		</g:FlowPanel>
 		<g:HTMLPanel ui:field="printWidget"></g:HTMLPanel>
 		<g:Frame ui:field="downloadFile"></g:Frame>
-
 	</g:FlowPanel>
 </ui:UiBinder>

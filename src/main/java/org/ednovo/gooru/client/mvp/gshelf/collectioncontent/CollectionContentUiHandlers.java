@@ -70,6 +70,9 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers ,UpdateEditR
 	 * @param stop
 	 */
 	public void updateCollectionItem(final CollectionItemDo collectionItem, String narration, String start, String stop);
+	
+	
+	public void updateNarrationItemMetaData(String collectionId,CollectionItemDo collectionItem, String narration,String start, String stop);
 
 	/**
 	 *
@@ -333,7 +336,6 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers ,UpdateEditR
 	public void showResourcePopup(CollectionItemDo collectionItem);
 	public void disableCollabaratorOptions(boolean b);
 	
-	void loadAddResourcePopup();
 	public void showLastEditCollaborater(String lblLastEditedBy,
 			boolean hasLastModifiedUser);
 	

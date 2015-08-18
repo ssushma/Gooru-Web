@@ -70,13 +70,13 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 
 	interface MyCollectionsListViewUiBinder extends UiBinder<Widget, MyCollectionsListView> {
 	}
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel emptyContainerDiv,pnlMainButtonsContainer,listScrollPanel,courseListContainer,pnlH2TitleContainer,pnlCreateContainer,pnlAddContainer,pnlCreate,collectionLevelPnl;
 	@UiField VerticalPanel pnlCourseList;
 	@UiField H2Panel h2Title;
 	@UiField Button btnCreate,btnCreateResource,btnCreateQuestion,createCollectionBtn,createAssessmentBtn;
-	@UiField Label lblAddNew,lblTitle;
+	@UiField Label lblAddNew,lblTitle,lblLimitReached;
 	@UiField Anchor lblAddNewForResource,lblAddNewForQuestion;
 	@UiField HTMLEventPanel createPanel;
 	
@@ -93,6 +93,11 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	private static final String O2_LEVEL = "o2";
 	
 	private static final String O3_LEVEL = "o3";
+	
+	private static final String COURSE_LIMIT_MSG = i18n.GL3567();
+	private static final String UNIT_LIMIT_MSG = i18n.GL3489();
+	private static final String LESSON_LIMIT_MSG = i18n.GL3490();
+	private static final String COLLECTION_LIMIT_MSG = i18n.GL3491();
 	
 	private static final String ID = "id";
 
@@ -115,6 +120,9 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		h2Title.getElement().setId("h2Title");
 		pnlCourseList.getElement().setId("pnlCourseList");
 		pnlH2TitleContainer.getElement().setId("pnlH2TitleContainer");
+		StringUtil.setAttributes(btnCreate.getElement(),"btnCreate", "", "");
+		StringUtil.setAttributes(btnCreateQuestion.getElement(),"btnCreateQuestion", "", "");
+		StringUtil.setAttributes(btnCreateResource.getElement(),"btnCreateResource", "", "");
 		createCollectionBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL1451());
 		createAssessmentBtn.setText(i18n.GL_SPL_PLUS()+ " " +i18n.GL3024());
 		courseListContainer.getElement().setAttribute("style","min-height:"+Window.getClientHeight()+"px");
@@ -163,6 +171,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		this.type=type;
 		pnlH2TitleContainer.setVisible(true);
 		pnlCreateContainer.setVisible(false);
+		lblLimitReached.setVisible(false);
 		lblTitle.setVisible(false);
 		collectionLevelPnl.setVisible(false);
 		if(listOfContent ==null || listOfContent.size()==0){
@@ -306,6 +315,39 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 			}
 			setLastWidgetArrowVisiblity(false);
 		}
+		//Showing Validation Msg when list limit reached
+		if(folderDo!=null){
+			if(pnlCourseList.getWidgetCount()>=20){
+				createPanel.setVisible(false);
+				pnlCreate.setVisible(false);
+				lblLimitReached.setVisible(true);
+				btnCreate.setEnabled(false);
+				btnCreate.getElement().addClassName("disabled");
+				if(type.equalsIgnoreCase(COURSE)){
+					lblLimitReached.setText(UNIT_LIMIT_MSG);
+				}else if(type.equalsIgnoreCase(UNIT)){
+					lblLimitReached.setText(LESSON_LIMIT_MSG);
+				}
+			}
+			if(type.equalsIgnoreCase(LESSON) && pnlCourseList.getWidgetCount()>=10  ){
+				createPanel.setVisible(false);
+				pnlCreate.setVisible(false);
+				lblLimitReached.setVisible(true);
+				btnCreateQuestion.setEnabled(false);
+				btnCreateResource.setEnabled(false);
+				btnCreateQuestion.getElement().addClassName("disabled");
+				btnCreateResource.getElement().addClassName("disabled");
+				lblLimitReached.setText(COLLECTION_LIMIT_MSG);
+			}
+		}else{
+			if(type.equalsIgnoreCase(COURSE)&& pnlCourseList.getWidgetCount()>=50){
+				createPanel.setVisible(false);
+				pnlCreate.setVisible(false);
+				lblLimitReached.setVisible(true);
+				lblLimitReached.setText(COURSE_LIMIT_MSG);
+			}
+		}
+		
 		pnlMainButtonsContainer.setVisible(true);
 	}
 	public HashMap<String,String> updatePrams(){
@@ -387,6 +429,14 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 	 */
 	public void setCreateText(String type){
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		btnCreate.setEnabled(true);
+		btnCreateQuestion.setEnabled(true);
+		btnCreateResource.setEnabled(true);
+		
+		btnCreate.getElement().removeClassName("disabled");
+		btnCreateQuestion.getElement().removeClassName("disabled");
+		btnCreateResource.getElement().removeClassName("disabled");
+		
 		if(COURSE.equalsIgnoreCase(type) && courseId!=null){
 			enableCreateButtons(false);
 			btnCreate.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL3370());

@@ -237,7 +237,7 @@ public class ProfileTopicListView extends Composite{
 				setConceptData(profileFolderDo.getCollectionItems().get(0),topicId, null, null,null,libraryGooruOid);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
-				AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+				AppClientFactory.printSevereLogger("ProfileTopicListView ...."+e.getMessage());
 			}
 		} else {
 			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems(), profileFolderDo.getGooruOid(),libraryGooruOid);
@@ -274,7 +274,9 @@ public class ProfileTopicListView extends Composite{
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		if(!AppClientFactory.isAnonymous()){
 			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() !=null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() != null){
+					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				}
 			} catch (Exception e) {
 				AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
 			}
@@ -353,7 +355,7 @@ public class ProfileTopicListView extends Composite{
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
 			noCollectionLbl.setVisible(true);
-			AppClientFactory.printSevereLogger("ProfileTopicListView:"+e.getMessage());
+			AppClientFactory.printSevereLogger("ProfileTopicListView  rrrrr:"+e);
 			
 		}
 		
@@ -373,7 +375,9 @@ public class ProfileTopicListView extends Composite{
 		loadingImage.setVisible(false);
 		if(!AppClientFactory.isAnonymous()){
 			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() != null){
+					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				}
 			} catch (Exception e) {
 				AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
 			}
@@ -541,25 +545,32 @@ public class ProfileTopicListView extends Composite{
 					final String collectionType=StringUtil.isEmpty(conceptDo.getType())?null:conceptDo.getType();
 					try {
 						StringUtil.setDefaultImages(conceptDo.getType(), collectionImage, "high");
-						AppClientFactory.printSevereLogger("conceptDo.getThumbnails().getUrl()::"+conceptDo.getThumbnails().getUrl());
-						collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
-						collectionImage.addErrorHandler(new ErrorHandler() {
-							@Override
-							public void onError(ErrorEvent event) {
-								StringUtil.setDefaultImages(collectionType, collectionImage, "high");
-							}
-						});
+
+						//AppClientFactory.printSevereLogger("conceptDo.getThumbnails().getUrl()::"+conceptDo.getThumbnails().getUrl());
+						if(conceptDo.getThumbnails() != null && conceptDo.getThumbnails().getUrl() != null){
+							collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
+							collectionImage.addErrorHandler(new ErrorHandler() {
+								@Override
+								public void onError(ErrorEvent event) {
+									StringUtil.setDefaultImages(collectionType, collectionImage, "high");
+								}
+							});
+						}else{
+							StringUtil.setDefaultImages(collectionType, collectionImage, "high");
+						}
+						
+
 						if(imageHandler!=null) {
 							imageHandler.removeHandler();
 						}
 						if(titleHandler!=null) {
 							titleHandler.removeHandler();
 						}
-						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid,conceptDo));
-						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid,conceptDo));
+						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid,conceptDo,"image"));
+						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid,conceptDo,"title"));
 					  } catch (Exception e) {
 						StringUtil.setDefaultImages(collectionType, collectionImage, "high");
-						AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+						AppClientFactory.printSevereLogger("ProfileTopicListView 3333...."+e.getMessage());
 					}
 					
 					try {
@@ -575,7 +586,7 @@ public class ProfileTopicListView extends Composite{
 						}
 						collectionDescriptionLbl.setHTML(description);
 					} catch(Exception ex) {
-						AppClientFactory.printSevereLogger(ex.getMessage());
+						AppClientFactory.printSevereLogger("exception222 "+ex.getMessage());
 					}
 					setMetaDataInfo(conceptDo); 
 					resourcesInside.clear();
@@ -754,7 +765,7 @@ public class ProfileTopicListView extends Composite{
 									resourceImage.setAltText(profileLibraryItem.getTitle());
 									resourceImage.setTitle(profileLibraryItem.getTitle());
 									//e.printStackTrace();
-									AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+									AppClientFactory.printSevereLogger("ProfileTopicListView 222"+e.getMessage());
 								}
 								
 								resourcePanel.addClickHandler(new ClickHandler() {
@@ -1047,7 +1058,7 @@ public class ProfileTopicListView extends Composite{
 								resourcesInside.add(resourcePanel);
 							} catch (Exception e){
 								//e.printStackTrace();
-								AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+								AppClientFactory.printSevereLogger("ProfileTopicListView 222"+e);
 							}
 						}
 					}
@@ -1196,7 +1207,7 @@ public class ProfileTopicListView extends Composite{
 				}
 				
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger("ProfileTopicListView"+e.getMessage());
+				AppClientFactory.printSevereLogger("ProfileTopicListView 333"+e.getMessage());
 			}
 			return standPrefCode;
 			
@@ -1408,11 +1419,13 @@ public class ProfileTopicListView extends Composite{
 		private String oId;
 		private String libraryGooruOid;
 		private ProfileLibraryDo conceptDo;
-		public CollectionOpenClickHandler(String lessonId, String oId,String libraryGooruOid,ProfileLibraryDo conceptDo) {
+		private String type;
+		public CollectionOpenClickHandler(String lessonId, String oId,String libraryGooruOid,ProfileLibraryDo conceptDo,String type) {
 			this.lessonId = lessonId;
 			this.oId = oId;
 			this.libraryGooruOid=libraryGooruOid;
 			this.conceptDo=conceptDo;
+			this.type=type;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1422,13 +1435,16 @@ public class ProfileTopicListView extends Composite{
 			}else{
 
 				try{
-					collectionIdVal = ((Image)event.getSource()).getElement().getAttribute("collid");
-					folderIdVal = ((Image)event.getSource()).getElement().getAttribute("folderId");
+					if(type.equalsIgnoreCase("image")){
+						collectionIdVal =(String) ((Image)event.getSource()).getElement().getAttribute("collid");
+						folderIdVal = (String)((Image)event.getSource()).getElement().getAttribute("folderId");
+					}else if(type.equalsIgnoreCase("title")){
+						collectionIdVal = (String) ((HTML)event.getSource()).getElement().getAttribute("collid");
+						folderIdVal = (String) ((HTML)event.getSource()).getElement().getAttribute("folderId");
+					}
 				}
 				catch(Exception ex){
-					collectionIdVal = ((HTML)event.getSource()).getElement().getAttribute("collid");
-					folderIdVal = ((HTML)event.getSource()).getElement().getAttribute("folderId");
-					AppClientFactory.printSevereLogger(ex.getMessage());
+					AppClientFactory.printSevereLogger("CollectionOpenClickHandler...:"+ex);
 				}
 				String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 				if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){

@@ -20,7 +20,7 @@
 	<inherits name="com.google.gwt.http.HTTP" />
 
 	<inherits name="org.ednovo.gooru.Gooru" />
-
+	 
 	<!--Inherit this class for disabling obfuscation. Remove this line for production -->
 	<inherits name='com.google.gwt.resources.Resources' />
 

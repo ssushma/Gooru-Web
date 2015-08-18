@@ -278,7 +278,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			if(collectionItemDo.getResource().getAssets()!=null&&collectionItemDo.getResource().getAssets().size()>0){
 				assetName=collectionItemDo.getResource().getAssets().get(0).getAsset().getName();
 				thumbnailImage=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+assetName;
-			}else{
+			}else if(collectionItemDo.getResource().getThumbnails() != null && collectionItemDo.getResource().getThumbnails().getUrl() != null){
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){

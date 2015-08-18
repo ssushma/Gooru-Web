@@ -223,9 +223,11 @@ public class LibraryMenuNav extends Composite{
 		
 		if(!AppClientFactory.isAnonymous()){
 			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() !=null){
+					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+				}
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryMenuNav :::"+e);
 			}
 		}
 		
@@ -342,7 +344,7 @@ public class LibraryMenuNav extends Composite{
 					getStandardPrefCode(standPrefCode);
 				}
 			} catch (Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("LibraryMenuNav getCode:::"+e);
 			}
 			return standPrefCode;
 			
@@ -870,9 +872,11 @@ public class LibraryMenuNav extends Composite{
 			}
 			if(!AppClientFactory.isAnonymous()){
 				try {
-					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+					if(AppClientFactory.getLoggedInUser().getMeta() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference() != null && AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode() != null){
+						getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+					}
 				} catch (Exception e) {
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("LibraryMenuNav setTaxonomyDataforStandards::::"+e);
 				}
 			} else {
 				getStandardPrefCode(null);

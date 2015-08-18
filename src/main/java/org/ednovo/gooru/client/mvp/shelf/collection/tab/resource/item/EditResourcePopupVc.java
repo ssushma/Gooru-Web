@@ -731,7 +731,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 			@Override
 			public void onSuccess(ProfileDo profileObj) {
-				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+				if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
 						standardContainer.setVisible(true);
 						isBrowseTooltip = true;
@@ -1277,35 +1277,35 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				try{
 					websiteClickHandler.removeHandler();
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("EditResourcePopupVc websiteClickHandler::"+e);
 				}
 			}
 			if(interactiveClickHandler!=null){
 				try{
 					interactiveClickHandler.removeHandler();
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("EditResourcePopupVc interactiveClickHandler::"+e);
 				}
 			}
 			if(imageClickHandler!=null){
 				try{
 					imageClickHandler.removeHandler();
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("EditResourcePopupVc imageClickHandler::"+e);
 				}
 			}
 			if(textClickHandler!=null){
 				try{
 					textClickHandler.removeHandler();
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("EditResourcePopupVc textClickHandler:::"+e);
 				}
 			}
 			if(audioClickHandler!=null){
 				try{
 					audioClickHandler.removeHandler();
 				}catch(Exception e){
-					AppClientFactory.printSevereLogger(e.getMessage());
+					AppClientFactory.printSevereLogger("EditResourcePopupVc audioClickHandler::"+e);
 				}
 			}
 		}else{
@@ -2034,7 +2034,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			MatchResult res = reg.exec(youtubeUrl);
 			videoId = res.getGroup(7);
 		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("EditResourcePopupVc getYoutubeVideoId:::"+e);
 		}
 		return videoId;
 

@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.client.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -305,6 +306,9 @@ public interface ResourceService extends BaseService {
 	
 	public CollectionItemDo updateUserOwnResource(String jsonString, String gooruOid, String collectionId)throws GwtException, ServerDownException; 
 	public CollectionItemDo updateNarrationMetadata(String collectionItemId, String narration, String narrationType)  throws GwtException, ServerDownException;
+	
+	public CollectionItemDo updateNarrationItemMetadata(String collectionId,String collectionItemId, String narration, String narrationType,String start,String stop)  throws GwtException, ServerDownException;
+	
 	//For Flag existing resources
 	//To create content report
   	public void createContentReport(String assocGooruOid,String targetValue,String typesvalue1,String typesvalue2,String typesvalue3, String typesvalue4,String otherDescription) throws GwtException, ServerDownException;
@@ -374,9 +378,9 @@ public interface ResourceService extends BaseService {
 	
 	public void deleteTagsServiceRequest(String resourceId, String addedTags)throws GwtException, ServerDownException;
 
-	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws GwtException, ServerDownException;
+	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws GwtException, ServerDownException, UnsupportedEncodingException;
 	
-	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws GwtException, ServerDownException;
+	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws GwtException, ServerDownException, UnsupportedEncodingException;
 
 	/**
 	 * @function refreshGoogleAccessToken 

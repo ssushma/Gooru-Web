@@ -125,14 +125,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		super.onReveal();
 		getView().onLoad();
 	}
-	
-	@Override
-	public void loadAddResourcePopup(){
-		addResourcePresenter.setCollectionDo(new CollectionDo());
-    	addResourcePresenter.setCollectionDoAndType(new CollectionDo(), "Question");
-    	addToPopupSlot(addResourcePresenter);
-    	addResourcePresenter.getView().hidePopUpStyle();
-	}
 
 	@Override
 	public void setData(final FolderDo folderDo) {
@@ -161,10 +153,22 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				collectionItem.setNarration(result.getNarration());
-				if("video/youtube".equalsIgnoreCase(collectionItem.getResource().getResourceType().getName())){
+				/*if("video/youtube".equalsIgnoreCase(collectionItem.getResource().getResourceType().getName())){*/
 					collectionItem.setStart(result.getStart());
-					collectionItem.setStop(result.getStop());				
-					}
+					collectionItem.setStop(result.getStop());
+					getView().setCollectionDetails(result);
+					/*}*/
+			}
+		});
+	}
+	@Override
+	public void updateNarrationItemMetaData(String collectionId,final CollectionItemDo collectionItem, String narration,String start, String stop){
+		AppClientFactory.getInjector().getResourceService().updateNarrationItemMetadata(collectionId,collectionItem.getCollectionItemId(), narration, null,start,stop, new SimpleAsyncCallback<CollectionItemDo>() {
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				collectionItem.setNarration(result.getNarration());
+				collectionItem.setStart(result.getStart());
+				collectionItem.setStop(result.getStop());
 			}
 		});
 	}
@@ -211,7 +215,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 
 	@Override
     public void addResourcePopup(CollectionDo collectionDo, String clickType) {
-		addResourcePresenter.getView().clearPopUpStyle();
     	addResourcePresenter.setCollectionDo(collectionDo);
     	addResourcePresenter.setCollectionDoAndType(collectionDo, clickType);
         addToPopupSlot(addResourcePresenter);
@@ -224,6 +227,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
         imgUploadPresenter.setUpdateQuestionImage(true);
         imgUploadPresenter.setCollectionItemId(collectionItemId);
         imgUploadPresenter.setEditResourceImage(false);
+        imgUploadPresenter.setAnswerImage(false);
 
 	}
 	@Override
@@ -279,6 +283,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
          imgUploadPresenter.setEditResourceImage(true);
          imgUploadPresenter.setCollectionImage(false);
          imgUploadPresenter.setQuestionImage(false);
+         imgUploadPresenter.setAnswerImage(false);
 	}
 
 	@Override
@@ -288,8 +293,10 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
 					public void onSuccess(final ProfileDo profileObj) {
-					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
 					}
 					public void checkStandarsList(List<String> standarsPreferencesList) {
 
@@ -350,6 +357,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
          imgUploadPresenter.setEditResourceImage(false);
          imgUploadPresenter.setCollectionImage(false);
          imgUploadPresenter.setQuestionImage(false);
+         imgUploadPresenter.setAnswerImage(false);
          imgUploadPresenter.getView().isFromEditQuestion(true);
 	}
 
@@ -371,7 +379,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 	@Override
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo) {
-		 addResourcePresenter.getView().clearPopUpStyle();
 		 addResourcePresenter.setCollectionItemDo(collectionItemDo);
 		 addResourcePresenter.setCollectionDoAndType(null, "QuestionEdit");
 		 addToPopupSlot(addResourcePresenter);

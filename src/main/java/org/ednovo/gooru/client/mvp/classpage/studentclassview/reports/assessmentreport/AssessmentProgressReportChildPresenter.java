@@ -32,10 +32,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.child.ChildPresenter;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.application.shared.model.analytics.AssessmentSummaryStatusDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
@@ -46,7 +46,6 @@ import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -77,8 +76,11 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	int count=0;
 
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
+	
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 
+	boolean isSession = true;
+	
 	public AssessmentProgressReportChildPresenter(IsAssessmentProgressReportView childView) {
 		super(childView);
 	}
@@ -107,13 +109,12 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	}
 
 	@Override
-	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
-
+	public void getSessionsDataByUser(final String collectionId,final String classId,String courseId, String unitId, String lessonId,final String userId) {
 		ClassDo classObj=new ClassDo();
 		classObj.setAssessmentId(collectionId);
 		classObj.setClassId(classId);
 		classObj.setSessionId(sessionId);
-		getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId,printData);
+		getCollectionMetaDataByUserAndSession(collectionId, classId, courseId, unitId, lessonId, userId,sessionId,printData);
 	}
 
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
@@ -128,19 +129,31 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		getView().displayScoreCount(result);
 	}
 	@Override
-	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-
+	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String courseId, final String unitId, final String lessonId, final String userId, final String sessionId,final PrintUserDataDO printData) {
 		if (sessionId != null){
 			ClassDo classObj=new ClassDo();
 			classObj.setAssessmentId(collectionId);
 			classObj.setClassId(classId);
+			classObj.setCourseId(courseId);
+			classObj.setUnitId(unitId);
+			classObj.setLessonId(lessonId);
 			classObj.setSessionId(sessionId);
 			
 			AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 				@Override
 				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 					if(result!=null && result.size()!=0){
+						getView().loaderVisibility(false);
+						getView().errorPanelData(false, true);
 						count=0;
+						if(!isSession()) {
+							if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
+								int sessionSize=result.get(0).getSession().size();
+								int day=result.get(0).getSession().get(sessionSize-1).getSequence();
+								getView().setAttemptsData(result.get(0).getSession());
+							}
+							setSession(true);
+						}
 						displayScoreCountData(result.get(0));
 						getView().setCollectionMetaDataByUserAndSession(result);
 						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData,null);
@@ -149,7 +162,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 							@Override
 							public void run() {
 								if (count < 10){
-									getSessionsDataByUser(collectionId, classId, userId);
+									getSessionsDataByUser(collectionId, classId, courseId, unitId, lessonId, userId);
 									count++;
 								}else{
 									if (count >= 10){
@@ -206,7 +219,6 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	}
 	
 	public void setIndividualData(final ArrayList<UserDataDo> result, final String type) {
-
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 
 			@Override
@@ -223,7 +235,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 				questionsData.clear();
 				boolean isCollection = false;
 				String isContentType=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-				if(isContentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)||isContentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
 					isCollection = true;
 				}
 
@@ -295,42 +307,13 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			}
 		});
 	}
-
-	public void getAssessmentSummaryDetails(){
-
-		String classId=AppClientFactory.getPlaceManager().getRequestParameter("class");
-		String courseId=AppClientFactory.getPlaceManager().getRequestParameter("course");
-		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unit");
-		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSON);
-		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter("assessment");
-
-		ClassDo classObj=new ClassDo();
-		classObj.setClassId(classId);
-		classObj.setCourseId(courseId);
-		classObj.setLessonId(lessonId);
-		classObj.setUnitId(unitId);
-		classObj.setAssessmentId(assessmentId);
-
-
-		AppClientFactory.getInjector().getAnalyticsService().getAssessmentSummary(classObj, new AsyncCallback<AssessmentSummaryStatusDo>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				throw new RuntimeException("Not implemented");
-			}
-
-			@Override
-			public void onSuccess(AssessmentSummaryStatusDo result) {
-				getView().displaySummaryMetadata(result);
-			}
-		});
-	}
+	
 	public void setSessionId(String sessionId){
 		this.sessionId=sessionId;
 	}
 
 	@Override
-	public void getContentPlayAllSessions(final String gooruUid, final String classGooruId, final String lessonGooruId, final String unitGooruId, final String courseGooruId, final String assessmentId) {
+	public void getContentPlayAllSessions(final String gooruUid, final String classGooruId, final String lessonGooruId, final String unitGooruId, final String courseGooruId, final String assessmentId, final String currentSessionId) {
 		AppClientFactory.getInjector().getClasspageService().getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, new SimpleAsyncCallback<List<UserPlayedSessionDo>>() {
 			@Override
 			public void onSuccess(List<UserPlayedSessionDo> result) {
@@ -338,11 +321,23 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 					getView().loaderVisibility(false);
 					getView().errorPanelData(false, true);
 					setSessionId(result.get(0).getSessionId());
-					getSessionsDataByUser(assessmentId, classGooruId, gooruUid);
+					getSessionsDataByUser(assessmentId, classGooruId, classGooruId, lessonGooruId, unitGooruId, gooruUid);
 					getView().setSessionsData(result);
 				} else {
-					getView().loaderVisibility(false);
-					getView().errorPanelData(true, false);
+					Timer timer = new Timer() {
+						@Override
+						public void run() {
+							if (count < 10){
+								getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, currentSessionId);
+								count++;
+							}else{
+								if (count >= 10){
+									getView().errorMsg();
+								}
+							}
+						}
+					};
+					timer.schedule(100);
 				}
 			}
 		});
@@ -369,4 +364,13 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		});
 
 	}
+	
+	public boolean isSession() {
+		return isSession;
+	}
+
+	public void setSession(boolean isSession) {
+		this.isSession = isSession;
+	}
+
 }

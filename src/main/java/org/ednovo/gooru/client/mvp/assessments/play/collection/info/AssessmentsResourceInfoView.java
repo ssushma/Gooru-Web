@@ -2086,8 +2086,9 @@ public class AssessmentsResourceInfoView extends BaseViewWithHandlers<Assessment
 	}
 	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.ASSESSMENT_PLAY) && chkViewParam == null && collectionItemId != null)
 	{
-		PlaceRequest request=new PlaceRequest(PlaceTokens.ASSESSMENT_PLAY).
-				with("id", collectionId).with("rid", collectionItemId);
+		params.put("id", collectionId);
+		params.put("rid", collectionItemId);
+		PlaceRequest request=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 	}
 	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam == null && collectionItemId != null)
@@ -2098,8 +2099,8 @@ public class AssessmentsResourceInfoView extends BaseViewWithHandlers<Assessment
 	}
 	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.ASSESSMENT_PLAY) && chkViewParam == null && collectionItemId == null)
 	{
-		PlaceRequest request=new PlaceRequest(PlaceTokens.ASSESSMENT_PLAY).
-				with("id", collectionId);
+		params.put("id", collectionId);
+		PlaceRequest request=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 	}
 	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam == null && collectionItemId == null)
@@ -2109,8 +2110,9 @@ public class AssessmentsResourceInfoView extends BaseViewWithHandlers<Assessment
 	}
 	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.ASSESSMENT_PLAY) && chkViewParam.equalsIgnoreCase("end"))
 	{
-		PlaceRequest request=new PlaceRequest(PlaceTokens.ASSESSMENT_PLAY).
-				with("id", collectionId).with("view", "end");
+		params.put("id", collectionId);
+		params.put("view", "end");
+		PlaceRequest request=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 	}
 	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam.equalsIgnoreCase("end"))

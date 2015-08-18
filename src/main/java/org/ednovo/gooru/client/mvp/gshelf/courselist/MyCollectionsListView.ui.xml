@@ -26,6 +26,7 @@
 						<g:InlineLabel styleName="courseTextAdd" text="{i18n.GL_SPL_PLUS} {i18n.GL1335}"></g:InlineLabel>
 						<g:Label styleName="courseTextAdd" ui:field="lblAddNew" />
 					</event:HTMLEventPanel>
+					<g:Label styleName="courseTextAdd" ui:field="lblLimitReached" />
 					<g:HTMLPanel ui:field="pnlCreate" styleName="pnlCreate">
 					    <g:InlineLabel styleName="pnlCreate" text="{i18n.GL_SPL_PLUS} {i18n.GL1335}"></g:InlineLabel>
 						<g:Anchor ui:field="lblAddNewForResource" styleName="courseTextAdd" />

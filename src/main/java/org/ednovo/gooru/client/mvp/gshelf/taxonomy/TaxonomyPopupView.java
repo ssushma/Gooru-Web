@@ -53,6 +53,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	
 	@UiField Image closeBtn;
 	
+	@UiField Label errorMsgLbl;
+	
 	@UiField Button k12Btn,higherEduBtn, profLearningBtn,addTaxonomyBtn;
 	
 	@UiField UlPanel subjectUlContainer,courseUlContainer,domainUlContainer, standardsUlContainer,selectedUlContainer;
@@ -76,6 +78,8 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 	int coursePaginationSubjectId,domainPaginationCourseId = 0;
 	
 	private String viewType;
+	
+	private final static int LIMIT = 15;
 	
 	
 	@Inject
@@ -129,6 +133,9 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		domainUlContainer.clear();
 		standardsUlContainer.clear();
 		removedLiPanelWithCloseArray.clear();
+		if(errorMsgLbl.isVisible()){
+			errorMsgLbl.setVisible(false);
+		}
 	}
 	
 	/**
@@ -324,7 +331,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 					public void onScroll(ScrollEvent event) {						
 						if(domainPagination<=60)
 						{
-						getUiHandlers().getCoursespaginatedData(domainPaginationCourseId,domainPagination);
+						getUiHandlers().getDomainspaginatedData(domainPaginationCourseId,domainPagination);
 						}
 						domainPagination = domainPagination+20;
 						
@@ -501,11 +508,15 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			setSubCouDomainActiveStyle(liPanel,previousSelectedCourseLiPanel,false);
-			previousSelectedCourseLiPanel = liPanel;
-			domainUlContainer.clear();
-			standardsUlContainer.clear();
-			getUiHandlers().getDomainsBasedOnSelectedCourse(courseId,"domain",0,20,title,courseId,liPanel,previousSelectedCourseLiPanel);
+			if(isLimitReached()){
+				errorMsgLbl.setVisible(true); 
+			}else{
+				setSubCouDomainActiveStyle(liPanel,previousSelectedCourseLiPanel,false);
+				previousSelectedCourseLiPanel = liPanel;
+				domainUlContainer.clear();
+				standardsUlContainer.clear();
+				getUiHandlers().getDomainsBasedOnSelectedCourse(courseId,"domain",0,20,title,courseId,liPanel,previousSelectedCourseLiPanel);
+			}
 		}
 	}
 
@@ -520,20 +531,24 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			if("Unit".equalsIgnoreCase(viewType)){
-				setStandardsActiveStyle(liPanel,previousSelectedDomainLiPanel);
-				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
-				liPanelWithClose.setId(subDomainId);
-				liPanelWithClose.setDifferenceId(2);
-				liPanelWithClose.setName(title.getText());
-				liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
-				addOrRemoveContent(liPanel,previousSelectedDomainLiPanel,liPanelWithClose);
+			if(isLimitReached()){
+				errorMsgLbl.setVisible(true); 
 			}else{
-				setSubCouDomainActiveStyle(liPanel,previousSelectedDomainLiPanel,false);
+				if("Unit".equalsIgnoreCase(viewType)){
+					setStandardsActiveStyle(liPanel,previousSelectedDomainLiPanel);
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
+					liPanelWithClose.setId(subDomainId);
+					liPanelWithClose.setDifferenceId(2);
+					liPanelWithClose.setName(title.getText());
+					liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
+					addOrRemoveContent(liPanel,previousSelectedDomainLiPanel,liPanelWithClose);
+				}else{
+					setSubCouDomainActiveStyle(liPanel,previousSelectedDomainLiPanel,false);
+				}
+				previousSelectedDomainLiPanel = liPanel;
+				standardsUlContainer.clear();
+				getUiHandlers().getStdBasedOnSelectedDomain(subDomainId,title,liPanel,previousSelectedDomainLiPanel);
 			}
-			previousSelectedDomainLiPanel = liPanel;
-			standardsUlContainer.clear();
-			getUiHandlers().getStdBasedOnSelectedDomain(subDomainId,title,liPanel,previousSelectedDomainLiPanel);
 		}
 	}
 	
@@ -549,14 +564,18 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			setStandardsActiveStyle(liPanel,previousSelectedStdLiPanel);
-			final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
-			liPanelWithClose.setId(id);
-			liPanelWithClose.setName(title.getText());
-			liPanelWithClose.setDifferenceId(3);
-			liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
-			addOrRemoveContent(liPanel,previousSelectedDomainLiPanel,liPanelWithClose);
-			previousSelectedStdLiPanel = liPanel;
+			if(isLimitReached()){
+				errorMsgLbl.setVisible(true); 
+			}else{
+				setStandardsActiveStyle(liPanel,previousSelectedStdLiPanel);
+				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(title.getText());
+				liPanelWithClose.setId(id);
+				liPanelWithClose.setName(title.getText());
+				liPanelWithClose.setDifferenceId(3);
+				liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
+				addOrRemoveContent(liPanel,previousSelectedDomainLiPanel,liPanelWithClose);
+				previousSelectedStdLiPanel = liPanel;
+			}
 		}
 	} 
 	
@@ -569,6 +588,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		}
 	}
 	
+
 	private void setSubCouDomainActiveStyle(LiPanel selectedLiPanel,LiPanel previousSelectedLiPanel,boolean flag) {
 		if(flag){
 //			previousSelectedLiPanel.addStyleName("active");
@@ -660,6 +680,7 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 
 	@Override
 	public void displaySelectedTaxonomyData(List<LiPanelWithClose> liPanelWithCloseArrayData) {
+		
 		for(int i=0;i<liPanelWithCloseArrayData.size();i++){
 			setActiveStyle(liPanelWithCloseArrayData.get(i).getId()); 
 			LiPanelWithClose closeLiPanel = new LiPanelWithClose("Unit".equalsIgnoreCase(viewType)?liPanelWithCloseArrayData.get(i).getName():liPanelWithCloseArrayData.get(i).getStdTitle());
@@ -681,6 +702,9 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if(errorMsgLbl.isVisible()){
+				errorMsgLbl.setVisible(false); 
+			}
 			removeSelectedDomainStyle(closeLiPanel,viewType);
 			removedLiPanelWithCloseArray.add(closeLiPanel);
 			closeLiPanel.removeFromParent();
@@ -715,6 +739,12 @@ public class TaxonomyPopupView extends PopupViewWithUiHandlers<TaxonomyPopupUiHa
 		liPanelWithClose.setDifferenceId(2);
 		liPanelWithClose.getCloseButton().addClickHandler(new RemoveLiPanelWithCloseBtn(liPanelWithClose));
 		addOrRemoveContent(liPanel,previousSelDomainLiPanel,liPanelWithClose); 
+	}
+	
+	public boolean isLimitReached() {
+		int selWidgetCount = selectedUlContainer.getWidgetCount();
+		boolean flag = selWidgetCount>=LIMIT?true:false;
+		return flag;
 	}
 
 }

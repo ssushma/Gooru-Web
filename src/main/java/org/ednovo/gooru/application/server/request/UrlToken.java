@@ -112,6 +112,8 @@ public enum UrlToken {
 	UPDATE_COLLLECTION_ITEM_METADATA("/scollection/item/{0}/metadata?"),
 
 	V2_UPDATE_COLLLECTION_ITEM_METADATA("/v2/collection/item/{0}?"),
+	
+	V3_UPDATE_COLLLECTION_ITEM_METADATA("/v3/collection/{0}/item/{1}?"),
 
 	GET_COLLLECTION_ITEM("/v2/collection/item/{0}?"),
 

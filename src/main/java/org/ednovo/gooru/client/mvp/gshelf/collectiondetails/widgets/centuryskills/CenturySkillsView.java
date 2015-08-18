@@ -248,9 +248,8 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 	@Override
 	public void setCollectionDo(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
-		
-		List<StandardFo> standardFos=collectionDo.getSkills();
-		//setSkills(standardFos);
+		//List<StandardFo> standardFos=collectionDo.getSkills();
+		setSkills(collectionDo.getMetaInfo().getSkills());
 	
 	}
 	
@@ -290,6 +289,17 @@ public class CenturySkillsView extends BaseViewWithHandlers<CenturySkillsUiHandl
 			}
 		}
 		return selectedValuesFromContainer;
+	}
+	public void setSkills(List<StandardFo> standardFos){
+		if(standardFos!=null){
+			selectedVaue=new HashMap<Long, String>();
+			hilightSelectedValuesFromAutoSuggest=new HashMap<Long, String>();
+			for(StandardFo standardFo:standardFos){
+				selectedVaue.put((long)standardFo.getId(), standardFo.getLabel());
+				hilightSelectedValuesFromAutoSuggest.put((long)standardFo.getId(), standardFo.getLabel());
+			}	
+		}
+			setUpdatedCentury(selectedVaue);
 	}
 
 }

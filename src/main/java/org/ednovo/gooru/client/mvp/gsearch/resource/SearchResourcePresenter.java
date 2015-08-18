@@ -27,11 +27,11 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch.resource;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
@@ -51,7 +51,6 @@ import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.uc.AppPopUp;
 
@@ -99,8 +98,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 
 	ViewMorePeoplePresenter viewmorePeoplePresenter = null;
 
-	CollectionFormInPlayPresenter collectionFormInPlayPresenter;
-
 	RatingAndReviewPopupPresenter ratingAndReviewPopup;
 
 	AppPopUp appPopUp=new AppPopUp();
@@ -112,7 +109,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 
 	@Inject
-	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,ShelfMainPresenter shelfMainPresenter,StandardsPopupPresenter standardsPopupPresenter) {
+	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,ShelfMainPresenter shelfMainPresenter,StandardsPopupPresenter standardsPopupPresenter) {
 		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter,standardsPopupPresenter);
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.standardsPopupPresenter=standardsPopupPresenter;
@@ -120,7 +117,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		this.addCenturyPresenter=addCenturyPresenter;
 		this.gooruGradesPresenter=gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
-		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.viewmorePeoplePresenter = viewmorePeoplePresenter;
 		this.shelfMainPresenter = shelfMainPresenter;
 		getView().setUiHandlers(this);
@@ -162,14 +158,15 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	public void setSearchService(SearchServiceAsync searchService) {
 		this.searchService = searchService;
 	}
-
 	@Override
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
+		getSearchDo().setSearchResults(new ArrayList<ResourceSearchResultDo>());
 		getSearchDo().setPageSize(9);
 		getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
 	}
 	@Override
 	protected void requestSearchLoad(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<ResourceSearchResultDo>> searchResultsJsonAsyncCallback,boolean isBackTotop) {
+		getSearchDo().setSearchResults(new ArrayList<ResourceSearchResultDo>());
 		if(isBackTotop){
 			getSearchService().getResourceSearchResultsJson(searchDo, getSearchResultsBackToTop());
 		}else{
@@ -177,11 +174,8 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		}
 	}
 	@Override
-	protected void requestSearchFormJson(String result,SearchDo<ResourceSearchResultDo> searchDo2) {
-		getSearchService().descralizeResourceSearchResults(result, getSearchDo(), getSearchAsyncCallback());
-	}
-	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
+		getSearchDo().setSearchResults(new ArrayList<ResourceSearchResultDo>());
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
 		getSearchService().getResourceSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallbackLoadInStore());
@@ -205,7 +199,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		searchAddResourceToCollectionPresenter.getLoadingImage();
 		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"coursebuilder",collectionResourceWidget);
-		searchAddResourceToCollectionPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid(),collectionResourceWidget));
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
 		Window.enableScrolling(false);
 	}
@@ -214,22 +207,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 		viewmorePeoplePresenter.getResourceDataByResource(resourceSearchResultDo,"resoruce");
 		//viewmorePeoplePresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid()));
 		addToPopupSlot(viewmorePeoplePresenter);
-	}
-	public class ShowNewCollectionWidget implements ClickHandler{
-		private String resourceId;
-		CollectionResourceWidget collectionResourceWidget;
-		public ShowNewCollectionWidget(String resourceId,CollectionResourceWidget collectionResourceWidget){
-			this.resourceId=resourceId;
-			this.collectionResourceWidget=collectionResourceWidget;
-		}
-		@Override
-		public void onClick(ClickEvent event) {
-			searchAddResourceToCollectionPresenter.hidePopup();
-			addToPopupSlot(collectionFormInPlayPresenter);
-			collectionFormInPlayPresenter.setResourceUid(resourceId);
-			collectionFormInPlayPresenter.setResourceWidget(collectionResourceWidget);
-			Window.enableScrolling(false);
-		}
 	}
 
 	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo){

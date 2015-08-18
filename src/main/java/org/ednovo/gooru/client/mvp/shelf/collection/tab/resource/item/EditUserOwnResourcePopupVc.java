@@ -112,6 +112,8 @@ import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormHandler;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -796,7 +798,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 			@Override
 			public void onSuccess(ProfileDo profileObj) {
-			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+			if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
 						standardContainer.setVisible(true);
 						isBrowseTooltip = true;
@@ -1622,15 +1624,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 											collectionItemDo.getResource().setTaxonomySet(standardsDo);
 											
 											if(fileChanged && (uploadContainer.isVisible())){
-												fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
-												fileuploadForm.addFormHandler(new FormHandler() {
-													public void onSubmitComplete(FormSubmitCompleteEvent event) {
+												fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
+												fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
+													@Override
+													public void onSubmitComplete(SubmitCompleteEvent event) {
 														if(isValidImageSize){
 															parseUploadFileDetails(event.getResults());
 														}
-													}
-													@Override
-													public void onSubmit(FormSubmitEvent event) {
+														
 													}
 												});
 												fileuploadForm.submit();
@@ -1864,7 +1865,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				return isValid = false;
 			}
 		}catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("EditUserOwnResourcePopupVc hasValidateResource:::"+e);
 		}
 		return isValid;
 	}

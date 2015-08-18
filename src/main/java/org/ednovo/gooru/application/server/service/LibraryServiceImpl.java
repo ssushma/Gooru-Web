@@ -877,7 +877,12 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 											}
 											conceptDo.setTitle(fourthLevelJsonObject.getString(TITLE));
 											conceptDo.setGooruOid(fourthLevelJsonObject.getString(GOORUOID));
+											//logger.info("fourthLevelJsonObject.isNull(THUMBNAILS) onbbb::::"+fourthLevelJsonObject.getJSONObject(THUMBNAILS));
+											if(!fourthLevelJsonObject.isNull(THUMBNAILS)){
 											conceptDo.setThumbnails(JsonDeserializer.deserialize(fourthLevelJsonObject.getJSONObject(THUMBNAILS).toString(), ThumbnailDo.class));
+											}else{
+												conceptDo.setThumbnails(null);
+											}
 											if(m==0) {
 												JSONArray resourceArray = fourthLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
 												ArrayList<LibraryCollectionItemDo> collectionItems = new ArrayList<LibraryCollectionItemDo>();

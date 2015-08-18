@@ -30,6 +30,7 @@ package org.ednovo.gooru.application.shared.model.search;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**

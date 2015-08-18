@@ -54,8 +54,7 @@
 				<div class="filterTags">
 					<uc:UlPanel ui:field="ulSelectedItems" />
 				</div>
-				<g:Label styleName="col-md-8 col-sm-7 errorMessage"
-					ui:field="lblGradeErrorMsg" />
+				<g:Label styleName="col-md-8 col-sm-7 errorMessage" ui:field="lblGradeErrorMsg" />
 			</div>
 			<div class="clearfix"></div>
 			<div class="tagCourseOptions">
@@ -68,5 +67,8 @@
 				<g:Button styleName="primary" ui:field="nextUnitBtn" text="{i18n.GL3361}" />
 			</div>
 		</div>
+		<g:HTMLPanel ui:field="spinnerIconContainer" styleName="spinnerContainer" visible="false">
+			<g:HTMLPanel styleName="loadingImage spinnerDisplayPosition"></g:HTMLPanel>
+		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

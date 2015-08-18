@@ -39,21 +39,21 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 	@UiField HTML resourceTitle,resourceHoverTitle;
 	@UiField FlowPanel resourceImageContainer,resourceThumbContainer;
 	@UiField public FlowPanel ratingWidgetPanel;
-	
+
 	private RatingWidgetView ratingWidgetView=null;
-	
+
 	private CollectionItemDo collectionItemDo=null;
-	
+
 	private String collectionItemId=null;
-	
+
 	private static TocResourceViewUiBinder uiBinder = GWT.create(TocResourceViewUiBinder.class);
 
 	interface TocResourceViewUiBinder extends UiBinder<Widget, PreviewResourceView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	
+
 	public PreviewResourceView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		resourceThumbContainer.getElement().setId("fpnlResourceThumbContainer");
@@ -68,8 +68,8 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		resourceSourceName.getElement().setId("lblResourceSourceName");
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 	}
-	
-	
+
+
 	@UiConstructor
 	public PreviewResourceView(CollectionItemDo collectionItemDo, int itemIndex){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -93,16 +93,16 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		setReourceSourceName();
 		setResourceSequence(itemIndex+1);
 		setResourcePlayLink();
-		
+
 		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			setAvgRatingWidget();
 			AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		}
 	}
-	
-	
+
+
 	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {
-		
+
 		@Override
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
 			if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getGooruOid()!=null && collectionItemDo.getResource().getGooruOid().equals(gooruOid)){
@@ -112,7 +112,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 			}
 		}
 	};
-	
+
 	/**
 	 * Average star ratings widget will get integrated.
 	 */
@@ -130,9 +130,9 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		ratingWidgetPanel.clear();
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Inner class implementing {@link ClickEvent}
 	 *
 	 */
@@ -143,11 +143,11 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
 
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTitle(),collectionItemDo.getResource().getUser().getUsername())); 
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTitle(),collectionItemDo.getResource().getUser().getUsername()));
 		}
 	}
 
-	
+
 	@UiHandler("resourceThumbnail")
 	public void onErrorResourceImage(ErrorEvent errorEvent){
 		resourceThumbnail.setUrl("images/resource_trans.png");
@@ -176,10 +176,10 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		}else if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("video/youtube")){
 			resourceThumbnail.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()),Window.Location.getProtocol()));
 		}else{
-			resourceThumbnail.setUrl(collectionItemDo.getResource().getThumbnails().getUrl());
+			resourceThumbnail.setUrl(collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : "images/defaultRes.png");
 		}
 	}
-	
+
 	public void setResourcePlayLink(){
 		Anchor resourceAnchor=new Anchor();
 		resourceAnchor.setHref(getResourceLink());
@@ -202,7 +202,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 	public void setResourceTypeIcon(String category){
 		resourceTypeImage.addStyleName(getResourceTypeImage(category));
 	}
-	
+
 	public void setNavigationResourceTitle(String title){
 		resourceTitle.setHTML(getHTML(title));
 		resourceTitle.getElement().setAttribute("alt", getHTML(title));
@@ -215,7 +215,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		if(collectionItemDo.getResource().getResourceFormat()!=null){
 			String resourceType=collectionItemDo.getResource().getResourceFormat().getDisplayName();
 			resourceType=resourceType.toLowerCase();
-			
+
 			if(resourceType.equalsIgnoreCase("lesson")||resourceType.equalsIgnoreCase("textbook")||resourceType.equalsIgnoreCase("handout"))
 			{
 				resourceType=resourceType.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
@@ -243,7 +243,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 			}else{
 			resourceSourceName.setText("");
 		}
-		
+
 	}
 	public void setResourceSequence(int itemIndex){
 		resourceIndex.setText(itemIndex<10?"0"+itemIndex:""+itemIndex);
@@ -253,7 +253,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		resourceNumber.getElement().setAttribute("alt", itemIndex<10?"0"+itemIndex:""+itemIndex);
 		resourceNumber.getElement().setAttribute("title", itemIndex<10?"0"+itemIndex:""+itemIndex);
 	}
-	
+
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		return addDomHandler(handler, ClickEvent.getType());
 	}
@@ -264,7 +264,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceType();
 		}
 		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Exam")||resourceType.equalsIgnoreCase("Webpage")|| resourceType.equalsIgnoreCase("challenge")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceType();		
+			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceType();
 		}
 		else if(resourceType.equalsIgnoreCase("Slide")||resourceType.equalsIgnoreCase("Image")){
 			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceType();
@@ -283,7 +283,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceType();
 		}
 	}
-	
+
 	public String getResourceDefaultImage(String resourceType){
 		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceDefault();
@@ -291,7 +291,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceDefault();
 		}
 		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Exam")||resourceType.equalsIgnoreCase("Webpage")|| resourceType.equalsIgnoreCase("challenge")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceDefault();		
+			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceDefault();
 		}
 		else if(resourceType.equalsIgnoreCase("Slide")||resourceType.equalsIgnoreCase("Image")){
 			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceDefault();
@@ -318,7 +318,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 	public void setCollectionItemId(String collectionItemId) {
 		this.collectionItemId = collectionItemId;
 	}
-	
+
 	private String getQuestionImage(){
 		String thumbnailImage="";
 		String assetName="";
@@ -330,7 +330,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("PreviewResourceView getQuestionImage:::"+e);
 		}
 		return thumbnailImage!=null?thumbnailImage:"images/defaultRes.png";
 	}

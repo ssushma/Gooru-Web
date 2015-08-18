@@ -30,7 +30,6 @@ import org.ednovo.gooru.application.client.gin.BaseView;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
-import org.ednovo.gooru.client.mvp.home.PreFilterPopup;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DeviceUc;
@@ -70,7 +69,6 @@ public class WrapView extends BaseView implements IsWrapView {
 
 	private boolean isArrowIcon = false;
 
-	PreFilterPopup preFilter =	null;
 	Boolean isIpad,isAndriod,isWinDskp;
 	/**
 	 * Class constructor
@@ -105,11 +103,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		  ClickHandler rootClick = new ClickHandler(){
 				@Override
 				public void onClick(ClickEvent event) {
-					if(!isArrowIcon && preFilter!=null){
-						preFilter.hide();
-					}else{
-						isArrowIcon=false;
-					}
+
 				}
 			};
 
@@ -185,14 +179,7 @@ public class WrapView extends BaseView implements IsWrapView {
 
 	@Override
 	public void invokeGooruGuideBubble() {
-		/*GooruGuideInfoVc gooruGuideInfo = new GooruGuideInfoVc();
-		int left = headerUc.getGooruGuideIconLeft() - 195;
-		int top = headerUc.getGooruGuideIconTop() + 40;
-		gooruGuideInfo.setWidth("224px");
-		gooruGuideInfo.setStyleName(GooruCBundle.INSTANCE.css().logoutPopup());
-		gooruGuideInfo.setGlassEnabled(true);
-		gooruGuideInfo.setPopupPosition(left, top);
-		gooruGuideInfo.show();*/
+
 	}
 
 	public void setDotsPanelSelection(HeaderTabType tabType){
@@ -219,26 +206,6 @@ public class WrapView extends BaseView implements IsWrapView {
 
 		return collectionSearchFilters;
 	}
-
-
-	/**
-	 * @description This class is used to show the pre-filter search popup
-	 * @date 16-Dec-2014
-	 */
-	public class showPrefilterPopup implements ClickHandler{
-
-		/* (non-Javadoc)
-		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 */
-
-		@Override
-		public void onClick(ClickEvent event) {
-
-			//displayPreFilterpopup();
-		}
-	}
-
-
 
 	@Override
 	public void updateUserHeaderProfileImage(String imageUrl) {

@@ -193,10 +193,9 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 	public void ClickOnHintButton(ClickEvent clickEvent){
 		if(hintsButton.getStyleName().equals("hintsActiveButton")){
 			if(collectionItemDo.getResource().getHints().size()>hintsLength){
-				startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
 				hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),"hintsText"));
 
-				if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9){
+				if(collectionItemDo.getResource().getType()==8 || collectionItemDo.getResource().getType()==9 || collectionItemDo.getResource().getType()==10 || collectionItemDo.getResource().getType()==11){
 
 				}else{
 					startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
@@ -279,13 +278,13 @@ public class AssessmentsQuestionResourceView extends BaseViewWithHandlers<Questi
 			if(collectionItemDo.getResource().getAssets()!=null&&collectionItemDo.getResource().getAssets().size()>0){
 				assetName=collectionItemDo.getResource().getAssets().get(0).getAsset().getName();
 				thumbnailImage=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+assetName;
-			}else{
+			}else if(collectionItemDo.getResource().getThumbnails() != null && collectionItemDo.getResource().getThumbnails().getUrl() != null){
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
 			AppClientFactory.printSevereLogger("AssessmentsQuestionResourceView : getQuestionImage : "+e.getMessage());
 		}
-		return thumbnailImage;
+		return thumbnailImage != null ? thumbnailImage : "images/defaultRes.png";
 	}
 
 	public void startHintDataLogEvent(int hintId) {

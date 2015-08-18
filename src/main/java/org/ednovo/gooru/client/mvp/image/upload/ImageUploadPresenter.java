@@ -38,8 +38,6 @@ import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
-import org.ednovo.gooru.client.mvp.shelf.IsShelfView;
-import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.IsAddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.event.AddAnswerImageEvent;
@@ -76,9 +74,9 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	private boolean isImageUploadedFromUrl=false;
 	private boolean isClassPageImage=false;
 	private String classpageId=null;
-	
+
 	CreateDo createDoObj = new CreateDo();
-	
+
 
 
 
@@ -152,11 +150,10 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			public void onSuccess(String filename) {
 
 				if(isCollectionImage){
-					//saveImageCollection(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
 					getShelfView().setCollectionImage(fileNameWithRepository,fileNameWithoutRepository);
 					getView().closeImageUploadWidget();
 					getView().resetImageUploadWidget();
-					
+
 
 				}else if(isClassPageImage){
 					saveImageClass(getClasspageId(), filename);
@@ -334,22 +331,22 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		String o4= AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 		//this.getMediaUploadService().saveImageCollection(o1,o2,o3,o4,createDoObj, fileName, getSaveImageCollectionAsyncCallback());
 	}
-	
+
 	public void saveImageClass(String gooruOid,String fileName){
 		ClasspageDo classpageDo = new ClasspageDo();
 		classpageDo.setMediaFilename(fileName);
 		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(gooruOid, null,null,fileName,null,null,null, new AsyncCallback<ClasspageDo>() {
-			
+
 			@Override
 			public void onSuccess(ClasspageDo result) {
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
 				AppClientFactory.getEventBus().fireEvent(new setClassImageEvent(fileNameWithRepository));
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
-				
+
 			}
 		});
 	}
@@ -381,14 +378,8 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		Window.enableScrolling(true);
 		this.fileNameWithoutRepository=fileName;
 		this.fileNameWithRepository=imageUrl;
-		//if(isCollectionImage||isQuestionImage){
-
-		if(isCollectionImage||isUpdateQuestionImage||isClassPageImage){
-			this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,null, getCropImageAsyncCallback());
-		}
-		else{
-			this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
-		}
+		this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
+		
 	}
 
 	@Override
@@ -452,7 +443,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		getView().setAspectRatio(1.0f);
 		this.isCollectionImage = isCollectionImage;
 	}
-	
+
 	public void setCollectionData(CreateDo createDo) {
 		this.createDoObj = createDo;
 	}

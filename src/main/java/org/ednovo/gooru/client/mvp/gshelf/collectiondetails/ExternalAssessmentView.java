@@ -9,6 +9,7 @@ import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,7 +44,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel pnlExternalAssessmentContainter,pnlPublic,pnlSharable,pnlPrivate;
+	@UiField HTMLPanel pnlExternalAssessmentContainter,pnlPublic,pnlSharable,pnlPrivate,spinnerIconContainer,spinnerIconPos;
 	@UiField Label lblRequiresYes,lblRequiresNo,lblErrorMessage,lblErrorMessageForURL,lblErrorMessageForDesc;
 	@UiField Button btnSaveExternalAssessment;
 	@UiField TextBox txtAssessmentTitle,txtAssessmentURL;
@@ -60,6 +61,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 	public ExternalAssessmentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		pnlExternalAssessmentContainter.getElement().setId("pnlExternalAssessmentContainter");
+		spinnerIconPos.getElement().getStyle().setTop(200, Unit.PX); 
 		pnlPublic.addDomHandler(new PanelClickHandler(0,true), ClickEvent.getType());
 		pnlSharable.addDomHandler(new PanelClickHandler(1,true), ClickEvent.getType());
 		pnlPrivate.addDomHandler(new PanelClickHandler(2,true), ClickEvent.getType());
@@ -222,6 +224,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		btnSaveExternalAssessment.addStyleName("disabled");
 		btnSaveExternalAssessment.setEnabled(false);
+		spinnerImageVisibility(true);
 		String assessmentExistingTitle=txtAssessmentTitle.getText();
 		String assessmentURL=txtAssessmentURL.getText();
 		
@@ -239,12 +242,14 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			lblErrorMessage.setVisible(true);
 			lblErrorMessage.setText(i18n.GL1026());
 			enableSubmitButton();
+			spinnerImageVisibility(false);
 		}else if(StringUtil.isEmpty(assessmentURL)){
 			lblErrorMessage.setVisible(false);
 			lblErrorMessage.setText("");
 			lblErrorMessageForURL.setVisible(true);
 			lblErrorMessageForURL.setText(i18n.GL3166());
 			enableSubmitButton();
+			spinnerImageVisibility(false);
 		}else{
 			assessmentURL = URL.encode(assessmentURL);
 			if(StringUtil.checkUrlContainesGooruUrl(assessmentURL)){
@@ -253,6 +258,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				lblErrorMessageForURL.setVisible(true);
 				lblErrorMessageForURL.setText(i18n.GL0924());
 				enableSubmitButton();
+				spinnerImageVisibility(false);
 				return;
 			}else{
 				boolean isStartWithHttp = assessmentURL.matches("^(http|https)://.*$");
@@ -269,6 +275,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 				lblErrorMessageForURL.setVisible(true);
 				lblErrorMessageForURL.setText(i18n.GL0926());
 				enableSubmitButton();
+				spinnerImageVisibility(false);
 			}else{
 				getUiHandlers().checkProfanity(txtAssessmentTitle.getText().trim(),true,0,createOrUpDate,currentShelfTreeWidget);
 			}
@@ -284,12 +291,15 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		if(result && index==0){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(txtAssessmentTitle, lblErrorMessage, result);
 			enableSubmitButton();
+			spinnerImageVisibility(false);
 		}else if(result && index==1){
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(txtAssessmentURL, lblErrorMessageForURL, result);
 			enableSubmitButton();
+			spinnerImageVisibility(false);
 		}else if(result && index==2){
 			SetStyleForProfanity.SetStyleForProfanityForTextArea(txaAssessmentDescription, lblErrorMessageForDesc, result);
 			enableSubmitButton();
+			spinnerImageVisibility(false);
 		}else{
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getUrl().trim(),isCreate,1,createOrUpDate,currentShelfTreeWidget);
@@ -338,7 +348,7 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 					lblRequiresYes.addStyleName(SELECTEDSTYLE);
 				}
 			}else{
-				lblRequiresYes.addStyleName(SELECTEDSTYLE);
+				lblRequiresNo.addStyleName(SELECTEDSTYLE);
 			}
 		}else{
 			txtAssessmentTitle.getElement().setAttribute("placeHolder", "UntitledExternalAssessment");
@@ -356,4 +366,10 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 		btnSaveExternalAssessment.removeStyleName("disabled");
 		btnSaveExternalAssessment.setEnabled(true);
 	}
+	
+	@Override
+	public void spinnerImageVisibility(boolean isVisible){
+		spinnerIconContainer.setVisible(isVisible); 
+	}
+
 }

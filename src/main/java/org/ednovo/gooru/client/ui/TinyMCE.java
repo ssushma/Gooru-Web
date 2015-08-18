@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestion
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.BodyElement;
@@ -98,7 +99,7 @@ public class TinyMCE extends Composite{
         tinyMceTextArea = new TextArea();
         tinyMceTextArea.getElement().getStyle().setBorderStyle(BorderStyle.NONE);
         tinyMceTextArea.addStyleName("ta");
-        DOM.setElementAttribute(tinyMceTextArea.getElement(), "id", id);
+        tinyMceTextArea.getElement().setAttribute("id", id);
         panel.add(tinyMceTextArea);
         timymceWrapper.add(toolBarOpenButton);
         timymceWrapper.add(markAsBlankPanel);
@@ -180,7 +181,14 @@ public class TinyMCE extends Composite{
 			@Override
 			public void execute() {
 				setWidth("100%");
+				try
+				{
                 setTextAreaToTinyMCE(id);
+				}
+				catch(JavaScriptException ex)
+				{
+					
+				}
                 setMarkAsBlankLabel();
 			}
         });
@@ -283,7 +291,12 @@ public class TinyMCE extends Composite{
 	}-*/;
 
     public void setContent(String text){
+    	try
+    	{
     	setContent(id, text);
+    	}
+    	 catch(JavaScriptException e) {
+    	 }
     }
     public void setEmptyContent(String text){
     	setEmptyContent(id,text);
@@ -441,7 +454,7 @@ public class TinyMCE extends Composite{
 				   Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
 			   }
 		   }catch(Exception e){
-			   AppClientFactory.printSevereLogger(e.getMessage());
+			   AppClientFactory.printSevereLogger("TinyMCE hideTinyMceToolBar:::"+e);
 		   }
 		   lastButtonId=id;
 	}
@@ -452,7 +465,7 @@ public class TinyMCE extends Composite{
 				 Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
 			}
 		}catch(Exception e){
-			 AppClientFactory.printSevereLogger(e.getMessage());
+			 AppClientFactory.printSevereLogger("TinyMCE hideTinyMceToolBar toolBarButtonVisible:::"+e);
 		}
 
 	}
@@ -467,7 +480,7 @@ public class TinyMCE extends Composite{
 			try{
 				Document.get().getElementById(lastButtonId+BUTTONID).getStyle().setDisplay(Display.NONE);
 			}catch(Exception e){
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("TinyMCE hideAllButtons:::"+e);
 			}
 		}
 	}
@@ -504,14 +517,14 @@ public class TinyMCE extends Composite{
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText("");
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("TinyMCE clearErrorMessage:::"+e);
 		}
 	}
 	public void setErrorMessage(String errorMessage,String tinyMceId){
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText(errorMessage);
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("TinyMCE setErrorMessage:::"+e);
 		}
 	}
 	public String getHiddenValue(String tinyMceId){

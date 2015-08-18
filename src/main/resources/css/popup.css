@@ -56,3 +56,11 @@
 	display: inline-block;
 	cursor: pointer;
 }
+
+
+.playerAddToolTipGlassStyle {
+	z-index: 999999;
+	background-color: black;
+	opacity: 0.3;
+	filter: literal("alpha(opacity = 30)");
+}

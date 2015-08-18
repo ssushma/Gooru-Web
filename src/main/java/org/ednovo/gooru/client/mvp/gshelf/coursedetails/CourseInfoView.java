@@ -82,7 +82,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField HTMLPanel courseInfo,pnlGradeContainer;
+	@UiField HTMLPanel courseInfo,pnlGradeContainer,spinnerIconContainer;
 	@UiField PPanel courseTitlePpanel,tagCoursePpanel;
 	@UiField UlPanel ulMainGradePanel,ulSelectedItems;
 	@UiField Button saveCourseBtn,nextUnitBtn,btnK12,btnHigherEducation,btnProfessionalLearning;
@@ -182,29 +182,38 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		pnlGradeContainer.clear();
 		courseGradeWidget=new CourseGradeWidget(libraryCodeDo,selectedValues.get(selectedId),"course") {
 			@Override
-			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd) {
+			public void setSelectedGrade(final CourseSubjectDo courseObj, final long codeId,boolean isAdd,LiPanel panel){
 				if(isAdd){
-					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseObj.getName());
-					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
-						@Override
-						public void onClick(ClickEvent event) {
-							//This will remove the selected value when we are trying by close button
-							for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
-								Map.Entry<Integer, ArrayList<String>> entry = it.next();
-								if(entry.getValue().contains(courseObj.getName())){
-									entry.getValue().remove(courseObj.getName());
+					if(ulSelectedItems.getWidgetCount()>=10){
+						lblGradeErrorMsg.setVisible(true);
+						lblGradeErrorMsg.setText(i18n.GL3567());
+					}else{
+						lblGradeErrorMsg.setVisible(false);
+						panel.addStyleName(ACTIVE);
+						final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(courseObj.getName());
+						liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								//This will remove the selected value when we are trying by close button
+								for(Iterator<Map.Entry<Integer,ArrayList<String>>>it=selectedValues.entrySet().iterator();it.hasNext();){
+									Map.Entry<Integer, ArrayList<String>> entry = it.next();
+									if(entry.getValue().contains(courseObj.getName())){
+										entry.getValue().remove(courseObj.getName());
+									}
 								}
+								removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
+								liPanelWithClose.removeFromParent();
+								lblGradeErrorMsg.setVisible(false);
 							}
-							removeGradeWidget(courseGradeWidget.getGradePanel(),codeId);
-							liPanelWithClose.removeFromParent();
-						}
-					});
-					selectedValues.get(selectedId).add(courseObj.getName());
-					liPanelWithClose.setId(codeId);
-					liPanelWithClose.setName(courseObj.getName());
-					liPanelWithClose.setRelatedId(selectedId);
-					ulSelectedItems.add(liPanelWithClose);
+						});
+						selectedValues.get(selectedId).add(courseObj.getName());
+						liPanelWithClose.setId(codeId);
+						liPanelWithClose.setName(courseObj.getName());
+						liPanelWithClose.setRelatedId(selectedId);
+						ulSelectedItems.add(liPanelWithClose);
+					}
 				}else{
+					panel.removeStyleName(ACTIVE);
 					if(selectedValues.get(selectedId).contains(courseObj.getName())){
 						selectedValues.get(selectedId).remove(courseObj.getName());
 					}
@@ -295,6 +304,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
 		saveCourseBtn.addStyleName("disabled");
 		saveCourseBtn.setEnabled(false);
+		spinnerImageVisibility(true);
 		if(validateInputs()){
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
@@ -310,6 +320,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 
 	}
@@ -319,6 +330,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		TreeItem treeSelectedItem  = getUiHandlers().getSelectedWidget();
 		nextUnitBtn.addStyleName("disabled");
 		nextUnitBtn.setEnabled(false);
+		spinnerImageVisibility(true);
 		if(validateInputs()){
 			CreateDo createOrUpDate=new CreateDo();
 			createOrUpDate.setAudienceIds(StringUtil.getKeys(getAudienceContainer().getSelectedValues().keySet()));
@@ -334,6 +346,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 			courseTitle.addStyleName("form-control");
 			lblErrorMessage.setText("Please Enter Course Title");
 			resetBtns();
+			spinnerImageVisibility(false);
 		}
 	}
 	/**
@@ -344,6 +357,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 	@Override
 	public void callCreateAndUpdate(boolean isCreate,boolean result,CreateDo createOrUpDate, TreeItem currentShelfTreeWidget){
 		if(result){
+			spinnerImageVisibility(false);
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(courseTitle, lblErrorMessage, result);
 		}else{
 			List<Integer> taxonomyList=getSelectedCourseIds();
@@ -357,7 +371,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 				}
 			}else{
 				lblGradeErrorMsg.setVisible(true);
-				lblGradeErrorMsg.setText("Select at least one Course");
+				lblGradeErrorMsg.setText("Select at least one Course"); 
 			}
 		}
 	}
@@ -466,5 +480,10 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 		saveCourseBtn.setEnabled(true);
 		nextUnitBtn.removeStyleName("disabled");
 		nextUnitBtn.setEnabled(true);
+	}
+	
+	@Override
+	public void spinnerImageVisibility(boolean isVisible){
+		spinnerIconContainer.setVisible(isVisible); 
 	}
 }

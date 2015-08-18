@@ -42,6 +42,7 @@ import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMeta
 import org.ednovo.gooru.application.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.application.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
@@ -68,7 +69,6 @@ import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -104,7 +104,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class AssessmentProgressReportChildView extends ChildView<AssessmentProgressReportChildPresenter> implements IsAssessmentProgressReportView,ClientConstants {
 
-	@UiField FlowPanel PrintPnl, printOptions, reportViewContainer;
+	@UiField FlowPanel PrintPnl, printOptions, reportViewContainer, scoreObject;
 	@UiField FlowPanel progressRadial,scoreRoundPanel, thumbnailImage, timeSpentPanel, headerLinksContainer, attemptPanel, selfReportPanel;
 	@UiField HTMLPanel  collectionSummaryText, questionsTable, collectionOverviewPanel;
 	@UiField ListBox sessionsDropDown;
@@ -130,7 +130,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	String style="";
 
 	private String userId = null, contentType = null;
-
+	
+	String classId = "", lessonId = "", unitId = "", courseId = "", assessmentId = "";
+	
 	private CollectionDo collectionDo=null;
 	private boolean isCollection = false, isExternalAssessment = false;
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -142,7 +144,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	public boolean isTableToDestroy=false;
 
-	public AssessmentProgressReportChildView(String assessmentId, String classId, String userId, String courseId, String unitId, String lessonId, String contentType) {
+	public AssessmentProgressReportChildView(String assessmentId, String classId, String userId, String courseId, String unitId, String lessonId, String contentType, String sessionId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new AssessmentProgressReportChildPresenter(this));
 		selfReportPanel.setVisible(false);
@@ -165,7 +167,26 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		questionsBtn.addClickHandler(new ResourceDataCall(questionsBtn));
 		oeQuestionsBtn.addClickHandler(new ResourceDataCall(oeQuestionsBtn));
 		this.userId = userId;
-		getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId);
+		this.classId = classId;
+		this.lessonId = lessonId;
+		this.unitId = unitId;
+		this.courseId = courseId;
+		this.assessmentId = assessmentId;
+		if(AppClientFactory.isAnonymous()) {
+			loaderVisibility(false);
+			errorPanelData(false, true);
+			errorMsg();
+			printOptions.setVisible(false);
+			scoreObject.setVisible(false);
+		} else {
+			if(sessionId==null) {
+				getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
+			} else {
+				getPresenter().setSessionId(sessionId);
+				getPresenter().setSession(false);
+				getPresenter().getSessionsDataByUser(assessmentId,classId,courseId, unitId, lessonId, userId);
+			}
+		}
 	}
 
 	private void setExternalAssessment() {
@@ -209,6 +230,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		errorPanelData(false, false);
 
 		PrintPnl.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-106)+"px");
+		
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)) {
+			PrintPnl.removeStyleName("LearningMapContainer");
+			PrintPnl.getElement().getStyle().setBackgroundColor("white");
+		}
+		
 		progressRadial.getElement().setId("fpnlprogressRadial");
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageLoading.getElement().setId("loadingUcCropImageLoadingInStudentSummaryView");
@@ -290,7 +317,23 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		}
 	}
 
+	@Override
+	public void setAttemptsData(ArrayList<session> result) {
+		sessionsDropDown.clear();
+		sessionData.clear();
+		for (session session : result) {
+			sessionData.put(session.getSessionId(), session.getEventTime());
+			int day=session.getSequence();
 
+			String attemptType = " Attempt";
+			if(isCollection) {
+				attemptType = " Session";
+			}
+			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+attemptType,session.getSessionId());
+		}
+		setSessionStartTime(result.size()-1);
+	}
+	
 	@Override
 	public void setSessionsData(List<UserPlayedSessionDo> result) {
 		sessionsDropDown.clear();
@@ -307,6 +350,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		}
 		setSessionStartTime(0);
 	}
+	
 	public void setSessionStartTime(int selectedIndex) {
 		if(sessionData.size()!=0){
 			if(isCollection) {
@@ -315,9 +359,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				lastModifiedTime.setText(i18n.GL4005()+" "+AnalyticsUtil.getSessionsCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 			}
 			sessionsDropDown.setSelectedIndex(selectedIndex);
-			printData.setUserName(null);
-			printData.setSession(sessionsDropDown.getItemText(selectedIndex));
-			printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 		}
 	}
 
@@ -543,43 +584,33 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					adTable.setWidget(i, 2,anserlbl);
 				}else if (FIB.equalsIgnoreCase(questionType)){
 					VerticalPanel answerspnl=new VerticalPanel();
-					if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-						String answerTextFormat = "";
-						String[] answersArry = null;
-						ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
-						for (MetaDataDo metaDataDo : questionList) {
-							String answerText = "";
-							if((metaDataDo.getAnswerText() != null)) {
-								String text=StringUtil.removeAllHtmlCss(removeHtmlTags(InfoUtil.removeQuestionTagsOnBoldClick(metaDataDo.getAnswerText())));
-								answerText = text;
-							}
-							answerTextFormat += '[' + answerText +']';
-							if(questionList.size()  != metaDataDo.getSequence()){
-								answerTextFormat += ",";
-							}
-						}
-						String[] userFibOption = null;
-						if(result.get(i).getText() != null) {
-							answersArry=answerTextFormat.split(",");
-							userFibOption =result.get(i).getText().split(",");
-						}
-						if(answersArry!=null && userFibOption!=null){
-							for (int k = 0; k < answersArry.length; k++) {
+					
+					if(result.get(i).getAnswerObject()!=null) {
+						JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+						JSONObject answerObject = value.isObject();
+						Set<String> keys=answerObject.keySet();
+						Iterator<String> itr = keys.iterator();
+						while(itr.hasNext()) {
+							answerspnl.clear();
+							JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+							for(int j=0;j<attemptsObj.size();j++){
 								Label answerChoice=new Label();
-								if(answersArry[k]!=null && k<userFibOption.length){
-									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
-										answerChoice.setText(userFibOption[k]);
-										answerChoice.getElement().getStyle().setColor(CORRECT);
-									}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
-										answerChoice.setText(userFibOption[k]);
-										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-									}else{
-										answerChoice.setText(userFibOption[k]);
+								boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+								String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+								String fibtext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+								if(skip == false)
+								{
+									answerChoice.setText(fibtext);
+									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 										answerChoice.getElement().getStyle().setColor(INCORRECT);
+									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+										answerChoice.getElement().getStyle().setColor(CORRECT);
+									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
 									}
-									answerChoice.setStyleName(STYLE_TABLE_CENTER);
-									answerspnl.add(answerChoice);
 								}
+								answerChoice.setStyleName(STYLE_TABLE_CENTER);
+								answerspnl.add(answerChoice);
 							}
 						}
 					}
@@ -851,15 +882,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	}
 
 	private void getContentData(String type, boolean isRefresh, Label selectedLbl) {
-		String classpageId="";
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASS)) {
-			classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID, "");
-		} else {
-			classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, "");
-		}
-		String assessmentId=AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID, "");
 		if(contentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT)) {
-			getPresenter().getCollectionScoreForSession(assessmentId, classpageId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);
+			getPresenter().getCollectionScoreForSession(assessmentId, classId, userId, sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()), null);
 		} else {
 			if(isRefresh) {
 				setPanelStyling(selectedLbl);
@@ -867,7 +891,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				setPanelStyling(collectionOverviewBtn);
 			}
 		}
-		getPresenter().setCollectionSummaryData(assessmentId, classpageId,userId,sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
+		getPresenter().setCollectionSummaryData(assessmentId, classId,userId,sessionsDropDown.getValue(sessionsDropDown.getSelectedIndex()),printData,type);
 	}
 
 	private void setErrorData(HTMLPanel globalPanel) {

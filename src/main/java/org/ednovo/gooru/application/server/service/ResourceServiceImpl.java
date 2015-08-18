@@ -367,7 +367,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				List<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
 
 				if(jsonRep.getJsonObject().has("settings")){
-					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionSettingsDo.class);
+					CollectionSettingsDo settings=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("settings").toString(), CollectionSettingsDo.class);
 					obj.setSettings(settings);
 				}
 				if(jsonRep.getJsonObject().has("thumbnails")){
@@ -1486,7 +1486,32 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return deserializeCollectionItem(jsonRep);
 	}
 
-
+	@Override
+	public CollectionItemDo updateNarrationItemMetadata(String collectionId,String collectionItemId,
+			String narration, String narrationType,String start,String stop) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLLECTION_ITEM_METADATA,collectionId,collectionItemId);
+		getLogger().info("updateNarrationMetadata url put call:::::"+url);
+		JSONObject narrationObject = new JSONObject();
+		try {
+			if(start!=null){
+				narrationObject.put("start", start);
+			}
+			if(stop!=null){
+				narrationObject.put("stop", stop);
+			}
+			if(narration!=null){
+				narrationObject.put("narration", narration);
+			}
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		getLogger().info("data url put call:::::"+narrationObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), narrationObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("response:::::"+jsonResponseRep.getStatusCode());
+		return deserializeCollectionItem(jsonRep);
+	}
 
 
 	@Override
@@ -2097,7 +2122,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) {
+	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws UnsupportedEncodingException {
 		GoogleDriveDo googleDriveDo=new GoogleDriveDo();
 		String contentType="application/json";
 		String access_token = getLoggedInAccessToken() != null ? getLoggedInAccessToken() : null;
@@ -2126,7 +2151,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 
         @Override
-	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId){
+	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws UnsupportedEncodingException{
 		GoogleDriveDo googleDriveDo=new GoogleDriveDo();
 		String contentType="application/json";
 		String access_token = getLoggedInAccessToken() != null ? getLoggedInAccessToken() : null;
@@ -2368,7 +2393,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public ArrayList<ResourceCollDo> getResourceBasedUsersDetails(String resourceId, int offSet, int limit) {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_RESOURCE_BASED_USERS,resourceId, getLoggedInSessionToken(),String.valueOf(offSet),String.valueOf(limit));
-		//getLogger().info("getResourceBasedUsersDetails::"+url);
+		logger.info("getResourceBasedUsersDetails::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation= jsonResponseRep.getJsonRepresentation();
 		return deserializeUserCollections(jsonRepresentation);
@@ -2494,8 +2519,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			try{
-				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri"));
 				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+				logger.info("copy collection v3 uri here:::::::"+getURL);
 				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
 				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
 					if(jsonResponseRepresentation1.getStatusCode()==200){
@@ -2527,8 +2552,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			try{
-				logger.info("copy collection v3 uri here:::::::"+jsonRep.getJsonObject().getString("uri"));
 				String getURL= getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+				logger.info("copy collection v3 uri here:::::::"+getURL);
 				JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
 				jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
 					if(jsonResponseRepresentation1.getStatusCode()==200){

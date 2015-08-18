@@ -27,12 +27,12 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.SearchServiceAsync;
 import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
@@ -53,8 +53,6 @@ import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -115,8 +113,6 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 //		((ServiceDefTarget)searchService)
 //		   .setServiceEntryPoint(AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint() + GWT.getModuleBaseURL() + "/greet");
 
-
-
 	}
 
 	@Override
@@ -158,28 +154,26 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 
 	@Override
 	protected void requestSearch(final SearchDo<CollectionSearchResultDo> searchDo,final SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
+		searchDo.setSearchResults(new ArrayList<CollectionSearchResultDo>());
 		getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackFirstLoad());
 	}
 	@Override
 	protected void requestSearchLoad(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallbackForSearch<SearchDo<CollectionSearchResultDo>> searchResultsJsonAsyncCallback,boolean isBackTotop) {
+		searchDo.setSearchResults(new ArrayList<CollectionSearchResultDo>());
 		if(isBackTotop){
 			getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsBackToTop());
 		}else{
 			getSearchService().getCollectionSearchResultsJson(searchDo, getSearchResultsJsonAsyncCallbackLoadInStore());
 		}
 	}
-	@Override
-	protected void requestSearchFormJson(String result,SearchDo<CollectionSearchResultDo> searchDo2) {
-		getSearchService().descralizeCollectionSearchResults(result, searchDo2, getSearchAsyncCallback());
-	}
 
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
+		getSearchDo().setSearchResults(new ArrayList<CollectionSearchResultDo>());
 		getSearchService().getCollectionSearchResultsJson(getSearchDo(), getSearchResultsJsonAsyncCallbackLoadInStore());
 	}
-	
 	/**
 	 * @return search filters as Map value
 	 */

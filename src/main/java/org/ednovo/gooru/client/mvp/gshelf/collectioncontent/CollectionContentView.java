@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResource
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -89,12 +90,13 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			UiBinder<Widget, CollectionContentView> {
 	}
 
-	@UiField HTMLPanel pnlContentContainer,emptyContainerdiv;
+	@UiField HTMLPanel pnlContentContainer,emptyContainerdiv,bottomPanel;
 	@UiField VerticalPanel pnlReosurceList;
 	@UiField Button btnAddResources, btnAddQuestions;
 	@UiField Anchor ancAddResource, ancAddQuestion;
 	@UiField InlineLabel lblSpanOr;
-	@UiField Label lblTitle;
+	@UiField Label lblTitle,lblLimitReached;
+	@UiField TinyMCE testTextArea;
 
 	CollectionContentPresenter collectionContentPresenter;
 	CollectionDo listOfContent=null;
@@ -142,7 +144,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 		ancAddResource.addClickHandler(new NewResourceClickEvent());
 		ancAddQuestion.addClickHandler(new NewQuestionClickEvent());
-
+		testTextArea.setVisible(false);
 	}
 
 	@Override
@@ -150,6 +152,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		this.listOfContent = listOfContent;
 		this.folderDo = folderDo;
 		emptyContainerdiv.clear();
+		bottomPanel.setVisible(true);
+		btnAddResources.setEnabled(true);
+		btnAddQuestions.setEnabled(true);
+		lblLimitReached.setVisible(false);
+		btnAddResources.getElement().removeClassName("disabled");
+		btnAddQuestions.getElement().removeClassName("disabled");
 		if(listOfContent!=null)
 		{
 		if(listOfContent.getUser()!=null){
@@ -187,9 +195,19 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}
 		if(listOfContent.getCollectionItems()!=null && listOfContent.getCollectionItems().size()>0){
 			index=0;
+			pnlReosurceList.clear();
 			for (CollectionItemDo collectionItem : listOfContent.getCollectionItems()) {
 				setDisplayResourceItem(collectionItem, type, index);
 				index++;
+			}
+			if(index>=25){
+				bottomPanel.setVisible(false);
+				btnAddResources.setEnabled(false);
+				btnAddQuestions.setEnabled(false);
+				lblLimitReached.setVisible(true);
+				btnAddResources.getElement().addClassName("disabled");
+				btnAddQuestions.getElement().addClassName("disabled");
+				lblLimitReached.setText("Resource limit reached.");
 			}
 			setLastWidgetArrowVisiblity(false);
 		}else{
@@ -224,9 +242,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		if (tmpIndex ==-1){
 			index = pnlReosurceList.getWidgetCount()>0 ? pnlReosurceList.getWidgetCount() : 0;
 			listOfContent.getCollectionItems().add(collectionItem);
-		}
-		if(index == 0){
-			pnlReosurceList.clear();
 		}
 		if (type.equals(RefreshType.INSERT)){
 			final ContentResourceWidgetWithMove widgetMove=new ContentResourceWidgetWithMove(index,collectionItem,folderDo.getType()) {
@@ -505,7 +520,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			emptyContainerdiv.setVisible(true);
 		}
 		if(listOfContent.getCollectionItems().size()>0){
-			listOfContent.getCollectionItems().remove(itemSequence);
+			listOfContent.getCollectionItems().remove(itemSequence-1);
 		}
 		resetWidgetPositions();
 	}
@@ -690,10 +705,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 		}
 	}
 	
-	@Override
-	public void onLoad() {
-		getUiHandlers().loadAddResourcePopup();
-	}
 	/**
 	 * @function getCreatedTime 
 	 * 

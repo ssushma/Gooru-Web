@@ -374,8 +374,6 @@ public class CollectionResourceTabView extends
 									category = categoryStr;
 	 								thumbnailUrl = thumbnailUrlStr;
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-									System.out.println("collectionid::"+collectionItemDo.getParentGooruOid());
-									System.out.println("collectiondo::"+collectionDo.getGooruOid());
 									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 								}
 								@Override
@@ -964,7 +962,7 @@ public class CollectionResourceTabView extends
 
 		@Override
 		public void onClick(ClickEvent event) {
-			try{
+			try{ 
 			MixpanelUtil.Click_On_AddQuestion();
 			clickType = "Question";
 			hidePopup();
@@ -976,7 +974,7 @@ public class CollectionResourceTabView extends
 				displayNewResourcePopup();
 			}
 		}catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			AppClientFactory.printSevereLogger("CollectionResourceTabView collectionitems size:::"+e);
 		}
 			
 

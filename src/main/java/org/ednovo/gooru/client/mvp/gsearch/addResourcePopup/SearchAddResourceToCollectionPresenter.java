@@ -45,7 +45,6 @@ import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
@@ -87,7 +86,6 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	private String unitId=null;
 	private String lessonId=null;
 	private String collectionTitle="";
-	CollectionFormPresenter collectionFormPresenter;
 	CollectionResourceWidget collectionResourceWidget=null;
 	CollectionSearchWidget collectionSearchWidget=null;
 	private static final String ASSESSMENT = "assessment";
@@ -103,10 +101,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Inject
-	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view, CollectionFormPresenter collectionFormPresenter) {
+	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		this.collectionFormPresenter = collectionFormPresenter;
 	}
 
 	@Override
@@ -137,8 +134,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		getView().setDefaultPanelVisibility(false);
 		getWorkspaceData(0,20,true,searchType);
 	}
-	
-	
+
+
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
 		if(clearShelfPanel){
 			getView().clearUrlParams();
@@ -212,35 +209,39 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							questionCount = result.getSummary().getQuestionCount();
 						}
 					}
-						 totalCount = resourceCount+questionCount;
-						if(totalCount<=25){
-							String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
-							AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
-								@Override
-								public void onSuccess(CollectionItemDo result) {
-									if(result!=null && result.getStatusCode()==200){
-										successparams.put("id", selectedFolderOrCollectionid);
-										urlparams.put("isSuccess", "true");
-										getView().displaySuccessPopup(title,selectedFolderOrCollectionid,urlparams,searchType,null);
-									}else{
-										getView().hidePopup();
-										Window.enableScrolling(false);
-										AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't add this resource to a Collection");
-									}
+					totalCount = resourceCount+questionCount;
+					if(totalCount<=25){
+						String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
+						AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
+							@Override
+							public void onSuccess(CollectionItemDo result) {
+								if(result!=null && result.getStatusCode()==200){
+									AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
+										@Override
+										public void onSuccess(HashMap<String, String> result) {
+											if(collectionResourceWidget!=null){
+												collectionResourceWidget.getLbladdCount().setText(result.get("resourceAdded"));
+											}
+										}
+									});
+									successparams.put("id", selectedFolderOrCollectionid);
+									urlparams.put("isSuccess", "true");
+									getView().displaySuccessPopup(title,selectedFolderOrCollectionid,urlparams,searchType,null);
+								}else{
+									getView().hidePopup();
+									Window.enableScrolling(false);
+									AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't add this resource to a Collection");
 								}
-							});
-						}else{
-							getView().hidePopup();
-							Window.enableScrolling(false);
-							AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't add more than 25 resources/questions");
-						}
-					
-				
+							}
+						});
+					}else{
+						getView().hidePopup();
+						Window.enableScrolling(false);
+						AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry You can't add more than 25 resources/questions");
+					}
 				}
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
 				}
 			});
 		}
@@ -249,51 +250,50 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public void addCollectionToFolder(final String selectedFolderOrCollectionid,final String searchType, final String title, final int folerLevel,HashMap<String, String> urlparams) {
 			this.urlParameters=urlparams;
 			final CollectionDo collection = new CollectionDo();
-		if(searchType.equalsIgnoreCase("collection")){
-			collection.setGooruOid(getCollectionGooruId());
-			collection.setSharing("anyonewithlink");
-		if(selectedFolderOrCollectionid!=null){
-			O1_LEVEL_VALUE = urlparams.get("o1");
-			O2_LEVEL_VALUE = urlparams.get("o2");
-			O3_LEVEL_VALUE = urlparams.get("o3");
-			if(O3_LEVEL_VALUE!=null){
-				parentId=O3_LEVEL_VALUE;
-			}else if(O2_LEVEL_VALUE!=null){
-				parentId=O2_LEVEL_VALUE;
-			}else if(O1_LEVEL_VALUE!=null){
-				parentId=O1_LEVEL_VALUE;
-			}
-
-			AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,getCollectionGooruId(),parentId,false,new SimpleAsyncCallback<CollectionDo>() {
-				@Override
-				public void onSuccess(CollectionDo result) {
-					FolderDo folderDo=getFolderDo(result);
-					HashMap<String,String> params = new HashMap<String,String>();
-					if(O3_LEVEL_VALUE!=null) {
-						params.put("o3", O3_LEVEL_VALUE);
-					}
-					if(O2_LEVEL_VALUE!=null) {
-						params.put("o2", O2_LEVEL_VALUE);
-					}
-					if(O1_LEVEL_VALUE!=null) {
-						params.put("o1", O1_LEVEL_VALUE);
-					}
-					params.put("view", "Folder");
-					AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
-						@Override
-						public void onSuccess(HashMap<String, String> result) {
-							if(collectionSearchWidget!=null){
-								collectionSearchWidget.getRemixCountLbl().setText(result.get("copyCount"));
-							}
-						}
-					});
-				//	getView().displaySuccessPopup(title, result.getGooruOid(), params,"collection",folderDo);
+			if(searchType.equalsIgnoreCase("collection")){
+				collection.setGooruOid(getCollectionGooruId());
+				collection.setSharing("anyonewithlink");
+			if(selectedFolderOrCollectionid!=null){
+				O1_LEVEL_VALUE = urlparams.get("o1");
+				O2_LEVEL_VALUE = urlparams.get("o2");
+				O3_LEVEL_VALUE = urlparams.get("o3");
+				if(O3_LEVEL_VALUE!=null){
+					parentId=O3_LEVEL_VALUE;
+				}else if(O2_LEVEL_VALUE!=null){
+					parentId=O2_LEVEL_VALUE;
+				}else if(O1_LEVEL_VALUE!=null){
+					parentId=O1_LEVEL_VALUE;
 				}
-			});
-		}else{
-			getView().restrictionToAddResourcesData("Please select a folder to add collection");
+				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,getCollectionGooruId(),parentId,false,new SimpleAsyncCallback<CollectionDo>() {
+					@Override
+					public void onSuccess(CollectionDo result) {
+						FolderDo folderDo=getFolderDo(result);
+						HashMap<String,String> params = new HashMap<String,String>();
+						if(O3_LEVEL_VALUE!=null) {
+							params.put("o3", O3_LEVEL_VALUE);
+						}
+						if(O2_LEVEL_VALUE!=null) {
+							params.put("o2", O2_LEVEL_VALUE);
+						}
+						if(O1_LEVEL_VALUE!=null) {
+							params.put("o1", O1_LEVEL_VALUE);
+						}
+						params.put("view", "Folder");
+						AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),searchType, new SimpleAsyncCallback<HashMap<String,String>>() {
+							@Override
+							public void onSuccess(HashMap<String, String> result) {
+								if(collectionSearchWidget!=null){
+									collectionSearchWidget.getRemixCountLbl().setText(result.get("copyCount"));
+								}
+							}
+						});
+					//	getView().displaySuccessPopup(title, result.getGooruOid(), params,"collection",folderDo);
+					}
+				});
+			}else{
+				getView().restrictionToAddResourcesData("Please select a folder to add collection");
+			}
 		}
-	}
 	}
 	private String getCollectionGooruId() {
 		String gooruOid="";
@@ -347,8 +347,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		if(currentsearchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(getCollectionGooruId());
 			AppClientFactory.getInjector().getResourceService().copyCollection(collection, "true", null,getSaveCollectionAsyncCallback());
+		}
 	}
-}
 	/**
 	 * @return instance of collectionDo after collection save
 	 */
@@ -408,40 +408,47 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			}
 		});
 	}
-
 	@Override
 	public void CopyToplevelMyCollections(String collectionId, String folderId,String searchType,String collectionTitle,final HashMap<String, String> urlparams) {
-			AppClientFactory.getInjector().getResourceService().CopyToplevelMyCollections(getCollectionGooruId(), folderId, this.collectionTitle, new SimpleAsyncCallback<CollectionDo>() {
-				@Override
-				public void onSuccess(CollectionDo result) {
-					if(result!=null  && result.getStatusCode()==200){
-						FolderDo folderDo=getFolderDo(result);
-						HashMap<String,String> params = new HashMap<String,String>();
-						if(urlparams!=null && urlparams.get("o3")!=null) {
-							params.put("o3", urlparams.get("o3"));
+		AppClientFactory.getInjector().getResourceService().CopyToplevelMyCollections(getCollectionGooruId(), folderId, this.collectionTitle, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo result) {
+				if(result!=null  && result.getStatusCode()==200){
+					FolderDo folderDo=getFolderDo(result);
+					AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),"collection", new SimpleAsyncCallback<HashMap<String,String>>() {
+						@Override
+						public void onSuccess(HashMap<String, String> result) {
+							if(collectionSearchWidget!=null){
+								collectionSearchWidget.getRemixCountLbl().setText(result.get("copyCount"));
+							}
 						}
-						if(urlparams!=null && urlparams.get("o2")!=null) {
-							params.put("o2", urlparams.get("o2"));
-						}
-						if(urlparams!=null && urlparams.get("o1")!=null) {
-							params.put("o1", urlparams.get("o1"));
-						}
-						params.put("id", result.getGooruOid());
-						params.put("view", "Folder");
-						String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-						if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
-							getView().hidePopup();
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
-						}else{
-							getView().displaySuccessPopup("My Content", result.getGooruOid(),params ,"collection",folderDo);
-						}
-					}else{
-						getView().hidePopup();
-						Window.enableScrolling(false);
-						AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry Something Went Wrong");
+					});
+					HashMap<String,String> params = new HashMap<String,String>();
+					if(urlparams!=null && urlparams.get("o3")!=null) {
+						params.put("o3", urlparams.get("o3"));
 					}
+					if(urlparams!=null && urlparams.get("o2")!=null) {
+						params.put("o2", urlparams.get("o2"));
+					}
+					if(urlparams!=null && urlparams.get("o1")!=null) {
+						params.put("o1", urlparams.get("o1"));
+					}
+					params.put("id", result.getGooruOid());
+					params.put("view", "Folder");
+					String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+					if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
+						getView().hidePopup();
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+					}else{
+						getView().displaySuccessPopup("My Content", result.getGooruOid(),params ,"collection",folderDo);
+					}
+				}else{
+					getView().hidePopup();
+					Window.enableScrolling(false);
+					AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),"Sorry Something Went Wrong");
 				}
-			});
+			}
+		});
 	}
 
 	@Override
@@ -457,6 +464,14 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			public void onSuccess(CollectionDo result) {
 				if(result!=null && result.getStatusCode()==200){
 					FolderDo folderDo=getFolderDo(result);
+					AppClientFactory.getInjector().getAnalyticsService().getResourceAndCollectionCounts(getCollectionGooruId(),"collection", new SimpleAsyncCallback<HashMap<String,String>>() {
+						@Override
+						public void onSuccess(HashMap<String, String> result) {
+							if(collectionSearchWidget!=null){
+								collectionSearchWidget.getRemixCountLbl().setText(result.get("copyCount"));
+							}
+						}
+					});
 					HashMap<String,String> params = new HashMap<String,String>();
 					if(urlparams!=null && urlparams.get("o3")!=null) {
 						params.put("o3", urlparams.get("o3"));
@@ -472,7 +487,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 						getView().hidePopup();
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 					}else{
 						getView().displaySuccessPopup("My Content", result.getGooruOid(),params ,"collection",folderDo);
 					}
@@ -513,7 +528,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 						getView().hidePopup();
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 					}else{
 						getView().displaySuccessPopup("My Content", getCollectionGooruId(),params ,"collection",folderDo);
 					}
@@ -549,7 +564,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 						getView().hidePopup();
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 					}else{
 						getView().displaySuccessPopup("My Content", getCollectionGooruId(),params ,"collection",folderDo);
 					}
@@ -561,9 +576,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			}
 		});
 	}
-	
-	public void selectedCopyOrMoveStatus(boolean isCopySelected,
-			boolean isMoveSelected) {
+
+	public void selectedCopyOrMoveStatus(boolean isCopySelected,boolean isMoveSelected) {
 		getView().setCopyAndMoveStatus(isCopySelected,isMoveSelected);
 	}
 
@@ -584,7 +598,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			getView().getMycollectionsDefaultLbl().getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
-	
+
 	public void setCollectionTitle(String collectionTitle) {
 		this.collectionTitle=collectionTitle;
 	}

@@ -322,9 +322,13 @@ public abstract class LoginPopupUc extends PopupPanel{
 			@Override
 			public void onSuccess(String result) {
 				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
-				Window.Location.replace(result);
-
-
+				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.STUDY)) {
+					Map<String,String> params = new HashMap<String,String>();
+					params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
+				} else {
+					Window.Location.replace(result);
+				}
 			}
 		});
 	}
@@ -407,7 +411,9 @@ public abstract class LoginPopupUc extends PopupPanel{
 						    AppClientFactory.fireEvent(new SetHeaderEvent(result));
 
 						    AppClientFactory.setUserflag(true);
-							AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
+						    if(result.getMeta() != null && result.getMeta().getTaxonomyPreference() != null && result.getMeta().getTaxonomyPreference().getCode() != null){
+						    	AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
+						    }
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
 						    }
@@ -699,8 +705,6 @@ public abstract class LoginPopupUc extends PopupPanel{
 				/*ImprovedGooruPopUpView popupview=new ImprovedGooruPopUpView();
 				popupview.show();
 				popupview.center();*/
-
-				//new TryItOutVc();
 
 				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 					@Override

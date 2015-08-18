@@ -65,7 +65,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	
 	private final String COLLECTION_RED = "#EAB4B3 !important";
 	
-	private final String COLLECTION_ORANGE = "#ebb4b2 !important";
+	private final String COLLECTION_ORANGE = "#ffe7c0 !important";
 	
 	private final String ASSESSMENT_GREEN = "#3fc380 !important";
 	
@@ -169,23 +169,28 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 			        		  }else{
 			        			  int attemptCount=collectionProgressData.get(j).getUsageData().get(i).getAttempts();
 			        			  int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
-			        			  if(scoreValue>=1){
-			        				  if(isCollection) {
+			        			  
+			        			  if(isCollection) {
+			        				  if(attemptCount>1&&scoreValue>=1){
+			        					  color = COLLECTION_ORANGE;
+			        					  score++;
+			        				  } else if(attemptCount==1&&scoreValue==1) {
 			        					  color = COLLECTION_GREEN;
+			        					  score++;
+			        				  } else if(attemptCount>=1&&scoreValue==0) {
+			        					  color=COLLECTION_RED;
 			        				  } else {
-			        					  color = ASSESSMENT_GREEN;
+			        					  color=WHITE;
 			        				  }
-									  score++;
-			        			  }else{
-			        				  if(attemptCount>=1){
-				        				  if(isCollection) {
-				        					  color = COLLECTION_ORANGE;
-				        				  } else {
-				        					  color = ASSESSMENT_ORANGE;
-				        				  }
-									  } else {
-										  color=WHITE;
-									  }
+			        			  } else {
+			        				  if(attemptCount>=1&&scoreValue>=1){
+			        					  color = ASSESSMENT_GREEN;
+			        					  score++;
+			        				  } else if(attemptCount>=1&&scoreValue==0) {
+			        					  color = ASSESSMENT_ORANGE;
+			        				  } else {
+			        					  color=WHITE;
+			        				  }
 			        			  }
 			        		  }
 			        		  adTable.setWidget(i, position+2,mainDataVpnl);

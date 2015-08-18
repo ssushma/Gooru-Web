@@ -966,7 +966,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
                 hotTextHLTabButton.setStyleName(res.css().buttonDeSelected());
             	questionTypePresenter.getView().editQuestion(null);
 			}catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("AddResourceView setPopup:::"+e);
 			}
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
 			try{
@@ -976,10 +976,13 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0304());
 				int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
+				
 				if(type==10){
-					getUiHandlers().addSelectedQuestionType("HS_TXT",getAddResourceMetadata());
+					getUiHandlers().addSelectedQuestionType("HS_TXT",null);
 				}else if(type==11){
-					getUiHandlers().addSelectedQuestionType("HS_IMG",getAddResourceMetadata());
+					getUiHandlers().addSelectedQuestionType("HS_IMG",null);
+				}else{
+					getUiHandlers().addSelectedQuestionType("MC",null);
 				}
 				getUiHandlers().setEditQuestionData(collectionItemDo);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
@@ -1025,7 +1028,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}catch(Exception e) {
-				AppClientFactory.printSevereLogger(e.getMessage());
+				AppClientFactory.printSevereLogger("AddResourceView:::"+e);
 			}
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);
@@ -1649,22 +1652,5 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			addQuestionResourceWidget.setDepthOfKnowledes(result);
 		}
 	}
-
-	@Override
-	public void hidePopUpStyle() {
-		appPopUp.setGlassEnabled(false);
-		appPopUp.setAutoHideEnabled(true);
-		popUpMain.setVisible(false);
-		
-	}
-
-	@Override
-	public void clearPopUpStyle() {
-		appPopUp.setGlassEnabled(true);
-		appPopUp.setAutoHideEnabled(false);
-		popUpMain.setVisible(true);
-		
-	}
-	
 	
 }

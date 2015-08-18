@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.session;
 import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -40,9 +39,9 @@ import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-
 public interface IsCollectionEndView extends IsViewWithHandlers<CollectionEndUiHandlers>{
-public void setCollectionMetadata(CollectionDo collectionDo);
+	
+	public void setCollectionMetadata(CollectionDo collectionDo);
 	
 	public void setViewCount(String viewCount);
 	
@@ -111,5 +110,8 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void showMessageWhenDataNotFound();
 
 	public void displayWhatsNextContent(FolderWhatsNextCollectionDo result, String urlValue);
-
+	
+	public void setReportContainer(String sessionId);
+	
+	public void clearsummaryReportViewPanel();
 }

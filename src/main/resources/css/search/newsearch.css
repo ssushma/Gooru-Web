@@ -150,7 +150,7 @@
 #gooruSearchMainContainer .authorDetails .input-group .form-control{
 	display:inline-block;
 	vertical-align:middle;
-	width:auto;
+	width:auto !important;
 	float:none;
 	border-radius: 4px;
 	height: 30px;
@@ -406,6 +406,8 @@
 
 #gooruSearchMainContainer .viewContainer{
 	margin:7px 0 6px 0;
+	padding-right: 0;
+	padding-left: 0;
 }
 #gooruSearchMainContainer .viewContainer span{
 	font-size: 12px;
@@ -419,6 +421,8 @@
 }
 #gooruSearchMainContainer .ratings{
 	margin:6px 0;
+	padding-right: 0;
+	padding-left: 0;
 }
 #gooruSearchMainContainer .fixedPosition{
 	position: fixed;
@@ -826,7 +830,7 @@ button#btnSearchType .caret {
 	vertical-align: middle;
 	margin: 0% auto;
 	display: table-cell;
-	width: 30%;
+	width: 31%;
 	border-right: 1px solid #ccc;
 }
 
@@ -1713,6 +1717,12 @@ left: auto !important;
 		  margin:2% 0;
 	  }
 
+	  #gooruSearchMainContainer .subFilters {
+			background: #F7F6F6;
+			padding-top: 84px;
+			clear: both;
+			min-height: 86px;
+		}
 }
 
 /* Landscape */
@@ -1722,15 +1732,14 @@ left: auto !important;
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
 
-	  #gooruSearchMainContainer .resourceImage{
-		  width:70px;
-		  height:60px;
-		  margin:2% 2.5% 2% 2.5%;
-	  }
-	 #gooruSearchMainContainer  .resourceImage:last-child{
-		  margin:2% 0 2% 2.5%;
-	  }
-
+	#gooruSearchMainContainer .resourceImage{
+		width:70px;
+		height:60px;
+		margin:2% 2.5% 2% 2.5%;
+	}
+	#gooruSearchMainContainer .resourceImage:last-child{
+		margin:2% 0 2% 2.5%;
+	}
 }
 
 
@@ -1740,8 +1749,8 @@ left: auto !important;
 		width: 100%;
 		z-index: 9;
 	}
-		#gooruSearchMainContainer  #back-top {
-	margin-left: 90%;
+	#gooruSearchMainContainer  #back-top {
+		margin-left: 90%;
 	}
 	#gooruSearchMainContainer .resourcesInside{
 
@@ -1758,7 +1767,6 @@ left: auto !important;
 	#gooruSearchMainContainer .collectionImg {
 	    width: 173px !important;
 	}
-
 	#gooruSearchMainContainer .seachRightNavigation .btn{
 		font-size:12px;
 		height:32px;
@@ -1778,23 +1786,21 @@ left: auto !important;
 	}
 	#gooruSearchMainContainer .resourceImage img {
 	    height: 100%;
-	/*     width: 100%; */
 	  	margin-left: -7px;
-
 	}
 	#gooruSearchMainContainer .videoSmall {
-    background: url("../images/Video_1.png") no-repeat scroll center 0 transparent;
-}
-#gooruSearchMainContainer .questionSmall {
-    background: url("../images/Question_1.png") no-repeat scroll center 0 transparent;
-}
+	    background: url("../images/Video_1.png") no-repeat scroll center 0 transparent;
+	}
+	#gooruSearchMainContainer .questionSmall {
+	    background: url("../images/Question_1.png") no-repeat scroll center 0 transparent;
+	}
 
-#gooruSearchMainContainer .textSmall {
-    background: url("../images/Text_1.png") no-repeat scroll center 0 transparent;
-}
-#gooruSearchMainContainer .webpageSmall {
-    background: url("../images/Website_1.png") no-repeat scroll center 0 transparent;
-}
+	#gooruSearchMainContainer .textSmall {
+	    background: url("../images/Text_1.png") no-repeat scroll center 0 transparent;
+	}
+	#gooruSearchMainContainer .webpageSmall {
+	    background: url("../images/Website_1.png") no-repeat scroll center 0 transparent;
+	}
 	#gooruSearchMainContainer .resourceName{
 		width:100%;
 	}
@@ -1831,48 +1837,57 @@ left: auto !important;
 	width:100% !important;
 	}
 	#gooruSearchMainContainer .subFilters{
-	padding:1px 0px !important;
-	min-height:inherit !important;
+		padding:1px 0px !important;
+		min-height:inherit !important;
 	}
 	.seachRightNavigation .panelFilterOptions {
-vertical-align: middle;
-margin: 0 0;
-display: inline-block;
-width: auto;
-border-right: 1px solid #ccc;
-vertical-align:top;
-padding-right: 20px;
-}
-#gooruSearchMainContainer .seachRightNavigation {
-text-align: left;
-margin: 12px 0;
-display:block;
-width: 100%;
-}
-#gooruSearchMainContainer .subNavigation {
-width: 100%;
-}
-#gooruSearchMainContainer .subNavigation{
-	height:auto;
-}
-#gooruSearchMainContainer .resourceDropdown{
-	text-align:left !important;
-}
-#gooruSearchMainContainer .gridToggle .dropdown-menu {
-left: 0;
-}
-#gooruSearchMainContainer .ratingandGrid .dropdown-menu:after{
-	content:none;
-}
-#gooruSearchMainContainer .ratingandGrid .dropdown-menu:before{
-	content:none;
-}
+		vertical-align: middle;
+		margin: 0 0;
+		display: inline-block;
+		width: auto;
+		border-right: 1px solid #ccc;
+		vertical-align:top;
+		padding-right: 20px;
+	}
+	#gooruSearchMainContainer .seachRightNavigation {
+		text-align: left;
+		margin: 12px 0;
+		display:block;
+		width: 100%;
+	}
+	#gooruSearchMainContainer .subNavigation {
+		width: 100%;
+	}
+	#gooruSearchMainContainer .subNavigation{
+		height:auto;
+	}
+	#gooruSearchMainContainer .resourceDropdown{
+		text-align:left !important;
+	}
+	#gooruSearchMainContainer .gridToggle .dropdown-menu {
+		left: 0;
+	}
+	#gooruSearchMainContainer .ratingandGrid .dropdown-menu:after{
+		content:none;
+	}
+	#gooruSearchMainContainer .ratingandGrid .dropdown-menu:before{
+		content:none;
+	}
+	#gooruSearchMainContainer .fixedPosition{
+		margin-top: 39px;
+	}
 }
 
 
 @media (min-width: 992px) and (max-width: 1199px) {
 	#gooruSearchMainContainer  #back-top {
-	margin-left: 902px;
+		margin-left: 902px;
+	}
+	#gooruSearchMainContainer .fixedPosition{
+		margin-top: 39px;
+	}
+	#gooruSearchMainContainer .subFilters {
+		padding-top: 84px !important;
 	}
 }
 

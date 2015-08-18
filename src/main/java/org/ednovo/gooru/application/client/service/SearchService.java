@@ -73,7 +73,7 @@ public interface SearchService extends BaseService {
 	 */
 	SearchDo<ResourceSearchResultDo> getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException, ServerDownException;
 
-	String getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException, ServerDownException;
+	SearchDo<ResourceSearchResultDo>  getResourceSearchResultsJson(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException, ServerDownException;
 	
 	SearchDo<ResourceSearchResultDo> descralizeResourceSearchResults(String response,SearchDo<ResourceSearchResultDo> searchDo) throws GwtException, ServerDownException;
 	
@@ -85,7 +85,7 @@ public interface SearchService extends BaseService {
 	 */
 	SearchDo<CollectionSearchResultDo> getCollectionSearchResults(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException, ServerDownException;
 
-	String getCollectionSearchResultsJson(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException, ServerDownException;
+	SearchDo<CollectionSearchResultDo> getCollectionSearchResultsJson(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException, ServerDownException;
 	
 	SearchDo<CollectionSearchResultDo> descralizeCollectionSearchResults(String response,SearchDo<CollectionSearchResultDo> searchDo) throws GwtException, ServerDownException;
 	/**
