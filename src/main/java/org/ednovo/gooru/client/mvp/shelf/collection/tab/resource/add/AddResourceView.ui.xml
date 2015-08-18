@@ -3,11 +3,9 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
 		field="res"></ui:with>
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:FlowPanel>
-		<g:HTMLPanel ui:field="popUpMain" styleName="{res1.css.AssessmentPopupMain}">
+		<g:HTMLPanel ui:field="popUpMain" styleName="AssessmentPopupMain">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupContainer}">
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionPopup}">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
@@ -75,7 +73,7 @@
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
 							<g:Anchor  ui:field="hotTextRO" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						
+
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="hotTextHLTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="hotTextHLRadioButton"
@@ -89,15 +87,15 @@
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
 							<g:Anchor  ui:field="hotSpotImg" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						
-						
+
+
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="hotSpotWordTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="hotSpotWordRadioButton"
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
 							<g:Anchor  ui:field="hotSpotWord" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						
+
 
 
 

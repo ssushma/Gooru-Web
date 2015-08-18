@@ -27,7 +27,6 @@ package org.ednovo.gooru.application.client.gin;
 
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
-import org.ednovo.gooru.application.client.home.HomePresenter;
 import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
 import org.ednovo.gooru.application.client.home.presearch.PreSearchPresenter;
 import org.ednovo.gooru.application.client.newhome.NewHomePresenter;
@@ -101,10 +100,7 @@ import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 
@@ -149,8 +145,6 @@ public interface AppInjector extends ServiceInjector {
 
 	Provider<PrimePresenter> getPrimePresenter();
 
-	AsyncProvider<HomePresenter> getHomePresenter();
-
 	AsyncProvider<SearchMainPresenter> getSearchMainPresenter();
 
 	AsyncProvider<SearchCollectionPresenter> getSearchCollectionPresenter();
@@ -158,10 +152,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<SearchResourcePresenter> getSearchResourcePresenter();
 
 	AsyncProvider<ErrorPresenter> getErrorPresenter();
-
-	AsyncProvider<CollectionResourceTabPresenter> getCollectionResourceTabPresenter();
-
-	AsyncProvider<CollectionInfoTabPresenter> getCollectionInfoTabPresenter();
 
 	AsyncProvider<ImageUploadPresenter> getImageUploadPresenter();
 
@@ -180,8 +170,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<StudentAssignmentPresenter> getStudentAssignmentPresenter();
 
 	AsyncProvider<ProfilePagePresenter> getProfilePagePresenter();
-
-	AsyncProvider<CollectionAssignTabPresenter> getCollectionAssignViewTabPresenter();
 
 	AsyncProvider<SignUpPresenter> getSignUpPresenter();
 

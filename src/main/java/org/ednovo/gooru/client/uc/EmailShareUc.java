@@ -29,8 +29,6 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
-import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -65,7 +63,6 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
 
 /**
  * @fileName : EmailShareUc.java
@@ -122,9 +119,6 @@ public class EmailShareUc extends PopupPanel{
 
 	private SimpleAsyncCallback<Void> socialShareAsyncCallback = null;
 
-	@Inject
-	private ClasspageServiceAsync classpageServiceAsync;
-
 	private String cfm = "no";
 
 	private String loggedEmailId;
@@ -146,7 +140,6 @@ public class EmailShareUc extends PopupPanel{
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
 		UcCBundle.INSTANCE.css().ensureInjected();
-		HomeCBundle.INSTANCE.css().ensureInjected();
 		this.socialShareDo = socialDo;
 		setSocialShareAsyncCallback(new SimpleAsyncCallback<Void>() {
 
@@ -156,8 +149,7 @@ public class EmailShareUc extends PopupPanel{
 
 		});
 		this.getElement().getStyle().setZIndex(999999);
-		this.setGlassStyleName(HomeCBundle.INSTANCE.css()
-				.loginPopupGlassStyle());
+		this.setGlassStyleName("loginPopupGlassStyle");
 		fromValidation.setText(i18n.GL0215());
 		fromValidation.getElement().setId("lblFromValidation");
 		fromValidation.getElement().setAttribute("alt", i18n.GL0215());
@@ -212,7 +204,6 @@ public class EmailShareUc extends PopupPanel{
 		toUsText.getElement().setAttribute("alt", i18n.GL1894());
 		toUsText.getElement().setAttribute("title", i18n.GL1894());
 
-		//ancprivacy.getElement().getStyle().setMarginLeft(10, Unit.PX);
 		mandatoryErrorLbl.getElement().setId("lblMandatoryErrorLbl");
 		mandatoryErrorLbl.setVisible(false);
 		mandatoryErrorRichTextArea.getElement().setId("lblMandatoryErrorRichTextArea");
@@ -249,33 +240,25 @@ public class EmailShareUc extends PopupPanel{
 		StringUtil.setAttributes(msgTxa, true);
 		btnSend.getElement().setId("btnSend");
 		checkCopyEmail.getElement().setId("lblCheckCopyEmail");
-		//fromTxt.getElement().getStyle().setBorderWidth(0, Unit.PX);
 		fromTxt.setText(loggedEmailId);
 		fromTxt.getElement().setAttribute("alt", loggedEmailId);
 		fromTxt.getElement().setAttribute("title",loggedEmailId);
-		//fromTxt.setReadOnly(true);
-//		toTxt.getElement().setAttribute("placeholder", i18n.GL1184_1);
 		toTxt.setPlaceholder(i18n.GL1184_1());
 		fromTxt.addBlurHandler(new CheckProfanityInOnBlur(fromTxt,null, fromValidation));
 		subTxt.addBlurHandler(new CheckProfanityInOnBlur(subTxt,null, mandatoryErrorLbl));
 		msgTxa.addBlurHandler(new CheckProfanityInOnBlur(null,msgTxa, mandatoryErrorRichTextArea));
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			if(socialShareDo.getIsSearchShare()){
-				//				subTxt.setText("Gooru -"+socialShareDo.getTitle());
 				subTxt.setText(StringUtil.generateMessage(i18n.GL0218(), socialShareDo.getTitle()));
 				subTxt.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0218(), socialShareDo.getTitle()));
 				subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0218(), socialShareDo.getTitle()));
-				//				msgTxa.setHTML(socialShareDo.getTitle() +"<div><br/></div>"+"<div>" +socialShareDo.getBitlylink() + "</div><div><br/></div>"+ "<div>"+"Sent using Gooru. Visit www.goorulearning.org for more great resources and collections. It's free!"+"</div>");
 				msgTxa.setHTML(StringUtil.generateMessage(i18n.GL0219(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 				msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0219(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 				msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0219(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 			}else{
-				//				subTxt.setText("Check out "+socialShareDo.getTitle()+" Gooru profile and fantastic collections");
 				subTxt.setText(StringUtil.generateMessage(i18n.GL0220(), socialShareDo.getTitle()));
 				subTxt.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0220(), socialShareDo.getTitle()));
 				subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0220(), socialShareDo.getTitle()));
-				//				msgTxa.setHTML(socialShareDo.getTitle() +" is an active member of the Gooru community! Take a look and browse through all their great collections - " +socialShareDo.getBitlylink()
-				//						+ "<div><br/></div>"+ "<div>"+"Gooru is a free search engine for learning used by thousands of teachers around the world to discover, organize and create teaching materials."+ "</div><div><br/></div>"+ "<div>"+"Experience Gooru today at http://goorulearning.org/"+"</div>");
 				msgTxa.setHTML(StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), socialShareDo.getBitlylink(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 				msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), socialShareDo.getBitlylink(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 				msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), socialShareDo.getBitlylink(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
@@ -308,9 +291,6 @@ public class EmailShareUc extends PopupPanel{
 				msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2001(),socialShareDo.getTitle(),socialShareDo.getDecodeRawUrl(),AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 				msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2001(),socialShareDo.getTitle(),socialShareDo.getDecodeRawUrl(),AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 			}
-//			subTxt.setText(StringUtil.generateMessage(i18n.GL0218, socialShareDo.getTitle()));
-			//			msgTxa.setHTML(socialShareDo.getTitle() +"<div><br/></div>"+"<div>" +socialShareDo.getBitlylink() + "</div><div><br/></div>"+ "<div>"+"Sent using Gooru. Visit www.goorulearning.org for more great resources and collections. It's free!"+"</div>");
-//			msgTxa.setHTML(StringUtil.generateMessage(i18n.GL0219, socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 		}
 
 		isCheckedValue = false;
@@ -354,17 +334,7 @@ public class EmailShareUc extends PopupPanel{
 	@UiHandler("btnSend")
 	public void onSendBtnClickEvent(ClickEvent event) {
 		isvalid = true;
-/*		if(fromTxt.getText() != null || !fromTxt.getText().equals("")){
-			String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-			Boolean from = fromTxt.getText().matches(EMAIL_REGEX);
-			if(from){
-				isvalid = true;
-			}else{
-				toValidation.setText(i18n.GL1027);
-				toValidation.setVisible(true);
-				isvalid = false;
-			}
-		}*/
+
 		if(!toTxt.getText().trim().equals("")){
 			String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 			String strEmails = toTxt.getText().trim();
@@ -398,11 +368,7 @@ public class EmailShareUc extends PopupPanel{
 			isvalid = false;
 
 		}
-/*		if (fromTxt.getText().equals("")) {
-			fromValidation.setText(i18n.GL0215);
-			fromValidation.setVisible(true);
-			isvalid = false;
-		}*/
+
 		if (toTxt.getText().equals("") || toTxt.getText().trim().equals("")) {
 			toValidation.setText(i18n.GL0216());
 			toValidation.getElement().setAttribute("alt", i18n.GL0216());
@@ -410,13 +376,6 @@ public class EmailShareUc extends PopupPanel{
 			toValidation.setVisible(true);
 			isvalid = false;
 		}
-/*		if ((fromTxt.getText() != null && !fromTxt.getText().isEmpty())
-				&& !fromTxt.getText().contains(AT_SYMBOL)) {
-
-			fromValidation.setText(i18n.GL1027);
-			fromValidation.setVisible(true);
-			isvalid = false;
-		}*/
 		if(isvalid){
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", subTxt.getValue());
@@ -472,27 +431,6 @@ public class EmailShareUc extends PopupPanel{
 				}
 			});
 		}
-	/*	if (isvalid  && !isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
-			AppClientFactory
-			.getInjector()
-			.getClasspageService()
-			.socialShareEmail(fromTxt.getText(), toTxt.getText(), cfm,
-					subTxt.getText(), msgTxa.getHTML(),
-					new SimpleAsyncCallback<Void>() {
-
-				@Override
-				public void onSuccess(Void result) {
-					hide();
-					String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-					if(!(placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)||placeToken.equals(PlaceTokens.RESOURCE_PLAY))) {
-						Window.enableScrolling(true);
-					}
-					new SentEmailSuccessVc(toTxt.getText());
-				}
-
-			});
-
-		}*/
 	}
 
 	@UiHandler("fromTxt")
@@ -519,23 +457,7 @@ public class EmailShareUc extends PopupPanel{
 			isCheckedValue = true;
 			cfm = "yes";
 		}
-		/*
-		 * if(cfm.equalsIgnoreCase("yes")){
-		 * toTxt.setText(toTxt.getText()+","+fromTxt.getText()); }else{
-		 *
-		 * }
-		 */
-
 	}
-
-	/*public ClasspageServiceAsync getclasspageServiceAsync() {
-		return classpageServiceAsync;
-	}
-
-	public void setclasspageServiceAsync(
-			ClasspageServiceAsync classpageServiceAsync) {
-		this.classpageServiceAsync = classpageServiceAsync;
-	}*/
 
 	public SimpleAsyncCallback<Void> getSocialShareAsyncCallback() {
 		return socialShareAsyncCallback;

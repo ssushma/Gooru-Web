@@ -69,9 +69,6 @@ public class ForgotPasswordVc extends PopupPanel implements ClientConstants {
 	@UiField
 	TextBox forgotEmailIdTxtBox;
 
-	@UiField(provided = true)
-	LoginPopUpCBundle res;
-
 	@UiField Label lblLoginHeading,lblDisplayTextMessage,lblTextMessageInfomation,errorMessage,
 	queriesText;
 
@@ -91,9 +88,7 @@ public class ForgotPasswordVc extends PopupPanel implements ClientConstants {
 	 */
 	public ForgotPasswordVc() {
 		super(false);
-		this.res = LoginPopUpCBundle.INSTANCE;
-        res.css().ensureInjected();
-        this.setGlassStyleName(LoginPopUpCBundle.INSTANCE.css().loginPopupGlassStyle());
+		this.setGlassStyleName("loginPopupGlassStyle");
         this.setGlassEnabled(true);
        	this.getElement().getStyle().setZIndex(99999);
        	setWidget(uiBinder.createAndBindUi(this));

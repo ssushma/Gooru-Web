@@ -1,29 +1,27 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
-	
+
 	<ui:with type="org.ednovo.gooru.client.uc.UcCBundle" field="res" />
-		<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
-	<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}">
-	    <g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
-		<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
-		   <g:HTMLPanel styleName="row"> 
+	<g:HTMLPanel styleName="PopupMainVSmall">
+	    <g:HTMLPanel styleName="popupInnerGrey">
+		<g:HTMLPanel styleName="popupgreyHeader">
+		   <g:HTMLPanel styleName="row">
 				<g:Label styleName="col-md-12 col-xs-12" ui:field="lblEmailFriend"/>
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{res1.css.emailContainer}" ui:field="mainShareContainer">
-		    <g:HTMLPanel styleName="{res1.css.emailSelection}">
-			<g:Label styleName="col-md-2 col-sm-3 {res1.css.lables}" ui:field="lblFrom"/>
+		<g:HTMLPanel styleName="emailContainer" ui:field="mainShareContainer">
+		    <g:HTMLPanel styleName="emailSelection">
+			<g:Label styleName="col-md-2 col-sm-3 lables" ui:field="lblFrom"/>
 			<g:HTMLPanel styleName="col-md-10 col-sm-9">
-				<gg:TextBoxWithPlaceholder styleName="form-control {res1.css.form_control}" ui:field="fromTxt"/>
+				<gg:TextBoxWithPlaceholder styleName="form-control form_control" ui:field="fromTxt"/>
 				<g:Label styleName="{res.css.emailShareErrorLabel}" ui:field="fromValidation"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-			<g:Label styleName="col-md-2 col-sm-3 {res1.css.lables}" ui:field="lblTo"/>
-			<g:HTMLPanel styleName="col-md-10 col-sm-9">	
-				<gg:TextBoxWithPlaceholder styleName="form-control {res1.css.form_control}" ui:field="toTxt"/>
+			<g:Label styleName="col-md-2 col-sm-3 lables" ui:field="lblTo"/>
+			<g:HTMLPanel styleName="col-md-10 col-sm-9">
+				<gg:TextBoxWithPlaceholder styleName="form-control form_control" ui:field="toTxt"/>
 				<g:Label styleName="{res.css.emailShareErrorLabel}" ui:field="toValidation"></g:Label>
 				<g:HTMLPanel>
 					<g:InlineLabel ui:field="lblPii"></g:InlineLabel><br/>
@@ -39,27 +37,27 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-			<g:Label styleName="col-md-2 col-sm-3 {res1.css.lables}" ui:field="lblSubject" />
+			<g:Label styleName="col-md-2 col-sm-3 lables" ui:field="lblSubject" />
 			<g:HTMLPanel styleName="col-md-10 col-sm-9">
-				<g:TextBox styleName="form-control {res1.css.form_control}" ui:field="subTxt" />
+				<g:TextBox styleName="form-control form_control" ui:field="subTxt" />
 				<g:Label ui:field="mandatoryErrorLbl"/>
 			</g:HTMLPanel>
-			<g:Label styleName="col-md-2 col-sm-3 {res1.css.lables}" ui:field="lblMessage" />
+			<g:Label styleName="col-md-2 col-sm-3 lables" ui:field="lblMessage" />
 			<g:HTMLPanel styleName="col-md-10 col-sm-9">
-				<g:RichTextArea	styleName="form-control {res1.css.form_control}" ui:field="msgTxa"/>
+				<g:RichTextArea	styleName="form-control form_control" ui:field="msgTxa"/>
 				<g:Label ui:field="mandatoryErrorRichTextArea"/>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-			<g:Label styleName="{res1.css.lblNoteTxt}" ui:field="noteTxt"></g:Label>
+			<g:Label styleName="lblNoteTxt" ui:field="noteTxt"></g:Label>
 			<!-- <g:HTMLPanel styleName="{res.css.classPageEmailButtonContainer}">
 				<g:HTMLPanel styleName="{res.css.classPageEmailButtonBg}">
 					<gg:BlueButtonUc styleName="{res.css.classPageEmailButtonTitle}" ui:field="btnSend" />
 				</g:HTMLPanel>
 				<g:Label styleName="{res.css.classPageEmailButtonCancel}" ui:field="cancelLbl" />
 			</g:HTMLPanel> -->
-			<g:HTMLPanel styleName="{res1.css.formViewButtonContainer}">
+			<g:HTMLPanel styleName="formViewButtonContainer">
  					<g:Button styleName="primary" ui:field="btnSend" />
-				<g:Label styleName="{res1.css.classPageEmailButtonCancel}" ui:field="cancelLbl" />
+				<g:Label styleName="classPageEmailButtonCancel" ui:field="cancelLbl" />
 			</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

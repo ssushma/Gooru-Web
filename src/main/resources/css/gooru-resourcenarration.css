@@ -19,6 +19,7 @@
 #narrartionpopupPnl .popupInner {
 	text-align: center;
 	padding: 20px;
+	background: none;
 }
 
 #narrartionpopupPnl .popupHeader {

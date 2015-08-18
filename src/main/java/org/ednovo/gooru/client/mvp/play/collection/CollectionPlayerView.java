@@ -30,7 +30,6 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePopupViewWithHandlers;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
@@ -639,7 +638,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 				if(resourcePlayerFirstTimeUser==null){
 					logOutToolTip=new GlobalTooltipWithButton(i18n.GL1614(),i18n.GL1615(), i18n.GL0543());
 					logOutToolTip.getCloseButton().addClickHandler(new StoreCookieHandler());
-					logOutToolTip.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
+					logOutToolTip.setGlassStyleName("playerAddToolTipGlassStyle");
 					logOutToolTip.setStyleName("");
 					logOutToolTip.getElement().getStyle().setZIndex(999999);
 					logOutToolTip.getElement().getStyle().clearLeft();
@@ -833,7 +832,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			narrationText=StringUtil.replaceAnchoreWithTarget(narrationText);
 			this.collectionItemDo=collectionItemDo;
 			this.collectionDo=collectionDo;
-			if(narrationText.length()>0 && narrationText.length()>240){
+			if(narrationText != null && narrationText.length()>0 && narrationText.length()>240){
 				lblNarrationText.getElement().setInnerHTML(narrationText.substring(0, 240)+"...");
 				lblSeeMore.setVisible(true);
 				lblSeeMore.setText(i18n.GL0508());
