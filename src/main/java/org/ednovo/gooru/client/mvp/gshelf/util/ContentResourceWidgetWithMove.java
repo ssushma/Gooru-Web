@@ -119,7 +119,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String ASSESSMENT = "assessment";
 	private static final String FOLDER = "Folder";
 	private static final String COURSE = "Course";
-	
+
 
 	boolean youtube,isPdf=false;
 	boolean isHavingBadWords=false;
@@ -785,7 +785,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				}else{
 				start=Integer.toString(1);
 			}
-			
+
 			collectionItem.setStart(start);
 			collectionItem.setStop(enteredStopPage);
 			collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, start, enteredStopPage);
@@ -808,20 +808,20 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 
 		Integer enteredStopPage =null;
 		Integer startpdfpage =null;
-		
+
 		if(stopPage!=null && !stopPage.equalsIgnoreCase("")){
 		enteredStopPage = Integer.parseInt(stopPage);
 		}else {
 		enteredStopPage = totalPage;
 		}
-		
-		
+
+
 		if(startpage!=null&& !startpage.equalsIgnoreCase("")){
 			startpdfpage = Integer.parseInt(startpage);
 			}else{
 			startpdfpage=1;
 			}
-		
+
 		if(enteredStopPage > totalPage){
 			lblError.setText(VALID_END_PAGE);
 			isValid = false;
@@ -1088,7 +1088,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		};
 	}
-	
+
 	private String getViewType() {
 		return AppClientFactory.getPlaceManager().getRequestParameter("view",COURSE);
 	}
@@ -1323,9 +1323,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			startpdfPageNumber.setText(startPageNumber);
 			StringUtil.setAttributes(startpdfPageNumber.getElement(), startPageNumber, startPageNumber);
 		}
-	
+
 	}
-	
+
 	public void setYoutubeData(){
 		isPdf=false;
 		imgDisplayIcon.setUrl("images/timeIcon.png");
@@ -1354,7 +1354,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		if (!"00:00:00".equalsIgnoreCase(stopTime) ||!"00:00:00".equalsIgnoreCase(startTime)) {
 				String[] VideoStartTime=startTime.split(":");
 				String[] VideoEndTime=stopTime.split(":");
-				String startMm=Integer.parseInt(VideoStartTime[0])*60+Integer.parseInt(VideoStartTime[1])+"";
+				String startMm=(Integer.parseInt(VideoStartTime[0])*60+Integer.parseInt(VideoStartTime[1]))+"";
 				String startSec =null;
 				String endSec = null;
 				if (VideoStartTime.length>2){
@@ -1362,7 +1362,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				}else{
 					startSec="00";
 				}
-				String endMm=Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1])+"";
+				String endMm=(Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1]))+"";
 				if (VideoEndTime.length>2){
 					endSec=Integer.parseInt(VideoEndTime[2])+"";
 				}else{
@@ -1400,6 +1400,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				});
 			}
 		}
-	
+
 	}
 }
