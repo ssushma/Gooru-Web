@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.classpage.event.setClassImageEvent;
@@ -53,6 +54,8 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -101,6 +104,8 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	@UiField Button saveBtn,uploadImagePanel;
 
 	@UiField Image classImage;
+	
+	private String DEFAULT_CLASSPAGE_IMAGE = "images/Classpage/default-classpage.png";
 
 	GooruGradesPresenter gooruGradesPresenterWidget = AppClientFactory.getInjector().getGooruGradePresenter();
 
@@ -207,9 +212,15 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	setClassImageHandler imageHandler = new setClassImageHandler() {
 
 		@Override
-		public void setImage(String fileName) {
-			classImage.setUrl(fileName);
+		public void setImage(String fileName, String mediaFile) {
+			String imageUrlValue = fileName+"?id="+Math.random();
+			ThumbnailDo thumbnailObj = new ThumbnailDo();
+			thumbnailObj.setUrl(imageUrlValue);
+			classpageDo.setThumbnails(thumbnailObj);
+			classImage.setUrl(imageUrlValue);
+			classImage.getElement().setAttribute("mediaFileName", mediaFile);
 			classImage.setVisible(true);
+			setSaveEnabled(true);
 			uploadImagePanel.setText(i18n.GL0138());
 		}
 	};
@@ -506,7 +517,16 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 						classImage.setVisible(true);
 						classImage.setUrl(classpageDo.getThumbnails().getUrl());
 						uploadImagePanel.setText(i18n.GL0138());
+						
 					}
+					classImage.addErrorHandler(new ErrorHandler() {
+						
+						@Override
+						public void onError(ErrorEvent event) {
+							classImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
+							
+						}
+					});
 				}else{
 					uploadImagePanel.setText(i18n.GL0912());
 					classImage.setVisible(false);
@@ -608,7 +628,12 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 								setSaveEnabled(true);
 								saveBtn.setVisible(false);
 								String sharing = Boolean.toString(privacy);
-								getUiHandlers().updateClass(title,grade,sharing);
+								String fileNametobeSent = null;
+								if(classImage.getElement().getAttribute("mediaFileName")!=null)
+								{
+									fileNametobeSent = classImage.getElement().getAttribute("mediaFileName");
+								}
+								getUiHandlers().updateClass(title,grade,sharing,fileNametobeSent);
 							}catch(Exception e){
 								AppClientFactory.printInfoLogger("e...."+e.getMessage());
 							}

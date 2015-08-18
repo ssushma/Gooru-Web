@@ -333,22 +333,9 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void saveImageClass(String gooruOid,String fileName){
-		ClasspageDo classpageDo = new ClasspageDo();
-		classpageDo.setMediaFilename(fileName);
-		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(gooruOid, null,null,fileName,null,null,null, new AsyncCallback<ClasspageDo>() {
-
-			@Override
-			public void onSuccess(ClasspageDo result) {
-				getView().closeImageUploadWidget();
-				getView().resetImageUploadWidget();
-				AppClientFactory.getEventBus().fireEvent(new setClassImageEvent(fileNameWithRepository));
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-		});
+		getView().closeImageUploadWidget();
+		getView().resetImageUploadWidget();
+		AppClientFactory.getEventBus().fireEvent(new setClassImageEvent(fileNameWithRepository,fileNameWithoutRepository));
 	}
 
 
