@@ -42,11 +42,11 @@ public class SlmExternalAssessmentForm extends Composite {
 	@UiField TextArea evidence;
 
 	@UiField Anchor submitTxt, inProgressTxt;
-	
+
 	@UiField InlineLabel scoreErrorLbl, evidenceErrorLbl, scoreLbl, evidenceLbl;
-	
+
 	private static final String ERROR_LBL_COLOR = "#EE1E7B";
-	
+
 	int attemptedScore;
 
 	private PlanProgressDo planProgressDo = null;
@@ -71,7 +71,7 @@ public class SlmExternalAssessmentForm extends Composite {
 			scoreTextBox.setText(planProgressDo.getScoreInPercentage()+"");
 		}
 	}
-	
+
 	private void setIds() {
 		evidenceErrorLbl.setVisible(false);
 		scoreErrorLbl.setVisible(false);
@@ -96,21 +96,21 @@ public class SlmExternalAssessmentForm extends Composite {
 			validateScoreEvidence();
 		}
 	}
-	
+
 	private class ValidateScore implements KeyUpHandler{
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			validateScore();
 		}
 	}
-	
+
 	private class ValidateScoreBlur implements BlurHandler{
 		@Override
 		public void onBlur(BlurEvent event) {
 			validateScore();
 		}
 	}
-	
+
 	private class NumbersOnly implements KeyPressHandler{
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
@@ -126,7 +126,7 @@ public class SlmExternalAssessmentForm extends Composite {
             }
 		}
 	}
-	
+
 	private boolean validateScore() {
 		boolean isScore = false;
 		String score = scoreTextBox.getText();
@@ -145,16 +145,16 @@ public class SlmExternalAssessmentForm extends Composite {
 		}
 		return isScore;
 	}
-	
+
 	private void validateScoreEvidence() {
 		boolean isScore = false, isEvidence = false;
 		isScore = validateScore();
-		
+
 		String evidenceStr = evidence.getText();
 		if(evidenceStr.isEmpty()){
 			evidence.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
 			evidenceErrorLbl.setVisible(false);
-		}else if(evidenceStr != null || evidenceStr.length()>0){
+		}else if(evidenceStr != null && evidenceStr.length()>0){
 			if(evidenceStr.length()>250) {
 				evidenceErrorLbl.setVisible(true);
 			} else {
@@ -174,7 +174,7 @@ public class SlmExternalAssessmentForm extends Composite {
 		submitTxt.setVisible(isVisible);
 		inProgressTxt.setVisible(!isVisible);
 	}
-	
+
 	private void logDataEvent() {
 			try
 			{

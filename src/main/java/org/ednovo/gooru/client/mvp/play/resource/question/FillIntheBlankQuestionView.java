@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -60,7 +60,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FillIntheBlankQuestionView extends Composite implements ClientConstants{
-	
+
 	@UiField Button checkAnswer;
 	@UiField FlowPanel optionsContainer,resultPanel,questionsMainPanel;
 	@UiField Label messageBodyText;
@@ -70,15 +70,15 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 	private String[] enteredAnswerText=new String[3];
 	private CollectionItemDo collectionItemDo=null;
 	private boolean isCheckButtonEnabled=false;
-	
+
 	private AttemptedAnswersDo attemptedAnswerDo=null;
-	
+
 	private static OpendEndedQuestionViewUiBinder uiBinder = GWT.create(OpendEndedQuestionViewUiBinder.class);
 
 	interface OpendEndedQuestionViewUiBinder extends UiBinder<Widget, FillIntheBlankQuestionView> {
-		
+
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	/**
 	 * Default constructor
@@ -90,13 +90,13 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 		answerText.getElement().setInnerHTML(i18n.GL0665());
 		answerText.getElement().setAttribute("alt",i18n.GL0665());
 		answerText.getElement().setAttribute("title",i18n.GL0665());
-		
+
 		checkAnswer.setText(i18n.GL0666());
 		checkAnswer.getElement().setAttribute("alt",i18n.GL0666());
 		checkAnswer.getElement().setAttribute("title",i18n.GL0666());
-		
+
 		messageBodyText.getElement().setAttribute("title",i18n.GL0666());
-		
+
 		renderFibQuestion();
 		setId();
 	}
@@ -154,7 +154,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 					}
 				}
 			}
-			
+
 			fibText.setHTML(fibQuestionTxt);
 			optionsContainer.add(fibText);
 		}
@@ -210,10 +210,10 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName("openEndedQuestionSubmitButton");
 			checkAnswer.addStyleName("hintsInActiveButton");
-		}		
+		}
 	}
 	/**
-	 * THis method will highlight the text boxes if the correct answer matched 
+	 * THis method will highlight the text boxes if the correct answer matched
 	 */
 	private void highlightTextBoxes(){
 		if(this.collectionItemDo!=null && this.collectionItemDo.getResource()!=null){
@@ -239,7 +239,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 					  	AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 						answerAttemptDo.setText(StringUtil.replaceSpecial(textBoxAnswerDoAnswerText));
 						answerAttemptDo.setAnswerId(questionAnswerDo.getAnswerId());
-						answerAttemptDo.setOrder(i+1+"");
+						answerAttemptDo.setOrder((i+1)+"");
 						userAttemptedOptionsList.add(answerAttemptDo);
 						if(StringUtil.isEmpty(textBoxAnswerDoAnswerText)){
 							answerAttemptDo.setSkip(true);
@@ -264,13 +264,13 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 					boolean isFirstAttempt=false;
 					isFirstAttempt=true;
 					score=isFibStatus?1:0;
-					
+
 					userAttemptedAnswerObject(userAttemptedOptionsList);
 					String attemptStatus=isFibStatus==true?"correct":"wrong";
 					createSesstionItemAttemptOe(attemptAnswerIds,attemptedAnswersList,attemptStatus);
 					setFibAnswerIdsWithTime(attemptAnswerIds,attemptTrySequenceArray,attemptStatusArray,score,isFirstAttempt,attemptedAnswersList);
 			 }
-		 }	
+		 }
 	}
 	/**
 	 * This method is used to set the answers data when navigating through resources
@@ -336,7 +336,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 		Label answerWrongImagePanel=new Label();
 		answerWrongImagePanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 		answerWrongImagePanel.addStyleName("resultPanelAnswerImageFIB");
-		
+
 		HTML answerOptiontext=new HTML();
 		answerOptiontext.setHTML(i18n.GL1456()+i18n.GL_SPL_SEMICOLON()+" "+correctAnswer);
 		answerOptiontext.setStyleName("resultPanelText");
@@ -357,20 +357,20 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 		setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 	}
 	public void setAttemptStatus(String collecionItemId, AttemptedAnswersDo attempteAnswersDo){
-		
+
 	}
 	public void createSesstionItemAttemptOe(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus){
-		
+
 	}
 	public void isUserAnswerAttempted(boolean isUserAttemptedResult){
 	}
 	public void setFibAnswerIdsWithTime(List<Integer> attemptAnswerIds,List<Integer> attemptTrySequenceArray,List<Integer> attemptStatusArray,Integer score,boolean isFirstAttempt,List<String> attemptedAnswersList){
-		
+
 	}
 	public void increaseUserAttemptCount(){
-		
+
 	}
-	
+
 	public void userAttemptedAnswerObject(List<AnswerAttemptDo> userAttemptedOptionsList) {
 	}
 }

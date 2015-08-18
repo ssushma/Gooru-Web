@@ -242,7 +242,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 					  	AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 						answerAttemptDo.setText(StringUtil.replaceSpecial(textBoxAnswerDoAnswerText));
 						answerAttemptDo.setAnswerId(questionAnswerDo.getAnswerId());
-						answerAttemptDo.setOrder(i+1+"");
+						answerAttemptDo.setOrder((i+1)+"");
 						userAttemptedOptionsList.add(answerAttemptDo);
 						if(StringUtil.isEmpty(textBoxAnswerDoAnswerText)){
 							answerAttemptDo.setSkip(true);
