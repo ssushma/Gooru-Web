@@ -39,7 +39,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.server.AppSessionHolder;
 import org.ednovo.gooru.application.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.application.server.request.ServiceProcessor;
@@ -58,7 +57,6 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
