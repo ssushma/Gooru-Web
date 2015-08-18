@@ -158,7 +158,7 @@ public class AssessmentsPlayerMetadataPresenter extends PresenterWidget<IsAssess
 				String gooruFlagId="";
 				if(result!=null){
 					if(result.size()==0){
-						getView().getFlagButton().setText(i18n.GL0556());
+						getView().getFlagButton().setText(i18n.GL3493());
 						getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 						getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 					}else{
@@ -166,7 +166,7 @@ public class AssessmentsPlayerMetadataPresenter extends PresenterWidget<IsAssess
 							if(result.get(i).getDeleteContentGooruOid()!=null){
 								gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
 							}
-							getView().getFlagButton().setText(i18n.GL0557());
+							getView().getFlagButton().setText(i18n.GL3498());
 							getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 							getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 						}

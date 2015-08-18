@@ -38,7 +38,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -67,7 +66,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	private EditClasspagePresenter editClasspagePresenter=null;
 
 	@Inject
-	public AddAssignmentContainerPresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddAssignmentContainerView view) {
+	public AddAssignmentContainerPresenter(EventBus eventBus, IsAddAssignmentContainerView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}

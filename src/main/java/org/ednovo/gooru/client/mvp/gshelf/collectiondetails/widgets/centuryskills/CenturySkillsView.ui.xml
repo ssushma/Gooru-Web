@@ -5,9 +5,6 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res" />
-	<ui:with
-		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle"
-		field="res1" />
 		<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<!-- Centure Skill -->
@@ -38,4 +35,4 @@
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel>
 	<!-- end -->
-</ui:UiBinder> 
+</ui:UiBinder>

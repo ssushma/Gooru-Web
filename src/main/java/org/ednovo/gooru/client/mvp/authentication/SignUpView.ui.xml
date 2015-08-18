@@ -3,36 +3,32 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc"
 	xmlns:dt="urn:import:com.google.gwt.user.datepicker.client">
 	 <ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle"
-		field="res1" /> 
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res" />
-
-
-	<g:HTMLPanel styleName="{res.css.LoginpopupMain}" ui:field="panelCreateAccount">
-		<g:HTMLPanel styleName="{res.css.LoginpopupInner}">
-			<g:HTMLPanel styleName="{res.css.LoginpopupHeader}">
+		field="res1" />
+	<g:HTMLPanel styleName="LoginpopupMain" ui:field="panelCreateAccount">
+		<g:HTMLPanel styleName="LoginpopupInner">
+			<g:HTMLPanel styleName="LoginpopupHeader">
 				<g:HTMLPanel styleName="row">
 					<g:HTMLPanel styleName="col-md-8 col-xs-8">
 						<g:Label  ui:field="lblTitle"></g:Label>
 					</g:HTMLPanel>
-					<g:HTMLPanel styleName="col-md-4 col-xs-4 {res.css.closeContainer}">
-						<g:Anchor styleName="{res.css.closeButton}" ui:field="lblCancel"></g:Anchor>
+					<g:HTMLPanel styleName="col-md-4 col-xs-4 closeContainer">
+						<g:Anchor styleName="closeButton" ui:field="lblCancel"></g:Anchor>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
-			   </g:HTMLPanel>	
+			   </g:HTMLPanel>
 			<!-- Sign Up Container -->
 			<g:HTMLPanel ui:field="panelSignUp">
-				<g:HTMLPanel  styleName="{res.css.LoginpopupContent}" ui:field="panelLoginPopupContent">
-					<g:Label styleName="{res.css.LoginPopUpgreensmall}" ui:field="lblJoinGooruCommunity" />
-					<g:Label styleName="{res.css.subheader}" ui:field="lblDescription" />
+				<g:HTMLPanel  styleName="LoginpopupContent" ui:field="panelLoginPopupContent">
+					<g:Label styleName="LoginPopUpgreensmall" ui:field="lblJoinGooruCommunity" />
+					<g:Label styleName="subheader" ui:field="lblDescription" />
 					<g:Label styleName="{res1.css.h1}" ui:field="lblParentInfo" />
-					<g:HTMLPanel styleName="{res.css.signInContainer}">
-						<g:Button styleName="{res.css.gConnectButton}" ui:field="btnSignUpWithGoogle" />
-						<g:HTMLPanel styleName="{res.css.whyGoogle}">
-							<g:Label styleName="{res.css.whyGoogle}" ui:field="lblWhyWithGoogle" />
+					<g:HTMLPanel styleName="signInContainer">
+						<g:Button styleName="gConnectButton" ui:field="btnSignUpWithGoogle" />
+						<g:HTMLPanel styleName="whyGoogle">
+							<g:Label styleName="whyGoogle" ui:field="lblWhyWithGoogle" />
 							<g:HTMLPanel styleName="{res1.css.questionHoverContainer}">
-								<g:Label styleName="{res.css.questionHover}" ui:field="lblQuestionMark" />
+								<g:Label styleName="questionHover" ui:field="lblQuestionMark" />
 								<g:HTMLPanel styleName="{res1.css.tooltipContainer}"
 									ui:field="panelCode">
 									<g:HTMLPanel styleName="{res1.css.arrowBorder}"></g:HTMLPanel>
@@ -45,12 +41,12 @@
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.divider}">
-							<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
+						<g:HTMLPanel styleName="divider">
+							<g:Label styleName="dividerText" ui:field="lblOr" />
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.emailSignIn}">
-							<g:Label styleName="{res.css.lblDontHaveGoogleAccount}" ui:field="lblDontHaveGoogleAccount" />
-							<g:Anchor styleName="{res.css.lnkSignUpWithEmail}" ui:field="achSignUpWithEmail" />
+						<g:HTMLPanel styleName="emailSignIn">
+							<g:Label styleName="lblDontHaveGoogleAccount" ui:field="lblDontHaveGoogleAccount" />
+							<g:Anchor styleName="lnkSignUpWithEmail" ui:field="achSignUpWithEmail" />
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res1.css.alreadyHaveContainer}">
@@ -68,4 +64,4 @@
 
 	</g:HTMLPanel>
 
-</ui:UiBinder> 
+</ui:UiBinder>
