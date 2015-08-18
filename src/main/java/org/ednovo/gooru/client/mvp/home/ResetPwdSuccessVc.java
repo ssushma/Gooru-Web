@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -47,28 +47,28 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class ResetPwdSuccessVc extends Composite{
-	
+
 	private AppPopUp appPopUp;
 
 	@UiField
 	BlueButtonUc okBtnUc;
-	
+
 	@UiField
 	Label resetPasswordLbl;
 	@UiField FlowPanel buttonContainer;
-	
+
 	private static resetPasswordSuccessVcUiBinder uiBinder = GWT
 			.create(resetPasswordSuccessVcUiBinder.class);
 
 	interface resetPasswordSuccessVcUiBinder extends
 			UiBinder<Widget, ResetPwdSuccessVc> {
 	}
-	
+
 	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor , assign user name in reset password success popup
-	 * 
+	 *
 	 * @param userName of password request user
 	 */
 	public ResetPwdSuccessVc(String userName) {
@@ -80,14 +80,14 @@ public class ResetPwdSuccessVc extends Composite{
 		resetPasswordLbl.getElement().setId("lblResetPasswordLbl");
 		resetPasswordLbl.getElement().setAttribute("alt",userName+( i18n.GL_SPL_EXCLAMATION()+" "+i18n.GL1256()));
 		resetPasswordLbl.getElement().setAttribute("title",userName+( i18n.GL_SPL_EXCLAMATION()+" "+i18n.GL1256()));
-		
+
 		buttonContainer.getElement().setId("fpnlButtonContainer");
-		
+
 		appPopUp.show();
 		appPopUp.center();
-		appPopUp.getMainPanel().removeStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVVSmall());
-		appPopUp.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
-		appPopUp.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainResetSucessStyle());
+		appPopUp.getMainPanel().removeStyleName("PopupMainVVSmall");
+		appPopUp.getMainPanel().addStyleName("PopupMainVSmall");
+		appPopUp.getMainPanel().addStyleName("PopupMainResetSucessStyle");
 		okBtnUc.setText(i18n.GL0190());
 		okBtnUc.getElement().setId("btnOkBtnUc");
 		okBtnUc.getElement().setAttribute("alt",i18n.GL0190());
@@ -95,9 +95,9 @@ public class ResetPwdSuccessVc extends Composite{
 		Window.enableScrolling(false);
 		AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
 	}
-	
+
 	/**
-	 * Redirect to home page while clicking ok button on reset password success popup 
+	 * Redirect to home page while clicking ok button on reset password success popup
 	 * @param clickEvent instance of {@link ClickEvent}
 	 */
 	@UiHandler("okBtnUc")

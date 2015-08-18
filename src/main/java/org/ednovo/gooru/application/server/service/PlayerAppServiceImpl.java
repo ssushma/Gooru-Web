@@ -151,7 +151,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				JSONArray collectionList=resourceCollectionObject.isNull("searchResults")?null:resourceCollectionObject.getJSONArray("searchResults");
 				resourceCollectionDo.setTotalHitCount(resourceCollectionObject.isNull("totalHitCount")?null:resourceCollectionObject.getInt("totalHitCount"));
 				List<ResourceSearchResultDo> resourceSearchResultList=new ArrayList<ResourceSearchResultDo>();
-				if(collectionList!=null&collectionList.length()>0){
+				if(collectionList!=null && collectionList.length()>0){
 					for(int i=0;i<collectionList.length();i++){
 						if(collectionList.getJSONObject(i)!=null){
 							resourceSearchResultList.add(ResourceCollectionDeSerializer.deserializeRecord(collectionList.getJSONObject(i)));
@@ -1013,7 +1013,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			 JSONObject createStarRatingsJsonObj = new JSONObject();
 			 createStarRatingsJsonObj.put(ASSOCIATE_GOORU_OID, associateGooruOid);
 			 createStarRatingsJsonObj.put(SCORE, starRatingValue);
-			 if(userReview!=null || !userReview.equals("")){
+			 if(userReview!=null && !userReview.equals("")){
 				 createStarRatingsJsonObj.put(FREE_TEXT, userReview);
 			 }
 			 createStarRatingsJsonObj.put("target",new JSONObject().put("value","content"));

@@ -114,7 +114,7 @@ public class ResetPasswordVc extends Composite{
 			appPopUp.setContent(i18n.GL0062(), uiBinder.createAndBindUi(this));
 			appPopUp.show();
 			appPopUp.center();
-			appPopUp.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
+			appPopUp.getMainPanel().addStyleName("PopupMainVSmall");
 			newPasswordText.setText(i18n.GL1254());
 			newPasswordText.getElement().setId("lblNewPasswordText");
 			newPasswordText.getElement().setAttribute("alt",i18n.GL1254());

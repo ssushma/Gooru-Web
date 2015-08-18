@@ -27,10 +27,6 @@ package org.ednovo.gooru.application.client.gin;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
-import org.ednovo.gooru.application.client.home.HomePresenter;
-import org.ednovo.gooru.application.client.home.HomePresenter.IsHomeProxy;
-import org.ednovo.gooru.application.client.home.HomeView;
-import org.ednovo.gooru.application.client.home.IsHomeView;
 import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
 import org.ednovo.gooru.application.client.home.banner.HomeBannerView;
 import org.ednovo.gooru.application.client.home.banner.IsHomeBannerView;
@@ -468,18 +464,9 @@ import org.ednovo.gooru.client.mvp.settings.IsUserSettingsView;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter.IsUserSettingProxy;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.IsCollectionAssignTab;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.IsCollectionCollaboratorsTab;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.IsCollectionInfoTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.IsAddResourceView;
@@ -544,8 +531,6 @@ public class AppModule extends AppPresenterModule {
 				.to(PlaceTokens.HOME);
 		bindPresenter(PrimePresenter.class, IsPrimeView.class, PrimeView.class,
 				IsPrimeProxy.class);
-		bindPresenter(HomePresenter.class, IsHomeView.class, HomeView.class,
-				IsHomeProxy.class);
 		bindPresenter(WrapPresenter.class, IsWrapView.class, WrapView.class,
 				IsWrapProxy.class);
 		bindPresenter(SearchMainPresenter.class, IsSearchMainView.class,
@@ -569,12 +554,6 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenter(ProfilePagePresenter.class, IsProfilePageView.class,
 				ProfilePageView.class, IsProfilePageProxy.class);
-
-		bindPresenterWidget(CollectionResourceTabPresenter.class,
-				IsCollectionResourceTabView.class,
-				CollectionResourceTabView.class);
-		bindPresenterWidget(CollectionInfoTabPresenter.class,
-				IsCollectionInfoTabView.class, CollectionInfoTabView.class);
 
 		bindPresenterWidget(ImageUploadPresenter.class,
 				IsImageUploadView.class, ImageUploadView.class);
@@ -614,8 +593,6 @@ public class AppModule extends AppPresenterModule {
 		bindConstant().annotatedWith(GaAccount.class).to(GA_ACCOUNT);
 		bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
 
-		bindPresenterWidget(CollectionAssignTabPresenter.class,
-				IsCollectionAssignTab.class, CollectionAssignTabView.class);
 		bindPresenterWidget(SignUpPresenter.class, IsSignUpView.class,SignUpView.class);
 		bindPresenter(CollectionPlayerPresenter.class, IsCollectionPlayerView.class, CollectionPlayerView.class,IsCollectionPlayerProxy.class);
 		bindPresenter(FolderTocPresenter.class, IsFolderTocView.class, FolderTocView.class,IsFolderTocProxy.class);

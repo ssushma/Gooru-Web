@@ -209,7 +209,9 @@ public class DateBoxUc extends FlowPanel{
 						String selectedMonth = (Integer.parseInt(datePickerUc.listMonths.getValue(datePickerUc.listMonths.getSelectedIndex())) + 1) + "";
 						dateBox.setText((selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateString.substring(2));
 						Element errorMessageElement=Document.get().getElementById("datePickerErrorMessageLabel");
-						errorMessageElement.getStyle().setDisplay(Display.NONE);
+						if(errorMessageElement != null){
+							errorMessageElement.getStyle().setDisplay(Display.NONE);
+						}
 					}
 				}else{
 					if(selectedDate.after(new Date())||selectedDate.equals(new Date())){
@@ -230,8 +232,9 @@ public class DateBoxUc extends FlowPanel{
 
 						dateBox.setText((selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateString.substring(2));
 						Element errorMessageElement=Document.get().getElementById("datePickerErrorMessageLabel");
-						errorMessageElement.getStyle().setDisplay(Display.NONE);
-
+						if(errorMessageElement != null){
+							errorMessageElement.getStyle().setDisplay(Display.NONE);
+						}
 					}
 				}
 			} catch (Exception e) {

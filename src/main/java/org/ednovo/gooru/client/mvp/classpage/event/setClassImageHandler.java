@@ -23,6 +23,6 @@ import com.google.gwt.event.shared.EventHandler;
  */
 public interface setClassImageHandler extends EventHandler{
 	
-	void setImage(String fileName);
+	void setImage(String fileName,String mediaName);
 
 }

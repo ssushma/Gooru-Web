@@ -42,15 +42,10 @@ import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
-import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
-import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
-import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.home.SampleReportView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
@@ -133,16 +128,16 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	AlertMessageUc alertMessageUc;
 	private boolean isValid = true;
 	private boolean toClear = false;
-	
+
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
-	
+
 	List<LiPanelWithClose> searchLiPanelWithCloseArray = new ArrayList<>();
-	
+
 	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
-	
+
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 	TreeMap<Integer, Integer> selectedGrades = new TreeMap<Integer, Integer>();
@@ -338,7 +333,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		});
 
 	}
-	
+
 	@UiHandler("btnBrowseStandard")
 	public void onClickBrowseStandards(ClickEvent event){
 		getAddStandards();
@@ -969,7 +964,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 											 String classUid = null;
 											 String status = null;
 											 boolean sharing = false;
-											 
+
 											 if(result.getClassType()!=null) {
 												 if(result.getClassType().equalsIgnoreCase("new-class")) {
 													 classUid = result.getClassUid();
@@ -983,7 +978,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 													 }
 												 }
 											 }
-											 
+
 											 if (classUid==null) {
 												Window.enableScrolling(false);
 												AppClientFactory
@@ -1163,7 +1158,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	public void setUlSubjectPanel(UlPanel ulSubjectPanel) {
 		this.ulSubjectPanel = ulSubjectPanel;
 	}
-	
+
 	public final void populateStandardValues(){
         for (String standardsTypesArray1 : standardsTypesArray) {
             List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
@@ -1176,9 +1171,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
                     }else{
                         liPanel.getElement().setId(standardsDescriptionList.get(j));
                     }
-                   
+
                     if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
-      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;"); 	  
+      		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
       		      else if((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS"))
       		        {
@@ -1190,7 +1185,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
       		      else if((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")){
       		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
-                    
+
                     headerDiv.setStyleName("liPanelStyle");
                 }else{
                 	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
@@ -1231,8 +1226,8 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
         }
 }
 public void checkStandarsList(List<String> standarsPreferencesList) {
-		
-		
+
+
 		if(standarsPreferencesList!=null){
 			if(standarsPreferencesList.contains("CCSS")){
 				isCCSSAvailable = true;
@@ -1280,5 +1275,5 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 		}
 	}
 
-	
+
 }

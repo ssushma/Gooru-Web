@@ -1,7 +1,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"	field="res1" />
 	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel>
 		 <g:HTMLPanel styleName="skillsCategory">

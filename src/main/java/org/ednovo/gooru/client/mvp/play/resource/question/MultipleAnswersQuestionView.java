@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -54,34 +54,34 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract  class MultipleAnswersQuestionView extends Composite{
-	
+
 	@UiField Button checkAnswer;
 	@UiField FlowPanel optionsContainer,questionsMainPanel;
 	@UiField Label messageBodyText;
 	@UiField HTMLPanel answerText;
 	@UiField InlineLabel btnYes,btnNo;
 	private boolean isCheckButtonEnabled=true;
-	
+
 	private boolean isChekcAnswerButtonClicked=false;
-	
+
 	private CollectionItemDo collectionItemDo;
-	
+
 	private AttemptedAnswersDo attemptedAnswerDo=null;
-	
+
 	private static MultipleAnswerQuestionViewUiBinder uiBinder = GWT.create(MultipleAnswerQuestionViewUiBinder.class);
 
 	interface MultipleAnswerQuestionViewUiBinder extends UiBinder<Widget, MultipleAnswersQuestionView> {
-		
+
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	public MultipleAnswersQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		questionsMainPanel.getElement().setId("fpnlQuestionContainer");
 		setQuestionTypeCaption();
 	}
-	
+
 	@UiConstructor
 	public MultipleAnswersQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -94,13 +94,13 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 		answerText.getElement().setInnerHTML(i18n.GL0665());
 		checkAnswer.setText(i18n.GL0666());
 	}
-	
+
 	private void setQuestionTypeCaption(){
 		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
 		btnYes.setText(i18n.GL_GRR_YES());
 		btnNo.setText(i18n.GL_GRR_NO());
 	}
-	
+
 	private void renderQuestionAnswerOptions(){
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null){
 				TreeSet<QuestionAnswerDo> answersSet=collectionItemDo.getResource().getAnswers();
@@ -121,7 +121,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 					}
 		}
 	}
-	
+
 	public void showPreviousResult(int answerId,CheckBoxAnswerOptionView checkBoxAnswerOptionView){
 		if(attemptedAnswerDo!=null){
 		 Map<Integer,Boolean> answerOptionCount=attemptedAnswerDo.getAnswerOptionResult();
@@ -148,7 +148,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 			 }
 		}
 	}
-	
+
 	public void showPreviousAttemptResult(int answerId,CheckBoxAnswerOptionView checkBoxAnswerOptionView){
 		if(attemptedAnswerDo!=null){
 			if(attemptedAnswerDo.getAnswerId()==answerId){
@@ -169,14 +169,14 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 		private QuestionAnswerDo questionAnswerDo=null;
 		private int attemptSequence=1;
 		private boolean isYesButton=false;
-		
+
 		public CheckBoxButtonSelectEvent(CheckBoxAnswerOptionView checkBoxAnswerOptionView,QuestionAnswerDo questionAnswerDo,int attemptSequence,boolean isYesButton){
 			this.checkBoxAnswerOptionView=checkBoxAnswerOptionView;
 			this.questionAnswerDo=questionAnswerDo;
 			this.attemptSequence=attemptSequence;
 			this.isYesButton=isYesButton;
 		}
-		
+
 		@Override
 		public void onClick(ClickEvent event) {
 			if(isYesButton&&!this.checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
@@ -198,10 +198,10 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 				setAnswerAttemptSequence(attemptSequence,attemptStatus,questionAnswerDo.getAnswerId());
 				isUserAnswerAttempted(true);
 			}
-		}	
+		}
 	}
-	
-	
+
+
 	private void enableCheckAnswerButton(){
 		int widgetCount=optionsContainer.getWidgetCount();
 		boolean isOptionSelected=false;
@@ -229,7 +229,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 			checkAnswer.addStyleName("hintsInActiveButton");
 		}
 	}
-	
+
 	@UiHandler("checkAnswer")
 	public void checkButtonClickEvent(ClickEvent event){
 		if(isCheckButtonEnabled){
@@ -239,7 +239,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 			checkAnswer.addStyleName("hintsInActiveButton");
 		}
 	}
-	
+
 	private void showCorrectResult(){
 		int widgetCount=optionsContainer.getWidgetCount();
 		boolean mutipleAnswerChoiceStatus=true;
@@ -252,9 +252,9 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
 				AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-				answerAttemptDo.setText(checkBoxAnswerOptionView.getAnswerText()); 
+				answerAttemptDo.setText(checkBoxAnswerOptionView.getAnswerText());
 				answerAttemptDo.setAnswerId(checkBoxAnswerOptionView.getAnswerId());
-				answerAttemptDo.setOrder(i+1+"");
+				answerAttemptDo.setOrder((i+1)+"");
 				answerIds.add(checkBoxAnswerOptionView.getAnswerId());
 				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
 					answerAttemptDo.setText("1");
@@ -308,22 +308,22 @@ public abstract  class MultipleAnswersQuestionView extends Composite{
 		boolean isFirstTry=isChekcAnswerButtonClicked;
 		isChekcAnswerButtonClicked=true;
 		score=mutipleAnswerChoiceStatus?1:0;
-		
+
 		String attemptStatus=mutipleAnswerChoiceStatus==true?"correct":"wrong";
 		userAttemptedValue(userAttemptedValueList);
 		setAnswersDetailsWitithTime(answerIds,mutipleAnswerChoiceStatus?1:0,1,score,!isFirstTry);
 		createSesstionItemAttemptForMultipleAnswer(answerIds,userAttemptedValueList,attemptStatus);
 	}
-	
+
 	public abstract void createSessionItemAttempt(int answerId,String answerAttemptStatus);
 	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
 	public abstract void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId);
 	public void isUserAnswerAttempted(boolean isUserAttemptedResult){}
 	public void setAnswersDetailsWitithTime(List<Integer> answerIds,int answerStatus,int answerSequence,int score,boolean isFirstTry){}
-	
+
 	public abstract void increaseUserAttemptCount();
 	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
 	public abstract void createSesstionItemAttemptForMultipleAnswer(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
 	public abstract void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList);
-	
+
 }
