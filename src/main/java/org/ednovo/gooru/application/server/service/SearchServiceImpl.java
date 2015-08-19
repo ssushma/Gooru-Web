@@ -997,7 +997,12 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				getLogger().info("getResourceSearchResultsJson:::::"+url);
 				JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 				jsonRep=jsonResponseRep.getJsonRepresentation();
-				return descralizeResourceSearchResults(jsonRep.getJsonObject().toString(),searchDo);
+				if(jsonRep!=null && jsonRep.getJsonObject()!=null){
+					return descralizeResourceSearchResults(jsonRep.getJsonObject().toString(),searchDo);
+				}else{
+					SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
+					return searchDOEmpty;
+				}
 			}catch(Exception e){
 				logger.error("Exception::", e);
 			}
@@ -1007,7 +1012,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public SearchDo<ResourceSearchResultDo> descralizeResourceSearchResults(String response, SearchDo<ResourceSearchResultDo> searchDo)	throws GwtException, ServerDownException {
 		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
-		getLogger().info("descralizeResourceSearchResults:::::");
 		try{
 			if(response!=null && !response.trim().isEmpty()){
 				resourceSearchResultDeSerializer.deserializeJsonObject(response, searchDo,"");
