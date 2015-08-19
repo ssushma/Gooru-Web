@@ -1457,4 +1457,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		lblLastEditedBy.setText(lastEditedBy);
 		lblLastEditedBy.setVisible(hasLastModifiedUser);
 	}
+
+	@Override
+	public void invokeSpinner() {
+		shelfFolderTree.clear();
+		shelfFolderTree.add(loadingImage());
+		pnlSlot.clear();
+		pnlSlot.add(loadingImage());
+	}
 }
