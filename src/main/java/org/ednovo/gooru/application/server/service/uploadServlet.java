@@ -1,10 +1,5 @@
 package org.ednovo.gooru.application.server.service;
 
-import gwtupload.server.UploadAction;
-import gwtupload.server.exceptions.UploadActionException;
-import gwtupload.server.exceptions.UploadSizeLimitException;
-import gwtupload.shared.UConsts;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,26 +22,29 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.application.server.request.UrlToken;
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import gwtupload.server.UploadAction;
+import gwtupload.server.exceptions.UploadActionException;
+import gwtupload.server.exceptions.UploadSizeLimitException;
+import gwtupload.shared.UConsts;
 
 public class uploadServlet extends UploadAction{
 	private static final long serialVersionUID = -4035393951562844790L;
 
 	private ClasspageServiceAsync classpageService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(uploadServlet.class);
 
 
 	private static final String REST_ENDPOINT = "rest.endpoint";
@@ -67,7 +65,6 @@ public class uploadServlet extends UploadAction{
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
 		 FileItem uploadedFileItem = null;
 		 String fileName="";
-		 Long fileSize = null;
 		 JSONArray jsonArray = null;
 		 boolean isMultiPart = ServletFileUpload.isMultipartContent(new ServletRequestContext(request));
 		 if(isMultiPart) {
@@ -80,8 +77,7 @@ public class uploadServlet extends UploadAction{
 					@SuppressWarnings("rawtypes")
 					java.util.List items = upload.parseRequest(request);
 
-					byte[] imageBytes=null;
-					String ebookId="";
+
 					 ApplicationContext appContext = new ClassPathXmlApplicationContext(
 						        "gooruContext-service.xml");
 						    Properties restConstants = (Properties) appContext.getBean("restConstants");
@@ -92,26 +88,26 @@ public class uploadServlet extends UploadAction{
 					}
 				  // we only upload one file
 					String stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
-
-					String requestData = "uploadFileName=" + fileName + "&imageURL=&sessionToken=" + stoken;
 					
-
 					try {
 						fileName=URLEncoder.encode(uploadedFileItem.getName(), "UTF-8");
 					} catch (Exception e) {
-						System.out.println("UploadServlet : URLEncoder.encode : "+e);
+						logger.info("Exception:::");
 					}
 
+					String requestData = "uploadFileName=" + fileName + "&imageURL=&sessionToken=" + stoken;
 
 					String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT), UrlToken.FILE_UPLOAD_GET_URL, fileName, stoken);
-					
+
+
+
 					try {
 
 						responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
 						jsonArray = new JSONArray(responsedata);
 
 					} catch (UnsupportedEncodingException e) {
-						System.out.println("UploadServlet : UnsupportedEncodingException : "+e);
+						logger.info("UnsupportedEncodingException:::");
 					}
 
 
@@ -120,7 +116,7 @@ public class uploadServlet extends UploadAction{
 					response.getOutputStream().flush();
 				}
 				catch (FileUploadBase.FileSizeLimitExceededException e) {
-					System.out.println("UploadServlet : FileSizeLimitExceededException : "+e);
+					logger.info("FileSizeLimitExceededException:::");
 					responsedata = "file size error" ;
 					response.setContentType("text/html");
 					response.getOutputStream().print(responsedata);
@@ -128,6 +124,7 @@ public class uploadServlet extends UploadAction{
 			    }
 			}
 			catch(Exception e) {
+				logger.info("Exception1sttry:::");
 			}
 		}
 	}
@@ -139,7 +136,7 @@ public class uploadServlet extends UploadAction{
 			try {
 					ret = testUpload(bytes, data, fileName,fileSize,urlVal);
 			} catch (Exception e) {
-				System.out.println("webInvokeForImage : Upload : "+e);
+				logger.info("webInvokeForImage Exception:::");
 			}
 			return ret;
 		}
@@ -158,9 +155,10 @@ public class uploadServlet extends UploadAction{
 
 
 
-		public String testUpload(byte[] bytes, String data, String fileName,Long fileSize, String urlVal)
+	    public String testUpload(byte[] bytes, String data, String fileName,Long fileSize, String urlVal)
                 throws Exception {
             String ret = "";
+            logger.info("upload Url:::"+urlVal);
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpPost httppost = new HttpPost(urlVal);
             MultipartEntityBuilder reqEntity=MultipartEntityBuilder.create();
@@ -172,6 +170,7 @@ public class uploadServlet extends UploadAction{
             if (resEntity != null) {
                 ret = EntityUtils.toString(resEntity);
             }
+        	logger.info("upload response:::"+ret);
             return ret;
         }
 
@@ -183,16 +182,17 @@ public class uploadServlet extends UploadAction{
 		   * @throws RuntimeException
 		   */
 		  @Override
-		public void checkRequest(HttpServletRequest request) {
-			try {
-				if (request.getContentLength() > 10 * 1024 * 1024) {
-					throw new UploadSizeLimitException(maxSize,
-							request.getContentLength());
-				}
-			} catch (Exception ex) {
-				System.out.println("checkRequest  : " + ex);
-			}
-		}
+		  public void checkRequest(HttpServletRequest request) {
+			  try
+			  {
+		    if (request.getContentLength() > 10 * 1024 * 1024) {
+		      throw new UploadSizeLimitException(maxSize, request.getContentLength());
+		    }
+			  }
+			  catch(Exception ex)
+			  {
+			  }
+		  }
 
 		/**
 	     * Get the content of an uploaded file.

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -53,7 +53,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class ResourceImageUc extends Composite implements ClickHandler {
 
@@ -61,7 +61,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 
 	interface ResourceImageUcUiBinder extends UiBinder<Widget, ResourceImageUc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
@@ -70,26 +70,23 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	@UiField
 	Image image;
 
-	@UiField(provided = true)
-	UcCBundle res;
-
 	@UiField
 	FlowPanel resourceThumbnail;
 
 	private String resourceId;
-	
+
 	private String collectionId;
 
 	private String playerName;
-	
+
 	private String narration;
-	
+
 	private String profilePageMoreInfoCollectionId;
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
-	
+
 	private static final String NULL = "null";
-	
+
 	String selectedFolderId = "";
 
 //	private static final String DEFAULT_THUMBNAIL = "slides/thumbnail.jpg";
@@ -102,14 +99,12 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 //	private static final String SMALL = i18n.GL0900;
 
 //	private static final String PNG = i18n.GL0899;
-	
+
 	boolean suggestFlag;
 	/**
-	 * 
+	 *
 	 */
 	public ResourceImageUc() {
-		this.res = UcCBundle.INSTANCE;
-		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		resourceThumbnail.getElement().setId("fpnlResourceThumbnail");
 		image.getElement().setId("imgImage");
@@ -120,7 +115,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 
 	/**
 	 * Class constructor with multi parameter
-	 * 
+	 *
 	 * @param category
 	 *            of the resource
 	 * @param thumbnailUrl
@@ -136,7 +131,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 
 	/**
 	 * Set resource image info
-	 * 
+	 *
 	 * @param category
 	 *            of the resource
 	 * @param thumbnailUrl
@@ -157,18 +152,18 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 				setCollectionId(collectionId);
 			}
 		}
-		
-		
+
+
 	}
 	/**
-	 * 
-	 * @function renderSearch 
-	 * 
+	 *
+	 * @function renderSearch
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param category
 	 * @parm(s) : @param thumbnailUrl
 	 * @parm(s) : @param realUrl
@@ -178,12 +173,12 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	 * @parm(s) : @param generateYoutube
 	 * @parm(s) : @param collectionId
 	 * @parm(s) : @param suggestedtype
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -202,14 +197,14 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		}
 	}
 	/**
-	 * 
-	 * @function renderSearch 
-	 * 
+	 *
+	 * @function renderSearch
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param category
 	 * @parm(s) : @param thumbnailUrl
 	 * @parm(s) : @param realUrl
@@ -217,12 +212,12 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	 * @parm(s) : @param title
 	 * @parm(s) : @param youtube
 	 * @parm(s) : @param narration
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -235,14 +230,14 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		setNarration(narration);
 	}
 	/**
-	 * 
-	 * @function renderSearch 
-	 * 
+	 *
+	 * @function renderSearch
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param category
 	 * @parm(s) : @param thumbnailUrl
 	 * @parm(s) : @param realUrl
@@ -251,12 +246,12 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	 * @parm(s) : @param youtube
 	 * @parm(s) : @param narration
 	 * @parm(s) : @param collectionId
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -269,25 +264,25 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		setProfilePageMoreInfoCollectionId(collectionId);
 	}
 	/**
-	 * 
-	 * @function setUrl 
-	 * 
+	 *
+	 * @function setUrl
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param thumbnailUrl
 	 * @parm(s) : @param realUrl
 	 * @parm(s) : @param category
 	 * @parm(s) : @param title
 	 * @parm(s) : @param generateYoutube
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -305,31 +300,31 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
 			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
 		} else {
-		
+
 			image.setUrl(thumbnailUrl);
 		}
 		image.setAltText(title);
 		image.setTitle(title);
 	}
 	/**
-	 * 
-	 * @function setDefaultThumbnail 
-	 * 
+	 *
+	 * @function setDefaultThumbnail
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param thumbnailUrl
 	 * @parm(s) : @param url
 	 * @parm(s) : @param categoryString
 	 * @parm(s) : @param generateYoutube
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -352,12 +347,12 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 			image.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(url), Window.Location.getProtocol()));
 		} else if (!failedThumbnailGeneration && thumbnailUrl!=null && thumbnailUrl.endsWith("/")) {
 			//image.setUrl(thumbnailUrl + DEFAULT_THUMBNAIL);
-			
+
 			image.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		} else {
 			image.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		}
-		
+
 	}
 
 	@Override
@@ -394,7 +389,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 						selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
 					}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
 						selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
-					}	
+					}
 					params.put("id", collectionId);
 					params.put("rid", gooruOid);
 					if(!selectedFolderId.isEmpty())
@@ -411,7 +406,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 									if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
 										params.put("tab", "narration");
 									}
-									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 									break;
@@ -425,7 +420,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
 						params.put("tab", "narration");
 					}
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);			
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 					}
@@ -438,32 +433,32 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}
 				}
-			
-			
+
+
 			}
 		}
 /*		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", getResourceId());
 		params.put("pn", getPlayerName());
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);*/
-		
+
 	}
 	/**
-	 * 
-	 * @function setResourceId 
-	 * 
+	 *
+	 * @function setResourceId
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param resourceId
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -471,21 +466,21 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		this.resourceId = resourceId;
 	}
 	/**
-	 * 
-	 * @function getResourceId 
-	 * 
+	 *
+	 * @function getResourceId
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -493,21 +488,21 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		return resourceId;
 	}
 	/**
-	 * 
-	 * @function setPlayerName 
-	 * 
+	 *
+	 * @function setPlayerName
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param playerName
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -515,21 +510,21 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		this.playerName = playerName;
 	}
 	/**
-	 * 
-	 * @function getPlayerName 
-	 * 
+	 *
+	 * @function getPlayerName
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -537,21 +532,21 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		return playerName;
 	}
 	/**
-	 * 
-	 * @function getCollectionId 
-	 * 
+	 *
+	 * @function getCollectionId
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -559,21 +554,21 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		return collectionId;
 	}
 	/**
-	 * 
-	 * @function setCollectionId 
-	 * 
+	 *
+	 * @function setCollectionId
+	 *
 	 * @created_date : 23-Jan-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param collectionId
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -601,7 +596,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	public String getProfilePageMoreInfoCollectionId() {
 		return profilePageMoreInfoCollectionId;
 	}
-	
+
 	/**
 	 * @param profilePageMoreInfoCollectionId the profilePageMoreInfoCollectionId to set
 	 */

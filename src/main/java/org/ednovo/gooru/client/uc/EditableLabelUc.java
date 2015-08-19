@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -57,7 +57,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : EditableLabelUc.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 5.5
@@ -66,7 +66,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Author Gooru Team
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 public class EditableLabelUc extends Composite implements HasValue<String> {
 
@@ -75,7 +75,7 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 
 	interface EditableLabelUcUiBinder extends UiBinder<Widget, EditableLabelUc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
@@ -93,17 +93,13 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 	protected String placeholder = "";
 
 	protected String text;
-	
-	boolean isHavingBadWords=false;
 
-	@UiField(provided = true)
-	UcCBundle res;
+	boolean isHavingBadWords=false;
 
 	/**
 	 * Class constructor
 	 */
 	public EditableLabelUc() {
-		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		deckPanel.showWidget(0);
 		focusPanel.getElement().setId("focuspnlFocusPanel");
@@ -113,33 +109,33 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 		StringUtil.setAttributes(editTextBox, true);
 		/*
 		 * focusPanel.addFocusHandler(new FocusHandler() {
-		 * 
+		 *
 		 * @Override public void onFocus(FocusEvent event) { switchToEdit(); }
 		 * });
-		 * 
+		 *
 		 * focusPanel.addClickHandler(new ClickHandler() {
-		 * 
+		 *
 		 * @Override public void onClick(ClickEvent event) { switchToEdit(); }
 		 * });
-		 * 
+		 *
 		 * editLabel.addClickHandler(new ClickHandler() {
-		 * 
+		 *
 		 * @Override public void onClick(ClickEvent event) { switchToEdit(); }
 		 * });
-		 * 
+		 *
 		 * editTextBox.addBlurHandler(new BlurHandler() {
-		 * 
+		 *
 		 * @Override public void onBlur(BlurEvent event) { switchToLabel(); }
 		 * });
 		 */
 		editTextBox.addBlurHandler(new BlurHandler() {
-			
+
 			@Override
 			public void onBlur(BlurEvent event) {
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", editTextBox.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-					
+
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -149,7 +145,7 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 						}else{
 							showProfanityError(false);
 							setValue(editTextBox.getText(), true); // fires events, too
-							
+
 							editTextBox.getElement().getStyle().clearBackgroundColor();
 							editTextBox.getElement().getStyle().setBorderColor("#ccc");
 
@@ -169,7 +165,7 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 					Map<String, String> parms = new HashMap<String, String>();
 					parms.put("text", editTextBox.getText());
 					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-						
+
 						@Override
 						public void onSuccess(Boolean value) {
 							isHavingBadWords = value;
@@ -232,7 +228,7 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 	public void switchToLabel() {
 		if (deckPanel.getVisibleWidget() == 0)
 			return;
-		if (editTextBox.getText().length() > 0 && !isHavingBadWords) {			
+		if (editTextBox.getText().length() > 0 && !isHavingBadWords) {
 			setValue(editTextBox.getText(), true); // fires events, too
 		} else {
 			if (isHavingBadWords){
@@ -257,11 +253,11 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 		deckPanel.showWidget(0);
 	}
 
-	
+
 	public void showErrorMessage(String message){
-		
+
 	}
-	
+
 	// Override this method to catch on blur
 	/**
 	 * @param text
@@ -277,15 +273,15 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 	public void checkCharacterLimit(String text) {
 
 	}
-	
+
 	// Override this method to catch on blur
 	/**
 	 * @param text
 	 */
 	public void showProfanityError(boolean value) {
 	}
-	
-	
+
+
 
 	@Override
 	public HandlerRegistration addValueChangeHandler(
@@ -334,7 +330,7 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 			ValueChangeEvent.fireIfNotEqual(this, getValue(), value);
 		setValue(value);
 	}
-	
+
 	public void setFocus(){
 		editTextBox.setFocus(true);
 	}
@@ -345,6 +341,6 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 	public Label getLabelField() {
 		return editLabel;
 	}
-	
-	
+
+
 }

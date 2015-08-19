@@ -1575,12 +1575,15 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			uploadProfileImage.setUrl(PROFILE_DEFAULT_IMAGE);
 			uploadProfilImageButton.setText(i18n.GL1087());
 			try{
-				uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
-				uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
-				uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
-				uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
+				if(v2userDo != null && v2userDo.getUser() != null){
+					uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
+					uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
+					uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
+					uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
+				}
+				
 			}catch(Exception exception){
-				AppClientFactory.printSevereLogger(exception.getMessage());
+				AppClientFactory.printSevereLogger("ProfileDefaultImage:"+exception.getMessage());
 			}
 		}
 	}
