@@ -1,11 +1,8 @@
 package org.ednovo.gooru.application.server.service;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Hashtable;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -35,15 +32,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import gwtupload.server.UploadAction;
-import gwtupload.server.exceptions.UploadActionException;
-import gwtupload.server.exceptions.UploadSizeLimitException;
-import gwtupload.shared.UConsts;
 
 public class uploadServlet extends UploadAction{
 	private static final long serialVersionUID = -4035393951562844790L;
 
-	private ClasspageServiceAsync classpageService;
-	
 	private static final Logger logger = LoggerFactory.getLogger(uploadServlet.class);
 
 
@@ -129,18 +121,6 @@ public class uploadServlet extends UploadAction{
 				logger.info("webInvokeForImage Exception:::");
 			}
 			return ret;
-		}
-
-
-
-
-
-		public ClasspageServiceAsync getClasspageService() {
-			return classpageService;
-		}
-
-		public void setClasspageService(ClasspageServiceAsync classpageService) {
-			this.classpageService = classpageService;
 		}
 
 
