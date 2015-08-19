@@ -138,6 +138,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String LIBRARY_NAME = "libName";
 
 	private static final String USER_ID = "userId";
+	
 
 
 	@Autowired
@@ -193,7 +194,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				  searchDo.getFilters().put(key, value);
 				 }
 			}
-			if(query.equalsIgnoreCase("'*'"))
+			if("'*'".equalsIgnoreCase(query))
 			{
 				query = "*";
 			}
@@ -959,7 +960,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 						  searchDo.getFilters().put(key, value);
 						 }*/
 					}
-					if(query.equalsIgnoreCase("'*'"))
+					if("'*'".equalsIgnoreCase(query))
 					{
 						query = "*";
 					}
