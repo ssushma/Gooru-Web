@@ -89,6 +89,7 @@
 			<g:Button styleName="secondary" ui:field="btnSaveAndCreateAssessment"
 				text="{i18n.GL3482}" />
 		</div>
+		<g:Label styleName="col-sm-7 errorMessage text-right" ui:field="lblCountMsg"/>
 			<g:HTMLPanel ui:field="spinnerIconContainer" styleName="spinnerContainer" visible="false">
 				<g:HTMLPanel styleName="loadingImage spinnerDisplayPosition"></g:HTMLPanel>
 			</g:HTMLPanel>

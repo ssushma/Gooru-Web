@@ -102,7 +102,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiField UlPanel standardsDropListValues;
 	@UiField HTMLEventPanel btnStandardsBrowse, taxonomyToggleBtn;
 	@UiField Button saveLessonBtn,btnSaveAndCreateCollection,btnSaveAndCreateAssessment,taxonomyBtn;
-	@UiField Label lblErrorMessage,lblLessonErrorMsg;
+	@UiField Label lblErrorMessage,lblLessonErrorMsg,lblCountMsg;
 	@UiField UlPanel ulSelectedItems;
 
 
@@ -474,28 +474,32 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiHandler("btnSaveAndCreateCollection")
 	public void clickOnSaveAndCreateCollection(ClickEvent saveCourseEvent){
 		TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
-		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		btnSaveAndCreateCollection.addStyleName("disabled");
-		btnSaveAndCreateCollection.setEnabled(false);
-		spinnerImageVisibility(true);
-		if (validateInputs()) {
-			final CreateDo createOrUpDate=new CreateDo(); 
-			createOrUpDate.setTitle(lessonTitle.getText());
-			createOrUpDate.setStandardIds(getSelectedStandards());
-			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
-			createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
-			
-			lblErrorMessage.setVisible(false);
-			lessonTitle.removeStyleName("textAreaErrorMessage");
-			getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
+		if(currentShelfTreeWidget.getChildCount()<10){
+			String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			btnSaveAndCreateCollection.addStyleName("disabled");
+			btnSaveAndCreateCollection.setEnabled(false);
+			spinnerImageVisibility(true);
+			if (validateInputs()) {
+				final CreateDo createOrUpDate=new CreateDo(); 
+				createOrUpDate.setTitle(lessonTitle.getText());
+				createOrUpDate.setStandardIds(getSelectedStandards());
+				createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
+				createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
+				lblErrorMessage.setVisible(false);
+				lessonTitle.removeStyleName("textAreaErrorMessage");
+				getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,COLLECTION,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
+			}else{
+				Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
+				lessonTitle.setStyleName("textAreaErrorMessage");
+				lessonTitle.addStyleName("form-control");	
+				lblErrorMessage.setVisible(true);
+				resetBtns();
+				spinnerImageVisibility(false);
+			}
 		}else{
-			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
-			lessonTitle.setStyleName("textAreaErrorMessage");
-			lessonTitle.addStyleName("form-control");	
-			lblErrorMessage.setVisible(true);
-			resetBtns();
-			spinnerImageVisibility(false);
+			btnSaveAndCreateCollection.addStyleName("disabled");
+			lblCountMsg.setText(i18n.GL3491());
 		}
 	}
 	/**
@@ -529,48 +533,51 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 	@UiHandler("btnSaveAndCreateAssessment")
 	public void clickOnSaveAndCreateAssessment(ClickEvent saveCourseEvent){
 		final TreeItem currentShelfTreeWidget = getUiHandlers().getSelectedWidget();
-		Window.enableScrolling(false);
-		final String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
-		final String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
-		if(validateInputs()){
-			final CreateDo createOrUpDate=new CreateDo(); 
-			createOrUpDate.setTitle(lessonTitle.getText());
-			createOrUpDate.setStandardIds(getSelectedStandards());
-			createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
-			createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
-			assessmentPopup=new AssessmentPopupWidget() {
-				@Override
-				public void clickOnNoramlAssessmentClick() {
-					spinnerImageVisibility(true);
-					assessmentPopup.hide();
-					Window.enableScrolling(true);
-					//This will display the normal assessment info
-					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
-				}
-				@Override
-				public void clickOnExternalAssessmentClick() {
-					spinnerImageVisibility(true);
-					assessmentPopup.hide();
-					Window.enableScrolling(true);
-					//This will display the external assessment info
-					getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
-				}
-			};
-			assessmentPopup.setGlassEnabled(true);
-			assessmentPopup.show();
-			assessmentPopup.center();
+		if(currentShelfTreeWidget.getChildCount()<10){
+			Window.enableScrolling(false);
+			final String courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+			final String unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			if(validateInputs()){
+				final CreateDo createOrUpDate=new CreateDo(); 
+				createOrUpDate.setTitle(lessonTitle.getText());
+				createOrUpDate.setStandardIds(getSelectedStandards());
+				createOrUpDate.setTaxonomyCourseIds(getSelectedCourseIds());
+				createOrUpDate.setSubdomainIds(getSelectedSubDomainIds());
+				assessmentPopup=new AssessmentPopupWidget() {
+					@Override
+					public void clickOnNoramlAssessmentClick() {
+						spinnerImageVisibility(true);
+						assessmentPopup.hide();
+						Window.enableScrolling(true);
+						//This will display the normal assessment info
+						getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
+					}
+					@Override
+					public void clickOnExternalAssessmentClick() {
+						spinnerImageVisibility(true);
+						assessmentPopup.hide();
+						Window.enableScrolling(true);
+						//This will display the external assessment info
+						getUiHandlers().checkProfanity(lessonTitle.getText().trim(),true,ASSESSMENT_URL,createOrUpDate,courseId,unitId,currentShelfTreeWidget);
+					}
+				};
+				assessmentPopup.setGlassEnabled(true);
+				assessmentPopup.show();
+				assessmentPopup.center();
+			}else{
+				Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
+				lessonTitle.setStyleName("textAreaErrorMessage");
+				lessonTitle.addStyleName("form-control");	
+				lblErrorMessage.setVisible(true);
+				resetBtns();
+			}
 		}else{
-			Window.scrollTo(lessonTitle.getAbsoluteLeft(), lessonTitle.getAbsoluteTop()-(lessonTitle.getOffsetHeight()*3));
-			lessonTitle.setStyleName("textAreaErrorMessage");
-			lessonTitle.addStyleName("form-control");	
-			lblErrorMessage.setVisible(true);
-			resetBtns();
+			btnSaveAndCreateAssessment.addStyleName("disabled");
+			lblCountMsg.setText(i18n.GL3491());
 		}
-		
 	}
 	@Override
 	public void callCreateAndUpdate(boolean isCreate,boolean result,String type,CreateDo createOrUpDate,String courseId,String unitId,TreeItem currentShelfTreeWidget){
-
 		if(result){
 			spinnerImageVisibility(false);
 			SetStyleForProfanity.SetStyleForProfanityForTextBox(lessonTitle, lblErrorMessage, result);
@@ -650,6 +657,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		selectedValues.clear();
 		standardsUI.clear();
 		lessonTitle.setText(folderObj==null?"":!folderObj.getTitle().equalsIgnoreCase(i18n.GL3365())?folderObj.getTitle():"");
+		lblCountMsg.setText("");
 		if(folderObj!=null){
 			if(folderObj.getStandards()!=null && folderObj.getStandards().size()>0){
 				//Render the existing standards
