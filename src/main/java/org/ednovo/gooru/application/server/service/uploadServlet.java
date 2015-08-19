@@ -175,6 +175,7 @@ public class uploadServlet extends UploadAction{
             logger.info("upload Url:::"+urlVal);
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpPost httppost = new HttpPost(urlVal);
+            httppost.setHeader("Content-Type", "multipart/form-data");
             MultipartEntityBuilder reqEntity=MultipartEntityBuilder.create();
             ByteArrayBody bab = new ByteArrayBody(bytes, fileName);
             reqEntity.addPart("image", bab);
