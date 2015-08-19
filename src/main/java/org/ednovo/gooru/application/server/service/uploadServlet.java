@@ -48,6 +48,8 @@ public class uploadServlet extends UploadAction{
 
 
 	private static final String REST_ENDPOINT = "rest.endpoint";
+	
+	String stoken ="";
 
 
 	 /**
@@ -87,12 +89,13 @@ public class uploadServlet extends UploadAction{
 						uploadedFileItem = (FileItem) items.get(i);
 					}
 				  // we only upload one file
-					String stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
+					stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
 					
 					try {
 						fileName=URLEncoder.encode(uploadedFileItem.getName(), "UTF-8");
 					} catch (Exception e) {
-						logger.info("Exception:::");
+						logger.info("Exception::@--:"+stoken);
+						e.printStackTrace();
 					}
 
 					String requestData = "uploadFileName=" + fileName + "&imageURL=&sessionToken=" + stoken;
@@ -104,13 +107,16 @@ public class uploadServlet extends UploadAction{
 					try {
 
 						responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
+						logger.info("responsebody::@:"+stoken+"------"+response.getContentType());
 						jsonArray = new JSONArray(responsedata);
+						logger.info("responsedata::@:"+stoken+"------"+responsedata);
 
 					} catch (UnsupportedEncodingException e) {
-						logger.info("UnsupportedEncodingException:::");
+						logger.info("UnsupportedEncodingException::@:"+stoken);
+						e.printStackTrace();
 					}
 
-
+					logger.info("responsecode::@:"+stoken+"------"+response.getStatus());
 					response.setContentType("text/html");
 					response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1. 
 					response.setHeader("Pragma", "no-cache"); // HTTP 1.0. 
@@ -119,7 +125,8 @@ public class uploadServlet extends UploadAction{
 					response.getOutputStream().flush();
 				}
 				catch (FileUploadBase.FileSizeLimitExceededException e) {
-					logger.info("FileSizeLimitExceededException:::");
+					logger.info("FileSizeLimitExceededException:::"+stoken);
+					e.printStackTrace();
 					responsedata = "file size error" ;
 					response.setContentType("text/html");
 					response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1. 
@@ -130,7 +137,8 @@ public class uploadServlet extends UploadAction{
 			    }
 			}
 			catch(Exception e) {
-				logger.info("Exception1sttry:::");
+				logger.info("Exception1sttry:::"+stoken);
+				
 			}
 		}
 	}
@@ -142,7 +150,7 @@ public class uploadServlet extends UploadAction{
 			try {
 					ret = testUpload(bytes, data, fileName,fileSize,urlVal);
 			} catch (Exception e) {
-				logger.info("webInvokeForImage Exception:::");
+				logger.info("webInvokeForImage Exception:::"+stoken);
 			}
 			return ret;
 		}
