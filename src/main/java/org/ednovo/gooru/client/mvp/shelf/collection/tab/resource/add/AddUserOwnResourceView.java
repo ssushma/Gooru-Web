@@ -1485,7 +1485,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	 
 	public final native String getFileNameSize() /*-{
 		var fileSize;
-		if ($wnd.$.browser.msie) 
+		if ($wnd.$.support.msie) 
 		{
 			var objFSO = new ActiveXObject("Scripting.FileSystemObject");
 			var sPath =   $wnd.$("#fileUpload1")[0].value;
