@@ -222,7 +222,7 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		 Educational use End -->
-
+		<div class="clearfix"></div>
 		<!-- Standards Start -->
 		 <g:FlowPanel ui:field="standardContainer">
 		      <uc:HTMLEventPanel styleName="{addWebResourceStyle.eHeader}" ui:field="eHearderIconStandards"></uc:HTMLEventPanel>

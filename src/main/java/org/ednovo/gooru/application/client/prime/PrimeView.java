@@ -25,7 +25,6 @@
 package org.ednovo.gooru.application.client.prime;
 
 import org.ednovo.gooru.application.client.gin.BaseView;
-import org.ednovo.gooru.client.uc.UcCBundle;
 
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -39,7 +38,6 @@ public class PrimeView extends BaseView implements IsPrimeView {
 	protected SimplePanel primePanel;
 
 	public PrimeView() {
-		UcCBundle.INSTANCE.css().ensureInjected();
 		primePanel = new SimplePanel();
 		setWidget(primePanel);
 	}

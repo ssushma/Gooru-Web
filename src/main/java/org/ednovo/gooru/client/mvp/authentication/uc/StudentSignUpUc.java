@@ -523,25 +523,62 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 			txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 			isValid= false;
 		}
-
-		//TODO Validate Password fields are match each other.
-		if (!password.equalsIgnoreCase(confirmPassword)){
+		
+		if (!password.equalsIgnoreCase(confirmPassword)) {
 			txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 			txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
 			passwordValidUc.setText(i18n.GL0446());
 			passwordValidUc.getElement().setAttribute("alt",i18n.GL0446());
 			passwordValidUc.getElement().setAttribute("title",i18n.GL0446());
 			passwordValidUc.setVisible(true);
-			isValid= false;
+			isValid = false;
 		}
-
-		RegExp reg = RegExp.compile(PWD_PATTERN, "gi");
-		boolean validatePwd=reg.test(password);
-		if (!validatePwd && password.length() >= 5 && password.length() <= 14){
-			passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0073(), "Password"));
-			passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0073(), "Password"));
-			passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0073(), "Password"));
-			passwordValidUc.setVisible(true);
+		
+		try {
+			RegExp reg = RegExp.compile(PWD_PATTERN, "gi");
+			if (password == null || (password != null && password.isEmpty())) {
+				txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0070(), "Password"));
+				passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0070(), "Password"));
+				passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0070(), "Password"));
+				passwordValidUc.setVisible(true);
+				isValid = false;
+			}
+			if (!password.equalsIgnoreCase("") && password.length() > 0 && password.length() < 5) {
+				txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0071(), "Password", "5"));
+				passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0071(), "Password", "5"));
+				passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0071(), "Password", "5"));
+				passwordValidUc.setVisible(true);
+				isValid = false;
+			}
+			if (!password.equalsIgnoreCase("") && password.length() >= 14) {
+				txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0072(), "Password", "<= 14"));
+				passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0072(), "Password", "<= 14"));
+				passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0072(), "Password", "<= 14"));
+				passwordValidUc.setVisible(true);
+				isValid = false;
+			}
+			if (password.equalsIgnoreCase("PASSWORD")) {
+				txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0076(), "Password"));
+				passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0076(), "Password"));
+				passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0076(), "Password"));
+				passwordValidUc.setVisible(true);
+				isValid = false;
+			}
+			if ((!password.equalsIgnoreCase("") && !password.isEmpty()) && !reg.test(password) && password.length() >= 5 && password.length() <= 14 && !password.equalsIgnoreCase("PASSWORD")) {
+				txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0073(), "Password"));
+				passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0073(), "Password"));
+				passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0073(), "Password"));
+				/*passwordValidUc.getElement().getStyle().setWidth(340, Unit.PX);*/
+				passwordValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
+				passwordValidUc.setVisible(true);
+				isValid = false;
+			}
+		} catch (Exception e) {
 			isValid = false;
 		}
 		return isValid;

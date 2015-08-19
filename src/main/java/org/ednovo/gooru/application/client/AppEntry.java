@@ -83,9 +83,6 @@ public class AppEntry implements EntryPoint {
 			DelayedBindRegistry.bind(appInjector);
 			AppClientFactory.setAppGinjector(appInjector);
 
-//			UcCBundle.INSTANCE.css().ensureInjected();
-//			HomeCBundle.INSTANCE.css().ensureInjected();
-
 			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
