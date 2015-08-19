@@ -1624,10 +1624,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 											collectionItemDo.getResource().setTaxonomySet(standardsDo);
 											
 											if(fileChanged && (uploadContainer.isVisible())){
+												fileuploadForm.setEncoding(FormPanel.ENCODING_MULTIPART); 
+												fileuploadForm.setMethod(FormPanel.METHOD_POST);
 												fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
 												fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 													@Override
 													public void onSubmitComplete(SubmitCompleteEvent event) {
+														AppClientFactory.printInfoLogger("eventgetresults-----"+event.getResults());
+														AppClientFactory.printInfoLogger("isValidImageSize-----"+isValidImageSize);
 														if(isValidImageSize){
 															parseUploadFileDetails(event.getResults());
 														}
