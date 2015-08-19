@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -55,16 +55,16 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @fileName : EditableTextAreaUc.java
- * 
+ *
  * @description :
- * 
- * 
+ *
+ *
  * @version : 5.5
- * 
+ *
  * @date: June 17, 2013
- * 
+ *
  * @Author Gooru Team
- * 
+ *
  * @Reviewer:
  */
 public class EditableTextAreaUc extends Composite implements HasValue<String> {
@@ -75,7 +75,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	interface EditableLabelUiBinder extends
 			UiBinder<Widget, EditableTextAreaUc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
@@ -95,17 +95,13 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	protected String text;
 
 	@UiField Label lblErrorMessage;
-	
+
 	@UiField HTMLPanel duplicateTinyMce,fakeContent;
-	
-	@UiField(provided = true)
-	UcCBundle res;
 
 	/**
 	 * Class constructor
 	 */
 	public EditableTextAreaUc() {
-		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		deckPanel.showWidget(0);
 		focusPanel.getElement().setId("focuspnlFocusPanel");
@@ -118,13 +114,13 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 		fakeContent.getElement().setId("pnlFakeContent");
 		StringUtil.setAttributes(textArea, true);
 		textArea.addBlurHandler(new BlurHandler() {
-			
+
 			@Override
 			public void onBlur(BlurEvent event) {
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", textArea.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-					
+
 					@Override
 					public void onSuccess(Boolean value) {
 						boolean isHavingBadWords = value;
@@ -145,7 +141,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 				});
 			}
 		});
-	
+
 		textArea.addKeyUpHandler(new ValidateConfirmText());
 	}
 
@@ -166,7 +162,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	public void switchToEdit() {
 		textArea.getElement().getStyle().clearBackgroundColor();
 		textArea.getElement().getStyle().setBorderColor("#ccc");
-		
+
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
 		textArea.setText(html.getHTML().equals(getPlaceholder()) ? "" :
@@ -185,12 +181,12 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	public void switchToLabel() {
 		if (deckPanel.getVisibleWidget() == 0)
 			return;
-		
-		
+
+
 		Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text", textArea.getText());
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-			
+
 			@Override
 			public void onSuccess(Boolean value) {
 				boolean isHavingBadWords = value;
@@ -206,7 +202,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 					textArea.getElement().getStyle().clearBackgroundColor();
 					textArea.getElement().getStyle().setBorderColor("#ccc");
 					lblErrorMessage.setVisible(false);
-					
+
 					setValue(textArea.getText().trim().length() == 0 ? getPlaceholder() : textArea.getText(), true); // fires events, too
 					deckPanel.showWidget(0);
 					String text = getValue();
@@ -245,7 +241,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	public void checkCharacterLimit(String text) {
 
 	}
-	
+
 	/**
 	 * @param text
 	 */
@@ -303,7 +299,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 		this.text = text;
 		setValue(text);
 	}
-	
+
 	public Label getLblErrorMessage() {
 		return lblErrorMessage;
 	}

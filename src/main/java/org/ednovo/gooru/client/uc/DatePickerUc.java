@@ -86,7 +86,6 @@ public class DatePickerUc extends PopupPanel {
 	public DatePickerUc(boolean isRegistration) {
 		super();
 		this.isRegistration = isRegistration;
-		UcCBundle.INSTANCE.css().ensureInjected();
 		monthYearContainer = new FlowPanel();
 		listMonths = new ListBox();
 
@@ -97,10 +96,9 @@ public class DatePickerUc extends PopupPanel {
 		todayButton = new Button(i18n.GL1506());
 		doneButton = new Button(i18n.GL0745());
 		datePickerBox = new FlowPanel();
-		monthYearContainer.setStyleName(UcCBundle.INSTANCE.css()
-				.monthYearContainer());
-		listMonths.setStyleName(UcCBundle.INSTANCE.css().monthListStyle());
-		listYear.setStyleName(UcCBundle.INSTANCE.css().yearListStyle());
+		monthYearContainer.setStyleName("Uc-monthYearContainer");
+		listMonths.setStyleName("Uc-monthListStyle");
+		listYear.setStyleName("Uc-yearListStyle");
 		monthYearContainer.add(listMonths);
 
 		monthYearContainer.add(listYear);
@@ -108,15 +106,14 @@ public class DatePickerUc extends PopupPanel {
 
 		datePickerBox.add(datePicker);
 
-		buttonContainer.setStyleName(UcCBundle.INSTANCE.css()
-				.dateButtonContainer());
-		todayButton.setStyleName(UcCBundle.INSTANCE.css().todayButton());
-		doneButton.setStyleName(UcCBundle.INSTANCE.css().doneButton());
+		buttonContainer.setStyleName("Uc-dateButtonContainer");
+		todayButton.setStyleName("Uc-todayButton");
+		doneButton.setStyleName("Uc-doneButton");
 		//buttonContainer.add(todayButton);
 		buttonContainer.add(doneButton);
 		datePickerBox.add(buttonContainer);
 
-		this.setStyleName(UcCBundle.INSTANCE.css().datePickerContainer());
+		this.setStyleName("Uc-datePickerContainer");
 		this.setWidget(datePickerBox);
 		this.setAutoHideEnabled(true);
 

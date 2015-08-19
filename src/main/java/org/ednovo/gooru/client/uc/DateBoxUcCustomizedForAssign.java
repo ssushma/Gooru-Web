@@ -49,23 +49,22 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 	public DateBoxUcCustomizedForAssign(boolean isRegistration,boolean isSmall,boolean isStudent) {
 		super();
 		this.isRegistration = isRegistration;
-		UcCBundle.INSTANCE.css().ensureInjected();
 
 		calendarIcon = new Label();
-		calendarIcon.setStyleName(UcCBundle.INSTANCE.css().gooruCalendarIcon());
+		calendarIcon.setStyleName("Uc-gooruCalendarIcon");
 
 		dateBox = new TextBox();
 		dateBox.getElement().setId("tbBirthday");
 		dateBox.setReadOnly(true);
 		if (!isRegistration){
-				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBoxAssignment());
+				this.setStyleName("Uc-gooruDateBoxAssignment");
 /*				dateBox.getElement().getStyle().setWidth(271, Unit.PX);
 */		}else{
 			dateBox.getElement().setAttribute("Placeholder", i18n.GL0211());
 			if (!isSmall){
-				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBox());
+				this.setStyleName("Uc-gooruDateBox");
 			}else{
-				calendarIcon.addStyleName(UcCBundle.INSTANCE.css().iconPosition());
+				calendarIcon.addStyleName("Uc-iconPosition");
 			}
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.ASSESSMENT_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
@@ -75,7 +74,7 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
         }
 
 		datePickerUc = new DatePickerUc(isRegistration);
-		dateBox.setStyleName(UcCBundle.INSTANCE.css().gooruDateText());
+		dateBox.setStyleName("Uc-gooruDateText");
 		if(!isStudent){
 		calendarIcon.addClickHandler(new OnIconClick());
 		}

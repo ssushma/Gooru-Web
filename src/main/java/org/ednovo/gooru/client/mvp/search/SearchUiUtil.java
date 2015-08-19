@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
-import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -77,7 +76,7 @@ public class SearchUiUtil{
 					}
 				} else {
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
-					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					toolTipUc.setStyleName("Uc-searchStandard");
 					standardsContainer.add(toolTipUc);
 				}
 				count++;
@@ -113,7 +112,7 @@ public class SearchUiUtil{
 					}
 				} else {
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
-					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					toolTipUc.setStyleName("Uc-searchStandard");
 					standardsContainer.add(toolTipUc);
 				}
 				count++;
@@ -158,7 +157,7 @@ public class SearchUiUtil{
 					else
 					{
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
-					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					toolTipUc.setStyleName("Uc-searchStandard");
 					standardsContainer.add(toolTipUc);
 					}
 				}
@@ -186,53 +185,15 @@ public class SearchUiUtil{
 			}
 		}
 	}
-	/*public static void renderPPPStandards(FlowPanel standardsContainer,CollectionItemDo collectionItemDo) {
-		if (collectionItemDo.getStandards() != null) {
-			List<Map<String, String>> standards = collectionItemDo.getStandards();
-			Iterator<Map<String, String>> iterator = standards.iterator();
-			int count = 0;
-			FlowPanel toolTipwidgets = new FlowPanel();
-			while (iterator.hasNext()) {
-				Map<String, String> standard = iterator.next();
-				String stdCode = standard.get(STANDARD_CODE);
-				String stdDec = standard.get(STANDARD_DESCRIPTION);
-				if (count > 2) {
-					StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
-					toolTipwidgets.add(standardItem);
-				} else {
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec));
-					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
-					standardsContainer.add(toolTipUc);
-				}
-				count++;
-			}
-			if (collectionItemDo.getStandards().size() > 3) {
-				Integer moreStandardsCount = collectionItemDo.getStandards().size() - 3;
-				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets);
-				toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLink());
-				standardsContainer.add(toolTipUc);
-			}
-		}
-	}*/
-
-
 
 	public static void renderMetaData(FlowPanel flowPanel, String data) {
 		renderMetaData(flowPanel, data, null, -1);
 	}
 
-	/*public static void renderMetaData(FlowPanel flowPanel, String data, int wrapLength) {
-		renderMetaData(flowPanel, data, null, wrapLength);
-	}*/
-
 	public static Label renderMetaData(FlowPanel flowPanel, String data, String suffix) {
 		Label label=renderMetaData(flowPanel, data, suffix, -1);
 		return label;
 	}
-
-	/*public static void renderMetaData(FlowPanel flowPanel, List<String> datas) {
-		renderMetaData(flowPanel, datas, -1);
-	}*/
 
 	public static void renderMetaData(FlowPanel flowPanel, List<String> datas, int wrapLength) {
 		if (datas == null) {
