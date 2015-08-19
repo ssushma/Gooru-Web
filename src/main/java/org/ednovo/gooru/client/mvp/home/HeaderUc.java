@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
+import org.ednovo.gooru.client.mvp.gshelf.LoadMyContentEvent;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
@@ -1080,7 +1081,11 @@ public class HeaderUc extends Composite
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					manageDotsMenuSelection(organizeLink);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.MYCONTENT)){
+						AppClientFactory.fireEvent(new LoadMyContentEvent("Course"));
+					}else{
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
+					}
 
 				}
 			});

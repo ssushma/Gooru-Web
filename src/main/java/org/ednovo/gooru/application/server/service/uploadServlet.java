@@ -52,16 +52,6 @@ public class uploadServlet extends UploadAction{
 	String stoken ="";
 
 
-	 /**
-     * Maintain a list with received files and their content types.
-     */
-    Hashtable<String, String> receivedContentTypes = new Hashtable<String, String>();
-
-    /**
-     * Maintain a list with received files.
-     */
-    Hashtable<String, File> receivedFiles = new Hashtable<String, File>();
-
 
 	@Override
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
@@ -118,9 +108,6 @@ public class uploadServlet extends UploadAction{
 
 					logger.info("responsecode::@:"+stoken+"------"+response.getStatus());
 					response.setContentType("text/html");
-					response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1. 
-					response.setHeader("Pragma", "no-cache"); // HTTP 1.0. 
-					response.setHeader("Expires", "0");
 					response.getOutputStream().print(jsonArray.get(0).toString());
 					response.getOutputStream().flush();
 				}
@@ -129,9 +116,6 @@ public class uploadServlet extends UploadAction{
 					e.printStackTrace();
 					responsedata = "file size error" ;
 					response.setContentType("text/html");
-					response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1. 
-					response.setHeader("Pragma", "no-cache"); // HTTP 1.0. 
-					response.setHeader("Expires", "0");
 					response.getOutputStream().print(responsedata);
 					response.getOutputStream().flush();
 			    }
@@ -148,7 +132,7 @@ public class uploadServlet extends UploadAction{
 		public String webInvokeForImage(String methodName, String data,String contentType, HttpServletRequest req, byte[] bytes,String fileName,Long fileSize, String urlVal) throws UnsupportedEncodingException {
 			String ret = "";
 			try {
-					ret = testUpload(bytes, data, fileName,fileSize,urlVal);
+					ret = fileUpload(bytes, data, fileName,fileSize,urlVal);
 			} catch (Exception e) {
 				logger.info("webInvokeForImage Exception:::"+stoken);
 			}
@@ -169,13 +153,12 @@ public class uploadServlet extends UploadAction{
 
 
 
-	    public String testUpload(byte[] bytes, String data, String fileName,Long fileSize, String urlVal)
+	    public String fileUpload(byte[] bytes, String data, String fileName,Long fileSize, String urlVal)
                 throws Exception {
             String ret = "";
             logger.info("upload Url:::"+urlVal);
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpPost httppost = new HttpPost(urlVal);
-            httppost.setHeader("Content-Type", "multipart/form-data");
             MultipartEntityBuilder reqEntity=MultipartEntityBuilder.create();
             ByteArrayBody bab = new ByteArrayBody(bytes, fileName);
             reqEntity.addPart("image", bab);
@@ -189,62 +172,9 @@ public class uploadServlet extends UploadAction{
             return ret;
         }
 
-		  /**
-		   * Override this method if you want to check the request before it is passed
-		   * to commons-fileupload parser.
-		   *
-		   * @param request
-		   * @throws RuntimeException
-		   */
-		  @Override
-		  public void checkRequest(HttpServletRequest request) {
-			  try
-			  {
-		    if (request.getContentLength() > 10 * 1024 * 1024) {
-		      throw new UploadSizeLimitException(maxSize, request.getContentLength());
-		    }
-			  }
-			  catch(Exception ex)
-			  {
-			  }
-		  }
 
-		/**
-	     * Get the content of an uploaded file.
-	     */
-	    @Override
-	    public void getUploadedFile(HttpServletRequest request,
-	            HttpServletResponse response) throws IOException
-	    {
-	        String fieldName = request.getParameter(UConsts.PARAM_SHOW);
-	        File f = receivedFiles.get(fieldName);
-	        if (f != null)
-	        {
-	            response.setContentType(receivedContentTypes.get(fieldName));
-	            FileInputStream is = new FileInputStream(f);
-	            copyFromInputStreamToOutputStream(is, response.getOutputStream());
-	        }
-	        else
-	        {
-	            renderXmlResponse(request, response, "");
-	        }
-	    }
 
-	    /**
-	     * Remove a file when the user sends a delete request.
-	     */
-	    @Override
-	    public void removeItem(HttpServletRequest request, String fieldName)
-	            throws UploadActionException
-	    {
-	        File file = receivedFiles.get(fieldName);
-	        receivedFiles.remove(fieldName);
-	        receivedContentTypes.remove(fieldName);
-	        if (file != null)
-	        {
-	            file.delete();
-	        }
-	    }
+		
 
 
 }
