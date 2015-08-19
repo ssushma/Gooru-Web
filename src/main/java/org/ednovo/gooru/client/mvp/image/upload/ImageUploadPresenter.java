@@ -315,6 +315,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 	@Override
 	public void imageWebUpload(String imageURL) {
+		AppClientFactory.printInfoLogger("imageURL---"+imageURL);
 		this.getMediaUploadService().imageWebUpload(imageURL, getImageWebUploadAsyncCallback());
 	}
 
@@ -365,12 +366,14 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		Window.enableScrolling(true);
 		this.fileNameWithoutRepository=fileName;
 		this.fileNameWithRepository=imageUrl;
+		AppClientFactory.printInfoLogger("imageUrl::::"+imageUrl);
 		this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
 		
 	}
 
 	@Override
 	public void imageFileUpload(String response) {
+		AppClientFactory.printInfoLogger("imageFileUpload response---"+response);
 		this.getMediaUploadService().imageFileUpload(response, getImageFileUploadAsyncCallback());
 	}
 
