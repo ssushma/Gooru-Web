@@ -661,6 +661,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				glasspanelLoadingImage(false);
 				AppClientFactory.printInfoLogger("onSubmitCompleteevent-----"+event.getResults());
 				getUiHandlers().imageFileUpload(event.getResults());
+				AppClientFactory.printInfoLogger("onSubmitCompleteeventdebug-----"+event.toDebugString());
 			}
 		});
 	}
