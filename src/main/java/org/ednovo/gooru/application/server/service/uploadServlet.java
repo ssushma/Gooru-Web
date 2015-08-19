@@ -112,6 +112,9 @@ public class uploadServlet extends UploadAction{
 
 
 					response.setContentType("text/html");
+					response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1. 
+					response.setHeader("Pragma", "no-cache"); // HTTP 1.0. 
+					response.setHeader("Expires", "0");
 					response.getOutputStream().print(jsonArray.get(0).toString());
 					response.getOutputStream().flush();
 				}
@@ -119,6 +122,9 @@ public class uploadServlet extends UploadAction{
 					logger.info("FileSizeLimitExceededException:::");
 					responsedata = "file size error" ;
 					response.setContentType("text/html");
+					response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1. 
+					response.setHeader("Pragma", "no-cache"); // HTTP 1.0. 
+					response.setHeader("Expires", "0");
 					response.getOutputStream().print(responsedata);
 					response.getOutputStream().flush();
 			    }
