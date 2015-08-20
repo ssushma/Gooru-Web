@@ -456,18 +456,18 @@ public class AssessmentsFlagView extends
 
 	@UiHandler("flagCollections")
 	public void onClickOfflagCollections(ClickEvent event) {
+		callFlagThisCollection();
+	}
+	public void callFlagThisCollection(){
 		flagResources.removeStyleName("flagbuttonDeSelected");
 		flagCollections.addStyleName("flagbuttonDeSelected");
 		collectionFlagContainer.setVisible(true);
 		resourceFlagContainer.setVisible(false);
 	}
-
 	@UiHandler("flagResources")
 	public void onClickOfflagResources(ClickEvent event) {
 		flagResources.addStyleName("flagbuttonDeSelected");
-
 		flagCollections.removeStyleName("flagbuttonDeSelected");
-
 		collectionFlagContainer.setVisible(false);
 		resourceFlagContainer.setVisible(true);
 	}
@@ -499,6 +499,8 @@ public class AssessmentsFlagView extends
 		dropdownListContainer.clear();
 		resourcesList.clear();
 		resourcesListId.clear();
+		callFlagThisCollection();
+		dropdownListPlaceHolder.getElement().setInnerHTML(i18n.GL0610());
 		if (collectionDo.getCollectionItems()!=null&&collectionDo.getCollectionItems().size() > 0) {
 			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				resourcesList.add(collectionItem.getResourceTitle()!=null?collectionItem.getResourceTitle():"");

@@ -498,10 +498,6 @@ public class CollectionFlagView extends
 	public void getDisplayData(CollectionDo collectionDo) {
 		callFlagThisCollection();
 		dropdownListPlaceHolder.getElement().setInnerHTML(i18n.GL0610());
-		dropdownListPlaceHolder.getElement().setId("htmlDropdownListPlaceHolder");
-		dropdownListPlaceHolder.getElement().setAttribute("alt",i18n.GL0610());
-		dropdownListPlaceHolder.getElement().setAttribute("title",i18n.GL0610());
-		
 		collectionTitle = collectionDo.getTitle();
 		collectionGooruOid=collectionDo.getGooruOid();
 		dropdownListContainer.clear();
