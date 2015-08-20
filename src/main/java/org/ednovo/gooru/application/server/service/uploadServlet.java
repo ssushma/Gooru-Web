@@ -23,8 +23,6 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.ednovo.gooru.application.server.request.UrlToken;
-import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -39,6 +37,8 @@ public class uploadServlet extends UploadAction{
 
 
 	private static final String REST_ENDPOINT = "rest.endpoint";
+	
+	private static final String IMAGE_UPLOAD_URL = "/v2/media?sessionToken={0}";
 
 
 
@@ -46,7 +46,6 @@ public class uploadServlet extends UploadAction{
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
 		 FileItem uploadedFileItem = null;
 		 String fileName="";
-		 JSONArray jsonArray = null;
 		 boolean isMultiPart = ServletFileUpload.isMultipartContent(new ServletRequestContext(request));
 		 if(isMultiPart) {
 			FileItemFactory factory = new DiskFileItemFactory();
@@ -82,17 +81,17 @@ public class uploadServlet extends UploadAction{
 					}
 
 					String requestData = "uploadFileName=" + fileName + "&imageURL=&sessionToken=" + stoken;
-					String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT), UrlToken.FILE_UPLOAD_GET_URL, fileName, stoken);
+					String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT)+IMAGE_UPLOAD_URL, stoken);
 					try {
 
 						responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
-						jsonArray = new JSONArray(responsedata);
+
 
 					} catch (UnsupportedEncodingException e) {
 						logger.error("UnsupportedEncodingException:::"+e);
 					}
 					response.setContentType("text/html");
-					response.getOutputStream().print(jsonArray.get(0).toString());
+					response.getOutputStream().print(responsedata);
 					response.getOutputStream().flush();
 				}
 				catch (FileUploadBase.FileSizeLimitExceededException e) {
