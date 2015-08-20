@@ -1287,10 +1287,15 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 											loadingImagePanel.clear();
 											loadingImagePanel.add(setLoadingPanel());
+											fileuploadForm.setEncoding(FormPanel.ENCODING_MULTIPART); 
+											fileuploadForm.setMethod(FormPanel.METHOD_POST);
 											fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
 											fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 												@Override
 												public void onSubmitComplete(SubmitCompleteEvent event) {
+													AppClientFactory.printInfoLogger("eventgetresults-----"+event.getResults());
+													AppClientFactory.printInfoLogger("isValidImageSize-----"+isValidImageSize);
+													AppClientFactory.printInfoLogger("collection--sharing-----"+collectionDo.getSharing());
 													panelAction.getElement().getStyle().setDisplay(Display.NONE);
 													lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
 													loadingImagePanel.setVisible(false);
@@ -1485,7 +1490,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	 
 	public final native String getFileNameSize() /*-{
 		var fileSize;
-		if ($wnd.$.browser.msie) 
+		if ($wnd.$.support.msie) 
 		{
 			var objFSO = new ActiveXObject("Scripting.FileSystemObject");
 			var sPath =   $wnd.$("#fileUpload1")[0].value;
