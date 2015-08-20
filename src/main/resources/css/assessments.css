@@ -813,3 +813,9 @@ table#report-student-assessment-report th{
 	background: #85b9df none repeat scroll 0 0;
 	color: #fff;
 }
+.alignCenterAndBackground {
+	background-color: inherit !important;
+	text-align: center;
+	width: auto;
+}
+
