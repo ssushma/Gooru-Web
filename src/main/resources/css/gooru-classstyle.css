@@ -1437,7 +1437,7 @@ text-align:left;
     color: #78b172;
     font-size: 24px;
     font-weight: bolder;
-    width: 73px;
+    width: 73px !important;
     display: inline-block;
 }
 .setScoreContainer .scoreBoxBlock .textBoxDiv {
