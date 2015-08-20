@@ -151,6 +151,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		myCollectionsListPresenter.setShelfMainPresenter(this);
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
+		addRegisteredHandler(LoadMyContentEvent.TYPE, this);
 		Document doc = Document.get();
 		doc.getBody().setClassName("");
 	}
@@ -670,6 +671,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			folderDo.setCollectionItems(folderItems);
 		}
 		return folderDo;
+	}
+
+	@Override
+	public void loadMyContentData(String type) {
+		getView().invokeSpinner();
+		setListPresenterBasedOnType(type);
 	}
 
 }

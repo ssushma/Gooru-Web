@@ -48,17 +48,9 @@ public class uploadServlet extends UploadAction{
 
 
 	private static final String REST_ENDPOINT = "rest.endpoint";
+	
+	String stoken ="";
 
-
-	 /**
-     * Maintain a list with received files and their content types.
-     */
-    Hashtable<String, String> receivedContentTypes = new Hashtable<String, String>();
-
-    /**
-     * Maintain a list with received files.
-     */
-    Hashtable<String, File> receivedFiles = new Hashtable<String, File>();
 
 
 	@Override
@@ -87,12 +79,13 @@ public class uploadServlet extends UploadAction{
 						uploadedFileItem = (FileItem) items.get(i);
 					}
 				  // we only upload one file
-					String stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
+					stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
 					
 					try {
 						fileName=URLEncoder.encode(uploadedFileItem.getName(), "UTF-8");
 					} catch (Exception e) {
-						logger.info("Exception:::");
+						logger.info("Exception::@--:"+stoken);
+						e.printStackTrace();
 					}
 
 					String requestData = "uploadFileName=" + fileName + "&imageURL=&sessionToken=" + stoken;
@@ -104,33 +97,32 @@ public class uploadServlet extends UploadAction{
 					try {
 
 						responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
+						logger.info("responsebody::@:"+stoken+"------"+response.getContentType());
 						jsonArray = new JSONArray(responsedata);
+						logger.info("responsedata::@:"+stoken+"------"+responsedata);
 
 					} catch (UnsupportedEncodingException e) {
-						logger.info("UnsupportedEncodingException:::");
+						logger.info("UnsupportedEncodingException::@:"+stoken);
+						e.printStackTrace();
 					}
 
-
+					logger.info("responsecode::@:"+stoken+"------"+response.getStatus());
 					response.setContentType("text/html");
-					response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1. 
-					response.setHeader("Pragma", "no-cache"); // HTTP 1.0. 
-					response.setHeader("Expires", "0");
 					response.getOutputStream().print(jsonArray.get(0).toString());
 					response.getOutputStream().flush();
 				}
 				catch (FileUploadBase.FileSizeLimitExceededException e) {
-					logger.info("FileSizeLimitExceededException:::");
+					logger.info("FileSizeLimitExceededException:::"+stoken);
+					e.printStackTrace();
 					responsedata = "file size error" ;
 					response.setContentType("text/html");
-					response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1. 
-					response.setHeader("Pragma", "no-cache"); // HTTP 1.0. 
-					response.setHeader("Expires", "0");
 					response.getOutputStream().print(responsedata);
 					response.getOutputStream().flush();
 			    }
 			}
 			catch(Exception e) {
-				logger.info("Exception1sttry:::");
+				logger.info("Exception1sttry:::"+stoken);
+				
 			}
 		}
 	}
@@ -140,9 +132,9 @@ public class uploadServlet extends UploadAction{
 		public String webInvokeForImage(String methodName, String data,String contentType, HttpServletRequest req, byte[] bytes,String fileName,Long fileSize, String urlVal) throws UnsupportedEncodingException {
 			String ret = "";
 			try {
-					ret = testUpload(bytes, data, fileName,fileSize,urlVal);
+					ret = fileUpload(bytes, data, fileName,fileSize,urlVal);
 			} catch (Exception e) {
-				logger.info("webInvokeForImage Exception:::");
+				logger.info("webInvokeForImage Exception:::"+stoken);
 			}
 			return ret;
 		}
@@ -161,7 +153,7 @@ public class uploadServlet extends UploadAction{
 
 
 
-	    public String testUpload(byte[] bytes, String data, String fileName,Long fileSize, String urlVal)
+	    public String fileUpload(byte[] bytes, String data, String fileName,Long fileSize, String urlVal)
                 throws Exception {
             String ret = "";
             logger.info("upload Url:::"+urlVal);
@@ -180,62 +172,9 @@ public class uploadServlet extends UploadAction{
             return ret;
         }
 
-		  /**
-		   * Override this method if you want to check the request before it is passed
-		   * to commons-fileupload parser.
-		   *
-		   * @param request
-		   * @throws RuntimeException
-		   */
-		  @Override
-		  public void checkRequest(HttpServletRequest request) {
-			  try
-			  {
-		    if (request.getContentLength() > 10 * 1024 * 1024) {
-		      throw new UploadSizeLimitException(maxSize, request.getContentLength());
-		    }
-			  }
-			  catch(Exception ex)
-			  {
-			  }
-		  }
 
-		/**
-	     * Get the content of an uploaded file.
-	     */
-	    @Override
-	    public void getUploadedFile(HttpServletRequest request,
-	            HttpServletResponse response) throws IOException
-	    {
-	        String fieldName = request.getParameter(UConsts.PARAM_SHOW);
-	        File f = receivedFiles.get(fieldName);
-	        if (f != null)
-	        {
-	            response.setContentType(receivedContentTypes.get(fieldName));
-	            FileInputStream is = new FileInputStream(f);
-	            copyFromInputStreamToOutputStream(is, response.getOutputStream());
-	        }
-	        else
-	        {
-	            renderXmlResponse(request, response, "");
-	        }
-	    }
 
-	    /**
-	     * Remove a file when the user sends a delete request.
-	     */
-	    @Override
-	    public void removeItem(HttpServletRequest request, String fieldName)
-	            throws UploadActionException
-	    {
-	        File file = receivedFiles.get(fieldName);
-	        receivedFiles.remove(fieldName);
-	        receivedContentTypes.remove(fieldName);
-	        if (file != null)
-	        {
-	            file.delete();
-	        }
-	    }
+		
 
 
 }

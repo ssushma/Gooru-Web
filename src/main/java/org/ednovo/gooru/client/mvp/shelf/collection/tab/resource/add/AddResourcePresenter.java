@@ -63,6 +63,8 @@ import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.GooruConstants;
 
@@ -226,14 +228,12 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	@Override
 	protected void onBind() {
 		super.onBind();
-
 		setUserResourceCollectionItemAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
-
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hide();
+				AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 			}
-
 			@Override
 			public void onFailure(Throwable caught) {
 				super.onFailure(caught);
@@ -242,11 +242,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		});
 
 		setCollectionItemAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
-
 			@Override
 			public void onSuccess(CollectionItemDo result) {
-
 				getView().hide();
+				AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 				/**
 				 * Dis-abled for 6.5 release
 				 */
@@ -286,6 +285,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
+            		AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
             		/**
     				 *  dis-abled tagging Quest resource for 6.5 release
     				 */
