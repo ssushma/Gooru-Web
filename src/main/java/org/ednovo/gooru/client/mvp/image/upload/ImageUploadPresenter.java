@@ -315,6 +315,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 	@Override
 	public void imageWebUpload(String imageURL) {
+		AppClientFactory.printInfoLogger("imageURL---"+imageURL);
 		this.getMediaUploadService().imageWebUpload(imageURL, getImageWebUploadAsyncCallback());
 	}
 
@@ -333,22 +334,9 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void saveImageClass(String gooruOid,String fileName){
-		ClasspageDo classpageDo = new ClasspageDo();
-		classpageDo.setMediaFilename(fileName);
-		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(gooruOid, null,null,fileName,null,null,null, new AsyncCallback<ClasspageDo>() {
-
-			@Override
-			public void onSuccess(ClasspageDo result) {
-				getView().closeImageUploadWidget();
-				getView().resetImageUploadWidget();
-				AppClientFactory.getEventBus().fireEvent(new setClassImageEvent(fileNameWithRepository));
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-		});
+		getView().closeImageUploadWidget();
+		getView().resetImageUploadWidget();
+		AppClientFactory.getEventBus().fireEvent(new setClassImageEvent(fileNameWithRepository,fileNameWithoutRepository));
 	}
 
 
@@ -378,12 +366,14 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		Window.enableScrolling(true);
 		this.fileNameWithoutRepository=fileName;
 		this.fileNameWithRepository=imageUrl;
+		AppClientFactory.printInfoLogger("imageUrl::::"+imageUrl);
 		this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
 		
 	}
 
 	@Override
 	public void imageFileUpload(String response) {
+		AppClientFactory.printInfoLogger("imageFileUpload response---"+response);
 		this.getMediaUploadService().imageFileUpload(response, getImageFileUploadAsyncCallback());
 	}
 

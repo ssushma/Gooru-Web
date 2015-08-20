@@ -217,7 +217,7 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 					answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText()));
 					answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
-					answerAttemptDo.setOrder(i+1+"");
+					answerAttemptDo.setOrder((i+1)+"");
 					answerAttemptDo.setStatus(questionAnswerOptionView.isAnswerCorrect()?"1":"0");
 					userAttemptedOptionsList.add(answerAttemptDo);
 					userAttemptedAnswerObject(userAttemptedOptionsList);

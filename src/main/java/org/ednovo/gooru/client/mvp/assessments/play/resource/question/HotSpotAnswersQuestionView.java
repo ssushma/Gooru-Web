@@ -305,21 +305,21 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 			Widget widget=optionsContainer.getWidget(i);
 			if(widget instanceof HSAnswerOptionView){
 				HSAnswerOptionView questionAnswerOptionView=(HSAnswerOptionView)widget;
-				
+
 				AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
 				attempteAnswersDo.setAttemptResult(questionAnswerOptionView.isAnswerCorrect());
 				attempteAnswersDo.setAnswerId(questionAnswerOptionView.getAnswerId());
-				
+
 				AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 				answerAttemptDo.setText(URL.encodeQueryString(questionAnswerOptionView.getAnswerText()));
 				answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
-				answerAttemptDo.setOrder(i+1+"");
+				answerAttemptDo.setOrder((i+1)+"");
 				answerIds.add(i+1);
 
 
 				if(questionAnswerOptionView.isChecked){
-					
+
 					if(questionAnswerOptionView.isAnswerCorrect()){
 						if(hsChoiceStatus){
 							hsChoiceStatus=true;
@@ -333,19 +333,19 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 						userAttemptedValueList.add("0");
 						answerAttemptDo.setStatus("0");
 					}
-					
+
 				}else if(!questionAnswerOptionView.isChecked && questionAnswerOptionView.isAnswerCorrect()) {
 					hsChoiceStatus=false;
 					answerAttemptDo.setStatus("skipped");
 				}
-				
+
 				setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 				attempteAnswersDo.setAnswerOptionResult(answerOptionResult);
 				userAttemptedOptionsList.add(answerAttemptDo);
 
 			}else if(widget instanceof AddAnswerImg){
 				AddAnswerImg answerImg=(AddAnswerImg)widget;
-				
+
 				AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 				attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
 				attempteAnswersDo.setAttemptResult(answerImg.isAnswerCorrect());
@@ -353,7 +353,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 				AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
 				answerAttemptDo.setText(answerImg.getAnswerImage());
 				answerAttemptDo.setAnswerId(answerImg.getAnswerId());
-				answerAttemptDo.setOrder(i+1+"");
+				answerAttemptDo.setOrder((i+1)+"");
 				answerIds.add(i+1);
 
 				if(answerImg.selectedImage){
@@ -370,7 +370,7 @@ public abstract  class HotSpotAnswersQuestionView extends Composite{
 						userAttemptedValueList.add("0");
 						answerAttemptDo.setStatus("0");
 					}
-					
+
 				}else if(!answerImg.selectedImage && answerImg.isAnswerCorrect()) {
 					hsChoiceStatus=false;
 					answerAttemptDo.setStatus("skipped");

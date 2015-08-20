@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -41,7 +41,6 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.GenderRadioButton;
-import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.ValidTextUc;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -74,7 +73,7 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class UserRegistrationView extends
 		PopupViewWithUiHandlers<UserRegistrationUiHandlers> implements
@@ -84,7 +83,7 @@ public class UserRegistrationView extends
 			.create(UserRegistrationViewUiBinder.class);
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField
 	Anchor cancelAnr;
 
@@ -149,7 +148,7 @@ public class UserRegistrationView extends
 
 	/**
 	 * Class constructor, creates popup , focus and blur events
-	 * 
+	 *
 	 * @param eventBus
 	 *            {@link EventBus}
 	 */
@@ -157,13 +156,12 @@ public class UserRegistrationView extends
 	public UserRegistrationView(EventBus eventBus) {
 		super(eventBus);
 		RegisterCBundle.INSTANCE.css().ensureInjected();
-		UcCBundle.INSTANCE.css().ensureInjected();
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName(RegisterCBundle.INSTANCE.css().registerPopup());
 		appPopUp.setContent((i18n.GL1207()), uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(RegisterCBundle.INSTANCE.css()
 				.registerPopupGlassPanel());
-		
+
 		userRegisterFloPanel.getElement().setId("fpnlUserRegisterFloPanel");
 		welcomeMessageHtml.getElement().setId("htmlWelcomeMessageHtml");
 		firstnameFloPanel.getElement().setId("fpnlFirstnameFloPanel");
@@ -177,118 +175,118 @@ public class UserRegistrationView extends
 		userCategoryFloPanel.getElement().setId("fpnlUserCategoryFloPanel");
 		userCategoryLisBox.getElement().setId("lbUserCategoryLisBox");
 		termsAndConditionFloPanel.getElement().setId("fpnlTermsAndConditionFloPanel");
-		
-		
+
+
 		accountTypeFieldLbl.setText(i18n.GL0807());
 		accountTypeFieldLbl.getElement().setId("lblAccountTypeFieldLbl");
 		accountTypeFieldLbl.getElement().setAttribute("alt",i18n.GL0807());
 		accountTypeFieldLbl.getElement().setAttribute("title",i18n.GL0807());
-		
+
 		accountInformationLbl.setText(i18n.GL1198());
 		accountInformationLbl.getElement().setId("lblAccountInformationLbl");
 		accountInformationLbl.getElement().setAttribute("alt",i18n.GL1198());
 		accountInformationLbl.getElement().setAttribute("title",i18n.GL1198());
-		
+
 		fName.setText(i18n.GL0424());
 		fName.getElement().setId("lblFName");
 		fName.getElement().setAttribute("alt",i18n.GL0424());
 		fName.getElement().setAttribute("title",i18n.GL0424());
-		
+
 		lName.setText(i18n.GL0425());
 		lName.getElement().setId("lblLName");
 		lName.getElement().setAttribute("alt",i18n.GL0425());
 		lName.getElement().setAttribute("title",i18n.GL0425());
-		
+
 		uName.setText(i18n.GL1035());
 		uName.getElement().setId("lblUName");
 		uName.getElement().setAttribute("alt",i18n.GL1035());
 		uName.getElement().setAttribute("title",i18n.GL1035());
-		
+
 		pWord.setText(i18n.GL0204());
 		pWord.getElement().setId("lblPWord");
 		pWord.getElement().setAttribute("alt",i18n.GL0204());
 		pWord.getElement().setAttribute("title",i18n.GL0204());
-		
+
 		cPword.setText(i18n.GL0427());
 		cPword.getElement().setId("lblCPword");
 		cPword.getElement().setAttribute("alt",i18n.GL0427());
 		cPword.getElement().setAttribute("title",i18n.GL0427());
-		
+
 		bdLbl.setText(i18n.GL0211());
 		bdLbl.getElement().setId("lblBdLbl");
 		bdLbl.getElement().setAttribute("alt",i18n.GL0211());
 		bdLbl.getElement().setAttribute("title",i18n.GL0211());
-		
+
 		emailText.setText(i18n.GL0212());
 		emailText.getElement().setId("lblEmailText");
 		emailText.getElement().setAttribute("alt",i18n.GL0212());
 		emailText.getElement().setAttribute("title",i18n.GL0212());
-		
+
 		genderText.setText(i18n.GL0809());
 		genderText.getElement().setId("lblGenderText");
 		genderText.getElement().setAttribute("alt",i18n.GL0809());
 		genderText.getElement().setAttribute("title",i18n.GL0809());
-		
+
 		female.setText(i18n.GL0811());
 		female.getElement().setId("rdFemale");
 		female.getElement().setAttribute("alt",i18n.GL0811());
 		female.getElement().setAttribute("title",i18n.GL0811());
-		
+
 		male.setText(i18n.GL0810());
 		male.getElement().setId("rdMale");
 		male.getElement().setAttribute("alt",i18n.GL0810());
 		male.getElement().setAttribute("title",i18n.GL0810());
-		
+
 		other.setText(i18n.GL1047());
 		other.getElement().setId("rdOther");
 		other.getElement().setAttribute("alt",i18n.GL1047());
 		other.getElement().setAttribute("title",i18n.GL1047());
-		
+
 		donot.setText(i18n.GL1199());
 		donot.getElement().setId("rdDoNot");
 		donot.getElement().setAttribute("alt",i18n.GL1199());
 		donot.getElement().setAttribute("title",i18n.GL1199());
-		
+
 		aboutMe.setText(i18n.GL1200());
 		aboutMe.getElement().setId("lblAboutMe");
 		aboutMe.getElement().setAttribute("alt",i18n.GL1200());
 		aboutMe.getElement().setAttribute("title",i18n.GL1200());
-		
+
 		conditionsText.setText(i18n.GL1201()+" ");
 		conditionsText.getElement().setId("lblConditionsText");
 		conditionsText.getElement().setAttribute("alt",i18n.GL1201());
 		conditionsText.getElement().setAttribute("title",i18n.GL1201());
-		
+
 		termsAndConditionsAnr.setText(i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
 		termsAndConditionsAnr.getElement().setAttribute("alt",i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
 		termsAndConditionsAnr.getElement().setAttribute("title",i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
-		
+
 		andText.setText("  "+i18n.GL_GRR_AND()+"  ");
 		andText.getElement().setId("lblAndText");
 		andText.getElement().setAttribute("alt","  "+i18n.GL_GRR_AND()+"  ");
 		andText.getElement().setAttribute("title","  "+i18n.GL_GRR_AND()+"  ");
-		
+
 		copyRightPolicyAnr.setText(i18n.GL0421());
 		copyRightPolicyAnr.getElement().setAttribute("alt",i18n.GL0421());
 		copyRightPolicyAnr.getElement().setAttribute("title",i18n.GL0421());
-		
+
 		gooruText.setText(" "+i18n.GL_GRR_OF()+" "+i18n.GL1202());
 		gooruText.getElement().setId("lblGooruText");
 		gooruText.getElement().setAttribute("alt"," "+i18n.GL_GRR_OF()+" "+i18n.GL1202());
 		gooruText.getElement().setAttribute("title"," "+i18n.GL_GRR_OF()+" "+i18n.GL1202());
-		
+
 		updateUserDetailsUc.setText(i18n.GL1203());
 		updateUserDetailsUc.getElement().setAttribute("alt",i18n.GL1203());
 		updateUserDetailsUc.getElement().setAttribute("title",i18n.GL1203());
-		
+
 		cancelAnr.setText(i18n.GL0142());
 		cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
 		cancelAnr.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		welcomeMessageHtml.setHTML(i18n.GL1211());
 		welcomeMessageHtml.getElement().setAttribute("alt",i18n.GL1211());
 		welcomeMessageHtml.getElement().setAttribute("title",i18n.GL1211());
-		
+
 		passwordFieldTxtBox.addFocusHandler(new OnPasswordFocus());
 		dateBoxUc = new DateBoxUc(true, false, false);
 		dateSimPanel.add(dateBoxUc);
@@ -300,11 +298,11 @@ public class UserRegistrationView extends
 		genderValidUc.setVisible(false);
 		genderValidUc.setStyleName(RegisterCBundle.INSTANCE.css()
 				.rightErrorLabel());
-		dateBoxUc.setStyleName(UcCBundle.INSTANCE.css().parentDateBox());
+		dateBoxUc.setStyleName("Uc-parentDateBox");
 		dateBoxUc.getDateBox().setStyleName(
-				UcCBundle.INSTANCE.css().parentDateText());
+				"Uc-parentDateText");
 		dateBoxUc.getDatePickerUc().setStyleName(
-				UcCBundle.INSTANCE.css().parentDatePickerContainer());
+				"Uc-parentDatePickerContainer");
 		dateBoxUc.addDomHandler(new OnDateFocus(), FocusEvent.getType());
 		dateBoxUc.getDateBox().addFocusHandler(new OnDateFocus());
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
@@ -362,7 +360,7 @@ public class UserRegistrationView extends
 				}
 				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 				termsAndPolicyVc.show();
-			
+
 				termsAndPolicyVc.center();
 			}
 		});
@@ -382,7 +380,7 @@ public class UserRegistrationView extends
 
 	/**
 	 * Hide the popup and redirect to home page while clicking cancel
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -394,7 +392,7 @@ public class UserRegistrationView extends
 
 	/**
 	 * Calls update user method
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -421,9 +419,9 @@ public class UserRegistrationView extends
 		public void onFocus(FocusEvent event) {
 			if (dateValidationUc.isVisible()) {
 				dateBoxUc
-						.setStyleName(UcCBundle.INSTANCE.css().parentDateBox());
+						.setStyleName("Uc-parentDateBox");
 				dateBoxUc.getDateBox().setStyleName(
-						UcCBundle.INSTANCE.css().parentDateText());
+						"Uc-parentDateText");
 				dateValidationUc.setVisible(false);
 			}
 		}
@@ -766,7 +764,7 @@ public class UserRegistrationView extends
 		userEmailFieldLbl.getElement().setId("lblUserEmailFieldLbl");
 		userEmailFieldLbl.getElement().setAttribute("alt",user.getEmailId());
 		userEmailFieldLbl.getElement().setAttribute("title",user.getEmailId());
-		
+
 		userCategoryLisBox.addItem(i18n.GL0417());
 		userCategoryLisBox.addItem(i18n.GL0416());
 		userCategoryLisBox.addItem(i18n.GL0418());
@@ -791,7 +789,7 @@ public class UserRegistrationView extends
 
 	/**
 	 * Get user's gender while register
-	 * 
+	 *
 	 * @param genderFlowPanel
 	 *            instance of {@link FlowPanel} which contains gender details
 	 * @return gender value
@@ -812,7 +810,7 @@ public class UserRegistrationView extends
 
 	/**
 	 * Clear the selected gender
-	 * 
+	 *
 	 * @param genderFlowPanel
 	 *            instance of {@link FlowPanel} which contains gender details
 	 * @return gender
@@ -841,7 +839,7 @@ public class UserRegistrationView extends
 
 	/**
 	 * Assign registration type
-	 * 
+	 *
 	 * @param registartionType
 	 */
 	public void setRegistartionType(String registartionType) {

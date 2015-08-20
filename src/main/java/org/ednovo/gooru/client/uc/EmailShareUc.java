@@ -139,7 +139,6 @@ public class EmailShareUc extends PopupPanel{
 	public EmailShareUc(SocialShareDo socialDo) {
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
-		UcCBundle.INSTANCE.css().ensureInjected();
 		this.socialShareDo = socialDo;
 		setSocialShareAsyncCallback(new SimpleAsyncCallback<Void>() {
 
@@ -447,13 +446,11 @@ public class EmailShareUc extends PopupPanel{
 	public void oncheckCopyEmailEvent(ClickEvent event) {
 
 		if (isCheckedValue) {
-			checkCopyEmail.setStyleName(UcCBundle.INSTANCE.css()
-					.classPageEmailCheckBoxBgHoverSprite());
+			checkCopyEmail.setStyleName("Uc-classPageEmailCheckBoxBgHoverSprite");
 			isCheckedValue = false;
 			cfm = "no";
 		} else {
-			checkCopyEmail.setStyleName(UcCBundle.INSTANCE.css()
-					.classPageEmailCheckBoxBgHover());
+			checkCopyEmail.setStyleName("Uc-classPageEmailCheckBoxBgHover");
 			isCheckedValue = true;
 			cfm = "yes";
 		}

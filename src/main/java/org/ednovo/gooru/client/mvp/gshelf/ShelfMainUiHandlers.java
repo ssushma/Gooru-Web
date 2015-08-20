@@ -43,7 +43,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  * @author Search Team
  *
  */
-public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHandler,UpdateResourceCountEventHandler{
+public interface ShelfMainUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHandler,UpdateResourceCountEventHandler,LoadMyContentEventHandler{
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();

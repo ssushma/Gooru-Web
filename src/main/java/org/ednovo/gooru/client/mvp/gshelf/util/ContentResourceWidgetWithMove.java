@@ -119,7 +119,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static final String ASSESSMENT = "assessment";
 	private static final String FOLDER = "Folder";
 	private static final String COURSE = "Course";
-	
+
 
 	boolean youtube,isPdf=false;
 	boolean isHavingBadWords=false;
@@ -245,8 +245,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			public void onBlur(BlurEvent event) {
 				String enteredString=txtMoveTextBox.getText().trim();
 				String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index").trim();
-				int enteredVal=Integer.valueOf(enteredString);
-				if(enteredString.isEmpty() || enteredVal==0){
+				int enteredVal = 0;
+				if(!enteredString.isEmpty()){
+					enteredVal=Integer.valueOf(enteredString);
+				}else if(enteredString.isEmpty() || enteredVal==0){
 					int currentIndex=(Integer.parseInt(currentWidgetString)+1);
 					if(currentIndex==1 || Integer.parseInt(currentWidgetString)==0){
 						lblDownArrow.setVisible(true);
@@ -572,7 +574,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			if(timeEditContainer.isVisible()){
 				editAndUpdateVideoTime();
 			}else{
-				updateNarration();
+				updateYoutubeNarrationWithTime();
 			}
 		}else if(isPdf){
 			updatePdfStartPage();
@@ -647,7 +649,120 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		});
 
 	}
+	private void updateYoutubeNarrationWithTime(){
+		String narration = null;
+		MixpanelUtil.Organize_Click_Edit_Narration_Update();
+		narration = trim(narrationTxtArea.getText());
+		collectionItem.setNarration(narration);
+		lblUpdateTextMessage.setVisible(true);
+		actionVerPanel.setVisible(false);
+		Map<String, String> parms = new HashMap<>();
+		parms.put("text", narrationTxtArea.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				isHavingBadWords = value;
+				if (value){
+					narrationAlertMessageLbl.addStyleName("narrationTxtArea titleAlertMessageActive");
+					narrationAlertMessageLbl.removeStyleName("titleAlertMessageDeActive");
+					narrationTxtArea.getElement().getStyle().setBorderColor("orange");
+					narrationAlertMessageLbl.setText(i18n.GL0554());
+					StringUtil.setAttributes(narrationAlertMessageLbl.getElement(), i18n.GL0554(), i18n.GL0554());
+					narrationAlertMessageLbl.setVisible(true);
+					actionVerPanel.setVisible(true);
+					lblUpdateTextMessage.setVisible(true);
+					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+				}else{
+					final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+					String narration = null;
+					MixpanelUtil.Organize_Click_Edit_Narration_Update();
+					if (resourceNarrationHtml.getHTML().length() > 0) {
+						narration = trim(narrationTxtArea.getText());
+						collectionItem.setNarration(narration);
+						pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+					}
+					try{
+						String from = null;
+						String to = null;
+						if((startMinTxt.getText().trim().length()>0)&&(startSecTxt.getText().trim().length()>0)&&(stopMinTxt.getText().trim().length()>0)&&(stopSecTxt.getText().trim().length()>0)){
+							if (collectionItem.getResource().getResourceType().getName()
+									.equalsIgnoreCase("video/youtube")) {
+								from = FROM_START_TIME;
+								to = FROM_STOP_TIME;
+							}
+							/*
+							 * if (resourceNarrationHtml.getHTML().length() > 0) { narration =
+							 * narrationTxtArea.getHTML(); collectionItemDo.setNarration(narration);
+							 * }
+							 */
+							if (startMinTxt.getText().length() > 0 && startSecTxt.getText().length() > 0) {
+								from = startMinTxt.getText();
+								startMinTxt.setText(from);
+								startMinTxt.getElement().setAttribute("alt", from);
+								startMinTxt.getElement().setAttribute("title", from);
+								from = startSecTxt.getText();
+								startSecTxt.setText(from);
+								startSecTxt.getElement().setAttribute("alt", from);
+								startSecTxt.getElement().setAttribute("title", from);
+								String startTimeTxtMin = null;
+								String startTimeTxtSec = null;
+								if (startMinTxt.getText().length() < 2) {
+									startTimeTxtMin = "0" + startMinTxt.getText();
 
+								} else {
+									startTimeTxtMin = startMinTxt.getText();
+								}
+								if (startSecTxt.getText().length() < 2) {
+									startTimeTxtSec = "0" + startSecTxt.getText();
+								} else {
+									startTimeTxtSec = startSecTxt.getText();
+								}
+								from = "00:" + startTimeTxtMin + ":" + startTimeTxtSec;
+								// collectionItemDo.setStart(from);
+
+							}
+							if (stopMinTxt.getText().length() > 0
+									&& stopSecTxt.getText().length() > 0) {
+								to = stopMinTxt.getText();
+								stopMinTxt.setText(to);
+								stopMinTxt.getElement().setAttribute("alt", to);
+								stopMinTxt.getElement().setAttribute("title", to);
+								to = stopSecTxt.getText();
+								stopSecTxt.setText(to);
+								stopSecTxt.getElement().setAttribute("alt", to);
+								stopSecTxt.getElement().setAttribute("title", to);
+								String EndTimeTxtMin = null;
+								String EndTimeTxtSec = null;
+								if (stopMinTxt.getText().length() < 2) {
+									EndTimeTxtMin = "0" + stopMinTxt.getText();
+
+								} else {
+									EndTimeTxtMin = stopMinTxt.getText();
+								}
+								if (stopSecTxt.getText().length() < 2) {
+									EndTimeTxtSec = "0" + stopSecTxt.getText();
+								} else {
+									EndTimeTxtSec = stopSecTxt.getText();
+								}
+								to = "00:" + EndTimeTxtMin + ":" + EndTimeTxtSec;
+								// collectionItemDo.setStop(to);
+							}
+						}
+						collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, from, to);
+						enableDisableNarration(true);
+					}catch(Exception e){
+						AppClientFactory.printSevereLogger("ContentResourceWidgetWithMove : updateNarration : "+e.getMessage());
+					}
+					lblUpdateTextMessage.setVisible(false);
+					lblCharLimit.setVisible(false);
+					resourceNarrationHtml.getElement().getStyle().clearWidth();
+					enableOrDisableTimeEdit(true);
+					startStopTimeDisplayText.setVisible(false);
+				}
+			}
+		});
+
+	}
 	/**
 	 * This method is used to update the pdf start and end page
 	 */
@@ -672,7 +787,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				}else{
 				start=Integer.toString(1);
 			}
-			
+
 			collectionItem.setStart(start);
 			collectionItem.setStop(enteredStopPage);
 			collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, start, enteredStopPage);
@@ -695,20 +810,20 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 
 		Integer enteredStopPage =null;
 		Integer startpdfpage =null;
-		
+
 		if(stopPage!=null && !stopPage.equalsIgnoreCase("")){
 		enteredStopPage = Integer.parseInt(stopPage);
 		}else {
 		enteredStopPage = totalPage;
 		}
-		
-		
+
+
 		if(startpage!=null&& !startpage.equalsIgnoreCase("")){
 			startpdfpage = Integer.parseInt(startpage);
 			}else{
 			startpdfpage=1;
 			}
-		
+
 		if(enteredStopPage > totalPage){
 			lblError.setText(VALID_END_PAGE);
 			isValid = false;
@@ -975,7 +1090,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		};
 	}
-	
+
 	private String getViewType() {
 		return AppClientFactory.getPlaceManager().getRequestParameter("view",COURSE);
 	}
@@ -1210,9 +1325,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			startpdfPageNumber.setText(startPageNumber);
 			StringUtil.setAttributes(startpdfPageNumber.getElement(), startPageNumber, startPageNumber);
 		}
-	
+
 	}
-	
+
 	public void setYoutubeData(){
 		isPdf=false;
 		imgDisplayIcon.setUrl("images/timeIcon.png");
@@ -1241,7 +1356,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 		if (!"00:00:00".equalsIgnoreCase(stopTime) ||!"00:00:00".equalsIgnoreCase(startTime)) {
 				String[] VideoStartTime=startTime.split(":");
 				String[] VideoEndTime=stopTime.split(":");
-				String startMm=Integer.parseInt(VideoStartTime[0])*60+Integer.parseInt(VideoStartTime[1])+"";
+				String startMm=(Integer.parseInt(VideoStartTime[0])*60+Integer.parseInt(VideoStartTime[1]))+"";
 				String startSec =null;
 				String endSec = null;
 				if (VideoStartTime.length>2){
@@ -1249,7 +1364,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				}else{
 					startSec="00";
 				}
-				String endMm=Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1])+"";
+				String endMm=(Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1]))+"";
 				if (VideoEndTime.length>2){
 					endSec=Integer.parseInt(VideoEndTime[2])+"";
 				}else{
@@ -1287,6 +1402,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 				});
 			}
 		}
-	
+
 	}
 }

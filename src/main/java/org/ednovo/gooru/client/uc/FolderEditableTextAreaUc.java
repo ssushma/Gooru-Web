@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -69,14 +69,11 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 
 	protected String text;
 
-	@UiField(provided = true)
-	UcCBundle res;
 
 	/**
 	 * Class constructor
 	 */
 	public FolderEditableTextAreaUc() {
-		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		focusPanel.getElement().setId("focuspnlFocusPanel");
 		deckPanel.getElement().setId("dpnlDeckPanel");
@@ -84,10 +81,10 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 		textArea.getElement().setId("tatTextArea");
 		StringUtil.setAttributes(textArea, true);
 		deckPanel.showWidget(0);
-	
+
 		textArea.addKeyUpHandler(new ValidateConfirmText());
 	}
-	
+
 	private class ValidateConfirmText implements KeyUpHandler {
 
 		@Override
@@ -118,9 +115,9 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 		setValue(textArea.getText(), true); // fires events, too
 		deckPanel.showWidget(0);
 		String text = getValue();
-		 
+
 		if ((getText() != null || text.trim().length() > 0)) {
-			
+
 			setText(text);
 			onEditDisabled(getValue());
 		}
@@ -135,13 +132,13 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 	public void onEditDisabled(String text) {
 
 	}
-	
+
 	// Override this method to catch on blur
 	/**
 	 * @param text
 	 */
 	public void checkCharacterLimit(String text) {
-		
+
 	}
 
 	@Override
@@ -181,8 +178,8 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 	}
 
 	public void setText(String text) {
-		
-		
+
+
 		this.text = text;
 		setValue(text);
 	}
