@@ -90,4 +90,5 @@ public interface DistrictStyleBundle extends CssResource {
 	String listViewBtnStyle();
 	String tabsSausdLi();
 	String ycglDistrictLogo();
+	String episdPartnerLogo();
 }

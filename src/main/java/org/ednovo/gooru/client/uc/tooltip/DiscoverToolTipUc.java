@@ -311,6 +311,7 @@ public class DiscoverToolTipUc extends Composite implements HasMouseOutHandlers{
 		publicPartners.put(i18n.GL2053(),PlaceTokens.LPS);
 		//publicPartners.put(i18n.GL2055(),PlaceTokens.MURRIETA); //Phased out of this release
 		publicPartners.put(i18n.GL0515_1(),PlaceTokens.RUSD_LIBRARY);
+//		publicPartners.put("EPISD",PlaceTokens.EPISD_LIBRARY);
 		publicPartners.put(i18n.GL1898(),PlaceTokens.SAUSD_LIBRARY);
 		publicPartners.put(i18n.GL2057(),PlaceTokens.SUSD);
 		publicPartners.put(i18n.GL2060(),PlaceTokens.VALVERDE);
