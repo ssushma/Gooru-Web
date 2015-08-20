@@ -101,13 +101,16 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
  		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
-									leftArrow.setVisible(true);
-									rightArrow.setVisible(true);
-							}else{
-									leftArrow.setVisible(false);
-									rightArrow.setVisible(false);
-									}
+				if(table != null){
+					if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
+						leftArrow.setVisible(true);
+						rightArrow.setVisible(true);
+				}else{
+						leftArrow.setVisible(false);
+						rightArrow.setVisible(false);
+						}
+				}
+				
 			}
 		};
 		scrollForCollectionProgress.addDomHandler(mouseOver, MouseOverEvent.getType());

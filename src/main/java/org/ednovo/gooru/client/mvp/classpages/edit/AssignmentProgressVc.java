@@ -131,7 +131,7 @@ public class AssignmentProgressVc extends Composite{
 		resourceTypePanel.setVisible(false);
 		resourceCategoryLabel.setText(String.valueOf(assignmentNumber));
 
-		/*resoureDropDownLbl.addClickHandler(new ClickHandler() {
+		/*.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -139,13 +139,13 @@ public class AssignmentProgressVc extends Composite{
 			}
 		});*/
 
-		resourceCategoryLabel.addClickHandler(new ClickHandler() {
+		/*resourceCategoryLabel.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
 			}
-		});
+		});*/
 
 		for (int i=0; i<assignmentTotalCount; i++){
 			resourceTypePanel.add(createLabel(""+(i+1)));
