@@ -100,5 +100,7 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	TreeItem getCurrentEditingWidget();
 
 	void showLastEditCollaborater(String lastEditedBy,
-			boolean hasLastModifiedUser);  
+			boolean hasLastModifiedUser);
+
+	void invokeSpinner();  
 }

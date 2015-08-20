@@ -65,6 +65,7 @@ import org.ednovo.gooru.client.mvp.gshelf.courselist.MyCollectionsListPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
+import org.ednovo.gooru.client.mvp.library.district.episd.EpisdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
@@ -296,4 +297,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<AssessmentsResourcePlayerPresenter> getAssessmentsResourcePlayerPresenter();
 
 	AsyncProvider<ShelfMainPresenter> getShelfMainPresenter();
+	
+	AsyncProvider<EpisdLibraryPresenter> getEpisdPresenter();
  }

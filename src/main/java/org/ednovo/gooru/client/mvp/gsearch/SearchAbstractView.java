@@ -311,7 +311,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}
 						}
 					}
-						previousScroll=event.getScrollTop();
+					previousScroll=event.getScrollTop();
 					}catch(Exception e){
 				}
 			}

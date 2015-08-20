@@ -326,20 +326,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 					getSessionsDataByUser(assessmentId, classGooruId, classGooruId, lessonGooruId, unitGooruId, gooruUid);
 					getView().setSessionsData(result);
 				} else {
-					Timer timer = new Timer() {
-						@Override
-						public void run() {
-							if (count < 10){
-								getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, currentSessionId);
-								count++;
-							}else{
-								if (count >= 10){
-									getView().errorMsg();
-								}
-							}
-						}
-					};
-					timer.schedule(100);
+					getView().setAnonymousData();
 				}
 			}
 		});

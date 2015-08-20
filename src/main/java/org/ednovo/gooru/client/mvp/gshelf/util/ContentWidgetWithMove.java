@@ -131,8 +131,10 @@ public abstract class ContentWidgetWithMove extends Composite {
 			public void onBlur(BlurEvent event) {
 				String enteredString=txtMoveTextBox.getText().toString().trim();
 				String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index").trim();
-				int enteredVal=Integer.valueOf(enteredString);
-				if(enteredString.isEmpty() || enteredVal==0){
+				int enteredVal=0;
+				if(!enteredString.isEmpty()){
+					enteredVal=Integer.valueOf(enteredString);
+				}else if(enteredString.isEmpty() || enteredVal==0){
 					int currentIndex=(Integer.parseInt(currentWidgetString)+1);
 					if(currentIndex==1 || Integer.parseInt(currentWidgetString)==0){
 						lblDownArrow.setVisible(true);

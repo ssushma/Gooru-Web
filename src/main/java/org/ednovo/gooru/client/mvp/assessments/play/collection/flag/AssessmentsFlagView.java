@@ -456,12 +456,14 @@ public class AssessmentsFlagView extends
 
 	@UiHandler("flagCollections")
 	public void onClickOfflagCollections(ClickEvent event) {
+		callFlagThisCollection();
+	}
+	public void callFlagThisCollection(){
 		flagResources.removeStyleName("flagbuttonDeSelected");
 		flagCollections.addStyleName("flagbuttonDeSelected");
 		collectionFlagContainer.setVisible(true);
 		resourceFlagContainer.setVisible(false);
 	}
-
 	@UiHandler("flagResources")
 	public void onClickOfflagResources(ClickEvent event) {
 		flagResources.addStyleName("flagbuttonDeSelected");
@@ -494,6 +496,8 @@ public class AssessmentsFlagView extends
 
 	@Override
 	public void getDisplayData(CollectionDo collectionDo) {
+		callFlagThisCollection();
+		dropdownListPlaceHolder.getElement().setInnerHTML(i18n.GL0610());
 		collectionTitle = collectionDo.getTitle();
 		collectionGooruOid=collectionDo.getGooruOid();
 		dropdownListContainer.clear();

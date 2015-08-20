@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.uc.suggestbox.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -315,14 +316,15 @@ public abstract class AutoSuggestForm extends Composite {
 					if (event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE && txtInputBox.getValue().trim().length() <= 0) {
 						keyPressOnTextBox(null);
 						if ("".equals(txtInputBox.getValue().trim())) {
-							ListItem li = (ListItem) list.getWidget(list
-									.getWidgetCount() - 2);
-							Paragraph p = (Paragraph) li.getWidget(0);
-							if (itemsSelected.contains(p.getText())) {
-								itemsSelected.remove(p.getText());
+							if(list.getWidgetCount() >1){
+								ListItem li = (ListItem) list.getWidget(list.getWidgetCount() - 2);
+								Paragraph p = (Paragraph) li.getWidget(0);
+								if (itemsSelected.contains(p.getText())) {
+									itemsSelected.remove(p.getText());
+								}
+								list.remove(li);
+								txtInputBox.setFocus(true);
 							}
-							list.remove(li);
-							txtInputBox.setFocus(true);
 						}
 					}
 				}
