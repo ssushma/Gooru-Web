@@ -188,6 +188,11 @@ public class LibraryMenuNav extends Composite{
 			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1827());
 			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1827());
 			aboutGooruAnr.setHref(i18n.GL1828());
+		}if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY)) {
+			aboutGooruAnr.setText(i18n.GL3503());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL3503());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL3503());
+			aboutGooruAnr.setHref("");
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 			aboutGooruAnr.setText(i18n.GL1899());
 			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());

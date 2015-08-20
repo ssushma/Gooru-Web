@@ -320,6 +320,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				placeToken.equalsIgnoreCase(PlaceTokens.AUTODESK) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.EPISD_LIBRARY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.SUSD) ||
@@ -356,7 +357,9 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			setLandingBannerMetaData("landingLifeboardBanner", "", i18n.GL2052(), districtStyleUc.sausdPartnerLogo(), false);
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
 			setLandingBannerMetaData("landingRusdBanner", "250px", i18n.GL0588(), districtStyleUc.rusdPartnerLogo(), true);
-		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SUSD)) {
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.EPISD_LIBRARY)) {
+			setLandingBannerMetaData("landingEpisdBanner", "250px", i18n.GL3504(), districtStyleUc.episdPartnerLogo(), true);
+		}  else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SUSD)) {
 			setLandingBannerMetaData("landingSusdBanner", "250px", i18n.GL2078() + " " + i18n.GL0587(), districtStyleUc.susdPartnerLogo(), true);
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.VALVERDE)) {
 			setLandingBannerMetaData("landingValverdeBanner", "250px", i18n.GL2075() + " " + i18n.GL0587(), districtStyleUc.valverdePartnerLogo(), true);

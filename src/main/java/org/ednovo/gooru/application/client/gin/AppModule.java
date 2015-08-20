@@ -271,6 +271,10 @@ import org.ednovo.gooru.client.mvp.image.upload.IsImageUploadView;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictView;
 import org.ednovo.gooru.client.mvp.library.district.IsDistrictView;
+import org.ednovo.gooru.client.mvp.library.district.episd.EpisdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.episd.EpisdLibraryPresenter.IsEpisdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.episd.EpisdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.episd.IsEpisdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.IsLifeboardLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter.IsLifeboardLibraryProxy;
@@ -615,6 +619,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(SignUpAfterThirteenPresenter.class,IsAfterThirteen.class,SignUpTurnsAfterThirteenView.class);
 
 		bindPresenter(RusdPresenter.class, IsRusdView.class, RusdView.class,IsRusdProxy.class);
+		bindPresenter(EpisdLibraryPresenter.class, IsEpisdLibraryView.class, EpisdLibraryView.class,IsEpisdLibraryProxy.class);
 		bindPresenter(CommunityPresenter.class, IsCommunityView.class, CommunityView.class,IsCommunityProxy.class);
 		bindPresenter(PreviewPlayerPresenter.class,IsPreviewPlayerView.class,PreviewPlayerView.class,IsPreviewPlayerProxy.class);
 		bindPresenterWidget(PreviewPlayerMetadataPresenter.class,IsPreviewPlayerMetadataView.class,PreviewPlayerMetadataView.class);
