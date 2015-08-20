@@ -2,7 +2,6 @@ package org.ednovo.gooru.application.server.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -15,6 +14,7 @@ import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -23,7 +23,6 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.ednovo.gooru.application.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.application.server.request.UrlToken;
 import org.json.JSONArray;
 import org.slf4j.Logger;
@@ -72,33 +71,32 @@ public class uploadServlet extends UploadAction{
 					String stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
 					
 					try {
-						fileName=URLEncoder.encode(uploadedFileItem.getName(), "UTF-8");
+						String fileNameVal = uploadedFileItem.getName();						
+						String basename = FilenameUtils.getBaseName(fileNameVal);
+						logger.info("basename:::"+basename);
+						String extension = FilenameUtils.getExtension(fileNameVal);
+						logger.info("extension:::"+extension);
+						fileName=basename.replaceAll("[^a-zA-Z0-9]", "_")+"."+extension;
 					} catch (Exception e) {
-						logger.info("Exception:::");
+						logger.error("Exception:::"+e);
 					}
 
 					String requestData = "uploadFileName=" + fileName + "&imageURL=&sessionToken=" + stoken;
-
 					String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT), UrlToken.FILE_UPLOAD_GET_URL, fileName, stoken);
-
-
-
 					try {
 
 						responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
 						jsonArray = new JSONArray(responsedata);
 
 					} catch (UnsupportedEncodingException e) {
-						logger.info("UnsupportedEncodingException:::");
+						logger.error("UnsupportedEncodingException:::"+e);
 					}
-
-
 					response.setContentType("text/html");
 					response.getOutputStream().print(jsonArray.get(0).toString());
 					response.getOutputStream().flush();
 				}
 				catch (FileUploadBase.FileSizeLimitExceededException e) {
-					logger.info("FileSizeLimitExceededException:::");
+					logger.error("FileSizeLimitExceededException:::"+e);
 					responsedata = "file size error" ;
 					response.setContentType("text/html");
 					response.getOutputStream().print(responsedata);
@@ -106,7 +104,7 @@ public class uploadServlet extends UploadAction{
 			    }
 			}
 			catch(Exception e) {
-				logger.info("Exception1sttry:::");
+				logger.error("Exception1sttry:::"+e);
 			}
 		}
 	}
@@ -118,7 +116,7 @@ public class uploadServlet extends UploadAction{
 			try {
 					ret = fileUpload(bytes, data, fileName,fileSize,urlVal);
 			} catch (Exception e) {
-				logger.info("webInvokeForImage Exception:::");
+				logger.error("webInvokeForImage Exception:::"+e);
 			}
 			return ret;
 		}
@@ -143,10 +141,4 @@ public class uploadServlet extends UploadAction{
         	logger.info("upload response:::"+ret);
             return ret;
         }
-
-
-
-		
-
-
 }
