@@ -529,6 +529,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			pnlYoutubeContainer.setVisible(false);
 		}
 		enableDisableNarration(true);
+		if(isPdf){
+			lblError.setVisible(false);
+			stoppdfPageNumber.setText(totalPages+"");
+		}
 		lblCharLimit.setVisible(false);
 		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
@@ -619,8 +623,6 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					actionVerPanel.setVisible(true);
 					lblUpdateTextMessage.setVisible(true);
 					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
-
-
 				}else{
 					final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 					String narration = null;
@@ -767,33 +769,41 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public void updatePdfStartPage(){
 		String start = startpdfPageNumber.getText();
 		String enteredStopPage = stoppdfPageNumber.getText();
-		boolean isValid = this.validatePDF(start, enteredStopPage, totalPages);
-		if (isValid) {
-			MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
-			lblError.setVisible(false);
-			fromLblDisplayText.setVisible(true);
-			actionVerPanel.setVisible(false);
-			final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-			String narration = null;
-			if (resourceNarrationHtml.getHTML().length() > 0) {
-				narration = trim(narrationTxtArea.getText());
-				collectionItem.setNarration(narration);
-				pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+		final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		if(totalPages!=null){
+			boolean isValid = this.validatePDF(start, enteredStopPage, totalPages);
+			if (isValid) {
+				MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
+				lblError.setVisible(false);
+				fromLblDisplayText.setVisible(true);
+				actionVerPanel.setVisible(false);
+				String narration = null;
+				if (resourceNarrationHtml.getHTML().length() > 0) {
+					narration = trim(narrationTxtArea.getText());
+					collectionItem.setNarration(narration);
+					pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
+				}
+				if(start!=null&& !start.equalsIgnoreCase("")){
+					start = startpdfPageNumber.getText();
+					}else{
+					start=Integer.toString(1);
+				}
+				if(enteredStopPage!=null&& !enteredStopPage.equalsIgnoreCase("")){
+					enteredStopPage = stoppdfPageNumber.getText();
+					}else{
+					enteredStopPage=Integer.toString(totalPages);
+				}
+				collectionItem.setStart(start);
+				collectionItem.setStop(enteredStopPage);
+				collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, start, enteredStopPage);
+				resetNarrationDetails();
+				setPDFData();
+			}else{
+				lblError.setVisible(true);
+				lblError.getElement().getStyle().setFloat(Float.LEFT);
 			}
-			if(start!=null&& !start.equalsIgnoreCase("")){
-				start = startpdfPageNumber.getText();
-				}else{
-				start=Integer.toString(1);
-			}
-
-			collectionItem.setStart(start);
-			collectionItem.setStop(enteredStopPage);
-			collectionContentPresenter.updateNarrationItemMetaData(collectionId,collectionItem, narration, start, enteredStopPage);
-			resetNarrationDetails();
-			setPDFData();
 		}else{
-			lblError.setVisible(true);
-			lblError.getElement().getStyle().setFloat(Float.LEFT);
+			updateNarration();
 		}
 	}
 	/**
@@ -804,36 +814,31 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	 * @return
 	 */
 	public boolean validatePDF(String startpage,String stopPage,Integer totalPage){
-		boolean isValid;
-
-		Integer enteredStopPage =null;
-		Integer startpdfpage =null;
-
+		boolean isValid=false;
+		int enteredStopPage=0;
+		int startpdfpage=0;
 		if(stopPage!=null && !stopPage.equalsIgnoreCase("")){
-		enteredStopPage = Integer.parseInt(stopPage);
-		}else {
-		enteredStopPage = totalPage;
-		}
-
-
-		if(startpage!=null&& !startpage.equalsIgnoreCase("")){
-			startpdfpage = Integer.parseInt(startpage);
-			}else{
-			startpdfpage=1;
-			}
-
-		if(enteredStopPage > totalPage){
-			lblError.setText(VALID_END_PAGE);
-			isValid = false;
-		}else if( startpdfpage > totalPage){
-			lblError.setText(VALID_END_PAGE);
-			isValid = false;
-		}else if( enteredStopPage < startpdfpage){
-			lblError.setText(VALID_END_PAGE);
-			isValid = false;
+			 enteredStopPage = Integer.parseInt(stopPage);
 		}else{
-			isValid = true;
-			lblError.setText("");
+			 enteredStopPage=totalPage;
+		}
+		if(startpage!=null&& !startpage.equalsIgnoreCase("")){
+			 startpdfpage = Integer.parseInt(startpage);
+			}
+		if(totalPage!=null){
+			if(enteredStopPage > totalPage){
+				lblError.setText(VALID_END_PAGE);
+				isValid = false;
+			}else if( startpdfpage > totalPage){
+				lblError.setText(VALID_END_PAGE);
+				isValid = false;
+			}else if( enteredStopPage < startpdfpage){
+				lblError.setText(VALID_END_PAGE);
+				isValid = false;
+			}else{
+				isValid = true;
+				lblError.setText("");
+			}
 		}
 		return isValid;
 	}
