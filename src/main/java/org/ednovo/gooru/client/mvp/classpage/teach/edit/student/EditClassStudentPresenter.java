@@ -83,6 +83,7 @@ public class EditClassStudentPresenter extends PresenterWidget<IsEditClassStuden
 				for(int i=0;i<emailId.size();i++){
 					CollaboratorsDo collaboratorsDo =new CollaboratorsDo();
 					collaboratorsDo.setEmailId(emailId.get(i).toString().replaceAll("\"",""));
+					collaboratorsDo.setEmail(emailId.get(i).toString().replaceAll("\"",""));
 					result.add(collaboratorsDo);
 				}
 				if(result.size()==0){
