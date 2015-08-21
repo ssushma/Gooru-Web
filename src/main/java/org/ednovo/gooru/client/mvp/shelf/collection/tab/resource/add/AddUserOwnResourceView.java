@@ -1287,7 +1287,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 											loadingImagePanel.clear();
 											loadingImagePanel.add(setLoadingPanel());
-											fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
+											fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
 											fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 												@Override
 												public void onSubmitComplete(SubmitCompleteEvent event) {
