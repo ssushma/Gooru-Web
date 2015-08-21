@@ -103,7 +103,13 @@ public class DistrictBannerView extends Composite {
 			partnerLogo.setStyleName(districtStyleUc.rusdPartnerLogo());
 			partnerLogo.setVisible(true);
 			bannerContainer.setVisible(false);
-		} else if(placeToken.contains(PlaceTokens.SUSD)) {
+		}else if(placeToken.contains(PlaceTokens.EPISD_LIBRARY)) {
+			setLandingBannerText(i18n.GL3501(),i18n.GL3502(),"","","","");
+			partnerLogo.setStyleName(districtStyleUc.episdPartnerLogo());
+			partnerLogo.setVisible(true);
+			bannerContainer.setVisible(false);
+		} 
+		else if(placeToken.contains(PlaceTokens.SUSD)) {
 			setLandingBannerText(i18n.GL2058(),i18n.GL2059(),"","","","");
 			partnerLogo.setStyleName(districtStyleUc.susdPartnerLogo());
 			partnerLogo.setVisible(true);

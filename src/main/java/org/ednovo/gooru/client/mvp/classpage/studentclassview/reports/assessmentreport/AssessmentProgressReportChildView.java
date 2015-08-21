@@ -172,11 +172,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		this.courseId = courseId;
 		this.assessmentId = assessmentId;
 		if(AppClientFactory.isAnonymous()) {
-			loaderVisibility(false);
-			errorPanelData(false, true);
-			errorMsg();
-			printOptions.setVisible(false);
-			scoreObject.setVisible(false);
+			setAnonymousData();
 		} else {
 			if(sessionId==null) {
 				getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
@@ -286,9 +282,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	}
 
 	public void displayScore(Integer collectionScore, Integer noOfQuestions){
-
 		score.setText(collectionScore+" %");
-		//		goal.setText("Goal : 90%");
 		correctStatus.setText(collectionScore+"/"+noOfQuestions+" "+i18n.GL2278());
 		int scorePercentage=0;
 		if(collectionScore!=0){
@@ -1010,5 +1004,15 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	@Override
 	public void loaderVisibility(boolean isVisible) {
 		cropImageLoading.setVisible(isVisible);
+	}
+
+	@Override
+	public void setAnonymousData() {
+		loaderVisibility(false);
+		errorPanelData(false, true);
+		errorMsg();
+		printOptions.setVisible(false);
+		scoreObject.setVisible(false);
+		collectionOverviewPanel.setVisible(false);
 	}
 }

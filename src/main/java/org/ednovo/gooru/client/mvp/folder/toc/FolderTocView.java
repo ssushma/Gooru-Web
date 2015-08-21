@@ -235,6 +235,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerVal= new HashMap<String, List<String>>();
 		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px no-repeat;",i18n.GL0532(),Constants.RUSD_LOGO));
 		
+		bannerVal.put(PlaceTokens.EPISD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-episd.png) -7px -47px no-repeat;",i18n.GL0532(),Constants.EPISD_LOGO));
+		
 		bannerVal.put(PlaceTokens.YCGL_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-ycgl.png) -7px -47px no-repeat; background-position: center center; ",i18n.GL3287_1(),Constants.YCGL_LOGO));
 		
 		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png) no-repeat;",i18n.GL2108(),Constants.CORE_LOGO));

@@ -1,8 +1,5 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<g:HTMLPanel styleName="setMarginAuto">
-	<g:Image ui:field="reactionlbl"/>
-	<g:Label ui:field="noReactionlbl"/>
-</g:HTMLPanel>
-</ui:UiBinder> 
+	<g:SimplePanel ui:field="partnerPanel"/>
+</ui:UiBinder>

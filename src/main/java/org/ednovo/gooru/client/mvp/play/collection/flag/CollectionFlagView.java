@@ -497,6 +497,7 @@ public class CollectionFlagView extends
 	@Override
 	public void getDisplayData(CollectionDo collectionDo) {
 		callFlagThisCollection();
+		dropdownListPlaceHolder.getElement().setInnerHTML(i18n.GL0610());
 		collectionTitle = collectionDo.getTitle();
 		collectionGooruOid=collectionDo.getGooruOid();
 		dropdownListContainer.clear();

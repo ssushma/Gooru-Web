@@ -219,7 +219,10 @@ public abstract class DistrictMenuNav extends Composite {
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 			learnText.setText(i18n.GL2076());
 			setGooruAnrText(i18n.GL1827(), i18n.GL1828(),false);
-		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
+		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY)) {
+			learnText.setText(i18n.GL3505());
+			setGooruAnrText(i18n.GL3506(), "",false);
+		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
 			learnText.setText(i18n.GL2077());
 			setGooruAnrText(i18n.GL2069(), i18n.GL2070(),false);
 			learnPanel.getElement().getStyle().setWidth(171, Unit.PX);

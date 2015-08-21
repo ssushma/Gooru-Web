@@ -879,6 +879,16 @@
 	top: 90px;
 	right: 9px;
 }
+
+.episdPartnerLogo {
+	background: url("../images/library/episd-logo.png");
+	width: 122px;
+	height: 45px;
+	position: absolute;
+	top: 90px;
+	right: 9px;
+}
+
 .resourcesInsideSubStyle {
 	width: 263px !important;
 	padding-left: 20px !important;
