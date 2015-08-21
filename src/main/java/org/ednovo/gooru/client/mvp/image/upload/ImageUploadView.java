@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.GlassPanelWithLoadingUc;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -647,9 +648,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			public void onChange(ChangeEvent event) {
 				if(hasValidateImage()){
 					glasspanelLoadingImage(true); 
-					fileuploadForm.setEncoding(FormPanel.ENCODING_MULTIPART); 
-					fileuploadForm.setMethod(FormPanel.METHOD_POST);
-					fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
+					fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), fileUpload.getFilename()));
 					fileuploadForm.submit();
 				} else {
 					new AlertContentUc(i18n.GL0060(),i18n.GL0059());
