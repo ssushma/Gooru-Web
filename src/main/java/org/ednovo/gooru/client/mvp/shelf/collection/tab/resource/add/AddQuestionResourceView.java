@@ -616,15 +616,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				for(final CodeDo codeObj:standardsDo){
-					if(id.equalsIgnoreCase(String.valueOf(codeObj.getCodeId()))){
-						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					if(id.equalsIgnoreCase(String.valueOf(entry.getKey()))){
+						int idVal=Integer.parseInt(id);
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(),idVal, new SimpleAsyncCallback<Void>() {
 							@Override
 							public void onSuccess(Void result) {
-								CodeDo deletedObj=new CodeDo();
-								deletedObj.setCodeId(codeObj.getCodeId());
-								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);
 								centurySelectedValues.remove(Long.parseLong(id));
 							}
 						});
@@ -865,8 +862,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			CodeDo codeObjStandard=new CodeDo();
 			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
 			codeObjStandard.setCode(centurySgstBox.getValue());
-			standardsDo.add(codeObjStandard);
-
 			centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
 			centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
 		}
@@ -2644,7 +2639,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					CodeDo codeObj=new CodeDo();
 					codeObj.setCodeId(standardObj.getId());
 					codeObj.setCode(standardObj.getLabel());
-					standardsDo.add(codeObj);
 					centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
 					centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"",""));
 				}
