@@ -687,7 +687,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		filtersMap.put(GooruConstants.EVENT, COLLECTION_EDIT_EVENT);
 		filtersMap.put(GooruConstants.CONTENT_GOORU_OID, contentGorruOid);
 		}catch(Exception e){
-			logger.error("Exception query::", e.getMessage());
+			logger.error("Exception query::", e);
 		}
 		String url = AddQueryParameter.constructQueryParams(partialUrl, filtersMap);
 		if(getSearchEndPoint().contains(HTTPS)){
