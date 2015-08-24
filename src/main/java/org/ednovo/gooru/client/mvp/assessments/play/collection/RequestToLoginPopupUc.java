@@ -70,7 +70,7 @@ public class RequestToLoginPopupUc extends PopupPanel{
 
 	public RequestToLoginPopupUc(){
 		super(false);
-        this.setGlassStyleName("loginPopupGlassStyle");
+        this.setGlassStyleName("requestToLoginPopupStyle");
         this.setGlassEnabled(true);
        	this.getElement().getStyle().setZIndex(999999);
 
