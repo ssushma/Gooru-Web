@@ -1414,7 +1414,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(getURL,getRestUsername(),getRestPassword());
 			jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
 		}catch(Exception e){
-			logger.error("Exception-------"+e);
+			logger.error("Exception-------",e);
 		}
 		return deserializeCollectionItem(jsonResponseRepget);
 	}
@@ -1457,7 +1457,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		*/	JsonResponseRepresentation	jsonResponseRepresentation1=ServiceProcessor.get(url,getRestUsername(),getRestPassword());
 			jsonResponseRepget=jsonResponseRepresentation1.getJsonRepresentation();
 		}catch(Exception e){
-			logger.error("Exception-------"+e);
+			logger.error("Exception-------",e);
 		}
 		return deserializeCollectionItem(jsonResponseRepget);
 	}
@@ -2491,7 +2491,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 						}
 					}
 			}catch(Exception e){
-				logger.error("Exception-------"+e);
+				logger.error("Exception-------",e);
 			}
 		}catch(Exception ex){
 			logger.error("Exception::", ex);
@@ -2531,7 +2531,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
 					}
 			}catch(Exception e){
-				logger.error("Exception-------"+e);
+				logger.error("Exception-------",e);
 			}
 		}catch(Exception ex){
 			logger.error("Exception::", ex);
@@ -2564,7 +2564,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 						collectionDoObj.setStatusCode(jsonResponseRepresentation1.getStatusCode());
 					}
 			}catch(Exception e){
-				logger.error("Exception-------"+e);
+				logger.error("Exception-------",e);
 			}
 		}catch(Exception ex){
 			logger.error("Exception::", ex);
@@ -2638,7 +2638,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					collectionItemDo.setResource(resoruce);
 				}
 		}catch(Exception e){
-			logger.error("Exception-------"+e);
+			logger.error("Exception-------",e);
 		}
 		return collectionItemDo;
 	}
