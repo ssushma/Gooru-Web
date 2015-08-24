@@ -836,7 +836,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			rawUrl=jsonRep.getJsonObject().getString("rawUrl");
 			originalUrl=jsonRep.getJsonObject().getString("rawUrl");
 		}catch(JSONException e){
-			logger.error("Exception-----"+e);
+			logger.error("Exception-----", e);
 		}
 		try {
 			rawUrl=URLEncoder.encode(rawUrl, "UTF-8");
@@ -1279,7 +1279,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 					classpageDo.setPermissions(permissionList);
 				}
 			} catch (JSONException e) {
-				logger.error("error.....:"+e.getMessage());
+				logger.error("error.....:", e);
 				classpageDo=new ClasspageDo();
 			}
 		return classpageDo;
