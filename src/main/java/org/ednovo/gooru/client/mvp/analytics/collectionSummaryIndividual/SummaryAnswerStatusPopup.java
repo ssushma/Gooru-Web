@@ -1,6 +1,5 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 
-import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
@@ -23,7 +22,6 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 
 	interface SummaryAnswerStatusPopupUiBinder extends UiBinder<Widget, SummaryAnswerStatusPopup> {
 	}
-	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField FlowPanel ansFlowPnl;
 	@UiField Label closeLbl;
@@ -34,9 +32,10 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 	 */
 	public SummaryAnswerStatusPopup(JSONArray attemptsObj ,String questionType,String attempts) {
 		setWidget(uiBinder.createAndBindUi(this));
+		this.setGlassEnabled(true);
+		this.getGlassElement().getStyle().setZIndex(99999999);
 		this.getElement().getStyle().setZIndex(99999999);
 		this.center();
-		this.setGlassEnabled(true);
 		this.show();
 		this.questionType=questionType;
 		this.noOfAttempts=Integer.parseInt(attempts!=null?attempts:"0");
