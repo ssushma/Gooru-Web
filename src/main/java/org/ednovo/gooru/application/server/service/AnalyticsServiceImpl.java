@@ -203,10 +203,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
-		}else{
-			logger.error("Exception::");
 		}
-		logger.info("reult obj--"+collectionResourcesList.size());
 		return collectionResourcesList;
 	}
 

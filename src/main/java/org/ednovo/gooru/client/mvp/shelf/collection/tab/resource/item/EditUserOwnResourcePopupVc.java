@@ -2632,7 +2632,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtn.setEnabled(false);
+			//addResourceBtn.setEnabled(false);
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
