@@ -190,7 +190,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		  if (AppClientFactory.isAnonymous()){
 			  requestToLogin = new RequestToLoginPopupUc();
 			  requestToLogin.getBtnLoginAndContinue().addClickHandler(new RequestLoginPopupEvent());
-			  requestToLogin.center();
+			  requestToLogin.setPopupPosition(0, (Window.getClientHeight()-428)/2);
 			  requestToLogin.show();
 		  }
 

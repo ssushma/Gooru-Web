@@ -2,13 +2,6 @@
 	clear: both;
 }
 
-.loginPopupGlassStyle {
-	z-index: 99999;
-	background-color: black;
-	opacity: 0.3;
-	filter: literal("alpha(opacity = 30)");
-}
-
 .activeGrade {
 	background-color: #87badd;
 	border-radius: 4px;
