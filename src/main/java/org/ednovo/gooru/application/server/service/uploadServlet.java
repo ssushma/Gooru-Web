@@ -60,7 +60,6 @@ public class uploadServlet extends UploadAction {
     private static final long serialVersionUID = -4035393951562844790L;
     private static final Logger logger = LoggerFactory.getLogger(uploadServlet.class);
     private static final String REST_ENDPOINT = "rest.endpoint";
-    private static final String GOORU_SESSION_TOKEN = "gooru-session-token";
     
 	@Inject
 	private BaseServiceImpl baseService;
