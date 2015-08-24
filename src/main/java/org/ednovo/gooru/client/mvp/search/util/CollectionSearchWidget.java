@@ -81,11 +81,7 @@ public class CollectionSearchWidget extends Composite {
 
 	private static final String ASSESSMENT = "assessment";
 
-	public static final String YUMA_COUNTY_SCIENCE = "YumaCountyScience";
-	public static final String YUMA_COUNTY_MATH = "YumaCountyMath";
-	public static final String YUMA_COUNTY_SS = "YumaCountySS";
-	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
-	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
+	
 	String collectionType;
 
 	CollectionSearchResultDo collectionSearchResultDo = null;
@@ -343,9 +339,7 @@ public class CollectionSearchWidget extends Composite {
 				}
 			});
 
-		}else if(YUMA_COUNTY_SCIENCE.equals(collectionSearchResultDo.getOwner().getUsername())|| YUMA_COUNTY_MATH.equals(collectionSearchResultDo.getOwner().getUsername()) ||
-				YUMA_COUNTY_SS.equals(collectionSearchResultDo.getOwner().getUsername()) || YUMA_COUNTY_ELA.equals(collectionSearchResultDo.getOwner().getUsername())||
-				YUMA_COUNTY_PD.equals(collectionSearchResultDo.getOwner().getUsername())){
+		}else if(PlaceTokens.YCGL_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionSearchResultDo.getOwner().getUsername()))){
 			authorName.getElement().getStyle().setColor("#1076bb");
 			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
 			authorName.addClickHandler(new ClickHandler() {
@@ -353,6 +347,18 @@ public class CollectionSearchWidget extends Composite {
 				public void onClick(ClickEvent event) {
 					MixpanelUtil.Click_Username();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.YCGL_LIBRARY);
+				}
+			});
+
+
+		}else if(PlaceTokens.EPISD_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionSearchResultDo.getOwner().getUsername()))){
+			authorName.getElement().getStyle().setColor("#1076bb");
+			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
+			authorName.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					MixpanelUtil.Click_Username();
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EPISD_LIBRARY);
 				}
 			});
 
