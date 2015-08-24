@@ -1622,9 +1622,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 											collectionItemDo.getResource().setTaxonomySet(standardsDo);
 
 											if(fileChanged && (uploadContainer.isVisible())){
-												fileuploadForm.setEncoding(FormPanel.ENCODING_MULTIPART); 
-												fileuploadForm.setMethod(FormPanel.METHOD_POST);
-												fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
+												fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet?sessionToken="+AppClientFactory.getLoginSessionToken());
 												fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 													@Override
 													public void onSubmitComplete(SubmitCompleteEvent event) {
@@ -2632,7 +2630,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtn.setEnabled(false);
+			//addResourceBtn.setEnabled(false);
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override

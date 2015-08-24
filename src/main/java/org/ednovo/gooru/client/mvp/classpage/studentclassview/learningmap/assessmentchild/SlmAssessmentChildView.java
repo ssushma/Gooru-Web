@@ -31,11 +31,9 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanContentDo;
-import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.SlmExternalAssessmentForm;
-import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.StudentClassLearningMapCircle;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
@@ -138,7 +136,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		final String collectionType = planContentDo.getCollectionType();
 
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
-		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
+		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE) || AppClientFactory.isAnonymous()) {
 			reportView.setVisible(false);
 		} else {
 			reportView.setVisible(true);
@@ -182,6 +180,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		lastSession.setText(lastAccessed);
 		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment/url")) {
 			resourceImgContainer.setVisible(false);
+			setArrowVisibility(false,false);
 		} else {
 			int size = planContentDo.getItems().size();
 			this.collectionType = collectionType;

@@ -167,7 +167,9 @@ public class PlayerDataLogEvents {
 	public static final String SCORE_IN_PERCENTAGE="scoreInPercentage";
 
 	public static void collectionStartStopEvent(JSONObject collectionDataLogEventMap){
-		triggerDataLogCall(collectionDataLogEventMap);
+		if(!AppClientFactory.isAnonymous()) {
+			triggerDataLogCall(collectionDataLogEventMap);
+		}
 	}
 	public static void collectionItemStartStopEvent(){
 
