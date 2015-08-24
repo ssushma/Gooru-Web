@@ -203,7 +203,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 								ownerClassesContainer.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 							}
 							}catch(Exception e){
-								e.printStackTrace();
+								AppClientFactory.printInfoLogger("v3GetUserClasses..."+e.getMessage());
 							}
 						}
 					});
