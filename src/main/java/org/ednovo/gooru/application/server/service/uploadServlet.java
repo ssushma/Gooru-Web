@@ -28,8 +28,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,11 +56,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import gwtupload.server.UploadAction;
 
-public class uploadServlet extends UploadAction{
+public class uploadServlet extends UploadAction {
     private static final long serialVersionUID = -4035393951562844790L;
     private static final Logger logger = LoggerFactory.getLogger(uploadServlet.class);
     private static final String REST_ENDPOINT = "rest.endpoint";
     private static final String GOORU_SESSION_TOKEN = "gooru-session-token";
+    
+	@Inject
+	private BaseServiceImpl baseService;
+    
     @Override
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
          FileItem uploadedFileItem = null;
@@ -106,7 +110,9 @@ public class uploadServlet extends UploadAction{
                     //AA: We cannot assume that any request that we make will land on the same server that had our session set (we will never scale like this).
                     //AA: We can read the session from the cookie instead...
                     //String stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
-                    String stoken = getCookie(request, GOORU_SESSION_TOKEN);
+                    String stoken = baseService.getLoggedInSessionToken();
+                    
+
 
                     if(stoken == null || stoken.isEmpty()){
                         logger.error("UploadServlet.doPost, could not obtain a sessionToken from the cookies, please check the request header!");
@@ -203,22 +209,4 @@ public class uploadServlet extends UploadAction{
         logger.info("Out UploadServlet.fileUpload, uploaded with return data:" + ret);
         return ret;
      }
-        private String getCookie(HttpServletRequest request, String name) {
-            logger.info("In UploadServlet.getCookie, trying to read sessionToken from the cookies");
-            Cookie[] cookies = request != null && request.getCookies() != null ? request.getCookies() : null;
-            if (cookies != null) {
-                logger.info("In UploadServlet.getCookie, found some cookies");
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals(name)) {
-                        logger.info("In UploadServlet.getCookie, found cookie with name:" + name);
-                        return cookie.getValue();
-                    }
-                }
-            }else {
-                logger.error("In UploadServlet.getCookie, no cookies found!");
-            }
-            logger.info("Out UploadServlet.getCookie");
-            return null;
-        }
-
 }
