@@ -271,13 +271,15 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 	}
 	private void getFolderMetaData(final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getFolderMetaData(folderId, new SimpleAsyncCallback<FolderDo>() {
-			@Override
-			public void onSuccess(FolderDo result) {
-				folderMetaData=result;
-				getChildFolderItems(folderId,"folder", false,null);
-			}
-		});
+		if("Folder".equalsIgnoreCase(getView().getViewType())){
+			AppClientFactory.getInjector().getfolderService().getFolderMetaData(folderId, new SimpleAsyncCallback<FolderDo>() {
+				@Override
+				public void onSuccess(FolderDo result) {
+					folderMetaData=result;
+					getChildFolderItems(folderId,"folder", false,null);
+				}
+			});
+		}
 	}
 
 	/**
