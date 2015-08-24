@@ -570,11 +570,10 @@ public class AssessmentsMetadataWidget extends Composite {
 
 			if(StringUtil.isPartnerUser((collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getUsername()))?collectionDo.getUser().getUsername():"")){
 				anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
-			}else if(YUMA_COUNTY_SCIENCE.equals(collectionDo.getUser().getUsernameDisplay())|| YUMA_COUNTY_MATH.equals(collectionDo.getUser().getUsernameDisplay()) ||
-					YUMA_COUNTY_SS.equals(collectionDo.getUser().getUsernameDisplay()) || YUMA_COUNTY_ELA.equals(collectionDo.getUser().getUsernameDisplay())||
-					YUMA_COUNTY_PD.equals(collectionDo.getUser().getUsernameDisplay())){
+			}else if(PlaceTokens.YCGL_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionDo.getUser().getUsernameDisplay()))){
 				anchor.setHref("#"+PlaceTokens.YCGL_LIBRARY);
-
+			}else if(PlaceTokens.EPISD_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionDo.getUser().getUsernameDisplay()))){
+				anchor.setHref("#"+PlaceTokens.EPISD_LIBRARY);
 			}else{
 				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+((collectionDo.getUser()!=null && collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
 				anchor.setHref(token);
