@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,9 +59,6 @@ public class uploadServlet extends UploadAction {
     private static final long serialVersionUID = -4035393951562844790L;
     private static final Logger logger = LoggerFactory.getLogger(uploadServlet.class);
     private static final String REST_ENDPOINT = "rest.endpoint";
-    
-	@Inject
-	private BaseServiceImpl baseService;
     
     @Override
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
@@ -109,7 +105,7 @@ public class uploadServlet extends UploadAction {
                     //AA: We cannot assume that any request that we make will land on the same server that had our session set (we will never scale like this).
                     //AA: We can read the session from the cookie instead...
                     //String stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
-                    String stoken = baseService.getLoggedInSessionToken();
+                    String stoken = request.getParameter("sessionToken");
                     
 
 
@@ -163,7 +159,8 @@ public class uploadServlet extends UploadAction {
             }
         }
     }
-    public String webInvokeForImage(String methodName, String data,String contentType, HttpServletRequest req, byte[] bytes,String fileName,Long fileSize, String urlVal) throws UnsupportedEncodingException {
+
+	public String webInvokeForImage(String methodName, String data,String contentType, HttpServletRequest req, byte[] bytes,String fileName,Long fileSize, String urlVal) throws UnsupportedEncodingException {
         String ret = "";
         try {
             logger.info("In UploadServlet.webInvokeForImage, upload fileName:" + fileName);

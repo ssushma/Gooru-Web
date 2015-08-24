@@ -648,7 +648,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			public void onChange(ChangeEvent event) {
 				if(hasValidateImage()){
 					glasspanelLoadingImage(true); 
-					fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
+					fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet?sessionToken="+AppClientFactory.getLoginSessionToken());
 					fileuploadForm.submit();
 				} else {
 					new AlertContentUc(i18n.GL0060(),i18n.GL0059());

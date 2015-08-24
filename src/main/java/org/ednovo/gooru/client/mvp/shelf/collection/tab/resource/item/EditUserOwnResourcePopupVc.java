@@ -1626,7 +1626,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 											if(fileChanged && (uploadContainer.isVisible())){
 												fileuploadForm.setEncoding(FormPanel.ENCODING_MULTIPART); 
 												fileuploadForm.setMethod(FormPanel.METHOD_POST);
-												fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet");
+												fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet?sessionToken="+AppClientFactory.getLoginSessionToken());
 												fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 													@Override
 													public void onSubmitComplete(SubmitCompleteEvent event) {
