@@ -59,6 +59,7 @@ public class uploadServlet extends UploadAction {
     private static final long serialVersionUID = -4035393951562844790L;
     private static final Logger logger = LoggerFactory.getLogger(uploadServlet.class);
     private static final String REST_ENDPOINT = "rest.endpoint";
+    private static long maxLimitSize = 31457280;
     
     @Override
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException,ServletException{
@@ -66,11 +67,10 @@ public class uploadServlet extends UploadAction {
          String fileName="";
          JSONArray jsonArray = null;
          boolean isMultiPart = ServletFileUpload.isMultipartContent(new ServletRequestContext(request));
-         logger.info("uploadServlet.doPost, isMultiPart: " + isMultiPart);
          if(isMultiPart) {
             FileItemFactory factory = new DiskFileItemFactory();
             ServletFileUpload upload = new ServletFileUpload(factory);
-            upload.setFileSizeMax(31457280);
+            upload.setFileSizeMax(maxLimitSize);
             String responsedata = "" ;
             try{
                 try{
@@ -81,72 +81,52 @@ public class uploadServlet extends UploadAction {
                     @SuppressWarnings("rawtypes")
                     java.util.List items = upload.parseRequest(request);
 
-                    if(items!=null) {
-                        logger.info("UploadServlet.doPost, parsed request, successfully, itemSize:" + items.size());
-                    }else {
-                        logger.error("UploadServlet.doPost, could not parse request!");
-                    }
 
                     ApplicationContext appContext = new ClassPathXmlApplicationContext("gooruContext-service.xml");
                     Properties restConstants = (Properties) appContext.getBean("restConstants");
-
-                    logger.info("UploadServlet.doPost, got appContext and restConstants");
-
-                    for(int i=0;i<items.size();i++){//strangeness
-                        uploadedFileItem = (FileItem) items.get(i);
-                    }
-
-                    if(uploadedFileItem!= null){
-                        logger.info("UploadServlet.doPost, uploadedFileItem fileName:" + uploadedFileItem.getName() + ", fileSize: ", uploadedFileItem.getSize());
-                    }else {
-                        logger.info("UploadServlet.doPost, uploadedFileItem is null!");
-                    }
                     //AA: We do not have sticky sessions or session replication configuration.
                     //AA: We cannot assume that any request that we make will land on the same server that had our session set (we will never scale like this).
-                    //AA: We can read the session from the cookie instead...
-                    //String stoken = (String)request.getSession(false).getAttribute("gooru-session-token");
                     String stoken = request.getParameter("sessionToken");
-                    
-
-
-                    if(stoken == null || stoken.isEmpty()){
-                        logger.error("UploadServlet.doPost, could not obtain a sessionToken from the cookies, please check the request header!");
-                    }
-
-                    logger.info("UploadServlet.doPost, sessionToken:" + stoken);
-                    try {
-
-                        //This will replace all the non-word characters with '_' excluding the dot.
-                        fileName=uploadedFileItem.getName().replaceAll("[^\\w.]", "_");
-
-                        logger.info("UploadServlet.doPost, modified fileName :" + fileName);
-
-                    } catch (Exception e) {
-                        logger.error("UploadServlet.doPost, Exception:", e);
-                    }
-                    String requestData = "uploadFileName=" + fileName + "&imageURL=&sessionToken=" + stoken;
-                    logger.info("UploadServlet.doPost, forming requestData:" + requestData);
-
-                    String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT), UrlToken.FILE_UPLOAD_GET_URL, fileName, stoken);
-                    logger.info("UploadServlet.doPost, forming url:" + url);
-
-                    try {
-                        responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
-                        logger.info("uploadServlet.doPost, got responseData:" + responsedata);
-                        jsonArray = new JSONArray(responsedata);
-                        if(jsonArray!=null) {
-                            logger.info("UploadServlet.doPost, got some jsonArray from responseData with length:" + jsonArray.length());
+                    if(stoken != null&&items!=null){
+                        logger.info("UploadServlet.doPost, parsed request, successfully, item is not null and thats the item size-->" + items.size());
+                        for(int i=0;i<items.size();i++){
+                            uploadedFileItem = (FileItem) items.get(i);
                         }
-
-                    } catch (UnsupportedEncodingException e) {
-                        logger.error("UnsupportedEncodingException:", e);
+	                    try {
+	
+	                        //This will replace all the non-word characters with '_' excluding the dot.
+	                    	if(uploadedFileItem!= null){
+	                    	logger.info("UploadServlet.doPost, uploadedFileItem is not null and thats the fileName:-->" + uploadedFileItem.getName() + ", fileSize: ", uploadedFileItem.getSize());
+	                        fileName=uploadedFileItem.getName().replaceAll("[^\\w.]", "_");
+	                    	}
+	
+	                        logger.info("UploadServlet.doPost, fileName after replace :" + fileName);
+	
+	                    } catch (Exception e) {
+	                        logger.error("UploadServlet.doPost, Exception:", e);
+	                    }
+	
+	                    String url = UrlGenerator.generateUrl(restConstants.getProperty(REST_ENDPOINT), UrlToken.FILE_UPLOAD_GET_URL, fileName, stoken);
+	                    logger.info("UploadServlet.doPost, forming url:" + url);
+	
+	                    try {
+	                        responsedata = webInvokeForImage("POST", "multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
+	                        logger.info("uploadServlet.doPost, got responseData:" + responsedata);
+	                        jsonArray = new JSONArray(responsedata);
+	                    } catch (UnsupportedEncodingException e) {
+	                        logger.error("UnsupportedEncodingException:", e);
+	                    }
+	                    response.setContentType("text/html");	
+	                    response.getOutputStream().print(jsonArray.get(0).toString());
+	                    response.getOutputStream().flush();
+	                    logger.info("UploadServlet.doPost,  flushed outputStream with data:" + jsonArray.get(0).toString());
+                    }else{
+                    	 logger.info("sessionToken is null-->"+stoken);
+                    	 responsedata = "sessionToken is null" ;
+                         response.setContentType("text/html");
+                         response.getOutputStream().print(responsedata);
+                         response.getOutputStream().flush();
                     }
-                    response.setContentType("text/html");
-
-                    response.getOutputStream().print(jsonArray.get(0).toString());
-                    response.getOutputStream().flush();
-                    logger.info("UploadServlet.doPost,  flushed outputStream with data:" + jsonArray.get(0).toString());
-
                 }catch(FileUploadBase.FileSizeLimitExceededException  e) {
                     logger.error("UploadServlet.doPost, FileSizeLimitExceededException:", e);
                     responsedata = "file size error" ;
@@ -155,27 +135,22 @@ public class uploadServlet extends UploadAction {
                     response.getOutputStream().flush();
                }
             }catch(Exception e){
-                logger.error("uploadServlet.doPost, why did i come here? Global exception:", e);
+                logger.error("uploadServlet.doPost, Global exception:", e);
             }
         }
     }
 
-	public String webInvokeForImage(String methodName, String data,String contentType, HttpServletRequest req, byte[] bytes,String fileName,Long fileSize, String urlVal) throws UnsupportedEncodingException {
+	public String webInvokeForImage(String methodName,String contentType, HttpServletRequest req, byte[] bytes,String fileName,Long fileSize, String urlVal) throws UnsupportedEncodingException {
         String ret = "";
         try {
-            logger.info("In UploadServlet.webInvokeForImage, upload fileName:" + fileName);
-            ret = fileUpload(bytes, data, fileName,fileSize,urlVal);
-            logger.info("In UploadServlet.webInvokeForImage, from fileUpload call got data:"+ ret);
+            ret = fileUpload(bytes, fileName,fileSize,urlVal);
         } catch (Exception e) {
             logger.error("UploadServlet.webInvokeForImage Exception:", e);
         }
-        logger.info("Out UploadServlet.webInvokeForImage with return data:" + ret);
         return ret;
     }
-    public String fileUpload(byte[] bytes, String data, String fileName,Long fileSize, String urlVal) throws Exception {
-        logger.info("In UploadServlet.fileUpload, preparing to upload url:" + urlVal);
+    public String fileUpload(byte[] bytes, String fileName,Long fileSize, String urlVal) throws Exception {
         String ret = "";
-        logger.info("upload Url:::"+urlVal);
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost httppost = new HttpPost(urlVal);
         MultipartEntityBuilder reqEntity=MultipartEntityBuilder.create();
@@ -184,25 +159,20 @@ public class uploadServlet extends UploadAction {
         httppost.setEntity(reqEntity.build());
         try {
             HttpResponse response = httpClient.execute(httppost);
-
             if (response != null) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                logger.info("UploadServlet.fileUpload response statusCode: " + statusCode);
+	            HttpEntity resEntity = response.getEntity();
+	
+	            if (resEntity != null) {
+	                ret = EntityUtils.toString(resEntity);
+	            }
             }else {
-                logger.error("UploadServlet.fileUpload, response is null!");
+            	logger.error("UploadServlet.fileUpload, response is null!");
             }
-
-            HttpEntity resEntity = response.getEntity();
-
-            if (resEntity != null) {
-                ret = EntityUtils.toString(resEntity);
-            }
+            
             logger.info("upload response:::" + ret);
         }catch(Exception e){
             logger.error("UploadServlet.fileUpload exception:", e);
-            e.printStackTrace();
         }
-        logger.info("Out UploadServlet.fileUpload, uploaded with return data:" + ret);
         return ret;
      }
 }
