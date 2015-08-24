@@ -197,8 +197,8 @@ public abstract class DistrictMenuNav extends Composite {
 		
 		socialSciencesText.setText(i18n.GL1002());
 		socialSciencesText.getElement().setId("lblSocialSciencesText");
-		socialSciencesText.getElement().setAttribute("alt","Social Studies");
-		socialSciencesText.getElement().setAttribute("title","Social Studies");
+		socialSciencesText.getElement().setAttribute("alt",i18n.GL1002());
+		socialSciencesText.getElement().setAttribute("title",i18n.GL1002());
 		
 		languageArtsText.setText(i18n.GL1003());
 		languageArtsText.getElement().setId("lblLanguageArtsText");
