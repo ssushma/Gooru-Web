@@ -434,7 +434,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		try {
 			fullUrlObject.put("fullUrl", URLDecoder.decode(params.get(REAL_URL)).toString());
 		} catch (JSONException e1) {
-			logger.error("Exception-----"+e1);
+			logger.error("Exception-----",e1);
 		}
 		getLogger().info("--getShortenShareUrl url--"+url);
 		getLogger().info("--getShortenShareUrl payload--"+fullUrlObject.toString());
@@ -489,7 +489,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		try {
 			fullUrlObject.put("fullUrl", URLDecoder.decode(params.get(REAL_URL)).toString());
 		} catch (JSONException e1) {
-			logger.error("Exception----"+e1);
+			logger.error("Exception----",e1);
 		}
 		getLogger().info("-----------getShortenShareUrlforAssign url--------------"+url);
 		getLogger().info("----------getShortenShareUrlforAssign payload---------"+fullUrlObject.toString());
