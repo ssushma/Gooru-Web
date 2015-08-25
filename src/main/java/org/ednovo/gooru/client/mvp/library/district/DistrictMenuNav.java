@@ -221,7 +221,7 @@ public abstract class DistrictMenuNav extends Composite {
 			setGooruAnrText(i18n.GL1827(), i18n.GL1828(),false);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY)) {
 			learnText.setText(i18n.GL3505());
-			setGooruAnrText(i18n.GL3506(), "",false);
+			setGooruAnrText(i18n.GL3506(), "",true);
 		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
 			learnText.setText(i18n.GL2077());
 			setGooruAnrText(i18n.GL2069(), i18n.GL2070(),false);
@@ -272,11 +272,17 @@ public abstract class DistrictMenuNav extends Composite {
 			aboutPanel.setVisible(true);
 			aboutPanel.getElement().setAttribute("style", "border-right:1px solid #ddd;");
 			aboutGooruAnr.setVisible(false);
-			aboutText.setText(i18n.GL1899());
-			aboutText.getElement().setId("lblLanguageArtsText");
-			aboutText.getElement().setAttribute("alt",i18n.GL1899());
-			aboutText.getElement().setAttribute("title",i18n.GL1899());
-			
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)){
+				aboutText.setText(i18n.GL1899());
+				aboutText.getElement().setId("lblLanguageArtsText");
+				aboutText.getElement().setAttribute("alt",i18n.GL1899());
+				aboutText.getElement().setAttribute("title",i18n.GL1899());
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY)){
+				aboutText.setText(anrTxt);
+				aboutText.getElement().setId("lblLanguageArtsText");
+				aboutText.getElement().setAttribute("alt",anrTxt);
+				aboutText.getElement().setAttribute("title",anrTxt);
+			}
 			sciencePanel.addStyleName(districtStyleUc.tabsSausdLi());
 			mathPanel.addStyleName(districtStyleUc.tabsSausdLi());
 			socialPanel.addStyleName(districtStyleUc.tabsSausdLi());
