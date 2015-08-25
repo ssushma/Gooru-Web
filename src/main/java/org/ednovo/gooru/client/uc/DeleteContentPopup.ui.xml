@@ -28,20 +28,20 @@
 
 					<div class="checkboxesBlock">
 						<g:SimpleCheckBox styleName="css-checkbox" ui:field="chkBox1"></g:SimpleCheckBox>
-						<label class="css-label" for="checkboxG12">All share links will be inaccessible</label>
+						<panel:LabelPanel styleName="css-label" ui:field="checkboxG12"></panel:LabelPanel>
 						<!-- <g:Label styleName="css-label">All share links will be inaccessible</g:Label> -->
 					</div>
 
 					<div class="checkboxesBlock">
 						<g:SimpleCheckBox styleName="css-checkbox" ui:field="chkBox2"></g:SimpleCheckBox>
-						<label class="css-label" for="checkboxG13">All content will be inaccessible to the classes tied to it</label>
+						<panel:LabelPanel styleName="css-label" ui:field="checkboxG13"></panel:LabelPanel>
 						<!-- <g:Label styleName="css-label">All content will be inaccessible to the classes tied to it</g:Label> -->
 					</div>
 
 
 					<div class="checkboxesBlock">
 						<g:SimpleCheckBox styleName="css-checkbox" ui:field="chkBox3"></g:SimpleCheckBox>
-						 <label class="css-label" for="checkboxG14">All content in this folder will be deleted</label>
+						<panel:LabelPanel styleName="css-label" ui:field="checkboxG14"></panel:LabelPanel>
 						<!-- <g:Label styleName="css-label">All content in this folder will be deleted</g:Label> -->
 					</div>
 

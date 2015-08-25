@@ -935,6 +935,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				disableEditMode(Cursor.POINTER);
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0893());
+				getUiHandlers().addSelectedQuestionType("MC",null);
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
 				addQuestionResourceWidget.getHideRightsToolTip();
 //				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
