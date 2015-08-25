@@ -738,7 +738,11 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
 				String rid= AppClientFactory.getPlaceManager().getRequestParameter("rid",null);
 				if(rid!=null){
-					headerView.getBtnSubmitAllAnswers().setVisible(true);
+					if(AppClientFactory.isAnonymous()) {
+						headerView.getBtnSubmitAllAnswers().setVisible(false);
+					} else {
+						headerView.getBtnSubmitAllAnswers().setVisible(true);
+					}
 				}else{
 					headerView.getBtnSubmitAllAnswers().setVisible(false);
 				}
