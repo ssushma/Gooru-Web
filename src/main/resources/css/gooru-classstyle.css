@@ -1015,6 +1015,12 @@ select option {
 	display:inline-block;
 	vertical-align:middle;
 }
+.classMenuRight .stPriviewButton .btn-default {
+	background-color: #ddd;
+	border: 0;
+	font-size: 13px;
+	color: #1076bb;
+}
 
 /** new unit dropdown css **/
 

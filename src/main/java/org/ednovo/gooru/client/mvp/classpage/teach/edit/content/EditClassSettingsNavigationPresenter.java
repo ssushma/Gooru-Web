@@ -173,5 +173,28 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 			}
 		}
 	}
+
+	@Override
+	public void deleteClass(String classpageId) {
+		AppClientFactory.getInjector().getClasspageService().V3DeleteClass(classpageId, new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				// TODO Auto-generated method stub
+				AppClientFactory.printInfoLogger("result:"+result);
+				if(result == 200){
+				   getView().onDeleteClassSuccess();
+				}else{
+					getView().onErrorPopup();
+				}
+			}
+		});
+	}
 	
 }
