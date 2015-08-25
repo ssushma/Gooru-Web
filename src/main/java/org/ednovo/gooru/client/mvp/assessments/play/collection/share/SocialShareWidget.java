@@ -122,7 +122,7 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 			if(collectionItemDo.getResource().getAssets()!=null&&collectionItemDo.getResource().getAssets().size()>0){
 				assetName=collectionItemDo.getResource().getAssets().get(0).getAsset()!=null?(collectionItemDo.getResource().getAssets().get(0).getAsset().getName()!=null?collectionItemDo.getResource().getAssets().get(0).getAsset().getName():""):"";
 				thumbnailImage=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+assetName;
-			}else{
+			}else if(collectionItemDo.getResource() != null && collectionItemDo.getResource().getThumbnails() != null && collectionItemDo.getResource().getThumbnails().getUrl() != null){
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
@@ -170,7 +170,9 @@ public abstract class SocialShareWidget extends Composite implements ClientConst
 		} else if (OTHER.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_OIMAGE;
 		}
-		resourceHiddenImage.setUrl(resourceThumbnail);
+		if(!resourceThumbnail.isEmpty()){
+			resourceHiddenImage.setUrl(resourceThumbnail);
+		}
 		resourceThumbnail=resourceHiddenImage.getUrl();
 	}
 	public abstract void onFacebook();
