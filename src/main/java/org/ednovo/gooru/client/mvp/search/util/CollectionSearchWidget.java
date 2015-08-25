@@ -412,12 +412,22 @@ public class CollectionSearchWidget extends Composite {
 					questionsText=" "+questionsCount+" "+i18n.GL3216()+" ";
 				}
 			}
-			if(questionsText.isEmpty() && !resourceText.isEmpty()){
-				collectionText = resourceText+i18n.GL3220();
-			}else if(resourceText.isEmpty() && !questionsText.isEmpty()){
-				collectionText=questionsText+i18n.GL3220();
-			}else if(!questionsText.isEmpty() && !resourceText.isEmpty()){
-				collectionText=resourceText+i18n.GL3219()+questionsText+i18n.GL3220();
+			if(collectionSearchResultDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
+				if(questionsText.isEmpty() && !resourceText.isEmpty()){
+					collectionText = resourceText+i18n.GL3572();
+				}else if(resourceText.isEmpty() && !questionsText.isEmpty()){
+					collectionText=questionsText+i18n.GL3572();
+				}else if(!questionsText.isEmpty() && !resourceText.isEmpty()){
+					collectionText=resourceText+i18n.GL3219()+questionsText+i18n.GL3572();
+				}
+			}else{
+				if(questionsText.isEmpty() && !resourceText.isEmpty()){
+					collectionText = resourceText+i18n.GL3220();
+				}else if(resourceText.isEmpty() && !questionsText.isEmpty()){
+					collectionText=questionsText+i18n.GL3220();
+				}else if(!questionsText.isEmpty() && !resourceText.isEmpty()){
+					collectionText=resourceText+i18n.GL3219()+questionsText+i18n.GL3220();
+				}
 			}
 			pResourceText.setText(collectionText);
 			StringUtil.setAttributes(pResourceText.getElement(), "pResourceText", resourceText, resourceText);
