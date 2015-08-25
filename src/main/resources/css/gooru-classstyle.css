@@ -34,6 +34,8 @@
 #getStartedContainer .settingsMenu .classAnrSettings:hover,  #getStartedContainer .settingsMenu  .classAnrSettings:focus{
 	opacity: 0.75;
 	text-decoration:none;
+	margin: 0px;
+	border: 0px;
 }
 #getStartedContainer .settingsMenu .classAnrSettings.active {
 	background: #4897ce;
