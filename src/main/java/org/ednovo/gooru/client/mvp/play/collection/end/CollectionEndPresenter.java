@@ -89,8 +89,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	private CollectionHomeMetadataPresenter collectionHomeMetadataPresenter;
 
-	//private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
-
 	public static final  Object METADATA_PRESENTER_SLOT = new Object();
 
 	private static final String PAGE = "course-page";
@@ -121,13 +119,12 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view,PreviewHomePresenter previewHomePresenter,
-			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,/*CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter,*/ShelfMainPresenter shelfMainPresenter) {
+			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,ShelfMainPresenter shelfMainPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
-		//this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 		this.shelfMainPresenter= shelfMainPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
 	}
@@ -176,10 +173,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		if(AppClientFactory.isAnonymous()){
 			getView().getLoadingImageLabel().setVisible(false);
 		}
-/*		collectionSummaryIndividualPresenter.setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
-		collectionSummaryIndividualPresenter.setTeacherImage(classpageItemDo);
-		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
-*/	}
+	}
 	public void clearslot(){
 		getView().resetData();
 		getView().resetCollectionMetaData();
@@ -392,7 +386,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		return previewHomePresenter.getBackToClassButton();
 	}
 	public void clearDashBoardIframe(){
-		//collectionSummaryIndividualPresenter.clearFrame();
 		getView().clearDashBoardIframe();
 	}
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
@@ -470,36 +463,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
-
-
 		getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
-
-
-		/*this.analyticService.getSessionsDataByUser(classObj,collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
-
-			@Override
-			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
-				if(result.size()!=0){
-					int day=result.get(result.size()-1).getFrequency();
-					printData.setUserName(null);
-					printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-					printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
-					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId(),printData);
-					getView().setSessionsData(result);
-				}else{
-					clearSlot(COLLECTION_REPORTS_SLOT);
-					getView().hidePanel();
-					collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
-					setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
-				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-		});*/
-
 	}
 	public void convertMilliSecondsToTime(Long milliSeconds){
 		//milliSeconds=milliSeconds>0&&milliSeconds<1000?1000:milliSeconds;
@@ -516,16 +480,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
 	public void displayScoreCountData(Integer score,Integer questionCount){
-//		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
-//			int questionCount=0;
-//			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
-//				if(collectionDo.getCollectionItems().get(i).getResource().getResourceType()!=null){
-//					String resourceTypeName=collectionDo.getCollectionItems().get(i).getResource().getResourceType().getName();
-//					if(resourceTypeName!=null&&resourceTypeName.equalsIgnoreCase("assessment-question")){
-//						questionCount++;
-//					}
-//				}
-//			}
+
 		if(questionCount!=null)
 		{
 			if(questionCount==0){
@@ -580,7 +535,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 										getView().hidePanel();
 										getView().showMessageWhenDataNotFound();
 										getView().setReportContainer(null);
-										//collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
 									}
 								}
 							}
@@ -598,9 +552,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			//clearSlot(COLLECTION_REPORTS_SLOT);
 			getView().hidePanel();
 			getView().setReportContainer(sessionId);
-			/*			collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
-			setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
-*/		}
+		}
 	}
 
 	public void getNextCollectionItem(String folderId,String folderItemId,final String urlVal) {
