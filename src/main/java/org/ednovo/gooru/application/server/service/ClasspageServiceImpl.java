@@ -475,6 +475,22 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 				UrlToken.V2_CLASSPAGE_DELETE, classpageId);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
+	
+	@Override
+	public Integer V3DeleteClass(String classpageId){
+		JsonRepresentation jsonRep = null;
+		Integer statusCode=0;
+		try{
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_GET_CLASSPAGE_BY_ID, classpageId);
+			getLogger().info("v3 class delete:::::::"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+			statusCode = jsonResponseRep.getStatusCode();
+		}catch(Exception e){
+			logger.error("V3DeleteClass Exception::", e);
+		}
+		
+		return statusCode;
+	}
 
 	@Override
 	public AssignmentDo v2CreateAssignment(AssignmentDo assignmentDo) throws GwtException {
@@ -1811,7 +1827,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 				classDo.setCourseGooruOid(courseId);
 				jsonObject.put("courseGooruOid",courseId);
 			}
-			if(fileName != null){
+			if(fileName != null && !fileName.isEmpty()){
 				classDo.setMediaFilename(fileName);
 				jsonObject.put("mediaFilename",fileName);
 			}

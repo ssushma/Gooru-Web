@@ -303,8 +303,6 @@ public class HeaderUc extends Composite
 
 	private ClasspageListVc classpageListVc;
 
-	private SaveSharePanel saveSharePanel;
-
 	@UiField
 	AnchorElement gooruLearning;
 
@@ -476,16 +474,6 @@ public class HeaderUc extends Composite
 
 		logoutPanelVc = new LogoutPanelVc();
 		settingOptionsPopup.add(logoutPanelVc);
-		saveSharePanel = new SaveSharePanel() {
-
-			@Override
-			@UiHandler("closeButton")
-			public void closeButton(ClickEvent clickEvent) {
-				isGooruGuidePanelOpen = false;
-				Window.enableScrolling(true);
-				hide();
-			}
-		};
 
 		editSearchInputFloPanel.setVisible(false);
 		LoginLinkContainer.setVisible(false);

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -55,7 +55,6 @@ import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagVi
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagsResourceView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -111,7 +110,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage, libraryMessage;
-	
+
 	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText, courseGradeLbl,lblDescCharLimit;
 
 	@UiField
@@ -135,36 +134,36 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiField
 	Button  profileOnButton, profileOffButton, btnSave,
 			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,FollowingButtonBlue;
-	
+
 	Boolean justClicked = false;
 
-	/** 
+	/**
 	 * This method is to get the followButton
 	 */
 	@Override
 	public Button getFollowButton() {
 		return followButton;
 	}
-	/** 
+	/**
 	 * This method is to set the followButton
 	 */
 	public void setFollowButton(Button followButton) {
 		this.followButton = followButton;
 	}
-	/** 
+	/**
 	 * This method is to get the unFollowButton
 	 */
-	
-	/** 
+
+	/**
 	 * This method is to set the unFollowButton
 	 */
-	
+
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
 			profilePageEditBioPanel,profileMainContainer,followingContainer,tagResourceContainer;
-	
+
 	@UiField FlowPanel moreGradeCourseLbl, moreCourseLbl;
-	
+
 	@UiField
 	UserSettingStyle settingsStyle;
 
@@ -182,39 +181,33 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	ProfilePageLibraryView profilePageLibraryView;
-	
+
 	@UiField HTML profileVisiblityMessage;
-	
-	
+
+
 	@UiField
 	ProfilePageTabVc collectionsTabVc, followingTabVc, followersTabVc,tagTabVc;
-	
+
 	Label noCollectionMsgPanel = new Label();
 
 	private Label editImageButton = new Label("Edit image");
 
 	private FooterUc footerUc = new FooterUc();
-	
+
 	private AlertContentUc alertContentUc;
-	
+
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
-	
+
 	private SocialShareView socialView=null;
-	
+
 	boolean enableEdit = true;
 	private String isFollowUser ;
-
-	@UiField(provided = true)
-	ShelfCBundle res;
-
-	@UiField(provided = true)
-	CollectionCBundle ccb;
 
 	/* HTML5 Storage implementation for tab persistance */
 	private Storage stockStore = null;
 
     boolean isProfileAdmin = false;
-	
+
 	private boolean isShowing=false;
 
 	private ProfileDo profileDo;
@@ -222,41 +215,36 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private GroupedListBox collectionCourseLst;
 
 	private SocialShareDo shareDo;
-	
+
 	private String profileOnStatus = "false";
-	
+
 	private static String USER_META_ACTIVE_FLAG = "1";
-	
+
 	private boolean isGradeCourseBtnClick = false;
-	
+
 	private String profileImageUrl="images/profilepage/user-profile-pic.png";
-	
+
 	List<UserFollowDo> userFollowingDo = new ArrayList<UserFollowDo>();
 	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
 	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
-		
+
 	private HandlerRegistration tagHandler;
 	private HandlerRegistration collectionHandler;
 	private HandlerRegistration followingHandler;
 	private HandlerRegistration follwerHandler;
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
-	
+
 	ProfileUserTagsResourceView profileUserTagsResourceView = null;
 		private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
 
 	interface ProfilePageViewUiBinder extends UiBinder<Widget, ProfilePageView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Inject
 	public ProfilePageView() {
-		this.res = ShelfCBundle.INSTANCE;
-		res.css().ensureInjected();
-		ccb = CollectionCBundle.INSTANCE;
-		CollectionCBundle.INSTANCE.css().ensureInjected();
-		
 		profileTextArea = new ProfilePageDescriptionEditUc() {
 			@Override
 			public void onEditDisabled(String text) {
@@ -269,11 +257,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}else{
 					addBioBtn.setVisible(false);
 				}
-					
+
 				userBio.setText(text);
 				userBio.getElement().setAttribute("alt",text);
 				userBio.getElement().setAttribute("title",text);
-				
+
 				String gender = "";
 				if(profileDo.getGender()!=null&&profileDo.getGender().getGenderId()!=null) {
 					gender = profileDo.getGender().getGenderId();
@@ -292,100 +280,100 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		};
 		profileTextArea.getElement().getStyle().setWidth(795, Unit.PX);
-		
+
 		profileTextArea.getElement().setAttribute("maxlength", "500");
 
 		setWidget(uiBinder.createAndBindUi(this));
 		addCourseGradeBtn.setText(i18n.GL1075());
 		addCourseGradeBtn.getElement().setAttribute("alt",i18n.GL1075());
 		addCourseGradeBtn.getElement().setAttribute("title",i18n.GL1075());
-		
+
 		editPencil.getElement().setInnerHTML(i18n.GL0140());
 		editPencil.getElement().setId("epnlEditPencil");
 		editPencil.getElement().setAttribute("alt",i18n.GL0140());
 		editPencil.getElement().setAttribute("title",i18n.GL0140());
-		
+
 		gradeText.setText(i18n.GL1076());
 		gradeText.getElement().setId("lblGradeText");
 		gradeText.getElement().setAttribute("alt",i18n.GL1076());
 		gradeText.getElement().setAttribute("title",i18n.GL1076());
-		
+
 		courseLabel.setText(i18n.GL0574());
 		courseLabel.getElement().setId("lblCourseLabel");
 		courseLabel.getElement().setAttribute("alt",i18n.GL0574());
 		courseLabel.getElement().setAttribute("title",i18n.GL0574());
-		
+
 		addCourseBtn.setText(i18n.GL0590());
 		addCourseBtn.getElement().setAttribute("alt",i18n.GL0590());
 		addCourseBtn.getElement().setAttribute("title",i18n.GL0590());
-		
+
 		courseMaxMsg.setText(i18n.GL0822());
 		courseMaxMsg.getElement().setId("lblCourseMaxMsg");
 		courseMaxMsg.getElement().setAttribute("alt",i18n.GL0822());
 		courseMaxMsg.getElement().setAttribute("title",i18n.GL0822());
-		
+
 		saveBtn.setText(i18n.GL0141());
 		saveBtn.getElement().setId("btnSaveBtn");
 		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
 		saveBtn.getElement().setAttribute("title",i18n.GL0141());
-		
+
 		cancelBtn.setText(i18n.GL0142());
 		cancelBtn.getElement().setId("lblCancelBtn");
 		cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
 		cancelBtn.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		addBioBtn.setText(i18n.GL1786());
 		addBioBtn.getElement().setAttribute("alt",i18n.GL1786());
 		addBioBtn.getElement().setAttribute("title",i18n.GL1786());
-		
+
 		aboutUsCharacterValidation.setText(i18n.GL0143());
 		aboutUsCharacterValidation.getElement().setId("lblAboutUsCharacterValidation");
 		aboutUsCharacterValidation.getElement().setAttribute("alt",i18n.GL0143());
 		aboutUsCharacterValidation.getElement().setAttribute("title",i18n.GL0143());
-		
+
 		btnSave.setText(i18n.GL0141());
 		btnSave.getElement().setId("btnSave");
 		btnSave.getElement().setAttribute("alt",i18n.GL0141());
 		btnSave.getElement().setAttribute("title",i18n.GL0141());
-		
+
 		biographyCancelButton.setText(i18n.GL0142());
 		biographyCancelButton.getElement().setId("btnBiographyCancelButton");
 		biographyCancelButton.getElement().setAttribute("alt",i18n.GL0142());
 		biographyCancelButton.getElement().setAttribute("title",i18n.GL0142());
-		
+
 		profilePageViewMsg.setText(i18n.GL1078());
 		profilePageViewMsg.getElement().setId("lblProfilePageViewMsg");
 		profilePageViewMsg.getElement().setAttribute("alt",i18n.GL1078());
 		profilePageViewMsg.getElement().setAttribute("title",i18n.GL1078());
-		
+
 		profilePageText.setText(i18n.GL1079());
 		profilePageText.getElement().setId("lblProfilePageText");
 		profilePageText.getElement().setAttribute("alt",i18n.GL1079());
 		profilePageText.getElement().setAttribute("title",i18n.GL1079());
-		
+
 		profileOnButton.setText(i18n.GL0802());
 		profileOnButton.getElement().setAttribute("alt",i18n.GL0802());
 		profileOnButton.getElement().setAttribute("title",i18n.GL0802());
-		
+
 		profileOffButton.setText(i18n.GL0803());
 		profileOffButton.getElement().setAttribute("alt",i18n.GL0803());
 		profileOffButton.getElement().setAttribute("title",i18n.GL0803());
-		
+
 		contentTabVc.setText(i18n.GL1082());
 		contentTabVc.getElement().setAttribute("alt",i18n.GL1082());
 		contentTabVc.getElement().setAttribute("title",i18n.GL1082());
-		
+
 		courseGradeLbl.setText(i18n.GL1886());
 		courseGradeLbl.getElement().setId("lblCourseGradeLbl");
 		courseGradeLbl.getElement().setAttribute("alt",i18n.GL1886());
 		courseGradeLbl.getElement().setAttribute("title",i18n.GL1886());
-		
+
 		errorImage.setTitle(i18n.GL1091_1());
 		errorImage.getElement().setId("imgErrorImage");
 		errorImage.getElement().setAttribute("title",i18n.GL1091_1());
 		errorImage.setAltText(i18n.GL1091_1());
 		errorImage.setUrl("images/404_message.png");
-		
+
 		profileOnContainerPanel.setVisible(false);
 		profileOffContainerPanel.setVisible(false);
 		loadingPanel.setVisible(false);
@@ -396,8 +384,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		userCoursePopup.setVisible(false);
 		profileOnButton.getElement().setAttribute("id", "btnProfileOn");
 		profileOffButton.getElement().setAttribute("id", "btnProfileOff");
-		contentTabVc.removeStyleName(res.css().tabsLi());
-		contentTabVc.setStyleName(res.css().tabsLiActive());
+		contentTabVc.removeStyleName("pppTabsLi");
+		contentTabVc.setStyleName("pppTabsLiActive");
 		contentTabVc.getElement().setId("lnkContentTab");
 		shareLinkFloPanel.setVisible(false);
 		profilePageEditBioPanel.setVisible(false);
@@ -410,7 +398,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followingTabVc.setLabel(i18n.GL1895());
 		followersTabVc.setLabel(i18n.GL1896());
 		tagTabVc.setLabel(i18n.GL1897());
-	
+
 		collectionsTabVc.getElement().setId("collections");
 		followingTabVc.getElement().setId("following");
 		followersTabVc.getElement().setId("followers");
@@ -419,29 +407,29 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followingTabVc.setStyleName("tabAlign");
 		followersTabVc.setStyleName("tabAlign");
 		tagTabVc.setStyleName("tabAlign");
-		
+
 		hpnlQuestion.getElement().setAttribute("style", "margin-top: 12px;");
-		
+
 		followButton.setText(i18n.GL1935());
 		followButton.getElement().setAttribute("alt",i18n.GL1935());
 		followButton.getElement().setAttribute("title",i18n.GL1935());
-		
+
 		FollowingButtonBlue.setText(i18n.GL1895());
 		FollowingButtonBlue.getElement().setAttribute("alt",i18n.GL1895());
 		FollowingButtonBlue.getElement().setAttribute("title",i18n.GL1895());
-		
+
 		FollowingButtonBlue.setVisible(false);
 		FollowingButtonBlue.addStyleName("followingBtn");
 		FollowingButtonBlue.addMouseOverHandler(new MouseOverOnUnFollowingButton());
 		FollowingButtonBlue.addMouseOutHandler(new MouseOutOnUnFollowingButton());
 		followButton.getElement().setAttribute("style", "width: 100px;");
 		//end for 6.4
-		userCoursePopup.setVisible(false);	
+		userCoursePopup.setVisible(false);
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
 			profileOnButton.addClickHandler(new ProfileOnClickEvent());
 		 }else{
 			profileOnButton.addMouseOverHandler(new MouseOverHandler() {
-				
+
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
 					toolTipPopupPanel.clear();
@@ -452,38 +440,38 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 			});
 			profileOnButton.addMouseOutHandler(new MouseOutHandler() {
-				
+
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
 					toolTipPopupPanel.hide();
 				}
 			});
-			
+
 		}
 		contentTabVc.getElement().getStyle().setCursor(Cursor.POINTER);
 
 		userCoursePopup.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				isShowing=true;
-				
+
 			}
 		});
 		ClickHandler eve1=new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				if(userCoursePopup.isVisible() && isShowing && enableEdit){
 						userCoursePopup.setVisible(true);
 				}else{
-				//	userCoursePopup.setVisible(false);	
+				//	userCoursePopup.setVisible(false);
 				}
 				isShowing=false;
 			}
 		};
 		RootPanel.get().addDomHandler(eve1, ClickEvent.getType());
-		
+
 		profileOnContainerPanel.getElement().setId("pnlProfileOnContainerPanel");
 		profileImageContainer.getElement().setId("epnlProfileImageContainer");
 		userProfilePic.getElement().setId("imgUserProfilePic");
@@ -528,7 +516,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followingContainer.getElement().setId("pnlFollowingContainer");
 		tagResourceContainer.getElement().setId("pnlTagResourceContainer");
 		profileOffContainerPanel.getElement().setId("pnlProfileOffContainerPanel");
-		
+
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		lblDescCharLimit.setText(value);
 		StringUtil.setAttributes(lblDescCharLimit.getElement(), "lblDescCharLimit", value, value);
@@ -550,17 +538,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
 			gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
-			
+
 			//update profile setting
 			getUiHandlers().updateProfileVisibilitySetting("true");
 		}
-		
-		
+
+
 	}
 	@Override
 	public void isFollow(String isFollow) {
 		this.isFollowUser=isFollow;
-		
+
 	}
 	@UiHandler("profileOffButton")
 	public void onClickOffButton(ClickEvent event) {
@@ -607,7 +595,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	
+
 	private void setPublicShareDo(String privatePublic) {
 		try {
 			if(shareDo != null){
@@ -625,14 +613,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 					gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
 				}
 			}
-			
+
 		} catch (Exception e) {
 			 AppClientFactory.printSevereLogger("profilePageView setPublicShareDo :"+e);
 		}
-		
+
 
 	}
-	
+
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
@@ -641,9 +629,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				//followingContainer().setVisible(false);
 				if(content!=null){
 					followingContainer.add(content);
-				}	
+				}
 			}
-			
+
 		}
 	}
 
@@ -653,7 +641,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			profileDo.setAboutMe("");
 		}
 		this.profileDo = profileDo;
-		userCoursePopup.setVisible(false);	
+		userCoursePopup.setVisible(false);
 		if(profileDo.getUserType() != null && profileDo.getUserType().length() > 1)
 		{
 			profileDo.setUserType(profileDo.getUserType().substring(0,1).toUpperCase()+profileDo.getUserType().substring(1, profileDo.getUserType().length()));
@@ -661,7 +649,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		roleTxt.setText(profileDo.getUserType());
 		roleTxt.getElement().setAttribute("alt",profileDo.getUserType());
 		roleTxt.getElement().setAttribute("title",profileDo.getUserType());
-		
+
 		profileTextArea.cancel();
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
@@ -671,31 +659,31 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+i18n.GL1083());
 		noCollectionMsgPanel.getElement().setAttribute("alt",profileDo.getUser().getUsernameDisplay()+" "+i18n.GL1083());
 		noCollectionMsgPanel.getElement().setAttribute("title",profileDo.getUser().getUsernameDisplay()+" "+i18n.GL1083());
-		
+
 		userName.setText(profileDo.getUser().getUsernameDisplay());
 		userName.getElement().setAttribute("alt",profileDo.getUser().getUsernameDisplay());
 		userName.getElement().setAttribute("title",profileDo.getUser().getUsernameDisplay());
-		
+
 		userLibraryMessage.setText(profileDo.getUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL1888());
 		userLibraryMessage.getElement().setAttribute("alt",profileDo.getUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL1888());
 		userLibraryMessage.getElement().setAttribute("title",profileDo.getUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL1888());
-		
+
 		libraryMessage.setText(i18n.GL1792());
 		libraryMessage.getElement().setAttribute("alt",i18n.GL1792());
 		libraryMessage.getElement().setAttribute("title",i18n.GL1792());
-		
+
 		profileVisiblityMessage.setHTML(i18n.GL1793()+"<br/><br/>"+i18n.GL1794());
 		profileVisiblityMessage.getElement().setAttribute("alt",i18n.GL1793()+"<br/><br/>"+i18n.GL1794());
 		profileVisiblityMessage.getElement().setAttribute("title",i18n.GL1793()+"<br/><br/>"+i18n.GL1794());
-		
+
 		userBio.setText(profileDo.getAboutMe());
 		userBio.getElement().setAttribute("alt",profileDo.getAboutMe());
 		userBio.getElement().setAttribute("title",profileDo.getAboutMe());
-		
+
 		profileTextArea.setText(profileDo.getAboutMe());
 		profileTextArea.getElement().setAttribute("alt",profileDo.getAboutMe());
 		profileTextArea.getElement().setAttribute("title",profileDo.getAboutMe());
-		
+
 		profileImageUrl=profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random();
 		userProfilePic.setUrl(profileImageUrl);
 		editImageButton.setText(i18n.GL0800());
@@ -750,16 +738,16 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 	*/		setTab(collectionsTabVc);
 		//}
-			
-		
-		
+
+
+
 	}
 
 	private void setUserCourseList(Set<ProfileCodeDo> codeList, boolean enable) {
 		profileDo.setCourses(codeList);
 		userCourseList.clear();
 		int count = 0;
-		
+
 		List<String> moreCourseLbls = new ArrayList<String>();
 		for (ProfileCodeDo profileCodeDo : codeList) {
 			if(count<2) {
@@ -801,7 +789,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 					moreGradeCourseLbls.add(grades[i]);
 				}
 			}
-			
+
 			if(grade!=null && !grade.isEmpty()) {
 				boolean isKinderGartnen = false;
 				boolean isHigherEducation = false;
@@ -885,7 +873,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				gradeCount++;
 			}
 	}
-	
+
 	public void renderExtraGradeCourse(List<String> datas, String type) {
 		if (datas.size() > 0) {
 			FlowPanel toolTipwidgets = new FlowPanel();
@@ -914,8 +902,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	}
 
 	private void setContentViewCss() {
-		contentTabVc.removeStyleName(res.css().tabsLi());
-		contentTabVc.setStyleName(res.css().tabsLiActive());
+		contentTabVc.removeStyleName("tabsLi");
+		contentTabVc.setStyleName("tabsLiActive");
 	}
 
 	@UiHandler("contentTabVc")
@@ -925,7 +913,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		params.put("user", AppClientFactory.getPlaceManager().getRequestParameter("user"));
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE, params);
 	}
-	
+
 	@Override
 	public void setContentItemData(List<CollectionItemDo> collectionItemDo) {
 
@@ -938,7 +926,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@Override
 	public void setMetaData(CollectionItemDo collectionItemDo) {
-		
+
 	}
 
 	@Override
@@ -985,11 +973,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		userName.setText("");
 		userName.getElement().setAttribute("alt","");
 		userName.getElement().setAttribute("title","");
-		
+
 		userBio.setText("");
 		userBio.getElement().setAttribute("alt","");
 		userBio.getElement().setAttribute("title","");
-		
+
 		userProfilePic.setUrl("");
 		shareLinkFloPanel.clear();
 		socialButtonContainer.clear();
@@ -1043,7 +1031,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		isProfileAdmin = true;
 		// Profile Image Edit option
 		profileImageContainer.add(editImageButton);
-		
+
 		if(profileDo.getUser().getProfileImageUrl()==null) {
 			editImageButton.setText(i18n.GL1087());
 			editImageButton.getElement().setAttribute("alt",i18n.GL1087());
@@ -1053,9 +1041,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		saveBtn.getElement().getStyle().setFloat(Float.LEFT);
 		saveBtn.getElement().setAttribute("id", "btnSave");
 		cancelBtn.getElement().setAttribute("id", "btnCancel");
-		
+
 		biographyCancelButton.getElement().setAttribute("id", "btnCancelEditBio");
-		
+
 		editImageButton.addClickHandler(new ShowImageUploadWidget());
 		profileImageContainer.addMouseOverHandler(new ShowEditButton());
 		profileImageContainer.addMouseOutHandler(new HideEditButton());
@@ -1078,7 +1066,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private void profilePageEditBioPanelUpdate() {
 		btnSave.getElement().setAttribute("id", "btnSaveEditBio");
 		biographyCancelButton.getElement().setAttribute("id", "btnCancelEditBio");
-		
+
 		aboutUsCharacterValidation.setWidth("100%");
 		aboutUsCharacterValidation.setVisible(false);
 		noAboutUsContainer.setVisible(false);
@@ -1311,7 +1299,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		courseMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().profileCourseMaxMsgShow());
 		new FadeInAndOut(courseMaxMsg.getElement(), 10000, 10000);
 	}
-	
+
 	/**
 	 * to hide message if course exceeds less than five
 	 */
@@ -1345,7 +1333,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	/**
 	 * New course is created for collection
-	 * 
+	 *
 	 * @param courseLabel
 	 *            the course of the label widget which is used to get all
 	 *            courses
@@ -1372,7 +1360,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	/**
 	 * Adding new course for the collection , will check it has more than five
 	 * courses and the selected course is repeated or not
-	 * 
+	 *
 	 * @param clickEvent
 	 *            specifies event type
 	 */
@@ -1409,7 +1397,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	/**
 	 * Will check it ,the selected course is repeated or not
-	 * 
+	 *
 	 * @param course
 	 *            to validate with already added course
 	 * @return true if repeated course is selected or false
@@ -1454,11 +1442,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		gooruSocialButtonsContainer.setVisible(false);
 		gooruProfileOnOffContainer.setVisible(false);
 	}
-	
+
 	@Override
 	public void editOptions(boolean toEnable){
 		enableEdit = toEnable;
-		
+
 		if(!toEnable){
 			gooruProfileOnOffContainer.setVisible(false);
 			if(isFollowUser !=null && (isFollowUser.toString().trim().equalsIgnoreCase("false") || isFollowUser.toString().trim()=="false")){
@@ -1475,7 +1463,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}else{
 			gooruProfileOnOffContainer.setVisible(true);
 			followButton.setVisible(false);
-			
+
 			FollowingButtonBlue.setVisible(false);
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1487,18 +1475,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public Label getChilNoShareOption() {
 		return profilePageViewMsg;
 	}
-	
+
 	public void getEnableWidget(boolean toEnable,String about,Set<ProfileCodeDo> set) {
 		if(toEnable){
 			gooruProfileOnOffContainer.setVisible(true);
 			followButton.setVisible(false);
-		
+
 			FollowingButtonBlue.setVisible(false);
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			bioMainContainer.setVisible(true);
-			userMetadata.setVisible(true);	
+			userMetadata.setVisible(true);
 			bioMainContainer.getElement().setAttribute("style", "margin-top:0px");
 		} else {
 			if(about==""||about.equalsIgnoreCase("")) {
@@ -1510,7 +1498,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if(set.isEmpty()) {
 				userMetadata.setVisible(false);
 			} else {
-				userMetadata.setVisible(true);	
+				userMetadata.setVisible(true);
 			}
 			gooruProfileOnOffContainer.setVisible(false);
 			if("false".equalsIgnoreCase(isFollowUser)||isFollowUser=="false"){
@@ -1534,7 +1522,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 
 	}
-	
+
 	private void clickGradeCourseEditBtn() {
 		//getUiHandlers().getTaxonomyData();
 		setGradeList(profileDo.getGrade());
@@ -1547,7 +1535,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			coursesPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
 		}
 	}
-	
+
 	@Override
 	public void onLoad() {
 		Window.enableScrolling(true);
@@ -1568,17 +1556,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				text = text.concat("rd "+i18n.GL0325());
 			} else {
 				text = text.concat("th "+i18n.GL0325());
-			} 
+			}
 		}
 		return text;
-	}	
-	
+	}
+
 	@Override
 	public void getFollowersObj(List<UserFollowDo> userFollowDo) {
-		
+
 		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
-		
+
 		buttonDisableCickOnFollow(userFollowDo.size());
 		followersTabVc.setLabelCount("");
 		if(userFollowDo.size()!=0){
@@ -1588,15 +1576,15 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		{
 			followersTabVc.setLabelCount(userFollowDo.size()+"");
 		}
-			
-	
+
+
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 			if("followers".equalsIgnoreCase(tabValue))
 			{
 
 					setTab(followersTabVc);
-				
+
 			}
 		}
 	}
@@ -1609,16 +1597,16 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if("following".equalsIgnoreCase(tabValue))
 			{
 				setTab(followingTabVc);
-				
+
 			}
 		}
-		
+
 	}
 	@Override
 	public void getTagsObj(List<UserTagsDo> userTagsDo) {
 		userTagDo.clear();
 		userTagDo.addAll(userTagsDo);
-		
+
 		tagTabVc.setLabelCount("");
 		if(userTagsDo.size()!=0){
 			tagTabVc.setLabelCount(userTagsDo.get(0).getTotalHitCount()+"");
@@ -1636,13 +1624,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 		buttonDisableOnTags(userTagsDo.size());
-		
+
 	}
 	public void onClick(ClickEvent event) {
 		Object source = event.getSource();
 		getUiHandlers().clearTabSlot();
 		setTab(source);
-		
+
 	}
 	@UiHandler("followButton")
 	public void onClickFollowButton(ClickEvent event)
@@ -1652,12 +1640,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if(!AppClientFactory.isAnonymous()){
 		FollowingButtonBlue.setVisible(true);
 		followButton.setVisible(false);
-		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));
 		}else{
 		LoginPopupUc popup =new  LoginPopupUc() {
 			@Override
 			public void onLoginSuccess() {
-				
+
 			}
 		};
 		popup.show();
@@ -1671,22 +1659,22 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if(!AppClientFactory.isAnonymous()){
 		FollowingButtonBlue.setVisible(false);
 		followButton.setVisible(true);
-		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));
 		}
 		else{
 			LoginPopupUc popup =new  LoginPopupUc() {
 				@Override
 				public void onLoginSuccess() {
-					
+
 				}
 			};
 			popup.show();
 			popup.setGlassEnabled(true);
 		}
-	
-		
+
+
 	}
-	
+
 
 	public class clickOnCollection implements ClickHandler{
 
@@ -1696,15 +1684,15 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			Map<String,String> params = new HashMap<String,String>();
 			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-			
+
 			params.put("id", id);
 			params.put("user", user);
 			params.put("tab", "collections");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			
+
 		}
-		
+
 	}
 	public class clickOnFollowing implements ClickHandler{
 
@@ -1719,32 +1707,32 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			params.put("tab", "following");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-		
+
 		}
 	}
 	public class clickOnFollowers implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			setTab(followersTabVc);	
+			setTab(followersTabVc);
 			Map<String,String> params = new HashMap<String,String>();
 			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-			
+
 			params.put("id", id);
 			params.put("user", user);
 			params.put("tab", "followers");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 
-			
+
 		}
 	}
 	public class clickOnTags implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
-		
+
 			Map<String,String> params = new HashMap<String,String>();
 			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
@@ -1753,9 +1741,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			params.put("tab", "tags");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			setTab(tagTabVc);	
+			setTab(tagTabVc);
 
-			
+
 		}
 	}
 	public void setTab(Object tab) {
@@ -1766,7 +1754,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				mainContainer.setVisible(true);
 				tagResourceContainer.setVisible(false);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_PUBLIC_SHELF_VIEW);
-				
+
 			}
 			if (tab.equals(followingTabVc)) {
 				followingContainer.clear();
@@ -1779,7 +1767,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
-				
+
 				followingContainer.clear();
 				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);
@@ -1788,7 +1776,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.setVisible(true);
 				tagResourceContainer.setVisible(false);
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
-				
+
 			}
 			if (tab.equals(tagTabVc)) {
 				followingContainer.clear();
@@ -1798,34 +1786,34 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.add(profileUserTagView);
 				followingContainer.setVisible(true);
 				tagResourceContainer.setVisible(false);
-				
-				
-				
+
+
+
 			}
 		}
-		
-		
+
+
  }
-	
-	
-	
+
+
+
 	public void buttonDisable()
 	{
 		try {
 			if(collectionHandler!=null) {
 				collectionHandler.removeHandler();
 			}
-		 } catch (AssertionError ae) { 
+		 } catch (AssertionError ae) {
 			 AppClientFactory.printSevereLogger(ae.getMessage());
 		 }
 		try {
 			if(followingHandler!=null) {
 				followingHandler.removeHandler();
 			}
-		} catch (AssertionError ae) { 
+		} catch (AssertionError ae) {
 			 AppClientFactory.printSevereLogger(ae.getMessage());
 		}
-		
+
 		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
 		{
 			collectionsTabVc.setEnabled(false);
@@ -1837,7 +1825,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			collectionHandler = collectionsTabVc.addClickHandler(new clickOnCollection());
 			collectionsTabVc.getLabelCount().getElement().setAttribute("style", "color:#1076bb");
 		}
-		
+
 		if(profileDo.getUser().getMeta().getSummary().getFollowing()==0)
 		{
 			followingTabVc.setEnabled(false);
@@ -1849,9 +1837,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			followingTabVc.setEnabled(true);
 			followingHandler = followingTabVc.addClickHandler(new clickOnFollowing());
 		}
-		
-		
-		
+
+
+
 	}
 	public void buttonDisableCickOnFollow(int totalCount)
 	{
@@ -1862,20 +1850,20 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}catch (AssertionError ae) {
 			 AppClientFactory.printSevereLogger(ae.getMessage());
 		}
-			 
-			 
+
+
 		if(totalCount==0)
 		{
 			followersTabVc.setEnabled(false);
 			followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-			
+
 		}
 		else
 		{
 			followersTabVc.setEnabled(true);
 			follwerHandler=followersTabVc.addClickHandler(new clickOnFollowers());
 			followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
-			
+
 		}
 }
 	public void buttonDisableOnTags(int totalCount)
@@ -1884,10 +1872,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if(tagHandler!=null) {
 				tagHandler.removeHandler();
 			}
-		}catch (AssertionError ae) { 
+		}catch (AssertionError ae) {
 			 AppClientFactory.printSevereLogger(ae.getMessage());
 		}
-		
+
 		if(totalCount==0)
 		{
 			tagTabVc.setEnabled(false);
@@ -1895,7 +1883,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 		else
 		{
-			
+
 			tagTabVc.setEnabled(true);
 			tagHandler = tagTabVc.addClickHandler(new clickOnTags());
 			tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
@@ -1906,7 +1894,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		// TODO Auto-generated method stub
 		return FollowingButtonBlue;
 	}
-	
+
 	public class MouseOverOnUnFollowingButton implements MouseOverHandler{
 
 		@Override
@@ -1939,12 +1927,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 			else
 			{
-				justClicked = false;	
+				justClicked = false;
 			}
-			
+
 		}
 	}
 
-	
+
 }
-	

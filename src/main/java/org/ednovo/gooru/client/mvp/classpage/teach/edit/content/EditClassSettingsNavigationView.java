@@ -24,8 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -33,6 +35,8 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.uc.DeleteContentPopup;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -44,8 +48,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -73,7 +76,13 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 
 	@UiField SimplePanel bodyView;
 	
+	@UiField Button deleteBtn;
+	
+	ClasspageDo classpageDo;
+	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	DeleteContentPopup deleteContentPopup = null;
 
 	private static EditClassSettingsNavigationViewUiBinder uiBinder = GWT.create(EditClassSettingsNavigationViewUiBinder.class);
 
@@ -97,6 +106,11 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		studentsAnr.getElement().setAttribute("alt",i18n.GL3403());
 		studentsAnr.getElement().setAttribute("title",i18n.GL3403());
 		
+		deleteBtn.setText(i18n.GL3450_18());
+		deleteBtn.getElement().setId("deleteBtnId");
+		deleteBtn.getElement().setAttribute("alt",i18n.GL3450_18());
+		deleteBtn.getElement().setAttribute("title",i18n.GL3450_18());
+		
 
 		/*contentSettingsAnr.setText(i18n.GL3404());
 		contentSettingsAnr.getElement().setId("contentSettingAnrId");
@@ -112,6 +126,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		classInfoAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classInfo));
 		minmumScoreAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
 		studentsAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,studentsPnl));
+		deleteBtn.addClickHandler(new DleteClassHandler());
 		//settLiPanel.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
 		
 	}
@@ -227,7 +242,74 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	 */
 	@Override
 	public void setClassData(ClasspageDo classpageDo) {
+		this.classpageDo=classpageDo;
 		String studentCount = "("+classpageDo.getMemberCount()+")";
 		studentsAnr.setText(i18n.GL3344() +" " +studentCount);
+	}
+	
+	private class DleteClassHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			invokeDeletePopup();
+		}
+	}
+	
+	public  void invokeDeletePopup() {
+		final String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		deleteContentPopup = new DeleteContentPopup() {
+
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				// TODO Auto-generated method stub
+				if(classpageId != null){
+					getUiHandlers().deleteClass(classpageId);
+				}
+			}
+
+			@Override
+			public void onClickNegitiveButton(ClickEvent event) {
+				// TODO Auto-generated method stub
+				hide();
+				Window.enableScrolling(true);
+			}
+			
+		};
+		deleteContentPopup.getElement().getStyle().setZIndex(9999999);
+		deleteContentPopup.setPopupTitle(i18n.GL0748());
+		String title=classpageDo.getName();
+		if(title.length()>50){
+			title=title.substring(0, 50)+"...";
+		}
+		deleteContentPopup.setNotes(StringUtil.generateMessage(i18n.GL3456(),title));
+		deleteContentPopup.setDeleteValidate("delete");
+		deleteContentPopup.setPositiveButtonText("Delete Forever");
+		deleteContentPopup.setNegitiveButtonText(i18n.GL0142());
+		deleteContentPopup.setPleaseWaitText(i18n.GL0339());
+		deleteContentPopup.show();
+		deleteContentPopup.center();
+	}
+	
+	@Override
+	public void onDeleteClassSuccess(){
+		hideDeletePopup();
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,params);
+	}
+	
+	private void hideDeletePopup() {
+		if(deleteContentPopup!=null){
+			deleteContentPopup.hide();
+		}
+		Window.enableScrolling(true);
+	}
+
+	@Override
+	public void onErrorPopup() {
+		// TODO Auto-generated method stub
+		hideDeletePopup();
+		new AlertMessageUc(i18n.GL1089(),new Label(i18n.GL3578()));
 	}
 }

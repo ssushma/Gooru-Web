@@ -1420,12 +1420,16 @@ button.btn-disabled {
 	background: #d8d8d8;
 	color: #333333;
 	text-decoration: none;
+	margin: 0px;
+	border: 0px;
 }
 
 #gShelfCourseInfo .folderBlockSitemap a.active {
 	background: #d8d8d8;
 	color: #333333;
 	text-decoration: none;
+	margin: 0px;
+	border: 0px;
 }
 
 #gShelfCourseInfo .tagCoursePanel .tagCoursePanelHeader .btn {
