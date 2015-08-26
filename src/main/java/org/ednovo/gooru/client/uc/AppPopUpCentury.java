@@ -24,8 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
-
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -54,7 +52,6 @@ public class AppPopUpCentury extends PopupPanel {
 	 */
 	public AppPopUpCentury() {
 		super(false);
-		ShelfCBundle.INSTANCE.css().ensureInjected();
 
 		mainPanel=new FlowPanel();
 		innerPanel=new FlowPanel();
@@ -101,8 +98,7 @@ public class AppPopUpCentury extends PopupPanel {
 	 */
 	public AppPopUpCentury(String type){
 		super(false);
-			ShelfCBundle.INSTANCE.css().ensureInjected();
-			this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+			this.setStyleName("app-shelfItemPopUp");
 			content = new FlowPanel();
 			this.setWidget(content);
 			setGlassEnabled(true);
@@ -114,8 +110,7 @@ public class AppPopUpCentury extends PopupPanel {
 	 */
 	public AppPopUpCentury(String type,boolean isAutoHide){
 		super(isAutoHide);
-		ShelfCBundle.INSTANCE.css().ensureInjected();
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+		this.setStyleName("app-shelfItemPopUp");
 		content = new FlowPanel();
 		this.setWidget(content);
 		setGlassEnabled(true);

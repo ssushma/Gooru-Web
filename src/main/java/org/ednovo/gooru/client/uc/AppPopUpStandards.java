@@ -24,8 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
-
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -54,11 +52,6 @@ public class AppPopUpStandards extends PopupPanel {
 	 */
 	public AppPopUpStandards() {
 		super(false);
-		//<div class="org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignCloseMarker org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignSprite org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignCloseMark" id="btnCancelButton"></div>
-		ShelfCBundle.INSTANCE.css().ensureInjected();
-	/*	this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
-		this.setStyleName(ShelfCBundle.INSTANCE.css().standardsBrowsePopup());*/
-
 		mainPanel=new FlowPanel();
 		innerPanel=new FlowPanel();
 		row=new FlowPanel();
@@ -104,8 +97,7 @@ public class AppPopUpStandards extends PopupPanel {
 	 */
 	public AppPopUpStandards(String type){
 		super(false);
-			ShelfCBundle.INSTANCE.css().ensureInjected();
-			this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+			this.setStyleName("app-shelfItemPopUp");
 			content = new FlowPanel();
 			this.setWidget(content);
 			setGlassEnabled(true);
@@ -117,8 +109,7 @@ public class AppPopUpStandards extends PopupPanel {
 	 */
 	public AppPopUpStandards(String type,boolean isAutoHide){
 		super(isAutoHide);
-		ShelfCBundle.INSTANCE.css().ensureInjected();
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+		this.setStyleName("app-shelfItemPopUp");
 		content = new FlowPanel();
 		this.setWidget(content);
 		setGlassEnabled(true);

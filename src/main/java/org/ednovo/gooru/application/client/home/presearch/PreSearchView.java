@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -50,7 +51,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.LiPanel;
-import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -82,6 +82,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 /**
  *
@@ -116,7 +117,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	@UiField UlPanel ulSubjectPanel,standardsDropListValues;
 	@UiField Label lblErrorMessage;
 	@UiField Button enterLbl;
-	@UiField TextBoxWithPlaceholder classCodeTxtBox;
+	@UiField TextBox classCodeTxtBox;
 
 	private final String QUERY = "query";
 	private final String FLT_SUBJECTNAME = "flt.subjectName";
@@ -167,22 +168,21 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		classCodeTxtBox.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-				setButtonStatus("active");
+				setButtonStatus(CssTokens.ACTIVE);
 			}
 		});
 		classCodeTxtBox.addKeyUpHandler(new KeyUpHandler() {
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				setButtonStatus("active");
+				setButtonStatus(CssTokens.ACTIVE);
 			}
 		});
 		classCodeTxtBox.setText("");
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
 		classCodeTxtBox.getElement().setId("txtClassCode");
-		classCodeTxtBox.setPlaceholder(i18n.GL1762_1());
-
-
+		classCodeTxtBox.getElement().setAttribute("placeholder", i18n.GL1785());
+		
 		AdvancedFlexTable table = new AdvancedFlexTable();
 
 		// create headers and put them in the thead tag
@@ -699,12 +699,12 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 				}
 				@Override
 				public void onSuccess() {
-					if(liPanel.getStyleName().equals("active")){
-						liPanel.removeStyleName("active");
+					if(liPanel.getStyleName().equals(CssTokens.ACTIVE)){
+						liPanel.removeStyleName(CssTokens.ACTIVE);
 						selectedSubjects.remove(subjectVal);
 						displaySelectedSbujects("remove");
 					}else{
-						liPanel.setStyleName("active");
+						liPanel.setStyleName(CssTokens.ACTIVE);
 						selectedSubjects.put(subjectVal, subjectVal);
 						displaySelectedSbujects("add");
 					}
@@ -893,11 +893,18 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			@Override
 			public void onSuccess() {
-				if (status.equalsIgnoreCase("active")) {
-					enterLbl.getElement().removeClassName("disabled");
+				if(classCodeTxtBox.getText().length()>0) {
+					classCodeTxtBox.getElement().addClassName(CssTokens.TEXT_UPPERCASE);
+					classCodeTxtBox.getElement().removeAttribute("placeholder");
+				} else {
+					classCodeTxtBox.getElement().removeClassName(CssTokens.TEXT_UPPERCASE);
+					classCodeTxtBox.getElement().setAttribute("placeholder", i18n.GL1785());
+				}
+				if (status.equalsIgnoreCase(CssTokens.ACTIVE)) {
+					enterLbl.getElement().removeClassName(CssTokens.DISABLED);
 					enterLbl.setEnabled(true);
 				} else {
-					enterLbl.getElement().addClassName("disabled");
+					enterLbl.getElement().addClassName(CssTokens.DISABLED);
 					enterLbl.setEnabled(false);
 				}
 			}
@@ -926,7 +933,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 				@Override
 				public void onSuccess() {
-					setButtonStatus("active");
+					setButtonStatus(CssTokens.ACTIVE);
 					if (classCodeTxtBox.getText().trim().equalsIgnoreCase("")
 							|| classCodeTxtBox.getText().trim() == null) {
 						alertMessageUc = new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
@@ -1057,7 +1064,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 														alertMessageUc.hide();
 													//StudentAssignmentView.setPrivatePage();
 
-												} else if (status!=null&&status.equalsIgnoreCase("active")) {
+												} else if (status!=null&&status.equalsIgnoreCase(CssTokens.ACTIVE)) {
 													if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 														MixpanelUtil.Click_Study_LandingPage();
 													}
