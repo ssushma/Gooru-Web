@@ -381,7 +381,14 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 							}
 							@Override
 							public void onSelection(SelectionEvent<Suggestion> event) {
-								super.onSelection(event);
+								
+							}
+
+							@Override
+							public void showStandardsPopup(String standardVal, String standardsDesc,
+									List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+								getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+								
 							}
 						};
 					}
@@ -564,7 +571,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	public void setUpdatedStandardsCode(String setStandardsVal, Integer codeId,String setStandardDesc, boolean value, boolean userResource) {
 		if(value == false){
 			if(userResource){
-				ownResourcePopupVc.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+				//ownResourcePopupVc.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
 			}else{
 				//editResoruce.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
 			}
@@ -594,20 +601,20 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
         }
 
-        List<CodeDo> codeDoList = new ArrayList<CodeDo>(collectionItemDo.getResource().getTaxonomySet());
+        
 
         JSONArray standardsJsonArray = new JSONArray();
         JSONArray momentsOfLearningArrValue = new JSONArray();
         JSONArray educatUseArrValue = new JSONArray();
         JSONArray tagsArrValue = new JSONArray();
+        
+        System.out.println("codeidsize::"+collectionItemDo.getStandards().size());
 
-        for(int i=0;i<codeDoList.size();i++){
-        	JSONObject code = new JSONObject();
-        	code.put("code",new JSONString(codeDoList.get(i).getCode()));
-        	code.put("codeId",new JSONNumber(codeDoList.get(i).getCodeId()));
-        	standardsJsonArray.set(i,code);
+        for(int i=0;i<collectionItemDo.getStandards().size();i++){
+        	System.out.println("codeid::"+collectionItemDo.getStandards().get(i).get("id"));
+         	standardsJsonArray.set(i,new JSONNumber(Integer.parseInt(collectionItemDo.getStandards().get(i).get("id"))));
         }
-        attach.put("taxonomySet", standardsJsonArray);
+        attach.put("standardIds", standardsJsonArray);
 
         for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
         	JSONObject momentsOfLearningJsonObj = new JSONObject();
@@ -785,8 +792,22 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 	@Override
 	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
+		try
+		{
 		editResoruce.displaySelectedStandards(standListArray);
-		
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		try
+		{
+		ownResourcePopupVc.displaySelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
 
 
