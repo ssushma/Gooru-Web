@@ -53,4 +53,8 @@ public interface IsEditClassSettingsNavigationView extends IsViewWithHandlers<Ed
 
 	void setClassData(ClasspageDo classpageDo);
 
+	void onDeleteClassSuccess();
+
+	void onErrorPopup();
+
 }

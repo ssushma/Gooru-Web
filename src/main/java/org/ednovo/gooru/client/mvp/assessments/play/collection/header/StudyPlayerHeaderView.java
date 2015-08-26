@@ -66,7 +66,7 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 
 	@UiField HTMLPanel panelSubmitContainer;
 
-	@UiField Button btnSubmitAllAnswers;
+	@UiField Button btnSubmitAllAnswers,btnLogin;
 
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 
@@ -96,6 +96,7 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 		loginMessageText.getElement().setId("lblLoginMessageText");
 
 		btnSubmitAllAnswers.setVisible(false);
+		btnLogin.setVisible(false);
 	}
 
 	public void setResourceTitle(String title){
@@ -188,4 +189,13 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 	public void setBtnSubmitAllAnswers(Button btnSubmitAllAnswers) {
 		this.btnSubmitAllAnswers = btnSubmitAllAnswers;
 	}
+	
+	public Button getBtnLogin() {
+		return btnLogin;
+	}
+
+	public void setBtnLogin(Button btnLogin) {
+		this.btnLogin = btnLogin;
+	}
+
 }
