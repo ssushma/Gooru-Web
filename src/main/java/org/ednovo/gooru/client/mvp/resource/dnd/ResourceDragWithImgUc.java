@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.resource.dnd;
 
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.util.ImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -65,17 +64,12 @@ public class ResourceDragWithImgUc extends FocusPanel implements IsDraggableMira
 	@UiField
 	FlowPanel labelPanel;
 
-	@UiField(provided = true)
-	ShelfCBundle res;
-
 	/**
 	 * Class constructor , to call setaData method and set image
 	 * @param category of resource which is being dragged
 	 * @param title of the resource which is being dragged
 	 */
 	public ResourceDragWithImgUc(String category, String title) {
-		this.res = ShelfCBundle.INSTANCE;
-		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		container.setWidgetPosition(dragImage, 226, 0);
 		container.getElement().setAttribute("style","box-sizing:content-box");
@@ -102,10 +96,9 @@ public class ResourceDragWithImgUc extends FocusPanel implements IsDraggableMira
 
 	public void onDroppable(Boolean droppable) {
 		if (droppable) {
-			dragImage.setStyleName(res.css().plusImage());
+			dragImage.setStyleName("plusImage");
 		} else {
-			dragImage.setStyleName(res.css().minusImage());
-//			dragImage.setStyleName(res.css().minusImage());
+			dragImage.setStyleName("minusImage");
 		}
 	}
 
