@@ -577,7 +577,6 @@
 	display: inline-block;
 	padding: 6px;
 	font-family: Tahoma, sans-serif !important;
-	text-transform: uppercase;
 }
 
 .remixPopupTabPnlStyle {
@@ -734,4 +733,7 @@
 
 .waitPopUp .removingText {
 
+}
+.text-uppercase {
+	text-transform: uppercase !important;
 }
