@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -62,6 +63,7 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	CollectionInfoPresenter collectionInfoPresenter;
 	AddResourcePresenter addResourcePresenter;
+	CollectionContentPresenter collectionContentPresenter;
 	SearchAbstractPresenter searchAbstractPresenter;
 	PreSearchPresenter preSearchPresenter;
 	LessonInfoPresenter lessonInfoPresenter;
@@ -211,6 +213,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		{
 			
 		}
+		try
+		{
+		collectionContentPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
 	
 	
@@ -255,6 +265,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	public List<Map<String, String>> getSelectedStandards() { 
 		return getView().getAddedStandards();
+	}
+	public CollectionContentPresenter getCollectionContentPresenter() {
+		return collectionContentPresenter;
+	}
+
+
+	public void setCollectionContentPresenter(CollectionContentPresenter collectionContentPresenter) {
+		this.collectionContentPresenter = collectionContentPresenter;
 	}
 
 
