@@ -9,7 +9,7 @@
 				<g:Label styleName="resourceNumber" ui:field="lblItemSequence" />
 				<event:HTMLEventPanel styleName="resourceNameBlock" ui:field="titleBlockPnl">
 					<g:InlineLabel ui:field="spnResourceType" />
-					<g:Label styleName="resourceTitle" ui:field="lblResourceTitle" />
+					<g:HTML styleName="resourceTitle" ui:field="lblResourceTitle" />
 				</event:HTMLEventPanel>
 			</div>
 		</div>
