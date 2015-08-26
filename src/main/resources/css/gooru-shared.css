@@ -735,3 +735,8 @@
 .waitPopUp .removingText {
 
 }
+
+.tagsPopupStdPos{
+	margin-left: 87px;
+	margin-top: -14px;
+}
