@@ -104,6 +104,7 @@ import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -259,6 +260,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
 
 	AddCenturyPresenter getAddCenturyPresenterWidget();
+	
+	StandardsPopupPresenter getStandardsPopupPresenter();
 
 	GooruGradesPresenter getGooruGradePresenter();
 
