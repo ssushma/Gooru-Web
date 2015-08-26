@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -56,6 +57,7 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	private SearchServiceAsync searchService;
 
 	CollectionInfoPresenter collectionInfoPresenter;
+	AddResourcePresenter addResourcePresenter;
 	SearchAbstractPresenter searchAbstractPresenter;
 	PreSearchPresenter preSearchPresenter;
 	LessonInfoPresenter lessonInfoPresenter;
@@ -69,6 +71,11 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	public StandardsPopupPresenter( EventBus eventBus,IsStandardsPopupView view) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+	}
+
+
+	public void setAddResourcePresenter(AddResourcePresenter addResourcePresenter) {
+		this.addResourcePresenter = addResourcePresenter;
 	}
 
 	@Override
@@ -186,6 +193,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		try
 		{
 		preSearchPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		try
+		{
+		addResourcePresenter.setSelectedStandards(standListArray);
 		}
 		catch(Exception ex)
 		{

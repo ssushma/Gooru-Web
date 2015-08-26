@@ -58,6 +58,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDocsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleWebResource;
@@ -80,6 +81,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONArray;
@@ -100,6 +102,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -509,15 +512,26 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 
 
-		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id,String desc) {
-			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
-		}
-
 
 		@Override
 		public void closeStandardsPopup() {
 			// TODO Auto-generated method stub
 			getUiHandlers().closeStandardsPopup();
+		}
+
+
+		@Override
+		public void onSelection(SelectionEvent<Suggestion> event) {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+		@Override
+		public void showStandardsPopup(String standardVal, String standardsDesc,
+				List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+			getUiHandlers().showStandardsPopup(standardVal, standardsDesc, collectionLiPanelWithCloseArray);
+			
 		}
 
 	}
@@ -1448,19 +1462,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 
 	@Override
-	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc,boolean value, boolean isUserOwnResource) {
-		if(value == false){
-			if(isUserOwnResource){
-				addUserOwnResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
-			}else{
-				addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
-			}
-		}else{
-			addQuestionResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
-		}
-	}
-
-	@Override
 	public void hidePopup() {
 		getUiHandlers().addSelectedQuestionType("MC",getAddResourceMetadata());
 		multipleChoiceRadioButton.setValue(true);
@@ -1655,6 +1656,19 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		if(addQuestionResourceWidget!=null){
 			addQuestionResourceWidget.setDepthOfKnowledes(result);
 		}
+	}
+
+	@Override
+	public void setUpdatedStandardsCode(String setStandardsVal, int id, String desc, boolean val,
+			boolean isUserOwnResource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
+		addWebResourceWidget.displaySelectedStandards(standListArray);
+		
 	}
 	
 }
