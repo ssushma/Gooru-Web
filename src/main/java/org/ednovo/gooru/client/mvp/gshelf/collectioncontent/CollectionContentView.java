@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.EmptyAssessmentView;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.EmptyCollectionView;
 import org.ednovo.gooru.client.mvp.gshelf.util.ContentResourceWidgetWithMove;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.EditQuestionPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.EditResourcePopupVc;
@@ -334,7 +335,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 							}
 							@Override
 							public void onSelection(SelectionEvent<Suggestion> event) {
-								super.onSelection(event);
+
 							}
 	
 							@Override
@@ -345,6 +346,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 							@Override
 							public void closeStandardsPopup() {
 								getUiHandlers().closeBrowseStandardsPopup();
+							}
+							@Override
+							public void showStandardsPopup(String standardVal, String standardsDesc,
+									List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+								getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+								
 							}
 						};
 					}else {
@@ -559,7 +566,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			if(userResource){
 				ownResourcePopupVc.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
 			}else{
-				editResoruce.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+				//editResoruce.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
 			}
 
 		}else{
@@ -773,6 +780,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 			editResoruce.setThumbnailUrlStr(imageUrl);
 			editResoruce.setFileNameWithOutRespUrl(fileNameWithOutRespUrl);
 		}
+		
+	}
+
+	@Override
+	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
+		editResoruce.displaySelectedStandards(standListArray);
 		
 	}
 

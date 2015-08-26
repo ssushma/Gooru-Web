@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.collectioncontent;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
@@ -210,4 +213,5 @@ public interface IsCollectionContentView extends IsViewWithHandlers<CollectionCo
 	void setCollectionDetails(CollectionItemDo collectionItemDo);
 	public void updateResouceItemImage(String fileName,
 			String fileNameWithOutRespUrl, boolean isEditUserOwnResourceImage);
+	public void displaySelectedStandards(List<Map<String, String>> standListArray);
 }
