@@ -382,7 +382,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 							@Override
 							public void onSuccess(SearchDo<CodeDo> result) {
-								System.out.println("result.getSearc::"+result.getSearchHits());
 								setStandardSuggestions(result);
 
 							}
