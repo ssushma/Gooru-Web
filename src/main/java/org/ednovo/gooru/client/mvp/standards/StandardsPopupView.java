@@ -82,7 +82,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 	@UiField HTMLPanel mainContainer,standardsContainer;
 
-	private AppPopUpStandards appPopUp;
+	public AppPopUpStandards appPopUp;
 
 	ToolTip toolTip;
 
@@ -156,6 +156,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		mainContainer.getElement().setId("standardsDetails");
 
 	}
+	
 	@Override
 	public void loadData() {
 		addBtn.setText(i18n.GL0590());
@@ -1019,5 +1020,21 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 				widget.removeStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
 			}
 		}
+	}
+	
+	@Override
+	public Anchor getCloseButton() {
+		return appPopUp.getCloseBtn();
+	}
+
+	
+	@Override
+	public Button getAddButton() {
+		return addBtn;
+	}
+
+	@Override
+	public List<Map<String, String>> getAddedStandards() {
+		return standListArray;
 	}
 }
