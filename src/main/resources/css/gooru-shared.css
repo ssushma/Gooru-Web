@@ -634,6 +634,7 @@
 	text-decoration: none;
 	color: #4e9746;
 	opacity: 1;
+	margin: 0px;
 }
 
 .myCourseContainer .myCousesTabMenu a.mycollectionMenu:hover,
@@ -736,4 +737,7 @@
 }
 .text-uppercase {
 	text-transform: uppercase !important;
+}
+.loginFailureAlert div table {
+  width: 100%;
 }
