@@ -449,9 +449,6 @@ import org.ednovo.gooru.client.mvp.profilepage.IsProfilePageView;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter.IsProfilePageProxy;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePageView;
-import org.ednovo.gooru.client.mvp.profilepage.list.IsProfilePageListView;
-import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListPresenter;
-import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListView;
 import org.ednovo.gooru.client.mvp.rating.IsRatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
@@ -588,9 +585,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(StudentAssignmentPresenter.class,
 				IsStudentAssignmentView.class, StudentAssignmentView.class,
 				IsStudentAssignmentProxy.class);
-
-		bindPresenterWidget(ProfilePageListPresenter.class,
-				IsProfilePageListView.class, ProfilePageListView.class);
 
 		bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class);
 
