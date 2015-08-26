@@ -381,7 +381,7 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 	
 	public void setSubjectPanelIds(ProfileLibraryListDo profileLibraryListDo) {
-
+		
 		for (ProfileLibraryDo profileListDo : profileLibraryListDo.getSearchResult()) {
 			if(profileListDo.getTitle().toLowerCase().contains("social")) {
 				subjectIdList.put(SOCIAL, profileListDo.getGooruOid());
@@ -389,7 +389,9 @@ public abstract class DistrictMenuNav extends Composite {
 				subjectIdList.put(MATH, profileListDo.getGooruOid());
 			} else if(profileListDo.getTitle().toLowerCase().contains("science")) {
 				subjectIdList.put(SCIENCE, profileListDo.getGooruOid());
-			} else if(profileListDo.getTitle().toLowerCase().contains("language")) {
+			}else if(profileListDo.getTitle().toLowerCase().contains("connecting languages")) {
+				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
+			}else if(profileListDo.getTitle().toLowerCase().contains("language")) {
 				subjectIdList.put(LANGUAGE, profileListDo.getGooruOid());
 			} else if(profileListDo.getTitle().toLowerCase().contains("learning")) {
 				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
