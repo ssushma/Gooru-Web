@@ -729,13 +729,23 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			isUserResource = true;
 			getUiHandlers().browseStandardsInfo(isQuestion,isUserResource);
 		}
-		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id,String desc) {
-			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
-		}
 		@Override
 		public void closeStandardsPopup() {
 			// TODO Auto-generated method stub
 			getUiHandlers().closeStandardsPopup();
+		}
+
+		@Override
+		public void showStandardsPopup(String standardVal, String standardsDesc,
+				List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+			getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+			
+		}
+
+		@Override
+		public void onSelection(SelectionEvent<Suggestion> event) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 
@@ -1370,12 +1380,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
         JSONArray tagsArrValue = new JSONArray();
 
         for(int i=0;i<standardsDo.size();i++){
-        	JSONObject code = new JSONObject();
-        	code.put("code",new JSONString(standardsDo.get(i).getCode()));
-        	code.put("codeId",new JSONNumber(standardsDo.get(i).getCodeId()));
-        	standardsJsonArray.set(i,code);
+           	standardsJsonArray.set(i,new JSONNumber(standardsDo.get(i).getCodeId()));
         }
-        attach.put("taxonomySet", standardsJsonArray);
+        attach.put("standardIds", standardsJsonArray);
 
         momentsOfLearningJsonObj.put("selected",JSONBoolean.getInstance(true));
         momentsOfLearningJsonObj.put("value",new JSONString(momentsOfLearning));
@@ -1668,6 +1675,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	@Override
 	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
 		addWebResourceWidget.displaySelectedStandards(standListArray);
+		addUserOwnResourceWidget.displaySelectedStandards(standListArray);
 		
 	}
 	

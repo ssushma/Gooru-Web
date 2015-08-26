@@ -7,6 +7,8 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
 		field="res"></ui:with>
+	<ui:with field="i18n"
+		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res1" />
@@ -404,14 +406,30 @@
 						<g:FlowPanel styleName="{res1.css.standardsCont}">
 							<uc:AppSuggestBox ui:field="standardSgstBox"
 								width="255px" height="19px" styleName="contentBoxStyles" />
-							<g:HTMLPanel styleName="{res1.css.browseContainer}">
+						<!-- 	<g:HTMLPanel styleName="{res1.css.browseContainer}">
 								<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
-							</g:HTMLPanel>
+							</g:HTMLPanel> -->
+								<tinyMce:HTMLEventPanel styleName="btn-group"
+									ui:field="btnStandardsBrowse">
+									<g:Button styleName="btn standardsContainerBswnbtn" text="{i18n.GL3479}"
+										title="{i18n.GL3479}" />
+									<g:HTMLPanel styleName="btn standardsContainerBswnbtn dropdown-toggle">
+										<g:InlineLabel styleName="caret"></g:InlineLabel>
+										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
+									</g:HTMLPanel>
+								</tinyMce:HTMLEventPanel>
+								<g:HTMLPanel ui:field="standardsCont">
+									<uc:UlPanel styleName="dropdown-menu"
+									ui:field="standardsDropListValues"></uc:UlPanel></g:HTMLPanel>
+
 							<g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 							<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
-							<g:FlowPanel ui:field="standardsPanel"
-								styleName="{res1.css.collectionStandardsMargin}" />
+							<!-- <g:FlowPanel ui:field="standardsPanel"
+								styleName="{res1.css.collectionStandardsMargin}" /> -->
 						</g:FlowPanel>
+							<g:HTMLPanel styleName="filterTags">
+									<uc:UlPanel ui:field="ulSelectedItems" />
+								</g:HTMLPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
 			</g:FlowPanel>
