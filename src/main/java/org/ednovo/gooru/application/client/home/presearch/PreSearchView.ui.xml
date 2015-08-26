@@ -86,8 +86,7 @@
 									<g:Label styleName="contentPane" text="{i18n.GL3298}" />
 									<div class="callToAction">
 										<!-- <g:Button styleName="primary" ui:field="btnStudentSignUp"></g:Button> -->
-										<tbp:TextBoxWithPlaceholder
-											ui:field="classCodeTxtBox" styleName="classCodeTxtBoxStyle" />
+										<g:TextBox ui:field="classCodeTxtBox" styleName="classCodeTxtBoxStyle" />
 										<g:Button styleName="primary" ui:field="enterLbl"></g:Button>
 									</div>
 								</div>
