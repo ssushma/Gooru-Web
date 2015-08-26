@@ -1041,4 +1041,9 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		return libName;
 	}
 	
+	public static String removeHtmlTags(String htmlText){
+		htmlText = htmlText.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		return htmlText;
+	}
+	
 }
