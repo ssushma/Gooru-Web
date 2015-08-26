@@ -1805,7 +1805,10 @@ public class AssessmentsPlayerPresenter extends BasePlacePresenter<IsAssessments
 		LoginPopupUc popup =new  LoginPopupUc() {
 			@Override
 			public void onLoginSuccess() {
-
+				String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				Map<String,String> params = new LinkedHashMap<String,String>();
+				params.put("id", collectionId);
+				AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken(), params);
 			}
 		};
 		popup.setWidgetMode(widgetMode);

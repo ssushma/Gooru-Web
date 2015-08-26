@@ -1554,9 +1554,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 										String categoryStr =resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
 
 										String urlStr = urlTextLbl.getText().trim();
-										String youTubeId = getYoutubeVideoId(urlStr);
-
-
 										if (titleStr.toLowerCase().contains("http://") || titleStr.toLowerCase().contains("https://") || titleStr.toLowerCase().contains("ftp://")){
 											showTitleErrorMessage(i18n.GL0323());
 											isValidate = false;
@@ -1580,14 +1577,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 										}
 
 										if(urlStr.indexOf("youtube")!=-1){
-
+											String youTubeId = getYoutubeVideoId(urlStr);
 											if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
 												if(!categoryStr.equalsIgnoreCase("Webpage")){
 													isValidate = true;
 												}else{
-
 													showCategoryErrorMessage(i18n.GL0927());
-
 													isValidate = false;													}
 											}
 

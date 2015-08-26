@@ -57,6 +57,7 @@ import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -65,6 +66,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.Que
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.GooruConstants;
 
@@ -79,6 +81,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> implements AddResourceUiHandlers{
 	
 	private ImageUploadPresenter imageUploadPresenter;
+	
+	StandardsPopupPresenter standardsPopupPresenter;
 	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
@@ -153,10 +157,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	AddStandardsPresenter addStandardsPresenter = null;
 
 	@Inject
-	public AddResourcePresenter(EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter,QuestionTypePresenter questionTypePresenter) {
+	public AddResourcePresenter(EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter,QuestionTypePresenter questionTypePresenter,StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus, view);
 		this.setImageUploadPresenter(imageUploadPresenter);
 		this.questionTypePresenter=questionTypePresenter;
+		this.standardsPopupPresenter=standardsPopupPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(AddResouceImageEvent.TYPE, this);
 
@@ -211,6 +216,14 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
         imageUploadPresenter.setEditUserOwnResourceImage(false);
         imageUploadPresenter.setAnswerImage(false);
         imageUploadPresenter.getView().isFromEditQuestion(true);
+	}
+	@Override
+	public void showStandardsPopup(String standardVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+		Window.enableScrolling(false);
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setAddResourcePresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
+		addToPopupSlot(standardsPopupPresenter);
 	}
 
 	public ImageUploadPresenter getImageUploadPresenter() {
@@ -629,5 +642,9 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			}
 		});
 	}
+
+   	public void setSelectedStandards(List<Map<String,String>> standListArray){
+   		getView().displaySelectedStandards(standListArray);
+   	}
 }
 

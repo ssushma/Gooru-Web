@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.uc;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -74,6 +75,8 @@ public abstract class DeleteContentPopup extends PopupPanel {
 	@UiField SimpleCheckBox chkBox1, chkBox2, chkBox3;
 	
 	@UiField PPanel paragraphPnl;
+	
+	@UiField LabelPanel checkboxG12,checkboxG13,checkboxG14;
 	
 	
 	
@@ -194,9 +197,25 @@ public abstract class DeleteContentPopup extends PopupPanel {
 		chkBox1.getElement().setId("checkboxG12");
 		chkBox2.getElement().setId("checkboxG13");
 		chkBox3.getElement().setId("checkboxG14");
+		
+		checkboxG12.getElement().setAttribute("for", "checkboxG12");
+		checkboxG13.getElement().setAttribute("for", "checkboxG13");
+		checkboxG14.getElement().setAttribute("for", "checkboxG14");
+		
 		chkBox1.setValue(false);
 		chkBox2.setValue(false);
 		chkBox3.setValue(false);
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_CLASS)){
+			checkboxG12.setText(i18n.GL3575());
+			checkboxG13.setText(i18n.GL3576());
+			checkboxG14.setText(i18n.GL3577());
+			checkboxG13.getElement().getStyle().setLineHeight(18, Unit.PX);
+		}else{
+			checkboxG12.setText(i18n.GL3579());
+			checkboxG13.setText(i18n.GL3573());
+			checkboxG14.setText(i18n.GL3574());
+		}
+		
 	}
 	
 	public void setDeleteValidate(String deleteCode){
