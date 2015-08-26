@@ -32,6 +32,19 @@ blockquote:before,blockquote:after,q:before,q:after {
 	content: none;
 }
 
+.standardsContainerBswnbtn {
+    background-color: #87badd;
+    border: 1px solid transparent;
+    font-size: 12px;
+    left:12px;
+    color: white !important;
+	font-weight: bold;
+}
+.standardsContainerBswnbtn:hover {
+    color: white;
+	font-weight: bold;
+}
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -1881,6 +1894,7 @@ color:#999;
     font-family: Arial, sans-serif;
     padding: 4px 8px;
 }
+
 
 /* Example tokeninput style #2: gooru style */
 ul.token-input-list-gooru {
