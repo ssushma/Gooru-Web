@@ -211,7 +211,7 @@ public abstract class DeleteContentPopup extends PopupPanel {
 			checkboxG14.setText(i18n.GL3577());
 			checkboxG13.getElement().getStyle().setLineHeight(18, Unit.PX);
 		}else{
-			checkboxG12.setText(i18n.GL3572());
+			checkboxG12.setText(i18n.GL3579());
 			checkboxG13.setText(i18n.GL3573());
 			checkboxG14.setText(i18n.GL3574());
 		}
