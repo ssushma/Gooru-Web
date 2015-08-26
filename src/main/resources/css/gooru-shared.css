@@ -635,6 +635,8 @@
 	color: #4e9746;
 	opacity: 1;
 	margin: 0px;
+	border-left: 0px;
+	border-top: 0px;
 }
 
 .myCourseContainer .myCousesTabMenu a.mycollectionMenu:hover,
