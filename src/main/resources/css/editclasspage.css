@@ -201,7 +201,7 @@
 	margin: 0 auto;
 }
 #pnlMainFlow .loadingpanelImage{
-	background: url(images/core/B-Dot.gif) no-repeat;
+	background: url(../images/core/B-Dot.gif) no-repeat;
 	height: 170px;
 	width: 233px;
 	color: #999;
@@ -302,7 +302,7 @@
 }
 
 #pnlMainFlow .collectionEditImage {
-	background: url("images/Collection-Search/icon-sprite.png") repeat
+	background: url("../images/Collection-Search/icon-sprite.png") repeat
 		scroll -71px -169px transparent;
 	float: right;
 	height: 18px;
@@ -579,7 +579,7 @@
 }
 
 #pnlMainFlow .addAssignment:hover{
-	background: url("images/Classpage/plus_blue.png") 11px 11px no-repeat, #eee;
+	background: url("../images/Classpage/plus_blue.png") 11px 11px no-repeat, #eee;
 	cursor: pointer;
 }
 
@@ -742,7 +742,6 @@ margin-left:-1px;
     /* -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	box-shadow: 0 0 10px rgba(0,0,0,.1); */
-	/* background: url('/images/Classpage/no-collections.png') no-repeat; */
 }
 #pnlMainFlow .classpageHoverTitle {
 	font-size: 24px;
@@ -1002,7 +1001,7 @@ margin-bottom: -10px;
 }
 
 #pnlMainFlow .dropdownPlaceHolder {
-	background: url(images/dropdownMenuArrow.png) no-repeat;
+	background: url(../images/dropdownMenuArrow.png) no-repeat;
 	background-color: white;
 	background-position: right center;
 	color: #999;
@@ -1017,7 +1016,7 @@ margin-bottom: -10px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
 }
 #pnlMainFlow .dropdownPlaceHolderStudent {
-	background: url(images/dropdownMenuArrow.png) no-repeat;
+	background: url(../images/dropdownMenuArrow.png) no-repeat;
 	background-color: white;
 	background-position: right center;
 	color: #999;
