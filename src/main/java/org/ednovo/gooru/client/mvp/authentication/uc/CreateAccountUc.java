@@ -1830,7 +1830,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 				@Override
 				public void onSuccess(Boolean value) {
 					btnSignUp.setEnabled(true);
-					panelAboveThirteen.getElement().setAttribute("style", "margin-top:25px;");
+					panelAboveThirteen.getElement().getStyle().setMarginTop(25, Unit.PX);
 					SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
 					if(textBox!=null){
 						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -1854,7 +1854,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 						errorLblForUsername.getElement().getStyle().setTop(-8, Unit.PX);
 						errorLblForUsername.getElement().getStyle().setLeft(16,  Unit.PX);
 					}else{
-						panelAboveThirteen.getElement().removeAttribute("style");
+						panelAboveThirteen.getElement().getStyle().clearMarginTop();
 					}
 				}
 			});
