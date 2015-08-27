@@ -125,21 +125,21 @@
 	padding-left: 36px;
 	height: 34px;
 	display: inline-block;
-	line-height: 34px;
+	line-height: 30px;
 	background-repeat: no-repeat;
 	background-position: 0 0;
 	font-size: 12px;
 	font-weight:normal;
 	vertical-align: middle;
 	cursor: pointer;
-	 text-overflow: ellipsis;
+	/*  text-overflow: ellipsis;
 	 overflow:hidden;
-	 white-space:nowrap;
+	 white-space:nowrap; */
 }
 #popupSteps input[type=checkbox].css-checkbox + label.css-label {
-	 text-overflow: ellipsis;
+	 /* text-overflow: ellipsis;
 	 overflow:hidden;
-	 white-space:nowrap;
+	 white-space:nowrap; */
 }
 #popupSteps .popupOrgBoxCheck input[type=checkbox].css-checkbox:checked + label.css-label {
 	background-position: 0 -35px;

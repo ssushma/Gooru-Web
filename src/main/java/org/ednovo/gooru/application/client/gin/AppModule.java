@@ -27,10 +27,6 @@ package org.ednovo.gooru.application.client.gin;
 
 import org.ednovo.gooru.application.client.AppPlaceKeeper;
 import org.ednovo.gooru.application.client.PlaceTokens;
-import org.ednovo.gooru.application.client.home.HomePresenter;
-import org.ednovo.gooru.application.client.home.HomePresenter.IsHomeProxy;
-import org.ednovo.gooru.application.client.home.HomeView;
-import org.ednovo.gooru.application.client.home.IsHomeView;
 import org.ednovo.gooru.application.client.home.banner.HomeBannerPresenter;
 import org.ednovo.gooru.application.client.home.banner.HomeBannerView;
 import org.ednovo.gooru.application.client.home.banner.IsHomeBannerView;
@@ -275,6 +271,10 @@ import org.ednovo.gooru.client.mvp.image.upload.IsImageUploadView;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictView;
 import org.ednovo.gooru.client.mvp.library.district.IsDistrictView;
+import org.ednovo.gooru.client.mvp.library.district.episd.EpisdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.episd.EpisdLibraryPresenter.IsEpisdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.episd.EpisdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.episd.IsEpisdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.IsLifeboardLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter.IsLifeboardLibraryProxy;
@@ -449,9 +449,6 @@ import org.ednovo.gooru.client.mvp.profilepage.IsProfilePageView;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter.IsProfilePageProxy;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePageView;
-import org.ednovo.gooru.client.mvp.profilepage.list.IsProfilePageListView;
-import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListPresenter;
-import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListView;
 import org.ednovo.gooru.client.mvp.rating.IsRatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
@@ -468,18 +465,9 @@ import org.ednovo.gooru.client.mvp.settings.IsUserSettingsView;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter.IsUserSettingProxy;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.IsCollectionAssignTab;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.IsCollectionCollaboratorsTab;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.IsCollectionInfoTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.IsAddResourceView;
@@ -544,8 +532,6 @@ public class AppModule extends AppPresenterModule {
 				.to(PlaceTokens.HOME);
 		bindPresenter(PrimePresenter.class, IsPrimeView.class, PrimeView.class,
 				IsPrimeProxy.class);
-		bindPresenter(HomePresenter.class, IsHomeView.class, HomeView.class,
-				IsHomeProxy.class);
 		bindPresenter(WrapPresenter.class, IsWrapView.class, WrapView.class,
 				IsWrapProxy.class);
 		bindPresenter(SearchMainPresenter.class, IsSearchMainView.class,
@@ -569,12 +555,6 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenter(ProfilePagePresenter.class, IsProfilePageView.class,
 				ProfilePageView.class, IsProfilePageProxy.class);
-
-		bindPresenterWidget(CollectionResourceTabPresenter.class,
-				IsCollectionResourceTabView.class,
-				CollectionResourceTabView.class);
-		bindPresenterWidget(CollectionInfoTabPresenter.class,
-				IsCollectionInfoTabView.class, CollectionInfoTabView.class);
 
 		bindPresenterWidget(ImageUploadPresenter.class,
 				IsImageUploadView.class, ImageUploadView.class);
@@ -606,16 +586,11 @@ public class AppModule extends AppPresenterModule {
 				IsStudentAssignmentView.class, StudentAssignmentView.class,
 				IsStudentAssignmentProxy.class);
 
-		bindPresenterWidget(ProfilePageListPresenter.class,
-				IsProfilePageListView.class, ProfilePageListView.class);
-
 		bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class);
 
 		bindConstant().annotatedWith(GaAccount.class).to(GA_ACCOUNT);
 		bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
 
-		bindPresenterWidget(CollectionAssignTabPresenter.class,
-				IsCollectionAssignTab.class, CollectionAssignTabView.class);
 		bindPresenterWidget(SignUpPresenter.class, IsSignUpView.class,SignUpView.class);
 		bindPresenter(CollectionPlayerPresenter.class, IsCollectionPlayerView.class, CollectionPlayerView.class,IsCollectionPlayerProxy.class);
 		bindPresenter(FolderTocPresenter.class, IsFolderTocView.class, FolderTocView.class,IsFolderTocProxy.class);
@@ -638,6 +613,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(SignUpAfterThirteenPresenter.class,IsAfterThirteen.class,SignUpTurnsAfterThirteenView.class);
 
 		bindPresenter(RusdPresenter.class, IsRusdView.class, RusdView.class,IsRusdProxy.class);
+		bindPresenter(EpisdLibraryPresenter.class, IsEpisdLibraryView.class, EpisdLibraryView.class,IsEpisdLibraryProxy.class);
 		bindPresenter(CommunityPresenter.class, IsCommunityView.class, CommunityView.class,IsCommunityProxy.class);
 		bindPresenter(PreviewPlayerPresenter.class,IsPreviewPlayerView.class,PreviewPlayerView.class,IsPreviewPlayerProxy.class);
 		bindPresenterWidget(PreviewPlayerMetadataPresenter.class,IsPreviewPlayerMetadataView.class,PreviewPlayerMetadataView.class);

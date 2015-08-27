@@ -39,7 +39,6 @@ import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.home.assign.AssignPopUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -80,7 +79,6 @@ public abstract class SharePlayerVc extends PopupPanel{
 	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;
 	private SimpleAsyncCallback<CollectionDo> collectionDoAsyncCallback;
 	String shareType = null;
-	ShareViewUc shareContainer;
 	HTMLPanel ftmPanel;
 	String toAssignStr = null;
 	String limit = "10";// pagesize
@@ -138,7 +136,6 @@ public abstract class SharePlayerVc extends PopupPanel{
 		swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
 
 		setLabelsAndIds();
-		shareContainer = new ShareViewUc("", "");
 		ftmPanel = new HTMLPanel("");
 		loadingImageLabel.setVisible(true);
 		popupContentAssign.setVisible(false);

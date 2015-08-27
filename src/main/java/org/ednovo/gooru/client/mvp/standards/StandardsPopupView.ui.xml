@@ -11,7 +11,9 @@
 	<g:HTMLPanel ui:field="standardsContainer" styleName="standarBodyContainer">		
 		<g:HTMLPanel styleName="listGroup no-gutter">
 		<g:HTMLPanel styleName="col-md-2 col-sm-2 border-right">
-			<uc:UlPanel  ui:field="levelOneStandards" styleName="list-unstyled"/>	    
+		   <g:HTMLPanel styleName="scrollBar">
+			 <uc:UlPanel  ui:field="levelOneStandards" styleName="list-unstyled"/>	
+		   </g:HTMLPanel>    
 		</g:HTMLPanel>    
 		<g:HTMLPanel styleName="col-md-3 col-sm-3 border-right">
 		 <g:HTMLPanel styleName="scrollBar">		      

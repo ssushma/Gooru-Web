@@ -99,6 +99,8 @@ public interface ClasspageService extends BaseService {
 	
 	public Boolean v3GetAllClass() throws GwtException, ServerDownException;
 	
+	public Integer V3DeleteClass(String classId) throws GwtException, ServerDownException;
+	
 	
 	/**
 	 * Get Classpage by Classpage id

@@ -89,6 +89,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -106,7 +107,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	@UiField FlowPanel PrintPnl, printOptions, reportViewContainer, scoreObject;
 	@UiField FlowPanel progressRadial,scoreRoundPanel, thumbnailImage, timeSpentPanel, headerLinksContainer, attemptPanel, selfReportPanel;
-	@UiField HTMLPanel  collectionSummaryText, questionsTable, collectionOverviewPanel;
+	@UiField HTMLPanel  collectionSummaryText, questionsTable, printDataTable, collectionOverviewPanel;
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage;
 	@UiField InlineLabel collectionResourcesCount,correctStatus;
@@ -173,11 +174,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		this.courseId = courseId;
 		this.assessmentId = assessmentId;
 		if(AppClientFactory.isAnonymous()) {
-			loaderVisibility(false);
-			errorPanelData(false, true);
-			errorMsg();
-			printOptions.setVisible(false);
-			scoreObject.setVisible(false);
+			setAnonymousData();
 		} else {
 			if(sessionId==null) {
 				getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
@@ -287,9 +284,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	}
 
 	public void displayScore(Integer collectionScore, Integer noOfQuestions){
-
 		score.setText(collectionScore+" %");
-		//		goal.setText("Goal : 90%");
 		correctStatus.setText(collectionScore+"/"+noOfQuestions+" "+i18n.GL2278());
 		int scorePercentage=0;
 		if(collectionScore!=0){
@@ -422,18 +417,24 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	}
 
 	@Override
-	public void setResourcesData(final ArrayList<UserDataDo> result) {
+	public void setResourcesData(final ArrayList<UserDataDo> result, boolean isPrint) {
 		loadingImageLabel.setVisible(false);
 		questionsTable.setVisible(true);
-		questionsTable.clear();
+		if(!isPrint) {
+			questionsTable.clear();
+		}
 		long totalTimeSpent = 0L;
 		if(result.size() > 0){
 			final AdvancedFlexTable adTable=new AdvancedFlexTable();
 			adTable.removeAllRows();
 			adTable.getElement().setId("report-student-assessment-report");
 			adTable.addStyleName("table table-bordered reportTableStyle");
-			questionsTable.add(adTable);
-
+			if(!isPrint) {
+				questionsTable.add(adTable);
+			} else {
+				printDataTable.add(adTable);
+			}
+			
 			Label heading1 = new Label(i18n.GL3259());
 			Label heading2 = new Label(StringUtil.capitalizeFirstLetter(i18n.GL1424()));
 			Label heading3 = new Label(i18n.GL3182());
@@ -489,18 +490,22 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			}
 			score.setText(AnalyticsUtil.getTimeSpent(totalTimeSpent));
 		}else {
-			setErrorData(questionsTable);
+			if(!isPrint) {
+				setErrorData(questionsTable);
+			} else {
+				setPrintErrorData(printDataTable,RESOURCE);
+			}
 		}
-
-
 	}
 
 
 	@Override
-	public void setQuestionsData(final ArrayList<UserDataDo> result, String contentType) {
+	public void setQuestionsData(final ArrayList<UserDataDo> result, String contentType, boolean isPrint) {
 		loadingImageLabel.setVisible(false);
 		questionsTable.setVisible(true);
-		questionsTable.clear();
+		if(!isPrint) {
+			questionsTable.clear();
+		}
 		if (isTableToDestroy){
 			isTableToDestroy = false;
 			destoryTables();
@@ -511,8 +516,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			adTable.removeAllRows();
 			adTable.getElement().setId("report-student-assessment-report");
 			adTable.addStyleName("table table-bordered reportTableStyle");
-			questionsTable.add(adTable);
-
+			if(!isPrint) {
+				questionsTable.add(adTable);
+			} else {
+				printDataTable.add(adTable);
+			}
+			
 			Label heading1 = new Label(i18n.GL3259());
 			Label heading2 = new Label(i18n.GL0308());
 
@@ -545,7 +554,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			adTable.setHeaderWidget(4, heading5);
 			adTable.setHeaderWidget(5, heading6);
 			for(int i=0;i<result.size();i++) {
-				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(result.get(i).getTitle()!=null? result.get(i).getTitle():"");
+				HTML questionTitle=new HTML(StringUtil.removeHtmlTags(titlelbl1));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
@@ -701,9 +711,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				int reaction=result.get(i).getReaction();
 				adTable.setWidget(i, 5, new AnalyticsReactionWidget(reaction));
 			}
-//			sortAndFixed();
 		}else {
-			setErrorData(questionsTable);
+			if(!isPrint) {
+				setErrorData(questionsTable);
+			} else {
+				setPrintErrorData(printDataTable,contentType);
+			}
 		}
 	}
 
@@ -774,20 +787,35 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			public void onSuccess() {
 				if(isClickedOnSave){
 					printOptions.setVisible(false);
+					if(isCollection) {
+						setPrintData();
+						setDataPanelVisibility(false,true);
+					}
 					String outputData = PrintPnl.getElement().getInnerHTML().toString();
 					outputData = outputData.replaceAll("images/", urlDomain+"/images/");
+					setDataPanelVisibility(true,false);
 					printOptions.setVisible(true);
 					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
 				}else{
 					printOptions.setVisible(false);
 					downloadFile.setUrl("");
+					if(isCollection) {
+						setPrintData();
+						setDataPanelVisibility(false,true);
+					}
 					Print.it(style,PrintPnl);
 					printOptions.setVisible(true);
+					setDataPanelVisibility(true,false);
 				}
 			}
 		});
 	}
-
+	
+	private void setDataPanelVisibility(boolean isQuestionData, boolean isPrintData) {
+		questionsTable.setVisible(isQuestionData);
+		printDataTable.setVisible(isPrintData);
+	}
+	
 	Timer timer1=new Timer() {
 		@Override
 		public void run() {
@@ -795,7 +823,37 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			downloadButton.setVisible(true);
 		}
 	};
-
+	
+	private void setPrintData() {
+		printDataTable.clear();
+		if(isCollection) {
+			setResourcesData(getPresenter().getPrintDataDo(),true);
+			setQuestionsData(getQuestionData(getPresenter().getPrintDataDo(),QUESTION),QUESTION,true);
+			setQuestionsData(getQuestionData(getPresenter().getPrintDataDo(),OE),OE,true);
+		}
+	}
+	
+	private ArrayList<UserDataDo> getQuestionData(ArrayList<UserDataDo> result, String type) {
+		ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
+		for (UserDataDo userDataDo : result) {
+			if(type!=null&&type.equalsIgnoreCase(QUESTION)) {
+				if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
+					if(!OE.equalsIgnoreCase(userDataDo.getType())){
+						questionsData.add(userDataDo);
+					}
+				}
+			} else if(type!=null&&type.equalsIgnoreCase(OE)) {
+				if(QUESTION.equalsIgnoreCase(userDataDo.getResourceFormat())){
+					if(OE.equalsIgnoreCase(userDataDo.getType())){
+						questionsData.add(userDataDo);
+					}
+				}
+			} else {
+				questionsData.add(userDataDo);
+			}
+		}
+		return questionsData;
+	}
 
 	@UiHandler("printButton")
 	public void printButtonClick(ClickEvent event){
@@ -903,10 +961,31 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					erroeMsg.setText(i18n.GL3467());
 				}
 				if(questionsBtn.getStyleName()!=null&&questionsBtn.getStyleName().contains(CssTokens.ACTIVE)) {
-					erroeMsg.setText(i18n.GL3264());
+					erroeMsg.setText(i18n.GL3265());
 				}
 				if(oeQuestionsBtn.getStyleName()!=null&&oeQuestionsBtn.getStyleName().contains(CssTokens.ACTIVE)) {
+					erroeMsg.setText(i18n.GL3264());
+				}
+			} else {
+				erroeMsg.setText(i18n.GL3265());
+			}
+			globalPanel.add(erroeMsg);
+		}
+	}
+
+	private void setPrintErrorData(HTMLPanel globalPanel, String type) {
+		if(!isExternalAssessment) {
+			Label erroeMsg=new Label();
+			erroeMsg.setStyleName(STYLE_ERROR_MSG);
+			if(collectionOverviewPanel.isVisible()) {
+				if(type.equalsIgnoreCase(RESOURCE)) {
+					erroeMsg.setText(i18n.GL3467());
+				}
+				if(type.equalsIgnoreCase(QUESTION)) {
 					erroeMsg.setText(i18n.GL3265());
+				}
+				if(type.equalsIgnoreCase(OE)) {
+					erroeMsg.setText(i18n.GL3264());
 				}
 			} else {
 				erroeMsg.setText(i18n.GL3265());
@@ -928,5 +1007,15 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	@Override
 	public void loaderVisibility(boolean isVisible) {
 		cropImageLoading.setVisible(isVisible);
+	}
+
+	@Override
+	public void setAnonymousData() {
+		loaderVisibility(false);
+		errorPanelData(false, true);
+		errorMsg();
+		printOptions.setVisible(false);
+		scoreObject.setVisible(false);
+		collectionOverviewPanel.setVisible(false);
 	}
 }

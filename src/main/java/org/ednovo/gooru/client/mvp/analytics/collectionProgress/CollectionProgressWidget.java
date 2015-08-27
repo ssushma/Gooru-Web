@@ -20,13 +20,8 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -102,24 +97,27 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		StringUtil.setAttributes(resourceCountlbl.getElement(), "spnResourceCountlbl", null, null);
 		StringUtil.setAttributes(questionCountlbl.getElement(), "spnQuestionCountlbl", null, null);
 		StringUtil.setAttributes(exportImage.getElement(), "exportImage", i18n.GL3283(), i18n.GL3283());
-		
+
  		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
-									leftArrow.setVisible(true);
-									rightArrow.setVisible(true);
-							}else{
-									leftArrow.setVisible(false);
-									rightArrow.setVisible(false);
-									}
+				if(table != null){
+					if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
+						leftArrow.setVisible(true);
+						rightArrow.setVisible(true);
+				}else{
+						leftArrow.setVisible(false);
+						rightArrow.setVisible(false);
+						}
+				}
+				
 			}
 		};
 		scrollForCollectionProgress.addDomHandler(mouseOver, MouseOverEvent.getType());
-		
+
 		leftArrow.addDomHandler(mouseOver, MouseOverEvent.getType());
 		rightArrow.addDomHandler(mouseOver, MouseOverEvent.getType());
-		
+
 		filterDropDown.clear();
 		filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
 	    filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
@@ -263,7 +261,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			        		  }else{
 			        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
 			        			//  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions().toString();
-			        			  
+
 			        			  Map<String, Integer> answerOption = collectionProgressData.get(j).getUserData().get(i).getOptions();
 			        			  String answer="";
 			        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();
@@ -289,7 +287,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			        				  }else{
 			        				  String answerText="";
 					        		  if(answerOption!=null){
-					        			  
+
 					        			  Map<String, Integer> optionObj =answerOption;
 						        		  Set<String> keys=optionObj.keySet();
 						        		  if(keys.iterator().hasNext())

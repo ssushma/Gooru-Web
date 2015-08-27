@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -58,7 +58,7 @@ public class AssignmentEditLabelUc extends Composite implements
 
 	private static AssignmentEditLabelUcUiBinder uiBinder = GWT
 			.create(AssignmentEditLabelUcUiBinder.class);
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AssignmentEditLabelUcUiBinder extends
@@ -76,26 +76,23 @@ public class AssignmentEditLabelUc extends Composite implements
 
 	@UiField
 	protected FocusPanel focusPanel;
-	
-	@UiField 
+
+	@UiField
 	Label errorLabel;
 
 	protected String placeholder = "";
 
 	protected String text;
-	
+
 
 	// static boolean pencilVisiblity = true;
 
 	boolean isHavingBadWords=false;
-	
-	@UiField(provided = true)
-	UcCBundle res;
+
 
 	public AssignmentEditLabelUc() {
-		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
 		setIds();
 		errorLabel.setText(i18n.GL0173());
 		errorLabel.getElement().setId("errlblErrorLabel");
@@ -104,15 +101,15 @@ public class AssignmentEditLabelUc extends Composite implements
 		errorLabel.setVisible(false);
 		deckPanel.showWidget(0);
 
-		
+
 		editTextBox.addBlurHandler(new BlurHandler() {
-			
+
 			@Override
 			public void onBlur(BlurEvent event) {
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", editTextBox.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-					
+
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -124,7 +121,7 @@ public class AssignmentEditLabelUc extends Composite implements
 							errorLabel.setVisible(true);
 						}else{
 							setValue(editTextBox.getText(), true); // fires events, too
-							
+
 							editTextBox.getElement().getStyle().clearBackgroundColor();
 							editTextBox.getElement().getStyle().setBorderColor("#ccc");
 							errorLabel.setVisible(false);
@@ -143,7 +140,7 @@ public class AssignmentEditLabelUc extends Composite implements
 					Map<String, String> parms = new HashMap<String, String>();
 					parms.put("text", editTextBox.getText());
 					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-						
+
 						@Override
 						public void onSuccess(Boolean value) {
 							isHavingBadWords = value;
@@ -168,7 +165,7 @@ public class AssignmentEditLabelUc extends Composite implements
 				}
 			}
 		});
-		
+
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 
 	}
@@ -229,7 +226,7 @@ public class AssignmentEditLabelUc extends Composite implements
 		if (editTextBox.getText().trim().length() > 0) {
 			setValue(editTextBox.getText(), true); // fires events, too
 		}else {
-			
+
 			if (isHavingBadWords){
 				errorLabel.setText(i18n.GL0554());
 				errorLabel.getElement().setAttribute("alt", i18n.GL0554());
@@ -286,26 +283,26 @@ public class AssignmentEditLabelUc extends Composite implements
 
 	}
 	/**
-	 * 
-	 * @function checkEmptyTitle 
-	 * 
+	 *
+	 * @function checkEmptyTitle
+	 *
 	 * @created_date : Aug 22, 2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param text
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	/*public void checkEmptyTitle(String text){
-		
+
 	}*/
 
 	@Override

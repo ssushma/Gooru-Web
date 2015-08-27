@@ -23,7 +23,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:html5="urn:import:org.
 		            </panel:HTMLEventPanel>
 		            <g:HTMLPanel ui:field="panelSubmitContainer" styleName="submitContainer">
 						<g:Button styleName="submitLightOrange" text="{i18n.GL3456_2}" ui:field="btnSubmitAllAnswers"/>
-		            </g:HTMLPanel>
+						<g:Button styleName="loginAssessmentOrangeBtn" text="{i18n.GL1185}" ui:field="btnLogin"/>
+					</g:HTMLPanel>
 	            </g:FlowPanel>
 	            <g:HTMLPanel styleName="clear"></g:HTMLPanel>
 			</g:HTMLPanel>

@@ -80,9 +80,6 @@ public class StandardsPopupVc extends PopupPanel  {
 
 	List<Map<String, String>> standards = null;
 
-	@UiField(provided = true)
-	UcCBundle res;
-
 	@UiTemplate("StandardsPopupVc.ui.xml")
 	interface Binder extends UiBinder<Widget, StandardsPopupVc> {
 
@@ -98,8 +95,6 @@ public class StandardsPopupVc extends PopupPanel  {
 	 */
 	public StandardsPopupVc(List<Map<String, String>> standards,boolean isStandards) {
 		super(false);
-		this.res = UcCBundle.INSTANCE;
-		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
 		standardsText.getElement().setId("pnlStandardsText");
@@ -154,14 +149,14 @@ public class StandardsPopupVc extends PopupPanel  {
 				String stdDec = standard.get("description");
 
 				final HTMLPanel standardsPanel = new HTMLPanel("");
-				standardsPanel.setStyleName(UcCBundle.INSTANCE.css().divContainer());
+				standardsPanel.setStyleName("Uc-divContainer");
 				standardsPanel.getElement().getStyle().setMarginBottom(5, Unit.PX);
 
 				final Label standardsLabel = new Label(stdCode);
-				standardsLabel.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+				standardsLabel.setStyleName("Uc-searchStandard");
 
 				final Label standardsDescLabel = new Label(stdDec);
-				standardsDescLabel.setStyleName(UcCBundle.INSTANCE.css().standardsDesc());
+				standardsDescLabel.setStyleName("Uc-standardsDesc");
 
 				standardsPanel.add(standardsLabel);
 				standardsPanel.add(standardsDescLabel);

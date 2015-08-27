@@ -49,7 +49,6 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -474,22 +473,14 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 			@Override
 			public void onSuccess(Void result) {
 				// TODO Auto-generated method stub
-				if (share.equalsIgnoreCase(PRIVATE)) {
+				if (share.equalsIgnoreCase(SHARABLE)) {
 					publicShareFloPanel.addStyleName("inActive");
 					privateShareFloPanel.addStyleName("inActive");
 					linkShareFloPanel.removeStyleName("inActive");
 					showPublishBtn();
-				}else if (share.equalsIgnoreCase(SHARABLE)) {
-					publicShareFloPanel.addStyleName("inActive");
-					privateShareFloPanel.addStyleName("inActive");
-					linkShareFloPanel.removeStyleName("inActive");
-					showPublishBtn();
+					AppClientFactory.fireEvent(new CollectionAssignShareEvent(share,"",false,null));
 				}else {
-					if(PRIVATE.equalsIgnoreCase(collectionDo.getSharing())){
-						publicShareFloPanel.addStyleName("inActive");
-						privateShareFloPanel.addStyleName("inActive");
-						linkShareFloPanel.removeStyleName("inActive");
-					}else if(SHARABLE.equalsIgnoreCase(collectionDo.getSharing())){
+					if(SHARABLE.equalsIgnoreCase(collectionDo.getSharing())){
 						publicShareFloPanel.addStyleName("inActive");
 						privateShareFloPanel.addStyleName("inActive");
 						linkShareFloPanel.removeStyleName("inActive");
@@ -503,6 +494,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 						publicShareFloPanel.removeStyleName("inActive");
 						privateShareFloPanel.addStyleName("inActive");
 						linkShareFloPanel.addStyleName("inActive");
+						AppClientFactory.fireEvent(new CollectionAssignShareEvent(share,"",false,null));
 					}else{
 						publishedPanel.setVisible(false);
 						rbPublic.setVisible(false);
@@ -510,7 +502,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 					}
 
 				}
-				AppClientFactory.fireEvent(new CollectionAssignShareEvent(share,"",false,null));
+				
 
 
 			}

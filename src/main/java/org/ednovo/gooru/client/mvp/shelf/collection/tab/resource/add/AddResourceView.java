@@ -58,6 +58,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDocsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleWebResource;
@@ -80,6 +81,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONArray;
@@ -100,6 +102,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -131,62 +134,65 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		return addWebResourceWidget;
 	}
 	protected AppPopUp appPopUp;
-	
+
 	public UserOwnResourcePreview userOwnResourcePreview;
-	
+
 	public WebResourcePreview webResourcePreview;
-	
+
 	@UiField HTMLPanel tabViewContainer,addResourceTabContainer,popUpMain;
-	
+
 	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive,multipleAnswerAnc,hotSpotImg,hotSpotWord,hotTextRO,hotTextHL;
 
 	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton,myDriveButton,hotSpotImageTabButton,hotSpotWordTabButton,hotTextROTabButton,hotTextHLTabButton;
 
-	
+
 	@UiField Label titleLbl,addResourceCloseButton;
-	
+
 	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,multipleAnswerRadioButton,fillInTheBlankRadioButton,hotSpotImgRadioButton,hotSpotWordRadioButton,hotTextRORadioButton,hotTextHLRadioButton;
-	
+
 	//@UiField HTMLEventPanel singleCorrectResponseButton,multipleSelectButton,evidenceBasedResponseButton,hotTextButton,reorderTextButton,matchingTablesButton/*,shortTextResponseButton,writtenResponseButton*/;
 //	@UiField RadioButton singleCorrectResponseRadioButton,multipleSelectRadioButton,evidenceBasedResponseRadioButton,hotTextRadioButton,reorderTextRadioButton,matchingTablesRadioButton/*,shortTextResponseRadioButton,writtenResponseRadioButton*/;
 //	@UiField Anchor singleCorrectResponseText,multipleSelectText,evidenceBasedResponseText,hotTextRadioText,reorderTextText,matchingTablesText/*,shortTextResponseText,writtenResponseText*/;
-	
+
 	@UiField SimplePanel questionContainerPnl;
 	private ResourceMetaInfoDo resMetaInfo;
-	
+
 	private ExistsResourceView existsResource=null;
-	
+
 	@UiField CollectionEditResourceCBundle res;
-	
+
 	CollectionDo collectionDo=null;
 	String title,desc,category,mediaFilename,originalFileName;
-	
+
 	String webResourceId;
 	String webResourceUrl;
 	String webResourceTitle;
 	String webResourceDescription;
 	String webResourceCategory;
 	String webResourceThumbnail;
-	Integer webResourceEnd; 
-	
+	Integer webResourceEnd;
+
 	private CollectionItemDo collectionItemDo=null;
-	
+
 	private HandlerRegistration handlerRegistration=null;
-	
+
 	private boolean isQuestion =false;
-	
+
 	private boolean isUserResource =false;
-	
+
 	private boolean isEdit =false;
-	
+
 	@Inject
 	QuestionTypePresenter questionTypePresenter;
-	
+
 	@Inject
 	public AddResourceView(EventBus eventBus) {
 		super(eventBus);
 		appPopUp = new AppPopUp("type");
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
+
+		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
+
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		tabViewContainer.clear();
 		fromweb.setText(i18n.GL0887());
@@ -506,15 +512,26 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 
 
-		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id,String desc) {
-			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
-		}
-
 
 		@Override
 		public void closeStandardsPopup() {
 			// TODO Auto-generated method stub
 			getUiHandlers().closeStandardsPopup();
+		}
+
+
+		@Override
+		public void onSelection(SelectionEvent<Suggestion> event) {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+		@Override
+		public void showStandardsPopup(String standardVal, String standardsDesc,
+				List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+			getUiHandlers().showStandardsPopup(standardVal, standardsDesc, collectionLiPanelWithCloseArray);
+			
 		}
 
 	}
@@ -593,13 +610,24 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			getUiHandlers().browseStandardsInfo(isQuestion, isUserResource);
 		}
 		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id, String desc) {
-			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
+			//super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
 
 		}
 		@Override
 		public void closeStandardsPopup() {
 			getUiHandlers().closeStandardsPopup();
 
+		}
+		@Override
+		public void showStandardsPopup(String standardVal, String standardsDesc,
+				List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+			getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+			
+		}
+		@Override
+		public void onSelection(SelectionEvent<Suggestion> event) {
+			// TODO Auto-generated method stub
+			
 		}
 
 	}
@@ -712,13 +740,23 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			isUserResource = true;
 			getUiHandlers().browseStandardsInfo(isQuestion,isUserResource);
 		}
-		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id,String desc) {
-			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
-		}
 		@Override
 		public void closeStandardsPopup() {
 			// TODO Auto-generated method stub
 			getUiHandlers().closeStandardsPopup();
+		}
+
+		@Override
+		public void showStandardsPopup(String standardVal, String standardsDesc,
+				List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+			getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+			
+		}
+
+		@Override
+		public void onSelection(SelectionEvent<Suggestion> event) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 
@@ -932,6 +970,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				disableEditMode(Cursor.POINTER);
 				tabViewContainer.clear();
 				titleLbl.setText(i18n.GL0893());
+				getUiHandlers().addSelectedQuestionType("MC",null);
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
 				addQuestionResourceWidget.getHideRightsToolTip();
 //				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1352,12 +1391,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
         JSONArray tagsArrValue = new JSONArray();
 
         for(int i=0;i<standardsDo.size();i++){
-        	JSONObject code = new JSONObject();
-        	code.put("code",new JSONString(standardsDo.get(i).getCode()));
-        	code.put("codeId",new JSONNumber(standardsDo.get(i).getCodeId()));
-        	standardsJsonArray.set(i,code);
+           	standardsJsonArray.set(i,new JSONNumber(standardsDo.get(i).getCodeId()));
         }
-        attach.put("taxonomySet", standardsJsonArray);
+        attach.put("standardIds", standardsJsonArray);
 
         momentsOfLearningJsonObj.put("selected",JSONBoolean.getInstance(true));
         momentsOfLearningJsonObj.put("value",new JSONString(momentsOfLearning));
@@ -1441,19 +1477,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				getUiHandlers().addUpdatedBrowseStandards();
 			}
 		});
-	}
-
-	@Override
-	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc,boolean value, boolean isUserOwnResource) {
-		if(value == false){
-			if(isUserOwnResource){
-				addUserOwnResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
-			}else{
-				addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
-			}
-		}else{
-			addQuestionResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
-		}
 	}
 
 	@Override
@@ -1573,7 +1596,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
 		addQuestionResourceWidget.centuryPanel.clear();
-		addQuestionResourceWidget.standardsPanel.clear();
+	//	addQuestionResourceWidget.standardsPanel.clear();
 		addQuestionResourceWidget.standardsDo.clear();
 		for (Map.Entry<Long, String> entry : centurySkills.entrySet())
 		{
@@ -1597,7 +1620,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			codeDo.setCode(code);
 			codeDo.setCodeId(codeID);
 			addQuestionResourceWidget.standardsDo.add(codeDo);
-			addQuestionResourceWidget.standardsPanel.add(addQuestionResourceWidget.createStandardLabel(code,String.valueOf(codeID),label));
+			//addQuestionResourceWidget.standardsPanel.add(addQuestionResourceWidget.createStandardLabel(code,String.valueOf(codeID),label));
 			}
 		}
 
@@ -1614,7 +1637,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		if(addQuestionResourceWidget.addDepthOfKnowledgeLabel.isVisible()){addQuestionResourceWidget.setDepthOfKnowledgeContainer();}
 		if(addQuestionResourceWidget.addHintsLabel.isVisible()){addQuestionResourceWidget.setHintsContainer();}
-		if(addQuestionResourceWidget.addStandardsLabel.isVisible()){addQuestionResourceWidget.setStandardsContainer();}
+		//if(addQuestionResourceWidget.addStandardsLabel.isVisible()){addQuestionResourceWidget.setStandardsContainer();}
 		if(addQuestionResourceWidget.addCenturyLabel.isVisible()){addQuestionResourceWidget.setCenturyContainer();}
 	}
 	}
@@ -1651,6 +1674,32 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		if(addQuestionResourceWidget!=null){
 			addQuestionResourceWidget.setDepthOfKnowledes(result);
 		}
+	}
+
+	@Override
+	public void setUpdatedStandardsCode(String setStandardsVal, int id, String desc, boolean val,
+			boolean isUserOwnResource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
+		try
+		{
+		if(addWebResourceWidget!=null){
+		addWebResourceWidget.displaySelectedStandards(standListArray);}
+		}catch(Exception e){}
+		try
+		{
+		if(addUserOwnResourceWidget!=null){
+		addUserOwnResourceWidget.displaySelectedStandards(standListArray);}
+		}catch(Exception e){}
+		try
+		{
+		if(addQuestionResourceWidget!=null){
+		addQuestionResourceWidget.displaySelectedStandards(standListArray);}
+		}catch(Exception e){}
 	}
 	
 }

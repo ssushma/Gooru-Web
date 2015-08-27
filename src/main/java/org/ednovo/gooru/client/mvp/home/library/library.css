@@ -60,7 +60,7 @@
 	background:white;
 	border:1px solid #ddd;
 	border-top:none;
-	width:100%; 
+	width:100%;
 	font-size:12px;
 }
 
@@ -162,7 +162,7 @@
 	padding:15px 0px;
 	position:absolute;
 	bottom:0px;
-	width: 100%;	
+	width: 100%;
 }
 
 #featuredEducator {
@@ -544,7 +544,7 @@
 	bottom: 0px;
 	width: 100%;
 	text-align: center;
-	text-shadow: none;	
+	text-shadow: none;
 }
 
 #landingBanner .fourSteps .step {
@@ -598,12 +598,14 @@
 
 #featuredCourseTabs .tabsLi {
 	width: 160px;
+	border: 0px;
 	border-right: 1px solid #ccc;
 	border-left: 1px solid #ccc;
 	margin-left: 0px;
 	height: 113px;
 	vertical-align: top;
 	box-sizing:content-box;
+	margin: 0px;
 }
 
 #featuredCourseTabs .courseTitle {
@@ -829,7 +831,7 @@
 	bottom: 0px;
 	width: 100%;
 	text-align: center;
-	text-shadow: none;	
+	text-shadow: none;
 }
 
 #landingRusdBanner .fourSteps .step {
@@ -879,6 +881,16 @@
 	top: 90px;
 	right: 9px;
 }
+
+.episdPartnerLogo {
+	background: url("../images/library/episd-logo.png");
+	width: 122px;
+	height: 45px;
+	position: absolute;
+	top: 90px;
+	right: 9px;
+}
+
 .resourcesInsideSubStyle {
 	width: 263px !important;
 	padding-left: 20px !important;
@@ -909,7 +921,7 @@
     clear: both;
     height:0px;
 }
-	
+
 .unitOption {
     padding:0px 15px;
 }
@@ -972,7 +984,7 @@ margin-bottom: 15px;
 	cursor:default;
 		/* Old browsers */
 	background: rgb(239,239,239);
-	
+
 	/* Safari 4-5, Chrome 1-9 */
 	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -webkit-gradient(linear, 0% 0%, 0% 100%, from(FFFFFF), to(FFFFFF));
 
@@ -1020,7 +1032,7 @@ margin-bottom: 15px;
 	bottom: 0px;
 	width: 100%;
 	text-align: center;
-	text-shadow: none;	
+	text-shadow: none;
 }
 
 #landingSausdBanner .fourSteps .step {
@@ -1227,7 +1239,7 @@ margin-left: 82px;
 	float:left;
 	margin-bottom:25px;
 	width: 700px;
-	
+
 }
 .topicTitleStyle{
 	font-size:14px;

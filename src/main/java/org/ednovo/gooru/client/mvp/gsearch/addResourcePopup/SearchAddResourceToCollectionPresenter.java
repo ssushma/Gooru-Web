@@ -210,7 +210,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						}
 					}
 					totalCount = resourceCount+questionCount;
-					if(totalCount<=25){
+					if(totalCount<25){
 						String resourceFormatValue= searchResultDo.getNewResourceFormat().getValue();
 						AppClientFactory.getInjector().getResourceService().addCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(),resourceFormatValue, new SimpleAsyncCallback<CollectionItemDo>() {
 							@Override

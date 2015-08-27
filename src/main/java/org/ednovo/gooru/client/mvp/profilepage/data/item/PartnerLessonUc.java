@@ -132,6 +132,7 @@ public class PartnerLessonUc extends Composite{
 			ProfileLibraryDo profileLibraryTemp = null;
 			if((AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)|| 
 					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)|| 
+					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY)|| 
 					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)|| 
 					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE))&&(isPaginated==false)) {
 				profileLibraryTemp = profileLibraryDoList.get(i).getCollectionItems().get(0);

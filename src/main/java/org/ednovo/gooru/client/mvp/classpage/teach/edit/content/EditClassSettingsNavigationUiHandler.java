@@ -59,6 +59,8 @@ public interface EditClassSettingsNavigationUiHandler extends BaseUiHandlers{
 	void addCourseToClass();
 
 	void setClearAllPanel();
+
+	void deleteClass(String classpageId);
 	
 	
 

@@ -22,6 +22,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -77,7 +78,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	//All Ui fields
-	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
+	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
 				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl,lblStartPage,lblEndPage,lblEditSartPageText,lblError,errorMsgLabel;
 	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon,pnlEditContainer,timeEditContainer;
 	@UiField FlowPanel actionVerPanel,narrationConatainer,pnlPdfEdiContainer;
@@ -86,7 +87,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiField TextBox startMinTxt,startSecTxt,stopMinTxt,stopSecTxt;
 	@UiField UlPanel ulGradePanel;
 	@UiField Anchor updateResourceBtn,editInfoLbl,editVideoTimeLbl,editStartPageLbl,copyResource,confirmDeleteLbl,addTages;
-	@UiField HTML resourceNarrationHtml;
+	@UiField HTML resourceNarrationHtml,lblResourceTitle;
 	@UiField Image imgDisplayIcon;
 	@UiField Button btnEdit;
 	@UiField InlineLabel spnResourceType;
@@ -224,7 +225,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			lblTopArrow.setVisible(false);
 		}
 		lblItemSequence.setText(indexVal+"");
-		lblResourceTitle.getElement().setInnerHTML(collectionItem.getTitle()!=null? StringUtil.removeAllHtmlCss(collectionItem.getTitle()):"");
+		String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItem.getTitle()!=null? collectionItem.getTitle():"");
+		lblResourceTitle.setHTML(StringUtil.removeHtmlTags(titlelbl1));
 		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
 		spnResourceType.setStyleName(collectionItem.getResource().getResourceFormat() != null ? collectionItem.getResource().getResourceFormat().getValue()+"Icon" : "webpageIcon");
 
@@ -245,8 +247,10 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			public void onBlur(BlurEvent event) {
 				String enteredString=txtMoveTextBox.getText().trim();
 				String currentWidgetString=txtMoveTextBox.getElement().getAttribute("index").trim();
-				int enteredVal=Integer.valueOf(enteredString);
-				if(enteredString.isEmpty() || enteredVal==0){
+				int enteredVal = 0;
+				if(!enteredString.isEmpty()){
+					enteredVal=Integer.valueOf(enteredString);
+				}else if(enteredString.isEmpty() || enteredVal==0){
 					int currentIndex=(Integer.parseInt(currentWidgetString)+1);
 					if(currentIndex==1 || Integer.parseInt(currentWidgetString)==0){
 						lblDownArrow.setVisible(true);

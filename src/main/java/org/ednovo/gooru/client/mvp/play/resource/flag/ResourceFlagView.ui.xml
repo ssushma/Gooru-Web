@@ -1,50 +1,48 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res" />
 	<g:HTMLPanel>
-		<div class="{res.css.PopupMainVVSmall}">
-			<div class="{res.css.popupInnerGrey}">
-				<div class="{res.css.popupgreyHeader}">
+		<div class="PopupMainVVSmall">
+			<div class="popupInnerGrey">
+				<div class="popupgreyHeader">
 					<g:HTMLPanel styleName="row">
 					    <g:HTMLPanel styleName="col-md-8 col-xs-8">
-					    	<g:Label  ui:field="flagText"></g:Label>    
+					    	<g:Label  ui:field="flagText"></g:Label>
 					    </g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-4 col-xs-4 {res.css.closeContainer}">
-							<panel:HTMLEventPanel ui:field="closeButton" styleName="{res.css.closeButton}"/>    
+						<g:HTMLPanel styleName="col-md-4 col-xs-4 closeContainer">
+							<panel:HTMLEventPanel ui:field="closeButton" styleName="closeButton"/>
 						</g:HTMLPanel>
-						    
-					</g:HTMLPanel> 
-					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>   
+
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</div>
 				<div class="flgContainer">
-				    <div class="{res.css.rightFlagPanel}">
-				    <g:HTML styleName="{res.css.normalText}"
+				    <div class="rightFlagPanel}">
+				    <g:HTML styleName="normalText"
 						ui:field="titleText" />
-					<!-- <div class="{flagPopUpstyle.playerflagcontenttext}">Flag this resource! 
+					<!-- <div class="{flagPopUpstyle.playerflagcontenttext}">Flag this resource!
 						</div> -->
-					<div class="{res.css.normalText}">
+					<div class="normalText">
 						<g:CheckBox ui:field="checkBox3"/>
 						<g:InlineLabel styleName="flagPopUpstylelabel" ui:field="inappropriateText"></g:InlineLabel>
 					</div>
-					<div class="{res.css.normalText}">
+					<div class="normalText">
 						<g:CheckBox ui:field="checkBox2" />
 						<g:InlineLabel styleName="flagPopUpstylelabel" ui:field="unavailableText"></g:InlineLabel>
 					</div>
-					<div class="{res.css.normalText}">
+					<div class="normalText">
 						<g:CheckBox ui:field="checkBox1"/>
 						<g:InlineLabel styleName="flagPopUpstylelabel" ui:field="inaccurateText"></g:InlineLabel>
 					</div>
 
-					<div class="{res.css.normalText}">
+					<div class="normalText">
 						<g:CheckBox ui:field="checkBox4"/>
 						<g:InlineLabel styleName="flagPopUpstylelabel" ui:field="otherReasonText"></g:InlineLabel>
 					</div>
-					<g:Label styleName="{res.css.normalText}" ui:field="provideMoreText"></g:Label>
-					<g:TextArea styleName="form-control {res.css.form_control}"
+					<g:Label styleName="normalText" ui:field="provideMoreText"></g:Label>
+					<g:TextArea styleName="form-control form_control"
 						ui:field="descriptionTextArea" />
-					<div class="{res.css.formViewButtonContainer}">
+					<div class="formViewButtonContainer">
 						<g:Button styleName="secondary"
 						 ui:field="cancelButton" />
 						<g:Button styleName="primary"
@@ -57,4 +55,4 @@
 			</div>
 		</div>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

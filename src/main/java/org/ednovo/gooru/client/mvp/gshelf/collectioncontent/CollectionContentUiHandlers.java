@@ -31,6 +31,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageHandler;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -338,5 +339,7 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers ,UpdateEditR
 	
 	public void showLastEditCollaborater(String lblLastEditedBy,
 			boolean hasLastModifiedUser);
+	public void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 	
 }

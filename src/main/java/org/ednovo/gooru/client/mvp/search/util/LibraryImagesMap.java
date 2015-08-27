@@ -18,6 +18,7 @@ public class LibraryImagesMap {
 		   mapObj.put(PlaceTokens.SAUSD_LIBRARY, Arrays.asList(i18n.GL3239(), PlaceTokens.SAUSD_LIBRARY,"sausdLogo"));
 		   mapObj.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList(i18n.GL3244(),PlaceTokens.ASPIRE_EPACS,"epacsLogo"));
 		   	mapObj.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList(i18n.GL3238(),PlaceTokens.RUSD_LIBRARY,"rusdLogo"));
+//		 	mapObj.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("",PlaceTokens.EPISD_LIBRARY,"episdLogo"));
 //		   	mapObj.put(PlaceTokens.YCGL_LIBRARY, Arrays.asList(i18n.GL3290_1(),PlaceTokens.YCGL_LIBRARY,"ycglLogo"));
 		   	mapObj.put(PlaceTokens.FINCAPINC, Arrays.asList(i18n.GL3250(),PlaceTokens.FINCAPINC,"cfciLogo"));		   	
 		   	mapObj.put(PlaceTokens.VALVERDE, Arrays.asList(i18n.GL3241(), PlaceTokens.VALVERDE,"valverdeLogo"));

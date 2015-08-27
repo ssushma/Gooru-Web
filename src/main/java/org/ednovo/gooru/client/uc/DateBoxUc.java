@@ -75,22 +75,21 @@ public class DateBoxUc extends FlowPanel{
 	public DateBoxUc(boolean isRegistration,boolean isSmall,boolean isStudent) {
 		super();
 		this.isRegistration = isRegistration;
-		UcCBundle.INSTANCE.css().ensureInjected();
 
 		calendarIcon = new Label();
-		calendarIcon.setStyleName(UcCBundle.INSTANCE.css().gooruCalendarIcon());
+		calendarIcon.setStyleName("Uc-gooruCalendarIcon");
 
 		dateBox = new TextBox();
 		dateBox.getElement().setId("tbBirthday");
 		dateBox.getElement().getStyle().setWidth(100, Unit.PCT);
 		dateBox.setReadOnly(true);
 		if (!isRegistration){
-				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBoxAssignment());
+				this.setStyleName("Uc-gooruDateBoxAssignment");
 				dateBox.getElement().getStyle().setWidth(271, Unit.PX);
 		}else{
 			dateBox.getElement().setAttribute("Placeholder", i18n.GL0211());
 			if (!isSmall){
-				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBox());
+				this.setStyleName("Uc-gooruDateBox");
 			}else{
 				calendarIcon.addStyleName(SignUpCBundle.INSTANCE.css().iconPosition());
 			}
@@ -102,7 +101,7 @@ public class DateBoxUc extends FlowPanel{
         }
 
 		datePickerUc = new DatePickerUc(isRegistration);
-		dateBox.setStyleName(UcCBundle.INSTANCE.css().gooruDateText());
+		dateBox.setStyleName("Uc-gooruDateText");
 		if(!isStudent){
 		calendarIcon.addClickHandler(new OnIconClick());
 		}
@@ -209,7 +208,9 @@ public class DateBoxUc extends FlowPanel{
 						String selectedMonth = (Integer.parseInt(datePickerUc.listMonths.getValue(datePickerUc.listMonths.getSelectedIndex())) + 1) + "";
 						dateBox.setText((selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateString.substring(2));
 						Element errorMessageElement=Document.get().getElementById("datePickerErrorMessageLabel");
-						errorMessageElement.getStyle().setDisplay(Display.NONE);
+						if(errorMessageElement != null){
+							errorMessageElement.getStyle().setDisplay(Display.NONE);
+						}
 					}
 				}else{
 					if(selectedDate.after(new Date())||selectedDate.equals(new Date())){
@@ -230,8 +231,9 @@ public class DateBoxUc extends FlowPanel{
 
 						dateBox.setText((selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateString.substring(2));
 						Element errorMessageElement=Document.get().getElementById("datePickerErrorMessageLabel");
-						errorMessageElement.getStyle().setDisplay(Display.NONE);
-
+						if(errorMessageElement != null){
+							errorMessageElement.getStyle().setDisplay(Display.NONE);
+						}
 					}
 				}
 			} catch (Exception e) {

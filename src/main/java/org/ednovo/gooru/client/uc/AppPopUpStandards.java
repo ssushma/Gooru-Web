@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,9 +23,6 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
-
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -39,11 +36,11 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class AppPopUpStandards extends PopupPanel {
-	
+
 	private FlowPanel mainPanel;
 	private FlowPanel innerPanel;
 	private FlowPanel headerPanel;
-	
+
 	private FlowPanel row;
 	private FlowPanel content;
 	private Label labletitle;
@@ -51,33 +48,28 @@ public class AppPopUpStandards extends PopupPanel {
 	private Anchor close;
 
 	/**
-	 * Class constructor 
+	 * Class constructor
 	 */
 	public AppPopUpStandards() {
 		super(false);
-		//<div class="org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignCloseMarker org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignSprite org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignCloseMark" id="btnCancelButton"></div>
-		ShelfCBundle.INSTANCE.css().ensureInjected();
-	/*	this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
-		this.setStyleName(ShelfCBundle.INSTANCE.css().standardsBrowsePopup());*/
-		
 		mainPanel=new FlowPanel();
 		innerPanel=new FlowPanel();
 		row=new FlowPanel();
 		close=new Anchor();
-		mainPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainExtraLarge());
-		innerPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().popupInnerGrey());
+		mainPanel.setStyleName("PopupMainExtraLarge");
+		innerPanel.setStyleName("popupInnerGrey");
 		row.setStyleName("row");
 		headerPanel = new FlowPanel();
 		content = new FlowPanel();
 		closeBtn = new FlowPanel();
-		headerPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().popupgreyHeader());
+		headerPanel.setStyleName("popupgreyHeader");
 		labletitle = new Label();
 		labletitle.setStyleName("col-md-8 col-xs-8");
 		closeBtn.addStyleName("col-md-4 col-xs-4");
-		closeBtn.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeContainer());
-		close.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeButton());
+		closeBtn.addStyleName("closeContainer");
+		close.addStyleName("closeButton");
 		closeBtn.add(close);
-		
+
 		row.add(labletitle);
 		row.add(closeBtn);
 		HTMLPanel htmlPanel=new HTMLPanel("");
@@ -87,7 +79,7 @@ public class AppPopUpStandards extends PopupPanel {
 		innerPanel.add(headerPanel);
 		mainPanel.add(innerPanel);
 		innerPanel.add(content);
-		
+
 		this.setWidget(mainPanel);
 		setGlassEnabled(true);
 		setAutoHideOnHistoryEventsEnabled(true);
@@ -101,25 +93,23 @@ public class AppPopUpStandards extends PopupPanel {
 	}
 	/**
 	 * Class constructor with one parameter
-	 * @param type 
+	 * @param type
 	 */
 	public AppPopUpStandards(String type){
 		super(false);
-			ShelfCBundle.INSTANCE.css().ensureInjected();
-			this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+			this.setStyleName("app-shelfItemPopUp");
 			content = new FlowPanel();
 			this.setWidget(content);
 			setGlassEnabled(true);
 	}
-	
+
 	/**
 	 * Class constructor with one parameter
-	 * @param type 
+	 * @param type
 	 */
 	public AppPopUpStandards(String type,boolean isAutoHide){
 		super(isAutoHide);
-		ShelfCBundle.INSTANCE.css().ensureInjected();
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+		this.setStyleName("app-shelfItemPopUp");
 		content = new FlowPanel();
 		this.setWidget(content);
 		setGlassEnabled(true);
@@ -127,7 +117,7 @@ public class AppPopUpStandards extends PopupPanel {
 	/**
 	 * Class constructor with two parameter
 	 * @param title of  AppPopUp
-	 * @param widget instance of {@link Widget} 
+	 * @param widget instance of {@link Widget}
 	 */
 	/*public AppPopUp(String title, Widget widget) {
 		this();
@@ -155,7 +145,7 @@ public class AppPopUpStandards extends PopupPanel {
 	public void setContent(Widget content) {
 		this.content.add(content);
 	}
-	
+
 	public void setViewTitle(String title) {
 		labletitle.setText(title);
 		labletitle.getElement().setAttribute("alt",title);
@@ -167,6 +157,6 @@ public class AppPopUpStandards extends PopupPanel {
 	public void setCloseBtn(Anchor close) {
 		this.close = close;
 	}
-	
-	
+
+
 }

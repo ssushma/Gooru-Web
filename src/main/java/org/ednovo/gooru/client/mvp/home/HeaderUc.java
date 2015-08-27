@@ -29,8 +29,6 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.home.HomePresenter;
-import org.ednovo.gooru.application.client.home.HomeUiHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
@@ -49,6 +47,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
+import org.ednovo.gooru.client.mvp.gshelf.LoadMyContentEvent;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
@@ -124,7 +123,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
@@ -189,15 +187,17 @@ public class HeaderUc extends Composite
 					Document doc = Document.get();
 					if (isClearZIndex) {
 						try {
-							doc.getElementById("headerMainPanel").getStyle()
-									.clearZIndex();
+							if(doc.getElementById("headerMainPanel") != null){
+								doc.getElementById("headerMainPanel").getStyle().clearZIndex();
+							}
 						} catch (Exception ex) {
 							AppClientFactory.printSevereLogger("HeaderUc setHeaderZIndex:::"+ex.getMessage());
 						}
 					} else {
 						try {
-							doc.getElementById("headerMainPanel").getStyle()
-									.setZIndex(value);
+							if(doc.getElementById("headerMainPanel") != null){
+								doc.getElementById("headerMainPanel").getStyle().setZIndex(value);
+							}
 						} catch (Exception e) {
 							AppClientFactory.printSevereLogger("HeaderUc setHeaderZIndex:::"+e);
 						}
@@ -302,14 +302,6 @@ public class HeaderUc extends Composite
 	private LogoutPanelVc logoutPanelVc;
 
 	private ClasspageListVc classpageListVc;
-
-	private SaveSharePanel saveSharePanel;
-
-	@Inject
-	HomeUiHandlers homeUiHandlers;
-
-	@Inject
-	HomePresenter homePresenter;
 
 	@UiField
 	AnchorElement gooruLearning;
@@ -482,16 +474,6 @@ public class HeaderUc extends Composite
 
 		logoutPanelVc = new LogoutPanelVc();
 		settingOptionsPopup.add(logoutPanelVc);
-		saveSharePanel = new SaveSharePanel() {
-
-			@Override
-			@UiHandler("closeButton")
-			public void closeButton(ClickEvent clickEvent) {
-				isGooruGuidePanelOpen = false;
-				Window.enableScrolling(true);
-				hide();
-			}
-		};
 
 		editSearchInputFloPanel.setVisible(false);
 		LoginLinkContainer.setVisible(false);
@@ -1087,7 +1069,11 @@ public class HeaderUc extends Composite
 					}
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					manageDotsMenuSelection(organizeLink);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.MYCONTENT)){
+						AppClientFactory.fireEvent(new LoadMyContentEvent("Course"));
+					}else{
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);
+					}
 
 				}
 			});

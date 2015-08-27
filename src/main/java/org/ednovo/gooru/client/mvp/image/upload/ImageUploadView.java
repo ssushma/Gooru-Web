@@ -658,8 +658,11 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 			@Override
 			public void onSubmitComplete(SubmitCompleteEvent event) {
+				AppClientFactory.printInfoLogger("onSubmitComplete-----");
 				glasspanelLoadingImage(false);
+				AppClientFactory.printInfoLogger("onSubmitCompleteevent-----"+event.getResults());
 				getUiHandlers().imageFileUpload(event.getResults());
+				AppClientFactory.printInfoLogger("onSubmitCompleteeventdebug-----"+event.toDebugString());
 			}
 		});
 	}
@@ -703,7 +706,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	public final native String getFileNameSize() /*-{
 
 	var fileSize;
-	      if ($wnd.$.browser.msie)
+	      if ($wnd.$.support.msie)
 	         {
 
 	     	 var objFSO = new ActiveXObject("Scripting.FileSystemObject");

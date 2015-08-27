@@ -26,9 +26,7 @@ package org.ednovo.gooru.client.mvp.socialshare;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.home.HomeCBundle;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.AppPopUp;
 
 import com.google.gwt.core.client.GWT;
@@ -86,9 +84,8 @@ public class SentEmailSuccessVc extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
-/*		appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUp());
-*/		appPopUp.getElement().getStyle().setZIndex(999999);
-		appPopUp.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
+		appPopUp.getElement().getStyle().setZIndex(999999);
+		appPopUp.setGlassStyleName("loginPopupGlassStyle");
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
 		appPopUp.center();
@@ -120,10 +117,10 @@ public class SentEmailSuccessVc extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
-		appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUp());
+		appPopUp.setStyleName("ses-shelfItemSucessPopUp");
 		appPopUp.getElement().getStyle().setZIndex(999999);
 		appPopUp.setPixelSize(480, 208);
-		appPopUp.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
+		appPopUp.setGlassStyleName("loginPopupGlassStyle");
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
 		appPopUp.center();
@@ -136,9 +133,7 @@ public class SentEmailSuccessVc extends Composite {
 		emailSentText.getElement().setInnerHTML("");
 		emailSentText.getElement().setId("pnlEmailSentText");
 
-		/*toEmailLbl.getElement().getStyle().setWidth(70, Unit.PCT);
-		toEmailLbl.getElement().getStyle().setPaddingLeft(86, Unit.PX);*/
-		toEmailLbl.setStyleName(ShelfCBundle.INSTANCE.css().aleartDescText());
+		toEmailLbl.setStyleName("ses-aleartDescText");
 		toEmailLbl.setText(desc);
 		toEmailLbl.getElement().setId("lblToEmailLbl");
 		toEmailLbl.getElement().setAttribute("alt", desc);
@@ -153,8 +148,8 @@ public class SentEmailSuccessVc extends Composite {
 			popupContainer.getElement().getStyle().setMargin(0, Unit.PX);
 			popupContainer.getElement().getStyle().clearHeight();
 			toEmailLbl.getElement().getStyle().clearWidth();
-			toEmailLbl.addStyleName(ShelfCBundle.INSTANCE.css().aleartDescTextForNotLoggedInUser());
-			appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUpWithOutWidth());
+			toEmailLbl.addStyleName("ses-aleartDescTextForNotLoggedInUser");
+			appPopUp.setStyleName("ses-shelfItemSucessPopUpWithOutWidth");
 		}
 		Window.enableScrolling(false);
 	}

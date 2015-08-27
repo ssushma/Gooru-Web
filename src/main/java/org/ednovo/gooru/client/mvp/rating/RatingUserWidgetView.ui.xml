@@ -2,13 +2,11 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<!-- <ui:style field="style" src="ratingandreview.css"	type="org.ednovo.gooru.client.mvp.rating.RatingAndReviewStyleBundle" /> -->
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res" />
-		<panel:HTMLEventPanel styleName="{res.css.reviewContainer}"	ui:field="reviewContainer">
-		    <g:HTMLPanel styleName="{res.css.reviewContainerHeader}">
+		<panel:HTMLEventPanel styleName="reviewContainer"	ui:field="reviewContainer">
+		    <g:HTMLPanel styleName="reviewContainerHeader">
 		        <g:HTMLPanel styleName="row">
 					<g:Label styleName="col-md-6 col-xs-6 "	ui:field="userName"></g:Label>
-					<g:Label styleName="col-md-6 col-xs-6 {res.css.date}" ui:field="timeStamp"></g:Label>	            
+					<g:Label styleName="col-md-6 col-xs-6 date" ui:field="timeStamp"></g:Label>
 		        </g:HTMLPanel>
 		        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		    </g:HTMLPanel>
@@ -24,7 +22,7 @@
 					<g:Button styleName="secondary editReview"
 						ui:field="deleteReview" />
 				</g:HTMLPanel>
-				<g:Label styleName="{res.css.review}" ui:field="review"></g:Label>
+				<g:Label styleName="review" ui:field="review"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="editReviewTextareaContainer">
 				<g:HTMLPanel styleName="rating">

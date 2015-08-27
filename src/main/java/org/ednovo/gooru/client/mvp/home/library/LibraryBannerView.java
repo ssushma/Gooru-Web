@@ -103,6 +103,13 @@ public class LibraryBannerView extends Composite{
 			partnerLogo.setStyleName(libraryStyle.rusdPartnerLogo());
 			partnerLogo.setVisible(true);
 			headerTag.getElement().getStyle().clearPaddingTop();
+		}else if(placeToken.contains(PlaceTokens.EPISD_LIBRARY)) {
+			setLandingBannerText(i18n.GL3501(),i18n.GL0533(),i18n.GL0534(),"","","","","","","");
+			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
+			fourSteps.setVisible(false);
+			partnerLogo.setStyleName(libraryStyle.episdPartnerLogo());
+			partnerLogo.setVisible(true);
+			headerTag.getElement().getStyle().clearPaddingTop();
 		} else if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {
 			setLandingBannerText(i18n.GL1902(),i18n.GL1903(),i18n.GL1904(),i18n.GL1905(),i18n.GL1906(),i18n.GL1907(),i18n.GL1908(),i18n.GL1909(),i18n.GL1910(),i18n.GL1911());
 			fourSteps.getElement().getStyle().setBackgroundColor("#000000");

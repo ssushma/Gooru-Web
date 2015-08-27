@@ -77,6 +77,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	
+	ArrayList<UserDataDo> printDataDo=new ArrayList<UserDataDo>();
+	
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 
 	boolean isSession = true;
@@ -238,7 +240,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)||isContentType.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
 					isCollection = true;
 				}
-
+				printDataDo = result;
 				for (UserDataDo userDataDo : result) {
 					if(isCollection) {
 						if(type!=null&&type.equalsIgnoreCase(QUESTION)) {
@@ -266,14 +268,14 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 				}
 				if(isCollection) {
 					if(type!=null&&type.equalsIgnoreCase(QUESTION)) {
-						getView().setQuestionsData(questionsData,QUESTION);
+						getView().setQuestionsData(questionsData,QUESTION,false);
 					} else if(type!=null&&type.equalsIgnoreCase(OE)) {
-						getView().setQuestionsData(questionsData,OE);
+						getView().setQuestionsData(questionsData,OE,false);
 					} else {
-						getView().setResourcesData(questionsData);
+						getView().setResourcesData(questionsData,false);
 					}
 				} else {
-					getView().setQuestionsData(questionsData,QUESTION);
+					getView().setQuestionsData(questionsData,QUESTION,false);
 				}
 			}
 		});
@@ -324,20 +326,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 					getSessionsDataByUser(assessmentId, classGooruId, classGooruId, lessonGooruId, unitGooruId, gooruUid);
 					getView().setSessionsData(result);
 				} else {
-					Timer timer = new Timer() {
-						@Override
-						public void run() {
-							if (count < 10){
-								getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, currentSessionId);
-								count++;
-							}else{
-								if (count >= 10){
-									getView().errorMsg();
-								}
-							}
-						}
-					};
-					timer.schedule(100);
+					getView().setAnonymousData();
 				}
 			}
 		});
@@ -373,4 +362,13 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		this.isSession = isSession;
 	}
 
+	@Override
+	public ArrayList<UserDataDo> getPrintDataDo() {
+		return printDataDo;
+	}
+
+	public void setPrintDataDo(ArrayList<UserDataDo> printDataDo) {
+		this.printDataDo = printDataDo;
+	}
+	
 }

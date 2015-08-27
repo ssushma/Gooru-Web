@@ -698,9 +698,8 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 	@Override
 	public void navigateToNextResource(final PlaceRequest resourceRequest) {
 		String view  = resourceRequest.getParameter("view", null);
-		if (view != null && view.equalsIgnoreCase("end")){
+		if (view != null && view.equalsIgnoreCase("end") && !AppClientFactory.isAnonymous()){
 			SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc() {
-
 				@Override
 				public void onClickSubmit(ClickEvent event) {
 					AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);

@@ -57,13 +57,16 @@ import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.GooruConstants;
 
@@ -78,6 +81,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> implements AddResourceUiHandlers{
 	
 	private ImageUploadPresenter imageUploadPresenter;
+	
+	StandardsPopupPresenter standardsPopupPresenter;
 	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
@@ -130,10 +135,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.addQuestionResourceAsyncCallback = addQuestionResourceAsyncCallback;
 	}
 
-	IsCollectionResourceTabView isCollResourceTabView=null;
-	
 	private DrivePresenter drivePresenter=null;
-	
+
 	public DrivePresenter getDrivePresenter() {
 		return drivePresenter;
 	}
@@ -146,22 +149,22 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	@Inject
 	private ResourceServiceAsync resourceService;
-	
+
 	CollectionDo collectionDo;
-	
+
 	String clickType;
-	
+
 	AddStandardsPresenter addStandardsPresenter = null;
-	
+
 	@Inject
-	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter,QuestionTypePresenter questionTypePresenter) {
+	public AddResourcePresenter(EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter,QuestionTypePresenter questionTypePresenter,StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus, view);
 		this.setImageUploadPresenter(imageUploadPresenter);
 		this.questionTypePresenter=questionTypePresenter;
+		this.standardsPopupPresenter=standardsPopupPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(AddResouceImageEvent.TYPE, this);
-		
-		this.isCollResourceTabView = isCollResourceTabView;
+
 		this.drivePresenter=drivePresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
 	}
@@ -214,6 +217,14 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
         imageUploadPresenter.setAnswerImage(false);
         imageUploadPresenter.getView().isFromEditQuestion(true);
 	}
+	@Override
+	public void showStandardsPopup(String standardVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+		Window.enableScrolling(false);
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setAddResourcePresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
+		addToPopupSlot(standardsPopupPresenter);
+	}
 
 	public ImageUploadPresenter getImageUploadPresenter() {
 		return imageUploadPresenter;
@@ -224,35 +235,30 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	}
 	@Override
 	public void setResourceImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage,boolean isUserOwnResourceImage) {
-	    getView().setImageUrl(fileName,fileNameWithoutRepository,isQuestionImage,isUserOwnResourceImage);	
+	    getView().setImageUrl(fileName,fileNameWithoutRepository,isQuestionImage,isUserOwnResourceImage);
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
-		
 		setUserResourceCollectionItemAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
-
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hide();
-				isCollResourceTabView.insertData(result);
+				AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 			}
-
 			@Override
 			public void onFailure(Throwable caught) {
 				super.onFailure(caught);
 				Window.enableScrolling(true);
 			}
 		});
-		
-		setCollectionItemAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
 
+		setCollectionItemAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo result) {
-				
 				getView().hide();
-				isCollResourceTabView.insertData(result);
+				AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
 				/**
 				 * Dis-abled for 6.5 release
 				 */
@@ -292,10 +298,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
+            		AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.INSERT));
             		/**
     				 *  dis-abled tagging Quest resource for 6.5 release
     				 */
-                    isCollResourceTabView.insertData(result);
                     MixpanelUtil.AddQuestion();
             }
             @Override
@@ -309,23 +315,22 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(Void result) {
 				getView().removeQuestionEditImage();
-			}	
+			}
 		});
 		setUpdateQuestionResourceAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-                  isCollResourceTabView.updateCollectionItem(result);
                     MixpanelUtil.AddQuestion();
             }
 		});
-		
+
 		setV2UpdateQuestionResourceAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-                    isCollResourceTabView.updateCollectionItem(result);
                     MixpanelUtil.AddQuestion();
+                    AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.UPDATE));
             }
 		});
 	}
@@ -638,5 +643,9 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			}
 		});
 	}
+
+   	public void setSelectedStandards(List<Map<String,String>> standListArray){
+   		getView().displaySelectedStandards(standListArray);
+   	}
 }
 
