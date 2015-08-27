@@ -446,13 +446,13 @@ label.custom-select {
     font-weight: normal;
     outline: none;
     /* remove focus ring from Webkit */
-    
+
     line-height: 1.2;
     background: #ffffff;
     width: 100%;
     -webkit-appearance: none;
     /* remove the strong OSX influence from Webkit */
-    
+
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -1048,10 +1048,10 @@ label.custom-select {
     border-right: 0px none black;
     border-top-width: 0px;
     /*only relevant for first row*/
-    
+
     margin-top: -1px;
     /*compensate for top border*/
-    
+
     border: none;
     height: 35px;
 }
@@ -1318,12 +1318,12 @@ th.headcol.whitebg {
 	padding: 8px 15px 8px 0;
 	margin-top: -10px !important;
 	background: #fbb03b;
-	background: url(images/preview-arrow.png) 134px center no-repeat, #fbb03b;
-	background: url(images/preview-arrow.png) 134px center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#fbb03b), to(#fbb03b));
-	background: url(images/preview-arrow.png) 134px center no-repeat, -webkit-linear-gradient(top, #fbb03b, #fbb03b);
-	background: url(images/preview-arrow.png) 134px center no-repeat, -moz-linear-gradient(top, #fbb03b, #fbb03b);
-	background: url(images/preview-arrow.png) 134px center no-repeat, -ms-linear-gradient(top, #fbb03b, #fbb03b);
-	background: url(images/preview-arrow.png) 134px center no-repeat, -o-linear-gradient(top, #fbb03b, #fbb03b);
+	background: url(../images/preview-arrow.png) 134px center no-repeat, #fbb03b;
+	background: url(../images/preview-arrow.png) 134px center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#fbb03b), to(#fbb03b));
+	background: url(../images/preview-arrow.png) 134px center no-repeat, -webkit-linear-gradient(top, #fbb03b, #fbb03b);
+	background: url(../images/preview-arrow.png) 134px center no-repeat, -moz-linear-gradient(top, #fbb03b, #fbb03b);
+	background: url(../images/preview-arrow.png) 134px center no-repeat, -ms-linear-gradient(top, #fbb03b, #fbb03b);
+	background: url(../images/preview-arrow.png) 134px center no-repeat, -o-linear-gradient(top, #fbb03b, #fbb03b);
 }
 
 .line-height-70 {
@@ -1399,7 +1399,7 @@ th.headcol.whitebg {
     margin-right: 0px;
 }
 .student-view-popup-modal .statusScrollContainer {
-	
+
 }
 .bannerInner {
     position: relative;
@@ -1583,7 +1583,7 @@ th.headcol.whitebg {
     width: 30px;
     height: 30px;
     /*		margin: -2.5px;*/
-    
+
     background: #4897CE;
     border: 2px solid transparent;
     border-radius: 20px;
@@ -1902,7 +1902,7 @@ th.headcol.whitebg {
 	background: #fafafa;
 }
 .modal-widget-1000 .rowContainer:last-child {
-	border-bottom: 1px solid #ddd;	
+	border-bottom: 1px solid #ddd;
 }
 .teach-popup-student-content-margin {
 	margin: 0px 15px;
@@ -2381,7 +2381,7 @@ button.primary.previewBtnIcon {
         display: none;
     }
     .student-view-popup-modal .learningHeaderBlock .scoreStatus {
-		margin-bottom: 15px;    
+		margin-bottom: 15px;
     }
 }
 @media (min-width: 320px) and (max-width: 479px) {
@@ -2432,7 +2432,7 @@ button.primary.previewBtnIcon {
         display: none;
     }
     .student-view-popup-modal .learningHeaderBlock .scoreStatus {
-		margin-bottom: 15px;    
+		margin-bottom: 15px;
     }
 }
 @media (min-width: 480px) and (max-width: 767px) {
@@ -2460,7 +2460,7 @@ button.primary.previewBtnIcon {
         display: none;
     }
     .student-view-popup-modal .learningHeaderBlock .scoreStatus {
-		margin-bottom: 15px;    
+		margin-bottom: 15px;
     }
 }
 @media (max-width: 767px) {

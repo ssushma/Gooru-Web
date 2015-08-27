@@ -86,7 +86,7 @@
 }
 #gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li.active{
 	background:none !important;
-
+	border: none;
 }
 
 #gooruSearchMainContainer .collectionDetails  .seachRightNavigation  button.primary{
