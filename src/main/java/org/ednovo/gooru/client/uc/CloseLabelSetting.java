@@ -50,16 +50,16 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 	}
 	public CloseLabelSetting(String text,String panelName){
 		removeLabel = new Label();
-		removeLabel.setStyleName(UcCBundle.INSTANCE.css().closeLabelRemoveInSetting());
+		removeLabel.setStyleName("Uc-closeLabelRemoveInSetting");
 		removeLabel.setText(i18n.GL_GRR_Close()+" ");
 		label = new Label();
-		label.setStyleName(UcCBundle.INSTANCE.css().closeLabelText());
+		label.setStyleName("Uc-closeLabelText");
 		label.setText(text);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
-			setStyleName(UcCBundle.INSTANCE.css().closeLabelSearch());
+			setStyleName("Uc-closeLabelSearch");
 			addStyleName("overrideFilterColor");
 		}else{
-			setStyleName(UcCBundle.INSTANCE.css().closeLabel());
+			setStyleName("Uc-closeLabel");
 			removeStyleName("overrideFilterColor");
 		}
 

@@ -322,16 +322,31 @@
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox"
 									width="255px" height="19px" styleName="contentBoxStyles" />
-								<g:HTMLPanel styleName="{res1.css.browseContainer}">
+							<!-- 	<g:HTMLPanel styleName="{res1.css.browseContainer}">
 									<g:Button ui:field="browseStandards" styleName="secondary"
 										text="{i18n.GL0902}" title="{i18n.GL0902}"></g:Button>
-								</g:HTMLPanel>
+								</g:HTMLPanel> -->
+								
+								<tinyMce:HTMLEventPanel styleName="btn-group"
+									ui:field="btnStandardsBrowse">
+									<g:Button styleName="btn standardsContainerBswnbtn" text="{i18n.GL3479}"
+										title="{i18n.GL3479}" />
+									<g:HTMLPanel styleName="btn standardsContainerBswnbtn dropdown-toggle">
+										<g:InlineLabel styleName="caret"></g:InlineLabel>
+										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
+									</g:HTMLPanel>
+								</tinyMce:HTMLEventPanel>
+
+								<uc:UlPanel styleName="dropdown-menu"
+									ui:field="standardsDropListValues"></uc:UlPanel>
+								
 								<g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}"
 									ui:field="standardMaxMsg" />
-								<g:FlowPanel ui:field="standardsPanel"
-									styleName="{res1.css.collectionStandardsMargin}" />
 							</g:FlowPanel>
+								<g:HTMLPanel styleName="filterTags">
+									<uc:UlPanel ui:field="ulSelectedItems" />
+								</g:HTMLPanel>
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
@@ -349,9 +364,7 @@
 							<g:FlowPanel styleName="{res1.css.standardsEditResourceCont}">
 								<uc:AppSuggestBox ui:field="centurySgstBox"
 									width="255px" height="19px" styleName="contentBoxStyles" />
-								<g:HTMLPanel styleName="{res1.css.browseContainer}">
 									<g:Button ui:field="browseCentury" styleName="secondary">Browse</g:Button>
-								</g:HTMLPanel>
 								<g:HTMLPanel ui:field="errorContainerForCentury"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}"
 									ui:field="centuryMaxMsg" />

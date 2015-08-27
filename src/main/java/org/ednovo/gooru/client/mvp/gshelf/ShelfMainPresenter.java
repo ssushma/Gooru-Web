@@ -151,6 +151,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		myCollectionsListPresenter.setShelfMainPresenter(this);
 		addRegisteredHandler(GetEditPageHeightEvent.TYPE, this);
 		addRegisteredHandler(UpdateResourceCountEvent.TYPE, this);
+		addRegisteredHandler(LoadMyContentEvent.TYPE, this);
 		Document doc = Document.get();
 		doc.getBody().setClassName("");
 	}
@@ -270,13 +271,15 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		}
 	}
 	private void getFolderMetaData(final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getFolderMetaData(folderId, new SimpleAsyncCallback<FolderDo>() {
-			@Override
-			public void onSuccess(FolderDo result) {
-				folderMetaData=result;
-				getChildFolderItems(folderId,"folder", false,null);
-			}
-		});
+		if("Folder".equalsIgnoreCase(getView().getViewType())){
+			AppClientFactory.getInjector().getfolderService().getFolderMetaData(folderId, new SimpleAsyncCallback<FolderDo>() {
+				@Override
+				public void onSuccess(FolderDo result) {
+					folderMetaData=result;
+					getChildFolderItems(folderId,"folder", false,null);
+				}
+			});
+		}
 	}
 
 	/**
@@ -670,6 +673,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			folderDo.setCollectionItems(folderItems);
 		}
 		return folderDo;
+	}
+
+	@Override
+	public void loadMyContentData(String type) {
+		getView().invokeSpinner();
+		setListPresenterBasedOnType(type);
 	}
 
 }

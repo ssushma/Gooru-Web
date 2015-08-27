@@ -57,7 +57,7 @@ public class AddQueryParameter {
 				reference.addQueryParameter(map.getKey(),map.getValue());
 			}
 		} catch (Exception e) {
-			logger.error("-- "+e.getMessage());
+			logger.error("AddQueryParameter Exception --- ",e);
 		}
 		return reference.toString();
 	}
@@ -78,7 +78,7 @@ public class AddQueryParameter {
 			reference = new Reference(url);
 			reference.addQueryParameter(paramKey,paramValue);
 		} catch (Exception e) {
-			logger.error("-- "+e.getMessage());
+			logger.error("AddQueryParameter Exception---",e);
 		}
 		return reference.toString();
 	}

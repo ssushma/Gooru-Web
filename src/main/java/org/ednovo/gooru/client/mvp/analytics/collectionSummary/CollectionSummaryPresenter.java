@@ -30,7 +30,6 @@ import org.ednovo.gooru.application.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.application.shared.model.analytics.PrintUserDataDO;
-import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
@@ -141,7 +140,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 
 			@Override
 			public void onSuccess() {
-				
+
 
 				analyticService.getSessionsDataByUser(StringUtil.getClassObj(),collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 

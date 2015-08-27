@@ -163,6 +163,8 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
 		headerView.getBtnSubmitAllAnswers().addClickHandler(new ShowPopUp());
 		headerView.getBtnSubmitAllAnswers().setVisible(false);
+		headerView.getBtnLogin().setVisible(false);
+		headerView.getBtnLogin().addClickHandler(new ShowLoginPopupEvent());
 		menuButton.addClickHandler(new ShowAuthorContainerEvent());
 		menuButton.addTouchStartHandler(new ShowAuthorContainerTouchEvent());
 		setAutoHideOnNavigationEventEnabled(true);
@@ -190,7 +192,7 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 		  if (AppClientFactory.isAnonymous()){
 			  requestToLogin = new RequestToLoginPopupUc();
 			  requestToLogin.getBtnLoginAndContinue().addClickHandler(new RequestLoginPopupEvent());
-			  requestToLogin.center();
+			  requestToLogin.setPopupPosition(0, (Window.getClientHeight()-428)/2);
 			  requestToLogin.show();
 		  }
 
@@ -734,13 +736,21 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 			if(view!=null&&view.equalsIgnoreCase("end")){
 				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 				headerView.getBtnSubmitAllAnswers().setVisible(false);
+				headerView.getBtnLogin().setVisible(false);
 			}else{
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
 				String rid= AppClientFactory.getPlaceManager().getRequestParameter("rid",null);
 				if(rid!=null){
-					headerView.getBtnSubmitAllAnswers().setVisible(true);
+					if(AppClientFactory.isAnonymous()) {
+						headerView.getBtnSubmitAllAnswers().setVisible(false);
+						headerView.getBtnLogin().setVisible(true);
+					} else {
+						headerView.getBtnSubmitAllAnswers().setVisible(true);
+						headerView.getBtnLogin().setVisible(false);
+					}
 				}else{
 					headerView.getBtnSubmitAllAnswers().setVisible(false);
+					headerView.getBtnLogin().setVisible(false);
 				}
 			}
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);

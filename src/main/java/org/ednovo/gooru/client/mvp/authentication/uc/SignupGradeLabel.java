@@ -32,7 +32,6 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -79,10 +78,10 @@ public class SignupGradeLabel extends Anchor implements ClickHandler {
 	public void onClick(ClickEvent event) {
 		if(this.getStyleName().toString().contains("activeGrade")){
 			removeGrade(this.getText());
-			this.removeStyleName(LoginPopUpCBundle.INSTANCE.css().activeGrade());
+			this.removeStyleName("activeGrade");
 		} else {
 			updateGrade(this.getText());
-			this.addStyleName(LoginPopUpCBundle.INSTANCE.css().activeGrade());
+			this.addStyleName("activeGrade");
 		}
 	}
 	/**

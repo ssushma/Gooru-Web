@@ -35,12 +35,18 @@ import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -56,9 +62,12 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	private SearchServiceAsync searchService;
 
 	CollectionInfoPresenter collectionInfoPresenter;
+	AddResourcePresenter addResourcePresenter;
+	CollectionContentPresenter collectionContentPresenter;
 	SearchAbstractPresenter searchAbstractPresenter;
 	PreSearchPresenter preSearchPresenter;
 	LessonInfoPresenter lessonInfoPresenter;
+	AddTagesPopupView addTagesPopupView;
 
 	/**
 	 * Class constructor
@@ -69,6 +78,11 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	public StandardsPopupPresenter( EventBus eventBus,IsStandardsPopupView view) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+	}
+
+
+	public void setAddResourcePresenter(AddResourcePresenter addResourcePresenter) {
+		this.addResourcePresenter = addResourcePresenter;
 	}
 
 	@Override
@@ -191,6 +205,22 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		{
 			
 		}
+		try
+		{
+		addResourcePresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		try
+		{
+		collectionContentPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
 	
 	
@@ -215,6 +245,34 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	public void setPreSearchPresenter(PreSearchPresenter preSearchPresenter) {
 		this.preSearchPresenter = preSearchPresenter;
+	}
+
+
+	public void setAddTagsPopView(AddTagesPopupView addTagesPopupView) { 
+		this.addTagesPopupView = addTagesPopupView;
+	}
+
+
+	public Anchor getCloseButton() {
+		return getView().getCloseButton();
+	}
+
+
+	public Button getAddButton() {
+		return getView().getAddButton();
+	}
+
+
+	public List<Map<String, String>> getSelectedStandards() { 
+		return getView().getAddedStandards();
+	}
+	public CollectionContentPresenter getCollectionContentPresenter() {
+		return collectionContentPresenter;
+	}
+
+
+	public void setCollectionContentPresenter(CollectionContentPresenter collectionContentPresenter) {
+		this.collectionContentPresenter = collectionContentPresenter;
 	}
 
 

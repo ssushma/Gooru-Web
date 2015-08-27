@@ -39,6 +39,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 *
 */
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -99,6 +100,8 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	boolean checkQuestionSlot();
 	
 	void setDepthOfKnowledges(List<ListValuesDo> result);
+
+	void displaySelectedStandards(List<Map<String, String>> standListArray);
 	
 	
 }

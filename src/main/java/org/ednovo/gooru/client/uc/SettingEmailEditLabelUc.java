@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -47,16 +47,16 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : SettingEmailEditLabelUc.java
- * 
+ *
  * @description :This class is used to change email in settingPage.
- * 
- * 
+ *
+ *
  * @version : 5.9
- * 
+ *
  * @date: Sep 20, 2013
- * 
+ *
  * @Author Gooru Team
- * 
+ *
  * @Reviewer:
  */
 public class SettingEmailEditLabelUc extends Composite implements HasValue<String> {
@@ -67,11 +67,11 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 	interface SettingEmailEditLabelUcUiBinder extends
 			UiBinder<Widget, SettingEmailEditLabelUc> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-	
+
 	@UiField
 	protected Label editLabel,errorLabel;
 
@@ -85,17 +85,15 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 	protected FocusPanel focusPanel;
 	boolean emailAvailable;
 	protected String text;
-	@UiField(provided = true)
-	UcCBundle res;
+
 	public SettingEmailEditLabelUc() {
-		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		focusPanel.getElement().setId("focuspnlFocusPanel");
 		deckPanel.getElement().setId("dpnlDeckPanel");
 		editLabel.getElement().setId("lblEditLabel");
 		errorLabel.getElement().setId("errlblErrorLabel");
 		deckPanel.showWidget(0);
-		
+
 		editTextBox.getElement().setAttribute("maxlength", "500");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setId("txtEmail");
@@ -117,13 +115,13 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
-		editTextBox.setText(getValue());	
+		editTextBox.setText(getValue());
 		editTextBox.getElement().setAttribute("alt", getValue());
 		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
-		editTextBox.addStyleName(res.css().SettingEditEmail());
-		
+		editTextBox.addStyleName("Uc-SettingEditEmail");
+
 
 	}
 
@@ -150,18 +148,18 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 											setValue(editTextBox.getText(), true); // fires events, too
 											}
 										}else {
-											
+
 											errorLabel.setVisible(true);
 											errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
 											errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
 											errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
 												return;
-											
-											
+
+
 										}
 										if ((getText() != null && text.trim().length() > 0)) {
 											if(emailAvailable){
-											errorLabel.setText(StringUtil.generateMessage(i18n.GL0428(), i18n.GL0212().toLowerCase()));	
+											errorLabel.setText(StringUtil.generateMessage(i18n.GL0428(), i18n.GL0212().toLowerCase()));
 											errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0428(), i18n.GL0212().toLowerCase()));
 											errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0428(), i18n.GL0212().toLowerCase()));
 											errorLabel.setVisible(true);
@@ -172,7 +170,7 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 											setText(editTextBox.getText());
 											onEditDisabled(editTextBox.getText());
 										}
-																				
+
 										}
 									}
 								});
@@ -206,7 +204,7 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 	public void checkCharacterLimit(String text) {
 
 	}
-	
+
 	@Override
 	public HandlerRegistration addValueChangeHandler(
 			ValueChangeHandler<String> handler) {
@@ -231,7 +229,7 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 	/**
 	 * @return placeholder
 	 */
-	
+
 
 	public String getText() {
 		return text;
@@ -255,30 +253,30 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 	}
 	public boolean hasValidateData() {
 		boolean isValid = true;
-		
+
 		Boolean hasvalidData = editTextBox.getText().matches(EMAIL_REGEX);
-		
+
 		if ((editTextBox.getText() != null && !editTextBox.getText().isEmpty()) && !hasvalidData) {
 			errorLabel.setText(StringUtil.generateMessage(i18n.GL0067(), i18n.GL0212().toLowerCase()));
 			errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0067(), i18n.GL0212().toLowerCase()));
 			errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0067(), i18n.GL0212().toLowerCase()));
 			errorLabel.setVisible(true);
 			isValid = false;
-		}	
+		}
 		if (editTextBox.getText() == null || editTextBox.getText().isEmpty() || editTextBox.getText().trim().equals(""))
-		 { 
+		 {
 			errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
 			errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
 			errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
-	
+
 			errorLabel.setVisible(true);
 			editTextBox.addStyleName(RegisterCBundle.INSTANCE.css().errorBoxStyle());
 			isValid = false;
 		 }
 		return isValid;
 	}
-	
-	
+
+
 
 }
 

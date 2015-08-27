@@ -31,6 +31,7 @@
 							<g:HTMLPanel styleName="userDetails">
 								<g:Image ui:field="imgAuthor"/>
 								<g:Label ui:field="authorName" styleName="authorName authorNameAddLeft"/>
+								<g:FlowPanel ui:field="teamContainer" styleName="authorName"></g:FlowPanel>
 								<g:HTMLPanel ui:field="creatorPanel"></g:HTMLPanel>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="collectionDescription" ui:field="collectionDescription"/>

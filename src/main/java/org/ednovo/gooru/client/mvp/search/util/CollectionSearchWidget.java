@@ -16,6 +16,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.BrowserAgent;
+import org.ednovo.gooru.client.uc.CollaboratorsUc;
 import org.ednovo.gooru.client.uc.UserProfileUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -70,7 +71,7 @@ public class CollectionSearchWidget extends Composite {
 	@UiField Label collectionTitle,authorName,lblViewCount,remixCountLbl,noResourcesText;
 	@UiField Paragraph pResourceText;
 	@UiField Image imgAuthor,imgCollection;
-	@UiField FlowPanel standardsDataPanel;
+	@UiField FlowPanel standardsDataPanel,teamContainer;
 	@UiField Button remixBtn;
 
 	private final FlowPanel profilePanel=new FlowPanel();
@@ -81,11 +82,7 @@ public class CollectionSearchWidget extends Composite {
 
 	private static final String ASSESSMENT = "assessment";
 
-	public static final String YUMA_COUNTY_SCIENCE = "YumaCountyScience";
-	public static final String YUMA_COUNTY_MATH = "YumaCountyMath";
-	public static final String YUMA_COUNTY_SS = "YumaCountySS";
-	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
-	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
+	
 	String collectionType;
 
 	CollectionSearchResultDo collectionSearchResultDo = null;
@@ -116,7 +113,14 @@ public class CollectionSearchWidget extends Composite {
 			}
 			collectionDescription.getElement().setInnerText(collectionDesc);
 		}
-		authorName.setText(collectionSearchResultDo.getOwner().getUsername());
+		if(collectionSearchResultDo.getCollaboratorCount()>0){
+			 authorName.setText(collectionSearchResultDo.getOwner().getUsername()+" "+ i18n.GL_GRR_AND()+"");
+			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionSearchResultDo);
+			 teamContainer.add(collaboratorsUc);
+		}else{
+			authorName.setText(collectionSearchResultDo.getOwner().getUsername());
+			teamContainer.clear();
+		}
 		if ((collectionSearchResultDo.getOwner().isProfileUserVisibility())){
 			 collectionCreatorDetails(collectionSearchResultDo);
 		}
@@ -185,7 +189,6 @@ public class CollectionSearchWidget extends Composite {
 			}
 		}
 		SearchUiUtil.renderStandardsforCollection(standardsDataPanel, collectionSearchResultDo);
-
 		StringUtil.setAttributes(pnlResourceWidget.getElement(), "pnlResourceWidget", "", "");
 		StringUtil.setAttributes(creatorPanel.getElement(), "pnlcreatorPanel", "", "");
 		StringUtil.setAttributes(standardsDataPanel.getElement(), "pnlStandards", "", "");
@@ -343,9 +346,7 @@ public class CollectionSearchWidget extends Composite {
 				}
 			});
 
-		}else if(YUMA_COUNTY_SCIENCE.equals(collectionSearchResultDo.getOwner().getUsername())|| YUMA_COUNTY_MATH.equals(collectionSearchResultDo.getOwner().getUsername()) ||
-				YUMA_COUNTY_SS.equals(collectionSearchResultDo.getOwner().getUsername()) || YUMA_COUNTY_ELA.equals(collectionSearchResultDo.getOwner().getUsername())||
-				YUMA_COUNTY_PD.equals(collectionSearchResultDo.getOwner().getUsername())){
+		}else if(PlaceTokens.YCGL_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionSearchResultDo.getOwner().getUsername()))){
 			authorName.getElement().getStyle().setColor("#1076bb");
 			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
 			authorName.addClickHandler(new ClickHandler() {
@@ -353,6 +354,18 @@ public class CollectionSearchWidget extends Composite {
 				public void onClick(ClickEvent event) {
 					MixpanelUtil.Click_Username();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.YCGL_LIBRARY);
+				}
+			});
+
+
+		}else if(PlaceTokens.EPISD_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionSearchResultDo.getOwner().getUsername()))){
+			authorName.getElement().getStyle().setColor("#1076bb");
+			authorName.getElement().getStyle().setCursor(Cursor.POINTER);
+			authorName.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					MixpanelUtil.Click_Username();
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EPISD_LIBRARY);
 				}
 			});
 
@@ -399,12 +412,22 @@ public class CollectionSearchWidget extends Composite {
 					questionsText=" "+questionsCount+" "+i18n.GL3216()+" ";
 				}
 			}
-			if(questionsText.isEmpty() && !resourceText.isEmpty()){
-				collectionText = resourceText+i18n.GL3220();
-			}else if(resourceText.isEmpty() && !questionsText.isEmpty()){
-				collectionText=questionsText+i18n.GL3220();
-			}else if(!questionsText.isEmpty() && !resourceText.isEmpty()){
-				collectionText=resourceText+i18n.GL3219()+questionsText+i18n.GL3220();
+			if(collectionSearchResultDo.getCollectionType().equalsIgnoreCase(ASSESSMENT)){
+				if(questionsText.isEmpty() && !resourceText.isEmpty()){
+					collectionText = resourceText+i18n.GL3572();
+				}else if(resourceText.isEmpty() && !questionsText.isEmpty()){
+					collectionText=questionsText+i18n.GL3572();
+				}else if(!questionsText.isEmpty() && !resourceText.isEmpty()){
+					collectionText=resourceText+i18n.GL3219()+questionsText+i18n.GL3572();
+				}
+			}else{
+				if(questionsText.isEmpty() && !resourceText.isEmpty()){
+					collectionText = resourceText+i18n.GL3220();
+				}else if(resourceText.isEmpty() && !questionsText.isEmpty()){
+					collectionText=questionsText+i18n.GL3220();
+				}else if(!questionsText.isEmpty() && !resourceText.isEmpty()){
+					collectionText=resourceText+i18n.GL3219()+questionsText+i18n.GL3220();
+				}
 			}
 			pResourceText.setText(collectionText);
 			StringUtil.setAttributes(pResourceText.getElement(), "pResourceText", resourceText, resourceText);

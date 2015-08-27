@@ -136,6 +136,7 @@ public class WrapView extends BaseView implements IsWrapView {
 					if (place.equals(PlaceTokens.SHELF)
 							|| place.equalsIgnoreCase(PlaceTokens.COMMUNITY)
 							|| place.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)
+							|| place.equalsIgnoreCase(PlaceTokens.EPISD_LIBRARY)
 							|| place.equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)
 							|| place.equalsIgnoreCase(PlaceTokens.YCGL_LIBRARY)
 							|| place.equalsIgnoreCase(PlaceTokens.VALVERDE)

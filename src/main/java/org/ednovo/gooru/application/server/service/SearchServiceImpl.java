@@ -138,6 +138,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String LIBRARY_NAME = "libName";
 
 	private static final String USER_ID = "userId";
+	
 
 
 	@Autowired
@@ -193,7 +194,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				  searchDo.getFilters().put(key, value);
 				 }
 			}
-			if(query.equalsIgnoreCase("'*'"))
+			if("'*'".equalsIgnoreCase(query))
 			{
 				query = "*";
 			}
@@ -433,7 +434,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		try {
 			fullUrlObject.put("fullUrl", URLDecoder.decode(params.get(REAL_URL)).toString());
 		} catch (JSONException e1) {
-			logger.error("Exception-----"+e1);
+			logger.error("Exception-----",e1);
 		}
 		getLogger().info("--getShortenShareUrl url--"+url);
 		getLogger().info("--getShortenShareUrl payload--"+fullUrlObject.toString());
@@ -488,7 +489,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		try {
 			fullUrlObject.put("fullUrl", URLDecoder.decode(params.get(REAL_URL)).toString());
 		} catch (JSONException e1) {
-			logger.error("Exception----"+e1);
+			logger.error("Exception----",e1);
 		}
 		getLogger().info("-----------getShortenShareUrlforAssign url--------------"+url);
 		getLogger().info("----------getShortenShareUrlforAssign payload---------"+fullUrlObject.toString());
@@ -686,7 +687,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		filtersMap.put(GooruConstants.EVENT, COLLECTION_EDIT_EVENT);
 		filtersMap.put(GooruConstants.CONTENT_GOORU_OID, contentGorruOid);
 		}catch(Exception e){
-			logger.error("Exception query::", e.getMessage());
+			logger.error("Exception query::", e);
 		}
 		String url = AddQueryParameter.constructQueryParams(partialUrl, filtersMap);
 		if(getSearchEndPoint().contains(HTTPS)){
@@ -959,7 +960,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 						  searchDo.getFilters().put(key, value);
 						 }*/
 					}
-					if(query.equalsIgnoreCase("'*'"))
+					if("'*'".equalsIgnoreCase(query))
 					{
 						query = "*";
 					}
@@ -997,7 +998,12 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				getLogger().info("getResourceSearchResultsJson:::::"+url);
 				JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 				jsonRep=jsonResponseRep.getJsonRepresentation();
-				return descralizeResourceSearchResults(jsonRep.getJsonObject().toString(),searchDo);
+				if(jsonRep!=null && jsonRep.getJsonObject()!=null){
+					return descralizeResourceSearchResults(jsonRep.getJsonObject().toString(),searchDo);
+				}else{
+					SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
+					return searchDOEmpty;
+				}
 			}catch(Exception e){
 				logger.error("Exception::", e);
 			}
@@ -1007,7 +1013,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public SearchDo<ResourceSearchResultDo> descralizeResourceSearchResults(String response, SearchDo<ResourceSearchResultDo> searchDo)	throws GwtException, ServerDownException {
 		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
-		getLogger().info("descralizeResourceSearchResults:::::");
 		try{
 			if(response!=null && !response.trim().isEmpty()){
 				resourceSearchResultDeSerializer.deserializeJsonObject(response, searchDo,"");

@@ -106,4 +106,5 @@ public interface LibraryStyleBundle extends CssResource {
 	String districtSpecificPartnersInnerMainYesd();
 	String districtLibraryHeaderTextYesd();
 	String districtLibrarySubHeaderTextYesd();
+	String episdPartnerLogo();
 	}

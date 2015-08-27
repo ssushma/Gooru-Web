@@ -311,34 +311,38 @@ public class AssessmentsPlayerTocView extends BaseViewWithHandlers<AssessmentsPl
 			String collectionItemId = AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 			
 			if(collectionItemId!=null) {
-				SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc() {
-
-					@Override
-					public void onClickSubmit(ClickEvent event) {
-						Map<String,String> params = new LinkedHashMap<String,String>();
-						String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-						params.put("id", collectionId);
-						params.put("view", "end");
-						params = AssessmentsPreviewPlayerPresenter.setConceptPlayerParameters(params);
-						String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-						//PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
-						final PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
-						if(!getUiHandlers().isOpenEndedAnswerSubmited()){
-							NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
-								@Override
-								public void navigateToNextResource() {
-									super.hide();
-									AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-								}
-							};
-						}else{
-							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				Map<String,String> params = new LinkedHashMap<String,String>();
+				String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				params.put("id", collectionId);
+				params.put("view", "end");
+				params = AssessmentsPreviewPlayerPresenter.setConceptPlayerParameters(params);
+				String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				//PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+				final PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+				
+				if (!AppClientFactory.isAnonymous()){
+					SubmitYourAnswersPopupUc submit = new SubmitYourAnswersPopupUc() {
+						@Override
+						public void onClickSubmit(ClickEvent event) {
+							if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+								NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+									@Override
+									public void navigateToNextResource() {
+										super.hide();
+										AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+									}
+								};
+							}else{
+								AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+							}
+							super.hide();
 						}
-						super.hide();
-					}
-				};
-				submit.show();
-				submit.center();
+					};
+					submit.show();
+					submit.center();
+				} else {
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				}
 			} else {
 				NoQuestionAttemptPopupUc alertContentUc=new NoQuestionAttemptPopupUc();
 			}

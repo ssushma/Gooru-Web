@@ -311,7 +311,7 @@
 .standardsCont {
 	float: left;
 	position: relative;
-	width: 100%;
+	width: 200%;
 }
 .standardsEditResourceCont {
 	float: left;
@@ -348,7 +348,6 @@
 	color: #CCCCCC;
 	float: right;
 	font-size: 16px;
-    margin-right: 70px; 
 }
 .addResourceSuggestedBoxForQuestion {
 	color: #CCCCCC;
@@ -1332,7 +1331,7 @@ position: relative;
 }
 .browseContainer{
 	display: inline-block;
-	width: 13%;
+	width: 12%;
 	position: relative;
 	text-align: right;
 }

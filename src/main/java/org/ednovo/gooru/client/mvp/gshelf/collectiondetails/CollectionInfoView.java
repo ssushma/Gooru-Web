@@ -135,7 +135,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
 
-	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 	private String type="";
 
@@ -699,7 +699,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                     public void onClick(ClickEvent event) {
 					String standardsVal = event.getRelativeElement().getAttribute("id");
 					String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
-
 					collectionLiPanelWithCloseArray.clear();
 					for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
 						collectionLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));

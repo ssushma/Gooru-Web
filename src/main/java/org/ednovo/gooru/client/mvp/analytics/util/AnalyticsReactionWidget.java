@@ -24,12 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.analytics.util;
 
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -42,35 +42,40 @@ public class AnalyticsReactionWidget extends Composite {
 			UiBinder<Widget, AnalyticsReactionWidget> {
 	}
 	
-	@UiField Label reactionlbl;
+	@UiField Image reactionlbl;
+	@UiField Label noReactionlbl;
+	String urlDomain = "";
 	
-	CollectionSummaryIndividualCBundle res;
+	public static String assessment_Reaction_needhelp1="/images/analytics/analyticsReactions5.png";
+	public static String assessment_Reaction_dontunderstand1="/images/analytics/analyticsReactions4.png";
+	public static String assessment_Reaction_mean1="/images/analytics/analyticsReactions3.png";
+	public static String assessment_Reaction_understand1="/images/analytics/analyticsReactions2.png";
+	public static String assessment_Reaction_explain1="/images/analytics/analyticsReactions1.png";
+	
 	
 	/**
 	 * Constructor
 	 * @param reaction
 	 */
 	public AnalyticsReactionWidget(int reaction) {
-		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
-		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
 		 if(reaction == 0){
-			 reactionlbl.setText("--");
+			 noReactionlbl.setText("--");
+			 reactionlbl.setVisible(false);
 		 }else{
-			  String customClass=res.css().reaction_needhelp1();
+			 noReactionlbl.setVisible(false);
     		  if (reaction==1) {
-				  customClass = res.css().reaction_needhelp1();
+    			  reactionlbl.setUrl(urlDomain+"/images/analytics/analyticsReactions5.png");
 			  } else if (reaction==2) {
-				  customClass = res.css().reaction_dontunderstand1();
+				  reactionlbl.setUrl(urlDomain+"/images/analytics/analyticsReactions4.png");
 			  } else if (reaction==3) {
-				  customClass =res.css().reaction_mean1();
+				  reactionlbl.setUrl(urlDomain+"/images/analytics/analyticsReactions3.png");
 			  } else if (reaction==4) {
-				  customClass = res.css().reaction_understand1();
+				  reactionlbl.setUrl(urlDomain+"/images/analytics/analyticsReactions2.png");
 			  }else if (reaction>4) {
-				  customClass = res.css().reaction_explain1();
+				  reactionlbl.setUrl(urlDomain+"/images/analytics/analyticsReactions1.png");
 			  }
-    		  reactionlbl.addStyleName(customClass);
 		 }
-		 reactionlbl.addStyleName(res.css().setMarginAuto());
 	}
 }

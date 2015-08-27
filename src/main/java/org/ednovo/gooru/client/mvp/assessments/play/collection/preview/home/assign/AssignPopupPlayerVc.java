@@ -49,7 +49,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
-import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -132,7 +131,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;
 	private SimpleAsyncCallback<CollectionDo> collectionDoAsyncCallback;
 	String shareType = null;
-	ShareViewUc shareContainer;
 	HTMLPanel ftmPanel;
 	String toAssignStr = null;
 	String limit = "10";// pagesize
@@ -186,7 +184,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		setLabelsAndIds();
 		setHandlers();
 
-		shareContainer = new ShareViewUc("", "");
 		ftmPanel = new HTMLPanel("");
 
 		htmlLoginPanel.setVisible(false);

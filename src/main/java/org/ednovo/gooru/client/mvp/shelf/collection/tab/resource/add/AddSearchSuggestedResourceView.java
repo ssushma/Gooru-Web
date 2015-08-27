@@ -1,8 +1,8 @@
-/* ******************************************************************************
+/*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -50,7 +50,6 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
-import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -82,24 +81,22 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 public abstract  class AddSearchSuggestedResourceView extends Composite {
-	
+
 
 	public interface AddSearchSuggestedResourceViewUiBinder extends UiBinder<Widget, AddSearchSuggestedResourceView> {
-		
+
 	}
-	
+
 	public  AddSearchSuggestedResourceViewUiBinder uiBinder=GWT.create(AddSearchSuggestedResourceViewUiBinder.class);
-	
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField SearchSuggestedResultWrapperCBundle res;
-	
-	@UiField UcCBundle res1;
 
 	@UiField HTML lblResourceTitle;
-	
+
 	@UiField Image imgNotFriendly;
-	
+
 	@UiField
 	HTMLEventPanel resourceTitleContainer;
 
@@ -108,7 +105,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 
 	@UiField
 	FlowPanel ratingWidgetPanel,resourceHeaderPanel,contentPanel,resourceTitlePanel;
-	
+
 	@UiField
 	HTML resourceDescriptionHtml;
 
@@ -117,47 +114,46 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 
 	@UiField
 	FlowPanel standardsFloPanel;
-	
+
 	@UiField HTMLPanel suggestedWrapperPanel,addResourceBtnPanel,buttonsPanel;
-	
+
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
 	ToolTip toolTip = null;
 
 	private ResourceSearchResultDo resourceSearchResultDo;
-	
+
 	private RatingWidgetView ratingWidgetView=null;
-	
-	
+
+
 	private static final String PLAYER_NAME = "resource";
-	
+
 	private static final String VIDEO = "Video";
-	
+
 	private static final String QUESTION = "Question";
-	
+
 	private static final String PAGES = " "+i18n.GL1471();
-	
+
 	private static final String VIEW = " "+i18n.GL1428();
-	
+
 	private static final String VIEWS = " "+i18n.GL0934();
-	
+
 	private static final String NULL = "null";
 	private static String publisherData = "";
 	private static String aggregatorData = "";
 	private boolean isRatingUpdated=true;
-	
+
 	String collectionId = "";
 	private AddResourceView addresourceview;
-	
+
 	public static final String STANDARD_CODE = "code";
 
 	public static final String STANDARD_DESCRIPTION = "description";
-	
+
 	AddSearchSuggestedResourceView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		res.css().ensureInjected();
-		res1.css().ensureInjected();
 		suggestedWrapperPanel.getElement().setId("pnlSuggestedWrapperPanel");
 		addResourceBtnPanel.getElement().setId("pnlAddResourceBtnPanel");
 		addResourceBtnLbl.getElement().setId("bluebtnAddResourceBtnLbl");
@@ -185,7 +181,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		addResourceBtnLbl.getElement().setAttribute("title", i18n.GL0590_1());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		imgNotFriendly.setTitle(i18n.GL0737());
-		
+
 		suggestedWrapperPanel.getElement().setId("pnlSuggestedWrapperPanel");
 		addResourceBtnPanel.getElement().setId("pnlAddResourceBtnPanel");
 		addResourceBtnLbl.getElement().setId("bluebtnAddResourceBtnLbl");
@@ -199,7 +195,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		contentPanel.getElement().setId("fpnlContentPanel");
 		resourceHeaderPanel.getElement().setId("fpnlResourceHeaderPanel");
-		resourceImageUc.getElement().setId("resourceImageUc");
+		resourceImageUc.getElement().setId("suggestedResourceImageUc");
 		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
 		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
@@ -208,17 +204,17 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		buttonsPanel.getElement().setId("pnlButtonsPanel");
 		setData(resourceSearchResultDo);
 	}
-	
+
 	public RatingWidgetView getRatingWidgetView(){
 		return ratingWidgetView;
 	}
-	
+
 	public void updateViews(String count, String contentId, String whatToUpdate){
 		if (resourceSearchResultDo.getGooruOid()!=null && resourceSearchResultDo.getGooruOid().equalsIgnoreCase(contentId)){
 			metaDataFloPanel.clear();
 			String category = (resourceSearchResultDo.getNewResourceFormat()!=null && resourceSearchResultDo.getNewResourceFormat().getValue() != null)? resourceSearchResultDo.getNewResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
-			
+
 			if(resourceSearchResultDo.getAggregator()!=null){
 				 String aggregatorData = "";
 				for (String aggregator: resourceSearchResultDo.getAggregator()) {
@@ -234,7 +230,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 					aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
 				}
 			}
-			
+
 			if(resourceSearchResultDo.getPublisher()!=null){
 				String publisherData = "";
 				for (String publisher: resourceSearchResultDo.getPublisher()) {
@@ -244,14 +240,14 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 					{
 						publisherData = publisher;
 					}
-				
+
 				}
 				if(publisherData.endsWith(",")){
 					publisherData=publisherData.substring(0, publisherData.length()-1);
 				}
 			}
 			renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
-			
+
 	       renderMetaData(metaDataFloPanel, count + (Integer.parseInt(count) == 1 ? VIEW : VIEWS));
 			if (category.equalsIgnoreCase(VIDEO)) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
@@ -262,15 +258,15 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			}
 		}
 	}
-	
+
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
 		if(resourceSearchResultDo.getRatings()!=null && resourceSearchResultDo.getRatings().getCount()!=0){
 			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
-			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
+			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString());
 			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		}
-		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
+		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
 		String category = resourceSearchResultDo.getNewResourceFormat().getValue() != null ? resourceSearchResultDo.getNewResourceFormat().getValue() : "webpage";
 		String description = resourceSearchResultDo.getDescription();
         String title = "";
@@ -280,7 +276,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
         }else{
         	title = StringUtil.truncateText(resourceSearchResultDo.getResourceTitle(), 38);
         }
-        
+
 		boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 		if(resourceSearchResultDo.getAggregator()!=null){
 			 String aggregatorData = "";
@@ -297,7 +293,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
 			}
 		}
-		
+
 		if(resourceSearchResultDo.getPublisher()!=null){
 			String publisherData = "";
 			for (String publisher: resourceSearchResultDo.getPublisher()) {
@@ -307,7 +303,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				{
 					publisherData = publisher;
 				}
-			
+
 			}
 			if(publisherData.endsWith(",")){
 				publisherData=publisherData.substring(0, publisherData.length()-1);
@@ -332,7 +328,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
-		
+
 		if(setVisibility)
 		{
 			imgNotFriendly.getElement().setId("imgImgFriendly");
@@ -351,10 +347,10 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		}else{
 			lblResourceTitle.getElement().getStyle().clearFloat();
 		}
-		
-		
+
+
 		imgNotFriendly.addMouseOverHandler(new MouseOverHandler() {
-			
+
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				toolTip = new ToolTip(i18n.GL0454()+""+" "+i18n.GL04431()+" "+" ");
@@ -367,10 +363,10 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			}
 		});
 		imgNotFriendly.addMouseOutHandler(new MouseOutHandler() {
-			
+
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				
+
 				EventTarget target = event.getRelatedTarget();
 				  if (Element.is(target)) {
 					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
@@ -380,7 +376,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			}
 		});
 		if(description!=null && description.length()>205){
-			description = description.trim().substring(0, 205) +"...";	
+			description = description.trim().substring(0, 205) +"...";
 		}
 		resourceDescriptionHtml.setHTML(description);
 		resourceTitleContainer.getElement().getStyle().setZIndex(99999);
@@ -388,13 +384,13 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		resourceImageUc.renderSearch(category, resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getGooruOid(), PLAYER_NAME, resourceTitle, false,"","");
 		renderStandards(standardsFloPanel, resourceSearchResultDo);
 	}
-	
+
 	UpdateResourceRatingCountEventHandler setRatingCount =new UpdateResourceRatingCountEventHandler(){
 		@Override
-		public void setResourceRatingCount(String resourceId,double avg,Integer count) { 
+		public void setResourceRatingCount(String resourceId,double avg,Integer count) {
 			if(resourceId.equals(resourceSearchResultDo.getGooruOid())){
 				if(count!=null){
-					ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
+					ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count));
 					ratingWidgetView.setAvgStarRating(avg);
 						if(count==1 && isRatingUpdated){
 							isRatingUpdated=false;
@@ -403,19 +399,19 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 							ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
 								@Override
 								public void onClick(ClickEvent event) {
-									AppClientFactory.fireEvent(new UpdateRatingsInSearchEvent(resourceSearchResultDo)); 
+									AppClientFactory.fireEvent(new UpdateRatingsInSearchEvent(resourceSearchResultDo));
 								}
-								
+
 							});
 						}
 				}
 			}
 		}
-		
+
 	};
-	
-	
-	
+
+
+
 	UpdateSearchResultMetaDataHandler setUpdateMetaData =new UpdateSearchResultMetaDataHandler(){
 
 		@Override
@@ -425,7 +421,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			}
 		}
 	};
-	
+
 	@UiHandler("resourceTitleContainer")
 	public void onClickResourceTitle(ClickEvent event){
 		MixpanelUtil.Preview_Resource_From_Search("ResourceTitleLbl");
@@ -469,7 +465,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				}else{
 					toolTipwidgets.add(label);
 				}
-				
+
 			}
 		}
 		if (datas != null && datas.size() > 1) {
@@ -515,7 +511,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 					}
 				} else {
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
-					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					toolTipUc.setStyleName("Uc-searchStandard");
 					standardsContainer.add(toolTipUc);
 				}
 				count++;
@@ -530,7 +526,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				toolTipUc.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().blueLink());
 				standardsContainer.add(toolTipUc);
 				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
-				
+
 			}
 		}
 	}

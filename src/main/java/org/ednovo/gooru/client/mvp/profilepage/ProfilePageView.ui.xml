@@ -4,9 +4,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:libraryview="urn:import:org.ednovo.gooru.client.mvp.profilepage.data"  xmlns:profileUc="urn:import:org.ednovo.gooru.client.mvp.profilepage">
-	
-	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
-	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle" field="ccb" />
 	<ui:style field="settingsStyle" src="../settings/Setting-page.css" type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
 	<g:HTMLPanel styleName="profileMainContainer" ui:field="profileMainContainer">
     <g:HTMLPanel styleName="profileContainer" ui:field="profileOnContainerPanel">
@@ -44,7 +41,7 @@
 							  	</g:HTMLPanel>
 							  	 <g:Button styleName="primary floatLeft" ui:field="followButton"></g:Button>
 							   	 <g:Button styleName="floatLeft" ui:field="FollowingButtonBlue"></g:Button>
-						
+
 					   <!--  Profile On/Off container stop -->
 					   </g:HTMLPanel>
 		        	</g:HTMLPanel>
@@ -82,12 +79,12 @@
 									<g:FlowPanel styleName="collectionCourseLstPanel" ui:field="collectionCourseLstPanel" />
 									<g:Button styleName="secondary addCourseBtnStyle" ui:field="addCourseBtn" />
 									<g:Label styleName="courseMaxMsg" ui:field="courseMaxMsg" />
-								</g:FlowPanel>	
+								</g:FlowPanel>
 								<g:FlowPanel styleName="addedCoursesList" ui:field="coursesPanel">
 								</g:FlowPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="coursePoupSaveBtnContainer">
-								<g:Button styleName="{ccb.css.infoAddButton}" ui:field="saveBtn" />
+								<g:Button styleName="pppInfoAddButton" ui:field="saveBtn" />
 								<g:Label styleName="coursePopupCancelLbl" ui:field="cancelBtn" />
 							</g:FlowPanel>
 					   </panel:HTMLEventPanel>
@@ -116,7 +113,7 @@
 	                </g:HTMLPanel>
 	        </g:HTMLPanel>
 			</g:FlowPanel>
-			
+
 			<g:FlowPanel styleName="userinfoContainer">
 			  <g:HTMLPanel styleName="tabContent">
 			   		<profileUc:ProfilePageTabVc ui:field="collectionsTabVc" enabled="true" />
@@ -125,7 +122,7 @@
 					<profileUc:ProfilePageTabVc ui:field="tagTabVc"/>
 					</g:HTMLPanel>
 				</g:FlowPanel>
-			
+
         <g:HTMLPanel styleName="userContent" ui:field="mainContainer">
             <g:Label styleName="userNameForCollection" ui:field="userLibraryMessage"></g:Label>
 			<g:HTMLPanel styleName="qmark" ui:field="hpnlQuestion">
@@ -139,11 +136,11 @@
                 <!-- Please dont make put these two anchor in different lines -->
                 <g:Anchor ui:field="contentTabVc"></g:Anchor><!-- <g:Anchor ui:field="shareTabVc">Share</g:Anchor> -->
         </g:HTMLPanel>
-			<g:HTMLPanel styleName="loadingImage" ui:field="loadingPanel"/>        
+			<g:HTMLPanel styleName="loadingImage" ui:field="loadingPanel"/>
 				<g:HTMLPanel styleName="contentView" ui:field="contentview">
 						<libraryview:ProfilePageLibraryView ui:field="profilePageLibraryView"/>
                </g:HTMLPanel>
-            <g:HTMLPanel ui:field="shareLinkFloPanel" styleName="{res.css.shareLinkFlowPanel}"></g:HTMLPanel>
+            <g:HTMLPanel ui:field="shareLinkFloPanel" styleName="shareLinkFlowPanel"></g:HTMLPanel>
         </g:HTMLPanel>
         <g:HTMLPanel ui:field="followingContainer"/>
           <g:HTMLPanel ui:field="tagResourceContainer"/>

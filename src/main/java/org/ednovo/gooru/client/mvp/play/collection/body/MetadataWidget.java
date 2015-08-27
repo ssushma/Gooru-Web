@@ -94,12 +94,6 @@ public class MetadataWidget extends Composite {
 
 	public static final String STANDARD_DESCRIPTION = "description";
 
-	public static final String YUMA_COUNTY_SCIENCE = "YumaCountyScience";
-	public static final String YUMA_COUNTY_MATH = "YumaCountyMath";
-	public static final String YUMA_COUNTY_SS = "YumaCountySS";
-	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
-	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
-
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static MetadataWidgetUiBinder uiBinder = GWT.create(MetadataWidgetUiBinder.class);
@@ -114,7 +108,7 @@ public class MetadataWidget extends Composite {
 	}
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		if(collectionDo!=null){
-		this.collectionDo = collectionDo;
+		this.collectionDo = collectionDo; 
 		teamContainer.clear();
 		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
@@ -482,7 +476,6 @@ public class MetadataWidget extends Composite {
 		lblcentury.getElement().setId("lblCenturys");
 		lblcentury.getElement().setAttribute("alt",i18n.GL3199());
 		lblcentury.getElement().setAttribute("title",i18n.GL3199());
-
 		previewFlagButton.setText(i18n.GL0556());
 		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
 		previewFlagButton.getElement().setAttribute("alt",i18n.GL0556());
@@ -570,10 +563,11 @@ public class MetadataWidget extends Composite {
 
 			if(StringUtil.isPartnerUser((collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getUsername()))?collectionDo.getUser().getUsername():"")){
 				anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
-			}else if(YUMA_COUNTY_SCIENCE.equals(collectionDo.getUser().getUsernameDisplay())|| YUMA_COUNTY_MATH.equals(collectionDo.getUser().getUsernameDisplay()) ||
-					YUMA_COUNTY_SS.equals(collectionDo.getUser().getUsernameDisplay()) || YUMA_COUNTY_ELA.equals(collectionDo.getUser().getUsernameDisplay())||
-					YUMA_COUNTY_PD.equals(collectionDo.getUser().getUsernameDisplay())){
+			}else if(PlaceTokens.YCGL_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionDo.getUser().getUsernameDisplay()))){
 				anchor.setHref("#"+PlaceTokens.YCGL_LIBRARY);
+
+			}else if(PlaceTokens.EPISD_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionDo.getUser().getUsernameDisplay()))){
+				anchor.setHref("#"+PlaceTokens.EPISD_LIBRARY);
 
 			}else{
 				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+((collectionDo.getUser()!=null && collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");

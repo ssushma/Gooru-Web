@@ -83,15 +83,14 @@ public class TinyMCE extends Composite{
     }
     public TinyMCE() {
         super();
-        TinyMceBundle.TINYMCEBUNDLE.tinyMceStyle().ensureInjected();
         FlowPanel timymceWrapper=new FlowPanel();
         toolBarOpenButton=new Button(i18n.GL_GRR_ALPHABET_A());
         errorMessageLabel=new Label();
         markAsBlankPanel=new HTMLPanel("");
         toolBarOpenButton.addClickHandler(new OpenRichTextToolBar());
-        toolBarOpenButton.setStyleName( TinyMceBundle.TINYMCEBUNDLE.tinyMceStyle().tinyMceStyleButton());
-        markAsBlankPanel.setStyleName( TinyMceBundle.TINYMCEBUNDLE.tinyMceStyle().markAsBlankLabel());
-        errorMessageLabel.setStyleName( TinyMceBundle.TINYMCEBUNDLE.tinyMceStyle().errorMessagesForRichText());
+        toolBarOpenButton.setStyleName("tinyMceStyleButton");
+        markAsBlankPanel.setStyleName("markAsBlankLabel");
+        errorMessageLabel.setStyleName("errorMessagesForRichText");
         VerticalPanel panel = new VerticalPanel();
         id = HTMLPanel.createUniqueId();
         richTextsList.add(id);
@@ -476,25 +475,21 @@ public class TinyMCE extends Composite{
 	   addClickEventToCloseButton(id);
 	}
 	public void hideAllButtons(){
-		if(!lastButtonId.equalsIgnoreCase("")){
-			try{
-				Document.get().getElementById(lastButtonId+BUTTONID).getStyle().setDisplay(Display.NONE);
-			}catch(Exception e){
-				AppClientFactory.printSevereLogger("TinyMCE hideAllButtons:::"+e);
-			}
+		if(!lastButtonId.equalsIgnoreCase("") && Document.get().getElementById(lastButtonId+BUTTONID) != null){
+			Document.get().getElementById(lastButtonId+BUTTONID).getStyle().setDisplay(Display.NONE);
 		}
 	}
 	public void addStyleToBody(){
 		 IFrameElement ele= Document.get().getElementById(id+"_ifr").cast();
 		 Document document = IFrameElement.as(ele).getContentDocument();
          BodyElement body = document.getBody();
-         body.addClassName(TinyMceBundle.TINYMCEBUNDLE.tinyMceStyle().addBackGroundColor());
+         body.addClassName("addBackGroundColor");
 	}
 	public void removeStyleToBody(){
 		 IFrameElement ele= Document.get().getElementById(id+"_ifr").cast();
 		 Document document = IFrameElement.as(ele).getContentDocument();
 	     BodyElement body = document.getBody();
-	     body.removeClassName(TinyMceBundle.TINYMCEBUNDLE.tinyMceStyle().addBackGroundColor());
+	     body.removeClassName("addBackGroundColor");
 	}
 	public int countCharcters(String content,String tinyMceId){
 		AddQuestionResourceView.errorMessageForQuestion.setText("");

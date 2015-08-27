@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,12 +36,14 @@ import java.util.Set;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -48,7 +52,7 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
@@ -73,6 +77,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
@@ -88,7 +93,6 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -98,9 +102,6 @@ import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
@@ -128,7 +129,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiField HTMLPanel panelCategory;
 
 	@UiField
-	public Button addResourceBtn,cancelResourcePopupBtnLbl,mobileYes,mobileNo,browseStandards,browseCentury;
+	public Button addResourceBtn,cancelResourcePopupBtnLbl,mobileYes,mobileNo,browseCentury;
 
 	@UiField
 	public Label resoureDropDownLbl;
@@ -171,18 +172,25 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	@UiField(provided = true)
 	AddTagesCBundle res2;
-	@UiField FlowPanel standardContainer,standardsPanel,centuryPanel,centuryContainer;
+	@UiField FlowPanel standardContainer,centuryPanel,centuryContainer;
 
-	@UiField Label accessHazard;
+	@UiField Label accessHazard;	
+
+	@UiField
+	HTMLEventPanel btnStandardsBrowse;
+	@UiField
+	UlPanel standardsDropListValues;
 
 	@UiField Label mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
 
 	@UiField ScrollPanel spanelMediaFeaturePanel;
 
-	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer,mediaDropdownArrowConatainer;
+	@UiField HTMLPanel standardsCont,htmlMediaFeatureListContainer,mediaLabelContainer,mediaDropdownArrowConatainer;
 
 	@UiField HTMLEventPanel AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,eHearderIconCentury,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly;
+	
+	@UiField UlPanel ulSelectedItems;
 
 	@UiField Anchor resourceEducationalLabel,resourcemomentsOfLearningLabel;
 	@UiField UlPanel educationalUsePanel,momentsOfLearningPanel;
@@ -257,6 +265,20 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues=new HashMap<Long, String>();
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	
+	private boolean isCCSSAvailable = false;
+	private boolean isNGSSAvailable = false;
+	private boolean isTEKSAvailable = false;
+	private boolean isCAAvailable = false;
+	
+	List<Integer> selectedValues=new ArrayList<>();
+	public FolderDo courseObjG;
+
+	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
+	
+	String codeID="",code="",label="";
+
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 
 	public EditResourcePopupVc(CollectionItemDo collectionItemDo) {
@@ -268,7 +290,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
-		super.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
+		super.getMainPanel().addStyleName("PopupMainVSmall");
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 
 			@Override
@@ -294,7 +316,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 							} else {
 								standardsPrefDisplayPopup = false;
 							}
-						}						
+						}
 					}
 					if(standardsPrefDisplayPopup){
 						errorContainer.setVisible(false);
@@ -336,9 +358,26 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		momentsOfLearning=collectionItemDo.getMomentsOfLearning();
 		educationalUse=collectionItemDo.getEducationalUse();
 		accessHazardList=collectionItemDo.getAccessHazard();
+		
+		
 
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
-		standardSgstBox.addSelectionHandler(this);
+		standardSgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
+
+			@Override
+			public void onSelection(SelectionEvent<Suggestion> event) {
+				Map<String, String> standard = new HashMap<>();
+				
+				standard.put("selectedCodeId", String.valueOf(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
+				standard.put("selectedCodeVal", standardSgstBox.getValue());
+				standard.put("selectedDifferenceId", String.valueOf(3));
+				standard.put("selectedCodeDesc", standardSgstBox.getValue());
+				displaySelectedStandardsOne(standard);
+				standardSgstBox.setText("");
+				standardSuggestOracle.clear();
+
+			}
+		});
 		centurySgstBox=new AppSuggestBox(centurySuggestOracle) {
 
 			@Override
@@ -363,7 +402,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						@Override
 						public void onFailure(Throwable caught) {
 
-						}							
+						}
 					});
 					centurySgstBox.showSuggestionList();
 				}
@@ -406,11 +445,25 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		});
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		standardsCont.getElement().setAttribute("style", "position:relative;");
 		addSetupAdvancedView = new AddSetupAdvancedView() {
 			@Override
 			public void showAndHideContainers() {
 			}
 		};
+		getAddStandards();
+		
+		btnStandardsBrowse.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:auto;left:18.9em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:auto;left:18.9em;color:#515151;");
+				} else {
+					standardsDropListValues.getElement().removeAttribute("style");
+				}
+			}
+		});
 		resourceEducationalLabel.getElement().setAttribute("data-toggle", "dropdown");
 		resourcemomentsOfLearningLabel.getElement().setAttribute("data-toggle", "dropdown");
 		setMomentOfLeaning();
@@ -495,7 +548,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		interactivePanel.getElement().setId("pnlInteractivePanel");
 		interactivePanel.getElement().setAttribute("alt", i18n.GL0919());
 		interactivePanel.getElement().setAttribute("title", i18n.GL0919());
-		
+
 		websitePanel.getElement().setInnerHTML(i18n.GL1396());
 		websitePanel.getElement().setId("pnlWebsitePanel");
 		websitePanel.getElement().setAttribute("alt", i18n.GL1396());
@@ -572,12 +625,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
 		loadingTextLbl.getElement().setAttribute("alt", i18n.GL0808().toLowerCase());
 		loadingTextLbl.getElement().setAttribute("title", i18n.GL0808().toLowerCase());
-		resourceFormat.getElement().setInnerHTML(i18n.GL3103()+i18n.GL_SPL_STAR()); 
+		resourceFormat.getElement().setInnerHTML(i18n.GL3103()+i18n.GL_SPL_STAR());
 		resourceFormat.getElement().setId("pnlResourceFormat");
 		resourceFormat.getElement().setAttribute("alt", i18n.GL0906());
 		resourceFormat.getElement().setAttribute("title", i18n.GL0906());
 
-		resDescription.getElement().setInnerHTML(i18n.GL0904()); 
+		resDescription.getElement().setInnerHTML(i18n.GL0904());
 		resDescription.getElement().setId("pnlResDescription");
 		resDescription.getElement().setAttribute("alt", i18n.GL0904());
 		resDescription.getElement().setAttribute("title", i18n.GL0904());
@@ -612,8 +665,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		momentsOfLearningTitle.getElement().setId("pnlMomentsOfLearningTitle");
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
 		momentsOfLearningTitle.getElement().setAttribute("title", i18n.GL1678());
-		
-		
+
+
 		resourceEducationalLabel.setText(i18n.GL1684());
 		resourceEducationalLabel.getElement().setId("lblResourceEducationalLabel");
 		resourceEducationalLabel.getElement().setAttribute("alt", i18n.GL1684());
@@ -640,14 +693,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		audio.getElement().setId("pnlAudio");
 		educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
 		mandatoryEducationalLbl.getElement().setId("lblMandatoryEducationalLbl");
-	
+
 		momentsOfLearningDropDownLbl.getElement().setId("lblMomentsOfLearningDropDownLbl");
 		mandatorymomentsOfLearninglLbl.getElement().setId("lblMandatorymomentsOfLearninglLbl");
-		
+
 		standardContainer.getElement().setId("fpnlStandardContainer");
 		standardSgstBox.getElement().setId("StandardSgstBox");
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
-		standardsPanel.getElement().setId("fpnlStandardsPanel");
 		leftArrowLbl.getElement().setId("lblLeftArrowLbl");
 		rightArrowLbl.getElement().setId("lblRightArrowLbl");
 		refreshLbl.getElement().setId("lblRefreshLbl");
@@ -722,40 +774,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
+				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank","");
 			}
 		});
 		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));
 		descriptionTxtAera.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords));
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
-
-			@Override
-			public void onSuccess(ProfileDo profileObj) {
-				if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
-					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-						standardContainer.setVisible(true);
-						isBrowseTooltip = true;
-						DisableStandars();
-					}else
-					{
-						standardContainer.setVisible(true);
-						isBrowseTooltip = false;
-						enableStandards();
-						standardPreflist=new ArrayList<String>();
-						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
-							standardPreflist.add(code);
-							standardPreflist.add(code.substring(0, 2));
-						}
-
-					}
-				}else{
-					standardContainer.setVisible(true);
-					isBrowseTooltip = true;
-					DisableStandars();
-				}
-			}
-
-		});
+	
 		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
 		moblieFriendly.setText(i18n.GL1811());
 		moblieFriendly.getElement().setId("spnMobileFriendly");
@@ -791,7 +815,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		if(mobileFeature!=null){
 			if(mobileFeature.equalsIgnoreCase(""))
 			{
-				lblMediaPlaceHolder.setText("Choose a Media Feature Option:");	
+				lblMediaPlaceHolder.setText("Choose a Media Feature Option:");
 			}
 		}
 		else
@@ -827,7 +851,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				//Set Click event for title
 				titleLabel.addClickHandler(new ClickHandler() {
 					@Override
-					public void onClick(ClickEvent event) {		
+					public void onClick(ClickEvent event) {
 						String optionSelected = titleLabel.getElement().getId();
 						lblMediaPlaceHolder.setText(optionSelected);
 						spanelMediaFeaturePanel.setVisible(false);
@@ -856,8 +880,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}
 		});
 		htmlMediaFeatureListContainer.add(defaultMediaFeaturePnl);
-
-		browseStandards.addClickHandler(new onBrowseStandardsClick());
 
 		ClickHandler rootHandler= new ClickHandler() {
 
@@ -917,6 +939,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				hideCenturyPopup();
 			}
 		});
+		standardsBrowseContainer.getElement().setId("standardsContainerBswn");
 		//This will hide the popup when clicked on close button
 		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
@@ -948,7 +971,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 	/**
 	 * new label is created for the 21 century which needs to be added
-	 * 
+	 *
 	 * @param standardCode
 	 *            update standard code
 	 * @return instance of {@link DownToolTipWidgetUc}
@@ -965,7 +988,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 								CodeDo deletedObj=new CodeDo();
 								deletedObj.setCodeId(codeObj.getCodeId());
 								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);	
+								standardsDo.remove(codeObj);
 								centurySelectedValues.remove(Long.parseLong(id));
 
 							}
@@ -1057,7 +1080,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	/**
 	 * This method will check all additional tags are open or not.
-	 * 
+	 *
 	 * @return allAdditionalTagInVisisble
 	 */
 	public boolean isAllAdditionalTagsOpen() {
@@ -1132,20 +1155,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 		hide();
 	}
-	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
-		standardSuggestOracle.clear();
-		this.standardSearchDo = standardSearchDo;
-		if (this.standardSearchDo.getSearchResults() != null) {
-			List<String> sources = getAddedStandards(standardsPanel);
-			for (CodeDo code : standardSearchDo.getSearchResults()) {
-				if (!sources.contains(code.getCode())) {
-					standardSuggestOracle.add(code.getCode());
-				}
-				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
-			}
-		}
-		standardSgstBox.showSuggestionList();
-	}
 	public void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo) {
 		centurySuggestOracle.clear();
 		this.centurySearchDo = centurySearchDo;
@@ -1160,26 +1169,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 		centurySgstBox.showSuggestionList();
 	}
-	/**
-	 * get the standards are added for collection
-	 * 
-	 * @param flowPanel
-	 *            having all added standards label
-	 * @return standards text in list which are added for the collection
-	 */
-	private List<String> getAddedStandards(FlowPanel flowPanel) {
-		List<String> suggestions = new ArrayList<String>();
-		for (Widget widget : flowPanel) {
-			if (widget instanceof DownToolTipWidgetUc) {
-				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
-			}
-		}
-		return suggestions;
-	}
+
 
 	/**
 	 * get the standards are added for collection
-	 * 
+	 *
 	 * @param flowPanel
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
@@ -1245,9 +1239,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 
 	public void displayResourceInfo() {
-		updateStandardsAdvancedSetupStyle();
 		String url = collectionItemDo.getResource().getUrl()!=null?collectionItemDo.getResource().getUrl():"";
-
+		updateStandardsAdvancedSetupStyle();
 		if(collectionItemDo.getResource().getResourceTags()!=null){
 			for(int i=0;i<collectionItemDo.getResource().getResourceTags().size();i++){
 				tagListGlobal.add("\""+collectionItemDo.getResource().getResourceTags().get(i).getLabel()+"\"");
@@ -1257,7 +1250,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					setMediaFeatureObjectVal(collectionItemDo.getMediaFeature());
 				}
 
-			
+
 
 				if(collectionItemDo.getAccessHazard()!=null&&collectionItemDo.getAccessHazard().size()>0)
 				{
@@ -1265,8 +1258,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				}
 			}
 		}
-		
-		
+
+
 		urlTextLbl.setText(url);
 		urlTextLbl.getElement().setAttribute("alt", i18n.GL0827());
 		urlTextLbl.getElement().setAttribute("title", i18n.GL0827());
@@ -1443,7 +1436,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}
 		}
 		if(collectionItemDo.getMomentsOfLearning()!=null){
-			for (checkboxSelectedDo item : collectionItemDo.getMomentsOfLearning()) {	
+			for (checkboxSelectedDo item : collectionItemDo.getMomentsOfLearning()) {
 				resourcemomentsOfLearningLabel.setText(item.getName());
 				resourcemomentsOfLearningLabel.getElement().setId(item.getId()+"");
 				resourcemomentsOfLearningLabel.getElement().setAttribute("alt", item.getName());
@@ -1456,9 +1449,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}
 		}
 		if(collectionItemDo.getStandards()!=null){
-			standardsPanel.clear();
+			ulSelectedItems.clear();
 			standardsDo.clear();
-			String codeID="",code="",label="";
+
 			for (Map<String, String> map: collectionItemDo.getStandards()) {
 				CodeDo codeObj=new CodeDo();
 				for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -1478,12 +1471,30 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					}
 				}
 				standardsDo.add(codeObj);
-				DownToolTipWidgetUc  downToolTipWidgetUc=createStandardLabel(code, codeID,label);
-				downToolTipWidgetUc.getElement().setId(codeID);
-				downToolTipWidgetUc.getElement().setTitle(code);
-				standardsPanel.add(downToolTipWidgetUc);
+				final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(code);
+				liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						for(int i=0;i<selectedValues.size();i++) {
+						     if((selectedValues.get(i)).equals(codeID)){
+						    	 selectedValues.remove(codeID);
+						    	 Element element = Document.get().getElementById(codeID);
+						    	 if(element!=null){
+						 			element.removeClassName("active");
+						 		}
+						     }
+						 }
+						removeGradeWidget(ulSelectedItems,Long.parseLong(codeID));
+						liPanelWithClose.removeFromParent();
+						//lblGradeErrorMsg.setVisible(false);
+					}
+				});
+				liPanelWithClose.setId(Long.parseLong(codeID));
+				liPanelWithClose.setName(label);
+				liPanelWithClose.setDifferenceId(3);
+				liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
+				ulSelectedItems.add(liPanelWithClose);
 			}
-			updateStandardsAdvancedSetupStyle();
 		}
 		if(collectionItemDo.getSkills()!= null && collectionItemDo.getSkills().size()>0){
 			centuryPanel.clear();
@@ -1496,12 +1507,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"","");
 				downToolTipWidgetUc.getElement().setId(standardObj.getId()+"");
 				downToolTipWidgetUc.getElement().setTitle(standardObj.getLabel());
-				
+
 				centuryPanel.add(downToolTipWidgetUc);
 			}
 			updateCenturyAdvancedSetupStyle();
 		}
-		
+
 		if(collectionItemDo.getMediaType()!=null)
 		{
 			setMobileFriendlyObjectVal(collectionItemDo.getMediaType());
@@ -1511,7 +1522,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public void setImage(String thumbnailUrlImage, String category){
 		if (thumbnailUrlImage==null || (thumbnailUrlImage.endsWith("null") || thumbnailUrlImage.contains("images/defaultRes.png"))) {
 			thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
-		} 
+		}
 		if (thumbnailUrlImage!=null && thumbnailUrlImage.indexOf("youtube") >0){
 			String urlStr = urlTextLbl.getText().trim();
 			String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(urlStr);
@@ -1537,6 +1548,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				@Override
 				public void onSuccess(Boolean value) {
 					isHavingBadWordsInTextbox = value;
+					getSelectedStandards();
 					if(value){
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(titleTextBox, mandatoryTitleLblForSwareWords,value);
 					}else{
@@ -1555,9 +1567,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 										String categoryStr =resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
 
 										String urlStr = urlTextLbl.getText().trim();
-										String youTubeId = getYoutubeVideoId(urlStr);
-
-
 										if (titleStr.toLowerCase().contains("http://") || titleStr.toLowerCase().contains("https://") || titleStr.toLowerCase().contains("ftp://")){
 											showTitleErrorMessage(i18n.GL0323());
 											isValidate = false;
@@ -1581,14 +1590,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 										}
 
 										if(urlStr.indexOf("youtube")!=-1){
-
+											String youTubeId = getYoutubeVideoId(urlStr);
 											if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
 												if(!categoryStr.equalsIgnoreCase("Webpage")){
-													isValidate = true;									
+													isValidate = true;
 												}else{
-
 													showCategoryErrorMessage(i18n.GL0927());
-
 													isValidate = false;													}
 											}
 
@@ -1618,9 +1625,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 										}
 
 										collectionItemDo.setAccessHazard(setAccessHazards());
-									
+
 										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
-										{	
+										{
 											ArrayList<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
 
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
@@ -1636,7 +1643,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											}
 										}
 										if(resourcemomentsOfLearningLabel.getText()!=null ||!resourcemomentsOfLearningLabel.getText().trim().equalsIgnoreCase(""))
-										{	
+										{
 											ArrayList<checkboxSelectedDo> checkboxSelectedDos=new ArrayList<>();
 
 											if(!resourcemomentsOfLearningLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
@@ -1663,12 +1670,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											collectionItemDo.getResource().setCategory(categoryStr);
 
 											if (thumbnailUrlStr!=null){
-												
+
 												if(collectionItemDo.getResource().getThumbnails()==null){
 													ThumbnailDo thumbnailObj=new ThumbnailDo();
 													collectionItemDo.getResource().setThumbnails(thumbnailObj);
 												}
-												
+
 												collectionItemDo.getResource().getThumbnails().setUrl(thumbnailUrlStr);
 											}else{
 												if(collectionItemDo.getResource().getThumbnails()!=null)
@@ -1761,7 +1768,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													@Override
 													public void onSuccess(Void result) {
 														// TODO Auto-generated method stub
-														updateResource(collectionItemDo,tagList);	
+														updateResource(collectionItemDo,tagList);
 													}
 
 													@Override
@@ -1987,28 +1994,28 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			rightArrowLbl.setVisible(false);
 		}
 	}
-	/** 
+	/**
 	 * This method is to get the setThumbnailImage
 	 */
 	public Image getSetThumbnailImage() {
 		return setThumbnailImage;
 	}
 
-	/** 
+	/**
 	 * This method is to set the setThumbnailImage
 	 */
 	public void setSetThumbnailImage(Image setThumbnailImage) {
 		this.setThumbnailImage = setThumbnailImage;
 	}
 
-	/** 
+	/**
 	 * This method is to get the thumbnailUrlStr
 	 */
 	public String getThumbnailUrlStr() {
 		return thumbnailUrlStr;
 	}
 
-	/** 
+	/**
 	 * This method is to set the thumbnailUrlStr
 	 */
 	public void setThumbnailUrlStr(String thumbnailUrlStr) {
@@ -2028,7 +2035,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 
 		String pattern = "^.*((youtu.be"+ "\\/)" + "|(v\\/)|(\\/u\\/w\\/)|(embed\\/)|(watch\\?))\\??v?=?([^#\\&\\?]*).*";
-		String videoId = null; 
+		String videoId = null;
 		try {
 			RegExp reg = RegExp.compile(pattern, "gi");
 			MatchResult res = reg.exec(youtubeUrl);
@@ -2073,8 +2080,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			});
 		}
 	}
-	
-	
+
+
 	@UiHandler("educationalDropDownLbl")
 	public void educationalDropDownClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
@@ -2120,38 +2127,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			momentsOfLearningOpen = false;
 		}
 	}
-	@Override
-	public void onSelection(SelectionEvent<Suggestion> event) {
 
-		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
-		standardSgstBox.setText("");
-		standardSuggestOracle.clear();
-		updateStandardsAdvancedSetupStyle();
-	}
-	/**
-	 * Adding new standard for the resouce collection , will check it has more than
-	 * fifteen standards
-	 * 
-	 * @param standard
-	 *            which to be added for the collection
-	 */
-	public void addStandard(String standard, String id) {
-		if (standardsPanel.getWidgetCount() <5) {
-			if (standard != null && !standard.isEmpty()) {
-				CodeDo codeObj=new CodeDo();
-				codeObj.setCodeId(Integer.parseInt(id));
-				codeObj.setCode(standard);
-				standardsDo.add(codeObj);
-				DownToolTipWidgetUc  downToolTipWidgetUc=createStandardLabel(standard, id, standardCodesMap.get(id));
-				downToolTipWidgetUc.getElement().setId(id);
-				downToolTipWidgetUc.getElement().setTitle(standard);
-				standardsPanel.add(downToolTipWidgetUc);
-			}
-		} else {
-			standardMaxShow();
-			standardSgstBox.setText("");
-		}
-	}
+
 	/**
 	 *  Adding new skills for the resource collection , will check it has more than
 	 * fifteen standards
@@ -2160,7 +2137,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	 */
 	public void addCentury(String centuryTag, String id) {
 		if (centuryTag != null && !centuryTag.isEmpty()) {
-			String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());				
+			String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());
 			CodeDo codeObjStandard=new CodeDo();
 			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
 			codeObjStandard.setCode(centurySgstBox.getValue());
@@ -2176,12 +2153,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public void standardMaxShow() {
 		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
 		standardMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().standardMax());
-		standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
+		//standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
 		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
 	}
 	/**
 	 * new label is created for the standard which needs to be added
-	 * 
+	 *
 	 * @param standardCode
 	 *            update standard code
 	 * @return instance of {@link DownToolTipWidgetUc}
@@ -2200,14 +2177,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 								CodeDo deletedObj=new CodeDo();
 								deletedObj.setCodeId(codeObj.getCodeId());
 								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);								
+								standardsDo.remove(codeObj);
 							}
 						});
 
 					}
 				}
 				this.getParent().removeFromParent();
-				updateStandardsAdvancedSetupStyle();
+				
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
@@ -2233,7 +2210,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		return null;
 	}
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
-	{	
+	{
 		if(mobileFriendlyVal.equalsIgnoreCase(i18n.GL_GRR_MOBILE_FRIENDLY()))
 		{
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
@@ -2245,7 +2222,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		}
 		updateMobileFriendlyAdvancedStyles();
-	}	
+	}
 	@UiHandler("mobileYes")
 	public void onmobileYesClick(ClickEvent click)
 	{
@@ -2339,85 +2316,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		setAdvancedAccessHazardStyles(valuesDos.size());
 	}
 
-	public void setUpdatedBrowseStandardsVal(String setStandardsVal,Integer codeId, String setStandardDesc) {
-		if (standardsPanel.getWidgetCount() <5) {
-			if (setStandardsVal != null && !setStandardsVal.isEmpty()) {
-				CodeDo codeObj=new CodeDo();
-				codeObj.setCodeId(codeId);
-				codeObj.setCode(setStandardsVal);
-				standardsDo.add(codeObj);
-				DownToolTipWidgetUc downToolTipWidgetUc=createStandardLabel(setStandardsVal, Integer.toString(codeId), setStandardDesc);
-				downToolTipWidgetUc.getElement().setId(codeId+"");
-				downToolTipWidgetUc.getElement().setTitle(setStandardsVal);
 
-				standardsPanel.add(downToolTipWidgetUc);
 
-			}
-		} else {
-			standardMaxShow();
-			standardSgstBox.setText("");
-		}
-		closeStandardsPopup();
-		updateStandardsAdvancedSetupStyle();
-	}
-	/**
-	 * 
-	 * @function DisableStandars 
-	 * 
-	 * @created_date : 15-Dec-2014
-	 * 
-	 * @description    This method is used to disable the standrds based on user selected standards from settings
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void DisableStandars(){
-		browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
-		browseStandards.getElement().getStyle().setColor("#999");
-		browseStandards.getElement().addClassName("disabled");
-		browseStandards.addMouseOverHandler(new MouseOverHandler() {
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(isBrowseTooltip == true){
-					browseStandardsTooltip.show();
-					browseStandardsTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
-					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
-					isBrowseStandardsToolTip= true;
-				}
-			}
-		});
 
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
-			public void onPreviewNativeEvent(NativePreviewEvent event) {
-				hideBrowseStandardsPopup(event);
-			}
-		});
-	}
-
-	public void hideBrowseStandardsPopup(NativePreviewEvent event){
-		try{
-			if(event.getTypeInt()==Event.ONMOUSEOVER){
-				Event nativeEvent = Event.as(event.getNativeEvent());
-				boolean target=eventTargetsPopup(nativeEvent);
-				if(!target)
-				{
-					if(isBrowseStandardsToolTip){
-						browseStandardsTooltip.hide();
-					}
-				}
-			}
-		}catch(Exception ex){
-			AppClientFactory.printSevereLogger(ex.getMessage());
-		}
-	}
 
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
@@ -2430,45 +2331,23 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 		return false;
 	}
+
 	/**
-	 * 
-	 * @function enableStandards 
-	 * 
+	 *
+	 * @function setAdvancedOptionsStyles
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
-	 * @description  This method is used to enable the standrds based on user selected standards from settings
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
 	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void enableStandards(){
-		browseStandards.getElement().getStyle().clearColor();
-		browseStandards.getElement().removeClassName("disabled");
-	}
-	/**
-	 * 
-	 * @function setAdvancedOptionsStyles 
-	 * 
-	 * @created_date : 15-Dec-2014
-	 * 
 	 * @description  This method is used to set styles for educationaluse,momentsoflearning and mediafeature based on dropdown selection.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2493,21 +2372,21 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 	}
 	/**
-	 * 
-	 * @function setAdvancedAccessHazardStyles 
-	 * 
+	 *
+	 * @function setAdvancedAccessHazardStyles
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description  This method is used to set styles for accesshazard on click of perticular panel.
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param length
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2520,13 +2399,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 	}
 	/**
-	 * @function updateCenturyAdvancedSetupStyle 
+	 * @function updateCenturyAdvancedSetupStyle
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to set styles for 21 skills based on the number of skills.
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -2540,46 +2419,23 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			addSetupAdvancedView.centuryAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}
 	}
+	
 	/**
-	 * 
-	 * @function updateStandardsAdvancedSetupStyle 
-	 * 
-	 * @created_date : 15-Dec-2014
-	 * 
-	 * @description This method is used to set styles for standards based on the number of standards.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
 	 *
-	 * @throws : <Mentioned if any exceptions>
+	 * @function updateMobileFriendlyAdvancedStyles
 	 *
-	 */
-	public void updateStandardsAdvancedSetupStyle() {
-		if(standardsPanel.getWidgetCount()==0){
-			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
-		}else{
-			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
-			addSetupAdvancedView.standardsAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
-		}
-	}
-	/**
-	 * 
-	 * @function updateMobileFriendlyAdvancedStyles 
-	 * 
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to set styles for MobileFriendly tags based on the user selection(Yes/No).
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2594,7 +2450,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
-		}	
+		}
 	}
 
 	private class  checkAvailableClickHandler implements ClickHandler{
@@ -2765,7 +2621,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					//Set Click event for title
 					titleLabel.addClickHandler(new ClickHandler() {
 						@Override
-						public void onClick(ClickEvent event) {		
+						public void onClick(ClickEvent event) {
 							String optionSelected = titleLabel.getText();
 							lblMediaPlaceHolder.setText(optionSelected);
 							spanelMediaFeaturePanel.setVisible(false);
@@ -2840,21 +2696,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}
 		});
 	}
-	public List<Map<String,String>> getStandards(){
-		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
-		int size=standardsPanel.getWidgetCount();
-		for(int i=0;i<size;i++){
-			Map<String, String> map=new HashMap<String, String>();
-			DownToolTipWidgetUc downToolTipWidgetUc=(DownToolTipWidgetUc)standardsPanel.getWidget(i);
-			map.put("id",downToolTipWidgetUc.getElement().getId());
-			map.put("code", downToolTipWidgetUc.getElement().getTitle());
-			standardsList.add(map);
-		}
-		
-		return standardsList;
-	}
-	
-	
+
+
+
 	public List<StandardFo> getCenturySkills(){
 		List<StandardFo> standardsList=new ArrayList<>();
 		int size=centuryPanel.getWidgetCount();
@@ -2868,4 +2712,286 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		return standardsList;
 	}
 	
+	public final void populateStandardValues() {
+		for (String standardsTypesArray1 : standardsTypesArray) {
+			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
+			LiPanel liPanel = new LiPanel();
+			for (int j = 0; j < standardsDescriptionList.size(); j++) {
+				HTMLPanel headerDiv = new HTMLPanel("");
+				if (j == 0) {
+					if (standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
+						liPanel.getElement().setId("CA");
+					} else {
+						liPanel.getElement().setId(standardsDescriptionList.get(j));
+					}
+
+					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isNGSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("NGSS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					}
+
+					headerDiv.setStyleName("liPanelStyle");
+				} else {
+					if (standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life")) {
+						standardsDescriptionList.set(j, "College, Career, and Civic Life");
+						headerDiv.setStyleName("liPanelStylenonBold");
+						liPanel.getElement().setAttribute("standarddesc", "College, Career, and Civic Life");
+					} else {
+						headerDiv.setStyleName("liPanelStylenonBold");
+						liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
+					}
+				}
+				headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
+				liPanel.add(headerDiv);
+			}
+			if (liPanel.getElement().getAttribute("style") != null
+					&& !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;")) {
+				liPanel.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						standardsDropListValues.setVisible(false);
+						String standardsVal = event.getRelativeElement().getAttribute("id");
+						String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+
+						collectionLiPanelWithCloseArray.clear();
+						for (int i = 0; i < ulSelectedItems.getWidgetCount(); i++) {
+							collectionLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+						}
+						showStandardsPopup(standardsVal, standardsDesc,
+								collectionLiPanelWithCloseArray);
+					}
+				});
+			}
+			standardsDropListValues.add(liPanel);
+		}
+	}
+	
+	
+
+	public void checkStandarsList(List<String> standarsPreferencesList) {
+
+		if (standarsPreferencesList != null) {
+			if (standarsPreferencesList.contains("CCSS")) {
+				isCCSSAvailable = true;
+			} else {
+				isCCSSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("NGSS")) {
+				isNGSSAvailable = true;
+			} else {
+				isNGSSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("TEKS")) {
+				isTEKSAvailable = true;
+			} else {
+				isTEKSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("CA")) {
+				isCAAvailable = true;
+			} else {
+				isCAAvailable = false;
+			}
+		}
+
+		populateStandardValues();
+	}
+
+	public void getAddStandards() {
+		if (!AppClientFactory.isAnonymous()) {
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(
+					AppClientFactory.getLoggedInUser().getGooruUId(), USER_META_ACTIVE_FLAG,
+					new SimpleAsyncCallback<ProfileDo>() {
+						@Override
+						public void onSuccess(final ProfileDo profileObj) {
+							if (profileObj.getUser().getMeta() != null
+									&& profileObj.getUser().getMeta().getTaxonomyPreference() != null
+									&& profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null) {
+								checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+							}
+							standardPreflist=new ArrayList<String>();
+							for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+								standardPreflist.add(code);
+								standardPreflist.add(code.substring(0, 2));
+							 }
+						}
+
+					});
+		} else {
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			isTEKSAvailable = false;
+		}
+	}
+
+	public abstract void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
+	
+	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
+		standardSuggestOracle.clear();
+		this.standardSearchDo = standardSearchDo;
+		if (this.standardSearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedStandards();
+			for (CodeDo code : standardSearchDo.getSearchResults()) {
+				if (!sources.contains(code.getCode())) {
+					standardSuggestOracle.add(code.getCode());
+				}
+				selectedValues.add(code.getCodeId());
+				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		standardSgstBox.showSuggestionList();
+	}
+	public void displaySelectedStandards(List<Map<String,String>> standListArray){
+		for (int i=0;i<standListArray.size();i++){
+			final Map<String, String> standard = standListArray.get(i);
+			if (!selectedValues.contains(standard.get("selectedCodeId"))){
+				ulSelectedItems.add(generateLiPanel(standard, "standards"));
+			}
+		}
+	}
+	public void displaySelectedStandardsOne(Map<String, String> standard){
+			if (!selectedValues.contains(standard.get("selectedCodeId"))){
+				ulSelectedItems.add(generateLiPanel(standard, "standards"));
+			}
+		
+	}
+	private LiPanelWithClose generateLiPanel(final Map<String, String> standard, String tagValue) {
+		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(standard.get("selectedCodeVal"));
+		liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				//This will remove the selected value when we are trying by close button
+				removeGradeWidget(ulSelectedItems,Long.parseLong(standard.get("selectedCodeId")));
+				liPanelWithClose.removeFromParent();
+			}
+		});
+		selectedValues.add(Integer.parseInt(standard.get("selectedCodeId")));
+		liPanelWithClose.setId(Long.parseLong(standard.get("selectedCodeId")));
+		liPanelWithClose.setName(standard.get("selectedCodeVal"));
+		liPanelWithClose.setRelatedId(Integer.parseInt(standard.get("selectedCodeId")));
+		liPanelWithClose.setDifferenceId(Integer.parseInt(standard.get("selectedDifferenceId")));
+		liPanelWithClose.getElement().setAttribute("tag", tagValue);
+		return liPanelWithClose;
+	}
+	/**
+	 * This method will remove the widget based on the codeId in the UlPanel
+	 * @param ulPanel
+	 * @param codeId
+	 */
+	public void removeGradeWidget(UlPanel ulPanel,long codeId){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getId()==codeId){
+					obj.removeFromParent();
+				}
+			}
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;
+				if(obj.getCodeId()==codeId){
+					obj.removeStyleName("active");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * This method is used to get the selected Std id's
+	 * @return
+	 */
+	public List<Integer> getSelectedStandards(){
+		List<Integer> taxonomyCourseIds=new ArrayList<>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getDifferenceId()==3){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					selectedValues.add((int)obj.getId());
+					courseObj.setId((int)obj.getId());
+					courseObj.setCode(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedId());
+					courseList.add(courseObj);
+					CodeDo codeObj=new CodeDo();
+					codeObj.setCodeId((int)obj.getId());
+					codeObj.setCode(obj.getName());
+					standardsDo.add(codeObj);
+				}
+			}
+		}
+		if(courseObjG!=null){
+			courseObjG.setStandards(courseList);
+		}
+
+		return taxonomyCourseIds;
+	}
+	/**
+	 * get the standards are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return standards text in list which are added for the collection
+	 */
+	private List<String> getAddedStandards() {
+		List<String> suggestions = new ArrayList<String>();
+		
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
+	public List<Map<String,String>> getStandards(){
+		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
+		int size=ulSelectedItems.getWidgetCount();
+		for(int i=0;i<size;i++){
+			Map<String, String> map=new HashMap<String, String>();
+			LiPanelWithClose downToolTipWidgetUc=(LiPanelWithClose)ulSelectedItems.getWidget(i);
+			map.put("id",String.valueOf(downToolTipWidgetUc.getId()));
+			map.put("code", downToolTipWidgetUc.getName());
+			standardsList.add(map);
+		}
+
+		return standardsList;
+	}
+	/**
+	 *
+	 * @function updateStandardsAdvancedSetupStyle
+	 *
+	 * @created_date : 15-Dec-2014
+	 *
+	 * @description This method is used to set styles for standards based on the number of standards.
+	 *
+	 *
+	 * @parm(s) :
+	 *
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	public void updateStandardsAdvancedSetupStyle() {
+		if(ulSelectedItems.getWidgetCount()==0){
+			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.standardsAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+	}
+
 }

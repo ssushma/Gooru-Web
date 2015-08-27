@@ -2,14 +2,11 @@ package org.ednovo.gooru.client.mvp.analytics.util;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
-
 import com.google.gwt.user.client.ui.Label;
 
 public class AnalyticsUtil {
 
 	private static final String DATE_FORMAT="MM/dd/yyyy hh:mm:ss aaa";
-	static CollectionSummaryIndividualCBundle res= CollectionSummaryIndividualCBundle.INSTANCE;
 	/**
 	 * This method will return the suffix for the numbers while displaying the seesions
 	 * @param value
@@ -184,9 +181,8 @@ public class AnalyticsUtil {
 	 * @return
 	 */
 	public static Label getTimeStampLabel(long timeSpent){
-		 res.css().ensureInjected();
 		 Label timeStamplbl=new Label(AnalyticsUtil.getTimeSpent(timeSpent));
-         timeStamplbl.setStyleName(res.css().alignCenterAndBackground());
+         timeStamplbl.setStyleName("alignCenterAndBackground");
          return timeStamplbl;
 	}
 	/**

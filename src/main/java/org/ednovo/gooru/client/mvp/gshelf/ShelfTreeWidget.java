@@ -35,7 +35,6 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.effects.FontWeightEffect;
-import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.EditAssessmentPopup;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
@@ -88,8 +87,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	private FolderDo collectionDo;
 
 	private List<FolderDo> folderListDoChild;
-
-	private ResourceDropController dropController;
 
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 
@@ -405,16 +402,6 @@ public class ShelfTreeWidget extends FocusPanel {
         }
 	}
 
-	/**
-	 * @return dropController instance of {@link ResourceDropController}
-	 */
-	public ResourceDropController getDropController() {
-		return dropController;
-	}
-
-	public void setDropController(ResourceDropController dropController) {
-		this.dropController = dropController;
-	}
 
 	/**
 	 * @return collectionDo

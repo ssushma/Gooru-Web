@@ -46,6 +46,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResourceImageHandler;
 
 import com.google.gwt.event.shared.EventHandler;
@@ -107,6 +108,9 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	public static final Type<RevealContentHandler<?>> SLOT_QUESTION_TYPE = new Type<RevealContentHandler<?>>();
 	
 	public void getDepthOfKnowledges();
+
+	void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 
 	
 

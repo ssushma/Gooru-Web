@@ -288,7 +288,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
-			} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
+			} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.EPISD_LIBRARY)) {
+				partnerLogo.setStyleName(libraryStyleUc.episdPartnerLogo());
+				partnerLogo.setVisible(true);
+				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
+				landingBanner.setVisible(false);
+			}else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 				partnerLogo.setStyleName(libraryStyleUc.sausdPartnerLogo());
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
@@ -340,7 +345,13 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredCousesLbl.setText(i18n.GL0588());
 			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL0588());
 			featuredCousesLbl.getElement().setAttribute("title",i18n.GL0588());
-		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.EPISD_LIBRARY)) {
+			landingBanner.getElement().setId("landingRusdBanner");
+			landingBanner.setHeight("250px");
+			featuredCousesLbl.setText(i18n.GL3504());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL3504());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL3504());
+		}  else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingSausdBanner");
 			landingBanner.setHeight("250px");
 			featuredCousesLbl.setText(i18n.GL1901());
