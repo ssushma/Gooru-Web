@@ -1045,5 +1045,11 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		htmlText = htmlText.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return htmlText;
 	}
-	
+	public static boolean checkItContainesURL(String textVal){
+		boolean isTrue=false;
+		if (textVal.toLowerCase().contains("www.") || textVal.toLowerCase().contains("http://") || textVal.toLowerCase().contains("https://") || textVal.toLowerCase().contains("ftp://")){
+			isTrue=true;
+		}
+		return isTrue;
+	}
 }
