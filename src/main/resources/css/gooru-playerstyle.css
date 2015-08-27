@@ -43,7 +43,7 @@
 
 
 .player-loginStatus {
-	
+
 }
 
 .player-loginStatus .loggingIcon {
@@ -281,7 +281,7 @@ background: -moz-linear-gradient(center top , #fdfdfd, #ddd) repeat scroll 0 0 r
     margin-right: 10px;
     margin-top: 10px;
     padding: 7px 9px;
-	
+
 }
 
 .ActiveButton:hover {
@@ -370,7 +370,7 @@ display: inline-block;
 	text-align:right;
 	vertical-align:top;
 	float:right;
-	
+
 }
 
 .avatarblock .ActiveButton{
@@ -444,7 +444,7 @@ display: inline-block;
 	display:inline-block;
 	vertical-align:middle;
 	margin-right:5px;
-	
+
 }
 
 .leftBigarrow a{
@@ -453,7 +453,7 @@ display: inline-block;
 	transition:all 0.5s ease-in-out 0s;
 	height:65px;
 	width:65px;
-	
+
 }
 .leftBigarrow a:hover{
 	opacity:1;
@@ -497,7 +497,7 @@ display: inline-block;
 	margin-left:5px;
 	float:right;
 
-	
+
 }
 
 .rightBigarrow a{
@@ -506,7 +506,7 @@ display: inline-block;
 	transition:all 0.5s ease-in-out 0s;
 	height:65px;
 	width:65px;
-	
+
 }
 .rightBigarrow a:hover{
 	opacity:1;
@@ -736,7 +736,7 @@ background:url(../images/player_sprite_new.png) no-repeat -74px -44px;
 .collectionTxt{
 	display:inline-block;
 	vertical-align:top;
-	
+
 }
 
 .collectionTxt .headBlue{
@@ -891,7 +891,7 @@ font-size: 31px;
 	overflow: visible;
 	z-index: 99999;
 	background-color: #ddd;
-	
+
 }
 .player-rightPanel{
 	padding-top: 30px;
@@ -949,7 +949,7 @@ font-size: 31px;
 	z-index:999;
 }
 .bodyContent{
-	
+
 }
 .greybackground{
 	background: #f0f0f0;
@@ -973,7 +973,7 @@ font-size: 31px;
 	display:inline-block;
 }
 .collectionsbuttons{
-	
+
 }
 .collectionsbuttons hr{
 	margin:10px 0;
@@ -1145,12 +1145,12 @@ font-size: 31px;
 	font-size: 15px;
 	text-align: center;
 	margin: 15px auto 0;
-	background-image: url(images/downarrow.png);
+	background-image: url(../images/downarrow.png);
 	background-repeat: no-repeat;
 	background-position: 11px 6px;
 }
 .seelessText {
-	background-image: url(images/uparrow.png);
+	background-image: url(../images/uparrow.png);
 }
 .tabSection {
 	width: 100%;
@@ -1349,7 +1349,7 @@ header{
 }
 
 .nav-toc-wrapperContainerMain{
-	
+
 }
 .nav-toc-wrapper{
 	width:100%;
@@ -1366,18 +1366,18 @@ header{
 	overflow-y:scroll !important;
 }
 .player-rightPanel{
-	
+
 }
 .player-leftPanel{
 }
 .playerBodyContainer{
-	
+
 }
 .collectionPlayerContainer{
-	
+
 }
 .blocksmallPlayer{
-	
+
 	float: left;
 padding: 10px 10px;
 width: 100%;
@@ -1412,7 +1412,7 @@ position: relative;
 }
 
 .greybackground{
-	
+
 }
 .collectionsImageContainer{
 	margin-bottom:25px;
@@ -1425,10 +1425,10 @@ position: relative;
 	margin-top:25px;
 }
 .player-buttonsContainer{
-	
+
 }
 .collectionsbuttons{
-	
+
 }
 
 .logStatus{
@@ -1440,7 +1440,7 @@ position: relative;
 	right:50px;
 }
 .bodysection{
-	
+
 }
 .narrationPopup {
 	width: 90%;
@@ -1522,7 +1522,7 @@ position: relative;
 }
 .seemoreText {}
 .seelessText {}
-	
+
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -1562,7 +1562,7 @@ position: relative;
 .animationWrapper{}
 
 .player-loginStatus{
-	
+
 }
 .collectionItem {
     margin: 5px;
@@ -1596,7 +1596,7 @@ position: relative;
 }
 .nav-toc-wrapperContainerMain{
 	width:100%;
-} 
+}
 .nav-toc-wrapper{
 	width:100%;
 }
@@ -1613,10 +1613,10 @@ position: relative;
 }
 
 .player-rightPanel{
-	
+
 }
 .player-leftPanel{
-	
+
 }
 .playerBodyContainer{
 	width:100%;
@@ -1625,10 +1625,10 @@ position: relative;
 
 
 .player-resource-title{
-	
+
 }
 .resourcesCountStyle{
-	
+
 }
 .fixedContainer{
 	position:relative;
@@ -1637,21 +1637,21 @@ position: relative;
 	padding-top:0px;
 }
 .greybackground{
-	
+
 }
 .collectionsImageContainer{
 	margin-bottom:25px;
 }
 
 .collectionImage{
-	
+
 }
 .assessmentImage{}
 .player-buttonsContainer{
-	
+
 }
 .collectionsbuttons{
-	
+
 }
 .logStatus{
 	display: inline-block;
@@ -1674,7 +1674,7 @@ position: relative;
 	right: 10%;
 	}
 .bodysection{
-	
+
 }
 .narrationPopup {
 	width:90%;
@@ -1686,10 +1686,10 @@ position: relative;
 
 }
 .resources-info-metadata-innerwrapper{
-	
+
 }
 .resources-info-collections-wrapper{
-	
+
 }
 .playerResourceRightSection {
 
@@ -1739,9 +1739,9 @@ position: relative;
 }
 .seemoreText {}
 .seelessText {}
-	
-	
-	
+
+
+
 }
 
 

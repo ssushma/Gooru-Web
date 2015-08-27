@@ -91,8 +91,8 @@ body.popupBG {
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
 	/* IE 6-9 */
-	
-		
+
+
 }
 
 #epnlReviewContainer .popupHeader h1 {
@@ -110,7 +110,7 @@ body.popupBG {
 #epnlReviewContainer .closeButton {
 	width: 17px;
 	height: 17px;
-	background: url("images/login/close-button.png") no-repeat;
+	background: url("../images/login/close-button.png") no-repeat;
 	position: absolute;
 	top: 10px;
 	right: 10px;
@@ -306,7 +306,7 @@ body.popupBG {
 	color: #579ECF;
 }
 
-#epnlReviewContainer .rating:not (:checked ) >label:hover,#epnlReviewContainer .rating:not (:checked ) >label:hover 
+#epnlReviewContainer .rating:not (:checked ) >label:hover,#epnlReviewContainer .rating:not (:checked ) >label:hover
 	~ label {
 	color: #1076BB;
 }
@@ -602,7 +602,7 @@ fieldset {
 }
 
 #epnlReviewContainer .panelRatingLabels{
-	float: left;	
+	float: left;
 }
 
 #epnlReviewContainer .panelRatingValues{

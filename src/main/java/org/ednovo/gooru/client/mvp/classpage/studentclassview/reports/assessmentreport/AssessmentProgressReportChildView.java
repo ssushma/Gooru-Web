@@ -382,9 +382,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	private void setDefaultImg() {
 		if(isCollection) {
-			collectionImage.setUrl("images/default-collection-image-160x120.png");
+			collectionImage.setUrl(urlDomain+"/images/default-collection-image-160x120.png");
 		} else {
-			collectionImage.setUrl("images/default-assessment-image -160x120.png");
+			collectionImage.setUrl(urlDomain+"/images/default-assessment-image -160x120.png");
 		}
 	}
 
@@ -792,7 +792,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						setDataPanelVisibility(false,true);
 					}
 					String outputData = PrintPnl.getElement().getInnerHTML().toString();
-					outputData = outputData.replaceAll("images/", urlDomain+"/images/");
+					
 					setDataPanelVisibility(true,false);
 					printOptions.setVisible(true);
 					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);

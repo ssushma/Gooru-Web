@@ -96,12 +96,11 @@ public class FolderCollectionView extends Composite {
 		if(folderDo.getSettings()!=null && folderDo.getSettings().getIsLoginRequired()!=null){
 			imgLock.setVisible(Boolean.parseBoolean(folderDo.getSettings().getIsLoginRequired()));
 		}
-		
 		if(folderDo.getTitle()!=null && !folderDo.getTitle().isEmpty()){
 			lblCollectionTitle.setText(folderDo.getTitle());
 		}
 		if(folderDo.getDescription()!=null && !folderDo.getDescription().isEmpty()){
-			lblCollectionDesc.setText(folderDo.getDescription());
+			lblCollectionDesc.getElement().setInnerHTML(folderDo.getDescription());
 		}
 		 if(folderDo.getCollectionItems().size()>0){
 			 pnlResources.add(new FolderCollectionResourceView(folderDo,parentId));
