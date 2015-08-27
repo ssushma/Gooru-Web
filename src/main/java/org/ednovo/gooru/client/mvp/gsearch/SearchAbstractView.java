@@ -70,6 +70,7 @@ import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -391,6 +392,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
+			reviewPanelUc.getElement().getStyle().setMarginTop(-10, Unit.PX);
 			renderCheckBox(reviewPanelUc,"1", "Only Resources with Reviews");
 	    	renderStarRatings();
 	    	renderAccessModeValues();
@@ -812,6 +814,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		final Image mobilefriendly = new Image();
 		mobilefriendly.setUrl("images/mos/questionmark.png");
 		mobilefriendly.getElement().getStyle().setCursor(Cursor.POINTER);
+		mobilefriendly.getElement().getStyle().setPaddingLeft(6, Unit.PX);
 		mobilefriendly.setAltText(i18n.GL0732());
 		mobilefriendly.setTitle(i18n.GL0732());
 		mobilefriendly.addMouseOverHandler(new MouseOverHandler() {

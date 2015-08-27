@@ -58,4 +58,6 @@ public interface CssTokens {
 
 	String CURSOR_POINTER = "cursorPointer";
 
+	String TEXT_UPPERCASE = "text-uppercase";
+	
 }
