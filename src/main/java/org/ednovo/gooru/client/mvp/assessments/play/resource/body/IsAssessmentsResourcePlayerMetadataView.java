@@ -88,4 +88,5 @@ public interface IsAssessmentsResourcePlayerMetadataView extends IsViewWithHandl
 	 *
 	 */
 	void navigateToNextResource(PlaceRequest resourceRequest);
+	public void displaySelectedStandards(List<Map<String, String>> standListArray);
 }
