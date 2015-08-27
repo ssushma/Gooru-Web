@@ -67,11 +67,11 @@ public abstract class DistrictMenuNav extends Composite {
 	
 	@UiField Anchor aboutGooruAnr;
 	
-	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning",EXTENDING="extending";
+	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning",EXTENDING="extending",MORE_SUBJECTS="more subjects";
 	
 	private static final String ACTIVE = "active";
 	
-	private boolean isScienceHovered = false, isMathHovered = false, isSocialHovered = false, isLanguageHovered = false,isExtendingHovered=false, isLearningHovered = false,iselementaryHoverd =false;
+	private boolean isScienceHovered = false, isMathHovered = false, isSocialHovered = false, isLanguageHovered = false,isExtendingHovered=false,isMoreSubHovered=false, isLearningHovered = false,iselementaryHoverd =false;
 	
 	private Map<String, String> subjectIdList = new HashMap<String, String>();
 	
@@ -150,6 +150,10 @@ public abstract class DistrictMenuNav extends Composite {
 				if(!isExtendingHovered) {
 					isExtendingHovered = true;
 					getTaxonomyData(subjectIdList.get(EXTENDING),EXTENDING);
+				}
+				if(!isMoreSubHovered){
+					isMoreSubHovered = true;
+					getTaxonomyData(subjectIdList.get(MORE_SUBJECTS),MORE_SUBJECTS);
 				}
 			}
 		});
@@ -371,6 +375,8 @@ public abstract class DistrictMenuNav extends Composite {
 					learnCourses.add(courseTitle);
 				} else if(subjectname.equalsIgnoreCase(EXTENDING)) {
 					aboutCourses.add(courseTitle);
+				}else if(subjectname.equalsIgnoreCase(MORE_SUBJECTS)) {
+					aboutCourses.add(courseTitle);
 				}
 			}
 		}
@@ -381,7 +387,7 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 	
 	public void setSubjectPanelIds(ProfileLibraryListDo profileLibraryListDo) {
-
+		
 		for (ProfileLibraryDo profileListDo : profileLibraryListDo.getSearchResult()) {
 			if(profileListDo.getTitle().toLowerCase().contains("social")) {
 				subjectIdList.put(SOCIAL, profileListDo.getGooruOid());
@@ -389,7 +395,7 @@ public abstract class DistrictMenuNav extends Composite {
 				subjectIdList.put(MATH, profileListDo.getGooruOid());
 			} else if(profileListDo.getTitle().toLowerCase().contains("science")) {
 				subjectIdList.put(SCIENCE, profileListDo.getGooruOid());
-			} else if(profileListDo.getTitle().toLowerCase().contains("language")) {
+			}else if(profileListDo.getTitle().toLowerCase().contains("language")) {
 				subjectIdList.put(LANGUAGE, profileListDo.getGooruOid());
 			} else if(profileListDo.getTitle().toLowerCase().contains("learning")) {
 				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
@@ -397,6 +403,13 @@ public abstract class DistrictMenuNav extends Composite {
 				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
 			}else if(profileListDo.getTitle().toLowerCase().contains(EXTENDING)) {
 				subjectIdList.put(EXTENDING, profileListDo.getGooruOid());
+			}
+			
+			if(profileListDo.getTitle().toLowerCase().contains("connecting languages")) {
+				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
+			}
+			if(profileListDo.getTitle().toLowerCase().contains(MORE_SUBJECTS)) {
+				subjectIdList.put(MORE_SUBJECTS, profileListDo.getGooruOid());
 			}
 			setLearningTabStyle();
  		}

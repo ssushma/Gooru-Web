@@ -737,6 +737,11 @@
 .waitPopUp .removingText {
 
 }
+
+.tagsPopupStdPos{
+	margin-left: 87px;
+	margin-top: -14px;
+}
 .text-uppercase {
 	text-transform: uppercase !important;
 }
