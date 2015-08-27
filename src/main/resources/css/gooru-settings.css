@@ -323,7 +323,7 @@
 }
 
 #gooruSettings .settingInfoMimiusArrow {
-	background: url(images/settings/setting-info-minimus.png);
+	background: url(../images/settings/setting-info-minimus.png);
 	width: 16px;
 	height: 10px;
 	float: right;
@@ -709,7 +709,7 @@
 }
 
 #gooruSettings .cssubStadard {
-	
+
 }
 
 #gooruSettings .defaultTextcss {

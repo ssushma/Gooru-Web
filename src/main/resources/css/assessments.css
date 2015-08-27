@@ -765,7 +765,7 @@ th.headcol.whitebg {
 	z-index: 1;
 }
 .loadingImageForSummary {
-	background: url(images/core/B-Dot.gif);
+	background: url(../images/core/B-Dot.gif);
 	width: 166px;
 	height: 170px;
 	margin: 0 auto;

@@ -636,7 +636,7 @@ public class ProfileTopicListView extends Composite{
 							try {
 								ProfileLibraryDo profileLibraryTemp = new ProfileLibraryDo();
 
-								if(libraryResources.size()>0 && libraryResources.get(i).getResource()!=null) {
+								if(libraryResources.size()>0 && (libraryResources.get(i)!=null && libraryResources.get(i).getResource()!=null)) {
 									profileLibraryTemp = libraryResources.get(i).getResource();
 								} else {
 									profileLibraryTemp = libraryResources.get(i);
