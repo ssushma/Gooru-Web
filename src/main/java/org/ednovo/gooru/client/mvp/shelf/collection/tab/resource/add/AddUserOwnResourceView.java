@@ -96,7 +96,10 @@ import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -456,6 +459,14 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			public void showAndHideContainers() {
 			}
 		};
+		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+			@Override
+			public void onPreviewNativeEvent(NativePreviewEvent event) {
+				hideDropDown(event);
+			}
+		}); 
+		
 		standardsCont.getElement().setAttribute("style", "position:relative;");
 		AdvancedSetupContainer.add(addSetupAdvancedView);
 		standardsBrowseContainer.getElement().setId("standardsContainerBswn");
@@ -1111,6 +1122,24 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				addSetupAdvancedView.setUpLabel.setVisible(false);
 			}
 		}
+	}
+	
+	protected void hideDropDown(NativePreviewEvent event) {
+		if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsStandardPopup(nativeEvent);
+        	if(!target){
+        		standardsDropListValues.getElement().removeAttribute("style");
+        	}
+    	}
+	}
+	
+	private boolean eventTargetsStandardPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
 	}
 	
 	
