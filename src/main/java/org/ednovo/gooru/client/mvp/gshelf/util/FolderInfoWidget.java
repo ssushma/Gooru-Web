@@ -54,11 +54,9 @@ public class FolderInfoWidget extends Composite {
 		folderInfo.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
 		titleDetailsPnl.getElement().setAttribute("style", "border-bottom: 0px solid #ddd;");
 		Window.addResizeHandler(new ResizeHandler() {
-			
 			@Override
 			public void onResize(ResizeEvent event) {
 				folderInfo.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
-				
 			}
 		});
 	}
@@ -108,20 +106,16 @@ public class FolderInfoWidget extends Composite {
 				lblErrorMessage.setVisible(true);
 				lblErrorMessage.setText(i18n.GL1427());
 			}
-			
 		}else{
 			lblErrorMessage.setVisible(true);
 			lblErrorMessage.setText(StringUtil.generateMessage(i18n.GL0067(),"Folder"));
 		}
-		
-		
 	}
 	/**
 	 * To Create folder 
 	 */
 	protected void createFolder(String parentId) {
 		AppClientFactory.getInjector().getfolderService().createFolder(folderTitleTxtBox.getText().trim(), parentId, false, new SimpleAsyncCallback<FolderDo>() {
-
 			@Override
 			public void onSuccess(FolderDo folderDo) {
 				Map<String, String> params= new HashMap<String, String>();
@@ -140,7 +134,6 @@ public class FolderInfoWidget extends Composite {
 		if(folderObj!=null){
 			folderTitleTxtBox.setText(folderObj.getTitle());
 		}
-		
 	}
 	/**
 	 * To update the folder details.
@@ -149,15 +142,14 @@ public class FolderInfoWidget extends Composite {
 	 */
 	protected void updateFolder(String folderId, final TreeItem currentItem) { 
 		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, folderTitleTxtBox.getText().trim(), null, null, null, new SimpleAsyncCallback<Void>() {
-
 			@Override
 			public void onSuccess(Void result) {
 				folderObj.setTitle(folderTitleTxtBox.getText());
 				folderObj.setType("folder");
 				rightPresenter.getShelfMainPresenter().updateTitleOfTreeWidget(folderObj,false,currentItem);
+				rightPresenter.getShelfMainPresenter().getView().getCollectionLabel().setText(folderTitleTxtBox.getText());
 				rightPresenter.setTabItems(2, FOLDER, folderObj);
 			}
 		});
 	}
-
 }

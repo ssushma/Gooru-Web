@@ -879,7 +879,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			Window.scrollTo(collectionTitle.getAbsoluteLeft(), collectionTitle.getAbsoluteTop()-(collectionTitle.getOffsetHeight()*3));
 			lblErrorMessage.setVisible(true);
 			collectionTitle.addStyleName("textAreaErrorMessage");
-			lblErrorMessage.setText("collection".equalsIgnoreCase(type)?"Please Enter Collection Title":"Please Enter Assessment Title");
 			resetBtns();
 			spinnerImageVisibility(false);
 		}
@@ -1160,17 +1159,20 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		return false;
 	}
 
-    public boolean validateInputs() {
-        if (collectionTitle.getText() == null) {
+    public boolean validateInputs(){
+        if (collectionTitle.getText().trim() == null || collectionTitle.getText().trim().equalsIgnoreCase(i18n.GL3367())){
+        	lblErrorMessage.setText("collection".equalsIgnoreCase(type)?"Please Enter Collection Title":"Please Enter Assessment Title");
             return false;
         }
-        String collectionTitleStr = collectionTitle.getText().trim();
-        if (collectionTitleStr.equalsIgnoreCase("") || collectionTitleStr.equalsIgnoreCase(i18n.GL3367())) {
-            return false;
-        } else {
-            return true;
+        boolean isValidSting = StringUtil.checkItContainesURL(collectionTitle.getText());
+        if(isValidSting){
+        	lblErrorMessage.setVisible(true);
+			lblErrorMessage.setText(i18n.GL0323());
+        	return false;
+        }else{
+        	lblErrorMessage.setVisible(false);
+        	return true;
         }
-
     }
 
 	@UiHandler("collectionTitle")
