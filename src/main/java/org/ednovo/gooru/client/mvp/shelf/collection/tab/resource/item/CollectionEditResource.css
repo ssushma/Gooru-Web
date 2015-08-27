@@ -2926,8 +2926,8 @@ margin-top: 18px; */
 .accessHazard {
 	font-size: 12px !important;
 	padding: 5px 0px;
-	border-bottom: 1px solid #CCC;
 	width: 74%;
+	display: inline-block;
 	margin-bottom: 8px;
 }
 
