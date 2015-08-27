@@ -9,7 +9,7 @@
 		    <g:HTMLPanel styleName="LoginpopupHeader">
 		    	<g:HTMLPanel styleName="row">
 		    	    <g:HTMLPanel styleName="col-md-8 col-xs-8">
-		    	    	<g:Label styleName="{res.css.popupHeader}" ui:field="lblTitle" />
+		    	    	<g:Label styleName="" ui:field="lblTitle" />
 		    	    </g:HTMLPanel>
 		    		<g:HTMLPanel styleName="col-md-4 col-xs-4 closeContainer">
 		    			<g:Label styleName="closeButton" ui:field="lblCancel"></g:Label>
