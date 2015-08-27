@@ -42,7 +42,6 @@ import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresen
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
-import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Anchor;
@@ -68,6 +67,7 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	PreSearchPresenter preSearchPresenter;
 	LessonInfoPresenter lessonInfoPresenter;
 	AddTagesPopupView addTagesPopupView;
+	String standardV = "";
 
 	/**
 	 * Class constructor
@@ -107,12 +107,13 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	@Override
 	public void callStandardsBasedonTypeService(String standardVal, final String titleVal) {
 		getView().reset();
+		standardV = standardVal;
 		getSearchService().getFirstLevelStandards("0", standardVal, new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
 
 			@Override
 			public void onSuccess(ArrayList<StandardsLevel1DO> result) {
 				for(int i=0;i<result.size();i++) {
-					getView().SetData(result.get(i),i,titleVal);
+					getView().SetData(result.get(i),i,titleVal,standardV);
 				}
 
 
@@ -126,8 +127,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		getSearchService().getSecondLevelStandards(levelOrder, standardCodeSelected, new SimpleAsyncCallback<ArrayList<StandardsLevel2DO>>() {
 			@Override
 			public void onSuccess(ArrayList<StandardsLevel2DO> result) {
-
+				if(!standardV.equalsIgnoreCase("b21"))
+				{
 					getView().loadSecondLevelContianerObjects(result);
+				}
+				else
+				{
+					getView().loadb21SecondLevelContianerObjects(result);
+				}
 
 			}
 		});
@@ -136,12 +143,18 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	@Override
 	public void getSecondLevelObjects(String levelOrder,
-			String standardCodeSelected) {
+			final String standardCodeSelected) {
 		getSearchService().getThirdLevelStandards(levelOrder, standardCodeSelected, new SimpleAsyncCallback<ArrayList<StandardsLevel3DO>>() {
 			@Override
 			public void onSuccess(ArrayList<StandardsLevel3DO> result) {
-
+					if(!standardV.equalsIgnoreCase("b21"))
+					{
 					getView().loadThirdLevelContianerObjects(result);
+					}
+					else
+					{
+					getView().loadB21ThirdLevelContianerObjects(result);	
+					}
 
 			}
 		});
