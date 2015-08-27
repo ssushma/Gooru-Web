@@ -116,12 +116,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormHandler;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
-import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -311,7 +308,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	
 	String codeID="",code="",label="";
 
-	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
 
 
 
@@ -975,7 +972,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 					momentsOfLearningPanel.setVisible(false);
 					momentsOfLearningOpen = false;
 					spanelMediaFeaturePanel.setVisible(false);
-
 				}else{
 					hasClickedOnDropDwn=false;
 				}
@@ -2550,12 +2546,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			//addResourceBtn.setEnabled(false);
+			addResourceBtn.setEnabled(false);
+			addResourceBtn.addStyleName("disabled");
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean value) {
 					addResourceBtn.setEnabled(true);
+					addResourceBtn.removeStyleName("disabled");
 					if(textBox!=null){
 						isHavingBadWordsInTextbox = value;
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);

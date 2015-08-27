@@ -173,7 +173,7 @@
 }
 
 .Uc-playIcon {
-	background: url("images/Collection-Search/play-icon.Uc-png") no-repeat
+	background: url("../images/Collection-Search/play-icon-png") no-repeat
 		scroll 0 0 transparent;
 	cursor: pointer;
 	height: 16px;
@@ -192,7 +192,7 @@
 }
 
 .Uc-header {
-	background: url("images/Collection-Search/standards-arrow.Uc-png");
+	background: url("../images/Collection-Search/standards-arrow.png");
 	display: block;
 	width: 29px;
 	height: 15px;
@@ -227,7 +227,7 @@
 }
 
 .Uc-lheader {
-	background: url("images/Collection-Search/standards-arrow-right.Uc-png")
+	background: url("../images/Collection-Search/standards-arrow-right.png")
 		no-repeat;
 	display: block;
 	width: 11px;
@@ -478,7 +478,7 @@
 }
 
 .Uc-rplayIcon {
-	background: url("images/Collection-Search/play-icon.Uc-png") no-repeat
+	background: url("../images/Collection-Search/play-icon.png") no-repeat
 		scroll 0 0 transparent;
 	cursor: pointer;
 	height: 16px;
@@ -682,7 +682,7 @@ float: left;
 }
 
 .Uc-resourceNameNew {
-	background: url(".Uc-.Uc-/images/resource-type-icons.Uc-png") no-repeat
+	background: url("../images/resource-type-icons.Uc-png") no-repeat
 		transparent;
 	color: #FFFFFF;
 	font-size: 12px;
@@ -695,69 +695,69 @@ float: left;
 }
 
 .Uc-videoSmall {
-	background:url(".Uc-.Uc-/images/Video_1.Uc-png") no-repeat
+	background:url("../images/Video_1.Uc-png") no-repeat
 		transparent;
 }
 
 .Uc-interactiveSmall {
-	background:url(".Uc-.Uc-/images/Interactive_1.Uc-png") no-repeat
+	background:url("../images/Interactive_1.Uc-png") no-repeat
 		transparent;
 }
 
 .Uc-websiteSmall {
-	background:url(".Uc-.Uc-/images/Website_1.Uc-png") no-repeat
+	background:url("../images/Website_1.Uc-png") no-repeat
 		transparent;
 }
 .Uc-webpageSmall {
-	background:url(".Uc-.Uc-/images/Website_1.Uc-png") no-repeat
+	background:url("../images/Website_1.Uc-png") no-repeat
 		transparent;
 }
 .Uc-examSmall {
-	background:url(".Uc-.Uc-/images/Text_1.Uc-png") no-repeat
+	background:url("../images/Text_1.Uc-png") no-repeat
 		transparent;
 	/* background-position: 0px -84px !important; */
 }
 .Uc-textSmall {
-	background:url(".Uc-.Uc-/images/Text_1.Uc-png") no-repeat
+	background:url("../images/Text_1.Uc-png") no-repeat
 		transparent;
 }
 .Uc-textbookSmall {
-	background:url(".Uc-.Uc-/images/Text_1.Uc-png") no-repeat
+	background:url("../images/Text_1.Uc-png") no-repeat
 		transparent;
 }
 
 .Uc-handoutSmall {
-	background:url(".Uc-.Uc-/images/Text_1.Uc-png") no-repeat
+	background:url("../images/Text_1.Uc-png") no-repeat
 		transparent;
 	/* background-position: 0px -56px !important; */
 }
 
 .Uc-lessonSmall {
-	background:url(".Uc-.Uc-/images/Text_1.Uc-png") no-repeat
+	background:url("../images/Text_1.Uc-png") no-repeat
 		transparent;
 	/* background-position: 0px -112px !important; */
 }
 
 .Uc-slideSmall {
-	background:url(".Uc-.Uc-/images/Text_1.Uc-png") no-repeat
+	background:url("../images/Text_1.Uc-png") no-repeat
 		transparent;
 	/* background-position: 0px -168px !important; */
 }
 
 .Uc-questionSmall {
-	background:url(".Uc-.Uc-/images/Question_1.Uc-png") no-repeat
+	background:url("../images/Question_1.Uc-png") no-repeat
 		transparent;
 }
 .Uc-imageSmall {
-	background:url(".Uc-.Uc-/images/Image_1.Uc-png") no-repeat
+	background:url("../images/Image_1.Uc-png") no-repeat
 		transparent;
 }
 .Uc-audioSmall{
-	background:url(".Uc-.Uc-/images/Audio_1.Uc-png") no-repeat
+	background:url("../images/Audio_1.Uc-png") no-repeat
 		transparent;
 }
 .Uc-otherSmall{
-	background:url(".Uc-.Uc-/images/Text_1.Uc-png") no-repeat
+	background:url("../images/Text_1.Uc-png") no-repeat
 		transparent;
 }
 /**************/
@@ -938,7 +938,7 @@ float: left;
 }
 
 .Uc-gooruCalendarIcon {
-	background: url("images/Collection-Search/icon-sprite.Uc-png") no-repeat
+	background: url("../images/Collection-Search/icon-sprite.png") no-repeat
 		scroll -7px -472px transparent;
 	cursor: pointer;
 	display: block;
@@ -1024,7 +1024,7 @@ float: left;
 }
 
 .Uc-previousArrow {
-	background: url("images/Collection-Search/icon-sprite.Uc-png") repeat
+	background: url("../images/Collection-Search/icon-sprite.png") repeat
 		scroll -4px -373px transparent;
 	float: left;
 	height: 40px;
@@ -1037,7 +1037,7 @@ float: left;
 }
 
 .Uc-nextArrow {
-	background: url("images/Collection-Search/icon-sprite.Uc-png") repeat
+	background: url("../images/Collection-Search/icon-sprite.png") repeat
 		scroll -4px -314px transparent;
 	float: right;
 	height: 41px;
@@ -1067,7 +1067,7 @@ float: left;
 }
 
 .Uc-removeTollTipTopImage {
-	background: url(images/Collection-Search/up-arrow-small.Uc-png) no-repeat;
+	background: url(../images/Collection-Search/up-arrow-small.png) no-repeat;
 	display: block;
 	width: 12px;
 	height: 8px;
@@ -1123,7 +1123,7 @@ float: left;
 }
 
 .Uc-hoverPopupArrow {
-	background: url(images/standards-arrow-two.Uc-png);
+	background: url(../images/standards-arrow-two.png);
 	display: block;
 	width: 25px;
 	height: 9px;
@@ -1447,7 +1447,7 @@ float: left;
 .Uc-classPageEmailCheckBoxBgHoverSprite {
 	width: 19px;
 	height: 17px;
-	background: url(images/checkboxsprite.Uc-png) no-repeat;
+	background: url(../images/checkboxsprite.png) no-repeat;
 	display: inline-block;
 	margin-bottom: -5px;
 }
@@ -1455,7 +1455,7 @@ float: left;
 .Uc-classPageEmailCheckBoxBgHover {
 	width: 19px;
 	height: 17px;
-	background: url(images/checkboxsprite.Uc-png) no-repeat;
+	background: url(../images/checkboxsprite.png) no-repeat;
 	display: inline-block;
 	margin-bottom: -5px;
 	background-position: 0px -34px;
@@ -1490,7 +1490,7 @@ float: left;
 }
 
 .Uc-profilePopupInnerImage {
-	background: url(/images/profilepage/user-profile-popup-pic-small.Uc-png);
+	background: url(../images/profilepage/user-profile-popup-pic-small.png);
 	float: left;
 	width: 50px;
 	height: 50px;
@@ -1720,7 +1720,7 @@ float: left;
 
 
 .Uc-standardsSprite {
-	background: url(images/Classpage/assign-sprite.Uc-png) no-repeat;
+	background: url(../images/Classpage/assign-sprite.png) no-repeat;
 }
 
 .Uc-standardsCloseMark {

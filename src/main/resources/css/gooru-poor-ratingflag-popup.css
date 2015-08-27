@@ -29,7 +29,7 @@
 	background: -o-linear-gradient(top, rgba(102,102,102,1) 0%,rgba(81,81,81,1) 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top, rgba(102,102,102,1) 0%,rgba(81,81,81,1) 100%); /* IE10+ */
 	background: linear-gradient(to bottom, rgba(102,102,102,1) 0%,rgba(81,81,81,1) 100%); /* W3C */
-	
+
 }
 #fpnlWrapperContainerField .playerflagpopupheaderCloseBtn
 {
@@ -63,7 +63,7 @@
 	margin: 0 auto;
 	width:382px;
 	margin-top: 52px;
-	
+
 }
 #fpnlWrapperContainerField .playerflagcontenttext
 {
@@ -82,7 +82,7 @@
 	margin-top:11px;
 	margin-left: 20px;
 	/* width: 345px; */
-	
+
 }
 #fpnlWrapperContainerField .playerflagcontentTextdescription
 {
@@ -92,7 +92,7 @@
 	margin-top:11px;
 	text-align:left;
 	width: 319px;
-	
+
 }
 
 #fpnlWrapperContainerField .playerflagcontentTextCollectiondescription
@@ -103,7 +103,7 @@
 	color:#515151;
 	margin-top:11px;
 	margin-left: 7px;
-	width: 345px;	
+	width: 345px;
 }
 
 #fpnlWrapperContainerField .playerflagcontentTextResourcedescription
@@ -114,7 +114,7 @@
 	color:#515151;
 	margin-top:11px;
 	margin-left: 7px;
-	width: 345px;	
+	width: 345px;
 }
 #fpnlWrapperContainerField .playerflagcontentChooseResource
 {
@@ -133,7 +133,7 @@
 }
  input[type="checkbox"] {
 	float:left;
-}  
+}
 #fpnlWrapperContainerField .playerflagtextarea
 {
 	float: left;
@@ -198,7 +198,7 @@
 	font-size:12px;
 	display: inline-block;
 	border: 1px solid #1076BB;
-	
+
 	background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat
 		scroll 0 0 transparent;
 	background: -o-linear-gradient(top, #4C98CC, #1076BB);
@@ -217,8 +217,8 @@
 	-o-border-radius: 4px 4px 4px 4px;
 	text-decoration:none;
 	cursor: pointer;
-	
-	
+
+
 }
 #fpnlWrapperContainerField .playerflagbuttonsubmit:hover
 {
@@ -243,7 +243,7 @@
 	border: 1px solid #ddd;
 	text-decoration:none;
 	cursor: default;
-	
+
 }
 #fpnlWrapperContainerField .playerflagbuttonOk
 {
@@ -279,12 +279,12 @@
 	cursor: pointer;
 	margin-top: 18px;
 	margin-left: 170px;
-	
+
 }
 #fpnlWrapperContainerField .playerflagbuttonOk:hover
 {
 background: #1076BB;
-color: #FFFFFF !important;	
+color: #FFFFFF !important;
 }
 #select
 {
@@ -559,7 +559,7 @@ color: #515151;
 	display: inline-block;
 	border: 1px solid #1076BB;
 	background: #1076BB;
-	border-radius: 4px;	
+	border-radius: 4px;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
 	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
 	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
@@ -589,7 +589,7 @@ vertical-align: top;
 	margin-top: 3px;
 }
   #fpnlWrapperContainerField .dropdownListPlaceHolder{
-	background:url(images/dropdownMenuArrow.png) no-repeat;
+	background:url(../images/dropdownMenuArrow.png) no-repeat;
 	background-color: white;
 	background-position: right center;
 	color: #999;
@@ -599,10 +599,10 @@ vertical-align: top;
 	cursor: pointer;
 	display: block;
 	width: 280px;
-	height: auto;	
+	height: auto;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
-} 
+}
 #fpnlWrapperContainerField .dropdownListContainerScrollPanel{
 	border: 1px solid #DDD;
 	list-style-type: none;

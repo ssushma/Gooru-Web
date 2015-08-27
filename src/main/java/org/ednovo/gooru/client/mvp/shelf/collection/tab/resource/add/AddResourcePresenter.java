@@ -330,6 +330,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
                     MixpanelUtil.AddQuestion();
+                    AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(result, RefreshType.UPDATE));
             }
 		});
 	}
