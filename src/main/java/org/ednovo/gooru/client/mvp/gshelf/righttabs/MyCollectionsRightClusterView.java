@@ -587,14 +587,13 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		public void onClick(ClickEvent event) {
 			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 			
-			
 			getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
 			/*copyLbl.getElement().addClassName("selected");
 			moveLbl.getElement().removeClassName("selected");
 			myCollDelLbl.getElement().removeClassName("selected");*/
 			isCopySelected= true;
 			isMoveSelected=false;
-			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
+			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
 			getUiHandlers().enableAddButton();
 		}
 	}
@@ -608,7 +607,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			isCopySelected= false;
 			isMoveSelected= true;
 			getUiHandlers().enableAddButton();
-			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
+			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
 			String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 				String viewParamVal= AppClientFactory.getPlaceManager().getRequestParameter("view",null);

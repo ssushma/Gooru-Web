@@ -465,11 +465,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public boolean checkCopyOrMoveStatus(boolean copySelected,
-			boolean moveSelected) {
+			boolean moveSelected,String clickedType) {
 		// TODO Auto-generated method stub
 		this.isCopySelected=copySelected;
 		this.isMoveSelected= moveSelected;
-		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected);
+		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected,clickedType);
 		return false;
 	}
 	@Override
