@@ -5,11 +5,9 @@
 #epnlReviewContainer .rating {
 	margin: 3px 10px 3px 0px;
 	font-size: 12px;
-	/* //width: 95px; used in search
-    //float: right; used in search
-    //text-align:right; used in search */
 	vertical-align: middle;
 	line-height: 1.4em;
+	height: 32px;
 }
 
 #epnlReviewContainer .ratingValue {
@@ -112,7 +110,6 @@ body.popupBG {
 	height: 17px;
 	background: url("../images/login/close-button.png") no-repeat;
 	position: absolute;
-	top: 10px;
 	right: 10px;
 }
 
@@ -239,7 +236,6 @@ body.popupBG {
 #epnlReviewContainer .reviewContainer {
 	position: relative;
 	padding: 15px;
-	width: 397px;
 }
 
 #epnlReviewContainer .reviewContainer .username,#epnlReviewContainer .editContainer .username {
