@@ -5,11 +5,9 @@
 #epnlReviewContainer .rating {
 	margin: 3px 10px 3px 0px;
 	font-size: 12px;
-	/* //width: 95px; used in search
-    //float: right; used in search
-    //text-align:right; used in search */
 	vertical-align: middle;
 	line-height: 1.4em;
+	height: 32px;
 }
 
 #epnlReviewContainer .ratingValue {
@@ -91,8 +89,8 @@ body.popupBG {
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
 	/* IE 6-9 */
-	
-		
+
+
 }
 
 #epnlReviewContainer .popupHeader h1 {
@@ -110,9 +108,8 @@ body.popupBG {
 #epnlReviewContainer .closeButton {
 	width: 17px;
 	height: 17px;
-	background: url("images/login/close-button.png") no-repeat;
+	background: url("../images/login/close-button.png") no-repeat;
 	position: absolute;
-	top: 10px;
 	right: 10px;
 }
 
@@ -239,7 +236,6 @@ body.popupBG {
 #epnlReviewContainer .reviewContainer {
 	position: relative;
 	padding: 15px;
-	width: 397px;
 }
 
 #epnlReviewContainer .reviewContainer .username,#epnlReviewContainer .editContainer .username {
@@ -306,7 +302,7 @@ body.popupBG {
 	color: #579ECF;
 }
 
-#epnlReviewContainer .rating:not (:checked ) >label:hover,#epnlReviewContainer .rating:not (:checked ) >label:hover 
+#epnlReviewContainer .rating:not (:checked ) >label:hover,#epnlReviewContainer .rating:not (:checked ) >label:hover
 	~ label {
 	color: #1076BB;
 }
@@ -602,7 +598,7 @@ fieldset {
 }
 
 #epnlReviewContainer .panelRatingLabels{
-	float: left;	
+	float: left;
 }
 
 #epnlReviewContainer .panelRatingValues{

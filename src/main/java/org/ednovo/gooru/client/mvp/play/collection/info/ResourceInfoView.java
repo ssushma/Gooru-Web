@@ -44,6 +44,7 @@ import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
@@ -72,6 +73,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -84,6 +86,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -2170,6 +2173,17 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 							success.getElement().getStyle().setZIndex(99999);
 			        }
 				}
+				@Override
+				public void onSelection(SelectionEvent<Suggestion> event) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void showStandardsPopup(String standardVal, String standardsDesc,
+						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+					getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+					
+				}
 			};
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
@@ -2259,6 +2273,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		collectionsText.getElement().setInnerHTML(message);
 		collectionsText.getElement().setAttribute("alt",message);
 		collectionsText.getElement().setAttribute("title",message);
+		
+	}
+
+	@Override
+	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
+		popup.displaySelectedStandards(standListArray);
 		
 	}
 }

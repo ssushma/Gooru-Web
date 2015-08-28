@@ -68,4 +68,5 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void setPreviousRating(double previousRating);
 	public double getPreviousRating();
 	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
+	public void displaySelectedStandards(List<Map<String, String>> standListArray);
 }

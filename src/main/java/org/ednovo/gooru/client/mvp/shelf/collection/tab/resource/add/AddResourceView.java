@@ -610,13 +610,24 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			getUiHandlers().browseStandardsInfo(isQuestion, isUserResource);
 		}
 		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id, String desc) {
-			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
+			//super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
 
 		}
 		@Override
 		public void closeStandardsPopup() {
 			getUiHandlers().closeStandardsPopup();
 
+		}
+		@Override
+		public void showStandardsPopup(String standardVal, String standardsDesc,
+				List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+			getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+			
+		}
+		@Override
+		public void onSelection(SelectionEvent<Suggestion> event) {
+			// TODO Auto-generated method stub
+			
 		}
 
 	}
@@ -1585,7 +1596,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
 		addQuestionResourceWidget.centuryPanel.clear();
-		addQuestionResourceWidget.standardsPanel.clear();
+	//	addQuestionResourceWidget.standardsPanel.clear();
 		addQuestionResourceWidget.standardsDo.clear();
 		for (Map.Entry<Long, String> entry : centurySkills.entrySet())
 		{
@@ -1609,7 +1620,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			codeDo.setCode(code);
 			codeDo.setCodeId(codeID);
 			addQuestionResourceWidget.standardsDo.add(codeDo);
-			addQuestionResourceWidget.standardsPanel.add(addQuestionResourceWidget.createStandardLabel(code,String.valueOf(codeID),label));
+			//addQuestionResourceWidget.standardsPanel.add(addQuestionResourceWidget.createStandardLabel(code,String.valueOf(codeID),label));
 			}
 		}
 
@@ -1626,7 +1637,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		if(addQuestionResourceWidget.addDepthOfKnowledgeLabel.isVisible()){addQuestionResourceWidget.setDepthOfKnowledgeContainer();}
 		if(addQuestionResourceWidget.addHintsLabel.isVisible()){addQuestionResourceWidget.setHintsContainer();}
-		if(addQuestionResourceWidget.addStandardsLabel.isVisible()){addQuestionResourceWidget.setStandardsContainer();}
+		//if(addQuestionResourceWidget.addStandardsLabel.isVisible()){addQuestionResourceWidget.setStandardsContainer();}
 		if(addQuestionResourceWidget.addCenturyLabel.isVisible()){addQuestionResourceWidget.setCenturyContainer();}
 	}
 	}
@@ -1674,9 +1685,21 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	@Override
 	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
-		addWebResourceWidget.displaySelectedStandards(standListArray);
-		addUserOwnResourceWidget.displaySelectedStandards(standListArray);
-		
+		try
+		{
+		if(addWebResourceWidget!=null){
+		addWebResourceWidget.displaySelectedStandards(standListArray);}
+		}catch(Exception e){}
+		try
+		{
+		if(addUserOwnResourceWidget!=null){
+		addUserOwnResourceWidget.displaySelectedStandards(standListArray);}
+		}catch(Exception e){}
+		try
+		{
+		if(addQuestionResourceWidget!=null){
+		addQuestionResourceWidget.displaySelectedStandards(standListArray);}
+		}catch(Exception e){}
 	}
 	
 }

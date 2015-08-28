@@ -633,8 +633,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImage.setVisible(false);
 		hideProfileOrLibraryPanel(false);
 		if(!StringUtil.isEmpty(placetoken)){
-			if(placetoken.equalsIgnoreCase("rusd"))
-			{
+			if(placetoken.equalsIgnoreCase("rusd")||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY)){ 
 				bannerLogoImageContainer.getElement().getStyle().setBottom(6, Unit.EM);
 			}
 			else

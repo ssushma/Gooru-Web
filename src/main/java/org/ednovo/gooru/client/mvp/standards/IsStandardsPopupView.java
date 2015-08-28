@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.standards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel1DO;
@@ -33,7 +34,10 @@ import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import org.ednovo.gooru.client.uc.UlPanel;
 
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.gwtplatform.mvp.client.PopupView;
 
 /**
@@ -44,7 +48,7 @@ public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<Stan
 
 	void loadData();
 
-	void SetData(StandardsLevel1DO levelOneData, int valArr, String titleVal);
+	void SetData(StandardsLevel1DO levelOneData, int valArr, String titleVal, String standardV);
 
 	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
 
@@ -57,6 +61,16 @@ public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<Stan
 	void hideLoaderIcon();
 
 	void setSelectedItmes(List<LiPanelWithClose> collectionLiPanelWithCloseArray);
+
+	Anchor getCloseButton();
+
+	Button getAddButton();
+
+	List<Map<String, String>> getAddedStandards();
+
+	void loadB21ThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
+
+	void loadb21SecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);  
 
 
 }

@@ -28,7 +28,7 @@
 .publicProfilePencil-IconNew {
 	width: 10px;
 	height: 15px;
-	background: url(images/pencil-hover-icon.fw.png) no-repeat;
+	background: url(../images/pencil-hover-icon.fw.png) no-repeat;
 	margin-left: 3px;
 	margin-top: 3px;
 }
@@ -634,6 +634,9 @@
 	text-decoration: none;
 	color: #4e9746;
 	opacity: 1;
+	margin: 0px;
+	border-left: 0px;
+	border-top: 0px;
 }
 
 .myCourseContainer .myCousesTabMenu a.mycollectionMenu:hover,
@@ -734,6 +737,14 @@
 .waitPopUp .removingText {
 
 }
+
+.tagsPopupStdPos{
+	margin-left: 87px;
+	margin-top: -14px;
+}
 .text-uppercase {
 	text-transform: uppercase !important;
+}
+.loginFailureAlert div table {
+  width: 100%;
 }
