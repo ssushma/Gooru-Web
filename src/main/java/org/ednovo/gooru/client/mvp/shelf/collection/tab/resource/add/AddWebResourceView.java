@@ -246,7 +246,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public boolean isValidYoutubeUrlFlag = true;
 
 	private boolean hasClickedOnDropDwn = false;
-	
+
 	public boolean resoureDropDownLblOpen = false, educationalDropDownLblOpen = false,
 			educationalDropDownLblOpen1 = false, momentsOfLearningOpen = false, momentsOfLearningOpen1 = false;
 
@@ -613,7 +613,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		addResourceBtnLbl.setEnable(true);
 		addResourceBtnLbl.getElement().removeClassName("secondary");
 		addResourceBtnLbl.getElement().addClassName("primary");
-		//standardsDropListValues.getElement().getStyle().setTop(0, Unit.PX);
+		standardsDropListValues.getElement().getStyle().setTop(0, Unit.PX);
 
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
@@ -624,10 +624,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (!standardsDropListValues.getStyleName().contains("standardsDropMenu")) {
-					standardsDropListValues.addStyleName("standardsDropMenu");
+				getAddStandards();
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:auto;left:18.9em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:auto;left:18.9em;color:#515151;");
 				} else {
-					standardsDropListValues.removeStyleName("standardsDropMenu");
+					standardsDropListValues.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -1886,9 +1887,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsStandardPopup(nativeEvent);
         	if(!target){
-        		if(standardsDropListValues.getStyleName().contains("standardsDropMenu")){
-        			standardsDropListValues.removeStyleName("standardsDropMenu");
-        		}
+        		standardsDropListValues.getElement().removeAttribute("style");
         	}
     	}
 	}
@@ -1896,7 +1895,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return standardsDropListValues.getElement().isOrHasChild(Element.as(target)) || btnStandardsBrowse.getElement().isOrHasChild(Element.as(target));
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}
@@ -3059,6 +3058,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();

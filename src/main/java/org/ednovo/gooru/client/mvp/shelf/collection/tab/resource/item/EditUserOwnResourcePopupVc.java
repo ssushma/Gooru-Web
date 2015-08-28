@@ -95,6 +95,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -476,10 +477,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (!standardsDropListValues.getStyleName().contains("standardsDropMenu")) {
-					standardsDropListValues.addStyleName("standardsDropMenu");
+				getAddStandards();
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:auto;left:18.9em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:auto;left:18.9em;color:#515151;");
 				} else {
-					standardsDropListValues.removeStyleName("standardsDropMenu");
+					standardsDropListValues.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -1094,7 +1096,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsStandardPopup(nativeEvent);
         	if(!target){
-        		standardsDropListValues.removeStyleName("standardsDropMenu");
+        		standardsDropListValues.getElement().removeAttribute("style");
         	}
     	}
 	}
@@ -1102,7 +1104,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return standardsDropListValues.getElement().isOrHasChild(Element.as(target)) || btnStandardsBrowse.getElement().isOrHasChild(Element.as(target));
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}
@@ -2656,6 +2658,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		centuryPopup.getElement().getStyle().setZIndex(999999);
 	}
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();

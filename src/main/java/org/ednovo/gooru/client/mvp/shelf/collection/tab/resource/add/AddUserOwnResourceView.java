@@ -488,15 +488,17 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
 		momentsOfLearningTitle.getElement().setAttribute("title", i18n.GL1678());
 		
+
 		getAddStandards();
-		
+
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (!standardsDropListValues.getStyleName().contains("standardsDropMenu")) {
-					standardsDropListValues.addStyleName("standardsDropMenu");
+				getAddStandards();
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:19.5em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:19.5em;color:#515151;");
 				} else {
-					standardsDropListValues.removeStyleName("standardsDropMenu");
+					standardsDropListValues.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -1127,7 +1129,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsStandardPopup(nativeEvent);
         	if(!target){
-        		standardsDropListValues.removeStyleName("standardsDropMenu");
+        		standardsDropListValues.getElement().removeAttribute("style");
         	}
     	}
 	}
@@ -1135,7 +1137,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return standardsDropListValues.getElement().isOrHasChild(Element.as(target)) || btnStandardsBrowse.getElement().isOrHasChild(Element.as(target));
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}
@@ -2588,7 +2590,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 
 	public void checkStandarsList(List<String> standarsPreferencesList) {
-
+		standardsDropListValues.clear();
 		if (standarsPreferencesList != null) {
 			if (standarsPreferencesList.contains("CCSS")) {
 				isCCSSAvailable = true;
@@ -2756,4 +2758,3 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 
 }
-
