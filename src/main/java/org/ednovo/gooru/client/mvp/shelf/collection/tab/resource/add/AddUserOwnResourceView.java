@@ -488,8 +488,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
 		momentsOfLearningTitle.getElement().setAttribute("title", i18n.GL1678());
 		
-
 		getAddStandards();
+		
 
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
@@ -1129,7 +1129,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsStandardPopup(nativeEvent);
         	if(!target){
-        		standardsDropListValues.getElement().removeAttribute("style");
+        		standardsDropListValues.removeStyleName("standardsDropMenu");
         	}
     	}
 	}
@@ -1137,7 +1137,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||btnStandardsBrowse.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}
@@ -2529,6 +2529,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		});
 	}
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();
@@ -2590,7 +2591,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 
 	public void checkStandarsList(List<String> standarsPreferencesList) {
-		standardsDropListValues.clear();
+
 		if (standarsPreferencesList != null) {
 			if (standarsPreferencesList.contains("CCSS")) {
 				isCCSSAvailable = true;
