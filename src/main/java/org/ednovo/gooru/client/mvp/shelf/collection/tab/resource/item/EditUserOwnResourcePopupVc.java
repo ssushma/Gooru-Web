@@ -2567,14 +2567,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtn.setEnabled(false);
-			addResourceBtn.addStyleName("disabled");
+			//addResourceBtn.setEnabled(false);
+			//addResourceBtn.addStyleName("disabled");
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean value) {
 					addResourceBtn.setEnabled(true);
-					addResourceBtn.removeStyleName("disabled");
+				//	addResourceBtn.removeStyleName("disabled");
 					if(textBox!=null){
 						isHavingBadWordsInTextbox = value;
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
