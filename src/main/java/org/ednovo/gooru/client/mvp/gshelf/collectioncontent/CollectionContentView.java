@@ -406,7 +406,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				@Override
 				public void showStandardsPopupInTags(String standardVal, String standardsDesc,
 						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
-					System.out.println("called method");
 					getUiHandlers().showStandardsPopup(standardVal, standardsDesc, collectionLiPanelWithCloseArray);
 					
 				}
@@ -616,10 +615,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
         JSONArray educatUseArrValue = new JSONArray();
         JSONArray tagsArrValue = new JSONArray();
         
-        System.out.println("codeidsize::"+collectionItemDo.getStandards().size());
 
         for(int i=0;i<collectionItemDo.getStandards().size();i++){
-        	System.out.println("codeid::"+collectionItemDo.getStandards().get(i).get("id"));
          	standardsJsonArray.set(i,new JSONNumber(Integer.parseInt(collectionItemDo.getStandards().get(i).get("id"))));
         }
         attach.put("standardIds", standardsJsonArray);
