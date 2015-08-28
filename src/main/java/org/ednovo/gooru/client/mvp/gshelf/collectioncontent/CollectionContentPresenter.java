@@ -50,6 +50,8 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -101,7 +103,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,StandardsPopupPresenter standardsPopupPresenter) {
+	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,final StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.addResourcePresenter = addResourcePresenter;
@@ -437,6 +439,9 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
 		addToPopupSlot(standardsPopupPresenter);
 		
+	}
+	public StandardsPopupPresenter getStandardPresenter(){
+		return standardsPopupPresenter;
 	}
    	public void setSelectedStandards(List<Map<String,String>> standListArray){
    		getView().displaySelectedStandards(standListArray);

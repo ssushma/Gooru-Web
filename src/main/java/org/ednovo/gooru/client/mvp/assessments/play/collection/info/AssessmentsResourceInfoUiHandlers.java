@@ -24,9 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.assessments.play.collection.info;
 
+import java.util.List;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 
 public interface AssessmentsResourceInfoUiHandlers extends BaseUiHandlers{
 	public void getCollectionList(String resourceGooruOid,String pageNum,String pageSize);
 	public void getAddedResourceTags(String resourceId);
+	public void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 }

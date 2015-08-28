@@ -100,6 +100,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@UiField TinyMCE testTextArea;
 
 	CollectionContentPresenter collectionContentPresenter;
+	
 	CollectionDo listOfContent=null;
 
 	private EditQuestionPopupWidget editQuestionPopupWidget;
@@ -401,6 +402,13 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 				public void dispalyNewResourcePopup(
 						CollectionItemDo collectionItemDo) {
 					getUiHandlers().showResourcePopup(collectionItemDo);
+				}
+				@Override
+				public void showStandardsPopupInTags(String standardVal, String standardsDesc,
+						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+					System.out.println("called method");
+					getUiHandlers().showStandardsPopup(standardVal, standardsDesc, collectionLiPanelWithCloseArray);
+					
 				}
 			};
 			widgetMove.setPresenter(collectionContentPresenter);
