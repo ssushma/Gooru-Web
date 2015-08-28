@@ -163,8 +163,10 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	
 	public void setUnitList(final ArrayList<ProfileLibraryDo> profileLibraryDoList,String libraryGooruOid) {
 		Window.addWindowScrollHandler(new LeftPanelScroll(libraryGooruOid));
+		if(profileLibraryDoList.size()>0){
 		if(profileLibraryDoList.get(0).getItemCount()>20){
 			totalCollectionCount = profileLibraryDoList.get(0).getItemCount();
+		}
 		}
 		//final String parentId=profileLibraryDoList.get(0).getParentGooruOid();
 		int firstWidgetCount = leftNav.getWidgetCount();
