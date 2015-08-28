@@ -146,7 +146,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// getUiHandlers().setSelectedStandards(standListArray);
+				getUiHandlers().setSelectedStandards(standListArray);
 				appPopUp.hide();
 				Window.enableScrolling(true);
 			}
@@ -366,6 +366,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 														liPanelWithClose.getCloseButton().addClickHandler(
 																new RemoveLiWithClosePanel(liPanelWithClose));
 														liPanelWithClose.setId(codeIdVal);
+														liPanelWithClose.setName(codeVal);
 														liPanelWithClose.setDifferenceId(3);
 														ulSelectedItems.add(liPanelWithClose);
 														standListArray.add(selectedStadDetails);
@@ -382,6 +383,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 													liPanelWithClose.getCloseButton().addClickHandler(
 															new RemoveLiWithClosePanel(liPanelWithClose));
 													liPanelWithClose.setId(codeIdVal);
+													liPanelWithClose.setName(codeVal);
 													liPanelWithClose.setDifferenceId(3);
 													ulSelectedItems.add(liPanelWithClose);
 												} else {
@@ -510,6 +512,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 												liPanelWithClose.getCloseButton()
 														.addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 												liPanelWithClose.setId(codeIdVal);
+												liPanelWithClose.setName(codeVal);
 												liPanelWithClose.setDifferenceId(3);
 												ulSelectedItems.add(liPanelWithClose);
 												standListArray.add(selectedStadDetails);
@@ -526,6 +529,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 											liPanelWithClose.getCloseButton()
 													.addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 											liPanelWithClose.setId(codeIdVal);
+											liPanelWithClose.setName(codeVal);
 											liPanelWithClose.setDifferenceId(3);
 											ulSelectedItems.add(liPanelWithClose);
 										} else {
@@ -720,6 +724,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 															liPanelWithClose.getCloseButton().addClickHandler(
 																	new RemoveLiWithClosePanel(liPanelWithClose));
 															liPanelWithClose.setId(codeIdVal);
+															liPanelWithClose.setName(codeVal);
 															liPanelWithClose.setDifferenceId(3);
 															ulSelectedItems.add(liPanelWithClose);
 															standListArray.add(selectedStadDetails);
@@ -737,6 +742,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 														liPanelWithClose.getCloseButton().addClickHandler(
 																new RemoveLiWithClosePanel(liPanelWithClose));
 														liPanelWithClose.setId(codeIdVal);
+														liPanelWithClose.setName(codeVal);
 														liPanelWithClose.setDifferenceId(3);
 														ulSelectedItems.add(liPanelWithClose);
 													} else {
@@ -873,6 +879,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 													liPanelWithClose.getCloseButton().addClickHandler(
 															new RemoveLiWithClosePanel(liPanelWithClose));
 													liPanelWithClose.setId(codeIdVal);
+													liPanelWithClose.setName(codeVal);
 													liPanelWithClose.setDifferenceId(3);
 													ulSelectedItems.add(liPanelWithClose);
 													standListArray.add(selectedStadDetails);
@@ -889,6 +896,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 												liPanelWithClose.getCloseButton()
 														.addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 												liPanelWithClose.setId(codeIdVal);
+												liPanelWithClose.setName(codeVal);
 												liPanelWithClose.setDifferenceId(3);
 												ulSelectedItems.add(liPanelWithClose);
 											} else {
@@ -1022,6 +1030,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 													liPanelWithClose.getCloseButton().addClickHandler(
 															new RemoveLiWithClosePanel(liPanelWithClose));
 													liPanelWithClose.setId(codeIdVal);
+													liPanelWithClose.setName(codeVal);
 													liPanelWithClose.setDifferenceId(3);
 													ulSelectedItems.add(liPanelWithClose);
 													standListArray.add(selectedStadDetails);
@@ -1038,6 +1047,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 												liPanelWithClose.getCloseButton()
 														.addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 												liPanelWithClose.setId(codeIdVal);
+												liPanelWithClose.setName(codeVal);
 												liPanelWithClose.setDifferenceId(3);
 												ulSelectedItems.add(liPanelWithClose);
 											} else {
@@ -1145,6 +1155,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 											liPanelWithClose.getCloseButton()
 													.addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 											liPanelWithClose.setId(codeIdVal);
+											liPanelWithClose.setName(codeVal);
 											liPanelWithClose.setDifferenceId(3);
 											ulSelectedItems.add(liPanelWithClose);
 											standListArray.add(selectedStadDetails);
@@ -1161,6 +1172,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 										liPanelWithClose.getCloseButton()
 												.addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 										liPanelWithClose.setId(codeIdVal);
+										liPanelWithClose.setName(codeVal);
 										liPanelWithClose.setDifferenceId(3);
 										ulSelectedItems.add(liPanelWithClose);
 									} else {
@@ -1264,6 +1276,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 											liPanelWithClose.getCloseButton()
 													.addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 											liPanelWithClose.setId(codeIdVal);
+											liPanelWithClose.setName(codeVal);
 											liPanelWithClose.setDifferenceId(3);
 											ulSelectedItems.add(liPanelWithClose);
 											standListArray.add(selectedStadDetails);
@@ -1280,6 +1293,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 										liPanelWithClose.getCloseButton()
 												.addClickHandler(new RemoveLiWithClosePanel(liPanelWithClose));
 										liPanelWithClose.setId(codeIdVal);
+										liPanelWithClose.setName(codeVal);
 										liPanelWithClose.setDifferenceId(3);
 										ulSelectedItems.add(liPanelWithClose);
 									} else {
@@ -1372,12 +1386,13 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 				LiPanelWithClose liPanelWithClose = new LiPanelWithClose("x");
 				liPanelWithClose = collectionLiPanelWithCloseArray.get(i);
 				liPanelWithClose.setId(liPanelWithClose.getId());
+				liPanelWithClose.setName(getActualStandard(collectionLiPanelWithCloseArray.get(i).getElement().getInnerText()));
 				liPanelWithClose.setDifferenceId(liPanelWithClose.getDifferenceId());
 				ulSelectedItems.add(liPanelWithClose);
 
 				Map<String, String> selectedStadDetails = new HashMap<String, String>();
 				selectedStadDetails.put("selectedCodeId", String.valueOf(liPanelWithClose.getId()));
-				selectedStadDetails.put("selectedCodeVal", String.valueOf(liPanelWithClose.getName()));
+				selectedStadDetails.put("selectedCodeVal", String.valueOf(getActualStandard(collectionLiPanelWithCloseArray.get(i).getElement().getInnerText())));
 				selectedStadDetails.put("selectedDifferenceId", String.valueOf(liPanelWithClose.getDifferenceId()));
 				selectedStadDetails.put("selectedCodeDesc", "");
 				standListArray.add(selectedStadDetails);
@@ -1434,5 +1449,11 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 	@Override
 	public List<Map<String, String>> getAddedStandards() {
 		return standListArray;
+	}
+	public String getActualStandard(String str) {
+	    if (str.length() > 0 && str.charAt(str.length()-1)=='x') {
+	      str = str.substring(0, str.length()-1);
+	    }
+	    return str;
 	}
 }
