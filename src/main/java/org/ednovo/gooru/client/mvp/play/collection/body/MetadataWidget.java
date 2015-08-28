@@ -110,9 +110,9 @@ public class MetadataWidget extends Composite {
 		if(collectionDo!=null){
 		this.collectionDo = collectionDo; 
 		teamContainer.clear();
-		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
-			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
-			 teamContainer.add(collaboratorsUc);
+		if (collectionDo.isIsCollaborator()){
+			CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
+			teamContainer.add(collaboratorsUc);
 			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername() +" " + i18n.GL_GRR_AND():"");
 		}else{
 			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
@@ -159,24 +159,21 @@ public class MetadataWidget extends Composite {
 					usernameAnchor = new Anchor();
 					if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()!=null?collectionDo.getUser().getUsername():"")){
 						usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+					}else{
+						String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
+						usernameAnchor.setHref(token);
 					}
-				else{
-					String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
-					usernameAnchor.setHref(token);
-				}
 					usernameAnchor.setText(userName);
 					usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 					usernameAnchor.setTarget("_blank");
 					userNameLabel.setText("");
 					userNameLabel.getElement().appendChild(usernameAnchor.getElement());
-				}
-				else{
+				}else{
 					userNameLabel.setText(userName);
 					userNameLabel.getElement().setAttribute("alt",userName);
 					userNameLabel.getElement().setAttribute("title",userName);
 				}
 			}
-
 		}
 	}
 	public void setViewCount(String viewCount){
