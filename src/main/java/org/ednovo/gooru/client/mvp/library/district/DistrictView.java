@@ -137,7 +137,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			final int widgetCountTemp = widgetCount;
 			final DistrictFeaturedView districtFeaturedView = ((DistrictFeaturedView) widget);
 			try {
-				if(courseId.equals(districtFeaturedView.getCourseId())) {
+				if(districtFeaturedView!=null && districtFeaturedView.getCourseId().equals(courseId)) {
 					widget.addStyleName(ACTIVE_STYLE);
 				}
 			} catch (Exception e) {

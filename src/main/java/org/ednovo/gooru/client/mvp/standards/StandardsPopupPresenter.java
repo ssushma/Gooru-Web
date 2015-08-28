@@ -36,13 +36,16 @@ import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
+import org.ednovo.gooru.client.mvp.assessments.play.collection.info.AssessmentsResourceInfoPresenter;
+import org.ednovo.gooru.client.mvp.assessments.play.resource.body.AssessmentsResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
+import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
-import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Anchor;
@@ -67,7 +70,12 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	SearchAbstractPresenter searchAbstractPresenter;
 	PreSearchPresenter preSearchPresenter;
 	LessonInfoPresenter lessonInfoPresenter;
+	ResourcePlayerMetadataPresenter resourcePlayerMetadataPresenter;
 	AddTagesPopupView addTagesPopupView;
+	AssessmentsResourceInfoPresenter assessmentsResourceInfoPresenter;
+	AssessmentsResourcePlayerMetadataPresenter assessmentsResourcePlayerMetadataPresenter;
+	ResourceInfoPresenter resourceInfoPresenter;
+	String standardV = "";
 
 	/**
 	 * Class constructor
@@ -78,6 +86,16 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	public StandardsPopupPresenter( EventBus eventBus,IsStandardsPopupView view) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
+	}
+
+
+	public AssessmentsResourceInfoPresenter getAssessmentsResourceInfoPresenter() {
+		return assessmentsResourceInfoPresenter;
+	}
+
+
+	public void setAssessmentsResourceInfoPresenter(AssessmentsResourceInfoPresenter assessmentsResourceInfoPresenter) {
+		this.assessmentsResourceInfoPresenter = assessmentsResourceInfoPresenter;
 	}
 
 
@@ -107,12 +125,13 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	@Override
 	public void callStandardsBasedonTypeService(String standardVal, final String titleVal) {
 		getView().reset();
+		standardV = standardVal;
 		getSearchService().getFirstLevelStandards("0", standardVal, new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
 
 			@Override
 			public void onSuccess(ArrayList<StandardsLevel1DO> result) {
 				for(int i=0;i<result.size();i++) {
-					getView().SetData(result.get(i),i,titleVal);
+					getView().SetData(result.get(i),i,titleVal,standardV);
 				}
 
 
@@ -126,8 +145,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		getSearchService().getSecondLevelStandards(levelOrder, standardCodeSelected, new SimpleAsyncCallback<ArrayList<StandardsLevel2DO>>() {
 			@Override
 			public void onSuccess(ArrayList<StandardsLevel2DO> result) {
-
+				if(!standardV.equalsIgnoreCase("b21"))
+				{
 					getView().loadSecondLevelContianerObjects(result);
+				}
+				else
+				{
+					getView().loadb21SecondLevelContianerObjects(result);
+				}
 
 			}
 		});
@@ -136,12 +161,18 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	@Override
 	public void getSecondLevelObjects(String levelOrder,
-			String standardCodeSelected) {
+			final String standardCodeSelected) {
 		getSearchService().getThirdLevelStandards(levelOrder, standardCodeSelected, new SimpleAsyncCallback<ArrayList<StandardsLevel3DO>>() {
 			@Override
 			public void onSuccess(ArrayList<StandardsLevel3DO> result) {
-
+					if(!standardV.equalsIgnoreCase("b21"))
+					{
 					getView().loadThirdLevelContianerObjects(result);
+					}
+					else
+					{
+					getView().loadB21ThirdLevelContianerObjects(result);	
+					}
 
 			}
 		});
@@ -221,6 +252,38 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		{
 			
 		}
+		try
+		{
+		assessmentsResourceInfoPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		try
+		{
+		assessmentsResourcePlayerMetadataPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}	
+		try
+		{
+		resourceInfoPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}	
+		try
+		{
+		resourcePlayerMetadataPresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
 	
 	
@@ -273,6 +336,37 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	public void setCollectionContentPresenter(CollectionContentPresenter collectionContentPresenter) {
 		this.collectionContentPresenter = collectionContentPresenter;
+	}
+
+
+	public AssessmentsResourcePlayerMetadataPresenter getAssessmentsResourcePlayerMetadataPresenter() {
+		return assessmentsResourcePlayerMetadataPresenter;
+	}
+
+
+	public void setAssessmentsResourcePlayerMetadataPresenter(
+			AssessmentsResourcePlayerMetadataPresenter assessmentsResourcePlayerMetadataPresenter) {
+		this.assessmentsResourcePlayerMetadataPresenter = assessmentsResourcePlayerMetadataPresenter;
+	}
+
+
+	public ResourceInfoPresenter getResourceInfoPresenter() {
+		return resourceInfoPresenter;
+	}
+
+
+	public void setResourceInfoPresenter(ResourceInfoPresenter resourceInfoPresenter) {
+		this.resourceInfoPresenter = resourceInfoPresenter;
+	}
+
+
+	public ResourcePlayerMetadataPresenter getResourcePlayerMetadataPresenter() {
+		return resourcePlayerMetadataPresenter;
+	}
+
+
+	public void setResourcePlayerMetadataPresenter(ResourcePlayerMetadataPresenter resourcePlayerMetadataPresenter) {
+		this.resourcePlayerMetadataPresenter = resourcePlayerMetadataPresenter;
 	}
 
 

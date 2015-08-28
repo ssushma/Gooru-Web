@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.assessments.play.collection.event.Assessments
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsNextResourceHandler;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.assessments.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
@@ -79,6 +80,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -92,6 +94,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -217,6 +220,8 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 	}
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	AddTagesPopupView addTagesPopupView;
 
 	@Inject
 	public AssessmentsResourcePlayerMetadataView(){
@@ -1858,7 +1863,7 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
-			AddTagesPopupView addTagesPopupView=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()) {
+			addTagesPopupView=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()) {
 				public void getAddedResourceTags(){
 					getUiHandlers().getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
 				}
@@ -1884,6 +1889,17 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 							success.show();
 							success.getElement().getStyle().setZIndex(99999);
 			        }
+				}
+				@Override
+				public void onSelection(SelectionEvent<Suggestion> event) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void showStandardsPopup(String standardVal, String standardsDesc,
+						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+					getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+					
 				}
 			};
 			addTagesPopupView.show();
@@ -1950,6 +1966,12 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 
 //		showResourceView(resourceId,tabView,view);
 //		showCollectionEndView(collectionId, tabView);
+	}
+
+	@Override
+	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
+		addTagesPopupView.displaySelectedStandards(standListArray);
+		
 	}
 
 }

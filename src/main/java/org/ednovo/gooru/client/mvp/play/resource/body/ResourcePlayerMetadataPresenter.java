@@ -41,6 +41,7 @@ import org.ednovo.gooru.application.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.htmltags.SectionTag;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
@@ -51,6 +52,7 @@ import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEvent;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 
 import com.google.gwt.dom.client.Document;
@@ -69,6 +71,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	private QuestionResourcePresenter questionResourcePresenter;
 
 	private CollectionPlayerPresenter collectionPlayerPresenter;
+		
+	StandardsPopupPresenter standardsPopupPresenter;
 
 	private PreviewPlayerPresenter previewPlayerPresenter;
 
@@ -89,10 +93,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	private static final String RATING = "rating";
 
 	@Inject
-	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
+	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus, view);
 		this.questionResourcePresenter=questionResourcePresenter;
 		this.ratingAndReviewPopup = ratingAndReviewPopup;
+		this.standardsPopupPresenter=standardsPopupPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 		addRegisteredHandler(UpdateUserStarReviewEvent.TYPE,this);
@@ -567,4 +572,18 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			collectionPlayerPresenter.updateRatReacSessionActivityItem(emoticRatingNumber, gooruOid, isRatingsReactions);
 		}
 	}
+
+	@Override
+	public void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+		Window.enableScrolling(false);
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setResourcePlayerMetadataPresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
+		addToPopupSlot(standardsPopupPresenter);
+		
+	}
+ 	public void setSelectedStandards(List<Map<String,String>> standListArray){
+   		getView().displaySelectedStandards(standListArray);
+   	}
 }

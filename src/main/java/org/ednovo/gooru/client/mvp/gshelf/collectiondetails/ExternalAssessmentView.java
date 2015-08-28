@@ -243,6 +243,11 @@ public class ExternalAssessmentView extends BaseViewWithHandlers<ExternalAssessm
 			lblErrorMessage.setText(i18n.GL1026());
 			enableSubmitButton();
 			spinnerImageVisibility(false);
+		}else if(StringUtil.checkItContainesURL(assessmentExistingTitle)){
+			lblErrorMessage.setVisible(true);
+			lblErrorMessage.setText(i18n.GL0323());
+			enableSubmitButton();
+			spinnerImageVisibility(false);
 		}else if(StringUtil.isEmpty(assessmentURL)){
 			lblErrorMessage.setVisible(false);
 			lblErrorMessage.setText("");

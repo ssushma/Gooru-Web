@@ -48,7 +48,7 @@ public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<Stan
 
 	void loadData();
 
-	void SetData(StandardsLevel1DO levelOneData, int valArr, String titleVal);
+	void SetData(StandardsLevel1DO levelOneData, int valArr, String titleVal, String standardV);
 
 	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
 
@@ -66,7 +66,11 @@ public interface IsStandardsPopupView extends PopupView, IsViewWithHandlers<Stan
 
 	Button getAddButton();
 
-	List<Map<String, String>> getAddedStandards();  
+	List<Map<String, String>> getAddedStandards();
+
+	void loadB21ThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
+
+	void loadb21SecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);  
 
 
 }

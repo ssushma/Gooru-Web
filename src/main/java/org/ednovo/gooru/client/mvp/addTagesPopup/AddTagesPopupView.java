@@ -36,8 +36,10 @@ import java.util.Set;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -45,10 +47,8 @@ import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
-import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
@@ -63,11 +63,6 @@ import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -79,9 +74,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -151,13 +143,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField InlineLabel addTagesTitle,moblieFriendly;
 	@UiField PPanel popupContentText;
 	
-	@UiField HTMLPanel addTagesContent;
+	@UiField HTMLPanel addTagesContent,standardsCont;
 	
-	@UiField HTMLEventPanel btnStandardsBrowse;
-	
-	@UiField UlPanel standardsDropListValues;
+	@UiField UlPanel ulSelectedItems;
 	
 	List<String> tagListGlobal = new ArrayList<String>();
+	
+	@UiField
+	HTMLEventPanel btnStandardsBrowse;
+	
+	@UiField
+	UlPanel standardsDropListValues;
 	
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
@@ -167,14 +163,21 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 
 	PopupPanel centuryPopup=new PopupPanel();
 	
-	PopupPanel standardsPopup=new PopupPanel();
-	
 	Map<Long, String> centurySelectedValues=new HashMap<Long, String>();
 	
+	private boolean isCCSSAvailable = false;
+	private boolean isNGSSAvailable = false;
+	private boolean isTEKSAvailable = false;
+	private boolean isCAAvailable = false;
+	
+	List<String> selectedValues=new ArrayList<>();
+
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
 
+	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+
 	
-	@UiField FlowPanel standardContainer,standardsPanel,centuaryContainer,centuryPanel;
+	@UiField FlowPanel standardContainer,centuaryContainer,centuryPanel;
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	private AppMultiWordSuggestOracle centurySuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
@@ -189,6 +192,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	ArrayList<String> centuryDo=new ArrayList<String>();
 	ArrayList<String> centuryTempDo=new ArrayList<String>();
 	
+	public FolderDo courseObjG;
+	
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private static final String USER_META_ACTIVE_FLAG = "0";
@@ -200,16 +205,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	String mediaFeatureStr = i18n.GL1767();
 	String resourceId=null;
 	Boolean isIpad,isAndriod,isWinDskp;
-	
-	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
-	private boolean isCCSSAvailable =false;
-	private boolean isNGSSAvailable =false;
-	private boolean isTEKSAvailable =false;
-	private boolean isCAAvailable =false;
-	
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
-	StandardsPopupPresenter standardsPopupPresenter = AppClientFactory.getInjector().getStandardsPopupPresenter();
-	
 	public AddTagesPopupView(final String resourceId) {
 		super(false);
 		initializeAutoSuggestedBox();
@@ -223,25 +219,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
 
 		}else{
-			this.getElement().setAttribute("style", "z-index:999999;");
+			this.getElement().setAttribute("style", "z-index:99999;");
 		}
 	
 		this.center();		
-		btnStandardsBrowse.addClickHandler(new OnClickStandardsToggleBtn());
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
-			@Override
-			public void onPreviewNativeEvent(NativePreviewEvent event) {
-				hideDropDown(event);
-			}
-		});
-		btnStandardsBrowse.getElement().setId("gShelfMainContainer");
-		standardsPanel.getElement().setId("pnlStandards");
-		standardsDropListValues.getElement().setId("gShelfMainContainer");
-		getUserSelectedStandards();
-		standardsPopupPresenter.getCloseButton().addClickHandler(new HideStandardPopup()); 
-		standardsPopupPresenter.getAddButton().addClickHandler(new OnClickAddStandard()); 
-		standardsPanel.getElement().setAttribute("alt","");
-		standardsPanel.getElement().setAttribute("title","");
+
 		
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
 		standardMaxMsg.getElement().setAttribute("alt","");
@@ -491,6 +473,22 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		
+		getAddStandards();
+		
+
+		btnStandardsBrowse.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:19.5em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:19.5em;color:#515151;");
+				} else {
+					standardsDropListValues.getElement().removeAttribute("style");
+				}
+			}
+		});
+		standardsCont.getElement().setAttribute("style", "position:relative;");
+		standardContainer.getElement().setId("standardsContainerBswn");
 		mediaLabel.setText(i18n.GL1706());
 		mediaLabel.getElement().setId("lblMediaFeature");
 		mediaLabel.getElement().setAttribute("alt",i18n.GL1706());
@@ -542,26 +540,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				liPanel.add(titleLabel);
 				htmlMediaFeatureListContainer.add(liPanel);
 		}
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
-			@Override
-			public void onSuccess(ProfileDo profileObj) {
-			if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
-					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-						standardContainer.setVisible(false);
-					}else
-					{
-						standardContainer.setVisible(true);
-						standardPreflist=new ArrayList<String>();
-						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
-							standardPreflist.add(code);
-							standardPreflist.add(code.substring(0, 2));
-						 }
-					}
-				}else{
-					standardContainer.setVisible(false);
-				}
-			}
-		});
 		
 		ClickHandler tagHandler= new ClickHandler() {
 			@Override
@@ -626,7 +604,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
 		ScrollPopupUtil.ScrollPopupUtilWidget(addTagesContent,true);
 	}
-	
 	/**
 	 * new label is created for the 21 century which needs to be added
 	 * 
@@ -732,7 +709,22 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
 		
-		standardSgstBox.addSelectionHandler(this);
+		standardSgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
+
+			@Override
+			public void onSelection(SelectionEvent<Suggestion> event) {
+				Map<String, String> standard = new HashMap<>();
+				
+				standard.put("selectedCodeId", String.valueOf(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
+				standard.put("selectedCodeVal", standardSgstBox.getValue());
+				standard.put("selectedDifferenceId", String.valueOf(3));
+				standard.put("selectedCodeDesc", standardSgstBox.getValue());
+				displaySelectedStandardsOne(standard);
+				standardSgstBox.setText("");
+				standardSuggestOracle.clear();
+
+			}
+		});
 		
 		centurySgstBox = new AppSuggestBox(centurySuggestOracle) {
 			
@@ -793,39 +785,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function setStandardSuggestions 
-	 * 
-	 * @created_date : 06-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param standardSearchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
-		standardSuggestOracle.clear();
-		this.standardSearchDo = standardSearchDo;
-		if (this.standardSearchDo.getSearchResults() != null) {
-			List<String> sources = getAddedStandards(standardsPanel);
-			for (CodeDo code : standardSearchDo.getSearchResults()) {
-				if (!sources.contains(code.getCode())) {
-					standardSuggestOracle.add(code.getCode());
-				}
-				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
-			}
-		}
-		standardSgstBox.showSuggestionList();
-	}
+	
 	public void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo) {
 		centurySuggestOracle.clear();
 		this.centurySearchDo = centurySearchDo;
@@ -850,7 +810,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		return null;
 	}
-	
 	/**
 	 * get the standards are added for collection
 	 * 
@@ -858,15 +817,19 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
 	 */
-	private List<String> getAddedStandards(FlowPanel flowPanel) {
+	private List<String> getAddedStandards() {
 		List<String> suggestions = new ArrayList<String>();
-		for (Widget widget : flowPanel) {
+		
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
 			if (widget instanceof DownToolTipWidgetUc) {
 				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
 			}
 		}
 		return suggestions;
 	}
+	
 	/**
 	 * get the standards are added for collection
 	 * 
@@ -883,30 +846,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		return suggestions;
 	}
-	@Override
-	public void onSelection(SelectionEvent<Suggestion> event) {
-		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
-		standardSgstBox.setText("");
-		standardSuggestOracle.clear();
-	}
-	/**
-	 * Adding new standard for the collection , will check it has more than
-	 * fifteen standards
-	 * 
-	 * @param standard
-	 *            which to be added for the collection
-	 */
-	public void addStandard(String standard, String id) {
-		if (standardsPanel.getWidgetCount() <5) {
-			if (standard != null && !standard.isEmpty()) {
-				standardsDo.add(standard);
-				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
-			}
-		} else {
-			standardMaxShow();
-			standardSgstBox.setText("");
-		}
-	}
+
+	
 	public void addCentury(String centuryTag, String id) {
 			if (centuryTag != null && !centuryTag.isEmpty()) {
 				centuryTag = centuryTag.trim();
@@ -918,10 +859,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	public void standardMaxShow() {
 		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
-		standardMaxMsg.getElement().getStyle().setMarginLeft(8, Unit.PX);
-		standardMaxMsg.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-		standardMaxMsg.setText("Standards reached to max");
-		
+		standardMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().standardMax());
 		/*standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());*/
 		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
 	}
@@ -940,8 +878,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				for(int i=0;i<standardsDo.size();i++){
 					if(standardsDo.get(i).toString().equalsIgnoreCase(standardCode)){
 						standardsDo.remove(standardsDo.get(i).toString());
-						standardMaxMsg.setText("");
-					} 
+					}
 				}
 				this.getParent().removeFromParent();
 			}
@@ -1520,6 +1457,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiHandler("addTagsBtn")
 	public void onaddTagsBtnClick(ClickEvent click)
 	{
+		getSelectedStandards();
 		String frameTagsStr = "";
 		String adsStr = "";
 		List<String> tagList = new ArrayList<String>();
@@ -1824,8 +1762,29 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	public void setStandardObjectVal(String standardStr)
 	{
 		String[] standardArray=standardStr.split(":");
+		
 		//standardsDo.add(standardArray[1]);
+		//here
 		addStandard(standardArray[1], "0");
+	}
+	/**
+	 * Adding new standard for the collection , will check it has more than
+	 * fifteen standards
+	 * 
+	 * @param standard
+	 *            which to be added for the collection
+	 */
+	public void addStandard(String standard, String id) {
+		if (ulSelectedItems.getWidgetCount() <5) {
+			if (standard != null && !standard.isEmpty()) {
+				standardsDo.add(standard);
+				ulSelectedItems.add(generateLiPanel(standard, id));
+			//	standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
+			}
+		} else {
+			standardMaxShow();
+			standardSgstBox.setText("");
+		}
 	}
 	/**
 	 * 
@@ -2313,164 +2272,215 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		return null;
 	}
 	
-	private class OnClickStandardsToggleBtn implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			if(!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:inline-block;")){
-				standardsDropListValues.getElement().setAttribute("style", "display:inline-block;");
-			}else{
-				standardsDropListValues.getElement().removeAttribute("style");
-			}
-		}
+	public abstract void closePoup(boolean isCancelclicked);
+	
+	public void getAddedResourceTags(){
 		
 	}
 	
-	protected void hideDropDown(NativePreviewEvent event) {
-		if(event.getTypeInt()==Event.ONCLICK){
-    		Event nativeEvent = Event.as(event.getNativeEvent());
-        	boolean target=eventTargetsPopup(nativeEvent);
-        	if(!target){
-        		standardsDropListValues.getElement().removeAttribute("style");
-        	}
-    	}
-	}
-	
-	private boolean eventTargetsPopup(NativeEvent event) {
-		EventTarget target = event.getEventTarget();
-		if (Element.is(target)) {
-			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
-		}
-		return false;
-	}
-	
-	private void getUserSelectedStandards() {
-		if(!AppClientFactory.isAnonymous()){
-			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
-				USER_META_ACTIVE_FLAG,
-				new SimpleAsyncCallback<ProfileDo>() {
-					@Override
-					public void onSuccess(final ProfileDo profileObj) {
-						if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
-							checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
-						}
+	public final void populateStandardValues() {
+		for (String standardsTypesArray1 : standardsTypesArray) {
+			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
+			LiPanel liPanel = new LiPanel();
+			for (int j = 0; j < standardsDescriptionList.size(); j++) {
+				HTMLPanel headerDiv = new HTMLPanel("");
+				if (j == 0) {
+					if (standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
+						liPanel.getElement().setId("CA");
+					} else {
+						liPanel.getElement().setId(standardsDescriptionList.get(j));
 					}
 
+					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isNGSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("NGSS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					}
+
+					headerDiv.setStyleName("liPanelStyle");
+				} else {
+					if (standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life")) {
+						standardsDescriptionList.set(j, "College, Career, and Civic Life");
+						headerDiv.setStyleName("liPanelStylenonBold");
+						liPanel.getElement().setAttribute("standarddesc", "College, Career, and Civic Life");
+					} else {
+						headerDiv.setStyleName("liPanelStylenonBold");
+						liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
+					}
+				}
+				headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
+				liPanel.add(headerDiv);
+			}
+			if (liPanel.getElement().getAttribute("style") != null
+					&& !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;")) {
+				liPanel.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						standardsDropListValues.setVisible(false);
+						String standardsVal = event.getRelativeElement().getAttribute("id");
+						String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+
+						collectionLiPanelWithCloseArray.clear();
+						for (int i = 0; i < ulSelectedItems.getWidgetCount(); i++) {
+							collectionLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+						}
+						showStandardsPopup(standardsVal, standardsDesc,
+								collectionLiPanelWithCloseArray);
+					}
 				});
-		}else{
+			}
+			standardsDropListValues.add(liPanel);
+		}
+	}
+	
+	
+
+	public void checkStandarsList(List<String> standarsPreferencesList) {
+
+		if (standarsPreferencesList != null) {
+			if (standarsPreferencesList.contains("CCSS")) {
+				isCCSSAvailable = true;
+			} else {
+				isCCSSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("NGSS")) {
+				isNGSSAvailable = true;
+			} else {
+				isNGSSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("TEKS")) {
+				isTEKSAvailable = true;
+			} else {
+				isTEKSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("CA")) {
+				isCAAvailable = true;
+			} else {
+				isCAAvailable = false;
+			}
+		}
+
+		populateStandardValues();
+	}
+
+	public void getAddStandards() {
+		if (!AppClientFactory.isAnonymous()) {
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(
+					AppClientFactory.getLoggedInUser().getGooruUId(), USER_META_ACTIVE_FLAG,
+					new SimpleAsyncCallback<ProfileDo>() {
+						@Override
+						public void onSuccess(final ProfileDo profileObj) {
+							if (profileObj.getUser().getMeta() != null
+									&& profileObj.getUser().getMeta().getTaxonomyPreference() != null
+									&& profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null) {
+								checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+							}
+							standardPreflist=new ArrayList<String>();
+							for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+								standardPreflist.add(code);
+								standardPreflist.add(code.substring(0, 2));
+							 }
+						}
+
+					});
+		} else {
 			isCCSSAvailable = true;
 			isNGSSAvailable = true;
 			isCAAvailable = true;
 			isTEKSAvailable = false;
 		}
 	}
+
+	public abstract void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 	
-	public void checkStandarsList(List<String> standarsPreferencesList) {
-		if(standarsPreferencesList!=null){
-			isCCSSAvailable = standarsPreferencesList.contains("CCSS")?true:false;
-			isNGSSAvailable = standarsPreferencesList.contains("NGSS")?true:false;
-			isTEKSAvailable = standarsPreferencesList.contains("TEKS")?true:false;
-			isCAAvailable = standarsPreferencesList.contains("CA")?true:false;
+	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
+		standardSuggestOracle.clear();
+		this.standardSearchDo = standardSearchDo;
+		if (this.standardSearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedStandards();
+			for (CodeDo code : standardSearchDo.getSearchResults()) {
+				if (!sources.contains(code.getCode())) {
+					standardSuggestOracle.add(code.getCode());
+				}
+				selectedValues.add(code.getLabel());
+				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
 		}
-		populateStandardValues();
+		standardSgstBox.showSuggestionList();
 	}
-	
-	public final void populateStandardValues(){
-        for (String standardsTypesArray1 : standardsTypesArray) {
-            List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
-            LiPanel liPanel = new LiPanel();
-            for(int j=0; j<standardsDescriptionList.size(); j++){
-                HTMLPanel headerDiv = new HTMLPanel("");
-                if(j==0){
-                	if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
-                		liPanel.getElement().setId("CA");
-                	}else{
-                		liPanel.getElement().setId(standardsDescriptionList.get(j));
-                	}
-
-                	if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
-                		liPanel.getElement().setAttribute("style", "opacity:0.5;"); 	  
-                	}else if((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
-                		liPanel.getElement().setAttribute("style", "opacity:0.5;");
-                	}else if((!isNGSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("NGSS")){
-                		liPanel.getElement().setAttribute("style", "opacity:0.5;");
-                	}else if((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")){
-                		liPanel.getElement().setAttribute("style", "opacity:0.5;");
-                	}
-                	headerDiv.setStyleName("liPanelStyle");
-                }else{
-                	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
-                	{
-                		standardsDescriptionList.set(j, "College, Career, and Civic Life");
-                        headerDiv.setStyleName("liPanelStylenonBold");
-                        liPanel.getElement().setAttribute("standarddesc", "College, Career, and Civic Life");
-                	}
-                	else
-                	{
-                    headerDiv.setStyleName("liPanelStylenonBold");
-                    liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
-                	}
-                }
-                headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
-                liPanel.add(headerDiv);
-            }
-            if(liPanel.getElement().getAttribute("style")!=null && !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;"))
-            {
-            liPanel.addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-				String standardsVal = event.getRelativeElement().getAttribute("id");
-				String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
-
-				collectionLiPanelWithCloseArray.clear();
-				/*for(int i=0;i<ulSelectedItems.getWidgetCount();i++){
-					collectionLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
-				}*/
-				showStandardsPopup(standardsVal,standardsDesc, collectionLiPanelWithCloseArray);
+	public void displaySelectedStandards(List<Map<String,String>> standListArray){
+		for (int i=0;i<standListArray.size();i++){
+			final Map<String, String> standard = standListArray.get(i);
+			if (!selectedValues.contains(standard.get("selectedCodeVal"))){
+				ulSelectedItems.add(generateLiPanel(standard.get("selectedCodeVal"), "standards"));
+			}
+		}
+	}
+	public void displaySelectedStandardsOne(Map<String, String> standard){
+			if (!selectedValues.contains(standard.get("selectedCodeVal"))){
+				ulSelectedItems.add(generateLiPanel(standard.get("selectedCodeVal"), "standards"));
+			}
+			
+	}
+	private LiPanelWithClose generateLiPanel(final String standard, String tagValue) {
+		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(standard);
+		liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				//This will remove the selected value when we are trying by close button
+				//removeGradeWidget(ulSelectedItems,Long.parseLong(standard.get("selectedCodeId")));
+				standardsDo.remove(standard);
+				liPanelWithClose.removeFromParent();
 			}
 		});
-            }
-            standardsDropListValues.add(liPanel);
-        }
-}
-
-	
-	protected void showStandardsPopup(String standardsVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
-		standardsPopupPresenter.callStandardsBasedonTypeService(standardsVal,standardsDesc);
-		standardsPopupPresenter.setAddTagsPopView(this);
-		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
-		standardsPopup.clear();
-		standardsPopup.add(standardsPopupPresenter.getWidget());
-		standardsPopup.show();
-		standardsPopup.center();
-		standardsPopup.getElement().getStyle().setZIndex(999999);
+		standardsDo.add(standard);
+		liPanelWithClose.getElement().setAttribute("tag", tagValue);
+		return liPanelWithClose;
 	}
-	
-	private class HideStandardPopup implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			standardsPopup.hide();
-		}
-	}
-	
-	private class OnClickAddStandard implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			standardsPopup.hide();
-			
-			List<Map<String,String>> standListArray = standardsPopupPresenter.getSelectedStandards();
-			for (int i=0;i<standListArray.size();i++){
-				final Map<String, String> standard = standListArray.get(i);
-				addStandard(standard.get("selectedCodeVal"),standard.get("selectedCodeId"));
+	/**
+	 * This method will remove the widget based on the codeId in the UlPanel
+	 * @param ulPanel
+	 * @param codeId
+	 */
+	public void removeGradeWidget(UlPanel ulPanel,long codeId){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getId()==codeId){
+					obj.removeFromParent();
+				}
+			}
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;
+				if(obj.getCodeId()==codeId){
+					obj.removeStyleName("active");
+				}
 			}
 		}
-		
 	}
-
-	public abstract void closePoup(boolean isCancelclicked);
 	
-	public void getAddedResourceTags(){
-		
+	/**
+	 * This method is used to get the selected Std id's
+	 * @return
+	 */
+	public void getSelectedStandards(){
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getDifferenceId()==3){
+					selectedValues.add(obj.getName());
+					standardsDo.add(obj.getName());
+				}
+			}
+		}
 	}
 }
