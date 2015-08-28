@@ -26,7 +26,8 @@
 						<g:FlowPanel styleName="clearfix" />
 					</g:FlowPanel>
 					<g:FlowPanel styleName="studentAssessmentBodyBlock">
-						<g:FlowPanel styleName="scoreBrief no-gutter" ui:field="scoreObject">
+						<g:FlowPanel ui:field="scorePrintObject"/>
+						    <g:FlowPanel styleName="scoreBrief no-gutter" ui:field="scoreObject">
 							<g:FlowPanel styleName="col-md-5 col-sm-4">
 								<g:FlowPanel styleName="lessonDetails">
 									<g:FlowPanel styleName="thumbnailImage" ui:field="thumbnailImage">
@@ -74,7 +75,7 @@
 								</g:HTMLPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="clearfix" />
-						</g:FlowPanel>
+							</g:FlowPanel>
 						<g:HTMLPanel styleName="displayCollectionIcons" ui:field="collectionOverviewPanel">
 						    <g:Label styleName="element active" ui:field="collectionOverviewBtn"></g:Label>
 						    <g:Label styleName="element" ui:field="questionsBtn"></g:Label>
