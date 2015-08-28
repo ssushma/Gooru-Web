@@ -1478,9 +1478,9 @@ footer ul li a {
 
 
 #gooruSearchMainContainer .subjectContainer .dropdown-menu>.active:hover, #gooruSearchMainContainer .seachRightNavigation li:hover{
+	display: block;
 	width: 100%;
 	margin: 0px;
 	border: 0px;
-	display: inline-block;
 }
 

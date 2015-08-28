@@ -95,6 +95,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -476,6 +477,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				getAddStandards();
 				if (!standardsDropListValues.getStyleName().contains("standardsDropMenu")) {
 					standardsDropListValues.addStyleName("standardsDropMenu");
 				} else {
@@ -1094,7 +1096,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsStandardPopup(nativeEvent);
         	if(!target){
-        		standardsDropListValues.removeStyleName("standardsDropMenu");
+        		standardsDropListValues.getElement().removeAttribute("style");
         	}
     	}
 	}
@@ -1102,7 +1104,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return standardsDropListValues.getElement().isOrHasChild(Element.as(target)) || btnStandardsBrowse.getElement().isOrHasChild(Element.as(target));
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}
@@ -2567,14 +2569,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			//addResourceBtn.setEnabled(false);
-			//addResourceBtn.addStyleName("disabled");
+			addResourceBtn.setEnabled(false);
+			addResourceBtn.addStyleName("disabled");
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean value) {
 					addResourceBtn.setEnabled(true);
-				//	addResourceBtn.removeStyleName("disabled");
+					addResourceBtn.removeStyleName("disabled");
 					if(textBox!=null){
 						isHavingBadWordsInTextbox = value;
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
@@ -2654,6 +2656,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		centuryPopup.getElement().getStyle().setZIndex(999999);
 	}
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();

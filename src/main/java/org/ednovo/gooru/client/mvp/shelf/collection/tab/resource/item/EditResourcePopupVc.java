@@ -1022,7 +1022,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsStandardPopup(nativeEvent);
         	if(!target){
-        		standardsDropListValues.removeStyleName("standardsDropMenu");
+        		standardsDropListValues.getElement().removeAttribute("style");
         	}
     	}
 	}
@@ -1030,7 +1030,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
-			return standardsDropListValues.getElement().isOrHasChild(Element.as(target)) || btnStandardsBrowse.getElement().isOrHasChild(Element.as(target));
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
 	}
@@ -2739,6 +2739,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 	
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();
