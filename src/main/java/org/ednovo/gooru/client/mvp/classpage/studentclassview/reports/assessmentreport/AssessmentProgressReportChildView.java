@@ -105,7 +105,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class AssessmentProgressReportChildView extends ChildView<AssessmentProgressReportChildPresenter> implements IsAssessmentProgressReportView,ClientConstants {
 
-	@UiField FlowPanel PrintPnl, printOptions, reportViewContainer, scoreObject;
+	@UiField FlowPanel PrintPnl, printOptions, reportViewContainer, scoreObject,scorePrintObject;
 	@UiField FlowPanel progressRadial,scoreRoundPanel, thumbnailImage, timeSpentPanel, headerLinksContainer, attemptPanel, selfReportPanel;
 	@UiField HTMLPanel  collectionSummaryText, questionsTable, printDataTable, collectionOverviewPanel;
 	@UiField ListBox sessionsDropDown;
@@ -462,7 +462,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	        });
 
 			for(int i=0;i<result.size();i++) {
-				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(result.get(i).getTitle()!=null? result.get(i).getTitle():"");
+				HTML questionTitle=new HTML(StringUtil.removeHtmlTags(titlelbl1));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
@@ -501,6 +502,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	@Override
 	public void setQuestionsData(final ArrayList<UserDataDo> result, String contentType, boolean isPrint) {
+		
+		
+		
 		loadingImageLabel.setVisible(false);
 		questionsTable.setVisible(true);
 		if(!isPrint) {
@@ -785,6 +789,28 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			@Override
 			public void onSuccess() {
+				
+				scoreObject.setVisible(false);
+				
+				collectionSummaryText.setVisible(false);
+				
+				Map<String, String> printMap=new HashMap<String, String>();
+				
+				printMap.put("collectionSummaryText", collectionSummaryText.getElement().getInnerText());
+				printMap.put("collectionImage", collectionImage.getUrl());
+				printMap.put("collectionTitle", collectionTitle.getText());
+				printMap.put("collectionResourcesCount", collectionResourcesCount.getText());
+				printMap.put("score", score.getText());
+				printMap.put("goal", goal.getText());
+				printMap.put("correctStatus", correctStatus.getText());
+				printMap.put("lastModifiedTime", lastModifiedTime.getText());
+				printMap.put("sessionsDropDown", sessionsDropDown.getItemText(sessionsDropDown.getSelectedIndex()));
+				
+				scorePrintObject.getElement().setAttribute("style", "padding: 0 15px;background: #fff;border-bottom: 1px solid #ddd;");
+				
+				scorePrintObject.add(new AssessmentProgressReportPrintView(printMap));
+				
+				
 				if(isClickedOnSave){
 					printOptions.setVisible(false);
 					if(isCollection) {
@@ -803,6 +829,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						setPrintData();
 						setDataPanelVisibility(false,true);
 					}
+					
 					Print.it(style,PrintPnl);
 					printOptions.setVisible(true);
 					setDataPanelVisibility(true,false);
@@ -814,6 +841,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	private void setDataPanelVisibility(boolean isQuestionData, boolean isPrintData) {
 		questionsTable.setVisible(isQuestionData);
 		printDataTable.setVisible(isPrintData);
+		scorePrintObject.clear();
+		scoreObject.setVisible(true);
+		collectionSummaryText.setVisible(true);
 	}
 	
 	Timer timer1=new Timer() {
@@ -821,6 +851,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		public void run() {
 			printButton.setVisible(true);
 			downloadButton.setVisible(true);
+			
 		}
 	};
 	

@@ -1418,11 +1418,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					 }
 				}
 				if(showPreview){
-					System.out.println("standardsDo::"+standardsDo.size());
 					showResourcePreview(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,tagList);
 					addResourceBtnLbl.setEnabled(true);
 				}else{
-					System.out.println("standardsDoelse::"+standardsDo.size());
 					addUserResource(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,tagList);
 					addResourceBtnLbl.setEnabled(true);
 				}

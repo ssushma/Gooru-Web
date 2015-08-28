@@ -184,10 +184,11 @@
     display: inline-block;
     font-size: 14px;
     font-style: italic;
-    height: 45px;
+    height: 43px;
     vertical-align: middle;
-    width: 272px;
+    width: 272px !important;
     margin-left: 15px;
+    margin-bottom: 0;
 }
 .classBannerCodeBlockMain .classBannerCodeBlock .searchBlockMyClasses button.primary {
     font-size: 16px;
@@ -430,7 +431,7 @@
 #myClassessLoggedout .myClasseBanner .classBannerCaptions{
 	padding:18px 0 15px 0;
 }
-	
+
 }
  @media (min-width: 768px) and (max-width: 991px) {
 #myClassessLoggedout section.learnYourOwnPace p.lead {

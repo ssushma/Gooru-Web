@@ -42,9 +42,11 @@
 	border-left:1px solid #ddd;
 	cursor:default;
 	box-sizing: content-box;
-/* 	width: 9.1%;*/
-/*  A temporary Fix - Bottom Line of code*/
 	width: 8.4%;
+	margin: 0px -2px;
+	border-top: 0;
+	border-bottom: 0px;
+	color: #515151;
 }
 #courseTabs .tabsSausdLi {
 	padding:0px 34px;
@@ -538,6 +540,7 @@
 	height: 113px;
 	vertical-align: top;
 	box-sizing: content-box;
+	color: #515151;
 }
 
 #featuredCourseTabs .courseTitle {
