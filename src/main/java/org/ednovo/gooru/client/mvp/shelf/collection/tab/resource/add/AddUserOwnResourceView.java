@@ -488,13 +488,13 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
 		momentsOfLearningTitle.getElement().setAttribute("title", i18n.GL1678());
 		
+
 		getAddStandards();
-		
 
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-
+				getAddStandards();
 				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:19.5em;color:#515151;")) {
 					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:19.5em;color:#515151;");
 				} else {
@@ -2590,7 +2590,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 
 	public void checkStandarsList(List<String> standarsPreferencesList) {
-
+		standardsDropListValues.clear();
 		if (standarsPreferencesList != null) {
 			if (standarsPreferencesList.contains("CCSS")) {
 				isCCSSAvailable = true;

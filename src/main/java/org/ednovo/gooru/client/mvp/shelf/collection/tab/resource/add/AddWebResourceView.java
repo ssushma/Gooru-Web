@@ -624,7 +624,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-
+				getAddStandards();
 				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:auto;left:18.9em;color:#515151;")) {
 					standardsDropListValues.getElement().setAttribute("style", "display:block;top:auto;left:18.9em;color:#515151;");
 				} else {
@@ -3058,6 +3058,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();
