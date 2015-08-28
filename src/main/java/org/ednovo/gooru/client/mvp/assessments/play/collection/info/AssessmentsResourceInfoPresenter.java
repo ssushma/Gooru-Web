@@ -25,13 +25,19 @@
 package org.ednovo.gooru.client.mvp.assessments.play.collection.info;
 
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.AssessmentsPlayerPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -40,6 +46,7 @@ public class AssessmentsResourceInfoPresenter extends PresenterWidget<IsAssessme
 	private CollectionItemDo collectionItemDo=null;
 
 	private AssessmentsPlayerPresenter collectionPlayerPresenter;
+	StandardsPopupPresenter standardsPopupPresenter;
 
 	public String mycollectionTitle;
 
@@ -47,8 +54,9 @@ public class AssessmentsResourceInfoPresenter extends PresenterWidget<IsAssessme
 	private PlayerAppServiceAsync playerAppService;
 
 	@Inject
-	public AssessmentsResourceInfoPresenter(EventBus eventBus, IsAssessmentsResourceInfoView view) {
+	public AssessmentsResourceInfoPresenter(EventBus eventBus, IsAssessmentsResourceInfoView view,StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus, view);
+		this.standardsPopupPresenter = standardsPopupPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -120,5 +128,19 @@ public class AssessmentsResourceInfoPresenter extends PresenterWidget<IsAssessme
 	public void insertHideButtonAtLast(){
 		getView().insertHideButtonAtLast();
 	}
+
+	@Override
+	public void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+		Window.enableScrolling(false);
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setAssessmentsResourceInfoPresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
+		addToPopupSlot(standardsPopupPresenter);
+		
+	}
+	public void setSelectedStandards(List<Map<String,String>> standListArray){
+   		getView().displaySelectedStandards(standListArray);
+   	}
 
 }

@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
@@ -43,6 +44,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -61,6 +63,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -904,6 +907,18 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			    		}
 			        }
 				}
+
+				@Override
+				public void onSelection(SelectionEvent<Suggestion> event) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void showStandardsPopup(String standardVal, String standardsDesc,
+						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+					showStandardsPopupInTags(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+				}
 			};
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
@@ -1062,12 +1077,22 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public abstract void editResource(CollectionItemDo collectionItem);
 
 	public abstract void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop);
+	
+	public abstract void showStandardsPopupInTags(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 
 
 	public abstract void dispalyNewResourcePopup(CollectionItemDo collectionItemDo);
 
-	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
+	public void setPresenter(final CollectionContentPresenter collectionContentPresenter) {
 		this.collectionContentPresenter=collectionContentPresenter;
+		collectionContentPresenter.getStandardPresenter().getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(popup!=null)
+				popup.displaySelectedStandards(collectionContentPresenter.getStandardPresenter().getView().getAddedStandards());
+			}
+		});
 	}
 	public class DisplayNewResourcePopup implements ClickHandler{
 		@Override
@@ -1410,5 +1435,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		}
 
+	}
+	
+	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
+		popup.displaySelectedStandards(standListArray);
 	}
 }

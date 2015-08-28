@@ -25,9 +25,11 @@
 package org.ednovo.gooru.client.mvp.assessments.play.resource.body;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
@@ -73,4 +75,7 @@ public interface AssessmentsResourcePlayerMetadataUiHandlers extends BaseUiHandl
 	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
 
 	public void updateSessionActivityItemForReactions(int emoticNumber,String gooruOid,String isRatingsReactions);
+
+	public void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 }
