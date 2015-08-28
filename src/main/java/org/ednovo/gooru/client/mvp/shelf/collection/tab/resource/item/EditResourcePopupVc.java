@@ -465,11 +465,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-
-				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:auto;left:18.9em;color:#515151;")) {
-					standardsDropListValues.getElement().setAttribute("style", "display:block;top:auto;left:18.9em;color:#515151;");
+				if (!standardsDropListValues.getStyleName().contains("standardsDropMenu")) {
+					standardsDropListValues.addStyleName("standardsDropMenu");
 				} else {
-					standardsDropListValues.getElement().removeAttribute("style");
+					standardsDropListValues.removeStyleName("standardsDropMenu");
 				}
 			}
 		});
@@ -2740,6 +2739,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 	
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();
