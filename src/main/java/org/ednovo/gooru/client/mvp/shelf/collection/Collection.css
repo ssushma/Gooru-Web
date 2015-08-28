@@ -317,6 +317,7 @@
 	float: left;
 	position: relative;
 	z-index: 99999;
+	width:148%;
 }
 
 .gradeList {
