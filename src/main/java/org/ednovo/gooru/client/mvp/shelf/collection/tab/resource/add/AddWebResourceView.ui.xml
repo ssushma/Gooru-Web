@@ -337,8 +337,9 @@
 									</g:HTMLPanel>
 								</tinyMce:HTMLEventPanel>
 
-								<uc:UlPanel styleName="dropdown-menu"
-									ui:field="standardsDropListValues"></uc:UlPanel>
+									<g:HTMLPanel ui:field="standardsCont">
+									<uc:UlPanel styleName="dropdown-menu"
+									ui:field="standardsDropListValues"></uc:UlPanel></g:HTMLPanel>
 								
 								<g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}"
