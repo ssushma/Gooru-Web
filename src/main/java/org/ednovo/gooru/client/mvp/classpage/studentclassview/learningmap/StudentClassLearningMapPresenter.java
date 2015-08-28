@@ -79,7 +79,10 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 	
 	@Override
 	public void onReset() {
-		getView().setContentVisiblity(false);
+		String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
+        if(classGooruOid!=null) {
+                getView().setContentVisiblity(false);
+        }
 	}
 	
 	public void setData() {
