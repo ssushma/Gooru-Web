@@ -180,6 +180,10 @@ public class AssessmentsMetadataWidget extends Composite {
 					userNameLabel.getElement().setAttribute("title",userName);
 				}
 			}
+		}else if(collectionDo.getUser()!=null){
+			userNameLabel.setText(userName);
+			userNameLabel.getElement().setAttribute("alt",userName);
+			userNameLabel.getElement().setAttribute("title",userName);
 		}
 	}
 	public void setViewCount(String viewCount){
