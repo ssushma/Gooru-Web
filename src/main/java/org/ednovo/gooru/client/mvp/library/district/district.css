@@ -70,7 +70,7 @@
 	background:white;
 	border:1px solid #ddd;
 	border-top:none;
-	width:100%; 
+	width:100%;
 	font-size:12px;
 }
 
@@ -163,7 +163,7 @@
 	padding:15px 0px;
 	position:absolute;
 	bottom:0px;
-	width: 100%;	
+	width: 100%;
 }
 
 #featuredEducator {
@@ -260,8 +260,8 @@
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 
-	
-	
+
+
 
 }
 
@@ -530,8 +530,10 @@
 
 #featuredCourseTabs .tabsLi {
 	width: 160px;
+	border: 0px;
 	border-right: 1px solid #ccc;
 	border-left: 1px solid #ccc;
+	margin:0px;
 	margin-left: 0px;
 	height: 113px;
 	vertical-align: top;
@@ -760,7 +762,7 @@
     clear: both;
     height:0px;
 }
-	
+
 .unitOption {
     padding:0px 15px;
 }
@@ -823,7 +825,7 @@ margin-bottom: 15px;
 	cursor:default;
 		/* Old browsers */
 	background: rgb(239,239,239);
-	
+
 	/* Safari 4-5, Chrome 1-9 */
 	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -webkit-gradient(linear, 0% 0%, 0% 100%, from(FFFFFF), to(FFFFFF));
 
@@ -839,9 +841,9 @@ margin-bottom: 15px;
 	/* Opera 11.10+ */
 	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -o-linear-gradient(top, #FFFFFF, #FFFFFF);
 
-	
-	
-	
+
+
+
 }
 
 .collectionSmall {
@@ -867,7 +869,7 @@ margin-bottom: 15px;
 	bottom: 0px;
 	width: 100%;
 	text-align: center;
-	text-shadow: none;	
+	text-shadow: none;
 }
 
 .fourSteps .step {
@@ -1020,8 +1022,8 @@ margin-bottom: 15px;
 	width: 122px;
 	height: 98px;
 	position: absolute;
-	top: 57px;
-	left: 992px;
+	top: 52px;
+	left: 888px;
 }
 #landingSusdBanner {
 	width:100%;
@@ -1099,7 +1101,7 @@ margin-bottom: 15px;
 	float:left;
 	margin-bottom:25px;
 	width: 700px;
-	
+
 }
 .topicTitleStyle{
 	font-size:14px;
@@ -1127,9 +1129,9 @@ margin-bottom: 15px;
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 
-	
-	
-	
+
+
+
 }
 .listViewBtnStyle{
 	float:right;

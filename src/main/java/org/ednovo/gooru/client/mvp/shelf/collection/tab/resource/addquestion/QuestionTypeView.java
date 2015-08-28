@@ -482,10 +482,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	public void clearTinyMce(){
 		questionNameTextArea=new TinyMCE(500);
-		explainationTextArea= new TinyMCE();
+		explainationTextArea= new TinyMCE(500);
 		questionNameTextAreaContainer.clear();
 		explainationTextAreaContainer.clear();
 		questionNameTextArea.setCharacterLimit(500);
+		explainationTextArea.setCharacterLimit(500);
 		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		questionNameTextArea.getElement().setAttribute("maxlength", "500");
 		questionNameTextArea.markAsBlankPanel.setVisible(false);

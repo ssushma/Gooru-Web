@@ -18,7 +18,7 @@
 	position: absolute;
 }
 #fpnlWrapperContainerField .leftArrowButtonNormal,#fpnlWrapperContainerField .rightArrowButtonNormal{
-	background-image: url(images/player_images.png);
+	background-image: url(../images/player_images.png);
 	width: 60px;
 	height: 60px;
 }
@@ -68,7 +68,7 @@
 	width: 952px;
 	margin: 0 auto;
 	padding-bottom: 13px;
-	/* position: fixed;	
+	/* position: fixed;
     top: 42px; */
 }
 
@@ -140,7 +140,7 @@
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
-	
+
 }
 #fpnlWrapperContainerField .emoticon_iv {
 	background-position: -184px -4px;
@@ -167,7 +167,7 @@
 	cursor: pointer;
 }
 #fpnlWrapperContainerField .emoticon_viii {
-	
+
 	background-position: -95px -4px;
 	width: 35px;
 	height: 35px;
@@ -275,7 +275,7 @@ content:â€�â€¦â€�;
 
 #fpnlWrapperContainerField .rating {
 	margin: 3px 10px 3px 0px;
-	font-size: 12px; 
+	font-size: 12px;
 	vertical-align: middle;
 	line-height: 1.4em;
 }
@@ -412,7 +412,7 @@ body.popupBG {
 
 #fpnlWrapperContainerField .bar {
 	height: 10px;
-	background-color: #8CC63E; 
+	background-color: #8CC63E;
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -567,7 +567,7 @@ body.popupBG {
 	color: #579ECF;
 }
 
-#fpnlWrapperContainerField .rating:not (:checked ) >label:hover,#fpnlWrapperContainerField .rating:not (:checked ) >label:hover 
+#fpnlWrapperContainerField .rating:not (:checked ) >label:hover,#fpnlWrapperContainerField .rating:not (:checked ) >label:hover
 	~ label {
 	color: #1076BB;
 }
@@ -585,7 +585,7 @@ fieldset {
 
 #fpnlWrapperContainerField .ratingContainer {
 	height: 53px;
-	white-space: nowrap; 
+	white-space: nowrap;
 	-webkit-font-smoothing: antialiased !important;
 	/* margin: 10px; */
 	position: relative;
@@ -786,11 +786,11 @@ fieldset {
 }
 
 #fpnlWrapperContainerField .ratingConfirmationContainer .icon.delete {
-    background: url('images/popup/exclamation-mark.png') no-repeat center;
+    background: url('../images/popup/exclamation-mark.png') no-repeat center;
     position: relative;
 }
 #fpnlWrapperContainerField .ratingConfirmationContainer .icon.complete {
-    background: url('images/popup/checkmark.png') no-repeat center;
+    background: url('../images/popup/checkmark.png') no-repeat center;
     position: relative;
 }
 #fpnlWrapperContainerField .okContainer{
@@ -873,7 +873,7 @@ fieldset {
 	max-width: 100%;
 	max-height: 18px;
 	overflow: hidden;
-	
+
 }
 #fpnlWrapperContainerField .tagsWrapperStyle{
 	position: relative;
@@ -950,10 +950,10 @@ margin-right: 5px;
 	border: 1px solid rgb(78, 151, 70);
 	font-family: Arial, sans-serif;
 	display:inline-block;
-	
-	/* Old browsers */ 
+
+	/* Old browsers */
 	background:rgb(78, 151, 70);
-	
+
 }
 #fpnlWrapperContainerField .green:hover{
 	color:white;

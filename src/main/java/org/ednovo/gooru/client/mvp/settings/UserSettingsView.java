@@ -1666,9 +1666,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 			for (int i = 0; i < newst.length; i++) {
 				try {
-					int k = Integer.parseInt(newst[i]);
-					listI.add(k);
-				} catch (Exception e) {
+					if (!newst[i].equalsIgnoreCase("Kindergarten")
+							&& !newst[i].equalsIgnoreCase("Higher Education")) {
+						int k = Integer.parseInt(newst[i]);
+						listI.add(k);
+					}else{
+						listS.add(newst[i]);
+					}
+				}catch (Exception e) {
 					listS.add(newst[i]);
 					AppClientFactory.printSevereLogger("UserSettingsView setGradeList:::"+e);
 				}

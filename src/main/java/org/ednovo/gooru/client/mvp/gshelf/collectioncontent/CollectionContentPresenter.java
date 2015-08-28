@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -46,8 +47,11 @@ import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResource
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
+import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -79,6 +83,8 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	ImageUploadPresenter imgUploadPresenter=null;
 	AddStandardsPresenter addStandardsPresenter = null;
 	
+	StandardsPopupPresenter standardsPopupPresenter;
+	
 	MyCollectionsRightClusterPresenter myCollectionsRightClusterPresenter;
 	
 	private SimpleAsyncCallback<Void> removeImageAsyncCallback;
@@ -97,13 +103,14 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
+	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,final StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.addResourcePresenter = addResourcePresenter;
 		this.imgUploadPresenter = imgUploadPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.searchAddResourceToCollectionPresenter = searchAddResourceToCollectionPresenter;
+		this.standardsPopupPresenter = standardsPopupPresenter;
 		addRegisteredHandler(UpdateEditResourceImageEvent.TYPE, this);
 		getView().setCollectionContentPresenter(this);
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, new InsertCollectionItemInAddResourceHandler() {
@@ -422,5 +429,22 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	public void setUpdateResourceImageUrl(String fileName,	String fileNameWithOutRespUrl, boolean isEditUserOwnResourceImage) {
 		 getView().updateResouceItemImage(fileName, fileNameWithOutRespUrl,isEditUserOwnResourceImage);
 	}
+
+	@Override
+	public void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+		Window.enableScrolling(false);
+		standardsPopupPresenter.callStandardsBasedonTypeService(standardVal,standardsDesc);
+		standardsPopupPresenter.setCollectionContentPresenter(this);
+		standardsPopupPresenter.setAlreadySelectedItems(collectionLiPanelWithCloseArray);
+		addToPopupSlot(standardsPopupPresenter);
+		
+	}
+	public StandardsPopupPresenter getStandardPresenter(){
+		return standardsPopupPresenter;
+	}
+   	public void setSelectedStandards(List<Map<String,String>> standListArray){
+   		getView().displaySelectedStandards(standListArray);
+   	}
 }
 

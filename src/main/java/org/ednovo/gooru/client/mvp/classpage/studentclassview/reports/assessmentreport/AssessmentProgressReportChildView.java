@@ -63,6 +63,7 @@ import org.ednovo.gooru.client.uc.LoadingUc;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
@@ -88,6 +89,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -380,9 +382,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	private void setDefaultImg() {
 		if(isCollection) {
-			collectionImage.setUrl("images/default-collection-image-160x120.png");
+			collectionImage.setUrl(urlDomain+"/images/default-collection-image-160x120.png");
 		} else {
-			collectionImage.setUrl("images/default-assessment-image -160x120.png");
+			collectionImage.setUrl(urlDomain+"/images/default-assessment-image -160x120.png");
 		}
 	}
 
@@ -552,7 +554,8 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			adTable.setHeaderWidget(4, heading5);
 			adTable.setHeaderWidget(5, heading6);
 			for(int i=0;i<result.size();i++) {
-				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(result.get(i).getTitle()!=null? result.get(i).getTitle():"");
+				HTML questionTitle=new HTML(StringUtil.removeHtmlTags(titlelbl1));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
@@ -789,7 +792,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 						setDataPanelVisibility(false,true);
 					}
 					String outputData = PrintPnl.getElement().getInnerHTML().toString();
-					outputData = outputData.replaceAll("images/", urlDomain+"/images/");
+					
 					setDataPanelVisibility(true,false);
 					printOptions.setVisible(true);
 					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);

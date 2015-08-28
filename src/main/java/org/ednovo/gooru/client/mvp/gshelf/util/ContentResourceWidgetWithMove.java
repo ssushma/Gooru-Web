@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.gshelf.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
@@ -22,6 +23,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -42,6 +44,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -60,6 +63,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -77,7 +81,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	//All Ui fields
-	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,lblResourceTitle,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
+	@UiField Label lblTopArrow,lblDownArrow,lblItemSequence,videoTimeField,fromLblDisplayText,startStopTimeDisplayText,
 				   lblUpdateTextMessage,lblCharLimit,narrationAlertMessageLbl,lblStartPage,lblEndPage,lblEditSartPageText,lblError,errorMsgLabel;
 	@UiField HTMLPanel pnlArrows,pnlNarration,pnlYoutubeContainer,pnlTimeIcon,pnlEditContainer,timeEditContainer;
 	@UiField FlowPanel actionVerPanel,narrationConatainer,pnlPdfEdiContainer;
@@ -86,7 +90,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	@UiField TextBox startMinTxt,startSecTxt,stopMinTxt,stopSecTxt;
 	@UiField UlPanel ulGradePanel;
 	@UiField Anchor updateResourceBtn,editInfoLbl,editVideoTimeLbl,editStartPageLbl,copyResource,confirmDeleteLbl,addTages;
-	@UiField HTML resourceNarrationHtml;
+	@UiField HTML resourceNarrationHtml,lblResourceTitle;
 	@UiField Image imgDisplayIcon;
 	@UiField Button btnEdit;
 	@UiField InlineLabel spnResourceType;
@@ -224,7 +228,8 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			lblTopArrow.setVisible(false);
 		}
 		lblItemSequence.setText(indexVal+"");
-		lblResourceTitle.getElement().setInnerHTML(collectionItem.getTitle()!=null? StringUtil.removeAllHtmlCss(collectionItem.getTitle()):"");
+		String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItem.getTitle()!=null? collectionItem.getTitle():"");
+		lblResourceTitle.setHTML(StringUtil.removeHtmlTags(titlelbl1));
 		pnlNarration.getElement().setInnerHTML(collectionItem.getNarration()!=null?(collectionItem.getNarration().trim().isEmpty()?i18n.GL0956():collectionItem.getNarration()):i18n.GL0956());
 		spnResourceType.setStyleName(collectionItem.getResource().getResourceFormat() != null ? collectionItem.getResource().getResourceFormat().getValue()+"Icon" : "webpageIcon");
 
@@ -902,6 +907,18 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			    		}
 			        }
 				}
+
+				@Override
+				public void onSelection(SelectionEvent<Suggestion> event) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void showStandardsPopup(String standardVal, String standardsDesc,
+						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+					showStandardsPopupInTags(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+				}
 			};
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
@@ -1060,12 +1077,22 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 	public abstract void editResource(CollectionItemDo collectionItem);
 
 	public abstract void updateVideoTime(CollectionItemDo collectionItemDo,String start,String stop);
+	
+	public abstract void showStandardsPopupInTags(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
 
 
 	public abstract void dispalyNewResourcePopup(CollectionItemDo collectionItemDo);
 
-	public void setPresenter(CollectionContentPresenter collectionContentPresenter) {
+	public void setPresenter(final CollectionContentPresenter collectionContentPresenter) {
 		this.collectionContentPresenter=collectionContentPresenter;
+		collectionContentPresenter.getStandardPresenter().getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(popup!=null)
+				popup.displaySelectedStandards(collectionContentPresenter.getStandardPresenter().getView().getAddedStandards());
+			}
+		});
 	}
 	public class DisplayNewResourcePopup implements ClickHandler{
 		@Override
@@ -1408,5 +1435,9 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			}
 		}
 
+	}
+	
+	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
+		popup.displaySelectedStandards(standListArray);
 	}
 }

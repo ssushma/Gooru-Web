@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.info;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ResoruceCollectionDo;
@@ -39,5 +42,6 @@ public interface IsResourceInfoView extends IsViewWithHandlers<ResourceInfoUiHan
 	public Button getPlusAddTagsButton();
 	public void insertHideButtonAtLast();
 	public void setCollectionType(String collectionType);
+	public void displaySelectedStandards(List<Map<String, String>> standListArray);
 	
 }

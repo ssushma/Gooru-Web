@@ -6,12 +6,13 @@
 .resourceHeaderPanel {
 	width: 320px;
 	float: left;
+	height: 66px;
 }
 
 .resourceHeaderTextPanel {
 	float: left;
 	height: 60px;
-	width: 225px;
+	width: 210px;
 }
 
 .resourceTitle {
