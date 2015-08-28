@@ -318,8 +318,8 @@ public abstract class AddSearchResourceView extends Composite {
 		if(suggestedSearchResults.size()==0) {
 			suggestedResourcesPanel.setVisible(false);
 			noResultsLabel.setHTML(i18n.GL1957());
-			noResultsLabel.getElement().setAttribute("alt", i18n.GL1957());
-			noResultsLabel.getElement().setAttribute("title", i18n.GL1957());
+			noResultsLabel.getElement().setAttribute("alt", noResultsLabel.getElement().getInnerText());
+			noResultsLabel.getElement().setAttribute("title",noResultsLabel.getElement().getInnerText());
 			noResultsPanel.setVisible(true);
 			noResultsLabel.setVisible(true);
 		} else {
@@ -329,8 +329,8 @@ public abstract class AddSearchResourceView extends Composite {
 						noResultsLabel.setVisible(true);
 						noResultsLabel.setHTML("");
 						noResultsLabel.setHTML(i18n.GL1958());
-						noResultsLabel.getElement().setAttribute("alt", i18n.GL1958());
-						noResultsLabel.getElement().setAttribute("title", i18n.GL1958());
+						noResultsLabel.getElement().setAttribute("alt",noResultsLabel.getElement().getInnerText());
+						noResultsLabel.getElement().setAttribute("title",noResultsLabel.getElement().getInnerText());
 						}
 					if(i>3){
 						noResultsLabel.setVisible(false);
