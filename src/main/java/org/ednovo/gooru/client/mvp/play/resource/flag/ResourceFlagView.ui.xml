@@ -17,7 +17,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</div>
 				<div class="flgContainer">
-				    <div class="rightFlagPanel}">
+				    <div class="rightFlagPanel">
 				    <g:HTML styleName="normalText"
 						ui:field="titleText" />
 					<!-- <div class="{flagPopUpstyle.playerflagcontenttext}">Flag this resource!

@@ -36,6 +36,7 @@ import org.ednovo.gooru.application.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.application.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -45,6 +46,7 @@ import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -54,6 +56,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -188,6 +191,19 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 							Window.enableScrolling(true);
 						}
 					}
+				}
+
+				@Override
+				public void onSelection(SelectionEvent<Suggestion> event) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void showStandardsPopup(String standardVal, String standardsDesc,
+						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+					// TODO Auto-generated method stub
+					
 				}
 			};
 			addTagesPopupView.show();

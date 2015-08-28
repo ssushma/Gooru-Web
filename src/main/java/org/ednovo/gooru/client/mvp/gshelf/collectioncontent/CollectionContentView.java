@@ -100,6 +100,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	@UiField TinyMCE testTextArea;
 
 	CollectionContentPresenter collectionContentPresenter;
+	
 	CollectionDo listOfContent=null;
 
 	private EditQuestionPopupWidget editQuestionPopupWidget;
@@ -402,6 +403,12 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 						CollectionItemDo collectionItemDo) {
 					getUiHandlers().showResourcePopup(collectionItemDo);
 				}
+				@Override
+				public void showStandardsPopupInTags(String standardVal, String standardsDesc,
+						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
+					getUiHandlers().showStandardsPopup(standardVal, standardsDesc, collectionLiPanelWithCloseArray);
+					
+				}
 			};
 			widgetMove.setPresenter(collectionContentPresenter);
 			widgetMove.getElement().setAttribute("itemSequence", collectionItem.getItemSequence()+"");
@@ -608,10 +615,8 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
         JSONArray educatUseArrValue = new JSONArray();
         JSONArray tagsArrValue = new JSONArray();
         
-        System.out.println("codeidsize::"+collectionItemDo.getStandards().size());
 
         for(int i=0;i<collectionItemDo.getStandards().size();i++){
-        	System.out.println("codeid::"+collectionItemDo.getStandards().get(i).get("id"));
          	standardsJsonArray.set(i,new JSONNumber(Integer.parseInt(collectionItemDo.getStandards().get(i).get("id"))));
         }
         attach.put("standardIds", standardsJsonArray);
