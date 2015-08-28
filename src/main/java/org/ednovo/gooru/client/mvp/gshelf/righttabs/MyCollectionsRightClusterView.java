@@ -46,7 +46,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -91,7 +90,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
-	private static final String ID = "id";
 	
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
@@ -568,30 +566,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}
 		Window.enableScrolling(true);
 	}
-	private class openDropDownFilters implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			String displayValue=copyPopupPanel.getElement().getStyle().getDisplay();
-			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
-				removeActiveStyle();
-				copyPopupPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-			}else{
-				copyPopupPanel.getElement().getStyle().setDisplay(Display.NONE);
-			}
-		}
-		
-	}
 	private class onCopyClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-			
-			
 			getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
-			/*copyLbl.getElement().addClassName("selected");
-			moveLbl.getElement().removeClassName("selected");
-			myCollDelLbl.getElement().removeClassName("selected");*/
 			isCopySelected= true;
 			isMoveSelected=false;
 			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
@@ -601,10 +579,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private class onMoveClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
-			/*copyLbl.getElement().removeClassName("selected");
-			moveLbl.getElement().addClassName("selected");
-			myCollDelLbl.getElement().removeClassName("selected");*/
 			isCopySelected= false;
 			isMoveSelected= true;
 			getUiHandlers().enableAddButton();
@@ -845,9 +819,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void setIsCollaboratorValue(boolean isHide) {
 		this.isCollaborator=isHide;
 	}
-
-	public Anchor getPreviewLink(){
-		toggleButton.setVisible(true);
-		return lnkPreview;
+	public void disableButtons(boolean isTrue){
+		toggleButton.setVisible(isTrue);
+		lnkPreview.setVisible(isTrue);
 	}
 }

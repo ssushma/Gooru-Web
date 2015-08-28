@@ -80,5 +80,5 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	
 	public void setIsCollaboratorValue(boolean isHide);
 	
-	public Anchor getPreviewLink();
+	public void disableButtons(boolean isTrue);
 }
