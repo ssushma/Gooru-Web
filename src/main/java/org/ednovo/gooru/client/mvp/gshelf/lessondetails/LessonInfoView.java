@@ -391,8 +391,10 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
             for(int j=0; j<standardsDescriptionList.size(); j++){
                 HTMLPanel headerDiv = new HTMLPanel("");
                 if(j==0){
-                    if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                	if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
                         liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
                     }else{
                         liPanel.getElement().setId(standardsDescriptionList.get(j));
                     }
