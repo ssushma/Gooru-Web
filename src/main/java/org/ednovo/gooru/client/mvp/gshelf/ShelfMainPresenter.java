@@ -190,7 +190,6 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		super.onBind();
 		Window.enableScrolling(true);
 		setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
-
 			@Override
 			public void onSuccess(CollectionDo collection) {
 				isApiCalled= false;
@@ -204,19 +203,17 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 							setCollectionContent(folderDo);
 						}
 					}
-				}else{
+				}else if(collection.getStatusCode()!=400){
 					errorPopup = null;
 					invokeErrorPopup();
 				}
 			}
-
 			@Override
 			public void onFailure(Throwable caught) {
 				super.onFailure(caught);
 				AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(null, RefreshType.OPEN));
 			}
 		});
-
 	}
 
 	@Override
