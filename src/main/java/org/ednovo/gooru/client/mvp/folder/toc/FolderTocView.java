@@ -116,6 +116,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	
 	final String FOLDER = "folder";
 	final String COLLECTION = "collection";
+	final String ASSESSMENT = "assessment";
 	final String SCOLLECTION="scollection";
 	private static final String USER_ID = "userId";
 	private static final String BACK2TOC = "backToToc";
@@ -282,7 +283,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
-					 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+					 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || ASSESSMENT.equalsIgnoreCase(floderDo.getType())|| SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo,null));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
@@ -550,7 +551,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
 								item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem,floderDo.getType(),folderLevel);
-						 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+						 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType())|| ASSESSMENT.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
 								folderItem.getElement().removeAttribute("style");
 							 	item.addItem(folderItem);
