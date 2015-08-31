@@ -1425,7 +1425,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		public void onClick(ClickEvent event) {
 			removeActiveStyle(closeLiPanel.getId());
 			for (int i = 0; i < standListArray.size(); i++) {
-				if ((standListArray.get(i).get("selectedCodeId")).equals(String.valueOf(closeLiPanel.getId()))) {
+				if ((standListArray.get(i).get("selectedCodeVal")).equals(closeLiPanel.getName())) {
 					standListArray.remove(i);
 					break;
 				}
@@ -1437,6 +1437,21 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 	public void removeActiveStyle(long id) {
 		Iterator<Widget> widgets = levelFourStandards.iterator();
+		if(!widgets.hasNext()){
+			removeActiveStyleb21(id);
+		}
+		else
+		{
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (String.valueOf(id).equals(widget.getElement().getAttribute("id"))) {
+				widget.removeStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+			}
+		}
+		}
+	}
+	public void removeActiveStyleb21(long id) {
+		Iterator<Widget> widgets = levelThreeStandards.iterator();
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (String.valueOf(id).equals(widget.getElement().getAttribute("id"))) {
