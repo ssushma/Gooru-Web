@@ -80,12 +80,12 @@ public class AssessmentProgressReportPrintView extends Composite implements Clie
 	private void setStaticStyle(Map<String, String> printMap) {
 		
 		printblock.getElement().setAttribute("style", "width:1000px; margin:0 auto; font-family:Arial, Helvetica, sans-serif;");
-		titleblock.getElement().setAttribute("style", "background:#515151; border-bottom: 1px solid #ddd; padding:6px 15px;");
+		titleblock.getElement().setAttribute("style", "background-color:#515151; border-bottom: 1px solid #ddd; padding:6px 15px;");
 		title.getElement().setInnerText(printMap.get("collectionSummaryText"));
 		title.getElement().setAttribute("style", "width:50%; text-align:left; float:left; color: #fafafa; font-size: 20px; font-weight: bold;padding: 5px;");
 		
 		titleClear.getElement().setAttribute("style", "clear:both");
-		firstBlock.getElement().setAttribute("style", "background: #fff; border-bottom: 1px solid #ddd; padding: 0 0;  float:left; width:100%;");
+		firstBlock.getElement().setAttribute("style", "background-color: #fff; border-bottom: 1px solid #ddd; padding: 0 0;  float:left; width:100%;");
 		firstInnerBlock.getElement().setAttribute("style", "width:41.6667%; float:left");
 		firstInnerSubBlock.getElement().setAttribute("style", "padding:14px 0; min-height:100px;");
 		secondInnerSubBlock.getElement().setAttribute("style", "height: 60px; width: 95px; display: inline-block; vertical-align: middle;");
@@ -93,8 +93,14 @@ public class AssessmentProgressReportPrintView extends Composite implements Clie
 		
 		if(printMap.get("collectionSummaryText").equalsIgnoreCase("Collection Summary")){
 			img.getElement().setAttribute("style", "border-left: 5px solid #0074be; height: 60px; width: 90px;");
+			secondBlock.getElement().setAttribute("style", "width:33%; float:left; text-align:center;");
+			thirdBlock.getElement().setAttribute("style", "width:20%; float:left; display:none;");
+			goal.getElement().setAttribute("style", "margin:0; color:#515151; font-size:12px;display:none;");
 		}else{
 			img.getElement().setAttribute("style", "border-left: 5px solid #fdb128; height: 60px; width: 90px;");
+			secondBlock.getElement().setAttribute("style", "width:16.6667%; float:left; text-align:center;");
+			thirdBlock.getElement().setAttribute("style", "width:20%; float:left; display:block;");
+			goal.getElement().setAttribute("style", "margin:0; color:#515151; font-size:12px;display:block;");
 		}
 		
 		detailsBlock.getElement().setAttribute("style", "display: inline-block; vertical-align: middle; width:75%;");
@@ -103,16 +109,13 @@ public class AssessmentProgressReportPrintView extends Composite implements Clie
 		collectionResourcesCount.setText(printMap.get("collectionResourcesCount"));
 		collectionResourcesCount.getElement().setAttribute("style", "margin:0; color:#515151; font-size:12px;");
 		
-		secondBlock.getElement().setAttribute("style", "width:16.6667%; float:left; text-align:center;");
 		secondInnerBlock.getElement().setAttribute("style", "min-height:100px; padding:14px 0; border-left:1px solid #ddd;");
 		scoreTitle.getElement().setAttribute("style", "margin:0 0 6px; color:#515151; font-weight:normal;");
 		scoreTitle.setText(printMap.get("scoreTitle"));
 		score.getElement().setAttribute("style", "color: #4897ce; font-weight: bold; margin:0 0 6px; font-size:30px;");
 		score.setText(printMap.get("score"));
 		goal.setText("Goal :"+printMap.get("goal"));
-		goal.getElement().setAttribute("style", "margin:0; color:#515151; font-size:12px;");
 		
-		thirdBlock.getElement().setAttribute("style", "width:20%; float:left;");
 		thirdInnerBlock.getElement().setAttribute("style", "padding:15px 0; min-height:100px; border-left:1px solid #ddd;");
 		thirdInnerSubBlock.getElement().setAttribute("style", "display: inline-block; vertical-align: middle; width:100%;");
 		thirdInnerSub2Block.getElement().setAttribute("style", "background-color: #ddd; border-radius: 50%; float:none; margin:0 auto; height: 80px; position: relative; width: 80px; background-image:linear-gradient(90deg, #ddd 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, #85b9df 50%, #ddd 50%, #ddd)");

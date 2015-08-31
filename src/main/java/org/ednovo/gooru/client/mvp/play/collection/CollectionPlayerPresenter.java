@@ -2060,7 +2060,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.collectionDataLogEventId=null;
 		this.sessionId = null;
 		this.isRefreshed = null;
+
+		this.isItem_lodRefreshed = null;
+        this.isItem_Refreshed = null;
+
 	}
+
+
 
 	/**
 	 * @return the isUserAttemptedAnswer
