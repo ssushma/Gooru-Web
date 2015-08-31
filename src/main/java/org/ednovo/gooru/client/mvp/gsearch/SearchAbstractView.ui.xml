@@ -142,7 +142,7 @@
 							</g:HTMLPanel>
 							<panel:UlPanel ui:field="ulSubjectPanel"/>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="btn-group grade standards" ui:field="btnStandardsBrowse">
+						<g:HTMLPanel styleName="btn-group standards" ui:field="btnStandardsBrowse">
 							<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
 						<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
 								<g:InlineLabel styleName="caret"></g:InlineLabel>
