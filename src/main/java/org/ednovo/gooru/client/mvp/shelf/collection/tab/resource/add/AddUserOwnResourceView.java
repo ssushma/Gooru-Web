@@ -495,10 +495,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			@Override
 			public void onClick(ClickEvent event) {
 				getAddStandards();
-				if (!standardsDropListValues.getStyleName().contains("standardsDropMenu")) {
-					standardsDropListValues.addStyleName("standardsDropMenu");
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:19.5em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:19.5em;color:#515151;");
 				} else {
-					standardsDropListValues.removeStyleName("standardsDropMenu");
+					standardsDropListValues.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -2535,11 +2535,13 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			for (int j = 0; j < standardsDescriptionList.size(); j++) {
 				HTMLPanel headerDiv = new HTMLPanel("");
 				if (j == 0) {
-					if (standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
-						liPanel.getElement().setId("CA");
-					} else {
-						liPanel.getElement().setId(standardsDescriptionList.get(j));
-					}
+					if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                        liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
+                    }else{
+                        liPanel.getElement().setId(standardsDescriptionList.get(j));
+                    }
 
 					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
 						liPanel.getElement().setAttribute("style", "opacity:0.5;");
@@ -2758,4 +2760,3 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 
 }
-

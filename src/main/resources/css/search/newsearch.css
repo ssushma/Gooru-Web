@@ -638,6 +638,7 @@ Back to top button
 	padding:0 0;
 	list-style:none;
 	display:inline-block;
+	background: none !important;
 }
 #gooruSearchMainContainer .standards ul li{
 	margin:0 0;
