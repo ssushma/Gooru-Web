@@ -649,6 +649,8 @@ Back to top button
 	list-style:none;
 	display:inline-block;
 	width:100%;
+	padding-top: 5px;
+	cursor: pointer;
 }
 #gooruSearchMainContainer .grade ul li:hover{
     background: none repeat scroll 0 0 #c3ddee;
