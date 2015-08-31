@@ -465,10 +465,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (!standardsDropListValues.getStyleName().contains("standardsDropMenu")) {
-					standardsDropListValues.addStyleName("standardsDropMenu");
+				getAddStandards();
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:auto;left:18.9em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:auto;left:18.9em;color:#515151;");
 				} else {
-					standardsDropListValues.removeStyleName("standardsDropMenu");
+					standardsDropListValues.getElement().removeAttribute("style");
 				}
 			}
 		});

@@ -188,13 +188,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
 		uploadImageLbl.setText(i18n.GL0912());
-
+		getAddStandards();
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				getAddStandards();
 				if(!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;")){
 					standardsDropListValues.getElement().setAttribute("style", "display:block;");
 				}else{
@@ -650,7 +649,6 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 	}
 	public final void populateStandardValues(){
-		standardsDropListValues.clear();
             for (String standardsTypesArray1 : standardsTypesArray) {
                 List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
                 LiPanel liPanel = new LiPanel();
@@ -1254,7 +1252,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		populateStandardValues();
 	}
 
-	public void getAddStandards() {	
+	public void getAddStandards() {
 		if(!AppClientFactory.isAnonymous()){
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,

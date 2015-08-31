@@ -158,7 +158,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	        	hidePopup(event);
 	          }
 	    });
-		getAddStandards();
+		//getAddStandards();
 		enterLbl.addClickHandler(new OnEnterClassCodeClick());
 		enterLbl.setText(i18n.GL1065());
 		enterLbl.getElement().setId("btnEnter");
@@ -1167,7 +1167,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	}
 
 	public final void populateStandardValues(){
-		standardsDropListValues.clear();
+		standardsDropListValues.clear(); 
         for (String standardsTypesArray1 : standardsTypesArray) {
             List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
             LiPanel liPanel = new LiPanel();
@@ -1263,6 +1263,7 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 	}
 
 	public void getAddStandards() {
+
 		if(!AppClientFactory.isAnonymous()){
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
