@@ -2060,6 +2060,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.collectionNewDataLogEventId=null;
 		this.collectionStartTime=0L;
 		this.collectionDataLogEventId=null;
+		this.sessionId = null;
 	}
 
 	/**
