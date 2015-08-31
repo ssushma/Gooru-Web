@@ -1475,12 +1475,17 @@ footer ul li a {
 	}
 }
 
-
-
-#gooruSearchMainContainer .subjectContainer .dropdown-menu>.active:hover, #gooruSearchMainContainer .seachRightNavigation li:hover{
-	display: block;
+#gooruSearchMainContainer .subjectContainer .dropdown-menu>.active:hover{
 	width: 100%;
 	margin: 0px;
 	border: 0px;
 }
+
+#gooruSearchMainContainer .seachRightNavigation .gradesContainer li:hover{
+	background: none !important;
+  	margin: 0px;
+	border: 0px;
+	display: inline-block;
+}
+
 

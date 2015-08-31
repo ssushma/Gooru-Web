@@ -90,7 +90,7 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 		addDomHandler(this, ClickEvent.getType());
 		this.profileDo = profileDo;
-		this.addStyleName("courseOption");
+		this.addStyleName("signUpCourseOption");
 
 		final Image courseImage = new Image(imageUrl);
 		courseImage.setAltText(codeName);

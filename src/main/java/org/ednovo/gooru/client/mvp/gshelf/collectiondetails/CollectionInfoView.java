@@ -657,6 +657,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                     if(j==0){
                         if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
                             liPanel.getElement().setId("CA");
+                        }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                            liPanel.getElement().setId("B21");
                         }else{
                             liPanel.getElement().setId(standardsDescriptionList.get(j));
                         }
@@ -1160,7 +1162,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 
     public boolean validateInputs(){
-        if (collectionTitle.getText().trim() == null || collectionTitle.getText().trim().equalsIgnoreCase(i18n.GL3367())){
+        if (collectionTitle.getText().trim().equalsIgnoreCase("") || collectionTitle.getText().trim().equalsIgnoreCase(i18n.GL3367())){
         	lblErrorMessage.setText("collection".equalsIgnoreCase(type)?"Please Enter Collection Title":"Please Enter Assessment Title");
             return false;
         }
