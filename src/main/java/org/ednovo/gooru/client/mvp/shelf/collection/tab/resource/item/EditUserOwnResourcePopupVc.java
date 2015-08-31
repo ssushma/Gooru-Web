@@ -2571,14 +2571,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtn.setEnabled(false);
-			addResourceBtn.addStyleName("disabled");
+		//	addResourceBtn.setEnabled(false);
+		//	addResourceBtn.addStyleName("disabled");
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean value) {
 					addResourceBtn.setEnabled(true);
-					addResourceBtn.removeStyleName("disabled");
+					//addResourceBtn.removeStyleName("disabled");
 					if(textBox!=null){
 						isHavingBadWordsInTextbox = value;
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
@@ -2665,11 +2665,13 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			for (int j = 0; j < standardsDescriptionList.size(); j++) {
 				HTMLPanel headerDiv = new HTMLPanel("");
 				if (j == 0) {
-					if (standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
-						liPanel.getElement().setId("CA");
-					} else {
-						liPanel.getElement().setId(standardsDescriptionList.get(j));
-					}
+					if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                        liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
+                    }else{
+                        liPanel.getElement().setId(standardsDescriptionList.get(j));
+                    }
 
 					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
 						liPanel.getElement().setAttribute("style", "opacity:0.5;");
