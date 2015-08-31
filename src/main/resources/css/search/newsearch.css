@@ -652,6 +652,7 @@ Back to top button
 }
 #gooruSearchMainContainer .grade ul li:hover{
     background: none repeat scroll 0 0 #c3ddee;
+    width: 27px;
 }
 
 #gooruSearchMainContainer .grade ul li a{
