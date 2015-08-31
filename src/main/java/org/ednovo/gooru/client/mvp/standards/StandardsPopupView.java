@@ -420,8 +420,11 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 		for (int i = 0; i < levelOneData.getNode().size(); i++) {
 			LiPanel liPanel2 = new LiPanel();
-			Anchor levelOneStandardsInner2 = new Anchor();
+			HTMLEventPanel levelOneStandardsInner2 = new HTMLEventPanel("");
+			HTMLEventPanel levelOneStandardsInner2Code = new HTMLEventPanel("");
 			liPanel2.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+			if(levelOneData.getNode().get(i).getCode()!=null){
+			levelOneStandardsInner2Code.getElement().setInnerHTML(levelOneData.getNode().get(i).getCode());}
 			levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.getNode().get(i).getLabel());
 			liPanel2.getElement().setAttribute("id", levelOneData.getNode().get(i).getCodeId().toString());
 			if (i == 0) {
@@ -432,6 +435,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 				@Override
 				public void onClick(ClickEvent event) {
 					LiPanel clickedElement = (LiPanel) event.getSource();
+
 					String codeStandardsVal = clickedElement.getElement().getAttribute("id");
 					getSecondLevelObjects("2", codeStandardsVal);
 					for (int l = 0; l < levelTwoStandards.getWidgetCount(); l++) {
@@ -441,6 +445,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 				}
 			});
+			liPanel2.add(levelOneStandardsInner2Code);
 			liPanel2.add(levelOneStandardsInner2);
 			levelTwoStandards.add(liPanel2.asWidget());
 			if (i == 0) {
@@ -786,8 +791,11 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		for (int i = 0; i < levelOneData.size(); i++) {
 			try {
 				LiPanel liPanel1 = new LiPanel();
-				Anchor levelOneStandardsInner2 = new Anchor();
+				HTMLEventPanel levelOneStandardsInner2 = new HTMLEventPanel("");
+				HTMLEventPanel levelOneStandardsInner2Code = new HTMLEventPanel("");
 				liPanel1.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+				if(levelOneData.get(i).getCode()!=null){
+					levelOneStandardsInner2Code.getElement().setInnerHTML(levelOneData.get(i).getCode());}
 				levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.get(i).getLabel());
 				liPanel1.getElement().setAttribute("id", levelOneData.get(i).getCodeId().toString());
 				if (i == 0) {
@@ -807,6 +815,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 					}
 				});
+				liPanel1.add(levelOneStandardsInner2Code);
 				liPanel1.add(levelOneStandardsInner2);
 				levelTwoStandards.add(liPanel1.asWidget());
 				if (i == 0) {
@@ -1416,7 +1425,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		public void onClick(ClickEvent event) {
 			removeActiveStyle(closeLiPanel.getId());
 			for (int i = 0; i < standListArray.size(); i++) {
-				if ((standListArray.get(i).get("selectedCodeId")).equals(String.valueOf(closeLiPanel.getId()))) {
+				if ((standListArray.get(i).get("selectedCodeVal")).equals(closeLiPanel.getName())) {
 					standListArray.remove(i);
 					break;
 				}
@@ -1428,6 +1437,21 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 
 	public void removeActiveStyle(long id) {
 		Iterator<Widget> widgets = levelFourStandards.iterator();
+		if(!widgets.hasNext()){
+			removeActiveStyleb21(id);
+		}
+		else
+		{
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (String.valueOf(id).equals(widget.getElement().getAttribute("id"))) {
+				widget.removeStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+			}
+		}
+		}
+	}
+	public void removeActiveStyleb21(long id) {
+		Iterator<Widget> widgets = levelThreeStandards.iterator();
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (String.valueOf(id).equals(widget.getElement().getAttribute("id"))) {

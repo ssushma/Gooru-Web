@@ -657,6 +657,8 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
                     if(j==0){
                         if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
                             liPanel.getElement().setId("CA");
+                        }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                            liPanel.getElement().setId("B21");
                         }else{
                             liPanel.getElement().setId(standardsDescriptionList.get(j));
                         }
