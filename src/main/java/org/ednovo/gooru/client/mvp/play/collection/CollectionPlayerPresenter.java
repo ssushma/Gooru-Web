@@ -78,8 +78,6 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
@@ -2060,6 +2058,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.collectionNewDataLogEventId=null;
 		this.collectionStartTime=0L;
 		this.collectionDataLogEventId=null;
+		this.sessionId = null;
+		this.isRefreshed = null;
 	}
 
 	/**
