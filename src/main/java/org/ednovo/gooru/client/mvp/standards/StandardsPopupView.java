@@ -142,6 +142,7 @@ public class StandardsPopupView extends PopupViewWithUiHandlers<StandardsPopupUi
 		imageLoader.setVisible(true);
 		imageLoader.setHeight("350" + Unit.PX);
 		standardsContainer.setVisible(false);
+		AddStandardsBundle.INSTANCE.css().ensureInjected();
 		appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
 
 			@Override
