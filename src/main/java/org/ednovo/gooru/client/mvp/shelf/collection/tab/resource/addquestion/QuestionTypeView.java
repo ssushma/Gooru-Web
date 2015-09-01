@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +15,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ProfanityCheckDo;
@@ -21,6 +23,7 @@ import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.application.shared.util.ClientConstants;
@@ -29,6 +32,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddAnswerChoice;
@@ -43,8 +47,10 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -111,20 +117,29 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	depthOfKnowledgeHeader,depthOfKnowledgeTitle,standardsDefaultText,standardMaxMsg,centuryDefaultText,rightsLbl,
 	loadingTextLbl,ansChoiceErrMsg;
 	@UiField Anchor addQuestionImg,addExplanationAnc,addHintsAnc,addDepthOfKnowledgeAnc,addStandardsAnc,addCenturyAnc;
-	@UiField HTMLPanel questionText,addQuestImgContainer,questionHotSpotAnswerChoiceContainer,advancedContainer,hintsContainer,
+	@UiField HTMLPanel standardsCont,questionText,addQuestImgContainer,questionHotSpotAnswerChoiceContainer,advancedContainer,hintsContainer,
 	errorContainer,panelContentRights,rightsContent,buttonContainer,questionNameTextAreaContainer,explainationTextAreaContainer;
 	TinyMCE questionNameTextArea,explainationTextArea;
-	@UiField FlowPanel explanationContainer,depthOfKnowledgeContainer,standardContainer,standardsPanel,centuryContainer,
+	@UiField FlowPanel explanationContainer,depthOfKnowledgeContainer,standardContainer,centuryContainer,
 	centuryPanel;
 	@UiField HTMLEventPanel eHearderIconExplanation,eHearderIconDepthOfKnowledge,eHearderIconStandards,eHearderIconCentury,
 	lblContentRights,addQuestionResourceButton;
 	@UiField Image depthOfKnoweldgeToolTip;
 	@UiField CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
-	@UiField Button browseStandards,browseCentury,cancelButton;
+	@UiField Button browseCentury,cancelButton;
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox,centurySgstBox;
 	@UiField BlueButtonUc addbutton;
+	
+	@UiField
+	HTMLEventPanel btnStandardsBrowse;
+	
+	@UiField UlPanel ulSelectedItems;
+	
+	@UiField
+	UlPanel standardsDropListValues;
+	
 	@UiField public static Label errorMessageForQuestion;
 
 	private static final String MESSAGE_HEADER = i18n.GL0748();
@@ -179,6 +194,22 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private String hsType=i18n.GL3228_1();
 
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
+	
+	
+	private boolean isCCSSAvailable = false;
+	private boolean isNGSSAvailable = false;
+	private boolean isTEKSAvailable = false;
+	private boolean isCAAvailable = false;
+	
+	String codeID="",code="",label="";
+	List<Integer> selectedValues=new ArrayList<>();
+	
+	public FolderDo courseObjG;
+
+	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
+
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
+
 
 	ArrayList<String> isValidHintsList = new ArrayList<String>();
 	
@@ -266,14 +297,14 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		eHearderIconStandards.addClickHandler(new MinimizePanelsClickHandler());
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardSgstBox.getElement().setId("appSuggestBoxStandardSgstBox");
-		standardSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:85%;height:19px");
+		standardSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:65%;height:19px");
 
 		standardsDefaultText.setText(i18n.GL1682());
-		browseStandards.addClickHandler(new onBrowseStandardsClick());
+
 
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
-		standardsPanel.getElement().setId("fpnlStandardsPanel");
+
 
 		/**
 		 * century
@@ -325,6 +356,28 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		cancelButton.getElement().setId("btnCancel");
 
 		setTextAndStyle();
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+			@Override
+			public void onPreviewNativeEvent(NativePreviewEvent event) {
+				hideDropDown(event);
+			}
+		}); 
+		
+		standardContainer.getElement().setId("standardsContainerBswn");
+		standardsCont.getElement().setAttribute("style", "position:relative;");
+		
+		getAddStandards();
+		btnStandardsBrowse.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:33.5em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:33.5em;color:#515151;");
+				} else {
+					standardsDropListValues.getElement().removeAttribute("style");
+				}
+			}
+		});
 
 		ansChoiceErrMsg.getElement().setId("lblAnsChoiceErrMsg");
 	}
@@ -393,35 +446,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
 
 		addClickEventsForCheckBox();
-		
-		if(!AppClientFactory.getGooruUid().equalsIgnoreCase(ClientConstants.GOORU_ANONYMOUS)){
-			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
-				@Override
-				public void onSuccess(ProfileDo profileObj) {
-					if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference()!= null && profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
-						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-							isBrowseTooltip = true;
-							DisableStandars();
-						}else
-						{
-							isBrowseTooltip = false;
-							enableStandards();
-							standardPreflist=new ArrayList<String>();
-							for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
-								standardPreflist.add(code);
-								standardPreflist.add(code.substring(0, 2));
-							}
-
-						}
-					}else{
-						isBrowseTooltip = true;
-						DisableStandars();
-					}
-				}
-
-			});
-		}
 	}
 
 
@@ -586,7 +611,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				standardContainer.setVisible(false);
 				addStandardsAnc.setVisible(true);
 				addStandardsAnc.setText(i18n.GL0575());
-				setStandardsContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconCentury")){
 				centuryContainer.setVisible(false);
 				addCenturyAnc.setVisible(true);
@@ -911,15 +935,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	}
 
 
-	public void setStandardsContainer(){
-		if(standardsPanel.getWidgetCount()>0){
-			addStandardsAnc.removeStyleName("advancedOptionsTabs");
-			addStandardsAnc.addStyleName("advancedOptionsTabActive");
-		}else{
-			addStandardsAnc.addStyleName("advancedOptionsTabs");
-			addStandardsAnc.removeStyleName("advancedOptionsTabActive");
-		}
-	}
 
 
 	public void initializeAutoSuggestedBox(){
@@ -976,7 +991,22 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				return null;
 			}
 		};
-		standardSgstBox.addSelectionHandler(this);
+		standardSgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
+
+			@Override
+			public void onSelection(SelectionEvent<Suggestion> event) {
+				Map<String, String> standard = new HashMap<>();
+				
+				standard.put("selectedCodeId", String.valueOf(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
+				standard.put("selectedCodeVal", standardSgstBox.getValue());
+				standard.put("selectedDifferenceId", String.valueOf(3));
+				standard.put("selectedCodeDesc", standardSgstBox.getValue());
+				displaySelectedStandardsOne(standard);
+				standardSgstBox.setText("");
+				standardSuggestOracle.clear();
+
+			}
+		});
 		BlurHandler blurHandler=new BlurHandler() {
 
 			@Override
@@ -1042,12 +1072,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		});
 	}
 
-	@Override
-	public void onSelection(SelectionEvent<Suggestion> event) {
-		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
-		standardSgstBox.setText("");
-		standardSuggestOracle.clear();
-	}
+
 	private static String getCodeIdByCode(String code, List<CodeDo> codes) {
 		if (codes != null) {
 			for (CodeDo codeDo : codes) {
@@ -1068,27 +1093,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		}
 		return null;
 	}
-	/**
-	 * Adding new standard for the collection , will check it has more than
-	 * fifteen standards
-	 *
-	 * @param standard
-	 *            which to be added for the collection
-	 */
-	public void addStandard(String standard, String id) {
-		if (standardsPanel.getWidgetCount() <5) {
-			if (standard != null && !standard.isEmpty()) {
-				CodeDo codeObj=new CodeDo();
-				codeObj.setCodeId(Integer.parseInt(id));
-				codeObj.setCode(standard);
-				standardsDo.add(codeObj);
-				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
-			}
-		} else {
-			standardMaxShow();
-			standardSgstBox.setText("");
-		}
-	}
+
 	public void addCentury(String centuryTag, String id) {
 		if (centuryTag != null && !centuryTag.isEmpty()) {
 			String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());
@@ -1142,23 +1147,10 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void standardMaxShow() {
 		standardSgstBox.addStyleName("standardTxtBox");
 		standardMaxMsg.setStyleName("standardMax");
-		standardsPanel.addStyleName("floatLeftNeeded");
+		//standardsPanel.addStyleName("floatLeftNeeded");
 		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
 	}
-	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
-		standardSuggestOracle.clear();
-		this.standardSearchDo = standardSearchDo;
-		if (this.standardSearchDo.getSearchResults() != null) {
-			List<String> sources = getAddedStandards(standardsPanel);
-			for (CodeDo code : standardSearchDo.getSearchResults()) {
-				if (!sources.contains(code.getCode())) {
-					standardSuggestOracle.add(code.getCode());
-				}
-				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
-			}
-		}
-		standardSgstBox.showSuggestionList();
-	}
+
 	public void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo) {
 		centurySuggestOracle.clear();
 		this.centurySearchDo = centurySearchDo;
@@ -1231,47 +1223,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		});
 	}
 
-	@Override
-	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc) {
-		if (standardsPanel.getWidgetCount() <5) {
-			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
-				CodeDo codeObj=new CodeDo();
-				codeObj.setCodeId(id);
-				codeObj.setCode(standardsCodeVal);
-				standardsDo.add(codeObj);
-				standardsPanel.add(createStandardLabel(standardsCodeVal, Integer.toString(id), desc));
-			}
-		} else {
-			standardMaxShow();
-		}
-		closeStandardsPopup();
-	}
+
 
 	public void closeStandardsPopup(){
 		getUiHandlers().closeStandardsPopup();
 	}
-	public void DisableStandars(){
-		browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
-		browseStandards.getElement().getStyle().setColor("#999");
-		browseStandards.getElement().addClassName("disabled");
-		browseStandards.addMouseOverHandler(new MouseOverHandler() {
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(isBrowseTooltip == true){
-					browseStandardsTooltip.show();
-					browseStandardsTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
-					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
-					isBrowseStandardsToolTip= true;
-				}
-			}
-		});
 
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
-			public void onPreviewNativeEvent(NativePreviewEvent event) {
-				hideBrowseStandardsPopup(event);
-			}
-		});
-	}
 
 	public void hideBrowseStandardsPopup(NativePreviewEvent event){
 		try{
@@ -1297,10 +1254,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		return false;
 	}
 
-	public void enableStandards(){
-		browseStandards.getElement().getStyle().clearColor();
-		browseStandards.getElement().removeClassName("disabled");
-	}
 
 	@UiHandler("addStandardsAnc")
 	public void clickOnaddStandardsLabel(ClickEvent event){
@@ -1717,6 +1670,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	 * If all validations successful, question is added to the collection.
 	 */
 	public void addFunctionality(boolean fieldValidationStaus,String mediaFileName){
+		standardsDo.clear();
+		getSelectedStandards();
 		if(fieldValidationStaus){
 			buttonContainer.getElement().getStyle().setDisplay(Display.NONE);
 			loadingTextLbl.setVisible(true);
@@ -1795,7 +1750,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			collectionQuestionItemDo.setDescription(questionText);
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
 			taxonomySet.put("taxonomyCode", standardsDo);
-			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
+			ArrayList<Integer> standards=new ArrayList<Integer>();
+			for(CodeDo codeDo:standardsDo){
+				standards.add(codeDo.getCodeId());
+			}
+			collectionQuestionItemDo.setStandardIds(standards);
 			collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledges);
 
 			if(questionType.equalsIgnoreCase("HS_IMG")){
@@ -1857,7 +1816,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		resetToHints();
 		setHotSpotAnswerFields();
 		depthOfKnowledges.clear();
-		standardsPanel.clear();
+		ulSelectedItems.clear();
 		centuryPanel.clear();
 		setTextAndStyle();
 		resetDepthOfKnowledges();
@@ -2045,32 +2004,54 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 					}
 				}
 
-				if(collectionItemDo.getStandards()!=null){
-					standardsPanel.clear();
-					standardsDo.clear();
-					String codeID="",code="",label="";
-					for (Map<String, String> map: collectionItemDo.getStandards()) {
-						 CodeDo codeObj=new CodeDo();
-						for (Map.Entry<String, String> entry : map.entrySet()) {
-							String key = entry.getKey();
-							String values = entry.getValue();
-							 if(key.contains("codeId")){
-								 codeID=values;
-								 codeObj.setCodeId(Integer.parseInt(values));
-							 }
-							 if(key.contains("code")){
-								 code=values;
-								 codeObj.setCode(values);
-							 }
-							 if(key.contains("description")){
-								 label=values;
-								 codeObj.setLabel(values);
-							 }
-							}
-						 standardsDo.add(codeObj);
-						 standardsPanel.add(createStandardLabel(code, codeID,label));
+			if(collectionItemDo.getStandards()!=null){
+				ulSelectedItems.clear();
+				standardsDo.clear();
+
+				for (Map<String, String> map: collectionItemDo.getStandards()) {
+					CodeDo codeObj=new CodeDo();
+					for (Map.Entry<String, String> entry : map.entrySet()) {
+						String key = entry.getKey();
+						String values = entry.getValue();
+						if(key.contains("id")){
+							codeID=values;
+							codeObj.setCodeId(Integer.parseInt(values));
+						}
+						if(key.contains("code")){
+							code=values;
+							codeObj.setCode(values);
+						}
+						if(key.contains("code")){
+							label=values;
+							codeObj.setLabel(values);
+						}
 					}
+					standardsDo.add(codeObj);
+					final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(code);
+					liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							for(int i=0;i<selectedValues.size();i++) {
+							     if((selectedValues.get(i)).equals(codeID)){
+							    	 selectedValues.remove(codeID);
+							    	 Element element = Document.get().getElementById(codeID);
+							    	 if(element!=null){
+							 			element.removeClassName("active");
+							 		}
+							     }
+							 }
+							removeGradeWidget(ulSelectedItems,Long.parseLong(codeID));
+							liPanelWithClose.removeFromParent();
+							//lblGradeErrorMsg.setVisible(false);
+						}
+					});
+					liPanelWithClose.setId(Long.parseLong(codeID));
+					liPanelWithClose.setName(label);
+					liPanelWithClose.setDifferenceId(3);
+					liPanelWithClose.getElement().setAttribute("tag", "taxonomy");
+					ulSelectedItems.add(liPanelWithClose);
 				}
+			}
 				if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
 					centuryPanel.clear();
 					for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
@@ -2139,7 +2120,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 			setDepthOfKnowledgeContainer();
 			setHintsContainer();
-			setStandardsContainer();
+			//setStandardsContainer();
 			setCenturyContainer();
 
 
@@ -2235,7 +2216,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addHintsAnc.setText(i18n.GL3210_1()+i18n.GL_SPL_OPEN_SMALL_BRACKET()+(5-count)+i18n.GL3207_1()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 
 		centuryPanel.clear();
-		standardsPanel.clear();
+		//standardsPanel.clear();
 		standardsDo.clear();
 		
 		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
@@ -2262,7 +2243,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			codeDo.setCode(code);
 			codeDo.setCodeId(codeID);
 			standardsDo.add(codeDo);
-			standardsPanel.add(createStandardLabel(code,String.valueOf(codeID),label));
+			ulSelectedItems.add(createStandardLabel(code,String.valueOf(codeID),label));
 			}
 		}
 		
@@ -2279,7 +2260,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		
 		if(addDepthOfKnowledgeAnc.isVisible()){setDepthOfKnowledgeContainer();}
 		if(addHintsAnc.isVisible()){setHintsContainer();}
-		if(addStandardsAnc.isVisible()){setStandardsContainer();}
 		if(addCenturyAnc.isVisible()){setCenturyContainer();}
 		
 	}
@@ -2321,10 +2301,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			collectionQuestionItemDo.getTaxonomySet().clear();
 		}
 		
-		HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
-		taxonomySet.put("taxonomyCode", standardsDo);
-		
-		collectionQuestionItemDo.setTaxonomySet(taxonomySet);
+
 		timer2.schedule(0);
 
 		HashMap<String,Boolean> moreOptions=new HashMap<String, Boolean>();
@@ -2425,5 +2402,284 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		deleteConfirmationPopup.hide();
 		addQuestImgContainer.clear();
 	    addQuestionImg.setVisible(true);
+	}
+	public final void populateStandardValues() {
+		for (String standardsTypesArray1 : standardsTypesArray) {
+			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
+			LiPanel liPanel = new LiPanel();
+			for (int j = 0; j < standardsDescriptionList.size(); j++) {
+				HTMLPanel headerDiv = new HTMLPanel("");
+				if (j == 0) {
+					if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                        liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
+                    }else{
+                        liPanel.getElement().setId(standardsDescriptionList.get(j));
+                    }
+
+					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isNGSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("NGSS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					} else if ((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")) {
+						liPanel.getElement().setAttribute("style", "opacity:0.5;");
+					}
+
+					headerDiv.setStyleName("liPanelStyle");
+				} else {
+					if (standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life")) {
+						standardsDescriptionList.set(j, "College, Career, and Civic Life");
+						headerDiv.setStyleName("liPanelStylenonBold");
+						liPanel.getElement().setAttribute("standarddesc", "College, Career, and Civic Life");
+					} else {
+						headerDiv.setStyleName("liPanelStylenonBold");
+						liPanel.getElement().setAttribute("standarddesc", standardsDescriptionList.get(j));
+					}
+				}
+				headerDiv.getElement().setInnerHTML(standardsDescriptionList.get(j));
+				liPanel.add(headerDiv);
+			}
+			if (liPanel.getElement().getAttribute("style") != null
+					&& !liPanel.getElement().getAttribute("style").equalsIgnoreCase("opacity:0.5;")) {
+				liPanel.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						standardsDropListValues.setVisible(false);
+						String standardsVal = event.getRelativeElement().getAttribute("id");
+						String standardsDesc = event.getRelativeElement().getAttribute("standarddesc");
+
+						collectionLiPanelWithCloseArray.clear();
+						for (int i = 0; i < ulSelectedItems.getWidgetCount(); i++) {
+							collectionLiPanelWithCloseArray.add((LiPanelWithClose) ulSelectedItems.getWidget(i));
+						}
+						showStandardsPopup(standardsVal, standardsDesc,
+								collectionLiPanelWithCloseArray);
+					}
+				});
+			}
+			standardsDropListValues.add(liPanel);
+		}
+	}
+	
+	
+
+	public void checkStandarsList(List<String> standarsPreferencesList) {
+
+		if (standarsPreferencesList != null) {
+			if (standarsPreferencesList.contains("CCSS")) {
+				isCCSSAvailable = true;
+			} else {
+				isCCSSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("NGSS")) {
+				isNGSSAvailable = true;
+			} else {
+				isNGSSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("TEKS")) {
+				isTEKSAvailable = true;
+			} else {
+				isTEKSAvailable = false;
+			}
+			if (standarsPreferencesList.contains("CA")) {
+				isCAAvailable = true;
+			} else {
+				isCAAvailable = false;
+			}
+		}
+
+		populateStandardValues();
+	}
+
+	public void getAddStandards() {
+		if (!AppClientFactory.isAnonymous()) {
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(
+					AppClientFactory.getLoggedInUser().getGooruUId(), USER_META_ACTIVE_FLAG,
+					new SimpleAsyncCallback<ProfileDo>() {
+						@Override
+						public void onSuccess(final ProfileDo profileObj) {
+							if (profileObj.getUser().getMeta() != null
+									&& profileObj.getUser().getMeta().getTaxonomyPreference() != null
+									&& profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null) {
+								checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+							}
+							standardPreflist=new ArrayList<String>();
+							for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+								standardPreflist.add(code);
+								standardPreflist.add(code.substring(0, 2));
+							 }
+						}
+
+					});
+		} else {
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			isTEKSAvailable = false;
+		}
+	}
+
+	public void showStandardsPopup(String standardVal, String standardsDesc,
+			List<LiPanelWithClose> collectionLiPanelWithCloseArray){
+		getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+	}
+	
+	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
+		standardSuggestOracle.clear();
+		this.standardSearchDo = standardSearchDo;
+		if (this.standardSearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedStandards();
+			for (CodeDo code : standardSearchDo.getSearchResults()) {
+				if (!sources.contains(code.getCode())) {
+					standardSuggestOracle.add(code.getCode());
+				}
+				selectedValues.add(code.getCodeId());
+				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		standardSgstBox.showSuggestionList();
+	}
+	public void displaySelectedStandards(List<Map<String,String>> standListArray){
+		for (int i=0;i<standListArray.size();i++){
+			final Map<String, String> standard = standListArray.get(i);
+			if (!selectedValues.contains(standard.get("selectedCodeId"))){
+				ulSelectedItems.add(generateLiPanel(standard, "standards"));
+			}
+		}
+	}
+	public void displaySelectedStandardsOne(Map<String, String> standard){
+			if (!selectedValues.contains(standard.get("selectedCodeId"))){
+				ulSelectedItems.add(generateLiPanel(standard, "standards"));
+			}
+		
+	}
+	private LiPanelWithClose generateLiPanel(final Map<String, String> standard, String tagValue) {
+		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(standard.get("selectedCodeVal"));
+		liPanelWithClose.getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				//This will remove the selected value when we are trying by close button
+				removeGradeWidget(ulSelectedItems,Long.parseLong(standard.get("selectedCodeId")));
+				liPanelWithClose.removeFromParent();
+			}
+		});
+		selectedValues.add(Integer.parseInt(standard.get("selectedCodeId")));
+		liPanelWithClose.setId(Long.parseLong(standard.get("selectedCodeId")));
+		liPanelWithClose.setName(standard.get("selectedCodeVal"));
+		liPanelWithClose.setRelatedId(Integer.parseInt(standard.get("selectedCodeId")));
+		liPanelWithClose.setDifferenceId(Integer.parseInt(standard.get("selectedDifferenceId")));
+		liPanelWithClose.getElement().setAttribute("tag", tagValue);
+		return liPanelWithClose;
+	}
+	/**
+	 * This method will remove the widget based on the codeId in the UlPanel
+	 * @param ulPanel
+	 * @param codeId
+	 */
+	public void removeGradeWidget(UlPanel ulPanel,long codeId){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getId()==codeId){
+					obj.removeFromParent();
+				}
+			}
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;
+				if(obj.getCodeId()==codeId){
+					obj.removeStyleName("active");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * This method is used to get the selected Std id's
+	 * @return
+	 */
+	public List<Integer> getSelectedStandards(){
+		List<Integer> taxonomyCourseIds=new ArrayList<>();
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		List<CourseSubjectDo> courseList=new ArrayList<>();
+		while (widgets.hasNext()) {
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				LiPanelWithClose obj=(LiPanelWithClose) widget;
+				if(obj.getDifferenceId()==3){
+					Integer intVal = (int)obj.getId();
+					taxonomyCourseIds.add(intVal);
+					CourseSubjectDo courseObj=new CourseSubjectDo();
+					selectedValues.add((int)obj.getId());
+					courseObj.setId((int)obj.getId());
+					courseObj.setCode(obj.getName());
+					courseObj.setSubjectId(obj.getRelatedId());
+					courseList.add(courseObj);
+					CodeDo codeObj=new CodeDo();
+					codeObj.setCodeId((int)obj.getId());
+					codeObj.setCode(obj.getName());
+					standardsDo.add(codeObj);
+				}
+			}
+		}
+		if(courseObjG!=null){
+			courseObjG.setStandards(courseList);
+		}
+
+		return taxonomyCourseIds;
+	}
+	/**
+	 * get the standards are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return standards text in list which are added for the collection
+	 */
+	private List<String> getAddedStandards() {
+		List<String> suggestions = new ArrayList<String>();
+		
+		Iterator<Widget> widgets = ulSelectedItems.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
+	protected void hideDropDown(NativePreviewEvent event) {
+		if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsStandardPopup(nativeEvent);
+        	if(!target){
+        		standardsDropListValues.getElement().removeAttribute("style");
+        	}
+    	}
+	}
+	
+	private boolean eventTargetsStandardPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return standardsDropListValues.getElement().isOrHasChild(Element.as(target))||standardsDropListValues.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
+
+
+	@Override
+	public void onSelection(SelectionEvent<Suggestion> event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setUpdatedStandardsCode(String setStandardsVal, int setStandardsIdVal, String setStandardDesc) {
+		// TODO Auto-generated method stub
+		
 	}
 }
