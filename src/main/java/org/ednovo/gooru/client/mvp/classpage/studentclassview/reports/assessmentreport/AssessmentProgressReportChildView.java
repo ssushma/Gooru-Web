@@ -778,6 +778,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			@Override
 			public void onSuccess() {
 				
+				if(isCollection) {
+					setPrintData();
+					setDataPanelVisibility(false,true);
+				}
+				
 				scoreObject.setVisible(false);
 				
 				collectionSummaryText.setVisible(false);
@@ -789,6 +794,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				printMap.put("collectionTitle", collectionTitle.getText());
 				printMap.put("collectionResourcesCount", collectionResourcesCount.getText());
 				printMap.put("score", score.getText());
+				printMap.put("scoreTitle", scoreTitle.getText());
 				printMap.put("goal", goal.getText());
 				printMap.put("correctStatus", correctStatus.getText());
 				printMap.put("lastModifiedTime", lastModifiedTime.getText());
@@ -801,10 +807,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				
 				if(isClickedOnSave){
 					printOptions.setVisible(false);
-					if(isCollection) {
-						setPrintData();
-						setDataPanelVisibility(false,true);
-					}
+					
 					String outputData = PrintPnl.getElement().getInnerHTML().toString();
 					
 					setDataPanelVisibility(true,false);
@@ -813,11 +816,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				}else{
 					printOptions.setVisible(false);
 					downloadFile.setUrl("");
-					if(isCollection) {
-						setPrintData();
-						setDataPanelVisibility(false,true);
-					}
-					
 					Print.it(style,PrintPnl);
 					printOptions.setVisible(true);
 					setDataPanelVisibility(true,false);
