@@ -1,12 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style field="toolTip" src="ToolTip.css" />
-	<ui:style>
-		/* Add CSS here. See the GWT docs on UI Binder for more details */
-	</ui:style>
 	<g:HTMLPanel ui:field="panelCode">
-		<!-- <g:HTMLPanel styleName="{toolTip.arrowBorder}"></g:HTMLPanel> -->
 		<uc:UlPanel styleName="dropdown-menu dropdowDisplay" ui:field="tooltipPanel">
 		    <uc:LiPanel>
 		        <g:Anchor ui:field="lblGooruLibrary"></g:Anchor>
@@ -18,7 +13,7 @@
   				</panel:HTMLEventPanel>
 			</uc:LiPanel>
 			<uc:LiPanel>
-				<g:Anchor styleName="{toolTip.discoverTooltipLabel}" ui:field="lblPartnerLibrary"/>
+				<g:Anchor styleName="discoverTooltipLabel" ui:field="lblPartnerLibrary"/>
 				<g:HTMLPanel ui:field="dropdownImg" styleName="right-caret  rightArrow"></g:HTMLPanel>
 				<panel:HTMLEventPanel ui:field="partnerLibContainer">
 				</panel:HTMLEventPanel>
