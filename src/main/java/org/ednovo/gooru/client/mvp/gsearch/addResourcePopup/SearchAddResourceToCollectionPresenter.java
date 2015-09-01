@@ -577,8 +577,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		});
 	}
 
-	public void selectedCopyOrMoveStatus(boolean isCopySelected,boolean isMoveSelected) {
-		getView().setCopyAndMoveStatus(isCopySelected,isMoveSelected);
+	public void selectedCopyOrMoveStatus(boolean isCopySelected,boolean isMoveSelected,String selectedType) {
+		getView().setCopyAndMoveStatus(isCopySelected,isMoveSelected,selectedType);
 	}
 
 	public void DisableMyCollectionsPanelData(boolean val) {

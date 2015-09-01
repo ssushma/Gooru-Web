@@ -66,7 +66,7 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void deleteMyCollectionContent(String id, String folderCollection);
 
-	public boolean checkCopyOrMoveStatus(boolean copySelected, boolean moveSelected);
+	public boolean checkCopyOrMoveStatus(boolean copySelected, boolean moveSelected,String clickedType);
 
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle);
 	

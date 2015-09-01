@@ -572,7 +572,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
 			isCopySelected= true;
 			isMoveSelected=false;
-			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
+			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
 			getUiHandlers().enableAddButton();
 		}
 	}
@@ -582,7 +582,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			isCopySelected= false;
 			isMoveSelected= true;
 			getUiHandlers().enableAddButton();
-			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected);
+			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
 			String NameTokenValue= AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			if(NameTokenValue.equalsIgnoreCase(PlaceTokens.MYCONTENT)){
 				String viewParamVal= AppClientFactory.getPlaceManager().getRequestParameter("view",null);
