@@ -2826,6 +2826,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		setExplanationContainer();
 		setDepthOfKnowledgeContainer();
 		setHintsContainer();
+		setStandardsContainer();
 		setCenturyContainer();
 	}
 
@@ -3271,6 +3272,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				standardContainer.setVisible(false);
 				addStandardsLabel.setVisible(true);
 				addStandardsLabel.setText(i18n.GL0575());
+				setStandardsContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconCentury")){
 				centuryContainer.setVisible(false);
 				addCenturyLabel.setVisible(true);
@@ -3647,6 +3649,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 		return suggestions;
+	}
+	public void setStandardsContainer(){
+		if(ulSelectedItems.getWidgetCount()>0){
+			addStandardsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
+			addStandardsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
+		}else{
+			addStandardsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
+			addStandardsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabActive());
+		}
 	}
 
 }
