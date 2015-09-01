@@ -135,7 +135,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
 
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 
 	private String type="";
 
