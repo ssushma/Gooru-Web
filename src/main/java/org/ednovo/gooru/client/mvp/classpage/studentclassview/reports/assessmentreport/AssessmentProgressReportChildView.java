@@ -163,7 +163,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
-		StringUtil.loadVisualizationLibraries();
 		collectionOverviewBtn.addClickHandler(new ResourceDataCall(collectionOverviewBtn));
 		questionsBtn.addClickHandler(new ResourceDataCall(questionsBtn));
 		oeQuestionsBtn.addClickHandler(new ResourceDataCall(oeQuestionsBtn));
@@ -723,18 +722,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			}
 		}
 	}
-
-	/**
-	 * This will set the cell properties
-	 * @return
-	 */
-	com.google.gwt.visualization.client.Properties getPropertiesCell(){
-		Properties properties=Properties.create();
-		properties.set("style", "text-align:center;");
-		com.google.gwt.visualization.client.Properties p=properties.cast();
-		return p;
-	}
-
+	
 	/**
 	 * This will return the correct answers
 	 * @param metaDataObj

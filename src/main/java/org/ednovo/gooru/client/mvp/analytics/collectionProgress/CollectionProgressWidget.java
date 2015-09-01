@@ -9,7 +9,6 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
-import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
@@ -35,7 +34,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.visualization.client.visualizations.Table;
 
 public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionProgressUiHandlers> implements IsCollectionProgressView  {
 
@@ -58,7 +56,6 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	@UiField Image exportImage;
 	@UiField Frame downloadFile;
 
-	DataView operationsView;
 	private final String GREEN = "#BCD1B9 !important";
 	private final String RED = "#EAB4B3 !important";
 	private final String ORANGE = "#FFE7C2 !important";
@@ -72,9 +69,11 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	ArrayList<CollectionProgressDataDo> questionProgressdata=new ArrayList<CollectionProgressDataDo>();
 	ArrayList<CollectionProgressDataDo> resourceProgressData=new ArrayList<CollectionProgressDataDo>();
 
-	Table table;
 	boolean isDropDownClicked=false,isCollectionView;
 	String collectionTitle;
+	
+	AdvancedFlexTable adTable=new AdvancedFlexTable();
+
 	/**
 	 * Constructor
 	 */
@@ -101,14 +100,14 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
  		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(table != null){
-					if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
+				if(adTable != null){
+					if(adTable.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
 						leftArrow.setVisible(true);
 						rightArrow.setVisible(true);
 				}else{
 						leftArrow.setVisible(false);
 						rightArrow.setVisible(false);
-						}
+					}
 				}
 				
 			}
@@ -173,7 +172,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 
 			destoryTables();
 			htmlpnlProgress.clear();
-			final AdvancedFlexTable adTable=new AdvancedFlexTable();
+			adTable = new AdvancedFlexTable();
 			adTable.getElement().setId("example");
 			htmlpnlProgress.add(adTable);
 			// create headers and put them in the thead tag
