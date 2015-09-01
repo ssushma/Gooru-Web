@@ -283,7 +283,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
-					 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || ASSESSMENT.equalsIgnoreCase(floderDo.getType())|| SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+					 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || ASSESSMENT.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo,null));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
@@ -397,7 +397,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 							}
 
 						}
-				 }else if(COLLECTION.equalsIgnoreCase(itemType) || SCOLLECTION.equalsIgnoreCase(itemType)){
+				 }else if(COLLECTION.equalsIgnoreCase(itemType) || ASSESSMENT.equalsIgnoreCase(itemType) || SCOLLECTION.equalsIgnoreCase(itemType)){
 					 if(folderLevel>=2){
 						 element.getStyle().setPaddingLeft(69, Unit.PX);
 				            element.getStyle().setMarginLeft(0, Unit.PX);
@@ -551,7 +551,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
 								item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem,floderDo.getType(),folderLevel);
-						 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType())|| ASSESSMENT.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+						 }else if(COLLECTION.equalsIgnoreCase(floderDo.getType()) || ASSESSMENT.equalsIgnoreCase(floderDo.getType()) || SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
 								folderItem.getElement().removeAttribute("style");
 							 	item.addItem(folderItem);

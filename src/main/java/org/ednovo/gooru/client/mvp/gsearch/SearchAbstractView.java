@@ -220,7 +220,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
 
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 
 	/**
 	 * Assign new instance for

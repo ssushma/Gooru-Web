@@ -1667,7 +1667,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			for (int i = 0; i < newst.length; i++) {
 				try {
 					if (!newst[i].equalsIgnoreCase("Kindergarten")
-							&& !newst[i].equalsIgnoreCase("Higher Education")) {
+							&& !newst[i].equalsIgnoreCase("Higher Education") && !newst[i].isEmpty()) {
 						int k = Integer.parseInt(newst[i]);
 						listI.add(k);
 					}else{

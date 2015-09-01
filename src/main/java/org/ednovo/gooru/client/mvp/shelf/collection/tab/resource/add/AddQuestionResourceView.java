@@ -274,7 +274,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
 
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 
 	public AddQuestionResourceView(){
 		initializeAutoSuggestedBox();
@@ -2826,6 +2826,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		setExplanationContainer();
 		setDepthOfKnowledgeContainer();
 		setHintsContainer();
+		setStandardsContainer();
 		setCenturyContainer();
 	}
 
@@ -3669,6 +3670,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 		return suggestions;
+	}
+	public void setStandardsContainer(){
+		if(ulSelectedItems.getWidgetCount()>0){
+			addStandardsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
+			addStandardsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
+		}else{
+			addStandardsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
+			addStandardsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabActive());
+		}
 	}
 
 }
