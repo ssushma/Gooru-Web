@@ -110,7 +110,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 
 	private static final MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 	List<Integer> selectedValues=new ArrayList<>();
 
 	final String ACTIVE="active";
@@ -391,8 +391,10 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
             for(int j=0; j<standardsDescriptionList.size(); j++){
                 HTMLPanel headerDiv = new HTMLPanel("");
                 if(j==0){
-                    if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                	if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
                         liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
                     }else{
                         liPanel.getElement().setId(standardsDescriptionList.get(j));
                     }

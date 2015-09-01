@@ -308,7 +308,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	
 	String codeID="",code="",label="";
 
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 
 
 
@@ -477,7 +477,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-
+				getAddStandards();
 				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:auto;left:18.9em;color:#515151;")) {
 					standardsDropListValues.getElement().setAttribute("style", "display:block;top:auto;left:18.9em;color:#515151;");
 				} else {
@@ -2569,14 +2569,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtn.setEnabled(false);
-			addResourceBtn.addStyleName("disabled");
+		//	addResourceBtn.setEnabled(false);
+		//	addResourceBtn.addStyleName("disabled");
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean value) {
 					addResourceBtn.setEnabled(true);
-					addResourceBtn.removeStyleName("disabled");
+					//addResourceBtn.removeStyleName("disabled");
 					if(textBox!=null){
 						isHavingBadWordsInTextbox = value;
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
@@ -2656,17 +2656,20 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		centuryPopup.getElement().getStyle().setZIndex(999999);
 	}
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();
 			for (int j = 0; j < standardsDescriptionList.size(); j++) {
 				HTMLPanel headerDiv = new HTMLPanel("");
 				if (j == 0) {
-					if (standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
-						liPanel.getElement().setId("CA");
-					} else {
-						liPanel.getElement().setId(standardsDescriptionList.get(j));
-					}
+					if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                        liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
+                    }else{
+                        liPanel.getElement().setId(standardsDescriptionList.get(j));
+                    }
 
 					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
 						liPanel.getElement().setAttribute("style", "opacity:0.5;");

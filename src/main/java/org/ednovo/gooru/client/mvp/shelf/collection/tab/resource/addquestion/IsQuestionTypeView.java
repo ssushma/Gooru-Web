@@ -1,5 +1,8 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
@@ -34,6 +37,8 @@ public interface IsQuestionTypeView extends IsViewWithHandlers<QuestionTypeUiHan
 	CollectionQuestionItemDo getMetadata();
 	
 	void removeQuestionEditImage();
+
+	void displaySelectedStandards(List<Map<String, String>> standListArray);
 
 
 

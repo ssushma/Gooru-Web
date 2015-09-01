@@ -334,16 +334,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		return collectionProgressSlot;
 	}
 	/**
-	 * This will set the styles for the data table cells.
-	 * @return
-	 */
-	com.google.gwt.visualization.client.Properties getPropertiesCell(){
-			  Properties properties=Properties.create();
-			  properties.set("style", "text-align:center;font-weight:bold;background-color: red;");
-			  com.google.gwt.visualization.client.Properties p=properties.cast();
-			  return p;
-	}
-	/**
      * This method is used to enable the no data message text.
      */
 	@Override

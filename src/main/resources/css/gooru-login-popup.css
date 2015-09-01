@@ -863,11 +863,21 @@ button.secondary:hover {
 	cursor: pointer;
 }
 
-.courseOption img {
+.signUpCourseOption img {
 	max-width: 100%;
 }
 
-.courseOption {
+
+.signUpCourseOption:hover, .active:hover {
+	background-color: #4c98cc;
+	border: 1px solid #ddd;
+	color: white;
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 10px 10px 0;
+}
+
+.signUpCourseOption {
 	background-color: white;
 	border: 1px solid #ddd;
 	color: #515151;
@@ -877,16 +887,7 @@ button.secondary:hover {
 	vertical-align: top;
 }
 
-.courseOption:hover, .active:hover {
-	background-color: #4c98cc;
-	border: 1px solid #ddd;
-	color: white;
-	cursor: pointer;
-	display: inline-block;
-	margin: 0 10px 10px 0;
-}
-
-.courseOption .title {
+.signUpCourseOption .title {
 	text-align: center;
 	height: 32px;
 	line-height: 1.2em;
@@ -1873,7 +1874,7 @@ button.secondary:hover {
 	.SliderHolderPrev {
 		left: -25px;
 	}
-	.courseOption {
+	.signUpCourseOption {
 		background-color: white;
 		border: 1px solid #ddd;
 		color: #515151;

@@ -277,7 +277,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
 
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 	
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	
@@ -488,13 +488,13 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
 		momentsOfLearningTitle.getElement().setAttribute("title", i18n.GL1678());
 		
+
 		getAddStandards();
-		
 
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-
+				getAddStandards();
 				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:19.5em;color:#515151;")) {
 					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:19.5em;color:#515151;");
 				} else {
@@ -1418,11 +1418,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					 }
 				}
 				if(showPreview){
-					System.out.println("standardsDo::"+standardsDo.size());
 					showResourcePreview(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,tagList);
 					addResourceBtnLbl.setEnabled(true);
 				}else{
-					System.out.println("standardsDoelse::"+standardsDo.size());
 					addUserResource(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,tagList);
 					addResourceBtnLbl.setEnabled(true);
 				}
@@ -2537,11 +2535,13 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			for (int j = 0; j < standardsDescriptionList.size(); j++) {
 				HTMLPanel headerDiv = new HTMLPanel("");
 				if (j == 0) {
-					if (standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
-						liPanel.getElement().setId("CA");
-					} else {
-						liPanel.getElement().setId(standardsDescriptionList.get(j));
-					}
+					if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                        liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
+                    }else{
+                        liPanel.getElement().setId(standardsDescriptionList.get(j));
+                    }
 
 					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
 						liPanel.getElement().setAttribute("style", "opacity:0.5;");
@@ -2592,7 +2592,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 
 	public void checkStandarsList(List<String> standarsPreferencesList) {
-
+		standardsDropListValues.clear();
 		if (standarsPreferencesList != null) {
 			if (standarsPreferencesList.contains("CCSS")) {
 				isCCSSAvailable = true;
@@ -2760,4 +2760,3 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 
 }
-
