@@ -1565,16 +1565,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			addQuestionResourceWidget.depthOfKnowledgesList.clear();
 			int checkBoxCount=0;
 			for (Integer item : collectionQuestionItemDo.getDepthOfKnowledgeIds()) {
-				  /* if(item.isSelected()){
-					   if(checkBoxCount==0)
-						   addQuestionResourceWidget.chkLevelRecall.setChecked(true);
-					   if(checkBoxCount==1)
-						   addQuestionResourceWidget.chkLevelSkillConcept.setChecked(true);
-					   if(checkBoxCount==2)
-						   addQuestionResourceWidget.chkLevelStrategicThinking.setChecked(true);
-					   if(checkBoxCount==3)
-						   addQuestionResourceWidget.chkLevelExtendedThinking.setChecked(true);
-				   }*/
 				   checkBoxCount++;
 				}
 
@@ -1608,21 +1598,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			addQuestionResourceWidget.centurySelectedValues.put(entry.getKey(),entry.getValue());
 			addQuestionResourceWidget.centuryPanel.add(addQuestionResourceWidget.create21CenturyLabel(entry.getValue(), entry.getKey()+"", addQuestionResourceWidget.centuryCodesMap.get(entry.getKey())));
 		}
-
-		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
-			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();
-			if(!centurySkills.containsKey(codeID.longValue())){
-			CodeDo codeDo=new CodeDo();
-			codeDo.setDepth((short) 2);
-			String label=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getLabel();
-			String code=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCode();
-			codeDo.setLabel(code);
-			codeDo.setCode(code);
-			codeDo.setCodeId(codeID);
-			addQuestionResourceWidget.standardsDo.add(codeDo);
-			//addQuestionResourceWidget.standardsPanel.add(addQuestionResourceWidget.createStandardLabel(code,String.valueOf(codeID),label));
-			}
-		}
+		HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
+		taxonomySet.put("taxonomyCode", addQuestionResourceWidget.standardsDo);
+		collectionQuestionItemDo.setTaxonomySet(taxonomySet);
 
 		HashMap<String,Boolean> moreOptions= collectionQuestionItemDo.getMoreOptions();
 

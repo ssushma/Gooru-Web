@@ -46,6 +46,7 @@ import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Anchor;
@@ -66,6 +67,7 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	CollectionInfoPresenter collectionInfoPresenter;
 	AddResourcePresenter addResourcePresenter;
+	QuestionTypePresenter questionTypePresenter;
 	CollectionContentPresenter collectionContentPresenter;
 	SearchAbstractPresenter searchAbstractPresenter;
 	PreSearchPresenter preSearchPresenter;
@@ -284,6 +286,14 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		{
 			
 		}
+		try
+		{
+		questionTypePresenter.setSelectedStandards(standListArray);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
 	
 	
@@ -367,6 +377,16 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 
 	public void setResourcePlayerMetadataPresenter(ResourcePlayerMetadataPresenter resourcePlayerMetadataPresenter) {
 		this.resourcePlayerMetadataPresenter = resourcePlayerMetadataPresenter;
+	}
+
+
+	public QuestionTypePresenter getQuestionTypePresenter() {
+		return questionTypePresenter;
+	}
+
+
+	public void setQuestionTypePresenter(QuestionTypePresenter questionTypePresenter) {
+		this.questionTypePresenter = questionTypePresenter;
 	}
 
 
