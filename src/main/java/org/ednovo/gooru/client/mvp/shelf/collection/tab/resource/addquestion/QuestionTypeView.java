@@ -611,6 +611,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				standardContainer.setVisible(false);
 				addStandardsAnc.setVisible(true);
 				addStandardsAnc.setText(i18n.GL0575());
+				setStandardsContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconCentury")){
 				centuryContainer.setVisible(false);
 				addCenturyAnc.setVisible(true);
@@ -2120,7 +2121,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 			setDepthOfKnowledgeContainer();
 			setHintsContainer();
-			//setStandardsContainer();
+			setStandardsContainer();
 			setCenturyContainer();
 
 
@@ -2682,4 +2683,15 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setStandardsContainer(){
+		if(ulSelectedItems.getWidgetCount()>0){
+			addStandardsAnc.removeStyleName("advancedOptionsTabs");
+			addStandardsAnc.addStyleName("advancedOptionsTabActive");
+		}else{
+			addStandardsAnc.addStyleName("advancedOptionsTabs");
+			addStandardsAnc.removeStyleName("advancedOptionsTabActive");
+		}
+	}
+	
 }
