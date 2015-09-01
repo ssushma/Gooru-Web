@@ -50,7 +50,6 @@ import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
-import org.ednovo.gooru.application.shared.util.ClientConstants;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -2823,6 +2822,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				ulSelectedItems.add(liPanelWithClose);
 			}
 		}
+		setStandardContainer();
 		setExplanationContainer();
 		setDepthOfKnowledgeContainer();
 		setHintsContainer();
@@ -3179,9 +3179,30 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addExplanationLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
 			addExplanationLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
 		}
-
 	}
-
+	public void setStandardContainer(){
+		boolean isSelected=false;
+		isSelected=isStandardsAdded();
+		if(isSelected){
+			addStandardsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
+			addStandardsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
+		}else{
+			addStandardsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
+			addStandardsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabActive());
+		}
+	}
+	public boolean isStandardsAdded(){
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		boolean isSelected=false;
+		while(widgets.hasNext()){
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				isSelected=true;
+			}
+		}
+		return isSelected;
+	}
+	
 	public void setDepthOfKnowledgeContainer(){
 		boolean isSelected=false;
 		isSelected=isDepthofKnowledge();
@@ -3272,7 +3293,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				standardContainer.setVisible(false);
 				addStandardsLabel.setVisible(true);
 				addStandardsLabel.setText(i18n.GL0575());
-				setStandardsContainer();
+				setStandardContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconCentury")){
 				centuryContainer.setVisible(false);
 				addCenturyLabel.setVisible(true);

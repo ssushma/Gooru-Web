@@ -20,14 +20,14 @@
 	<inherits name="com.google.gwt.http.HTTP" />
 
 	<inherits name="org.ednovo.gooru.Gooru" />
-	 
+
 	<!--Inherit this class for disabling obfuscation. Remove this line for production -->
 	<inherits name='com.google.gwt.resources.Resources' />
 
 	<!-- Inherit the default GWT style sheet. You can change -->
 	<!-- the theme of your GWT application by uncommenting -->
 	<!-- any one of the following lines. -->
-	<inherits name='com.google.gwt.user.theme.clean.Clean' />
+	<!-- <inherits name='com.google.gwt.user.theme.clean.Clean' /> -->
 
 	<!-- Other module inherits -->
 	<inherits name='com.google.gwt.uibinder.UiBinder' />
@@ -92,7 +92,7 @@
 	<set-property name="gwt.logging.logLevel" value="INFO"/>
  	<set-property name="gwt.logging.enabled" value="TRUE"/>
 	<set-property name="gwt.logging.simpleRemoteHandler" value="ENABLED" />
-	
+
 	  <!-- allow Super Dev Mode -->
     <add-linker name="xsiframe"/>
 

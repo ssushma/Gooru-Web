@@ -64,7 +64,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
 	@UiField Label lblEmptyErrorMessage,lblError;
-	@UiField public Label myCollDefault,addtocollHeaderText,addingTextLbl;;
+	@UiField public Label myCollDefault,addtocollHeaderText,addingTextLbl;
 
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 
@@ -82,6 +82,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	boolean isFromCopyResource= false;
 	private boolean isCopySelected= false;
 	private boolean isMoveSelected= false;
+	private String selectedType="";
 
 	HashMap<String,String> urlparams ;
 	private static final String O1_LEVEL = "o1";
@@ -719,9 +720,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void setCopyAndMoveStatus(boolean isCopySelected,
-			boolean isMoveSelected) {
+			boolean isMoveSelected,String selectedType) {
 		this.isCopySelected=isCopySelected;
 		this.isMoveSelected=isMoveSelected;
+		this.selectedType=selectedType;
 		mycollectionsLbl.removeStyleName("active");
 		mycontentLbl.addStyleName("active");
 		isFromMyCourse=true;
@@ -806,11 +808,21 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			addingTextLbl.setText(i18n.GL3462_18());
 		}else{
 			if(isCopySelected){
-				addtocollHeaderText.setText(i18n.GL3462_13());
-				addingTextLbl.setText(i18n.GL3462_14());
+				if("collection".equalsIgnoreCase(this.selectedType)){
+					addtocollHeaderText.setText(i18n.GL3462_13());
+					addingTextLbl.setText(i18n.GL3462_14());
+				}else{
+					addtocollHeaderText.setText(i18n.GL3462_13_1());
+					addingTextLbl.setText(i18n.GL3462_14_1());
+				}
 			}else if(isMoveSelected){
-				addtocollHeaderText.setText(i18n.GL3462_15());
-				addingTextLbl.setText(i18n.GL3462_16());
+				if("collection".equalsIgnoreCase(this.selectedType)){
+					addtocollHeaderText.setText(i18n.GL3462_15());
+					addingTextLbl.setText(i18n.GL3462_16());
+				}else{
+					addtocollHeaderText.setText(i18n.GL3462_15_1());
+					addingTextLbl.setText(i18n.GL3462_16_1());
+				}
 			}else{
 			addtocollHeaderText.setText(i18n.GL3223());
 			addingTextLbl.setText(i18n.GL3462_17());

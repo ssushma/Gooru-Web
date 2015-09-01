@@ -34,7 +34,6 @@ import org.ednovo.gooru.application.shared.model.library.LessonDo;
 import org.ednovo.gooru.application.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
-import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleHandler;
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
@@ -145,7 +144,7 @@ public class PartnerLessonUc extends Composite{
 			Label conceptTitleLbl = new Label(conceptTitle);
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 				conceptTitleLbl.addStyleName("conceptTitle"); 
-				if(profileLibraryTemp.getCollectionType().contains(ASSESSMENT)){
+				if(profileLibraryTemp.getType().contains(ASSESSMENT)){
 					conceptTitleLbl.addStyleName("assessmentSmall");
 				}else{
 					conceptTitleLbl.addStyleName("collectionSmall");
@@ -192,7 +191,7 @@ public class PartnerLessonUc extends Composite{
 			lessonId = lessonNumber;
 			conceptId = profileLibraryDo.getGooruOid();
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-				if(profileLibraryDo.getCollectionType().contains(ASSESSMENT)){
+				if(profileLibraryDo.getType().contains(ASSESSMENT)){
 					lessonTitle.setStyleName("assessment");
 				}else{
 					lessonTitle.setStyleName("collection"); 
