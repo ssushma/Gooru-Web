@@ -591,23 +591,19 @@ public class ProfileTopicListView extends Composite{
 					setMetaDataInfo(conceptDo);
 					resourcesInside.clear();
 					ArrayList<ProfileLibraryDo> libraryResources =  conceptDo.getCollectionItems();
-					AppClientFactory.printInfoLogger("libraryResources-size:"+libraryResources.size());
 					int resourceCount = 0;
 					if(libraryResources!=null) {
-						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY) ){
 							resourceCount = libraryResources.size();
 						}else{
 							if(conceptDo.getItemCount()!=null){
-								AppClientFactory.printInfoLogger("conceptDo.getItemCount():"+conceptDo.getItemCount());
 								resourceCount = conceptDo.getItemCount();
 							}
-							else
-							{
+							else{
 								resourceCount = libraryResources.size();
 							}
 
 						}
-						AppClientFactory.printInfoLogger("libraryResources.size():"+libraryResources.size());
 						int resources=resourceCount<=4?resourceCount:4;
 						String resourceText="";
 						if(collectionType!=null){
