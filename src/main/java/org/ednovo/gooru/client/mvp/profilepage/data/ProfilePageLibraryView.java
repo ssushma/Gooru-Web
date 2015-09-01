@@ -174,7 +174,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					if(handlerRegistration!=null){
 						handlerRegistration.removeHandler();
 					}
-
 					handlerRegistration=listAllBtn.addClickHandler(new ClickOnListAll(folderList.get(i).getGooruOid()));
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
@@ -209,7 +208,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 							handlerRegistration.removeHandler();
 						}
 						handlerRegistration=listAllBtn.addClickHandler(new ClickOnListAll(unitListId));
-
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}

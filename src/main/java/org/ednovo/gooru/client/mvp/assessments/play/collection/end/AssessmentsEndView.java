@@ -364,7 +364,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 			adTable.setHeaderWidget(4, heading5);
 			adTable.setHeaderWidget(5, heading6);
 			for(int i=0;i<result.size();i++) {
-				Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle() != null ? result.get(i).getTitle() : "" ));
+				Label questionTitle=new Label(StringUtil.removeAllHtmlCss(result.get(i).getTitle() != null ? result.get(i).getTitle() : "" ));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(i+1)));

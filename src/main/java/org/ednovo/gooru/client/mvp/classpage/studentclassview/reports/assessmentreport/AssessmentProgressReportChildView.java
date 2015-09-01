@@ -462,7 +462,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 			for(int i=0;i<result.size();i++) {
 				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(result.get(i).getTitle()!=null? result.get(i).getTitle():"");
-				HTML questionTitle=new HTML(StringUtil.removeHtmlTags(titlelbl1));
+				HTML questionTitle=new HTML(StringUtil.removeAllHtmlCss(titlelbl1));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
@@ -558,7 +558,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			adTable.setHeaderWidget(5, heading6);
 			for(int i=0;i<result.size();i++) {
 				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(result.get(i).getTitle()!=null? result.get(i).getTitle():"");
-				HTML questionTitle=new HTML(StringUtil.removeHtmlTags(titlelbl1));
+				HTML questionTitle=new HTML(StringUtil.removeAllHtmlCss(titlelbl1));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
