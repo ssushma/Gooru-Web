@@ -106,8 +106,6 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
      */
 	HTMLPanel getGradePanel();
 
-	void OnStandardsClickEvent(Button addBtn);
-
 	void setUpdatedStandards(List<Map<String, String>> list);
 
 	void setSourceSuggestions(SearchDo<String> result);

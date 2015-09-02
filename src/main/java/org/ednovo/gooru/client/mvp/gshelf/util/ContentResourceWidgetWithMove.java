@@ -877,6 +877,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
 			Window.enableScrolling(false);
+
 			popup=new AddTagesPopupView(collectionItem.getResource().getGooruOid()){
 				@Override
 				public void closePoup(boolean isCancelclicked) {
@@ -920,6 +921,7 @@ public abstract class ContentResourceWidgetWithMove extends Composite{
 					showStandardsPopupInTags(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
 				}
 			};
+			popup.getAddStandards();
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}

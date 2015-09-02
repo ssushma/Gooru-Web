@@ -98,9 +98,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -300,11 +300,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	private GoogleDriveItemDo googleDriveItemDo = null;
 
-	private boolean isBrowseTooltip = false;
-
 	BrowseStandardsTooltip browseStandardsTooltip;
 
-	private boolean isBrowseStandardsToolTip = false;
 
 	private boolean isGenerateURL = false;
 
@@ -1256,13 +1253,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 	}
 
-	private class onBrowseStandarsCLick implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			browseStandardsInfo();
-		}
-	}
-
 	/**
 	 * 
 	 * @author GooruTeam This method is used to generate image on button click
@@ -1366,10 +1356,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	public abstract void resourceImageUpload();
-
-	public abstract void browseStandardsInfo();
-
-	public abstract void closeStandardsPopup();
 
 	private class AddClickHandler implements ClickHandler {
 
