@@ -686,19 +686,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		List<String> momentoflearningdetails = new ArrayList<String>();
 		
 		if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-		 depthofknowledgedetails = new ArrayList<String>();
-			if(collectionItemDo.getResource().getDepthOfKnowledge()!=null){
-			if(collectionItemDo.getResource().getDepthOfKnowledge().size()>0){
-			for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledge().size();i++){
-				if(collectionItemDo.getResource().getDepthOfKnowledge().get(i).isSelected())
-				{
-				depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledge().get(i).getValue());
+			depthofknowledgedetails = new ArrayList<String>();
+			if(collectionItemDo.getDepthOfKnowledge()!=null){
+				if(collectionItemDo.getDepthOfKnowledge().size()>0){
+					for(int i=0;i<collectionItemDo.getDepthOfKnowledge().size();i++){
+						depthofknowledgedetails.add(collectionItemDo.getDepthOfKnowledge().get(i).getName());
+					}
+					setDepthofknowledgeDetails(depthofknowledgedetails);
+				}else{
+					dKnowledgePanel.setVisible(false);
 				}
-			}
-			setDepthofknowledgeDetails(depthofknowledgedetails);
-			}else{
-				dKnowledgePanel.setVisible(false);
-			}
 			}else{
 				dKnowledgePanel.setVisible(false);
 			}

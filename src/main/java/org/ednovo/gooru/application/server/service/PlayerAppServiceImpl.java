@@ -59,7 +59,6 @@ import org.ednovo.gooru.application.shared.model.player.CommentsDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.application.shared.model.player.FeaturedContentDo;
 import org.ednovo.gooru.application.shared.model.player.InsightsCollectionDo;
-import org.ednovo.gooru.application.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.user.CreatorDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
