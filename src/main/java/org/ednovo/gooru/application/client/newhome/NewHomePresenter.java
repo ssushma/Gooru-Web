@@ -173,11 +173,10 @@ public class NewHomePresenter extends BasePlacePresenter<IsNewHomeView, IsEditCl
 		if(doc.getElementById("uvTab") != null){
 			doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
 		}
-		
+
 		setInSlot(BANNER_SLOT, banner);
-		presearchPresenter.getFiltersAPI();
 		setInSlot(PRESEARCH_SLOT, presearchPresenter);
-		
+
 	}
 
 	@Override
