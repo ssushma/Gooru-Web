@@ -147,6 +147,7 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
 			Window.enableScrolling(false);
+
 			addTagesPopupView=new AddTagesPopupView(resourceGooruOid) {
 
 				/** 
@@ -206,6 +207,7 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 					
 				}
 			};
+			addTagesPopupView.getAddStandards();
 			addTagesPopupView.show();
 			addTagesPopupView.setPopupPosition(addTagesPopupView.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}
