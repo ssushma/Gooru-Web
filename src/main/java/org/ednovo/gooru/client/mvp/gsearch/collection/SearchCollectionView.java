@@ -25,6 +25,9 @@
 
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
@@ -95,5 +98,10 @@ public class SearchCollectionView extends
 			element.setAttribute("style", "opacity:0.1;");
 		}
 		getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo,collectionSearchWidget);
+	}
+	@Override
+	public void setUpdatedStandards(List<Map<String, String>> list) {
+		// TODO Auto-generated method stub
+		
 	}
 }

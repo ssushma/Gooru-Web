@@ -2535,18 +2535,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		}
 	}
 
-	/**
-	 * Inner class which will be called on click of standards browse button
-	 *
-	 */
-	private class onBrowseStandardsClick implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			isQuestionResource= false;
-			isUserResource = true;
-			browseStandardsInfo(isQuestionResource,isUserResource);
-		}
-	}
+
 
 	/**
 	 * Inner class to invoke profanity checker.
@@ -2589,9 +2578,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			});
 		}
 	}
-
-	public abstract void browseStandardsInfo(boolean val, boolean userResource);
-	public abstract void closeStandardsPopup();
 	/**
 	 * This method is used to set Styles for Advanced Options(Educational Use,Moments Of Learning and Media Feature)
 	 */

@@ -340,18 +340,19 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 							}
 	
 							@Override
-							public void browseStandardsInfo(boolean val,boolean userResource) {
-								getUiHandlers().getBrowseStandardsInfo(val,userResource);
-							}
-	
-							@Override
-							public void closeStandardsPopup() {
-								getUiHandlers().closeBrowseStandardsPopup();
-							}
-							@Override
 							public void showStandardsPopup(String standardVal, String standardsDesc,
 									List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
 								getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
+								
+							}
+							@Override
+							public void browseStandardsInfo(boolean val, boolean userResource) {
+								// TODO Auto-generated method stub
+								
+							}
+							@Override
+							public void closeStandardsPopup() {
+								// TODO Auto-generated method stub
 								
 							}
 						};
@@ -372,14 +373,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
 								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId(),collectionItemDo.getParentGooruOid());
 							}
-							@Override
-							public void browseStandardsInfo(boolean val, boolean userResource) {
-								getUiHandlers().getBrowseStandardsInfo(val,userResource);
-							}
-							@Override
-							public void closeStandardsPopup() {
-								getUiHandlers().closeBrowseStandardsPopup();
-							}
+	
 							@Override
 							public void onSelection(SelectionEvent<Suggestion> event) {
 								
@@ -561,20 +555,6 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 	}
 
 	@Override
-	public void OnBrowseStandardsClickEvent(Button addStandardsBtn) {
-		if(handlerRegistration!=null){
-			handlerRegistration.removeHandler();
-		}
-		handlerRegistration=addStandardsBtn.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().addUpdatedBrowseStandards();
-			}
-		});
-	}
-
-	@Override
 	public void setUpdatedStandardsCode(String setStandardsVal, Integer codeId,String setStandardDesc, boolean value, boolean userResource) {
 		if(value == false){
 			if(userResource){
@@ -694,7 +674,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 		@Override
 		public void callBrowseStandardsInfo(boolean val,boolean userResource) {
-			getUiHandlers().getBrowseStandardsInfo(val,userResource);
+
 		}
 
 		public void setUpdatedBrowseStandardsVal(String setStandardsVal,Integer codeId, String setStandardDesc) {
@@ -704,7 +684,7 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
 
 		@Override
 		public void closeBrowseStandardsPopup() {
-			getUiHandlers().closeBrowseStandardsPopup();
+
 		}
 	}
 	@Override

@@ -473,8 +473,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		
-		getAddStandards();
-		
 
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
