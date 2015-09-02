@@ -68,7 +68,6 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoHandler;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -328,8 +327,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  courseTabs.getElement().getStyle().setPosition( (isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) || (isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click) ? Position.RELATIVE : Position.FIXED);
+		courseTabs.getElement().getStyle().setPosition( (isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) || (isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click) ? Position.RELATIVE : Position.FIXED);
 		courseTabs.getElement().setId("courseTabs");
 		container.getElement().setId("container");
 		

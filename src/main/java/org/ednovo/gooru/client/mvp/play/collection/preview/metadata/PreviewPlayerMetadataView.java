@@ -55,7 +55,6 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -186,8 +185,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		
 		Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
 		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
