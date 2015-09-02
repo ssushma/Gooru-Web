@@ -25,6 +25,9 @@
 
 package org.ednovo.gooru.client.mvp.gsearch.resource;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
@@ -130,5 +133,10 @@ public class SearchResourceView extends
 	public void setCollectionResourceWidget(
 			CollectionResourceWidget collectionResourceWidget) {
 		this.collectionResourceWidget = collectionResourceWidget;
+	}
+	@Override
+	public void setUpdatedStandards(List<Map<String, String>> list) {
+		// TODO Auto-generated method stub
+		
 	}
 }
