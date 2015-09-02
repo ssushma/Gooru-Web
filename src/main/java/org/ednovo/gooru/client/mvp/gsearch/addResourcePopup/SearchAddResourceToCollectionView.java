@@ -8,6 +8,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
@@ -469,6 +470,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		private FlowPanel folderContainer=null;
 		private String selectedFolderName=null;
 		private String gooruOid=null,folderTitle=null;
+		private CourseSummaryDo courseSummary;
 		Label floderName=null;
 		Label arrowLabel=null;
 		private boolean isOpen=false;
@@ -518,6 +520,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			this.selectedFolderName = folderTitle;
 			this.folderTitle=folderTitle;
 			this.type = floderDo.getType();
+			this.courseSummary=floderDo.getSummary();
 			folderContainer.getElement().setInnerText(folderTitle);
 		}
 		public boolean isOpen() {
@@ -552,6 +555,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 		public void setType(String type) {
 			this.type = type;
+		}
+		public CourseSummaryDo getCourseSummary() {
+			return courseSummary;
+		}
+		public void setCourseSummary(CourseSummaryDo courseSummary) {
+			this.courseSummary = courseSummary;
 		}
 	}
 	public class CollectionTreeItem extends Composite{
@@ -631,13 +640,18 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			}else{
 				if(isFromMyCourse){
 					if(currentFolderSelectedTreeItem!=null){
-						if(COURSE.equalsIgnoreCase(currentFolderSelectedTreeItem.getType()) || UNIT.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
-							restrictionToAddResourcesData("You can add Collections only to Lesson Level");
-						}else if(LESSON.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
-							if(isMoveSelected){
-								getUiHandlers().moveCollectionTOLesson("","",this.urlparams);
-							}else{
-								getUiHandlers().copyCollectionToLession("","",this.urlparams);
+						FolderTreeItem item =currentFolderSelectedTreeItem;
+						if(item.getCourseSummary()!=null && item.getCourseSummary().getCollectionCount()!=null && item.getCourseSummary().getCollectionCount()>=10){
+							restrictionToAddResourcesData(i18n.GL3491());
+						}else{
+							if(COURSE.equalsIgnoreCase(currentFolderSelectedTreeItem.getType()) || UNIT.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
+								restrictionToAddResourcesData("You can add Collections only to Lesson Level");
+							}else if(LESSON.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
+								if(isMoveSelected){
+									getUiHandlers().moveCollectionTOLesson("","",this.urlparams);
+								}else{
+									getUiHandlers().copyCollectionToLession("","",this.urlparams);
+								}
 							}
 						}
 					}else{
@@ -652,8 +666,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						}else{
 							getUiHandlers().CopyToplevelMyCollections(collectionId, null, currentsearchType, "",null);
 						}
-					}
-					else if(FOLDER.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
+					}else if(FOLDER.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
 						 collectionId= urlparams.get(O1_LEVEL);
 						if(isMoveSelected){
 							getUiHandlers().moveCollectionToMyCOllections(collectionId, currentFolderSelectedTreeItem.getGooruOid(), currentsearchType,"",this.urlparams);
