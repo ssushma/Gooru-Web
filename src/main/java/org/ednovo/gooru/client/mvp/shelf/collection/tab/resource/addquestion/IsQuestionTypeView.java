@@ -40,6 +40,8 @@ public interface IsQuestionTypeView extends IsViewWithHandlers<QuestionTypeUiHan
 
 	void displaySelectedStandards(List<Map<String, String>> standListArray);
 
+	void getAddStandards();
+
 
 
 }
