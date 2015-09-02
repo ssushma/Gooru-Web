@@ -98,21 +98,9 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 		addRegisteredHandler(PreFilterEvent.TYPE, this);
 		addRegisteredHandler(UpdateProfileHeaderImageEvent.TYPE, this);
 
-		//showPrefilterPopup();
-
-//		AppClientFactory.getInjector().getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
-//			@Override
-//			public void onSuccess(UserDo loggedInUser) {
-//				AppClientFactory.setLoggedInUser(loggedInUser);
-//				setLoginData(loggedInUser);
-//			}
-//		});
 		registerWindowEvents();
 
 		getloggersStatus();
-
-		loadResponsiveCss();
-
 	}
 
 	@Override
@@ -282,47 +270,4 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 			}
 		});
 	}
-
-	private void loadResponsiveCss(){
-//		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:landscape){"+SearchCBundle.INSTANCE.getResponsive2Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsive3Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+SearchCBundle.INSTANCE.getResponsive4Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+SearchCBundle.INSTANCE.getResponsive5Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media screen and (min-width: 768px){"+SearchCBundle.INSTANCE.getResponsive6Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 1200px){"+SearchCBundle.INSTANCE.getResponsive7Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+SearchCBundle.INSTANCE.getResponsive8Style().getText()+"}");
-//
-//		SearchCBundle.INSTANCE.css().ensureInjected();
-
-//		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+LoginPopUpCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+LoginPopUpCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+LoginPopUpCBundle.INSTANCE.getResponsive2Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px){"+LoginPopUpCBundle.INSTANCE.getResponsive3Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 1200px){"+LoginPopUpCBundle.INSTANCE.getResponsive4Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media screen and (max-width: 767px) {"+LoginPopUpCBundle.INSTANCE.getResponsive5Style().getText()+"}");
-//		StyleInjector.injectAtEnd("@media screen and (min-width: 768px) {"+LoginPopUpCBundle.INSTANCE.getResponsive6Style().getText()+"}");
-//
-//		LoginPopUpCBundle.INSTANCE.css().ensureInjected();
-
-//		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+AnalyticsTabCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+AnalyticsTabCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-//
-//		AnalyticsTabCBundle.INSTANCE.css().ensureInjected();
-//
-//		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionSummaryIndividualCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-//
-//		CollectionSummaryIndividualCBundle.INSTANCE.css().ensureInjected();
-
-//		StyleInjector.injectAtEnd("@media (max-width: 767px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-//		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsive1Style().getText()+"}");
-//
-//		CollectionPlaySummaryCBundle.INSTANCE.css().ensureInjected();
-
-//		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+FolderContainerCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
-//		FolderContainerCBundle.INSTANCE.css().ensureInjected();
-	}
-
 }

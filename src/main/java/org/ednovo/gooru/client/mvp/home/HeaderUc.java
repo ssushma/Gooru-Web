@@ -43,8 +43,6 @@ import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListHandler;
-import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
-import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.gshelf.LoadMyContentEvent;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
@@ -61,7 +59,6 @@ import org.ednovo.gooru.client.uc.BPanel;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.HeaderPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
-import org.ednovo.gooru.client.uc.tooltip.DashBoardToolTip;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTipUc;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
@@ -81,7 +78,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -99,9 +95,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -138,14 +131,6 @@ public class HeaderUc extends Composite
 	}
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
-	OpenClasspageListHandler openClasspageListHandler = new OpenClasspageListHandler() {
-
-		@Override
-		public void openClasspageList() {
-			OpenClasspageList();
-		}
-	};
 
 	ClearClasspageListHandler clearHandler = new ClearClasspageListHandler() {
 
@@ -267,8 +252,6 @@ public class HeaderUc extends Composite
 
 	DiscoverToolTipUc discoverToolTip;
 
-	//OrganizeToolTip organizeToolTip;
-
 	static String stadardCode="";
 
 	boolean isGooruGuidePanelOpen = false;
@@ -292,7 +275,7 @@ public class HeaderUc extends Composite
 	@UiField
 	HTMLPanel settingOptionsPopup;
 
-	@UiField HTMLPanel discovertooltippop,myDashBoardPop;
+	@UiField HTMLPanel discovertooltippop;
 
 	@UiField static HTMLPanel myClassesPop;
 
@@ -310,9 +293,6 @@ public class HeaderUc extends Composite
 	FlowPanel headerSearchBarFloPanel;
 
 	@UiField
-	Label lblBeta;
-
-	@UiField
 
 	public static HTMLPanel mainDotsPanel, mainInnerDotsPanel;
 
@@ -323,16 +303,11 @@ public class HeaderUc extends Composite
 	@UiField
 	public static HTMLPanel dropDownImgforDashboard, panelArrow;
 
-
 	@UiField
 	Anchor discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl;
 
 	@UiField
 	Label thanksLbl;
-
-	/*@UiField
-	static Label arrowLbl;*/
-
 
 	@UiField
 	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,organizeLinkMain,teachLinkMain,discoverLinkMain,
@@ -365,8 +340,6 @@ public class HeaderUc extends Composite
 
 
 	private static String DEFAULT_PROFILE_IMAGE = "images/settings/setting-user-image.png";
-
-	DashBoardToolTip dashBoardToolTip;
 
 	/**
 	 * Class constructor , set logged in user , gooru classic view link
@@ -515,29 +488,6 @@ public class HeaderUc extends Composite
 
 		teachLinkContainer.addClickHandler(new OnClickTeachEventHandler());
 
-		dashBoardToolTip=new DashBoardToolTip() {
-
-			@Override
-			public void fireSelectionEvent() {
-				if (!AppClientFactory.isAnonymous()){
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
-					manageDotsMenuSelection(loggedInfoLbl);
-				}
-
-			}
-		};
-		dashBoardToolTip.getElement().getStyle().setBackgroundColor("transparent");
-		dashBoardToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-		dashBoardToolTip.getElement().getStyle().setZIndex(99);
-		dashBoardToolTip.getElement().getStyle().setLeft(loggedInfoLbl.getAbsoluteLeft(), Unit.PX);
-		myDashBoardPop.add(dashBoardToolTip);
-		myDashBoardPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
-		myDashBoardPop.getElement().getStyle().setZIndex(99);
-		myDashBoardPop.setVisible(false);
-
-
-
-
 		studyLinkContainer.addClickHandler(new studyClickHandler());
 
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");
@@ -565,14 +515,6 @@ public class HeaderUc extends Composite
 
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
 				i18n.GL0177());
-
-		lblBeta.setText(i18n.GL0178());
-		lblBeta.getElement().setId("lblBeta");
-		lblBeta.getElement().setAttribute("alt", i18n.GL0178());
-		lblBeta.getElement().setAttribute("title", i18n.GL0178());
-		lblBeta.getElement().getStyle().setDisplay(Display.NONE);
-
-		getBetaStatus();
 
 		discoverLink.setText(i18n.GL1748_1());
 		discoverLink.getElement().setId("lblDiscoverLink");
@@ -692,8 +634,6 @@ public class HeaderUc extends Composite
 				setZindex);
 		AppClientFactory.getEventBus().addHandler(ClearClasspageListEvent.TYPE,
 				clearHandler);
-		AppClientFactory.getEventBus().addHandler(OpenClasspageListEvent.TYPE,
-				openClasspageListHandler);
 		AppClientFactory.getEventBus().addHandler(ConfirmStatusPopupEvent.TYPE,
 				confirmUser);
 
@@ -750,88 +690,6 @@ public class HeaderUc extends Composite
 				}
 			}
 		});
-	}
-
-
-
-	/**
-	 * @function getBetaStatus
-	 *
-	 * @created_date : Aug 14, 2014
-	 *
-	 * @description
-	 *
-	 *
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-
-	private void getBetaStatus() {
-		lblBeta.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-
-//		try {
-//			new RequestBuilder(RequestBuilder.GET,
-//					"./images/json/product-beta-status.json").sendRequest("",
-//					new RequestCallback() {
-//						@Override
-//						public void onResponseReceived(Request req,
-//								Response resp) {
-//							boolean status = getStatus(resp.getText());
-//							if (status) {
-//								lblBeta.getElement().getStyle()
-//										.setVisibility(Visibility.VISIBLE);
-//							} else {
-//								lblBeta.getElement().getStyle()
-//										.setVisibility(Visibility.HIDDEN);
-//							}
-//						}
-//
-//						@Override
-//						public void onError(Request res, Throwable throwable) {
-//
-//						}
-//					});
-//		} catch (RequestException e) {
-//			AppClientFactory.printSevereLogger(e.getMessage());
-//		}
-	}
-
-	/**
-	 *
-	 * @function getStatus
-	 *
-	 * @created_date : Aug 14, 2014
-	 *
-	 * @description
-	 *
-	 *
-	 * @param text
-	 * @return
-	 *
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	private boolean getStatus(String text) {
-		boolean status = false;
-
-		JSONValue jsonValue = JSONParser.parse(text);
-		JSONObject jsonObject = jsonValue.isObject();
-
-		status = jsonObject.get("betaStatus").isBoolean() != null ? jsonObject
-				.get("betaStatus").isBoolean().booleanValue() : false;
-
-		return status;
 	}
 
 	public void clearClasspageList() {
@@ -1107,16 +965,6 @@ public class HeaderUc extends Composite
 		}
 	}
 
-
-	public void OpenClasspageList() {
-		/*
-		 * int left = teachLinkContainer.getAbsoluteLeft(); int top =
-		 * teachLinkContainer.getAbsoluteTop() + 50; showTeachPanelAsPopup(left,
-		 * top);
-		 */
-	}
-
-
 	/* On mouse over and out handlers */
 	public class DiscoverMouseOver implements MouseOverHandler {
 		@Override
@@ -1134,27 +982,6 @@ public class HeaderUc extends Composite
 		}
 	}
 
-
-
-	public class DashBoardMouseOver implements MouseOverHandler {
-
-		@Override
-		public void onMouseOver(final MouseOverEvent event) {
-			if (!AppClientFactory.isAnonymous()){
-				myDashBoardPop.setVisible(true);
-			}
-		}
-	}
-
-	public class DashBoardMouseOut implements MouseOutHandler {
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			if (!AppClientFactory.isAnonymous()){
-				myDashBoardPop.setVisible(false);
-			}
-		}
-	}
 	public class TeachMouseOver implements MouseOverHandler {
 
 		@Override
