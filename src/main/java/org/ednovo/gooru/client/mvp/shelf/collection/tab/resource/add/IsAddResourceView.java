@@ -51,7 +51,6 @@ import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.PopupView;
 
@@ -82,8 +81,6 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result); 
 	
 	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo);
-
-	void OnBrowseStandardsClickEvent(Button addBtn);
 
 	void setUpdatedStandardsCode(String setStandardsVal,int id,String desc,boolean val, boolean isUserOwnResource);
 	

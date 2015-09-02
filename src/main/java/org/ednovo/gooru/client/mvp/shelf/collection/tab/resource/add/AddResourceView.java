@@ -504,20 +504,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void updateThumbanilImage(String userUrlStr) {
 			getUiHandlers().getResourceImageInfo(userUrlStr);
 		}
-		@Override
-		public void browseStandardsInfo() {
-			isQuestion =false;
-			isUserResource = false;
-			getUiHandlers().browseStandardsInfo(isQuestion,isUserResource);
-		}
-
-
-
-		@Override
-		public void closeStandardsPopup() {
-			// TODO Auto-generated method stub
-			getUiHandlers().closeStandardsPopup();
-		}
 
 
 		@Override
@@ -607,7 +593,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void callBrowseStandards() {
 			isQuestion =true;
 			isUserResource = false;
-			getUiHandlers().browseStandardsInfo(isQuestion, isUserResource);
 		}
 		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id, String desc) {
 			//super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
@@ -615,7 +600,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 		@Override
 		public void closeStandardsPopup() {
-			getUiHandlers().closeStandardsPopup();
 
 		}
 		@Override
@@ -732,18 +716,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			JSONObject jsonObject = setImageUploadJsonObject(originalFileName,mediaFileName, title, desc, category, ownResourceImgUrl,educationalLevel,momentsOfLearning,standardsDo,tagList);
 			ownResourceImgUrl = null;
 			getUiHandlers().addUserOwnResource(jsonObject.toString());
-		}
-
-		@Override
-		public void browseStandardsInfo() {
-			isQuestion =false;
-			isUserResource = true;
-			getUiHandlers().browseStandardsInfo(isQuestion,isUserResource);
-		}
-		@Override
-		public void closeStandardsPopup() {
-			// TODO Auto-generated method stub
-			getUiHandlers().closeStandardsPopup();
 		}
 
 		@Override
@@ -1465,20 +1437,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
 	}
-
-	@Override
-	public void OnBrowseStandardsClickEvent(Button addStandardsBtn) {
-		if(handlerRegistration!=null){
-			handlerRegistration.removeHandler();
-		}
-		handlerRegistration=addStandardsBtn.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().addUpdatedBrowseStandards();
-			}
-		});
-	}
-
 	@Override
 	public void hidePopup() {
 		getUiHandlers().addSelectedQuestionType("MC",getAddResourceMetadata());
