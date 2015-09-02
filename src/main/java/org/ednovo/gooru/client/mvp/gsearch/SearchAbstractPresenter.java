@@ -55,7 +55,6 @@ import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
@@ -117,23 +116,15 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	protected static final String ALL = "*";
 
-	SignUpPresenter signUpViewPresenter = null;
+	SignUpPresenter signUpViewPresenter;
 
-	AddCenturyPresenter addCenturyPresenter = null;
-
-	GooruGradesPresenter gooruGradesPresenter = null;
+	GooruGradesPresenter gooruGradesPresenter;
 	StandardsPopupPresenter standardsPopupPresenter;
 
-	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
 
-	ViewMorePeoplePresenter viewMorePeoplePresenter=null;
+	ViewMorePeoplePresenter viewMorePeoplePresenter;
 
-	private boolean isCCSSAvailable =false;
-	private boolean isNGSSAvailable =false;
-	private boolean isTEKSAvailable =false;
-	private boolean isCAAvailable =false;
-
-	private static final String USER_META_ACTIVE_FLAG = "0";
 
 	boolean setFilter=true;
 	/**
@@ -146,10 +137,9 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	 */
 	public SearchAbstractPresenter(V view, P proxy,
 			SignUpPresenter signUpViewPresenter,
-			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewMorePeoplePresenter,StandardsPopupPresenter standardsPopupPresenter) {
+			GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewMorePeoplePresenter,StandardsPopupPresenter standardsPopupPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
-		this.addCenturyPresenter = addCenturyPresenter;
 		this.gooruGradesPresenter = gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.viewMorePeoplePresenter=viewMorePeoplePresenter;
