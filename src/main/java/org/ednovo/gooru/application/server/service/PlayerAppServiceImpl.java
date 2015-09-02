@@ -236,15 +236,15 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return deserializeResourceCollection(jsonRep);
 	}
 
-	public ResourceInfoObjectDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {
+	public CollectionItemDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceInfoObjectDo.class);
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
 		}
-		return new ResourceInfoObjectDo();
+		return new CollectionItemDo();
 	}
 
 	@Override
