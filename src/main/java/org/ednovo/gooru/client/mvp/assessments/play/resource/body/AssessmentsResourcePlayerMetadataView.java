@@ -1863,6 +1863,7 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
+
 			addTagesPopupView=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()) {
 				public void getAddedResourceTags(){
 					getUiHandlers().getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
@@ -1902,6 +1903,7 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 					
 				}
 			};
+			addTagesPopupView.getAddStandards();
 			addTagesPopupView.show();
 			addTagesPopupView.setPopupPosition(addTagesPopupView.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}

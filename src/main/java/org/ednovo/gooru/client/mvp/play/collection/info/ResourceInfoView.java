@@ -2147,7 +2147,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
+	
 			popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
+	
 				public void getAddedResourceTags(){
 					getUiHandlers().getAddedResourceTags(collectionItemDoGlobal.getResource().getGooruOid());
 				}
@@ -2185,6 +2187,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					
 				}
 			};
+			popup.getAddStandards();
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}
