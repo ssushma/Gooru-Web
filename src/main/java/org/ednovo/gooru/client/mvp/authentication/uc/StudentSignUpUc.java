@@ -302,7 +302,7 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 		lblAgree.getElement().setAttribute("alt",i18n.GL0420());
 		lblAgree.getElement().setAttribute("title",i18n.GL0420());
 
-		ancCopyRight.setText(i18n.GL0421()+",");
+		ancCopyRight.setText(" "+i18n.GL0421()+",");
 		ancCopyRight.getElement().setId("lnkCopyRight");
 		ancCopyRight.getElement().setAttribute("alt",i18n.GL0421());
 		ancCopyRight.getElement().setAttribute("title",i18n.GL0421());
@@ -312,7 +312,7 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 		ancTermsAndPrivacy.getElement().setAttribute("alt",i18n.GL0422());
 		ancTermsAndPrivacy.getElement().setAttribute("title",i18n.GL0422());
 
-		ancPrivacy.setText(i18n.GL0452());
+		ancPrivacy.setText(" "+i18n.GL0452());
 		ancPrivacy.getElement().setId("lnkPrivacy");
 		ancPrivacy.getElement().setAttribute("alt",i18n.GL0422());
 		ancPrivacy.getElement().setAttribute("title",i18n.GL0422());
