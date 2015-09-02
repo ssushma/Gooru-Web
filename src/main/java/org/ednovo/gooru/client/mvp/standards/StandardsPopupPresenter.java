@@ -35,7 +35,6 @@ import org.ednovo.gooru.application.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.application.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.info.AssessmentsResourceInfoPresenter;
 import org.ednovo.gooru.client.mvp.assessments.play.resource.body.AssessmentsResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
@@ -73,7 +72,6 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 	PreSearchPresenter preSearchPresenter;
 	LessonInfoPresenter lessonInfoPresenter;
 	ResourcePlayerMetadataPresenter resourcePlayerMetadataPresenter;
-	AddTagesPopupView addTagesPopupView;
 	AssessmentsResourceInfoPresenter assessmentsResourceInfoPresenter;
 	AssessmentsResourcePlayerMetadataPresenter assessmentsResourcePlayerMetadataPresenter;
 	ResourceInfoPresenter resourceInfoPresenter;
@@ -320,10 +318,6 @@ public class StandardsPopupPresenter extends PresenterWidget<IsStandardsPopupVie
 		this.preSearchPresenter = preSearchPresenter;
 	}
 
-
-	public void setAddTagsPopView(AddTagesPopupView addTagesPopupView) { 
-		this.addTagesPopupView = addTagesPopupView;
-	}
 
 
 	public Anchor getCloseButton() {

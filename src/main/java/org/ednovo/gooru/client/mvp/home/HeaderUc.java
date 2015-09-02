@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpages.ClasspageListVc;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
@@ -301,8 +300,6 @@ public class HeaderUc extends Composite
 
 	private LogoutPanelVc logoutPanelVc;
 
-	private ClasspageListVc classpageListVc;
-
 	@UiField
 	AnchorElement gooruLearning;
 
@@ -516,29 +513,7 @@ public class HeaderUc extends Composite
 		organizeLinkContainer
 				.addClickHandler(new OnClickOrganizeEventHandler());
 
-		//organizeToolTip = new OrganizeToolTip();
-		/*organizeToolTip.getElement().getStyle()
-				.setBackgroundColor("transparent");
-		organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-		organizeToolTip.getElement().getStyle().setZIndex(99);*/
-		//myCollectionsPop.add(organizeToolTip);
-		/*myCollectionsPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
-		myCollectionsPop.getElement().getStyle().setZIndex(99);*/
-		//myCollectionsPop.setVisible(false);
-		//organizeToolTip.getElement().getStyle().setMarginLeft(78, Unit.PCT);
-	//	organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-
-
 		teachLinkContainer.addClickHandler(new OnClickTeachEventHandler());
-
-		classpageListVc = new ClasspageListVc(false, null);
-
-		myClassesPop.add(classpageListVc);
-		myClassesPop.setVisible(false);
-
-		/*teachLinkMain.addMouseOverHandler(new TeachMouseOver());
-		teachLinkMain.addMouseOutHandler(new TeachMouseOut());*/
-
 
 		dashBoardToolTip=new DashBoardToolTip() {
 
