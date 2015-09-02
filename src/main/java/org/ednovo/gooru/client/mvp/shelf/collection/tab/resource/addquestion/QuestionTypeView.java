@@ -366,7 +366,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		standardContainer.getElement().setId("standardsContainerBswn");
 		standardsCont.getElement().setAttribute("style", "position:relative;");
 		
-		getAddStandards();
+
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -2494,7 +2494,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 		populateStandardValues();
 	}
-
+	@Override
 	public void getAddStandards() {
 		if (!AppClientFactory.isAnonymous()) {
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(

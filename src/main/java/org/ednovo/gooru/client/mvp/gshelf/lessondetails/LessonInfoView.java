@@ -148,7 +148,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 				lessonInfo.getElement().setAttribute("style", "min-height:"+Window.getClientHeight()+"px");
 			}
 		});
-		getAddStandards();
+
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
@@ -160,6 +160,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				getAddStandards();
 				if(!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;")){
 					standardsDropListValues.getElement().setAttribute("style", "display:block;");
 				}else{
@@ -385,6 +386,7 @@ public class LessonInfoView extends BaseViewWithHandlers<LessonInfoUiHandlers> i
         }
 	}
 	public final void populateStandardValues(){
+		standardsDropListValues.clear();
         for (String standardsTypesArray1 : standardsTypesArray) {
             List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
             LiPanel liPanel = new LiPanel();
