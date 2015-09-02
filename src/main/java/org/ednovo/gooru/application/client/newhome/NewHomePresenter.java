@@ -174,6 +174,10 @@ public class NewHomePresenter extends BasePlacePresenter<IsNewHomeView, IsEditCl
 			doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
 		}
 		
+		setInSlot(BANNER_SLOT, banner);
+		presearchPresenter.getFiltersAPI();
+		setInSlot(PRESEARCH_SLOT, presearchPresenter);
+		
 	}
 
 	@Override
@@ -206,8 +210,7 @@ public class NewHomePresenter extends BasePlacePresenter<IsNewHomeView, IsEditCl
 				});
 			}
 		});
-		setInSlot(BANNER_SLOT, banner);
-		setInSlot(PRESEARCH_SLOT, presearchPresenter);
+
 	}
 
 	@Override

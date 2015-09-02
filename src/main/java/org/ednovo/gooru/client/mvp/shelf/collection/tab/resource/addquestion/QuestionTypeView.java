@@ -366,7 +366,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		standardContainer.getElement().setId("standardsContainerBswn");
 		standardsCont.getElement().setAttribute("style", "position:relative;");
 		
-		getAddStandards();
+
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -2405,6 +2405,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	    addQuestionImg.setVisible(true);
 	}
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();
@@ -2494,7 +2495,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 		populateStandardValues();
 	}
-
+	@Override
 	public void getAddStandards() {
 		if (!AppClientFactory.isAnonymous()) {
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(

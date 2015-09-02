@@ -831,7 +831,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
 
 		addClickEventsForCheckBox();
-		getAddStandards();
+
 		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 			@Override
@@ -844,7 +844,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-
+				getAddStandards();
 				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:33.5em;color:#515151;")) {
 					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:33.5em;color:#515151;");
 				} else {
@@ -3426,6 +3426,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		return depthOfKnowledge;
 	}
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();
