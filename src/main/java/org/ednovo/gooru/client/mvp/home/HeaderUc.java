@@ -344,7 +344,6 @@ public class HeaderUc extends Composite
 	HeaderPanel headerMainPanel;
 
 	private UserDo userDo;
-	private LoginPopupUc popup;
 
 	private StudyNowToolTip studyNowToolTip;
 	private static boolean addedAccounts = false;
@@ -846,7 +845,7 @@ public class HeaderUc extends Composite
 	 */
 	@UiHandler("loginLink")
 	public void onLinkPopupClicked(ClickEvent clickEvent) {
-		popup = new LoginPopupUc(this) {
+		final LoginPopupUc popup = new LoginPopupUc(this) {
 			@Override
 			public void onLoginSuccess() {
 
