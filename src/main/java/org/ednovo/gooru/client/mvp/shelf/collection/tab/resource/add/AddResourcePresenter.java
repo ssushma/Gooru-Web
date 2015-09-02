@@ -535,6 +535,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void addSelectedQuestionType(String type,CollectionQuestionItemDo collectionQuestionItemDo) {
 		if(type.equalsIgnoreCase("HS_TXT") || type.equalsIgnoreCase("HS_IMG")){
 		questionTypePresenter.getView().resetFields(type);
+		questionTypePresenter.getView().getAddStandards();
 		if(getView().checkQuestionSlot()){
 		addToSlot(SLOT_QUESTION_TYPE, questionTypePresenter);
 		}
