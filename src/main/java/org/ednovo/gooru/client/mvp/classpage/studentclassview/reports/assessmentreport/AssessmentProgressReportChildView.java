@@ -163,7 +163,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
-		StringUtil.loadVisualizationLibraries();
 		collectionOverviewBtn.addClickHandler(new ResourceDataCall(collectionOverviewBtn));
 		questionsBtn.addClickHandler(new ResourceDataCall(questionsBtn));
 		oeQuestionsBtn.addClickHandler(new ResourceDataCall(oeQuestionsBtn));
@@ -463,7 +462,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 			for(int i=0;i<result.size();i++) {
 				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(result.get(i).getTitle()!=null? result.get(i).getTitle():"");
-				HTML questionTitle=new HTML(StringUtil.removeHtmlTags(titlelbl1));
+				HTML questionTitle=new HTML(StringUtil.removeAllHtmlCss(titlelbl1));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
@@ -559,7 +558,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			adTable.setHeaderWidget(5, heading6);
 			for(int i=0;i<result.size();i++) {
 				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(result.get(i).getTitle()!=null? result.get(i).getTitle():"");
-				HTML questionTitle=new HTML(StringUtil.removeHtmlTags(titlelbl1));
+				HTML questionTitle=new HTML(StringUtil.removeAllHtmlCss(titlelbl1));
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
@@ -723,18 +722,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			}
 		}
 	}
-
-	/**
-	 * This will set the cell properties
-	 * @return
-	 */
-	com.google.gwt.visualization.client.Properties getPropertiesCell(){
-		Properties properties=Properties.create();
-		properties.set("style", "text-align:center;");
-		com.google.gwt.visualization.client.Properties p=properties.cast();
-		return p;
-	}
-
+	
 	/**
 	 * This will return the correct answers
 	 * @param metaDataObj

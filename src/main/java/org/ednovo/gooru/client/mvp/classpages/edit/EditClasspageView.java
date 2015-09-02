@@ -597,8 +597,6 @@ public class EditClasspageView extends
 		newAssignmentAndMsgPanel.getElement().getStyle().setMarginTop(10, Unit.PX);
 		btnDeleteClasspage.getElement().setId("btnDeleteClasspage");
 		frameUrl.setVisible(false);
-
-		StringUtil.loadVisualizationLibraries();
 	}
 	/**
 	 *

@@ -744,50 +744,7 @@ public class StringUtil implements ClientConstants {
 		  }
 		return resourceCategory;
 	}
-
-
-	/**
-	 *
-	 * @function loadVisualizationLibraries
-	 *
-	 * @created_date : 17-Jun-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	public static void loadVisualizationLibraries(){
-//		boolean status = getScriptStatus();
-//		AppClientFactory.printInfoLogger("status : "+status);
-//		if (!status){
-//			Runnable onLoad = new Runnable() {
-//	            @Override
-//	            public void run() {
-//
-//	            }
-//	        };
-//	        VisualizationUtils.loadVisualizationApi(onLoad, PieChart.PACKAGE);
-//	        VisualizationUtils.loadVisualizationApi(onLoad, Table.PACKAGE);
-
-//			AjaxLoaderOptions options = AjaxLoaderOptions.newInstance();
-//            options.setPackages(PieChart.PACKAGE,Table.PACKAGE);
-//            AjaxLoader.loadApi("visualization", "1", new Runnable() {
-//              public void run() {
-//              }
-//            }, options);
-//
-//		}
-	}
-
+	
 	public static String capitalizeFirstLetter(String original){
 	    if(original.length() == 0)
 	        return original;

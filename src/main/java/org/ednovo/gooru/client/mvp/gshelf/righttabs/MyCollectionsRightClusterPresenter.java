@@ -84,11 +84,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
 	
-	
-	private static final String O1_LEVEL = "o1";
-	private static final String O2_LEVEL = "o2";
-	private static final String O3_LEVEL = "o3";
-	
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
@@ -171,7 +166,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 						getView().disableAndEnableBreadCums(true);
 					}
 					getView().enableAndHideTabs(false);
-					getView().getPreviewLink().setVisible(true);
+					if(folderObj!=null && folderObj.getGooruOid()!=null){
+						getView().disableButtons(true);
+					}else{
+						getView().disableButtons(false);
+					}
 					externalAssessmentInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
@@ -465,11 +464,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public boolean checkCopyOrMoveStatus(boolean copySelected,
-			boolean moveSelected) {
+			boolean moveSelected,String clickedType) {
 		// TODO Auto-generated method stub
 		this.isCopySelected=copySelected;
 		this.isMoveSelected= moveSelected;
-		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected);
+		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected,clickedType);
 		return false;
 	}
 	@Override
