@@ -97,9 +97,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -1762,14 +1762,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		return null;
 	}
 	
-	private class onBrowseStandarsCLick implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			browseStandardsInfo();
-		}
-	}
-
-	
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
@@ -2160,11 +2152,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		updateMobileFriendlyAdvancedStyles();
 	}
-	
-	
-	public abstract void browseStandardsInfo();
-	
-	public abstract void closeStandardsPopup();
 	/**
 	 * 
 	 * @function setAdvancedOptionsStyles 

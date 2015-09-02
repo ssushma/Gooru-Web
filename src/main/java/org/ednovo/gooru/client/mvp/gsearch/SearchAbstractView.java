@@ -1789,28 +1789,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	};
 
-	public void OnStandardsClickEvent(Button standardsButtonClicked)
-	{
-		if(handlerRegistration!=null){
-			handlerRegistration.removeHandler();
-		}
-		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().setUpdatedStandards();
-			}
-		});
-	}
-	@Override
-	public void setUpdatedStandards(List<Map<String, String>> standsListArray){
-		getUiHandlers().closeStandardsPopup();
-		if(standsListArray.size()!=0){
-			for(int i=0; i<standsListArray.size(); i++){
-				pnlAddFilters.add(createTagsLabel(standsListArray.get(i).get("selectedCodeVal"),"standardPanel"));
-			}
-			callSearch();
-		}
-	}
+
 	public class MouseOverOnImage implements MouseOverHandler{
 		String mouseOverTxt;
 

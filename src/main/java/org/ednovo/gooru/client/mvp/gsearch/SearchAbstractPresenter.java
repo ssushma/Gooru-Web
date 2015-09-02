@@ -41,7 +41,6 @@ import org.ednovo.gooru.application.shared.model.search.AutoSuggestContributorSe
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
-import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SearchAsyncCallbackForSearch;
 import org.ednovo.gooru.client.SearchAsyncCallbackForString;
@@ -56,7 +55,6 @@ import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
@@ -64,7 +62,6 @@ import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -122,8 +119,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	SignUpPresenter signUpViewPresenter = null;
 
-	AddStandardsPresenter addStandardsPresenter = null;
-
 	AddCenturyPresenter addCenturyPresenter = null;
 
 	GooruGradesPresenter gooruGradesPresenter = null;
@@ -151,11 +146,9 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	 */
 	public SearchAbstractPresenter(V view, P proxy,
 			SignUpPresenter signUpViewPresenter,
-			AddStandardsPresenter addStandardsPresenterObj,
 			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewMorePeoplePresenter,StandardsPopupPresenter standardsPopupPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
-		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.addCenturyPresenter = addCenturyPresenter;
 		this.gooruGradesPresenter = gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
@@ -660,74 +653,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		return gooruGradesPresenter;
 	}
 
-	@Override
-	public void setUpdatedStandards() {
-		getView().setUpdatedStandards(addStandardsPresenter.getStandardListArray());
-	}
-
-	@Override
-	public void closeStandardsPopup() {
-		addStandardsPresenter.hidePopup();
-	}
-
-	@Override
-	public void getAddStandards() {
-		if(!AppClientFactory.isAnonymous()){
-			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
-				USER_META_ACTIVE_FLAG,
-				new SimpleAsyncCallback<ProfileDo>() {
-					@Override
-					public void onSuccess(final ProfileDo profileObj) {
-						if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
-							AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-							checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
-						}
-					}
-					public void checkStandarsList(List<String> standarsPreferencesList) {
-
-					if(standarsPreferencesList!=null){
-							if(standarsPreferencesList.contains("CCSS")){
-								isCCSSAvailable = true;
-							}else{
-								isCCSSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("NGSS")){
-								isNGSSAvailable = true;
-							}else{
-								isNGSSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("TEKS")){
-								isTEKSAvailable = true;
-							}else{
-								isTEKSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("CA")){
-								isCAAvailable = true;
-							}else{
-								isCAAvailable = false;
-							}
-								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-									addToPopupSlot(addStandardsPresenter);
-									getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
-								}
-
-					}
-					}
-				});
-		}else{
-			isCCSSAvailable = true;
-			isNGSSAvailable = true;
-			isCAAvailable = true;
-			isTEKSAvailable = false;
-			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-				addToPopupSlot(addStandardsPresenter);
-				getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
-			}
-		}
-
-	}
 	@Override
 	public void setSearchType(boolean isCollectionSearch, String query) {
 		String viewToken;
