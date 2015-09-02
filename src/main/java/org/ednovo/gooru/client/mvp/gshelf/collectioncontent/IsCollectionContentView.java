@@ -141,26 +141,7 @@ public interface IsCollectionContentView extends IsViewWithHandlers<CollectionCo
 	 */
 	void hideUpdateResourcePopup();
 	void updateCollectionItem(CollectionItemDo collectionItem);
-	/**
-	 *
-	 * @function OnBrowseStandardsClickEvent
-	 *
-	 * @created_date : 04-Jul-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) : @param addStandardsBtn
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void OnBrowseStandardsClickEvent(Button addStandardsBtn);
+
 
 	/**
 	 *

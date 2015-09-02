@@ -99,7 +99,6 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
@@ -224,8 +223,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<SausdLibraryPresenter> getSausdPresenter();
 
 	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
-
-	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
 
 	AsyncProvider<AddCenturyPresenter> getAddCenturyPresenter();
 
