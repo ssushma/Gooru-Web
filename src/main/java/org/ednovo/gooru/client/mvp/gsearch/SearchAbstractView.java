@@ -322,7 +322,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(1), ClickEvent.getType());
 		btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
-		getAddStandards();
+		
 		//btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
 		gradesDropDown.addDomHandler(new GradesDropDownHandler(), ClickEvent.getType());
 		oerLbl.addClickHandler(new ClickOnOER());
@@ -484,6 +484,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			getAddStandards();
 			GWT.runAsync(new RunAsyncCallback(){
 				@Override
 				public void onSuccess() {
@@ -1965,6 +1966,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params, true);
 	}
 	public final void populateStandardValues(){
+		standardsDropListValues.clear(); 
         for (String standardsTypesArray1 : standardsTypesArray) {
             List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
             LiPanel liPanel = new LiPanel();

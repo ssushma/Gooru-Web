@@ -29,9 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.client.service.ResourceServiceAsync;
-import org.ednovo.gooru.application.client.service.ShelfServiceAsync;
-import org.ednovo.gooru.application.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -50,15 +47,6 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  */
 public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> implements AddCenturyUiHandlers {
 
-	@Inject
-	private ShelfServiceAsync shelfService;
-
-	@Inject
-	private ResourceServiceAsync resourceService;
-
-	@Inject
-	private TaxonomyServiceAsync taxonomyService;
-
 	/**
 	 * Class constructor
 	 * @param view {@link View}
@@ -76,7 +64,6 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	@Override
 	public void onBind() {
 		super.onBind();
-		loadStateStandards();
 	}
 	
 	/* (non-Javadoc)
