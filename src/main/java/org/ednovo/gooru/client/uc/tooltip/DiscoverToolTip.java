@@ -38,7 +38,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -176,9 +175,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
         Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
         Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		  
-		UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  
+		
 		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
 			panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;margin-top:-53px;");
 			districtLibContainer.getElement().setAttribute("style", "margin-top:-4px;");
