@@ -81,8 +81,8 @@ public class HomeBannerView extends BaseViewWithHandlers<HomeBannerUiHandlers> i
 		StringUtil.setAttributes(lblPageTitle1.getElement(), "lblPageTitle", "", "");
 		lblPageTitle2.setText(i18n.GL3284_3());
 		StringUtil.setAttributes(lblPageTitle2.getElement(), "lblPageTitle", "", "");
-		lblPageTitle3.setText(i18n.GL3284_4());
-		StringUtil.setAttributes(lblPageTitle3.getElement(), "lblPageTitle", "", "");
+//		lblPageTitle3.setText(i18n.GL3284_4());
+//		StringUtil.setAttributes(lblPageTitle3.getElement(), "lblPageTitle", "", "");
 
 		StringUtil.setAttributes(panelTitleContainer.getElement(), "panelTitleContainer", i18n.GL3284_1(), i18n.GL3284_1());
 
