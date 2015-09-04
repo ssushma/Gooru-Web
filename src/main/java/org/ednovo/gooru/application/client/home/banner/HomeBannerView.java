@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -81,6 +82,7 @@ public class HomeBannerView extends BaseViewWithHandlers<HomeBannerUiHandlers> i
 		StringUtil.setAttributes(lblPageTitle1.getElement(), "lblPageTitle", "", "");
 		lblPageTitle2.setText(i18n.GL3284_3());
 		StringUtil.setAttributes(lblPageTitle2.getElement(), "lblPageTitle", "", "");
+		lblPageTitle2.getElement().getStyle().setMarginTop(50, Unit.PX);
 //		lblPageTitle3.setText(i18n.GL3284_4());
 //		StringUtil.setAttributes(lblPageTitle3.getElement(), "lblPageTitle", "", "");
 
