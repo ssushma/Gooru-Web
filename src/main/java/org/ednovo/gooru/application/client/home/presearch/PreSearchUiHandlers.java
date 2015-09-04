@@ -73,4 +73,6 @@ public interface PreSearchUiHandlers extends BaseUiHandlers{
 
 	void setSelectedStandards(List<Map<String, String>> standListArray);
 
+	public void loadSubjects();
+
 }

@@ -528,7 +528,7 @@
 					<!-- URL that should be automatically opened in the GWT shell (gwt:run). -->
 					<runTarget>index.html</runTarget>
 					<!-- Ask GWT to create the Story of Your Compile (SOYC) (gwt:compile) -->
-					<compileReport>false</compileReport>
+					<compileReport>true</compileReport>
 					<!-- <module>org.ednovo.gooru.Gooru</module> -->
 					<module>org.ednovo.gooru.application.Application</module>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>

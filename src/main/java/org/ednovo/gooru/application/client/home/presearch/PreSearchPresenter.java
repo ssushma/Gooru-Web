@@ -96,18 +96,16 @@ public class PreSearchPresenter<T extends ResourceSearchResultDo, C extends Reso
 	protected void onReset() {
 		getView().setButtonVisibility();
 	}
-	
-	public void getFiltersAPI()
-	{
+
+	@Override
+	public void loadSubjects(){
 		AppClientFactory.getInjector().getSearchService().getSearchFilters(PlaceTokens.HOME,new SimpleAsyncCallback<SearchFilterDo>() {
 			@Override
 			public void onSuccess(SearchFilterDo searchFilterDo) {
 				getView().setSearchFilter(searchFilterDo);
 			}
 		});
-		getView().getUlSubjectPanel().clear();
 	}
-
 
 
 	@Override

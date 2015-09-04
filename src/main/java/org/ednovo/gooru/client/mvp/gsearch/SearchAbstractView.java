@@ -297,6 +297,14 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				try{
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+						if(publisherSgstBox.isSuggestionListShowing()){
+							publisherSgstBox.hideSuggestionList();
+						}
+						if(aggregatorSgstBox.isSuggestionListShowing()){
+							aggregatorSgstBox.hideSuggestionList();
+						}
+					}
 					String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
 						if(resultCountVal>=8 && isApiInProgress){
