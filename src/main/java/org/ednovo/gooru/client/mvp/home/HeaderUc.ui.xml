@@ -12,7 +12,7 @@
 					<g:HTMLPanel styleName="col-md-2 col-sm-3 col-xs-3 logo">
 						<a ui:field="gooruLearning" style="opacity: 1;">
 							<!-- <div class="gooruLearningIcon"></div> -->
-							<img class="" src="images/atlas.png" style="margin-top: 5px;"/>
+							<img class="" src="images/atlas.png" style="height: 45px;"/>
 							<g:Label styleName="gooruLearningCaption"
 								ui:field="lblBeta"></g:Label>
 						</a>
