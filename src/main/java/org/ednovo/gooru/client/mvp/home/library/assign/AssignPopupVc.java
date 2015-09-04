@@ -750,7 +750,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 							AppClientFactory.setUserflag(true);
 							AppClientFactory.resetPlace();
-
+							hide();
 							//loadListContainers();
 							MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
 						}else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){

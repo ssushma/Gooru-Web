@@ -668,6 +668,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 							AppClientFactory.resetPlace();
 							loadListContainers();
 							MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
+							hide();
 							// heeere add widget
 						}else if(result.getActive()==0){
 							loginButton.setVisible(true);
