@@ -234,6 +234,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			text = jsonRep.getText();
 			profileDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileDo.class);
 			setUserFilterProperties(profileDo.getUser());
+			profileDo.getUser().setToken(getLoggedInSessionToken());
 			if (params.containsKey(REGISTRATION_TYPE) && !params.get(REGISTRATION_TYPE).equalsIgnoreCase(CHILD)) {
 				setLoggedInSessionToken(token);
 				setLoggedInUserUid(profileDo.getUser().getGooruUId());
