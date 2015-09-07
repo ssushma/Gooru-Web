@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.content;
 
-import org.ednovo.gooru.application.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

@@ -748,3 +748,198 @@
 .loginFailureAlert div table {
   width: 100%;
 }
+
+.ssv-classPageShareButtonsFTEBgDisable {
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgb(76, 152,204)), color-stop(1, rgb(16, 118, 187)));
+	background-image: -webkit-linear-gradient(-90deg, rgb(76, 152, 204) 0%,rgb(16, 118, 187) 100%);
+	background-image: -o-linear-gradient(-90deg, rgb(76, 152, 204) 0%,rgb(16, 118, 187) 100%);
+	background-image: -ms-linear-gradient(-90deg, rgb(76, 152, 204) 0%,rgb(16, 118, 187) 100%);
+	height: 30px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-image: -moz-linear-gradient(-90deg, rgb(76, 152, 204) 0%,rgb(16, 118, 187) 100%);
+	background-color: #1076bb;
+	filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb, GradientType=0)";
+}
+
+
+.ssv-fbPageShareIconButtonsBg {
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgb(59, 89,150)), color-stop(1, rgb(59, 89,150)));
+	background-image: -webkit-linear-gradient(-90deg, rgb(59, 89,150) 0%,rgb(59, 89,150) 100%);
+	background-image: -o-linear-gradient(-90deg, rgb(59, 89,150) 0%,rgb(59, 89,150) 100%);
+	background-image: -ms-linear-gradient(-90deg, rgb(59, 89,150) 0%,rgb(59, 89,150) 100%);
+	height: 30px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #3b5996;
+	cursor:pointer;
+	background-image: -moz-linear-gradient(-90deg, rgb(59, 89,150) 0%,rgb(59, 89,150) 100%);
+	filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+}
+
+.ssv-fbPageShareIconButtonsBg:hover {
+	background: #3b5996;
+	height: 30px;
+}
+
+.ssv-classPageEmailBlueText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(16, 118, 185);
+	text-align: center;
+	padding: 20px 0px 0px 10px;
+}
+
+
+.ssv-classPageEmailDescText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	text-align: center;
+	padding: 15px 0px 0px 10px;
+	word-wrap: break-word;
+}
+
+.ssv-classPageShareButtonsOuterDiv {
+	float: left;
+	padding: 4px 6px 0 0px;
+}
+
+.ssv-classPageShareButtonSpriteOuterDiv {
+	float: left;
+	width: 30px;
+}
+.ssv-classPageShareButtonSpriteAlign {
+	padding-top: 5px;
+}
+
+.ssv-classPageShareButtonsSprite {
+	background: url(../images/FTE.png) no-repeat;
+}
+.ssv-classPageShareButtonSpriteFacebook {
+	background-position: -25px -23px;
+	width: 30px;
+	height: 20px;
+}
+
+
+.ssv-twitterPageShareIconButtonsBg {
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgb(0, 172,240)), color-stop(1, rgb(0, 172,240)));
+	background-image: -webkit-linear-gradient(-90deg, rgb(0, 172,240) 0%,rgb(0, 172,240) 100%);
+	background-image: -o-linear-gradient(-90deg, rgb(0, 172,240) 0%,rgb(0, 172,240) 100%);
+	background-image: -ms-linear-gradient(-90deg, rgb(0, 172,240) 0%,rgb(0, 172,240) 100%);
+	height: 30px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #00acf0;
+	cursor:pointer;
+	background-image: -moz-linear-gradient(-90deg, rgb(0, 172,240) 0%,rgb(0, 172,240) 100%);
+	filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+}
+
+.ssv.twitterPageShareIconButtonsBg:hover {
+	background: #00acf0;
+	height: 30px;
+}
+
+.ssv-classPageShareButtonSpriteTwitter {
+	background-position: -26px -43px;
+	width: 30px;
+	height: 30px;
+}
+.ssv-classPageShareButtonsFTEBg {
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgb(76, 152,
+		204)), color-stop(1, rgb(16, 118, 187)));
+	background-image: -webkit-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 100%);
+	background-image: -o-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 100%);
+	background-image: -ms-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 100%);
+	/* 	width: 105px; */
+	height: 30px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-image: -moz-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 100%);
+	background-color: #1076bb;
+	cursor:pointer;
+	/* 	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)"; */
+	filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb, GradientType=0)";
+}
+
+.ssv-classPageShareButtonsFTEBg:hover {
+	background: #1076bb;
+	cursor: pointer;
+}
+.ssv-classPageShareButtonSpriteEmail {
+	background-position: -24px -69px;
+	width: 30px;
+	height: 30px;
+}
+
+.ssv-displayNone {
+	display:none;
+	width:1px;
+	height:1px;
+}
+.ssv-clear {
+	clear: both;
+}
+
+
+.cpEmaiInputLabel {
+	float: left;
+	width: 270px;
+	text-align: left;
+	margin-bottom: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81, 81, 81);
+	padding: 11px 10px 0px 0px;
+}
+
+
+.ces-emailShareErrorLabel {
+	clear: both;
+	font: 12px arial;
+	color: #fab03a;
+	text-align: right;
+	margin-top: 3px;
+	padding: 3px;
+}
+
+.ces-privacyAlignStyle{
+	margin-right: 2px;
+}
+
+.ces-cpEmailCheckBoxContainer {
+	height: 27px;
+}
+
+.ces-cpEmailCheckBoxStyle {
+	margin-top: 4px;
+	float: right;
+}
+
+.ces-cpEmailCheckBoxMargin {
+	margin-top: 3px;
+	width: 17px;
+	height: 17px;
+	cursor: pointer;
+}
+
+
+
+.ces-cpEmailNormalText {
+	float: right;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81, 81, 81);
+	text-align: right;
+	padding: 5px 6px 0px 0px;
+}
