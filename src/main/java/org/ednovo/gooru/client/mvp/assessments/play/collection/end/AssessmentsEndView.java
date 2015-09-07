@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -527,7 +528,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		}else {
 			Label erroeMsg=new Label();
 			erroeMsg.setStyleName(STYLE_ERROR_MSG);
-			erroeMsg.setText(i18n.GL3265());
+			erroeMsg.setText(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)?i18n.GL3507():i18n.GL3265());
 			questionsTable.add(erroeMsg);
 		}
 
@@ -697,7 +698,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	public void errorMsg() {
 		Label erroeMsg=new Label();
 		erroeMsg.setStyleName(STYLE_ERROR_MSG);
-		erroeMsg.setText(i18n.GL3265());
+		erroeMsg.setText(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)?i18n.GL3507():i18n.GL3265());
 		questionsTable.clear();
 		questionsTable.add(erroeMsg);
 	}
