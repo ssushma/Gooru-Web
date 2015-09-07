@@ -108,9 +108,6 @@ IsSocialShareView,ClientConstants{
 
 	@UiField Image categoryImage;;
 
-	@UiField
-	SocialShareStyle socialShareStyle;
-
 	private String category;
 
 	private String description;
@@ -224,27 +221,14 @@ IsSocialShareView,ClientConstants{
 			}
 		}
 		if((socialDo.getShareType().equalsIgnoreCase("private"))){
-
-			panelfbIcon.setStyleName(socialShareStyle.classPageShareButtonsFTEBgDisable());
-			panelTwIcon.setStyleName(socialShareStyle.classPageShareButtonsFTEBgDisable());
-			panelEmailIcon.setStyleName(socialShareStyle.classPageShareButtonsFTEBgDisable());
-
-		//	fbPanel.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
-		//	panelTwitter.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
-		//	panelEmail.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
-
+			panelfbIcon.setStyleName("ssv-classPageShareButtonsFTEBgDisable");
+			panelTwIcon.setStyleName("ssv-classPageShareButtonsFTEBgDisable");
+			panelEmailIcon.setStyleName("ssv-classPageShareButtonsFTEBgDisable");
 		}else{
-
-			panelfbIcon.setStyleName(socialShareStyle.fbPageShareIconButtonsBg());
-			panelTwIcon.setStyleName(socialShareStyle.twitterPageShareIconButtonsBg());
-			panelEmailIcon.setStyleName(socialShareStyle.classPageShareButtonsFTEBg());
-
-			//fbPanel.setStyleName(socialShareStyle.fbPageShareButtonsBg());
-			//panelTwitter.setStyleName(socialShareStyle.twitterPageShareButtonsBg());
-			//panelEmail.setStyleName(socialShareStyle.classPageShareButtonsBg());
-
+			panelfbIcon.setStyleName("ssv-fbPageShareIconButtonsBg");
+			panelTwIcon.setStyleName("ssv-fbPageShareIconButtonsBg");
+			panelEmailIcon.setStyleName("ssv-fbPageShareIconButtonsBg");
 		}
-
 
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
 			isProfilePageView = true;
