@@ -235,7 +235,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		progressRadial.getElement().setId("fpnlprogressRadial");
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageLoading.getElement().setId("loadingUcCropImageLoadingInStudentSummaryView");
-
+		score.setText("--");
 		String collectionType = i18n.GL4006();
 
 		if(isCollection) {
@@ -297,17 +297,19 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	@Override
 	public void displayScoreCount(CollectionSummaryMetaDataDo result) {
-		score.setText(result.getScoreInPercentage()+" %");
-		goal.setText(i18n.GL3460_5() + result.getGoal()+" %");
-		correctStatus.setText(result.getScore()+"/"+result.getScorableQuestionCount()+" "+i18n.GL2278());
-		int scorePercentage=result.getScoreInPercentage();
-		String progressRedialStyle="blue-progress-"+scorePercentage;
-		progressRadial.setStyleName("progress-radial");
-		progressRadial.addStyleName(progressRedialStyle);
-		if(isExternalAssessment) {
-			externalAssessmentUrl.setText(result.getEvidence());
-			externalAssessmentUrl.setHref(result.getEvidence());
-			externalAssessmentUrl.setTarget("_blank");
+		if(!isCollection) {
+			score.setText(result.getScoreInPercentage()+" %");
+			goal.setText(i18n.GL3460_5() + result.getGoal()+" %");
+			correctStatus.setText(result.getScore()+"/"+result.getScorableQuestionCount()+" "+i18n.GL2278());
+			int scorePercentage=result.getScoreInPercentage();
+			String progressRedialStyle="blue-progress-"+scorePercentage;
+			progressRadial.setStyleName("progress-radial");
+			progressRadial.addStyleName(progressRedialStyle);
+			if(isExternalAssessment) {
+				externalAssessmentUrl.setText(result.getEvidence());
+				externalAssessmentUrl.setHref(result.getEvidence());
+				externalAssessmentUrl.setTarget("_blank");
+			}
 		}
 	}
 

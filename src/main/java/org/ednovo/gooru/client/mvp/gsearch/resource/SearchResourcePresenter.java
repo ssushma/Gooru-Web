@@ -47,12 +47,9 @@ import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToC
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
-import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
-import org.ednovo.gooru.client.uc.AppPopUp;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -82,23 +79,17 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	@Inject
 	private SearchServiceAsync searchService;
 
-	AddStandardsPresenter addStandardsPresenter = null;
-
-	AddCenturyPresenter addCenturyPresenter;
-
 	GooruGradesPresenter gooruGradesPresenter;
 
 	StandardsPopupPresenter standardsPopupPresenter;
 
-	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter = null;
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
 
 	ShelfMainPresenter shelfMainPresenter;
 
-	ViewMorePeoplePresenter viewmorePeoplePresenter = null;
+	ViewMorePeoplePresenter viewmorePeoplePresenter;
 
 	RatingAndReviewPopupPresenter ratingAndReviewPopup;
-
-	AppPopUp appPopUp=new AppPopUp();
 
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SEARCH_RESOURCE)
@@ -107,12 +98,10 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 
 	@Inject
-	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,ShelfMainPresenter shelfMainPresenter,StandardsPopupPresenter standardsPopupPresenter) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter,standardsPopupPresenter);
-		this.addStandardsPresenter = addStandardsPresenter;
+	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,ShelfMainPresenter shelfMainPresenter,StandardsPopupPresenter standardsPopupPresenter) {
+		super(view, proxy, signUpViewPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter,standardsPopupPresenter);
 		this.standardsPopupPresenter=standardsPopupPresenter;
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
-		this.addCenturyPresenter=addCenturyPresenter;
 		this.gooruGradesPresenter=gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.viewmorePeoplePresenter = viewmorePeoplePresenter;

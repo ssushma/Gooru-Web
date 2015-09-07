@@ -36,7 +36,6 @@ import java.util.Set;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
-import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -197,7 +196,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private static final String USER_META_ACTIVE_FLAG = "0";
-	private static final String FLT_SOURCE_CODE_ID = "flt.sourceCodeId";
 	String CENTURYSKILLS="21st Century Skills";
 
 	boolean isCancelclicked=false;
@@ -205,7 +203,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	String mediaFeatureStr = i18n.GL1767();
 	String resourceId=null;
 	Boolean isIpad,isAndriod,isWinDskp;
-	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+
 	public AddTagesPopupView(final String resourceId) {
 		super(false);
 		initializeAutoSuggestedBox();
@@ -473,8 +471,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		
-		getAddStandards();
-		
 
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
@@ -552,55 +548,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		};
 		
-		//This will display the 21 century popup
-		centbrowseBtn.addClickHandler(new ClickHandler() {
-					@Override
-			public void onClick(ClickEvent event) {
-				centuryPopup.clear();
-				centuryPresenterWidget.setAddResourceDataAddTags(centuryDo);
-				centuryPopup.add(centuryPresenterWidget.getWidget());
-				centuryPopup.show();
-				centuryPopup.center();
-				centuryPopup.getElement().getStyle().setZIndex(999999);
-			}
-		});
-		//This will hide the popup when clicked on the cancel button
-		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-					centuryDo.add(entry.getValue());
-				}
-				
-						hideCenturyPopup();
-			}
-		});
-		//This will hide the popup when clicked on close button
-		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-					centuryDo.add(entry.getValue());
-				}
-						hideCenturyPopup();
-			}
-		});
-		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {		
-				centuryPanel.clear();
-				centuryDo.clear();
-				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
-				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
-					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-						centuryDo.add(entry.getValue());
-						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
-					}
-				}
-				hideCenturyPopup();
-			}
-			
-		});
+		
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
 		ScrollPopupUtil.ScrollPopupUtilWidget(addTagesContent,true);
 	}
@@ -2368,8 +2316,63 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 
 		populateStandardValues();
 	}
+	
+	private void bindDatabeforeLoad()
+	{
+		final AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		//This will display the 21 century popup
+				centbrowseBtn.addClickHandler(new ClickHandler() {
+							@Override
+					public void onClick(ClickEvent event) {
+						centuryPopup.clear();
+						centuryPresenterWidget.setAddResourceDataAddTags(centuryDo);
+						centuryPopup.add(centuryPresenterWidget.getWidget());
+						centuryPopup.show();
+						centuryPopup.center();
+						centuryPopup.getElement().getStyle().setZIndex(999999);
+					}
+				});
+				//This will hide the popup when clicked on the cancel button
+				centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+							centuryDo.add(entry.getValue());
+						}
+						
+								hideCenturyPopup();
+					}
+				});
+				//This will hide the popup when clicked on close button
+				centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+							centuryDo.add(entry.getValue());
+						}
+								hideCenturyPopup();
+					}
+				});
+				centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {		
+						centuryPanel.clear();
+						centuryDo.clear();
+						centurySelectedValues=centuryPresenterWidget.getSelectedValues();
+						if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+							for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+								centuryDo.add(entry.getValue());
+								centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+							}
+						}
+						hideCenturyPopup();
+					}
+					
+				});
+	}
 
 	public void getAddStandards() {
+		bindDatabeforeLoad();
 		if (!AppClientFactory.isAnonymous()) {
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(
 					AppClientFactory.getLoggedInUser().getGooruUId(), USER_META_ACTIVE_FLAG,

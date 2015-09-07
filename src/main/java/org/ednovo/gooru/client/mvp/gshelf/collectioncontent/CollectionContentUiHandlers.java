@@ -34,8 +34,6 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageHandler;
 
-import com.google.gwt.user.client.ui.VerticalPanel;
-
 /**
  * @author Search Team
  *
@@ -179,70 +177,6 @@ public interface CollectionContentUiHandlers extends BaseUiHandlers ,UpdateEditR
 	 *
 	 */
 	void imageEditResourceUpload();
-
-	/**
-	 *
-	 * @function getBrowseStandardsInfo
-	 *
-	 * @created_date : 04-Jul-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) : @param val
-	 * @parm(s) : @param userResource
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void getBrowseStandardsInfo(boolean val, boolean userResource);
-
-	/**
-	 *
-	 * @function addUpdatedBrowseStandards
-	 *
-	 * @created_date : 04-Jul-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void addUpdatedBrowseStandards();
-
-	/**
-	 *
-	 * @function closeBrowseStandardsPopup
-	 *
-	 * @created_date : 04-Jul-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	void closeBrowseStandardsPopup();
 
 	/**
 	 *

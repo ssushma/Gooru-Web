@@ -34,14 +34,11 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceHandler;
@@ -50,8 +47,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -69,19 +64,9 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	final String SUBJECT="subject";
 
 	final String COURSE="course";
-	private static final String USER_META_ACTIVE_FLAG = "0";
-	private boolean isCCSSAvailable =false;
-	private boolean isNGSSAvailable =false;
-	private boolean isTEKSAvailable =false;
-	private boolean isCAAvailable =false;
-	private boolean isQuestionResource=false;
-	private boolean isUserOwnResource = false;
-	
-	private Integer courseList;
 
 	AddResourcePresenter addResourcePresenter=null;
 	ImageUploadPresenter imgUploadPresenter=null;
-	AddStandardsPresenter addStandardsPresenter = null;
 	
 	StandardsPopupPresenter standardsPopupPresenter;
 	
@@ -103,12 +88,11 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,AddStandardsPresenter addStandardsPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,final StandardsPopupPresenter standardsPopupPresenter) {
+	public CollectionContentPresenter( EventBus eventBus,IsCollectionContentView view, AddResourcePresenter addResourcePresenter, ImageUploadPresenter imgUploadPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,final StandardsPopupPresenter standardsPopupPresenter) {
 		super(eventBus,view);
 		getView().setUiHandlers(this);
 		this.addResourcePresenter = addResourcePresenter;
 		this.imgUploadPresenter = imgUploadPresenter;
-		this.addStandardsPresenter = addStandardsPresenter;
 		this.searchAddResourceToCollectionPresenter = searchAddResourceToCollectionPresenter;
 		this.standardsPopupPresenter = standardsPopupPresenter;
 		addRegisteredHandler(UpdateEditResourceImageEvent.TYPE, this);
@@ -294,70 +278,6 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
 	}
 
 	@Override
-	public void getBrowseStandardsInfo(final boolean val,final boolean userResource) {
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
-				USER_META_ACTIVE_FLAG,
-				new SimpleAsyncCallback<ProfileDo>() {
-					@Override
-					public void onSuccess(final ProfileDo profileObj) {
-					if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
-						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-						checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
-					}
-					}
-					public void checkStandarsList(List<String> standarsPreferencesList) {
-
-					if(standarsPreferencesList!=null){
-							if(standarsPreferencesList.contains("CCSS")){
-								isCCSSAvailable = true;
-							}else{
-								isCCSSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("NGSS")){
-								isNGSSAvailable = true;
-							}else{
-								isNGSSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("TEKS")){
-								isTEKSAvailable = true;
-							}else{
-								isTEKSAvailable = false;
-							}
-							if(standarsPreferencesList.contains("CA")){
-								isCAAvailable = true;
-							}else{
-								isCAAvailable = false;
-							}
-								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-									isQuestionResource = val;
-									isUserOwnResource = userResource;
-									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-									addToPopupSlot(addStandardsPresenter);
-									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
-								}
-					}
-
-					}
-
-				});
-	}
-
-	@Override
-	public void addUpdatedBrowseStandards() {
-		List<Map<String,String>> selectedStandList=addStandardsPresenter.getStandardListArray();
-		if(selectedStandList.size()!=0){
-			for(int i=0;i<selectedStandList.size();i++){
-				getView().setUpdatedStandardsCode(selectedStandList.get(i).get("selectedCodeVal"), Integer.parseInt(selectedStandList.get(i).get("selectedCodeId")),selectedStandList.get(i).get("selectedCodeDesc"),this.isQuestionResource, this.isUserOwnResource);
-			}
-		}
-	}
-
-	@Override
-	public void closeBrowseStandardsPopup() {
-		addStandardsPresenter.hidePopup();
-	}
-
-	@Override
 	public void imageEditUserOwnResourceUpload() {
 		 addToPopupSlot(imgUploadPresenter);
 		 imgUploadPresenter.setEditUserOwnResourceImage(true);
@@ -446,5 +366,7 @@ public class CollectionContentPresenter extends PresenterWidget<IsCollectionCont
    	public void setSelectedStandards(List<Map<String,String>> standListArray){
    		getView().displaySelectedStandards(standListArray);
    	}
+
+
 }
 
