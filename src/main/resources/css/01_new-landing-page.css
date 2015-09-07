@@ -65,14 +65,6 @@
   background-color: #eaeaea;
   z-index: 89;
 }
-#loading-animation {
-  height: auto;
-  left: 50%;
-  margin: 0 0 0 -40px;
-  position: absolute;
-  top: 45%;
-  width: 130px;
-}
 
 .dropdown-menu .liPanelStyle {
     text-align: left;

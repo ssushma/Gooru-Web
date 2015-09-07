@@ -39,9 +39,8 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.search.SearchCBundle;
+import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -241,7 +240,7 @@ public class AddResourceAssessmentsView extends BaseViewWithHandlers<AddResource
 			folderContainer.add(arrowLabel);
 			floderName=new Label();
 			floderName.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().title());
-			floderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
+			floderName.addStyleName("arav-addResource");
 
 			folderContainer.add(floderName);
 		}
@@ -288,7 +287,7 @@ public class AddResourceAssessmentsView extends BaseViewWithHandlers<AddResource
 			folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().foldercollection());
 			folderName=new Label();
 			folderName.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().title());
-			folderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
+			folderName.addStyleName("arav-addResource");
 
 			folderContainer.add(folderName);
 		}
