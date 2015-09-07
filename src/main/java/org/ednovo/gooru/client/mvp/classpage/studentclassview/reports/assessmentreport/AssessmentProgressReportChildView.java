@@ -980,13 +980,13 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					erroeMsg.setText(i18n.GL3467());
 				}
 				if(questionsBtn.getStyleName()!=null&&questionsBtn.getStyleName().contains(CssTokens.ACTIVE)) {
-					erroeMsg.setText(i18n.GL3265());
+					erroeMsg.setText(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)?i18n.GL3507():i18n.GL3265());
 				}
 				if(oeQuestionsBtn.getStyleName()!=null&&oeQuestionsBtn.getStyleName().contains(CssTokens.ACTIVE)) {
 					erroeMsg.setText(i18n.GL3264());
 				}
 			} else {
-				erroeMsg.setText(i18n.GL3265());
+				erroeMsg.setText(i18n.GL3508());
 			}
 			globalPanel.add(erroeMsg);
 		}
@@ -1001,7 +1001,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					erroeMsg.setText(i18n.GL3467());
 				}
 				if(type.equalsIgnoreCase(QUESTION)) {
-					erroeMsg.setText(i18n.GL3265());
+					erroeMsg.setText(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)?i18n.GL3507():i18n.GL3265());
 				}
 				if(type.equalsIgnoreCase(OE)) {
 					erroeMsg.setText(i18n.GL3264());

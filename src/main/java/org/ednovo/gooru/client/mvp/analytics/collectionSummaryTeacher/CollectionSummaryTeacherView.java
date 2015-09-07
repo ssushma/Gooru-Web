@@ -31,6 +31,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -727,7 +728,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         }else{
         	Label erroeMsg=new Label();
         	erroeMsg.setStyleName(res.css().displayMessageTextForScoredQuestions());
-        	erroeMsg.setText(i18n.GL3265());
+        	erroeMsg.setText(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)?i18n.GL3507():i18n.GL3265());
         	scoredPrintWidget.add(erroeMsg);
         }
         scoredPrintWidget.setVisible(false);
@@ -758,7 +759,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         }else{
         	Label erroeMsg=new Label();
         	erroeMsg.setStyleName(res.css().displayMessageTextForScoredQuestions());
-        	erroeMsg.setText(i18n.GL3265());
+        	erroeMsg.setText(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)?i18n.GL3507():i18n.GL3265());
         	teacherScoredData.add(erroeMsg);
         }
 	}
