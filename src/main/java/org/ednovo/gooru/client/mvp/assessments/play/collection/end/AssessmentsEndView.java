@@ -62,9 +62,7 @@ import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
-import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -104,7 +102,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 	@UiField H2Panel score;
 	@UiField PPanel lastModifiedTime,goal;
 	@UiField HTMLPanel printWidget;
-	@UiField Button printButton,downloadButton;
+	@UiField Button printButton, downloadButton;
 	@UiField Frame downloadFile;
 
 	HTMLPanel printScoredData=new HTMLPanel("");
@@ -179,7 +177,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		studentAssessmentReportViewContainer.setVisible(false);
 		printWidget.setVisible(false);
 		downloadFile.setVisible(false);
-		
+
 		//PrintPnl.getElement().getStyle().setHeight(Window.getClientHeight()-106, Unit.PX);
 
 		progressRadial.getElement().setId("fpnlprogressRadial");
@@ -554,7 +552,7 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 		String answerObj;
 		String questionType;
 		String attempts;
-		
+
 		public SummaryPopupClick(UserDataDo userDataDo) {
 			answerObj=userDataDo.getAnswerObject();
 			questionType=userDataDo.getType();

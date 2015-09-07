@@ -1,8 +1,10 @@
 @charset "utf-8";
 /* CSS Document */
 .wrapper {
-	overflow: hidden;
 	position: relative;
+}
+.wrapperContent {
+	min-height: 450px;
 }
 
 .newSprite{

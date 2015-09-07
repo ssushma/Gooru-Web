@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.application.shared.model.user.UserDo;
-import org.ednovo.gooru.application.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -132,8 +132,8 @@ public class ResourceDo extends ContentDo {
 	private ArrayList<checkboxSelectedDo> educationalUse;
 	private List<checkboxSelectedDo> depthOfKnowledge;
 	private List<checkboxSelectedDo> accessHazard;
-	
-	
+
+
 
 	public List<String> getPublisher() {
 		return publisher;
@@ -178,7 +178,7 @@ public class ResourceDo extends ContentDo {
 
 	private String isadaptation;
 
-	
+
 	public List<ListValuesDo> getMediaFeature() {
 		return mediaFeature;
 	}
@@ -244,9 +244,9 @@ public class ResourceDo extends ContentDo {
 	/** need to change the above **/
 
 
-	
 
-	
+
+
 	public List<checkboxSelectedDo> getAccessHazard() {
 		return accessHazard;
 	}
@@ -622,6 +622,6 @@ public class ResourceDo extends ContentDo {
 	public void setSingleCorrectAnswer(boolean singleCorrectAnswer) {
 		this.singleCorrectAnswer = singleCorrectAnswer;
 	}
-	
-	
+
+
 }
