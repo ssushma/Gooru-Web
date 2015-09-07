@@ -943,3 +943,244 @@
 	text-align: right;
 	padding: 5px 6px 0px 0px;
 }
+
+/* Collection Progress Widget */
+.cpw-loadingImageMainDiv {
+	width: 100%;
+    height: 300px;
+	position: relative;
+	/* background-color: #FFF; */
+	/* opacity: 0.4; */
+	top: 0px;
+    left: 0px;
+    z-index:1;
+}
+
+.cpw-loadingImageForSelfEdit {
+	background: url("../images/core/B-Dot.gif");
+	width: 166px;
+	height: 170px;
+	margin: 0 auto;
+	margin-top: 65px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 375px;
+}
+
+
+.cpw-maincontainer{
+	background-color: inherit;
+	text-align: center;
+	clear:both;
+}
+
+.cpw-summary_title {
+	float: left;
+	text-align: center;
+	width: 100%;
+	font-size: 24px;
+	font-weight: bold;
+	color: #515151;
+	margin-top: 3%;
+}
+
+.cpw-exportImage{
+	float: right;
+	margin-top: -4%;
+}
+
+.cpw-resource_monitor_header_title{
+	float: left;
+	width: 100%;
+	color: #515151;
+	padding-top: 25px;
+	padding-left: 23px;
+	padding-bottom: 10px;
+}
+
+.cpw-floatLeft{
+	float: left;
+}
+.cpw-correct_legend_one {
+	float: left;
+	width: 15px;
+	height: 15px;
+	background: #BCD1B9;
+}
+
+
+.cpw-correct_incorrect_text{
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+.cpw-correct_legend_other {
+	float: left;
+	width: 15px;
+	height: 15px;
+	background: #FFE7C2;
+}
+.cpw-incorrect_legend {
+	float: left;
+	width: 15px;
+	height: 15px;
+	background: #EAB4B3;
+}
+
+
+.cpw-narrowreportText{
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	padding-right: 12px;
+	color: #515151;
+	font-size: 14px;
+	padding-left: 24px;
+	padding-bottom: 13px;
+}
+
+.cpw-filterDropDown{
+	float: left;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	display: block;
+	background-color: white;
+	color: rgb(81, 81, 81);
+	padding: 5px 0px 5px 5px;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+	display: block;
+	text-overflow: '';
+	text-indent: 0.01px;
+}
+
+.cpw-mainPanelContainer{
+	position: relative;
+	clear: both;
+}
+
+
+.cpw-leftArrow{
+	width: 6%;
+	height: 40px;
+	z-index: 999;
+	bottom: 18%;
+	left: 9%;
+	position: fixed;
+	cursor:pointer;
+	background: url(../images/analytics/leftArrow.png)  no-repeat ;
+}
+.cpw-rightArrow{
+	float: right;
+	z-index: 999;
+	position: fixed;
+	width: 4%;
+	bottom: 18%;
+	right: 8.5%;
+	height: 40px;
+	cursor:pointer;
+	background: url(../images/analytics/rightArrow.png)  no-repeat ;
+}
+
+.cpw-htmlpanlProgress{
+	overflow:hidden;
+	width: 95%;
+	margin: 2%;
+	border-left: 1px solid #eee;
+	clear:both;
+}
+.cpw-htmlpanlProgressCollectionView{
+	overflow-x: auto;
+	width: 731px;
+	margin: 2%;
+	border-left: 1px solid #eee;
+	clear:both;
+}
+
+
+.cpw-reaction_redneedhelp {
+	background: url(../images/analyticsReactions.png) no-repeat scroll -81px -45px transparent;
+	height: 35px;
+	width: 35px
+}
+
+
+.cpw-reaction_reddontunderstand {
+	background:url(../images/analyticsReactions.png) no-repeat scroll -1px -45px transparent;
+	height: 35px;
+	width: 35px
+}
+
+.cpw-reaction_mean1 {
+	background: url(../images/analyticsReactions.png) no-repeat scroll -148px 1px transparent;
+	height: 35px;
+	width: 35px
+}
+
+.cpw-reaction_understand1 {
+	background: url(../images/analyticsReactions.png) no-repeat scroll -78px 1px transparent;
+	height: 35px;
+	width: 35px
+}
+
+.cpw-reaction_explain1 {
+	background: url(../images/analyticsReactions.png) no-repeat scroll 0px 0px transparent;
+	height: 35px;
+	width: 35px
+}
+
+.cpw-alignCenterAndBackground{
+	background-color: inherit !important;
+	text-align: center;
+}
+.cpw-viewResponseInCollectionProgress {
+	padding: 0px;
+	border-radius: 4px;
+	text-align: center;
+	cursor: pointer;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#EDEDED));
+	background: -webkit-linear-gradient(top, #FFF, #EDEDED);
+	background: -moz-linear-gradient(top, #FFF, #EDEDED);
+	background: -ms-linear-gradient(top, #FFF, #EDEDED);
+	background: -o-linear-gradient(top, #FFF, #EDEDED);
+	/* line-height: 27px; */
+	line-height: 21px;
+	/* width: 86%; */
+	width: 88%;
+	margin-left: 7%;
+	background-color: inherit;
+	font-size:11px;
+}
+
+
+.cpw-alignCenterAndBackground{
+	background-color: inherit !important;
+	text-align: center;
+}
+
+.cpw-mainDataVpnl{
+	margin: 0 auto;
+	vertical-align: baseline;
+	text-align: center;
+}
+
+
+.cpw-setOETextPopupCenter {
+	left: 0 !important;
+	right: 0 !important;
+	top: 0px !important;
+	bottom: 0 !important;
+	position: fixed !important;
+	margin: auto;
+	width: 941px;
+	min-height: 148px;
+	height:250px;
+	z-index: 99999;
+}
+
+.cpw-setGlassStyleName{
+	background-color: #000;
+	opacity: 0.3;
+	z-index: 99999;
+}
+/* End - Collection Progress Widget */
