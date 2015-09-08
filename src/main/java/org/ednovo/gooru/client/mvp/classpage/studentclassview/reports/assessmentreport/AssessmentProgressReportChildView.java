@@ -67,7 +67,6 @@ import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
-import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -306,8 +305,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			progressRadial.setStyleName("progress-radial");
 			progressRadial.addStyleName(progressRedialStyle);
 			if(isExternalAssessment) {
-				externalAssessmentUrl.setText(result.getEvidence());
-				externalAssessmentUrl.setHref(result.getEvidence());
+				String url = result.getEvidence();
+				if(!(url!=null&&(url.contains("http://")||url.contains("https://")))) {
+					url = "http://"+url;
+				}
+				externalAssessmentUrl.setText(url);
+				externalAssessmentUrl.setHref(url);
 				externalAssessmentUrl.setTarget("_blank");
 			}
 		}
@@ -468,9 +471,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				questionTitle.setStyleName(STYLE_TABLE_CENTER);
 				questionTitle.setStyleName(STYLE_TXTLEFT);
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
-	            Label categorylbl=new Label();
+	            Image categorylbl=new Image();
 	            String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
-	            categorylbl.addStyleName(StringUtil.getResourceFormatImage(resourceCategory));
+	            categorylbl.setUrl(urlDomain+StringUtil.getResourceTypeImage(resourceCategory.toLowerCase()));
 				adTable.setWidget(i, 1,categorylbl);
 				adTable.setWidget(i, 2,questionTitle);
 
@@ -980,13 +983,13 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					erroeMsg.setText(i18n.GL3467());
 				}
 				if(questionsBtn.getStyleName()!=null&&questionsBtn.getStyleName().contains(CssTokens.ACTIVE)) {
-					erroeMsg.setText(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)?i18n.GL3507():i18n.GL3265());
+					erroeMsg.setText(!isCollection?i18n.GL3507():i18n.GL3265());
 				}
 				if(oeQuestionsBtn.getStyleName()!=null&&oeQuestionsBtn.getStyleName().contains(CssTokens.ACTIVE)) {
 					erroeMsg.setText(i18n.GL3264());
 				}
 			} else {
-				erroeMsg.setText(i18n.GL3508());
+				erroeMsg.setText(!isCollection?i18n.GL3507():i18n.GL3265());
 			}
 			globalPanel.add(erroeMsg);
 		}
@@ -1001,13 +1004,13 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					erroeMsg.setText(i18n.GL3467());
 				}
 				if(type.equalsIgnoreCase(QUESTION)) {
-					erroeMsg.setText(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASSESSMENT_PLAY)?i18n.GL3507():i18n.GL3265());
+					erroeMsg.setText(!isCollection?i18n.GL3507():i18n.GL3265());
 				}
 				if(type.equalsIgnoreCase(OE)) {
 					erroeMsg.setText(i18n.GL3264());
 				}
 			} else {
-				erroeMsg.setText(i18n.GL3265());
+				erroeMsg.setText(!isCollection?i18n.GL3507():i18n.GL3265());
 			}
 			globalPanel.add(erroeMsg);
 		}
