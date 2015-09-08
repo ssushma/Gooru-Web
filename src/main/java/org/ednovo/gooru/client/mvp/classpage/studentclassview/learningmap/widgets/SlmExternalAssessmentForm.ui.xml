@@ -5,7 +5,7 @@
 	<ui:style src=""/>
 	<g:HTMLPanel>
 		<g:InlineLabel ui:field="scoreLbl"/><g:InlineLabel text="{i18n.GL3425}" styleName="errorMessage pull-right" ui:field="scoreErrorLbl"/>
-		<g:HTMLPanel styleName="textBoxPadding">
+		<g:HTMLPanel styleName="textBoxPadding no-gutter">
 			<g:HTMLPanel styleName="col-md-10">
 				<g:TextBox styleName="pull-left form-control" ui:field="scoreTextBox"></g:TextBox>
 			</g:HTMLPanel>
