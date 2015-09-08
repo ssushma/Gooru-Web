@@ -2320,6 +2320,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	private void bindDatabeforeLoad()
 	{
 		final AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		centuryPresenterWidget.loadStateStandards();
 		//This will display the 21 century popup
 				centbrowseBtn.addClickHandler(new ClickHandler() {
 							@Override
