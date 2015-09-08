@@ -305,8 +305,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			progressRadial.setStyleName("progress-radial");
 			progressRadial.addStyleName(progressRedialStyle);
 			if(isExternalAssessment) {
-				externalAssessmentUrl.setText(result.getEvidence());
-				externalAssessmentUrl.setHref(result.getEvidence());
+				String url = result.getEvidence();
+				if(!(url!=null&&(url.contains("http://")||url.contains("https://")))) {
+					url = "http://"+url;
+				}
+				externalAssessmentUrl.setText(url);
+				externalAssessmentUrl.setHref(url);
 				externalAssessmentUrl.setTarget("_blank");
 			}
 		}
