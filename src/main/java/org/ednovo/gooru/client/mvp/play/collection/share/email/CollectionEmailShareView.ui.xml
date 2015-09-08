@@ -1,7 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style field="cpEmailStyle" src="emailshare.css" />
 	<g:HTMLPanel styleName="PopupMainVSmall">
 	    <g:HTMLPanel styleName="popupInnerGrey">
 	        <g:HTMLPanel  styleName="popupgreyHeader">
@@ -16,25 +15,25 @@
 				<g:Label styleName="col-md-2 col-sm-3 lables" ui:field="lblFrom"/>
 				<g:HTMLPanel styleName="col-md-10 col-sm-9">
 				<gg:TextBoxWithPlaceholder styleName="form-control form_control" ui:field="fromTxt"/>
-				<g:Label styleName="{cpEmailStyle.cpEmaiInputLabel}" ui:field="fromLbl" visible="false"/>
-				<g:Label styleName="{cpEmailStyle.emailShareErrorLabel}" ui:field="fromValidation"></g:Label>
+				<g:Label styleName="cpEmaiInputLabel" ui:field="fromLbl" visible="false"/>
+				<g:Label styleName="ces-emailShareErrorLabel" ui:field="fromValidation"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="clearfix"/>
 
 				<g:Label styleName="col-md-2 col-sm-3 lables" ui:field="lblTo"/>
 				<g:HTMLPanel styleName="col-md-10 col-sm-9">
 				<gg:TextBoxWithPlaceholder styleName="form-control form_control" ui:field="toTxt"/>
-				<g:Label styleName="{cpEmailStyle.emailShareErrorLabel}" ui:field="toValidation"></g:Label>
+				<g:Label styleName="ces-emailShareErrorLabel" ui:field="toValidation"></g:Label>
 				<g:HTMLPanel>
 					<g:InlineLabel ui:field="lblPii"></g:InlineLabel><br/>
-					<g:Anchor ui:field="ancprivacy" styleName="{cpEmailStyle.privacyAlignStyle}"></g:Anchor>
+					<g:Anchor ui:field="ancprivacy" styleName="ces-privacyAlignStyle"></g:Anchor>
 					<g:InlineLabel ui:field="toUsText"></g:InlineLabel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{cpEmailStyle.cpEmailCheckBoxContainer}">
-					<g:HTMLPanel styleName="{cpEmailStyle.cpEmailCheckBoxStyle}">
-					<g:CheckBox styleName="{cpEmailStyle.cpEmailCheckBoxMargin}" ui:field="checkCopyEmail"/>
+				<g:HTMLPanel styleName="ces-cpEmailCheckBoxContainer">
+					<g:HTMLPanel styleName="ces-cpEmailCheckBoxStyle">
+					<g:CheckBox styleName="ces-cpEmailCheckBoxMargin" ui:field="checkCopyEmail"/>
 					</g:HTMLPanel>
-					<g:Label styleName="{cpEmailStyle.cpEmailNormalText}" ui:field="lblSendMeCopy" />
+					<g:Label styleName="ces-cpEmailNormalText" ui:field="lblSendMeCopy" />
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>

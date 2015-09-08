@@ -3,16 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
 	xmlns:d="urn:import:com.google.gwt.dom.client">
-	<ui:style>
-		.wrapper {
-			position: relative;
-		}
-		.wrapperContent {
-			min-height: 450px;
-		}
-	</ui:style>
-
-	<g:HTMLPanel styleName="{style.wrapper}" ui:field="panelWrapper">
+	<g:HTMLPanel styleName="wrapper" ui:field="panelWrapper">
 	    <g:HTMLPanel ui:field="searchPush">
 	        <g:HTMLPanel ui:field="menuRight">
 	        	<g:HTMLPanel ui:field="resorceSearchFilters" styleName="searchFilters"></g:HTMLPanel>
@@ -22,7 +13,7 @@
 	    <g:HTMLPanel ui:field="panelDevice"></g:HTMLPanel>
 	     <g:HTMLPanel ui:field="wrapBodyPanel">
 		<sg:HeaderUc ui:field="headerUc" />
-		<g:SimplePanel ui:field="wrapperPanel" styleName="{style.wrapperContent}" />
+		<g:SimplePanel ui:field="wrapperPanel" styleName="wrapperContent" />
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 

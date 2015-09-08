@@ -848,9 +848,15 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public void removePendingUserWidget(MembersViewVc membersViewVc,	boolean isPendingList) {
 		membersViewVc.removeFromParent();
 		if(isPendingList){
-			//getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(),0,pendingOffsetValue, "pending",false);
+			if(pendingContainer.getWidgetCount()==0){
+				ancPendingListSeeMore.setVisible(false);
+			}
+			//getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(),0,pendingOffsetValue, "pending",false,false);
 		}else{
-			//getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
+			if(tableContainer.getWidgetCount()== 0){
+				ancActiveListSeeMore.setVisible(false);
+			}
+		//	getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  (activeListPageNum*pageSize)-1, 1, "active",false,false,false);
 		}
 	}
 
