@@ -13,14 +13,11 @@
 		<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res1" />
-		<ui:with
-		type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
-		field="res2" />
 	<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:HTMLPanel styleName="{res.css.myWebResourceContainer}">
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTextPanel"/> 
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTextPanel"/>
 			<g:HTMLPanel>
 				<g:Label ui:field="urlTextLbl" styleName="{res.css.inputTextBox}" />
 			</g:HTMLPanel>
@@ -37,7 +34,7 @@
 				ui:field="mandatoryTitleLbl"></g:Label>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="resDescription"/> 
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="resDescription"/>
 			<g:HTMLPanel
 				styleName="{res.css.myFolderCollectionFormInputControl} {res.css.myFolderCollectionFormTextarea} editResourceDescriptionContainer">
 					<g:TextArea styleName="{res.css.inputTextBox} {res.css.newPopupTextAreaEdit}" ui:field="descriptionTxtAera" />
@@ -48,7 +45,7 @@
 				ui:field="descCharcterLimit"></g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="resourceFormat"/> 
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="resourceFormat"/>
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDivRFormat}" ui:field="panelCategory">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
@@ -65,7 +62,7 @@
 				<g:Label styleName="{res.css.addNewResourceMandatoryCategory}"
 					ui:field="mandatoryCategoryLbl"></g:Label>
 			</g:HTMLPanel>
-		
+
 		 <g:HTMLPanel styleName="{res.css.reorderLabelContainerRFormat}" ui:field="resourceTypePanel">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderDropdownRFormat}">
 				<tinyMce:HTMLEventPanel
@@ -238,10 +235,10 @@
 				</tinyMce:HTMLEventPanel> -->
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-			
-			
+
+
 		</g:HTMLPanel>
-		
+
 		<g:HTMLPanel styleName="{res.css.standardsInEditResource}">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbImageDesc}" ui:field="thumbnailLbl"></g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRect}">
@@ -256,7 +253,7 @@
 						ui:field="rightArrowLbl"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRectDesc}">
-					<!-- <g:Label styleName="" 
+					<!-- <g:Label styleName=""
 						ui:field="generateImageLbl"></g:Label> -->
 						 <g:Image url="" ui:field="generateImageLbl" styleName="{res.css.resourceThumbnailImage}"></g:Image>
 					<g:Image url="" ui:field="setThumbnailImage" styleName="{res.css.resourceThumbnailImage}"></g:Image>
@@ -276,10 +273,10 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		
-		
-		
-		
+
+
+
+
 		<g:HTMLPanel styleName="{res.css.advncedOption}"><g:InlineLabel ui:field="advancedText"></g:InlineLabel></g:HTMLPanel>
 		<!-- Educational use -->
 		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}" ui:field="educationalContainer">
@@ -295,12 +292,12 @@
 						<g:Label ui:field="educationalDropDownLbl"	styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
 				</tinyMce:HTMLEventPanel>
-			
+
             <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatoryEducationalLbl"></g:Label>
           </g:HTMLPanel>
         </g:HTMLPanel>
-       
-		
+
+
 		<!-- Educational use End -->
 		        	<!-- Moments of Learning -->
 		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}" ui:field="momentsOfLearningContainer">
@@ -316,12 +313,12 @@
 						<g:Label ui:field="momentsOfLearningDropDownLbl" styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
 				</tinyMce:HTMLEventPanel>
-			
+
             <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatorymomentsOfLearninglLbl"></g:Label>
           </g:HTMLPanel>
         </g:HTMLPanel>
        	<!-- Moments of Learning  End-->
-	
+
 		<!-- Standards Start -->
 		<g:HTMLPanel ui:field="standardsBrowseContainer">
 		 <g:FlowPanel ui:field="standardContainer">
@@ -343,7 +340,7 @@
 										<g:InlineLabel styleName="caret"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 									</g:HTMLPanel>
-								</tinyMce:HTMLEventPanel>								
+								</tinyMce:HTMLEventPanel>
 							<g:HTMLPanel ui:field="standardsCont">
 									<uc:UlPanel styleName="dropdown-menu"
 									ui:field="standardsDropListValues"></uc:UlPanel></g:HTMLPanel>
@@ -359,7 +356,7 @@
 				</g:FlowPanel>
 				</g:HTMLPanel>
         <!-- Standards End -->
-        
+
         <!-- 21 century Start -->
 		<g:HTMLPanel ui:field="centuryBrowseContainer">
 		 <g:FlowPanel ui:field="centuryContainer">
@@ -379,14 +376,14 @@
 				</g:FlowPanel>
 				</g:HTMLPanel>
         <!-- 21 century End -->
-        
+
 		<!--accessHazard -->
       	<g:Label styleName="{res.css.clearfix}"></g:Label>
       	<g:HTMLPanel ui:field="accessHazardContainer">
       	 	 <tinyMce:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconAccessHazard"></tinyMce:HTMLEventPanel>
 		      <g:Label styleName="{res.css.accessHazard}" ui:field="accessHazard"></g:Label>
 		    <g:HTMLPanel ui:field="hazardContainer"></g:HTMLPanel>
-		    
+
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
 		 </g:HTMLPanel>
       	 <!-- accessHazard End -->
@@ -395,7 +392,7 @@
       	 	<g:HTMLPanel ui:field="mediaFeatureContainer">
       	 	 <tinyMce:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMediafeature"></tinyMce:HTMLEventPanel>
 				  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
-				  
+
 	 		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" ui:field="mediaLabelContainer">
 	 		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
 								<!-- <g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label> -->
@@ -421,10 +418,10 @@
 		 </g:HTMLPanel>
       	 <!-- moblieFriendly End -->
 		 <tinyMce:HTMLEventPanel ui:field="AdvancedSetupContainer"></tinyMce:HTMLEventPanel>
-		
+
 		 <g:HTMLPanel styleName="{res.css.resourceRightsContainerPdf}" ui:field="rightsContainer">
         	<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" checked="true"></g:CheckBox>
-        	<g:Label ui:field="rightsLbl" styleName="{res.css.ownResourceFormDeclarationText}"></g:Label> 
+        	<g:Label ui:field="rightsLbl" styleName="{res.css.ownResourceFormDeclarationText}"></g:Label>
      <tinyMce:HTMLEventPanel ui:field="lblContentRights" styleName="{res.css.ownResourceFormRightsContent}">
 	        	<g:HTMLPanel styleName="{res.css.resourceRightsPopupContainer}" ui:field="panelContentRights">
 					<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel>
@@ -433,7 +430,7 @@
 					<g:HTMLPanel styleName="{res.css.resourceRightsInnerPopup}">
 						<!-- <g:HTMLPanel ui:field="htmlContentRightsDesc"></g:HTMLPanel> -->
 						<g:HTMLPanel ui:field="rightsContent">
-						
+
 							<g:InlineLabel ui:field="agreeText"/>
      						<g:InlineLabel styleName="{res.css.anchorText}" ui:field="commuGuideLinesAnr"/>
      						<g:InlineLabel styleName="{res.css.customAnchorText}" ui:field="termsAndPolicyAnr"/>
@@ -446,11 +443,11 @@
 				</g:HTMLPanel>
         	</tinyMce:HTMLEventPanel>
          </g:HTMLPanel>
-		
-		
+
+
 		<g:HTMLPanel styleName="{res.css.myFolderEditButtonContainer}" ui:field="saveButtonContainer">
 			<g:Button styleName="primary" ui:field="addResourceBtn" />
-			<!-- <g:Anchor styleName="{res.css.myFolderCollectionCancel}" 
+			<!-- <g:Anchor styleName="{res.css.myFolderCollectionCancel}"
 				ui:field="cancelResourcePopupBtnLbl" /> -->
 				<g:Button styleName="grayPrimaryButton" ui:field="cancelResourcePopupBtnLbl"></g:Button>
 		</g:HTMLPanel>
