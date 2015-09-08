@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.SpanPanel;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,7 +56,8 @@ public class TeachStudentReportPopupWidget extends PopupPanel {
 	public void setData(String contentName, String userNameLbl,String gooruUId, String classId, String courseId, String unitId, String lessonId, String assessmentId, String collectionType, String pageType) {
 		panel.clear();
 		userName.setText("Hello, "+userNameLbl+"!");
-		userImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl()+gooruUId+".png");
+		userImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+gooruUId+ClientConstants.PNG);
+		
 		userImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
