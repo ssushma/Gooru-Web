@@ -127,13 +127,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 		getView().activateSearchBar(activate);
 	}
 
-
-	@Override
-	public void activateClassicButton(boolean activate) {
-		getView().activateClassicButton(activate);
-
-	}
-
 	@Override
 	public void setSelected(HeaderTabType tabType) {
 

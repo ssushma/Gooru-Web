@@ -1157,3 +1157,101 @@
 	color: #fff;
 	margin-left: 4px;
 }
+
+/* Add Tags */
+.at-mediaFeature{
+	width: 243px;
+	text-align: left;
+}
+.at-browseInput{
+  float:left;
+  width: 42% !important;
+}
+
+.at-tag {
+	display: inline-block;
+	vertical-align: top;
+	width: 25px;
+	height: 21px;
+	cursor: pointer;
+	background: url(../images/tag.png) left no-repeat;
+}
+
+.at-standardMaxHide {
+	display: none;
+}
+
+.at-collectionStandardsMargin {
+	margin-top: 10px;
+}
+.at-clearfix {
+	clear: both;
+}
+.at-scrollPanelContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:245px;
+	height:80px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 33px;
+	left: -1px;
+	z-index: 99999;
+	overflow-x:hidden !important;
+	position:absolute !important;
+}
+
+.at-OnButtonDeActive {
+	font-size: 12px;
+	width: 57px;
+	height: 29px;
+	cursor: pointer;
+	text-align: center;
+	margin-top: 5px;
+	background: #EFEFEF;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#FDFDFD), to(#DDD));
+	background: -webkit-linear-gradient(top, #FDFDFD, #DDD);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #DDD;
+	margin-left:-4px;
+}
+.at-OnButtonDeActive:hover, .at-OffButtonsDeActive:hover {
+	cursor: pointer;
+	background: #EEE;
+}
+
+.at-selected {
+	padding: 5px 10px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	background: #a6cba2;
+}
+
+.at-select {
+	position: relative;
+	padding: 5px 10px;
+	padding-left: 5px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	background: #a6cba2;
+}
+.at-OffButtonsActive {
+	font-size: 12px;
+	width: 57px;
+	height: 29px;
+	cursor: pointer;
+	border: none;
+	margin-left: -4px;
+	background: #a6cba2;
+}
+
+/* End - Add Tags */
+

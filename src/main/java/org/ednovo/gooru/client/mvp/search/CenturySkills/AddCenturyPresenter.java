@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Anchor;
@@ -46,6 +47,8 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
  *
  */
 public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> implements AddCenturyUiHandlers {
+	
+	CenturySkillsPresenter centurySkillsPresenter;
 
 	/**
 	 * Class constructor
@@ -76,6 +79,9 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 			public void onSuccess(CenturySkilsDo result) {
 				if(result!=null){
 					getView().SetData(result);
+					if(centurySkillsPresenter!=null){
+						centurySkillsPresenter.setselData();
+					}
 				}
 			}
 		});
@@ -140,5 +146,9 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 			public void onSuccess(Void result) {
 			}
 		});
+	}
+
+	public void setCenturySkillsObject(CenturySkillsPresenter centurySkillsPresenter) {
+		this.centurySkillsPresenter = centurySkillsPresenter;
 	}
 }
