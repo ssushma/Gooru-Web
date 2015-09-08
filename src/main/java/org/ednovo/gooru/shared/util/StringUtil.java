@@ -102,7 +102,8 @@ public class StringUtil implements ClientConstants {
 
 	private final static byte[] key = CRYPTO_KEY.getBytes();
 
-
+	private static final String IMAGE_URL = "/images/ratings/";
+	
 	static{
 		addAllCategories();
 	}
@@ -1008,5 +1009,27 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 			isTrue=true;
 		}
 		return isTrue;
+	}
+	
+	public static String getResourceTypeImage(String resourceCategory) {
+		 StringBuilder image = new StringBuilder();
+			if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory) || EXAM.equalsIgnoreCase(resourceCategory)){
+				image = image.append(IMAGE_URL+WEBPAGE+PNG);
+			} else if(SLIDE.equalsIgnoreCase(resourceCategory) || IMAGE.equalsIgnoreCase(resourceCategory)){
+				image = image.append(IMAGE_URL+IMAGE+PNG);
+			} else if(HANDOUT.equalsIgnoreCase(resourceCategory) || LESSON.equalsIgnoreCase(resourceCategory) || TEXTBOOK.equalsIgnoreCase(resourceCategory)|| TEXT.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+TEXT+PNG);
+			} else if(VIDEO.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+VIDEO+PNG);
+			} else if(INTERACTIVE.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+INTERACTIVE+PNG);
+			}else if(AUDIO.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+AUDIO+PNG);
+			}else if(QUESTION.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+QUESTION+PNG);
+			} else{
+				image = image.append(IMAGE_URL+WEBPAGE+PNG);
+			}
+	     return image.toString();
 	}
 }
