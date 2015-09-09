@@ -1331,12 +1331,6 @@ public class HeaderUc extends Composite
 
 			this.switchToClassicView();
 
-			if (userDo.isBeforeProductionSwitch()) {
-				logoutPanelVc.displayClassicGooruLink(true);
-			} else {
-				logoutPanelVc.displayClassicGooruLink(false);
-			}
-
 		} else {
 			mainDotsPanel.getElement().getStyle().clearWidth();
 			mainInnerDotsPanel.getElement().getStyle().clearWidth();
