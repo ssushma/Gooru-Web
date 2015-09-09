@@ -26,7 +26,6 @@ import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
-import org.ednovo.gooru.application.shared.util.ClientConstants;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -131,15 +130,15 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox,centurySgstBox;
 	@UiField BlueButtonUc addbutton;
-	
+
 	@UiField
 	HTMLEventPanel btnStandardsBrowse;
-	
+
 	@UiField UlPanel ulSelectedItems;
-	
+
 	@UiField
 	UlPanel standardsDropListValues;
-	
+
 	@UiField public static Label errorMessageForQuestion;
 
 	private static final String MESSAGE_HEADER = i18n.GL0748();
@@ -194,16 +193,16 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	private String hsType=i18n.GL3228_1();
 
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
-	
-	
+
+
 	private boolean isCCSSAvailable = false;
 	private boolean isNGSSAvailable = false;
 	private boolean isTEKSAvailable = false;
 	private boolean isCAAvailable = false;
-	
+
 	String codeID="",code="",label="";
 	List<Integer> selectedValues=new ArrayList<>();
-	
+
 	public FolderDo courseObjG;
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
@@ -212,7 +211,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 	ArrayList<String> isValidHintsList = new ArrayList<String>();
-	
+
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
 	private CopyRightPolicyVc copyRightPolicy;
@@ -361,11 +360,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				hideDropDown(event);
 			}
-		}); 
-		
+		});
+
 		standardContainer.getElement().setId("standardsContainerBswn");
 		standardsCont.getElement().setAttribute("style", "position:relative;");
-		
+
 
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
@@ -651,7 +650,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			addQuestionAnswer.textRDButtonClick();
 		}
 		questionHotSpotAnswerChoiceContainer.add(addQuestionAnswer);
-		
+
 	}
 
 	public void setExplanationContainer(){
@@ -862,8 +861,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			setDOKCheckBoxes();
 		}
 	}
-	
-	
+
+
 	public void setDOKCheckBoxes(){
 		/*if(chkLevelRecall.isChecked())
 		{
@@ -925,8 +924,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			depthOfKnowledges.add(depthObj);
 		}*/
 	}
-	
-	
+
+
 	@UiHandler("addDepthOfKnowledgeAnc")
 	public void clickOnaddDepthOfKnowledgeAnc(ClickEvent event){
 		addDepthOfKnowledgeAnc.setVisible(false);
@@ -997,7 +996,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			@Override
 			public void onSelection(SelectionEvent<Suggestion> event) {
 				Map<String, String> standard = new HashMap<>();
-				
+
 				standard.put("selectedCodeId", String.valueOf(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
 				standard.put("selectedCodeVal", standardSgstBox.getValue());
 				standard.put("selectedDifferenceId", String.valueOf(3));
@@ -1687,9 +1686,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
 			HashMap<String,ArrayList<QuestionAnswerDo>> answerMap = new HashMap<String,ArrayList<QuestionAnswerDo>>();
 			HashMap<String,ArrayList<QuestionHintsDo>> hintsMap = new HashMap<String,ArrayList<QuestionHintsDo>>();
-			
+
 			ArrayList<String> answerImageIds=new ArrayList<String>();
-			
+
 			if(questionType.equalsIgnoreCase("HS_TXT") || questionType.equalsIgnoreCase("HS_IMG")){
 
 				AddHotSpotQuestionAnswerChoice addQuestionAnswerChoice=(AddHotSpotQuestionAnswerChoice)questionHotSpotAnswerChoiceContainer.getWidget(0);
@@ -1969,7 +1968,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 	}
-	
+
 	public void setAncTabs(){
 		explanationContainer.setVisible(!addExplanationAnc.isVisible());
     	depthOfKnowledgeContainer.setVisible(!addDepthOfKnowledgeAnc.isVisible());
@@ -2082,7 +2081,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				AddHotSpotQuestionAnswerChoice addHotSpotQuestion=(AddHotSpotQuestionAnswerChoice) questionHotSpotAnswerChoiceContainer.getWidget(0);
 
 				if(collectionItemDo.getResource()!=null){
-				
+
 				String HsType=	collectionItemDo.getResource().getHlType();
 
 				if(HsType.equalsIgnoreCase(i18n.GL3229_1())){
@@ -2112,7 +2111,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						QuestionAnswerDo answer = it.next();
 						//hard code Image url for 1.5 QA
 						addHotSpotQuestion.setAnswerImageUrl(collectionItemDo.getAssetURI()+collectionItemDo.getFolder()+answer.getAnswerText(), answer.getAnswerText(), true,answer.isIsCorrect());
-						
+
 					}
 				}
 				}
@@ -2168,18 +2167,18 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	@Override
 	public void setMetadata(final CollectionQuestionItemDo collectionQuestionItemDo) {
-		
+
 		Timer timer1=new Timer() {
 			@Override
 			public void run() {
 				questionNameTextArea.setText(collectionQuestionItemDo.getQuestionText());
 				explainationTextArea.setText(collectionQuestionItemDo.getExplanation());
-				
+
 				if(addExplanationAnc.isVisible()){setExplanationContainer();}
 			}
 		};
 		timer1.schedule(0);
-		
+
 		if(collectionQuestionItemDo.getDepthOfKnowledgeIds()!=null){
 			int checkBoxCount=0;
 			resetDepthOfKnowledges();
@@ -2198,11 +2197,11 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				   }*/
 				   checkBoxCount++;
 				}
-			
+
 			setDOKCheckBoxes();
-			
+
 			}
-		
+
 		TreeSet<QuestionHintsDo> hintset = new TreeSet<QuestionHintsDo>(collectionQuestionItemDo.getHints().get("hint"));
 		TreeSet<QuestionHintsDo> hintsList = hintset;
 		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
@@ -2219,9 +2218,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		centuryPanel.clear();
 		//standardsPanel.clear();
 		standardsDo.clear();
-		
+
 		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
-		
+
 		for (Map.Entry<Long, String> entry : centurySkills.entrySet())
 		{
 			CodeDo codeDo=new CodeDo();
@@ -2232,7 +2231,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			centurySelectedValues.put(entry.getKey(),entry.getValue());
 			centuryPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"", centuryCodesMap.get(entry.getKey())));
 		}
-		
+
 		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
 			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();
 			if(!centurySkills.containsKey(codeID.longValue())){
@@ -2247,24 +2246,24 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			ulSelectedItems.add(createStandardLabel(code,String.valueOf(codeID),label));
 			}
 		}
-		
+
 		HashMap<String,Boolean> moreOptions= collectionQuestionItemDo.getMoreOptions();
-		
+
 		addExplanationAnc.setVisible(moreOptions.get("explanation"));
 		addHintsAnc.setVisible(moreOptions.get("hints"));
 		addDepthOfKnowledgeAnc.setVisible(moreOptions.get("DOK"));
 		addStandardsAnc.setVisible(moreOptions.get("standards"));
 		addCenturyAnc.setVisible(moreOptions.get("21stcentury"));
-		
+
 		setAncTabs();
-		
-		
+
+
 		if(addDepthOfKnowledgeAnc.isVisible()){setDepthOfKnowledgeContainer();}
 		if(addHintsAnc.isVisible()){setHintsContainer();}
 		if(addCenturyAnc.isVisible()){setCenturyContainer();}
-		
+
 	}
-	
+
 	public CollectionQuestionItemDo getMetadata(){
 		final CollectionQuestionItemDo collectionQuestionItemDo = new CollectionQuestionItemDo();
 
@@ -2301,7 +2300,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		if(collectionQuestionItemDo.getTaxonomySet()!=null){
 			collectionQuestionItemDo.getTaxonomySet().clear();
 		}
-		
+
 
 		timer2.schedule(0);
 
@@ -2316,7 +2315,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		collectionQuestionItemDo.setMoreOptions(moreOptions);
 		return collectionQuestionItemDo;
 	}
-	
+
 	/**
 	 * Opens up Terms of Use pop-up.
 	 *
@@ -2465,8 +2464,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			standardsDropListValues.add(liPanel);
 		}
 	}
-	
-	
+
+
 
 	public void checkStandarsList(List<String> standarsPreferencesList) {
 
@@ -2528,7 +2527,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			List<LiPanelWithClose> collectionLiPanelWithCloseArray){
 		getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
 	}
-	
+
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
@@ -2556,7 +2555,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			if (!selectedValues.contains(standard.get("selectedCodeId"))){
 				ulSelectedItems.add(generateLiPanel(standard, "standards"));
 			}
-		
+
 	}
 	private LiPanelWithClose generateLiPanel(final Map<String, String> standard, String tagValue) {
 		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(standard.get("selectedCodeVal"));
@@ -2599,7 +2598,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method is used to get the selected Std id's
 	 * @return
@@ -2636,14 +2635,14 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	}
 	/**
 	 * get the standards are added for collection
-	 * 
+	 *
 	 * @param flowPanel
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
 	 */
 	private List<String> getAddedStandards() {
 		List<String> suggestions = new ArrayList<String>();
-		
+
 		Iterator<Widget> widgets = ulSelectedItems.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
@@ -2662,7 +2661,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
         	}
     	}
 	}
-	
+
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
@@ -2675,16 +2674,16 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void setUpdatedStandardsCode(String setStandardsVal, int setStandardsIdVal, String setStandardDesc) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public void setStandardsContainer(){
 		if(ulSelectedItems.getWidgetCount()>0){
 			addStandardsAnc.removeStyleName("advancedOptionsTabs");
@@ -2694,5 +2693,5 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			addStandardsAnc.removeStyleName("advancedOptionsTabActive");
 		}
 	}
-	
+
 }

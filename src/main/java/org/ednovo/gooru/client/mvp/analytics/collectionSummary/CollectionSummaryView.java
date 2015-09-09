@@ -50,7 +50,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -60,14 +59,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSummaryUiHandlers> implements  IsCollectionSummaryView,ClientConstants {
 
-	private static CollectionSummaryViewUiBinder uiBinder = GWT 
+	private static CollectionSummaryViewUiBinder uiBinder = GWT
 			.create(CollectionSummaryViewUiBinder.class);
 
 	interface CollectionSummaryViewUiBinder extends
 			UiBinder<Widget, CollectionSummaryView> {
 	}
-
-	CollectionSummaryCBundle res;
 
 	@UiField ListBox sessionsDropDown;
 	@UiField Image exportImage,sessionsTooltip,imgQuestionMark;
@@ -76,7 +73,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	@UiField VerticalPanel pnlSummary;
 	@UiField Frame downloadFile;
 	@UiField Label subText,errorMessage,arrowLbl;
-	
+
 	@UiField(provided = true)
 	AppSuggestBox studentSgstBox;
 
@@ -89,18 +86,16 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	PrintUserDataDO printUserDataDO=new PrintUserDataDO();
 	List<String> allStudentsList = new ArrayList<String>();
 	private Map<String, String> studentsUIdMap = new HashMap<String, String>();
-	
+
 	private AppMultiWordSuggestOracle studentSuggestOracle;
-	
+
 	private String previousText;
-	
+
 
 	/**
 	 * Constructor
 	 */
 	public CollectionSummaryView() {
-		this.res = CollectionSummaryCBundle.INSTANCE;
-		res.css().ensureInjected();
 		initializeAutoSuggestedBox();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
@@ -109,19 +104,19 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		errorMessage.setVisible(false);
 		studentSgstBox.addDomHandler(hanlder, MouseDownEvent.getType());
 	}
-	
+
 	MouseDownHandler hanlder=new MouseDownHandler() {
 		@Override
 		public void onMouseDown(MouseDownEvent event) {
 			displaySuggestedStudents();
 		}
 	};
-	
+
 	/**
 	 * Initializes the suggestion box.
 	 */
-	private void initializeAutoSuggestedBox() { 
-		
+	private void initializeAutoSuggestedBox() {
+
 		studentSuggestOracle= new AppMultiWordSuggestOracle(true);
 		studentSgstBox=new AppSuggestBox(studentSuggestOracle) {
 
@@ -132,7 +127,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 			@Override
 			public void keyAction(String text, KeyUpEvent event) {
-				
+
 				if (text != null && text.trim().length() > 0) {
 					search(text.trim());
 					studentSgstBox.showSuggestionList();
@@ -149,7 +144,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				showReport(studentSgstBox.getText().trim(),studentsUIdMap.get(studentSgstBox.getText().trim()));
 			}
 		});
-		
+
 		BlurHandler blurHandler=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -158,9 +153,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		};
 		studentSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 	}
-	
-	
-	
+
+
+
 	/**
 	 * This method is used to set static data.
 	 */
@@ -247,7 +242,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			});
 		}
 	}
-    
+
     public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -261,7 +256,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 	                setSessionStartTime(selectedSessionIndex);
 	                printUserDataDO.setUserName(studentSgstBox.getText());
-	                printUserDataDO.setSession(sessionsDropDown.getItemText(selectedSessionIndex)); 
+	                printUserDataDO.setSession(sessionsDropDown.getItemText(selectedSessionIndex));
 					getUiHandlers().setIndividualData(collectionId, classpageId, studentsUIdMap.get(studentSgstBox.getText()),sessionsDropDown.getValue(selectedSessionIndex),pathwayId,printUserDataDO);
 
 				}
@@ -424,11 +419,11 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			}
 		});
 	}
-	
+
 
 	/**
 	 * This method will return matched student name in the list.
-	 * 
+	 *
 	 * @param searchText {@link String}
 	 */
 	private void search(String searchText) {
@@ -441,7 +436,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	}
 
 	/**
-	 * Displays suggested student name based on the given text. 
+	 * Displays suggested student name based on the given text.
 	 */
 	private void displaySuggestedStudents() {
 		if(ALL_STUDENTS.equals(studentSgstBox.getText())){
@@ -454,8 +449,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		studentSgstBox.setPopupStyleName("suggestPopupContentStyle");
 		studentSgstBox.showSuggestionList();
 	}
-	
-	
+
+
 	/**
 	 * On selection of any student, this method is called in which shows the report for respective student.
 	 * @param studentName {@link String}

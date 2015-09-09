@@ -2134,7 +2134,8 @@ svg.dotted.round {
 .setProgressBar {
 	float: left;
 	height: 25px;
-	background-color: rgb(16, 118, 187);
+	background-color: #1076bb !important;
+	-webkit-print-color-adjust: exact;
 }
 
 .alignCenterAndBackground {
