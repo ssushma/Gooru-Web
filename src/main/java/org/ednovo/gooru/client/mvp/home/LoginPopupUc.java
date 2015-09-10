@@ -362,20 +362,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 
 						if(statusCode==HTTP_SUCCESS_STATUS_CODE){
 							MixpanelUtil.Regular_User_Logged_In();
-							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
-								MixpanelUtil.Registration_turns13();
-								com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat
-											.getFormat("yyyy-MM-dd hh:mm:ss.S");
-								Date convertedCurrentDate = null;
-								convertedCurrentDate = dateFormat.parse(result.getDateOfBirth());
-								age = getAge(convertedCurrentDate);
-								if(age>=13){
-									Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
-									map.put("callback", "turn13");
-									AppClientFactory.getPlaceManager().revealPlace(
-											AppClientFactory.getCurrentPlaceToken(), map);
-								}
-							}
+
 							AppClientFactory.setLoggedInUser(result);
 							final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
 							//Refresh token will be available only if user login using google.
@@ -418,6 +405,20 @@ public abstract class LoginPopupUc extends PopupPanel{
 												AppClientFactory.setLoggedInUser(user);
 										    	AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
 										    }
+											if(profileObj.getDateOfBirth()!=null && profileObj.getUser().getAccountTypeId()==2){
+												MixpanelUtil.Registration_turns13();
+												com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat
+															.getFormat("yyyy-MM-dd hh:mm:ss.S");
+												Date convertedCurrentDate = null;
+												convertedCurrentDate = profileObj.getDateOfBirth();
+												age = getAge(convertedCurrentDate);
+												if(age>=13){
+													Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
+													map.put("callback", "turn13");
+													AppClientFactory.getPlaceManager().revealPlace(
+															AppClientFactory.getCurrentPlaceToken(), map);
+												}
+											}
 										}
 									});
 
