@@ -42,7 +42,6 @@ import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
@@ -73,11 +72,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @ServiceURL("/mediaUploadService")
 public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		MediaUploadService {
-
-	/**
-	 *
-	 */
-
 	private static final long serialVersionUID = -8673556966040594979L;
 	private static final String ADDED = "added";
 	private static final String TITLE = "title";
@@ -184,7 +178,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	public CollectionItemDo deserializeCollectionItem(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
@@ -204,24 +197,17 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		params.put(GooruConstants.YPOSITION,yPosition);
 		params.put(GooruConstants.CROPENGINE,GooruConstants.BUFFERIMAGE);
 		String url=AddQueryParameter.constructQueryParams(partialUrl,params);
-
-		try
-		{
-		ServiceProcessor.put(url, getRestUsername(), getRestPassword(),
-				new Form());
-		}
-		catch(Exception ex)
-		{
+		try{
+			logger.info("cropImage:"+url);
+			ServiceProcessor.put(url, getRestUsername(), getRestPassword(),	new Form());
+		}catch(Exception ex){
 			logger.error("Exception::", ex);
 		}
-
 		if (imageUrl == null) {
 			return fileName;
-		}
-		else {
+		}else{
 			return imageUrl;
 		}
-
 	}
 	@Override
 	public MediaUploadDo imageFileUpload(String response) {
@@ -297,12 +283,8 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 		 }
 
-
-
-
-
-		collItemDo.getQuestionInfo().setAnswers(null);
-		collItemDo.getQuestionInfo().setHints(null);
+		 collItemDo.getQuestionInfo().setAnswers(null);
+		 collItemDo.getQuestionInfo().setHints(null);
 		  JSONObject mainQuestionTempObj = new JSONObject();
 		  JSONObject mainAnswerTempObj = new JSONObject();
 		  JSONObject mainQTempObj = new JSONObject();
@@ -317,12 +299,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			  mainHintTempObj.put("hint", jArrHints);
 			  mainQuestionTempObj1.put("answers", mainAnswerTempObj);
 			  mainQuestionTempObj1.put("hints", mainHintTempObj);
-
-
-
 			  data = "{\""+"question"+"\" : " + mainQuestionTempObj1.toString() +", \""+"mediaFileName"+"\" : " +fileName+"}";
-
-
 			  mainQTempObj.put("question", mainQuestionTempObj1).put("mediaFileName", fileName);
 			  //mainQTempObj.put("mediaFileName", fileName);
 
@@ -401,5 +378,4 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		respStr = cr.getText();
 		return respStr;
 	}
-
 }

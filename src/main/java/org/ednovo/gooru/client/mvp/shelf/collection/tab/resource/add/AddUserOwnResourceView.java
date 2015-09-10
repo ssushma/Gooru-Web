@@ -141,7 +141,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	public BlueButtonUc addResourceBtnLbl;
 
 	@UiField
-	Label centuryDefaultText,resourceContentChkLbl, mandatoryTitleLbl,descCharcterLimit,standardsDefaultText,accessHazard,flashingHazard,motionSimulationHazard,soundHazard,mediaLabel,mandatoryCategoryLbl;
+	Label centuryDefaultText,resourceContentChkLbl, mandatoryTitleLbl,descCharcterLimit,standardsDefaultText,accessHazard,mediaLabel,mandatoryCategoryLbl;
 	
 	@UiField
 	HTMLEventPanel lblContentRights;
@@ -156,7 +156,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	HTMLEventPanel eHearderIconCentury,preparingTheLearningPanel,interactingWithTheTextPanel,activityPanel,extendingUnderstandingPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,defaultPanel,defaultPanelMomentsOfLearningPnl;
 
-
 	@UiField
 	public TextBox resourcePathTextBox, titleTextBox;
 
@@ -164,7 +163,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	public TextArea descriptionTxtAera;
 	
 	@UiField UlPanel ulSelectedItems;
-
 
 	@UiField
 	public Image setThumbnailImage;
@@ -267,6 +265,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	List<String> standardPreflist;
 	
 	String courseCode="";
+	String mediaType = "";
 	
 	private boolean isCCSSAvailable = false;
 	private boolean isNGSSAvailable = false;
@@ -314,7 +313,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	 */
 	
 	public AddUserOwnResourceView(CollectionDo collectionDo){ 
-		
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
@@ -361,7 +359,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					}
 				}
 			}
-
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
 				return null;
@@ -369,7 +366,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		};
 		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
-			
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
@@ -379,11 +375,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		};
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 		standardSgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
-
 			@Override
 			public void onSelection(SelectionEvent<Suggestion> event) {
 				Map<String, String> standard = new HashMap<>();
-				
 				standard.put("selectedCodeId", String.valueOf(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
 				standard.put("selectedCodeVal", standardSgstBox.getValue());
 				standard.put("selectedDifferenceId", String.valueOf(3));
@@ -405,23 +399,22 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				centurySearchDo.setSearchResults(null);
 				centurySearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
-						AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centurySearchDo, new AsyncCallback<SearchDo<StandardFo>>() {
-							@Override
-							public void onSuccess(SearchDo<StandardFo> result) {
-								setCenturySuggestions(result);
-							}
-							@Override
-							public void onFailure(Throwable caught) {
-							}							
-						});
-						centurySgstBox.showSuggestionList();
+					AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centurySearchDo, new AsyncCallback<SearchDo<StandardFo>>() {
+						@Override
+						public void onSuccess(SearchDo<StandardFo> result) {
+							setCenturySuggestions(result);
 						}
+						@Override
+						public void onFailure(Throwable caught) {
+						}							
+					});
+					centurySgstBox.showSuggestionList();
+				}
 			}
 		};
 		centurySgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
-	BlurHandler blurHandlerCentury=new BlurHandler() {
-			
+		BlurHandler blurHandlerCentury=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
@@ -443,6 +436,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		setEducationUse();
+		setHazard();
 		setMomentOfLeaning();
 		educationalUsePanelOld.setVisible(false);
 		momentsOfLearningPanelOld.setVisible(false);
@@ -459,14 +453,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			public void showAndHideContainers() {
 			}
 		};
-		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 			@Override
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				hideDropDown(event);
 			}
 		}); 
-		
 		standardsCont.getElement().setAttribute("style", "position:relative;");
 		AdvancedSetupContainer.add(addSetupAdvancedView);
 		standardsBrowseContainer.getElement().setId("standardsContainerBswn");
@@ -487,10 +479,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningTitle.getElement().setId("pnlMomentsOfLearningTitle");
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
 		momentsOfLearningTitle.getElement().setAttribute("title", i18n.GL1678());
-		
-
 		getAddStandards();
-
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -502,9 +491,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				}
 			}
 		});
-	
 		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
-		resourcemomentsOfLearningLabel.getElement().setId("lblResourcemomentsOfLearningLabel");
 		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1684());
 		resourcemomentsOfLearningLabel.getElement().setAttribute("title", i18n.GL1684());
 		momentsOfLearningDropDownLbl.getElement().setId("lblMomentsOfLearningDropDownLbl");
@@ -531,7 +518,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalTitle.getElement().setAttribute("alt", i18n.GL1664());
 		educationalTitle.getElement().setAttribute("title", i18n.GL1664());
 		resourceEducationalLabel.setText(i18n.GL1684());
-		resourceEducationalLabel.getElement().setId("lblResourceEducationalLabel");
 		resourceEducationalLabel.getElement().setAttribute("alt", i18n.GL1684());
 		resourceEducationalLabel.getElement().setAttribute("title", i18n.GL1684());
 		educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
@@ -620,7 +606,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		accessHazard.getElement().setAttribute("alt",i18n.GL1804());
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		
-		flashingHazard.setText(i18n.GL3110());
+		/*flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");
 		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
 		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
@@ -633,7 +619,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		soundHazard.setText(i18n.GL3112());
 		soundHazard.getElement().setId("lblSoundHazard");
 		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
-		soundHazard.getElement().setAttribute("title",i18n.GL3112());
+		soundHazard.getElement().setAttribute("title",i18n.GL3112());*/
 		
 		mediaLabel.setText("Media Feature");
 		mediaLabel.getElement().setId("lblMediaFeature");
@@ -942,7 +928,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
+				
 				if(!hasClickedOnDropDwn){
 					educationalUsePanel.setVisible(false);
 					educationalDropDownLblOpen = false;
@@ -1278,7 +1264,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 										addResourceBtnLbl.getElement().removeClassName("secondary");
 										addResourceBtnLbl.getElement().addClassName("primary");
 									}else{
-										
 										MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
 										filePath = resourcePathTextBox.getText().trim();
 										resourceTitle = titleTextBox.getText().trim();
@@ -1319,42 +1304,27 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											isEnabled = false;
 											showCategoryErrorMessage(i18n.GL0917());
 										}
-										
-										if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
-										{
-											
+										final Map<String, List<Integer>> hazardsAndMediaFeatures = new HashMap<>();
+										if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive())){				
 											tagList.add("Mobile Friendly : "+mobileYes.getText());
-											
-										}
-										else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
-										{
-										
+											mediaType = i18n.GL_GRR_MOBILE_FRIENDLY();
+										}else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive())){
 											tagList.add("Mobile Friendly : "+mobileNo.getText());
-											
+											mediaType = i18n.GL_GRR_NOT_MOBILE_FRIENDLY();
 										}
-										if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
-										{
-											
+										List<Integer> mediaFeaturesList = new ArrayList<>();
+										if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:")){	
+											mediaFeaturesList.add(Integer.parseInt(lblMediaPlaceHolder.getElement().getId()));
 											tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
-										
 										}
-										
-								/*		String hazardArr[] = setAccessHazards();
-										
-										if(hazardArr != null)
-										{
-											for(int i=0;i<hazardArr.length;i++)
-											{
-												tagList.add(hazardArr[i].toString());
-											}
-										}*/
-										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
-										{
+										hazardsAndMediaFeatures.put("media", mediaFeaturesList);
+										hazardsAndMediaFeatures.put("hazard", setAccessHazards());
+								
+										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase("")){
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
 												tagList.add("Educational Use : "+resourceEducationalLabel.getText());
 											}
 										}
-										
 										
 										if(!rightsChkBox.getValue()){
 											rightsLbl.getElement().getStyle().setColor("orange");
@@ -1380,13 +1350,11 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 													loadingImagePanel.setVisible(false);
 													if(isValidImageSize){
 														if(collectionDo.getSharing().equalsIgnoreCase("public")){
-															parseUploadFileDetails(event.getResults(),true,tagList);
-														}
-														else{
-															parseUploadFileDetails(event.getResults(),false,tagList);
+															parseUploadFileDetails(event.getResults(),true,tagList,hazardsAndMediaFeatures, mediaType,centuryDo);
+														}else{
+															parseUploadFileDetails(event.getResults(),false,tagList,hazardsAndMediaFeatures, mediaType,centuryDo);
 														}
 													}
-													
 												}
 											});
 											fileuploadForm.submit();
@@ -1402,7 +1370,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			});
 		}
 
-		protected void parseUploadFileDetails(String jsonString,boolean showPreview, List<String> tagList) {  
+		protected void parseUploadFileDetails(String jsonString,boolean showPreview, List<String> tagList,Map<String, List<Integer>> hazardsAndMediaFeatures,String mediaType, List<StandardFo> centuryDo) {  
 			if(jsonString!=null){
 				JSONValue jsonParseValue=JSONParser.parseStrict(jsonString);
 				JSONObject jsonObject=jsonParseValue.isObject();
@@ -1413,15 +1381,15 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				if(resourceCategory.equalsIgnoreCase("Image")||resourceCategory.equalsIgnoreCase("Text"))
 				{
 					//resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
-					 if(resourceCategory.equalsIgnoreCase("Image")){
+					 if(resourceCategory.equalsIgnoreCase("Image")){	
 						 resourceCategory="Image";
 					 }
 				}
 				if(showPreview){
-					showResourcePreview(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,tagList);
+					showResourcePreview(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,tagList,hazardsAndMediaFeatures,mediaType,centuryDo);
 					addResourceBtnLbl.setEnabled(true);
 				}else{
-					addUserResource(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,tagList);
+					addUserResource(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory,resourceEducationalLabel.getElement().getId(),resourcemomentsOfLearningLabel.getElement().getId(),standardsDo,tagList,hazardsAndMediaFeatures,mediaType,centuryDo);
 					addResourceBtnLbl.setEnabled(true);
 				}
 				
@@ -1430,8 +1398,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	}
 	
 
-	public abstract void showResourcePreview(String filePath, String mediaFileName,String originalFileName,String resourceTitle, String resourceDesc, String resourceCategory, String educationalLevel, String momentsOfLearning, List<CodeDo> standardsDo, List<String> tagList);
-	public abstract void addUserResource(String filePath,String mediaFileName,String originalFileName, String resourceTitle, String resourceDesc, String resourceCategory, String educationalLevel, String momentsOfLearning, List<CodeDo> standardsDo, List<String> tagList);
+	public abstract void showResourcePreview(String filePath, String mediaFileName,String originalFileName,String resourceTitle, String resourceDesc, String resourceCategory, String educationalLevel, String momentsOfLearning, List<CodeDo> standardsDo, List<String> tagList,Map<String, List<Integer>> hazardsAndMediaFeatures,String mediaType,List<StandardFo> centuryDo2);
+	public abstract void addUserResource(String filePath,String mediaFileName,String originalFileName, String resourceTitle, String resourceDesc, String resourceCategory, String educationalLevel, String momentsOfLearning, List<CodeDo> standardsDo, List<String> tagList,Map<String, List<Integer>> hazardsAndMediaFeatures,String mediaType,List<StandardFo> centuryDo2);
 	
 	
 	private class OnEditImageClick implements ClickHandler {
@@ -1731,7 +1699,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	 */
 	public DownToolTipWidgetUc createStandardLabel(final String standardCode, final String id, String description) {
 		CloseLabel closeLabel = new CloseLabel(standardCode) {
-
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.getParent().removeFromParent();
@@ -2052,9 +2019,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	/*
 	 * method for select access hazards
 	 */
-	public List<Integer> setAccessHazards()
-	{
-		String[] accessHazardsArr = null;
+	public List<Integer> setAccessHazards(){
 		List<Integer> accessHazardsSelected = new ArrayList<Integer>();
 		int size=hazardContainer.getWidgetCount();
 		for(int i=0;i<size;i++){
@@ -2062,66 +2027,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			if(label.getElement().getClassName().contains("select")){
 				accessHazardsSelected.add(Integer.parseInt(label.getElement().getId()));
 			}
-			
 		}
-
-/*		if(flashingHazard.getElement().getClassName().contains("select")){
-			String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
-		if(motionSimulationHazard.getElement().getClassName().contains("select"))
-		{
-			String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
-		if(soundHazard.getElement().getClassName().contains("select"))
-		{
-			String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
-*/
-		//accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
 		setAdvancedAccessHazardStyles(accessHazardsSelected.size());
 		return accessHazardsSelected;
-	}
-	
-	@UiHandler("flashingHazard")
-	public void onflashingHazardClick(ClickEvent click){
-		if(flashingHazard.getStyleName().toString().contains("select"))
-		{
-			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
-	}
-
-	@UiHandler("motionSimulationHazard")
-	public void onmotionSimulationHazardClick(ClickEvent click){
-		if(motionSimulationHazard.getStyleName().toString().contains("select"))
-		{
-			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
-	}
-
-	@UiHandler("soundHazard")
-	public void onsoundHazardClick(ClickEvent click){
-		if(soundHazard.getStyleName().toString().contains("select"))
-		{
-			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else
-		{
-			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		setAccessHazards();
 	}
 	
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
@@ -2315,24 +2223,15 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	public void setEducationUse(){
 		AppClientFactory.getInjector().getResourceService().getEducationalUseList(new AsyncCallback<List<ListValuesDo>>() {
-			
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
-				// TODO Auto-generated method stub
 				setData(result,"education");
 			}
-			
 			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void onFailure(Throwable caught) {}
 		});
 	}
-	
-	
 	public void setData(List<ListValuesDo> listValuesDos,String type){
-	
 		if(type.equalsIgnoreCase("education")){
 			educationalUsePanel.clear();
 		}else if(type.equalsIgnoreCase("mLearning")){
@@ -2353,21 +2252,16 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				liPanel.addDomHandler(new MomentOfLearingClickHandler(liPanel, anchor), ClickEvent.getType());
 				momentsOfLearningPanel.add(liPanel);
 			}
-			
 		}
 	}
 	public void setMomentOfLeaning(){
 		AppClientFactory.getInjector().getResourceService().getMomentOfLearning(new AsyncCallback<List<ListValuesDo>>() {
-			
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
-				// TODO Auto-generated method stub
 				setData(result, "mLearning");
 			}
-			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -2378,13 +2272,11 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		Anchor anchor;
 		LiPanel liPanel;
 		public EducationClickHandler(LiPanel liPanel,Anchor anchor) {
-			// TODO Auto-generated constructor stub
 			this.anchor=anchor;
 			this.liPanel=liPanel;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 			resetSelection(educationalUsePanel);
 			liPanel.setStyleName("active");
 			resourceEducationalLabel.setText(anchor.getText());
@@ -2396,19 +2288,16 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			mandatoryEducationalLbl.setVisible(false);
 			setAdvancedOptionsStyles();
 		}
-		
 	}
 	public class MomentOfLearingClickHandler implements ClickHandler{
 		Anchor anchor;
 		LiPanel liPanel;
 		public MomentOfLearingClickHandler(LiPanel liPanel,Anchor anchor) {
-			// TODO Auto-generated constructor stub
 			this.anchor=anchor;
 			this.liPanel=liPanel;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 			resetSelection(momentsOfLearningPanel);
 			liPanel.setStyleName("active");
 			resourcemomentsOfLearningLabel.setText(anchor.getText());
@@ -2419,9 +2308,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			momentsOfLearningOpen = false;
 			mandatorymomentsOfLearninglLbl.setVisible(false);
 			setAdvancedOptionsStyles();
-		
 		}
-		
 	}
 	
 	public void resetSelection(UlPanel ulPanel){
@@ -2431,14 +2318,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			liPanel.removeStyleName("active");
 		}
 	}
-
 	public void getMediaFeatures(){
 		AppClientFactory.getInjector().getResourceService().getMediaFeature(new AsyncCallback<List<ListValuesDo>>() {
-			
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
-				// TODO Auto-generated method stub
-			
 				for(ListValuesDo listValuesDo:result){
 						String mediaTitleVal = listValuesDo.getName();
 						final Label titleLabel = new Label(mediaTitleVal);
@@ -2461,10 +2344,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 						htmlMediaFeatureListContainer.add(titleLabel);
 				}
 			}
-			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -2477,16 +2358,11 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				label.setText(do1.getName());
 				label.getElement().setId(do1.getId()+"");
 				label.addClickHandler(new ClickHandler() {
-					
 					@Override
 					public void onClick(ClickEvent event) {
-						// TODO Auto-generated method stub
-						if(label.getStyleName().toString().contains("select"))
-						{
+						if(label.getStyleName().toString().contains("select")){
 							label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-						}
-						else
-						{
+						}else{
 							label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 						}
 						setAccessHazards();
@@ -2495,23 +2371,14 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				hazardContainer.add(label);
 			}
 		}
-		
 	}
 	public void setHazard(){
-		AppClientFactory.getInjector().getResourceService().getAccessHazards(new AsyncCallback<List<ListValuesDo>>() {
-			
+		AppClientFactory.getInjector().getResourceService().getAccessHazards(new SimpleAsyncCallback<List<ListValuesDo>>() {
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
-				// TODO Auto-generated method stub
 				if(result!=null){
 					setHazardData(result);
 				}
-				
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 			}
 		});
 	}
@@ -2624,7 +2491,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 								standardPreflist.add(code.substring(0, 2));
 							 }
 						}
-
 					});
 		} else {
 			isCCSSAvailable = true;
@@ -2739,11 +2605,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		if(courseObjG!=null){
 			courseObjG.setStandards(courseList);
 		}
-
 		return taxonomyCourseIds;
 	}
-
-
-
-
 }

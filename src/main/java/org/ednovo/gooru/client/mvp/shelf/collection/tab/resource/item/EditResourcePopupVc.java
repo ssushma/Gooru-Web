@@ -2338,7 +2338,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					label.addStyleName(res2.INSTANCE.css().select());
 				}
 			}
-
 		}
 		setAdvancedAccessHazardStyles(valuesDos.size());
 	}
@@ -2661,15 +2660,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					htmlMediaFeatureListContainer.add(titleLabel);
 					if(collectionItemDo!=null&&collectionItemDo.getMediaFeature()!=null){
 						setMediaFeatureObjectVal(collectionItemDo.getMediaFeature());
-
 					}
 				}
 			}
-
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 	}
@@ -2683,19 +2678,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				label.setStyleName("accessHazardLbl");
 				label.getElement().setId(do1.getId()+"");
 				label.addClickHandler(new ClickHandler() {
-
 					@Override
 					public void onClick(ClickEvent event) {
-						// TODO Auto-generated method stub
-						if(label.getStyleName().toString().contains("select"))
-						{
+						if(label.getStyleName().toString().contains("select")){
 							label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-						}
-						else
-						{
+						}else{
 							label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 						}
-
 					}
 				});
 				hazardContainer.add(label);
@@ -2704,27 +2693,20 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				}
 			}
 		}
-
 	}
 	public void setHazard(){
 		AppClientFactory.getInjector().getResourceService().getAccessHazards(new AsyncCallback<List<ListValuesDo>>() {
 			@Override
 			public void onSuccess(List<ListValuesDo> result) {
-				// TODO Auto-generated method stub
 				if(result!=null){
 					setHazardData(result);
-
 				}
-
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 			}
 		});
 	}
-
-
 
 	public List<StandardFo> getCenturySkills(){
 		List<StandardFo> standardsList=new ArrayList<>();
