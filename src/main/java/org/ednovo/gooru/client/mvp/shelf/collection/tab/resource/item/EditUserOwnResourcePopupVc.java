@@ -1068,12 +1068,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 								deletedStandardsDo.add(deletedObj);
 								standardsDo.remove(codeObj);
 								centurySelectedValues.remove(Long.parseLong(id));
-
 							}
 						});
 						this.getParent().removeFromParent();
 						return;
-
 					}
 				}
 			}
@@ -1097,7 +1095,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
         	}
     	}
 	}
-
 	public void setHazardData(List<ListValuesDo> hazards){
 		if(hazards!=null){
 			hazardContainer.clear();

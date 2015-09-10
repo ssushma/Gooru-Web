@@ -573,7 +573,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if (mediaUploadDo != null && mediaUploadDo.getStatusCode() == 200) {
 			//getUiHandlers().cropImage(mediaUploadDo.getName(),null, null,null,null,mediaUploadDo.getUrl());
-			/*ImageCropView imageCropView = new ImageCropView() {
+			ImageCropView imageCropView = new ImageCropView() {
 				@Override
 				public void onCancelCrop() {
 					resetImageUploadWidget();
@@ -620,7 +620,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			});
 			imageCropPopup.clear();
 			imageCropPopup.add(imageCropView);
-			imageCropPopup.show();*/
+			imageCropPopup.show();
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
