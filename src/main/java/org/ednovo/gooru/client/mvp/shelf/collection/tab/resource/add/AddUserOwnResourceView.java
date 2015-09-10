@@ -2327,13 +2327,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				label.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						// TODO Auto-generated method stub
-						if(label.getStyleName().toString().contains("at-select"))
-						{
+						if(label.getStyleName().toString().contains("at-select")){
 							label.getElement().removeClassName("at-select");
-						}
-						else
-						{
+						}else{
 							label.getElement().addClassName("at-select");
 						}
 						setAccessHazards();
