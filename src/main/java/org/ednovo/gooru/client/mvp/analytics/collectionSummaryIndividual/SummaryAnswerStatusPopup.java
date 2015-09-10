@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
@@ -41,10 +42,10 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		this.noOfAttempts=Integer.parseInt(attempts!=null?attempts:"0");
 		renderAnswersData(attemptsObj);
 	}
-	
-	
+
+
 	public void renderAnswersData(JSONArray attemptsObj ){
-		
+
 		if(HS_IMG.equalsIgnoreCase(questionType)){
 			for(int j=0;j<attemptsObj.size();j++){
 	        	Image answerChoice=new Image();
@@ -85,7 +86,7 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 					  }
   		      ansFlowPnl.add(answerChoice);
 		         }
-			
+
 		}else if(HT_HL.equalsIgnoreCase(questionType)){
 			 for(int j=0;j<attemptsObj.size();j++){
 		        	HTML answerChoice=new HTML();
@@ -93,7 +94,7 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
 		        	String hlText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-		        	
+
   		         if(skip == false)
   		         {
   		        	 if(hlText.contains(PLAYER_HT_HL)){
@@ -138,7 +139,8 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		        	String OeAnswer =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 		         if(skip == false)
 					  {
-						answerChoice.setHTML(OeAnswer);
+		        	 	AppClientFactory.printInfoLogger("OeAnswer : "+OeAnswer);
+						answerChoice.setHTML(URL.decodeQueryString(OeAnswer));
 						/*if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 							answerChoice.addStyleName(HS_INCORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
@@ -150,15 +152,15 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 		         ansFlowPnl.add(answerChoice);
 		        }
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	@UiHandler("closeLbl")
 	public void closePopup(ClickEvent event){
 		this.hide();
 	}
 
-	
+
 }
