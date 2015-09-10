@@ -1181,7 +1181,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			public void onChange(ChangeEvent event) {
 				filePathContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().ownResourceFormInputControl());
 				resourcePathTextBox.getElement().getStyle().setBorderColor("#dddddd");
-
 				 if(hasValidateResource()){
 					 isValidImageSize=true;
 					 resourceContentChkLbl.setVisible(false);
@@ -1196,16 +1195,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 						 resourceContentChkLbl.getElement().setAttribute("alt", RESOURCE_FILE_SUPPORT_MSG);
 						 resourceContentChkLbl.getElement().setAttribute("title", RESOURCE_FILE_SUPPORT_MSG);
 					 }
-					 
 				 }
-				
 			}
 		});
-		
 	}
-
-	
-
 	private class CloseClickHandler implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -2356,6 +2349,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			for(ListValuesDo do1:hazards){
 				final Label label=new Label();
 				label.setText(do1.getName());
+				label.setStyleName("accessHazardLbl");
 				label.getElement().setId(do1.getId()+"");
 				label.addClickHandler(new ClickHandler() {
 					@Override
