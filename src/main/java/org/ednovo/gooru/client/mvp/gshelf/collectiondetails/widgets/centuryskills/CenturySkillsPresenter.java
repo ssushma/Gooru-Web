@@ -87,17 +87,8 @@ public class CenturySkillsPresenter extends PresenterWidget<IsCenturySkillsView>
 
 	@Override
 	public void getAddCentury() {
-		addCenturyPresenter.getView().resetPopupHilightedData();
-		addCenturyPresenter.getSelectedValues().clear();
-		if(getView().getSelectedCenturyValuesThroughAutosuggest().size()> 0){
-			addCenturyPresenter.setAddResourceData(getView().getSelectedCenturyValuesThroughAutosuggest());
-		}
-		String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-		/*if(collectionUid!=null){*/
-			addCenturyPresenter.setCollectionIdFromCollectionInfo(collectionUid,getView().getSelectedCenturyValuesThroughAutosuggest());
-			addToPopupSlot(addCenturyPresenter);
-			getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
-	/*	}*/
+		addCenturyPresenter.setCenturySkillsObject(this);
+		addCenturyPresenter.loadStateStandards();
 	}
 	
 	@Override
@@ -115,5 +106,19 @@ public class CenturySkillsPresenter extends PresenterWidget<IsCenturySkillsView>
 	@Override
 	public void closeCenturyPopup() {
 		addCenturyPresenter.hidePopup();
+	}
+
+	public void setselData() {
+		addCenturyPresenter.getView().resetPopupHilightedData();
+		addCenturyPresenter.getSelectedValues().clear();
+		if(getView().getSelectedCenturyValuesThroughAutosuggest().size()> 0){
+			addCenturyPresenter.setAddResourceData(getView().getSelectedCenturyValuesThroughAutosuggest());
+		}
+		String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		/*if(collectionUid!=null){*/
+			addCenturyPresenter.setCollectionIdFromCollectionInfo(collectionUid,getView().getSelectedCenturyValuesThroughAutosuggest());
+			addToPopupSlot(addCenturyPresenter);
+			getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
+	/*	}*/
 	}
 }

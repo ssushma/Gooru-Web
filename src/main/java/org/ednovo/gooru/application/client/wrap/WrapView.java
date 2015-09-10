@@ -128,7 +128,6 @@ public class WrapView extends BaseView implements IsWrapView {
 
 		}
 		activateSearchBar(true);
-		activateClassicButton(false);
 		if (slot == WrapPresenter.TYPE_VIEW) {
 			if (content != null) {
 				String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
@@ -151,11 +150,6 @@ public class WrapView extends BaseView implements IsWrapView {
 				wrapperPanel.setWidget(content);
 			}
 		}
-	}
-
-	@Override
-	public void activateClassicButton(boolean activate) {
-		headerUc.setClassicButtonEnabled(activate);
 	}
 
 	@Override

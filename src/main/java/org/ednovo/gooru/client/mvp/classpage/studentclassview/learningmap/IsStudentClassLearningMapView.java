@@ -37,7 +37,7 @@ import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 public interface IsStudentClassLearningMapView extends IsViewWithHandlers<StudentClassLearningMapUiHandlers> {
 	public void setPreviewClassMode(boolean isPreview);
 	public void setMetadataContent(ArrayList<PlanProgressDo> dataList);
-	public void setLessonContent(PlanContentDo collectionList, String status, String userId);
+	public void setLessonContent(PlanContentDo collectionList, String status, String userId, int minimumScore);
 	public void setContent(ArrayList<PlanProgressDo> dataList, String status, String userId);
 	public void setContentVisiblity(boolean isVisible);
 	public void setEmptyContainerVisiblity(boolean isVisible);

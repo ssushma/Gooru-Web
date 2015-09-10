@@ -1331,12 +1331,6 @@ public class HeaderUc extends Composite
 
 			this.switchToClassicView();
 
-			if (userDo.isBeforeProductionSwitch()) {
-				logoutPanelVc.displayClassicGooruLink(true);
-			} else {
-				logoutPanelVc.displayClassicGooruLink(false);
-			}
-
 		} else {
 			mainDotsPanel.getElement().getStyle().clearWidth();
 			mainInnerDotsPanel.getElement().getStyle().clearWidth();
@@ -1561,15 +1555,6 @@ public class HeaderUc extends Composite
 		editSearchInputFloPanel.setVisible(enabled);
 	}
 
-	/**
-	 * Set classic link location
-	 *
-	 * @param enabled
-	 *            to left view or right view
-	 */
-	public void setClassicButtonEnabled(boolean enabled) {
-
-	}
 
 	/**
 	 * Set logout popup location

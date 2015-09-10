@@ -51,7 +51,7 @@
 									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary primary" text="{i18n.GL3294}"></g:Button>
 									    <tbp:UlPanel styleName="dropdown-menu" ui:field="standardsDropListValues"/>
 									</span>
-									
+
 								</div>
 								<div class="clearfix"></div>
 							</div>
@@ -120,7 +120,7 @@
 			</section>
 			<section class="gettingStarted no-gutter">
 				<div class="col-md-5 col-sm-6 gettingStartedBanner">
-					<img src="images/newlandingpage/getting-started-banner.png" class="img-responsive" />
+					<img src="images/newlandingpage/getting-started-banner.jpg" class="img-responsive" />
 				</div>
 				<div class="col-md-7 col-sm-6">
 					<div class="gettingContentPane">
@@ -194,7 +194,7 @@
 			</section>
 			<section class="freeToOpenBlock">
 				<div class="focusBannerAlwys">
-					<img src="images/newlandingpage/free-to-open-banner.png" class="img-responsive" />
+					<img src="images/newlandingpage/free-to-open-banner.jpg" class="img-responsive" />
 				</div>
 				<div class="focusTextAlwys">
 					<div class="container">

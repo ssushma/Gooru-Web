@@ -2134,7 +2134,8 @@ svg.dotted.round {
 .setProgressBar {
 	float: left;
 	height: 25px;
-	background-color: rgb(16, 118, 187);
+	background-color: #1076bb !important;
+	-webkit-print-color-adjust: exact;
 }
 
 .alignCenterAndBackground {
@@ -2344,6 +2345,15 @@ button.primary.previewBtnIcon {
     width: 25px;
 	left: 0%;
 	top: 30%;
+}
+.minimumScoreLblPanel {
+	padding: 20px;
+}
+.minimumScoreLblKey {
+	font-size: 14px;
+}
+.minimumScoreLblValue {
+	font-size: 18px;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     .custom-select select {

@@ -112,6 +112,7 @@ public class StudentClassReportView extends BaseViewWithHandlers<StudentClassRep
 			}
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_VIEW)) {
 			headerLeftArrow.setVisible(true);
+			previousContentPanel.setVisible(true);
 			allContentPanel.addStyleName("cursorPointer");
 			String cId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID);
 			String aId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_ASSESSMENT_ID);

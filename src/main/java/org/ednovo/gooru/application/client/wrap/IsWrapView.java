@@ -59,12 +59,6 @@ public interface IsWrapView extends IsView {
 	void activateSearchBar(boolean activate);
 
 	/**
-	 * Set enabled or disabled classic url link
-	 * @param activate if is true classic url link is visible or invisible
-	 */
-	void activateClassicButton(boolean activate);
-
-	/**
 	 * Create gooru guide view
 	 *
 	 */

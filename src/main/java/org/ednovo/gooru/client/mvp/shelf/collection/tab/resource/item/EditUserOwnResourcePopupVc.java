@@ -47,7 +47,6 @@ import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
@@ -146,7 +145,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 	@UiField
 	FormPanel fileuploadForm;
-	
+
 	@UiField
 	HTMLEventPanel btnStandardsBrowse;
 	@UiField
@@ -156,7 +155,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	HTMLPanel hazardContainer,standardsCont,uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText,imageContainer,rightsContent,
 	mediaLabelContainer,educationalContainer,momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,
 	mobileFriendlyContainer,mediaDropdownArrowConatainer,centuryBrowseContainer;
-	
+
 	@UiField UlPanel ulSelectedItems;
 
 
@@ -220,8 +219,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,eHearderIconCentury,defaultPanel,defaultPanelMomentsOfLearningPnl;
 
-	@UiField(provided = true)
-	AddTagesCBundle res2;
 
 	private CopyRightPolicyVc copyRightPolicy;
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -293,17 +290,17 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues=new HashMap<Long, String>();
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
-	
+
 	private boolean isCCSSAvailable = false;
 	private boolean isNGSSAvailable = false;
 	private boolean isTEKSAvailable = false;
 	private boolean isCAAvailable = false;
-	
+
 	List<Integer> selectedValues=new ArrayList<>();
 	public FolderDo courseObjG;
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
-	
+
 	String codeID="",code="",label="";
 
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
@@ -317,8 +314,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	public EditUserOwnResourcePopupVc(CollectionItemDo collectionItemDo) {
 
 		super();
-		this.res2 = AddTagesCBundle.INSTANCE;
-		res2.css().ensureInjected();
 		AddSetupAdvancedCBundle.INSTANCE.css().ensureInjected();
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 
@@ -444,7 +439,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			@Override
 			public void onSelection(SelectionEvent<Suggestion> event) {
 				Map<String, String> standard = new HashMap<>();
-				
+
 				standard.put("selectedCodeId", String.valueOf(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
 				standard.put("selectedCodeVal", standardSgstBox.getValue());
 				standard.put("selectedDifferenceId", String.valueOf(3));
@@ -460,7 +455,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				hideDropDown(event);
 			}
-		}); 
+		});
 		setContent(i18n.GL0949(), uiBinder.createAndBindUi(this));
 		defaultText.getElement().setInnerHTML(i18n.GL3093());
 		defaultMomentsOfLearningText.getElement().setInnerHTML(i18n.GL3093());
@@ -1085,7 +1080,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	public void hideCenturyPopup(){
 		centuryPopup.hide();
 	}
-	
+
 	protected void hideDropDown(NativePreviewEvent event) {
 		if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
@@ -1106,10 +1101,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				label.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						if(label.getStyleName().toString().contains("select")){
-							label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+						if(label.getStyleName().toString().contains("at-select")){
+							label.getElement().removeClassName("at-select");
 						}else{
-							label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+							label.getElement().addClassName("at-select");
 						}
 					}
 				});
@@ -1132,7 +1127,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			if(id!=null&&!id.equalsIgnoreCase("")){
 				int idInt=Integer.parseInt(id);
 				if(accessHazards.containsKey(idInt)){
-					label.addStyleName(res2.INSTANCE.css().select());
+					label.addStyleName("at-select");
 				}
 			}
 		}
@@ -1330,7 +1325,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 	public void displayResourceInfo() {
 		String url = collectionItemDo.getResource().getUrl();
-	
+
 			if(collectionItemDo.getResource().getResourceTags()!=null){
 
 			for(int i=0;i<collectionItemDo.getResource().getResourceTags().size();i++){
@@ -1638,10 +1633,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 											isValidate = false;
 										}
 
-										if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive())){
+										if(mobileYes.getStyleName().contains("at-OffButtonsActive")){
 											tagList.add("Mobile Friendly : "+i18n.GL_GRR_YES());
 										}
-										else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive())){
+										else if(mobileNo.getStyleName().contains("at-OffButtonsActive")){
 											tagList.add("Mobile Friendly : "+i18n.GL1735());
 										}
 										if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:")){
@@ -1735,7 +1730,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 														if(isValidImageSize){
 															parseUploadFileDetails(event.getResults());
 														}
-														
+
 													}
 												});
 												fileuploadForm.submit();
@@ -2283,7 +2278,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		}
 	}
 
-	
+
 	/**
 	 *  Adding new skills for the resource collection , will check it has more than
 	 * fifteen standards
@@ -2387,12 +2382,12 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
 	{
 		if(mobileFriendlyVal.trim().contains(i18n.GL_GRR_YES().trim())){
-			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+			mobileYes.getElement().setClassName("at-OffButtonsActive");
+			mobileNo.getElement().setClassName("at-OnButtonDeActive");
 		}
 		else if(mobileFriendlyVal.trim().contains(i18n.GL1735().trim())){
-			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+			mobileNo.getElement().setClassName("at-OffButtonsActive");
+			mobileYes.getElement().setClassName("at-OnButtonDeActive");
 		}
 		updateMobileFriendlyAdvancedStyles();
 	}
@@ -2404,8 +2399,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	 */
 	@UiHandler("mobileYes")
 	public void onmobileYesClick(ClickEvent click){
-		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		mobileYes.getElement().setClassName("at-OffButtonsActive");
+		mobileNo.getElement().setClassName("at-OnButtonDeActive");
 		updateMobileFriendlyAdvancedStyles();
 	}
 
@@ -2415,8 +2410,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	 */
 	@UiHandler("mobileNo")
 	public void onmobileNoClick(ClickEvent click){
-		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		mobileNo.getElement().setClassName("at-OffButtonsActive");
+		mobileYes.getElement().setClassName("at-OnButtonDeActive");
 		updateMobileFriendlyAdvancedStyles();
 	}
 	/**
@@ -2470,8 +2465,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			spanelMediaFeaturePanel.setVisible(true);
 		}
 	}
-
-
 
 	/**
 	 * Inner class to invoke profanity checker.
@@ -2554,12 +2547,12 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	 *  This method is used to set Styles for Mobile Friendly Advanced Option
 	 */
 	public void updateMobileFriendlyAdvancedStyles(){
-		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		if(mobileYes.getStyleName().contains("at-OffButtonsActive"))
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}
-		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		else if(mobileNo.getStyleName().contains("at-OffButtonsActive"))
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 /*			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());*/		}
@@ -2638,8 +2631,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			standardsDropListValues.add(liPanel);
 		}
 	}
-	
-	
+
+
 
 	public void checkStandarsList(List<String> standarsPreferencesList) {
 
@@ -2699,7 +2692,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 	public abstract void showStandardsPopup(String standardVal, String standardsDesc,
 			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
-	
+
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
@@ -2727,7 +2720,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			if (!selectedValues.contains(standard.get("selectedCodeId"))){
 				ulSelectedItems.add(generateLiPanel(standard, "standards"));
 			}
-		
+
 	}
 	private LiPanelWithClose generateLiPanel(final Map<String, String> standard, String tagValue) {
 		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(standard.get("selectedCodeVal"));
@@ -2770,7 +2763,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}
 		}
 	}
-	
+
 	/**
 	 * This method is used to get the selected Std id's
 	 * @return
@@ -2807,14 +2800,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	}
 	/**
 	 * get the standards are added for collection
-	 * 
+	 *
 	 * @param flowPanel
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
 	 */
 	private List<String> getAddedStandards() {
 		List<String> suggestions = new ArrayList<String>();
-		
+
 		Iterator<Widget> widgets = ulSelectedItems.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();

@@ -356,7 +356,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}else{
 				disableCollabaratorOptions(true);
 			}*/
-			
 			if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 				lnkPreview.setVisible(true);
 				toggleButton.setVisible(true);
@@ -367,7 +366,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}else{
 				lnkPreview.setVisible(false);
 				toggleButton.setVisible(true);
-				copyLbl.setVisible(false);
+				boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
+				copyLbl.setVisible(isVisible);
 				moveLbl.setVisible(false);
 				myCollDelLbl.setVisible(true);
 				deletePnl.setVisible(false);
