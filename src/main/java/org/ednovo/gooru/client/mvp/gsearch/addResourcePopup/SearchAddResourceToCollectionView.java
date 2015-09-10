@@ -15,6 +15,7 @@ import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -60,7 +61,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	UiBinder<Widget, SearchAddResourceToCollectionView> {
 	}
 
-	@UiField HTMLPanel floderTreeContainer,remixPopupTabPnl;
+	@UiField HTMLPanel floderTreeContainer,remixPopupTabPnl,myCourseContainer;
 	@UiField Anchor cancelResourcePopupBtnLbl,mycollectionsLbl,mycontentLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
@@ -96,6 +97,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private String courseId=null;
 	private String unitId=null;
 	private String lessonId=null;
+	private String copyType;
 
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";
 
@@ -349,6 +351,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			initWidget(folderContainer=new FlowPanel());
 			folderContainer.setStyleName("foldermenuLevel");
 		}
+		
 		public FolderTreeItem(String levelStyleName,String folderTitle,String gooruOid,FolderDo floderDo){
 			this();
 			if(floderDo.getType()!=null){
@@ -391,6 +394,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			this.courseSummary=floderDo.getSummary();
 			folderContainer.getElement().setInnerText(folderTitle);
 		}
+		
+		
 		public boolean isOpen() {
 			return isOpen;
 		}
@@ -546,10 +551,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			}
 		}
 	}
+	
+	
 	@Override
 	public Button getAddButton(){
 		return btnAddNew;
 	}
+	
+	
 	@Override
 	public void hidePopup(){
 		Element element = Document.get().getElementById("fixedFilterSearchID");
@@ -601,8 +610,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 
 	@Override
-	public void setCopyAndMoveStatus(boolean isCopySelected,
-			boolean isMoveSelected,String selectedType) {
+	public void setCopyAndMoveStatus(boolean isCopySelected,boolean isMoveSelected,String selectedType) {
+		
 		this.isCopySelected=isCopySelected;
 		this.isMoveSelected=isMoveSelected;
 		this.selectedType=selectedType;
@@ -636,6 +645,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public Label getMycollectionsDefaultLbl() {
 		return myCollDefault;
 	}
+	
+	
 	@Override
 	public Image loadingImage(){
 		Image loadingImage =  new Image();
@@ -656,7 +667,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void isFromCopyResource(boolean isFromCopyResource) {
-		// TODO Auto-generated method stub
 		this.isFromCopyResource=isFromCopyResource;
 	}
 
@@ -665,6 +675,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		hide();
 		hideResourceAddPopup();
 	}
+	
+	
 	public void hideResourceAddPopup(){
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
@@ -678,12 +690,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
+	
+	
 	public void setPopupTitle(){
-		String resourceInstanceId = AppClientFactory.getPlaceManager().getRequestParameter("rid");
-		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(nameToken.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE) || nameToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY )
-				|| (nameToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && resourceInstanceId!=null)
-				|| (nameToken.equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY) && resourceInstanceId!=null) || isFromCopyResource){
+
+		if(getStatus()){
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3462_18());
 		}else{
@@ -691,6 +702,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				if("collection".equalsIgnoreCase(this.selectedType)){
 					addtocollHeaderText.setText(i18n.GL3462_13());
 					addingTextLbl.setText(i18n.GL3462_14());
+				}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
+					addtocollHeaderText.setText(i18n.GL3510());
+					addingTextLbl.setText(i18n.GL3509());
+				}else if(!StringUtil.isEmpty(copyType)&& LESSON.equalsIgnoreCase(copyType)){
+					addtocollHeaderText.setText(i18n.GL3512());
+					addingTextLbl.setText(i18n.GL3511());
 				}else{
 					addtocollHeaderText.setText(i18n.GL3462_13_1());
 					addingTextLbl.setText(i18n.GL3462_14_1());
@@ -799,7 +816,20 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			if(folderWidget instanceof FolderTreeItem){
 				folderTreeItemWidget = (FolderTreeItem) folderWidget;
 				String foldertypevalue=	folderTreeItemWidget.getType();
-				enableDisableAddBtn((COURSE.equalsIgnoreCase(foldertypevalue) || UNIT.equalsIgnoreCase(foldertypevalue))?false:true);
+				if(myCourseContainer.isVisible()){
+					enableDisableAddBtn((COURSE.equalsIgnoreCase(foldertypevalue) || UNIT.equalsIgnoreCase(foldertypevalue))?false:true);
+				}else{
+					if((COURSE.equalsIgnoreCase(foldertypevalue))){
+						enableDisableAddBtn(false);
+					}
+					enableDisableAddBtn(((UNIT.equalsIgnoreCase(copyType) || LESSON.equalsIgnoreCase(copyType))&&!((COURSE.equalsIgnoreCase(foldertypevalue)))?true:false));
+					/*if(UNIT.equalsIgnoreCase(copyType)){
+						enableDisableAddBtn(true);
+					}else if(LESSON.equalsIgnoreCase(copyType)){
+						enableDisableAddBtn(true);
+					}*/
+				}
+				
 				if (folderTreeItemWidget.isOpen()) {
 					folderTreeItemWidget.removeStyleName("open");
 					folderTreeItemWidget.setOpen(false);
@@ -839,6 +869,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					String typevalue=	folderTreeItemWidget.getType();
 					if(FOLDER.equalsIgnoreCase(typevalue)){
 						getFolderItems(item, folderTreeItemWidget.getGooruOid());
+					}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
 					}else{
 						courseId=urlparams.get(O1_LEVEL);
 						unitId=urlparams.get(O2_LEVEL);
@@ -850,6 +881,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					parent.setSelected(false);
 				}
 				item.setState(!item.getState(), false);
+				
 			}else if(folderWidget instanceof CollectionTreeItem){
 				removePreviousSelectedItem();
 				cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
@@ -875,5 +907,18 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			btnAddExisting.setEnabled(false);
 			btnAddExisting.getElement().addClassName("disabled");
 		}
+	}
+
+
+	@Override
+	public void disableTabs(boolean isVisible,String copyType) {
+		if(UNIT.equalsIgnoreCase(copyType)||LESSON.equalsIgnoreCase(copyType)){
+			this.copyType=copyType;
+		}else{
+			this.copyType=null;
+		}
+		myCourseContainer.setVisible(isVisible);
+		
+		
 	}
 }

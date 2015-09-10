@@ -72,4 +72,6 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	public void isFromCopyResource(boolean isFromCopyResource);
 	public Image loadingImage();
 	public void closeTabView();
+	
+	public void disableTabs(boolean isVisible, String copyType);
 }
