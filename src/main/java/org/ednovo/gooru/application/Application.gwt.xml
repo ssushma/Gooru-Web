@@ -11,7 +11,7 @@
 	<inherits name='com.gwtplatform.mvp.Mvp' />
 	<inherits name='com.allen_sauer.gwt.dnd.gwt-dnd' />
 	<inherits name="com.google.gwt.http.HTTP" />
-	<inherits name='com.google.code.gwt.crop.GWTCropper' />
+	 <inherits name='com.google.code.gwt.crop.GWTCropper'/>
 	<inherits name='com.nitrous.gwt.earth.GwtEarthAPI' />
 	<inherits name='br.com.freller.tool.PrintIt' />
 	<inherits name='com.google.gwt.query.Query' />

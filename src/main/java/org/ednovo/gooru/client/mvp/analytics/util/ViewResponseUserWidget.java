@@ -42,6 +42,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -186,7 +187,7 @@ public class ViewResponseUserWidget extends Composite {
 	   		        	Label answerChoice=new Label();
 	   		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 	   		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-	   		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+	   		        	String matext =getTextFromHTML(attemptsObj.get(j).isObject().get("text").isString().stringValue());
 	   		        	String colorCode="",text="";
 						if(status.equalsIgnoreCase("1")) {
 							colorCode = "#4E9746";
@@ -229,7 +230,7 @@ public class ViewResponseUserWidget extends Composite {
 			if(oeText==null || oeText.trim().isEmpty()){
 				userResponselbl.setText(i18n.GL3116());
 			}else{
-				userResponselbl.setText(oetextDataDO.getOEText());
+				userResponselbl.setText(getTextFromHTML(oetextDataDO.getOEText()));
 			}
 			if((isSummary && feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("false")) && (oeText!=null && !oeText.trim().isEmpty())){
 				giveFeedBackpnl.setVisible(true);
@@ -289,5 +290,13 @@ public class ViewResponseUserWidget extends Composite {
 				}
 			});
 		}
+	}
+
+	private String getTextFromHTML(String html){
+		if (!"+".equalsIgnoreCase(html)){
+			html = URL.decodeQueryString(html);
+		}
+		AppClientFactory.printInfoLogger("html : "+html);
+		return html;
 	}
 }

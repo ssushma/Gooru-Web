@@ -72,9 +72,9 @@ public class HomeBannerView extends BaseViewWithHandlers<HomeBannerUiHandlers> i
 		setWidget(uiBinder.createAndBindUi(this));
 
 		if (AppClientFactory.loggedInUser != null){
-			imgBanner.setUrl(AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint() +"/images/newlandingpage/"+generateRandomNumber()+".png");
+			imgBanner.setUrl(AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint() +"/images/newlandingpage/"+generateRandomNumber()+".jpg");
 		}else{
-			imgBanner.setUrl("images/newlandingpage/"+generateRandomNumber()+".png");
+			imgBanner.setUrl("images/newlandingpage/"+generateRandomNumber()+".jpg");
 		}
 
 		lblPageTitle1.setText(i18n.GL3284_2());

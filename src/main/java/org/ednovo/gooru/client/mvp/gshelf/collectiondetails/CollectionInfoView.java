@@ -88,6 +88,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -125,6 +126,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	@UiField PPanel colltitle,collimagetitle,tagcollectiontitle;
 	@UiField UlPanel ulSelectedItems;
 	@UiField PPanel learningObjPpanel;
+	@UiField InlineLabel cropImage;
 	private boolean isLanguageObjectInfo=false;
 	private boolean isCenturySkillsInfo=false;
 	private boolean isDepthOfKnlzeInfo = false;
@@ -1314,7 +1316,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
         }
 	}
-
-	
+	@UiHandler("cropImage")
+	public void onClickOfCropImage(ClickEvent event){
+		getUiHandlers().displayCropImage(collThumbnail.getUrl());
+	}
 }
 

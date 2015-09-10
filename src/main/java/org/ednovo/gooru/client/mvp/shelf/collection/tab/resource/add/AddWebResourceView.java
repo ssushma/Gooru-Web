@@ -1328,23 +1328,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			if (label.getStyleName().contains("select")) {
 				accessHazardsSelected.add(Integer.parseInt(label.getElement().getId()));
 			}
-
 		}
-
-		/*
-		 * if(flashingHazard.getElement().getClassName().contains("select")){
-		 * String hazardsStr = accessHazard.getText()+" : "
-		 * +flashingHazard.getText(); accessHazardsSelected.add(hazardsStr); }
-		 * if(motionSimulationHazard.getElement().getClassName().contains(
-		 * "select")) { String hazardsStr = accessHazard.getText()+" : "
-		 * +motionSimulationHazard.getText();
-		 * accessHazardsSelected.add(hazardsStr); }
-		 * if(soundHazard.getElement().getClassName().contains("select")) {
-		 * String hazardsStr = accessHazard.getText()+" : "
-		 * +soundHazard.getText(); accessHazardsSelected.add(hazardsStr); }
-		 */
-		// accessHazardsArr = accessHazardsSelected.toArray(new
-		// String[accessHazardsSelected.size()]);
 		setAdvancedAccessHazardStyles(accessHazardsSelected.size());
 		return accessHazardsSelected;
 	}
@@ -1485,14 +1469,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 													mediaType = i18n.GL_GRR_MOBILE_FRIENDLY();
 													tagList.add("Mobile Friendly : " + mobileYes.getText());
 
-												}
-
-										else if (mobileNo.getStyleName()
+												}else if (mobileNo.getStyleName()
 												.contains("at-OffButtonsActive")) {
-
 													tagList.add("Mobile Friendly : " + mobileNo.getText());
 													mediaType = i18n.GL_GRR_NOT_MOBILE_FRIENDLY();
-
 												}
 												List<Integer> mediaFeaturesList = new ArrayList<>();
 												if (!lblMediaPlaceHolder.getText()
