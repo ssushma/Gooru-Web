@@ -32,6 +32,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -144,7 +145,7 @@ public abstract class LoginPopupUc extends PopupPanel{
 	private static final String ERR_GL010502 = "401-GL010502";
 	private static final String ERR_GL010503 = "401-GL010503";
 	private static final String ERR_GL0081="401-GL0081";
-
+	private static final String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
 
 
 	@UiTemplate("LoginPopupUc.ui.xml")
@@ -403,9 +404,23 @@ public abstract class LoginPopupUc extends PopupPanel{
 						    AppClientFactory.fireEvent(new SetHeaderEvent(result));
 
 						    AppClientFactory.setUserflag(true);
-						    if(result.getMeta() != null && result.getMeta().getTaxonomyPreference() != null && result.getMeta().getTaxonomyPreference().getCode() != null){
-						    	AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
-						    }
+						    /// To get the user Preference :
+
+						    AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+									USER_META_ACTIVE_FLAG,
+									new SimpleAsyncCallback<ProfileDo>() {
+										@Override
+										public void onSuccess(final ProfileDo profileObj) {
+											if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
+												UserDo user = AppClientFactory.getLoggedInUser();
+												user.getMeta().setTaxonomyPreference(profileObj.getUser().getMeta().getTaxonomyPreference());
+
+												AppClientFactory.setLoggedInUser(user);
+										    	AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+										    }
+										}
+									});
+
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
 						    }
@@ -469,7 +484,6 @@ public abstract class LoginPopupUc extends PopupPanel{
 								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 							}
 
-						    showNewGooruTryOut(result);
 						    if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME)) {
 						    	AppClientFactory.fireEvent(new SetLoginStatusEvent(true));
 						    }
@@ -690,25 +704,25 @@ public abstract class LoginPopupUc extends PopupPanel{
 	 * @param user
 	 *            instance of {@link UserDo}
 	 */
-	private void showNewGooruTryOut(UserDo user) {
-		if (user != null) {
-			int flag = user.getViewFlag() != null ? user.getViewFlag() : 0;
-			if (flag == 0 && !AppClientFactory.isAnonymous()) {
-				/*ImprovedGooruPopUpView popupview=new ImprovedGooruPopUpView();
-				popupview.show();
-				popupview.center();*/
-
-				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
-					@Override
-					public void onSuccess(UserDo newUser) {
-						UserDo user = AppClientFactory.getLoggedInUser();
-						user.setViewFlag(newUser.getViewFlag());
-						AppClientFactory.setLoggedInUser(user);
-					}
-				});
-			}
-		}
-	}
+//	private void showNewGooruTryOut(UserDo user) {
+//		if (user != null) {
+//			int flag = user.getViewFlag() != null ? user.getViewFlag() : 0;
+//			if (flag == 0 && !AppClientFactory.isAnonymous()) {
+//				/*ImprovedGooruPopUpView popupview=new ImprovedGooruPopUpView();
+//				popupview.show();
+//				popupview.center();*/
+//
+//				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
+//					@Override
+//					public void onSuccess(UserDo newUser) {
+//						UserDo user = AppClientFactory.getLoggedInUser();
+//						user.setViewFlag(newUser.getViewFlag());
+//						AppClientFactory.setLoggedInUser(user);
+//					}
+//				});
+//			}
+//		}
+//	}
 
 	private static native boolean isCookieEnabled() /*-{
 		return navigator.cookieEnabled;

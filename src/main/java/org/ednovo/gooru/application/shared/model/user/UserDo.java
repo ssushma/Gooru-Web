@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package org.ednovo.gooru.application.shared.model.user;
 
@@ -37,13 +37,13 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * @author Search Team
- * 
+ *
  */
 @JsonInclude(Include.NON_NULL)
 public class UserDo extends ResponseStatusDo implements IsSerializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 8351101332489190167L;
 
@@ -75,56 +75,40 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	private String usernameDisplay;
 	private List<CustomFieldDo> customFields;
 	private Integer active;
-	
+
 	private Integer statusCode;
-	
+
 	private String createdOn;
-	
-	private boolean isBeforeProductionSwitch=false;
-	
-	private boolean profileUserVisibility; 
+
+	private boolean profileUserVisibility;
 
 	private String dateOfBirth;
-	
+
 	private String accountCreatedType;
-	
+
 	private String organizationName;
-	
+
 	private UserMetaDo meta;
-	
+
 	private String accessToken;
-	
+
 	private String refreshToken;
-	
+
 	private String errorMsg;
-	
-	private ResponseStatusDo responseDo;  
-	
+
+	private ResponseStatusDo responseDo;
+
 	public UserDo(){}
-	
-	
-	/** 
-	 * This method is to get the isBeforeProductionSwitch
-	 */
-	public boolean isBeforeProductionSwitch() {
-		return isBeforeProductionSwitch;
-	}
 
-	/** 
-	 * This method is to set the isBeforeProductionSwitch
-	 */
-	public void setBeforeProductionSwitch(boolean isBeforeProductionSwitch) {
-		this.isBeforeProductionSwitch = isBeforeProductionSwitch;
-	}
 
-	/** 
+	/**
 	 * This method is to get the createdOn
 	 */
 	public String getCreatedOn() {
 		return createdOn;
 	}
 
-	/** 
+	/**
 	 * This method is to set the createdOn
 	 */
 	public void setCreatedOn(String createdOn) {
@@ -315,14 +299,14 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 		this.loginType = loginType;
 	}
 
-	/** 
+	/**
 	 * This method is to get the profileUserVisibility
 	 */
 	public boolean isProfileUserVisibility() {
 		return profileUserVisibility;
 	}
 
-	/** 
+	/**
 	 * This method is to set the profileUserVisibility
 	 */
 	public void setProfileUserVisibility(boolean profileUserVisibility) {
@@ -345,13 +329,13 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 		this.customFields = customFields;
 	}
 
-	/** 
+	/**
 	 * This method is to get the user date of birth
 	 */
 	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
-	/** 
+	/**
 	 * This method is to set the user dateofbirth
 	 */
 	public void setDateOfBirth(String dateOfBirth) {
@@ -367,7 +351,7 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	}
 
 
-	/** 
+	/**
 	 * This method is to get the organizationName
 	 */
 	public String getOrganizationName() {
@@ -375,7 +359,7 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	}
 
 
-	/** 
+	/**
 	 * This method is to set the organizationName
 	 */
 	public void setOrganizationName(String organizationName) {
@@ -433,7 +417,7 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	}
 
 
-	/** 
+	/**
 	 * This method is to get the accessToken
 	 */
 	public String getAccessToken() {
@@ -441,7 +425,7 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	}
 
 
-	/** 
+	/**
 	 * This method is to set the accessToken
 	 */
 	public void setAccessToken(String accessToken) {
@@ -449,7 +433,7 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	}
 
 
-	/** 
+	/**
 	 * This method is to get the refreshToken
 	 */
 	public String getRefreshToken() {
@@ -457,7 +441,7 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	}
 
 
-	/** 
+	/**
 	 * This method is to set the refreshToken
 	 */
 	public void setRefreshToken(String refreshToken) {
@@ -481,7 +465,7 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	}
 
 
-	/** 
+	/**
 	 * This method is to get the responseDo
 	 */
 	public ResponseStatusDo getResponseDo() {
@@ -489,12 +473,12 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	}
 
 
-	/** 
+	/**
 	 * This method is to set the responseDo
 	 */
 	public void setResponseDo(ResponseStatusDo responseDo) {
 		this.responseDo = responseDo;
 	}
-	
-	
+
+
 }

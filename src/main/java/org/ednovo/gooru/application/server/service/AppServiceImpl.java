@@ -114,16 +114,6 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 					user.setDateOfBirth(v2UserDo.getDateOfBirth());
 					user.setAccountCreatedType(user.getAccountCreatedType());
 
-					//				user.setCreatedOn(v2UserDo.getCreatedOn());
-					Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
-					Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
-					// if user created after production switch
-					if (userCreatedDate.getTime() >= prodDate.getTime()){
-						user.setBeforeProductionSwitch(false);
-					}else{
-						user.setBeforeProductionSwitch(true);
-					}
-
 					setUserFilterProperties(user);
 					deleteLoggedInInfo();
 					setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId(),user.getDateOfBirth());
