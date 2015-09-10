@@ -856,7 +856,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		public void onClick(ClickEvent event) {
 			CheckBox checkBox = (CheckBox) event.getSource();
 			boolean checked = checkBox.getValue();
-
 			depthOfKnowledges.clear();
 			setDOKCheckBoxes();
 		}
@@ -864,65 +863,53 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 
 	public void setDOKCheckBoxes(){
-		/*if(chkLevelRecall.isChecked())
-		{
+		if(chkLevelRecall.getValue()){
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
 			depthObj.setValue(chkLevelRecall.getText());
-			depthOfKnowledges.add(depthObj);
-		}
-		else
-		{
+			depthOfKnowledges.add(depthObj.getId());
+		}else{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelRecall.getText());
-			depthOfKnowledges.add(depthObj);
+			depthOfKnowledges.add(depthObj.getId());
 		}
 
-		if(chkLevelSkillConcept.isChecked())
-		{
+		if(chkLevelSkillConcept.getValue()){
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
 			depthObj.setValue(chkLevelSkillConcept.getText());
-			depthOfKnowledges.add(depthObj);
-		}
-		else
-		{
+			depthOfKnowledges.add(depthObj.getId());
+		}else{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelSkillConcept.getText());
-			depthOfKnowledges.add(depthObj);
+			depthOfKnowledges.add(depthObj.getId());
 		}
 
-		if(chkLevelStrategicThinking.isChecked())
-		{
+		if(chkLevelStrategicThinking.getValue()){
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
 			depthObj.setValue(chkLevelStrategicThinking.getText());
-			depthOfKnowledges.add(depthObj);
-		}
-		else
-		{
+			depthOfKnowledges.add(depthObj.getId());
+		}else{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelStrategicThinking.getText());
-			depthOfKnowledges.add(depthObj);
+			depthOfKnowledges.add(depthObj.getId());
 		}
 
-		if(chkLevelExtendedThinking.isChecked())
-		{
+		if(chkLevelExtendedThinking.getValue()){
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
 			depthObj.setValue(chkLevelExtendedThinking.getText());
-			depthOfKnowledges.add(depthObj);
-		}
-		else
-		{
+			depthOfKnowledges.add(depthObj.getId());
+		}else{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelExtendedThinking.getText());
-			depthOfKnowledges.add(depthObj);
-		}*/
+			depthOfKnowledges.add(depthObj.getId());
+		}
 	}
 
 
@@ -933,10 +920,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addDepthOfKnowledgeAnc.removeStyleName("advancedOptionsTabActive");
 		depthOfKnowledgeContainer.setVisible(true);
 	}
-
-
-
-
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
@@ -1427,8 +1410,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				isAddBtnClicked=true;
 			}
 		}
-
-
 		if(isAddBtnClicked){
 			isRightsClicked=rightsChkBox.getValue();
 			isAddBtnClicked=false;
@@ -1755,6 +1736,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				standards.add(codeDo.getCodeId());
 			}
 			collectionQuestionItemDo.setStandardIds(standards);
+			collectionQuestionItemDo.setSkillIds(getSelectedCenturySkills());
 			collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledges);
 
 			if(questionType.equalsIgnoreCase("HS_IMG")){
@@ -2684,6 +2666,16 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	}
 
+	public List<Integer> getSelectedCenturySkills(){
+		List<Integer> selectedValues=new ArrayList<Integer>();
+		int size=centuryPanel.getWidgetCount();
+		System.out.println("AsdfADS::"+size);
+		for(int i=0;i<size;i++){
+			DownToolTipWidgetUc downToolTipWidgetUc=(DownToolTipWidgetUc)centuryPanel.getWidget(i);
+			selectedValues.add(Integer.parseInt(downToolTipWidgetUc.getElement().getId()));
+		}
+		return selectedValues;
+	}
 	public void setStandardsContainer(){
 		if(ulSelectedItems.getWidgetCount()>0){
 			addStandardsAnc.removeStyleName("advancedOptionsTabs");
