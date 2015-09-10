@@ -38,6 +38,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
@@ -151,7 +152,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	UlPanel standardsDropListValues;
 
 	@UiField
-	HTMLPanel standardsCont,uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText,imageContainer,rightsContent,
+	HTMLPanel hazardContainer,standardsCont,uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText,imageContainer,rightsContent,
 	mediaLabelContainer,educationalContainer,momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,
 	mobileFriendlyContainer,mediaDropdownArrowConatainer,centuryBrowseContainer;
 
@@ -201,9 +202,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 	@UiField FlowPanel standardContainer,centuryPanel,centuryContainer;
 
-	@UiField Label accessHazard,flashingHazard,motionSimulationHazard,soundHazard;
-
-	@UiField Label mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
+	@UiField Label accessHazard,mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
 
 	@UiField ScrollPanel spanelMediaFeaturePanel;
 
@@ -468,6 +467,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}
 		};
 		getAddStandards();
+		setHazard();
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -578,7 +578,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		resourceEducationalLabel.getElement().setAttribute("alt", i18n.GL1684());
 		resourceEducationalLabel.getElement().setAttribute("title", i18n.GL1684());
 		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
-		resourcemomentsOfLearningLabel.getElement().setId("lblResourcemomentsOfLearningLabel");
 		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1684());
 		resourcemomentsOfLearningLabel.getElement().setAttribute("title", i18n.GL1684());
 		educationalpanel.getElement().setId("pnlEducationalpanel");
@@ -860,14 +859,13 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		mobileNo.getElement().setId("btnNo");
 		mobileNo.getElement().setAttribute("alt",i18n.GL1735());
 		mobileNo.getElement().setAttribute("title",i18n.GL1735());
-
+		
 		accessHazard.setText(i18n.GL1804());
 		accessHazard.getElement().setId("lblAccessHazard");
 		accessHazard.getElement().setAttribute("alt",i18n.GL1804());
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-
-		flashingHazard.setText(i18n.GL3110());
+		/*flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");
 		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
 		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
@@ -880,7 +878,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		soundHazard.setText(i18n.GL3112());
 		soundHazard.getElement().setId("lblSoundHazard");
 		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
-		soundHazard.getElement().setAttribute("title",i18n.GL3112());
+		soundHazard.getElement().setAttribute("title",i18n.GL3112());*/
 
 
 		mediaLabel.setText("Media Feature");
@@ -1065,12 +1063,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 								deletedStandardsDo.add(deletedObj);
 								standardsDo.remove(codeObj);
 								centurySelectedValues.remove(Long.parseLong(id));
-
 							}
 						});
 						this.getParent().removeFromParent();
 						return;
-
 					}
 				}
 			}
@@ -1093,6 +1089,62 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
         		standardsDropListValues.getElement().removeAttribute("style");
         	}
     	}
+	}
+	public void setHazardData(List<ListValuesDo> hazards){
+		if(hazards!=null){
+			hazardContainer.clear();
+			for(ListValuesDo do1:hazards){
+				final Label label=new Label();
+				label.setText(do1.getName());
+				label.setStyleName("accessHazardLbl");
+				label.getElement().setId(do1.getId()+"");
+				label.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						if(label.getStyleName().toString().contains("at-select")){
+							label.getElement().removeClassName("at-select");
+						}else{
+							label.getElement().addClassName("at-select");
+						}
+					}
+				});
+				hazardContainer.add(label);
+				if(collectionItemDo!=null&&collectionItemDo.getAccessHazard()!=null){
+					setAccessHazardObjectVal(collectionItemDo.getAccessHazard());
+				}
+			}
+		}
+	}
+	public void setAccessHazardObjectVal(List<checkboxSelectedDo> valuesDos){
+		Map<Integer, String> accessHazards=new HashMap<>();
+		for(checkboxSelectedDo listValuesDo:valuesDos){
+			accessHazards.put(listValuesDo.getId(), listValuesDo.getName());
+		}
+		int size=hazardContainer.getWidgetCount();
+		for(int i=0;i<size;i++){
+			Label label=(Label)hazardContainer.getWidget(i);
+			String id=label.getElement().getId();
+			if(id!=null&&!id.equalsIgnoreCase("")){
+				int idInt=Integer.parseInt(id);
+				if(accessHazards.containsKey(idInt)){
+					label.addStyleName("at-select");
+				}
+			}
+		}
+		setAdvancedAccessHazardStyles(valuesDos.size());
+	}
+	public void setHazard(){
+		AppClientFactory.getInjector().getResourceService().getAccessHazards(new AsyncCallback<List<ListValuesDo>>() {
+			@Override
+			public void onSuccess(List<ListValuesDo> result) {
+				if(result!=null){
+					setHazardData(result);
+				}
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 	}
 
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
@@ -1287,7 +1339,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 					setMobileFriendlyObjectVal(collectionItemDo.getResource().getResourceTags().get(i).getLabel());
 				}
 				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Access Hazard")){
-					setAccessHazardObjectVal(collectionItemDo.getResource().getResourceTags().get(i).getLabel());
+					setAccessHazardObjectVal(collectionItemDo.getAccessHazard());
 				}
 			}
 		}
@@ -1339,36 +1391,31 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
 		setImage(url, category);
-		if(collectionItemDo.getResource().getEducationalUse()!=null){
-			for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
-				   if(item.isSelected()){
-					    resourceEducationalLabel.setText(item.getValue());
-						educationalUsePanel.setVisible(false);
-						educationalDropDownLblOpen = false;
-						mandatoryEducationalLbl.setVisible(false);
-						setAdvancedOptionsStyles();
-				   }
-				}
+		if(collectionItemDo.getEducationalUse()!=null){
+			for (checkboxSelectedDo item : collectionItemDo.getEducationalUse()) {
+				    resourceEducationalLabel.setText(item.getValue());
+					educationalUsePanel.setVisible(false);
+					educationalDropDownLblOpen = false;
+					mandatoryEducationalLbl.setVisible(false);
+					setAdvancedOptionsStyles();
+			}
 		}
 
-		if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
-			for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {
-				   if(item.isSelected()){
-					   resourcemomentsOfLearningLabel.setText(item.getValue());
-					   resourcemomentsOfLearningLabel.getElement().setAttribute("alt", item.getValue());
-						resourcemomentsOfLearningLabel.getElement().setAttribute("title", item.getValue());
-					   momentsOfLearningPanel.setVisible(false);
-					   momentsOfLearningOpen = false;
-					   mandatorymomentsOfLearninglLbl.setVisible(false);
-					   setAdvancedOptionsStyles();
-				   }
-				}
+		if(collectionItemDo.getMomentsOfLearning()!=null){
+			for (checkboxSelectedDo item : collectionItemDo.getMomentsOfLearning()) {
+				   resourcemomentsOfLearningLabel.setText(item.getValue());
+				   resourcemomentsOfLearningLabel.getElement().setAttribute("alt", item.getValue());
+				   resourcemomentsOfLearningLabel.getElement().setAttribute("title", item.getValue());
+				   momentsOfLearningPanel.setVisible(false);
+				   momentsOfLearningOpen = false;
+				   mandatorymomentsOfLearninglLbl.setVisible(false);
+				   setAdvancedOptionsStyles();
+			}
 		}
 
 		if(collectionItemDo.getStandards()!=null){
 			ulSelectedItems.clear();
 			standardsDo.clear();
-
 			for (Map<String, String> map: collectionItemDo.getStandards()) {
 				CodeDo codeObj=new CodeDo();
 				for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -1415,9 +1462,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			updateStandardsAdvancedSetupStyle();
 		}
 		//This will set the 21 centry skill values if the user as added already
-		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
+		if(collectionItemDo.getSkills()!= null && collectionItemDo.getSkills().size()>0){
 			centuryPanel.clear();
-			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
+			for (StandardFo standardObj : collectionItemDo.getSkills()) {
 				 CodeDo codeObj=new CodeDo();
 				 codeObj.setCodeId(standardObj.getCodeId());
 				 codeObj.setCode(standardObj.getLabel());
@@ -1427,7 +1474,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}
             updateCenturyAdvancedSetupStyle();
 		}
-
+		if(collectionItemDo.getMediaType()!=null){
+			setMobileFriendlyObjectVal(collectionItemDo.getMediaType());
+		}
 	}
 	/**
 	 * @function updateCenturyAdvancedSetupStyle
@@ -1516,13 +1565,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		@SuppressWarnings("deprecation")
 		@Override
 		public void onClick(ClickEvent event) {
-
 			lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
 			panelAction.getElement().getStyle().setDisplay(Display.NONE);
-
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
-
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
@@ -1597,20 +1643,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 											tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
 										}
 
-										String hazardArr[] = setAccessHazards();
-
-										if(hazardArr != null){
-											for(int i=0;i<hazardArr.length;i++){
-												tagList.add(hazardArr[i].toString());
-											}
-										}
 										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase("")){
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
 												tagList.add("Educational Use : "+resourceEducationalLabel.getText());
 											}
 										}
-
-
 
 										if (isValidate) {
 											if(!resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
@@ -2377,83 +2414,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		mobileYes.getElement().setClassName("at-OnButtonDeActive");
 		updateMobileFriendlyAdvancedStyles();
 	}
-
-
-
-	/**
-	 * If resource has access hazard this method will be invoked to set respective access hazard.
-	 * @return accessHazardsArr {@link String[]}
-	 */
-	public String[] setAccessHazards(){
-		String[] accessHazardsArr = null;
-		List<String> accessHazardsSelected = new ArrayList<String>();
-
-		if(flashingHazard.getElement().getClassName().contains("select")){
-			String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
-			//String hazardsStr = flashingHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
-		if(motionSimulationHazard.getElement().getClassName().contains("select")){
-			String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
-			//String hazardsStr = motionSimulationHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
-		if(soundHazard.getElement().getClassName().contains("select")){
-			String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
-			//String hazardsStr = soundHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
-
-		accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
-		setAdvancedAccessHazardStyles(accessHazardsArr.length);
-		return accessHazardsArr;
-	}
-
-
-
-	/**
-	 * Click event for flashing hazard under access hazard option.
-	 * @param click {@link ClickEvent}
-	 */
-	@UiHandler("flashingHazard")
-	public void onflashingHazardClick(ClickEvent click){
-		if(flashingHazard.getStyleName().toString().contains("at-select"))	{
-			flashingHazard.getElement().removeClassName("at-select");
-		}else{
-			flashingHazard.getElement().addClassName("at-select");
-		}
-		setAccessHazards();
-	}
-
-	/**
-	 * Click event for motionSimulationHazard hazard under access hazard option.
-	 * @param click {@link ClickEvent}
-	 */
-	@UiHandler("motionSimulationHazard")
-	public void onmotionSimulationHazardClick(ClickEvent click){
-		if(motionSimulationHazard.getStyleName().toString().contains("at-select")){
-			motionSimulationHazard.getElement().removeClassName("at-select");
-		}else{
-			motionSimulationHazard.getElement().addClassName("at-select");
-		}
-		setAccessHazards();
-	}
-
-	/**
-	 * Click event for soundHazard hazard under access hazard option.
-	 * @param click {@link ClickEvent}
-	 */
-	@UiHandler("soundHazard")
-	public void onsoundHazardClick(ClickEvent click){
-		if(soundHazard.getStyleName().toString().contains("at-select")){
-			soundHazard.getElement().removeClassName("at-select");
-		}else{
-			soundHazard.getElement().addClassName("at-select");
-		}
-		setAccessHazards();
-	}
-
-
 	/**
 	 * If resource has any media features, this method will be invoked and sets the respective value.
 	 * @param mediaFeatureVal {@link String}
@@ -2475,29 +2435,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		}
 		catch(Exception ex)	{
 			AppClientFactory.printSevereLogger(ex.getMessage());
-		}
-	}
-
-
-	/**
-	 * Sets the respective access hazards for resource.
-	 * @param accessHazardStr {@link String}
-	 */
-	public void setAccessHazardObjectVal(String accessHazardStr)
-	{
-
-		String[] stringArry=accessHazardStr.split(" : ");
-		if(stringArry.length!=0){
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3110().trim())){
-				flashingHazard.getElement().addClassName("at-select");
-			}
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3111().trim())){
-				motionSimulationHazard.getElement().addClassName("at-select");
-			}
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3112().trim())){
-				soundHazard.getElement().addClassName("at-select");
-			}
-			setAdvancedAccessHazardStyles(stringArry.length);
 		}
 	}
 
@@ -2528,8 +2465,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			spanelMediaFeaturePanel.setVisible(true);
 		}
 	}
-
-
 
 	/**
 	 * Inner class to invoke profanity checker.

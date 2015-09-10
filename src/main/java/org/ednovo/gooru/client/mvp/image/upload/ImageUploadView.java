@@ -568,9 +568,11 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	public void setImageUpload(final MediaUploadDo mediaUploadDo) {
 		imageCropPopup.clear();
 		imagUploadFloPanel.setVisible(false);
+		
 		appPopUp.hide();
 		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if (mediaUploadDo != null && mediaUploadDo.getStatusCode() == 200) {
+			//getUiHandlers().cropImage(mediaUploadDo.getName(),null, null,null,null,mediaUploadDo.getUrl());
 			ImageCropView imageCropView = new ImageCropView() {
 				@Override
 				public void onCancelCrop() {
@@ -583,9 +585,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 					}else{
 						Window.enableScrolling(true);
 					}
-//					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
-
 				@Override
 				public void onBackToUpload() {
 					resetImageUploadWidget();
@@ -598,9 +598,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 						Window.enableScrolling(true);
 					}
 					appPopUp.show();
-//					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
-
 				@Override
 				public void onCrop() {
 					glasspanelLoadingImage(true);
@@ -620,12 +618,9 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 					Window.enableScrolling(true);
 				}
 			});
-			//imageCropFloPanel.add(imageCropView);
-//			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
 			imageCropPopup.clear();
 			imageCropPopup.add(imageCropView);
 			imageCropPopup.show();
-			/*Window.enableScrolling(true);*/
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
@@ -737,7 +732,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	  }-*/;
 
 	public static native String getUserAgent() /*-{
-	return navigator.userAgent.toLowerCase();
+		return navigator.userAgent.toLowerCase();
 	}-*/;
 
 	public void setAspectRatio(float aspectRatio){
@@ -748,6 +743,63 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	public void isFromEditQuestion(boolean isEdit) {
 		this.isEdit=isEdit;
 	}
-
-
+	/**
+	 * This method is used to display crop popup
+	 * @param mediaUploadDo
+	 */
+	@Override
+	 public void displayCropPopup(final MediaUploadDo mediaUploadDo){
+		imageCropPopup.clear();
+		imagUploadFloPanel.setVisible(false);
+		imageCropFloPanel.setVisible(false);
+		appPopUp.hide();
+		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		ImageCropView imageCropView = new ImageCropView() {
+			@Override
+			public void onCancelCrop() {
+				resetImageUploadWidget();
+				appPopUp.hide();
+				imageCropPopup.hide();
+				Window.scrollTo(0, 0);
+				if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
+				}
+			}
+			@Override
+			public void onBackToUpload() {
+				resetImageUploadWidget();
+				imageCropPopup.clear();
+				imageCropPopup.hide();
+				Window.scrollTo(0, 0);
+				if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
+				}
+				appPopUp.show();
+			}
+			@Override
+			public void onCrop() {
+				glasspanelLoadingImage(true);
+				getUiHandlers().cropImage(mediaUploadDo.getName(), getSelectionHeight(), getSelectionWidth(), getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getUrl());
+			}
+			@Override
+			public void onLoad(){
+				super.onLoad();
+				imageCropPopup.center();
+			}
+		};
+		imageCropView.cropImage(mediaUploadDo.getUrl(),aspectRatio);
+		imageCropView.addCanvasLoadHandler(new LoadHandler() {
+			@Override
+			public void onLoad(LoadEvent event) {
+				imageCropPopup.center();
+				Window.enableScrolling(true);
+			}
+		});
+		imageCropPopup.add(imageCropView);
+		imageCropPopup.show();
+	 }
 }
