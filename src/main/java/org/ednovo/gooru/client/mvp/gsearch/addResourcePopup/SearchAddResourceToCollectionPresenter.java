@@ -150,6 +150,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			type=null;
 			accessType = ACESSTEXT;
 		}
+		
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
@@ -179,6 +180,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			}
 		});
 	}
+	
+	
+	
 	@Override
 	public void getFolderItems(final TreeItem item,String parentId) {
 		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
@@ -188,6 +192,10 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			}
 		});
 	}
+	
+	
+	
+	
 	@Override
 	public void addResourceToCollection(final String selectedFolderOrCollectionid,final String searchType,final String title,final HashMap<String, String> urlparams,final boolean isFromMyCourse) {
 		if(selectedFolderOrCollectionid!=null){
@@ -246,6 +254,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			});
 		}
 	}
+	
+	
+	
 	@Override
 	public void addCollectionToFolder(final String selectedFolderOrCollectionid,final String searchType, final String title, final int folerLevel,HashMap<String, String> urlparams) {
 			this.urlParameters=urlparams;
@@ -349,6 +360,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			AppClientFactory.getInjector().getResourceService().copyCollection(collection, "true", null,getSaveCollectionAsyncCallback());
 		}
 	}
+	
 	/**
 	 * @return instance of collectionDo after collection save
 	 */
@@ -397,9 +409,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		return flag;
 	}
 
+	
 	@Override
-	public void getCourseItems(final TreeItem item,String courseId, String UnitId,
-			String lessionId, String typeValue) {
+	public void getCourseItems(final TreeItem item,String courseId, String UnitId,String lessionId, String typeValue) {
 		final String COLLECTION_ASSESMENT="collection,assessment";
 		AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse(0, 20,courseId, UnitId, lessionId, null, COLLECTION_ASSESMENT, false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
@@ -408,6 +420,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			}
 		});
 	}
+	
+	
 	@Override
 	public void CopyToplevelMyCollections(String collectionId, String folderId,String searchType,String collectionTitle,final HashMap<String, String> urlparams) {
 		AppClientFactory.getInjector().getResourceService().CopyToplevelMyCollections(getCollectionGooruId(), folderId, this.collectionTitle, new SimpleAsyncCallback<CollectionDo>() {
@@ -459,6 +473,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			unitId=urlparams.get("o2");
 			lessonId=urlparams.get("o3");
 		}
+		
 		AppClientFactory.getInjector().getResourceService().CopyCollectionToLesson(courseId, unitId, lessonId, getCollectionGooruId(),this.collectionTitle, new org.ednovo.gooru.application.client.SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
@@ -617,4 +632,5 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	public void getLoadingImage() {
 		getView().loadingImage();
 	}
+
 }
