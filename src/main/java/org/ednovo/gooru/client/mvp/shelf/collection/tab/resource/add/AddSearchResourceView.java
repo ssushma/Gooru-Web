@@ -306,11 +306,11 @@ public abstract class AddSearchResourceView extends Composite {
 				filterMap.put(IsGooruSearchView.SUBJECT_FLT, subjectDoFilter);
 			}
 		}
-		filterSearchDo.setFilters(filterMap);
 		filterMap.put("fltNot.scollectionGooruOIds", collectionId);
+		filterSearchDo.setFilters(filterMap);
 		getSuggestedResourceSearchResults(filterSearchDo,collectionId);
 	}
-	
+
 	public abstract void hidePopup();
 
 	private void setData(SearchDo<ResourceSearchResultDo> result,String collectiongooruOid) {
@@ -318,24 +318,24 @@ public abstract class AddSearchResourceView extends Composite {
 		if(suggestedSearchResults.size()==0) {
 			suggestedResourcesPanel.setVisible(false);
 			noResultsLabel.setHTML(i18n.GL1957());
-			noResultsLabel.getElement().setAttribute("alt", i18n.GL1957());
-			noResultsLabel.getElement().setAttribute("title", i18n.GL1957());
+			noResultsLabel.getElement().setAttribute("alt", noResultsLabel.getElement().getInnerText());
+			noResultsLabel.getElement().setAttribute("title",noResultsLabel.getElement().getInnerText());
 			noResultsPanel.setVisible(true);
 			noResultsLabel.setVisible(true);
 		} else {
 			suggestedResourcesPanel.setVisible(true);
-				for(int i = 0; i < suggestedSearchResults.size(); i++) {
-					if(suggestedSearchResults.size()<=2){
-						noResultsLabel.setVisible(true);
-						noResultsLabel.setHTML("");
-						noResultsLabel.setHTML(i18n.GL1958());
-						noResultsLabel.getElement().setAttribute("alt", i18n.GL1958());
-						noResultsLabel.getElement().setAttribute("title", i18n.GL1958());
-						}
-					if(i>3){
-						noResultsLabel.setVisible(false);
-						break;
-					}
+			for(int i = 0; i < suggestedSearchResults.size(); i++) {
+				if(suggestedSearchResults.size()<=2){
+					noResultsLabel.setVisible(true);
+					noResultsLabel.setHTML("");
+					noResultsLabel.setHTML(i18n.GL1958());
+					noResultsLabel.getElement().setAttribute("alt",noResultsLabel.getElement().getInnerText());
+					noResultsLabel.getElement().setAttribute("title",noResultsLabel.getElement().getInnerText());
+				}
+				if(i>7){
+					noResultsLabel.setVisible(false);
+					break;
+				}
 				AddSearchSuggestedResourceView addsearchobj = new AddSearchSuggestedResourceView(suggestedSearchResults.get(i),collectiongooruOid) {
 					@Override
 					public void closePopup() {
