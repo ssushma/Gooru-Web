@@ -474,7 +474,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
 	            Image categorylbl=new Image();
 	            String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
-	            categorylbl.setUrl(urlDomain+StringUtil.getResourceTypeImage(resourceCategory.toLowerCase()));
+	            categorylbl.addStyleName(StringUtil.getResourceFormatImage(resourceCategory));
 				adTable.setWidget(i, 1,categorylbl);
 				adTable.setWidget(i, 2,questionTitle);
 
