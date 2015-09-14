@@ -297,14 +297,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				try{
-					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-						if(publisherSgstBox.isSuggestionListShowing()){
-							publisherSgstBox.hideSuggestionList();
-						}
-						if(aggregatorSgstBox.isSuggestionListShowing()){
-							aggregatorSgstBox.hideSuggestionList();
-						}
-					}
 					String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
 						if(resultCountVal>=8 && isApiInProgress){
@@ -330,7 +322,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(1), ClickEvent.getType());
 		btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
-		
+		getAddStandards();
 		//btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
 		gradesDropDown.addDomHandler(new GradesDropDownHandler(), ClickEvent.getType());
 		oerLbl.addClickHandler(new ClickOnOER());
@@ -492,7 +484,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			getAddStandards();
 			GWT.runAsync(new RunAsyncCallback(){
 				@Override
 				public void onSuccess() {
@@ -1798,7 +1789,27 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	};
 
-
+	public void OnStandardsClickEvent(Button standardsButtonClicked)
+	{
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+			//	getUiHandlers().setUpdatedStandards();
+			}
+		});
+	}
+	@Override
+	public void setUpdatedStandards(List<Map<String, String>> standsListArray){
+		if(standsListArray.size()!=0){
+			for(int i=0; i<standsListArray.size(); i++){
+				pnlAddFilters.add(createTagsLabel(standsListArray.get(i).get("selectedCodeVal"),"standardPanel"));
+			}
+			callSearch();
+		}
+	}
 	public class MouseOverOnImage implements MouseOverHandler{
 		String mouseOverTxt;
 
@@ -1974,7 +1985,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params, true);
 	}
 	public final void populateStandardValues(){
-		standardsDropListValues.clear(); 
         for (String standardsTypesArray1 : standardsTypesArray) {
             List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
             LiPanel liPanel = new LiPanel();
@@ -2098,5 +2108,18 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			 filtersMap.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
 		 }
 		 return filtersMap;
+	}
+	
+	@Override
+	public void noStarSearchResult(){
+		searchResults.setText("There are no results for *");
+		lblLoadingText.setVisible(false);
+		searchResults.setVisible(true);
+		searchResults.setText(i18n.GL3210());
+		pnlBackToTop.setVisible(false);
+		panelBorderBox.getElement().getStyle().setBackgroundColor("#FFFFFF");
+		searchResults.setVisible(false);
+		searchResultPanel.clear();
+		searchResultPanel.add(NoSearchResultWidget.getInstance());
 	}
 }
