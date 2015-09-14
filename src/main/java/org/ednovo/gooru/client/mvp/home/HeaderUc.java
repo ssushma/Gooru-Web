@@ -387,6 +387,8 @@ public class HeaderUc extends Composite
 								&& editSearchTxtBox.getText().length() > 0) {
 							if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
 							{
+							if(getEditSearchTxtBox().getText().length()>2)
+							{
 							gooruLabel.setVisible(false);
 							MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim()
 									.toLowerCase(), "HeaderUc");
@@ -411,12 +413,19 @@ public class HeaderUc extends Composite
 							AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 							editSearchTxtBox.hideSuggestionList();
 							getEditSearchTxtBox().setText(searchText.trim());
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3583());
+							}
 						}
 						else
 						{
 							gooruLabel.setVisible(true);
 							getEditSearchTxtBox().setText("");
-							gooruLabel.setText("* cannot be your search term!");
+							gooruLabel.setText(i18n.GL3581());
 						}
 						}
 						else
@@ -426,7 +435,7 @@ public class HeaderUc extends Composite
 							{
 								gooruLabel.setVisible(true);
 								getEditSearchTxtBox().setText("");
-								gooruLabel.setText("Search Term cannot be empty!");
+								gooruLabel.setText(i18n.GL3582());
 							}
 						}
 
@@ -1172,6 +1181,8 @@ public class HeaderUc extends Composite
 						&& getEditSearchTxtBox().getText().length() > 0) {
 				if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
 				{
+					if(getEditSearchTxtBox().getText().length()>2)
+					{
 					savePlaceRequest();
 					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
 							.toLowerCase(), "HeaderUc");
@@ -1193,12 +1204,19 @@ public class HeaderUc extends Composite
 					}
 					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 					getEditSearchTxtBox().hideSuggestionList();
+					}
+					else
+					{
+						gooruLabel.setVisible(true);
+						getEditSearchTxtBox().setText("");
+						gooruLabel.setText(i18n.GL3583());
+					}
 				}
 				else
 				{
 					gooruLabel.setVisible(true);
 					getEditSearchTxtBox().setText("");
-					gooruLabel.setText("* cannot be your search term!");
+					gooruLabel.setText(i18n.GL3581());
 				}
 				}else{
 					//else is for * query search.
@@ -1207,7 +1225,7 @@ public class HeaderUc extends Composite
 					{
 						gooruLabel.setVisible(true);
 						getEditSearchTxtBox().setText("");
-						gooruLabel.setText("Search Term cannot be empty!");
+						gooruLabel.setText(i18n.GL3582());
 					}
 				}
 
@@ -1420,6 +1438,10 @@ public class HeaderUc extends Composite
 					if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 						if (getEditSearchTxtBox().getText() != null
 								&& getEditSearchTxtBox().getText().length() > 0) {
+							if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+							{
+							if(getEditSearchTxtBox().getText().length()>2)
+							{
 							if (AppClientFactory.getCurrentPlaceToken()
 									.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
 								MixpanelUtil.Perform_Search_FromTeach();
@@ -1467,6 +1489,20 @@ public class HeaderUc extends Composite
 							AppClientFactory.fireEvent(new HomeEvent(
 									HeaderTabType.DISCOVER));
 							getEditSearchTxtBox().hideSuggestionList();
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3583());
+							}
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3581());
+							}
 						}
 					}
 
@@ -1797,6 +1833,8 @@ public class HeaderUc extends Composite
 		if (editSearchTxtBox.getText() != null && editSearchTxtBox.getText().length() > 0) {
 			if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
 			{
+			if(getEditSearchTxtBox().getText().length()>2)
+			{
 			MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim().toLowerCase(),"HeaderUc");
 			Map<String, String> params = new HashMap<String, String>();
 			params = updateParams(params);
@@ -1823,7 +1861,14 @@ public class HeaderUc extends Composite
 			{
 				gooruLabel.setVisible(true);
 				getEditSearchTxtBox().setText("");
-				gooruLabel.setText("* cannot be your search term!");
+				gooruLabel.setText(i18n.GL3583());
+			}
+			}
+			else
+			{
+				gooruLabel.setVisible(true);
+				getEditSearchTxtBox().setText("");
+				gooruLabel.setText(i18n.GL3581());
 			}
 		}
 		else
@@ -1833,7 +1878,7 @@ public class HeaderUc extends Composite
 			{
 				gooruLabel.setVisible(true);
 				getEditSearchTxtBox().setText("");
-				gooruLabel.setText("Search Term cannot be empty!");
+				gooruLabel.setText(i18n.GL3582());
 			}
 		}
 
