@@ -879,6 +879,11 @@ public class PlayerDataLogEvents {
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
 		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
 		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
+
+		AppClientFactory.printInfoLogger("Player : "+AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()+"-- @ : "+from+"--courseId : " + courseId
+				+ "-- unitId : " + unitId + "-- Lesson Id : " + lessonId
+				+ "--cid : " + cid + "-- isStudent:" + isStudent
+				+ "-- sessionId : " + sessionId + "-- eventId : " + eventId+"-- userId : "+AppClientFactory.getLoggedInUser().getGooruUId());
 	}
 
 }
