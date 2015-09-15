@@ -569,11 +569,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private class onCopyClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
-			isCopySelected= true;
-			isMoveSelected=false;
-			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
-			getUiHandlers().enableAddButton();
+			if(!(COURSE.equalsIgnoreCase(currentTypeView))){
+				getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
+				getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
+				isCopySelected= true;
+				isMoveSelected=false;
+				getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
+				getUiHandlers().enableAddButton();
+			}
 		}
 	}
 	private class onMoveClickHandler implements ClickHandler{

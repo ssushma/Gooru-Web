@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets.SlmExternalAssessmentForm;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -70,8 +71,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 
 	@UiField Anchor reportUrl;
 
-	@UiField HTMLPanel reportView, imageContainer, resourceImgContainer;
-
+	@UiField HTMLPanel reportView, imageContainer, resourceImgContainer, minimumScoreLblPanel;
+	
 	@UiField H3Panel contentName;
 
 	@UiField PPanel contentDescription;
@@ -81,7 +82,9 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	@UiField Image contentImage;
 
 	@UiField HTMLEventPanel viewReport, leftArrow, rightArrow;
-
+	
+	@UiField SpanPanel minScore;
+	
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 
 	private final String DEFAULT_ASSESSMENT_IMAGE = "../images/default-assessment-image -160x120.png";
@@ -113,14 +116,21 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	interface SlmAssessmentChildViewUiBinder extends UiBinder<Widget, SlmAssessmentChildView> {
 	}
 
-	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId) {
+	public SlmAssessmentChildView(PlanContentDo planContentDo, String status, String userId, int minimumScore) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.planContentDo = planContentDo;
-		setData(planContentDo, status);
+		setData(planContentDo, status, minimumScore);
 		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
 	}
 
-	public void setData(final PlanContentDo planContentDo, final String status) {
+	public void setData(final PlanContentDo planContentDo, final String status, int minimumScore) {
+		String type = planContentDo.getCollectionType();
+		if(type.equalsIgnoreCase("collection")) {
+			minimumScoreLblPanel.setVisible(false);
+		} else {
+			minScore.setText(minimumScore+"%");
+		}
+		
 		contentName.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

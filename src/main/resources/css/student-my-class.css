@@ -2346,6 +2346,15 @@ button.primary.previewBtnIcon {
 	left: 0%;
 	top: 30%;
 }
+.minimumScoreLblPanel {
+	padding: 20px;
+}
+.minimumScoreLblKey {
+	font-size: 14px;
+}
+.minimumScoreLblValue {
+	font-size: 18px;
+}
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     .custom-select select {
         padding-right: 30px;

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -44,7 +44,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- * 
+ *
  */
 public class LogoutPanelVc extends Composite{
 
@@ -52,20 +52,17 @@ public class LogoutPanelVc extends Composite{
 	Anchor logoutAnr, anrSettings, gooruTutorialsAnr;
 	@UiField
 	Anchor feedbackAnr;
-	
-	@UiField
-	Anchor classicGooruAnr;
-	
+
 	@UiField
 	Anchor supportAnr;
-	
+
 	@UiField
 	FlowPanel logPanel;
-	
+
 	@UiField HTMLPanel mainContainer;
-	
+
 	public LogoutPopupVc logoutPopupVc;
-	
+
 	UserDo userdo;
 
 	private static logoutPanelVcUiBinder uiBinder = GWT
@@ -88,11 +85,6 @@ public class LogoutPanelVc extends Composite{
 		anrSettings.getElement().setAttribute("alt",i18n.GL0192());
 		anrSettings.getElement().setAttribute("title",i18n.GL0192());
 		anrSettings.setHref("#settings");
-
-		classicGooruAnr.setText(i18n.GL0193());
-		classicGooruAnr.getElement().setId("lnkClassicGooru");
-		classicGooruAnr.getElement().setAttribute("alt",i18n.GL0193());
-		classicGooruAnr.getElement().setAttribute("title",i18n.GL0193());
 
 		supportAnr.setText(i18n.GL0194());
 		supportAnr.getElement().setId("lnkSupport");
@@ -119,30 +111,13 @@ public class LogoutPanelVc extends Composite{
 		logoutAnr.getElement().setAttribute("alt",i18n.GL0197());
 		logoutAnr.getElement().setAttribute("title",i18n.GL0197());
 
-		classicGooruAnr.setVisible(false);
-
 		logPanel.getElement().setId("fpnlLogPanel");
 		triggerUserVoice();
 
 		mainContainer.getElement().setId("headerMainPanel");
 	}
 
-	/**
-	 * Get confirm to logout popup
-	 *
-	 * @param clickEvent
-	 *            instance of {@link ClickEvent}
-	 */
 
-	/*public int getGooruGuideIconLeft() {
-		return gooruGuideImgLbl.getAbsoluteLeft();
-	}
-
-	public int getGooruGuideIconTop() {
-		return gooruGuideImgLbl.getAbsoluteTop();
-	}
-	*/
-	
 	@UiHandler("anrSettings")
 	public void onClickSetting(ClickEvent event){
 		hide();
@@ -155,13 +130,13 @@ public class LogoutPanelVc extends Composite{
         logoutPopupVc = new LogoutPopupVc();
         hide();
 	}
-	
+
 	@UiHandler("supportAnr")
 	public void supportLinkClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Click_On_Support();
 		hide();
 	}
-	
+
 	@UiHandler("classicGooruAnr")
 	public void classicGooruClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Click_On_ClassicGooru();
@@ -169,18 +144,6 @@ public class LogoutPanelVc extends Composite{
 		hide();
 	}
 
-	public void displayClassicGooruLink(boolean isVisible) {
-//		if(isVisible) {
-////			logPanel.getElement().getStyle().setHeight(123, Unit.PX);
-////			classicGooruAnr.setVisible(true);
-//		} else {
-//			logPanel.getElement().getStyle().setHeight(100, Unit.PX);
-//			classicGooruAnr.setVisible(false);
-//		}
-		classicGooruAnr.setVisible(false);
-		//logPanel.getElement().getStyle().setHeight(100, Unit.PX);
-	}
-	
 	public void show(){
 		logPanel.setVisible(true);
 	}
@@ -193,7 +156,7 @@ public class LogoutPanelVc extends Composite{
 	}
 	/**
 	 * Initialise user voice feedback popup
-	 * 
+	 *
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
@@ -204,13 +167,13 @@ public class LogoutPanelVc extends Composite{
 		hide();
 	}
 
-	protected final native void triggerUserVoice() /*-{ 
+	protected final native void triggerUserVoice() /*-{
 
 		UserVoice = window.UserVoice || [];
 		$wnd.UserVoice.push(['showTab', 'classic_widget', { mode: 'feedback', primary_color: '#cc6d00', link_color: '#007dbf', forum_id: 192782, tab_label: 'Feedback', tab_color: '#4e9746', tab_position: 'bottom-right', tab_inverted: false }]);
-		
+
 	}-*/;
-	protected final native void triggerUserVoiceFeedback() /*-{ 
+	protected final native void triggerUserVoiceFeedback() /*-{
     var my_options = {
         mode: 'feedback',
         primary_color: '#cc6d00',

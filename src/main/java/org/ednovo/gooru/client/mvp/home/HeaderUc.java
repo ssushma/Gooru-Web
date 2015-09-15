@@ -239,7 +239,7 @@ public class HeaderUc extends Composite
 	Anchor resendEmailAncr;
 
 	@UiField
-	Label logoutDownArrowLbl, loginLink, confirmEmailText;
+	Label logoutDownArrowLbl, loginLink, confirmEmailText,gooruLabel;
 
 	@UiField
 	HTMLEventPanel acctActivationPl;
@@ -385,6 +385,11 @@ public class HeaderUc extends Composite
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						if (editSearchTxtBox.getText() != null
 								&& editSearchTxtBox.getText().length() > 0) {
+							if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+							{
+							if(getEditSearchTxtBox().getText().length()>2)
+							{
+							gooruLabel.setVisible(false);
 							MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim()
 									.toLowerCase(), "HeaderUc");
 							Map<String, String> params = new HashMap<String, String>();
@@ -408,19 +413,29 @@ public class HeaderUc extends Composite
 							AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 							editSearchTxtBox.hideSuggestionList();
 							getEditSearchTxtBox().setText(searchText.trim());
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3583());
+							}
+						}
+						else
+						{
+							gooruLabel.setVisible(true);
+							getEditSearchTxtBox().setText("");
+							gooruLabel.setText(i18n.GL3581());
+						}
 						}
 						else
 						{
 							//else is for * query search.
 							if(getEditSearchTxtBox().getText().isEmpty())
 							{
+								gooruLabel.setVisible(true);
 								getEditSearchTxtBox().setText("");
-								Map<String, String> params = new HashMap<String, String>();
-								params = updateParams(params);
-								Map<String, String> map = params;
-								map.put("query", "*");
-								AppClientFactory.getPlaceManager().revealPlace(
-										PlaceTokens.SEARCH_COLLECTION, map);
+								gooruLabel.setText(i18n.GL3582());
 							}
 						}
 
@@ -439,6 +454,7 @@ public class HeaderUc extends Composite
 			}
 		});
 		initWidget(uiBinder.createAndBindUi(this));
+		gooruLabel.setVisible(false);
 		headerMainPanel.getElement().setAttribute("id", "headerMainPanel");
 
 		logoutPanelVc = new LogoutPanelVc();
@@ -681,6 +697,7 @@ public class HeaderUc extends Composite
 		editSearchTxtBox.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
+				gooruLabel.setVisible(false);
 				int key=event.getNativeEvent().getKeyCode();
 				if(key==KeyCodes.KEY_ENTER){
 					String searchText = editSearchTxtBox.getText();
@@ -851,7 +868,7 @@ public class HeaderUc extends Composite
 
 		@Override
 		public void onClick(final ClickEvent event) {
-
+			gooruLabel.setVisible(false);
 			Window.enableScrolling(true);
 			Cookies.setCookie("searchvalue", "");
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
@@ -885,7 +902,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					AppClientFactory.setPreviousPlaceRequest(AppClientFactory
 							.getPlaceManager().getCurrentPlaceRequest());
 					Storage stockStore = Storage.getLocalStorageIfSupported();
@@ -920,7 +937,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					if (userDo != null && !userDo.getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
@@ -950,7 +967,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					name = "dashboard";
 
 					Window.enableScrolling(true);
@@ -1162,6 +1179,10 @@ public class HeaderUc extends Composite
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
+				if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+				{
+					if(getEditSearchTxtBox().getText().length()>2)
+					{
 					savePlaceRequest();
 					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
 							.toLowerCase(), "HeaderUc");
@@ -1183,18 +1204,28 @@ public class HeaderUc extends Composite
 					}
 					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 					getEditSearchTxtBox().hideSuggestionList();
+					}
+					else
+					{
+						gooruLabel.setVisible(true);
+						getEditSearchTxtBox().setText("");
+						gooruLabel.setText(i18n.GL3583());
+					}
+				}
+				else
+				{
+					gooruLabel.setVisible(true);
+					getEditSearchTxtBox().setText("");
+					gooruLabel.setText(i18n.GL3581());
+				}
 				}else{
 					//else is for * query search.
 
 					if(getEditSearchTxtBox().getText().isEmpty())
 					{
-						Map<String, String> params = new HashMap<String, String>();
-						params = updateParams(params);
-						Map<String, String> map = params;
-						String queryVal = params.get("query");
-						map.put("query", "*");
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.SEARCH_COLLECTION, map);
+						gooruLabel.setVisible(true);
+						getEditSearchTxtBox().setText("");
+						gooruLabel.setText(i18n.GL3582());
 					}
 				}
 
@@ -1331,12 +1362,6 @@ public class HeaderUc extends Composite
 
 			this.switchToClassicView();
 
-			if (userDo.isBeforeProductionSwitch()) {
-				logoutPanelVc.displayClassicGooruLink(true);
-			} else {
-				logoutPanelVc.displayClassicGooruLink(false);
-			}
-
 		} else {
 			mainDotsPanel.getElement().getStyle().clearWidth();
 			mainInnerDotsPanel.getElement().getStyle().clearWidth();
@@ -1409,10 +1434,14 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 						if (getEditSearchTxtBox().getText() != null
 								&& getEditSearchTxtBox().getText().length() > 0) {
+							if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+							{
+							if(getEditSearchTxtBox().getText().length()>2)
+							{
 							if (AppClientFactory.getCurrentPlaceToken()
 									.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
 								MixpanelUtil.Perform_Search_FromTeach();
@@ -1460,6 +1489,20 @@ public class HeaderUc extends Composite
 							AppClientFactory.fireEvent(new HomeEvent(
 									HeaderTabType.DISCOVER));
 							getEditSearchTxtBox().hideSuggestionList();
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3583());
+							}
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3581());
+							}
 						}
 					}
 
@@ -1482,7 +1525,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					isStudyNow = true;
 					if (isClassCodePopupOpen) {
 						if (studyNowToolTip != null && studyNowToolTip.isShowing()) {
@@ -1637,7 +1680,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					Map<String, String> params = new HashMap<String, String>();
 					params.put(GOORU_UID, userDo.getGooruUId());
 
@@ -1788,6 +1831,10 @@ public class HeaderUc extends Composite
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		if (editSearchTxtBox.getText() != null && editSearchTxtBox.getText().length() > 0) {
+			if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+			{
+			if(getEditSearchTxtBox().getText().length()>2)
+			{
 			MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim().toLowerCase(),"HeaderUc");
 			Map<String, String> params = new HashMap<String, String>();
 			params = updateParams(params);
@@ -1809,19 +1856,29 @@ public class HeaderUc extends Composite
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 			editSearchTxtBox.hideSuggestionList();
 			getEditSearchTxtBox().setText(searchText.trim());
+			}
+			else
+			{
+				gooruLabel.setVisible(true);
+				getEditSearchTxtBox().setText("");
+				gooruLabel.setText(i18n.GL3583());
+			}
+			}
+			else
+			{
+				gooruLabel.setVisible(true);
+				getEditSearchTxtBox().setText("");
+				gooruLabel.setText(i18n.GL3581());
+			}
 		}
 		else
 		{
 			//else is for * query search.
 			if(getEditSearchTxtBox().getText().isEmpty())
 			{
+				gooruLabel.setVisible(true);
 				getEditSearchTxtBox().setText("");
-				Map<String, String> params = new HashMap<String, String>();
-				params = updateParams(params);
-				Map<String, String> map = params;
-				map.put("query", "*");
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.SEARCH_RESOURCE, map);
+				gooruLabel.setText(i18n.GL3582());
 			}
 		}
 

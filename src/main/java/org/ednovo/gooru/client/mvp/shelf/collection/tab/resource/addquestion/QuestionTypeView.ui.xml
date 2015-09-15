@@ -80,11 +80,11 @@
 					</g:FlowPanel>
 					<g:Label styleName="containerTitle"	ui:field="depthOfKnowledgeTitle" />
 					<g:FlowPanel styleName="depthOfKnoweldgeInnerContainer">
-						<g:HTMLPanel styleName="outerContiner">
+							<g:HTMLPanel styleName="outerContiner">
 							<g:HTMLPanel styleName="checkBoxinnerContainer">
 								<g:CheckBox styleName="checkBoxlevels"	ui:field="chkLevelRecall"></g:CheckBox>
 							</g:HTMLPanel>
-						<g:HTMLPanel styleName="checkBoxinnerContainer">
+							<g:HTMLPanel styleName="checkBoxinnerContainer">
 								<g:CheckBox styleName="checkBoxlevels" ui:field="chkLevelSkillConcept"></g:CheckBox>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="checkBoxinnerContainer">

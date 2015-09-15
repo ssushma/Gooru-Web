@@ -116,15 +116,21 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	protected static final String ALL = "*";
 
-	SignUpPresenter signUpViewPresenter;
+	SignUpPresenter signUpViewPresenter = null;
 
-	GooruGradesPresenter gooruGradesPresenter;
+	GooruGradesPresenter gooruGradesPresenter = null;
 	StandardsPopupPresenter standardsPopupPresenter;
 
-	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
 
-	ViewMorePeoplePresenter viewMorePeoplePresenter;
+	ViewMorePeoplePresenter viewMorePeoplePresenter=null;
 
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+
+	private static final String USER_META_ACTIVE_FLAG = "0";
 
 	boolean setFilter=true;
 	/**
@@ -186,18 +192,39 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(SearchDo<T> result,boolean isApiCalled) {
 				setSearchDo(result);
+				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subject") || result.getFilters().containsKey("flt.standard"))))
+				{
 				getView().postSearch(result,isApiCalled);
+				}
+				else
+				{
+				getView().noStarSearchResult();
+				}
 			}
 		});
 		setSearchResultsJsonAsyncCallbackFirstLoad(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
 			@Override
 			protected void run(SearchDo<T> searchDo) {
+				if(searchDo.getQuery()!=null && !searchDo.getQuery().isEmpty() && (!searchDo.getQuery().trim().equalsIgnoreCase("*")||(searchDo.getFilters().containsKey("flt.grade") || searchDo.getFilters().containsKey("flt.subject")|| searchDo.getFilters().containsKey("flt.standard"))))
+				{
 				requestSearch(searchDo, this);
+				}
+				else
+				{
+				getView().noStarSearchResult();
+				}
 			}
 			@Override
 			public void onCallSuccess(SearchDo<T>  result) {
 				setSearchDo(result);
+				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subject")|| result.getFilters().containsKey("flt.standard"))))
+				{
 				getView().postSearch(result,false);
+				}
+				else
+				{
+				getView().noStarSearchResult();
+				}
 				//getView().setJsonResponseInStorage(result, false);
 				/*if(getSearchDo().getPageNum()==1){
 					getSearchDo().setPageNum(2);
@@ -231,7 +258,14 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(SearchDo<T> result) {
 				setSearchDo(result);
+				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subject")|| result.getFilters().containsKey("flt.standard"))))
+				{
 				getView().postSearch(result,false);
+				}
+				else
+				{
+				getView().noStarSearchResult();
+				}
 				//getSearchAsyncCallbackLoadInStore().execute(false,result,getSearchDo());
 			}
 		});

@@ -75,6 +75,8 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void setViewTitleWthicon(String title, String type);
 	
-	public void deleteMyCollectionColl(String id); 
+	public void deleteMyCollectionColl(String id);
+	
+	public void disableCopyPopupTabs(boolean isVisible, String copyType);   
 	
 }

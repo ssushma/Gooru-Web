@@ -75,6 +75,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -130,9 +131,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	String style="";
 
 	private String userId = null, contentType = null;
-	
+
 	String classId = "", lessonId = "", unitId = "", courseId = "", assessmentId = "";
-	
+
 	private CollectionDo collectionDo=null;
 	private boolean isCollection = false, isExternalAssessment = false;
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -225,12 +226,12 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		errorPanelData(false, false);
 
 		PrintPnl.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-106)+"px");
-		
+
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)) {
 			PrintPnl.removeStyleName("LearningMapContainer");
 			PrintPnl.getElement().getStyle().setBackgroundColor("white");
 		}
-		
+
 		progressRadial.getElement().setId("fpnlprogressRadial");
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageLoading.getElement().setId("loadingUcCropImageLoadingInStudentSummaryView");
@@ -332,7 +333,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		}
 		setSessionStartTime(result.size()-1);
 	}
-	
+
 	@Override
 	public void setSessionsData(List<UserPlayedSessionDo> result) {
 		sessionsDropDown.clear();
@@ -349,7 +350,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		}
 		setSessionStartTime(0);
 	}
-	
+
 	public void setSessionStartTime(int selectedIndex) {
 		if(sessionData.size()!=0){
 			if(isCollection) {
@@ -438,7 +439,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			} else {
 				printDataTable.add(adTable);
 			}
-			
+
 			Label heading1 = new Label(i18n.GL3259());
 			Label heading2 = new Label(StringUtil.capitalizeFirstLetter(i18n.GL1424()));
 			Label heading3 = new Label(i18n.GL3182());
@@ -506,9 +507,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 
 	@Override
 	public void setQuestionsData(final ArrayList<UserDataDo> result, String contentType, boolean isPrint) {
-		
-		
-		
+
+
+
 		loadingImageLabel.setVisible(false);
 		questionsTable.setVisible(true);
 		if(!isPrint) {
@@ -529,7 +530,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			} else {
 				printDataTable.add(adTable);
 			}
-			
+
 			Label heading1 = new Label(i18n.GL3259());
 			Label heading2 = new Label(i18n.GL0308());
 
@@ -587,7 +588,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 							 String userSelectedOption=entry.getKey();
 							// int ansStatus=entry.getValue();
 							 if(userSelectedOption!=null){
-									anserlbl.setText(userSelectedOption);
+									anserlbl.setText(getTextFromHTML(userSelectedOption));
 									if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
 										anserlbl.getElement().getStyle().setColor(CORRECT);
 									}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
@@ -602,7 +603,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					adTable.setWidget(i, 2,anserlbl);
 				}else if (FIB.equalsIgnoreCase(questionType)){
 					VerticalPanel answerspnl=new VerticalPanel();
-					
+
 					if(result.get(i).getAnswerObject()!=null) {
 						JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
 						JSONObject answerObject = value.isObject();
@@ -615,9 +616,10 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 								Label answerChoice=new Label();
 								boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 								String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-								String fibtext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+								String fibtext =getTextFromHTML(attemptsObj.get(j).isObject().get("text").isString().stringValue());
 								if(skip == false)
 								{
+									AppClientFactory.printInfoLogger("fibtext: "+fibtext+";-- status: "+status);
 									answerChoice.setText(fibtext);
 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 										answerChoice.getElement().getStyle().setColor(INCORRECT);
@@ -650,7 +652,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 								String showMessage = null;
 								boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 								String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-								String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+								String matext =getTextFromHTML(attemptsObj.get(j).isObject().get("text").isString().stringValue());
 								if(skip == false)
 								{
 									if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
@@ -727,7 +729,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			}
 		}
 	}
-	
+
 	/**
 	 * This will return the correct answers
 	 * @param metaDataObj
@@ -748,7 +750,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		String answerObj;
 		String questionType;
 		String attempts;
-		
+
 		public SummaryPopupClick(UserDataDo userDataDo) {
 			answerObj=userDataDo.getAnswerObject();
 			questionType=userDataDo.getType();
@@ -782,18 +784,18 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 			@Override
 			public void onSuccess() {
-				
+
 				if(isCollection) {
 					setPrintData();
 					setDataPanelVisibility(false,true);
 				}
-				
+
 				scoreObject.setVisible(false);
-				
+
 				collectionSummaryText.setVisible(false);
-				
+
 				Map<String, String> printMap=new HashMap<String, String>();
-				
+
 				printMap.put("collectionSummaryText", collectionSummaryText.getElement().getInnerText());
 				printMap.put("collectionImage", collectionImage.getUrl());
 				printMap.put("collectionTitle", collectionTitle.getText());
@@ -804,17 +806,17 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				printMap.put("correctStatus", correctStatus.getText());
 				printMap.put("lastModifiedTime", lastModifiedTime.getText());
 				printMap.put("sessionsDropDown", sessionsDropDown.getItemText(sessionsDropDown.getSelectedIndex()));
-				
+
 				scorePrintObject.getElement().setAttribute("style", "padding: 0 15px;background: #fff;border-bottom: 1px solid #ddd;");
-				
+
 				scorePrintObject.add(new AssessmentProgressReportPrintView(printMap));
-				
-				
+
+
 				if(isClickedOnSave){
 					printOptions.setVisible(false);
-					
+
 					String outputData = PrintPnl.getElement().getInnerHTML().toString();
-					
+
 					setDataPanelVisibility(true,false);
 					printOptions.setVisible(true);
 					getPresenter().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),collectionTitle.getText(),isClickedOnEmail);
@@ -828,7 +830,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			}
 		});
 	}
-	
+
 	private void setDataPanelVisibility(boolean isQuestionData, boolean isPrintData) {
 		questionsTable.setVisible(isQuestionData);
 		printDataTable.setVisible(isPrintData);
@@ -836,16 +838,16 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		scoreObject.setVisible(true);
 		collectionSummaryText.setVisible(true);
 	}
-	
+
 	Timer timer1=new Timer() {
 		@Override
 		public void run() {
 			printButton.setVisible(true);
 			downloadButton.setVisible(true);
-			
+
 		}
 	};
-	
+
 	private void setPrintData() {
 		printDataTable.clear();
 		if(isCollection) {
@@ -854,7 +856,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 			setQuestionsData(getQuestionData(getPresenter().getPrintDataDo(),OE),OE,true);
 		}
 	}
-	
+
 	private ArrayList<UserDataDo> getQuestionData(ArrayList<UserDataDo> result, String type) {
 		ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 		for (UserDataDo userDataDo : result) {
@@ -1040,4 +1042,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		scoreObject.setVisible(false);
 		collectionOverviewPanel.setVisible(false);
 	}
+
+	private String getTextFromHTML(String html){
+		html = html.replaceAll("\\+", "%2B");
+		html = URL.decodeQueryString(html);
+		return html;
+	}
+
 }

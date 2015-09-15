@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
@@ -125,10 +126,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	@Override
 	protected void onReset() {
-		// TODO Auto-generated method stub
 		super.onReset();
-		
-	
 	}
 	@Override
 	protected void onReveal(){
@@ -453,10 +451,21 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget();
 		return shelfTreeWidget;
 	}
-
-
    	public void setSelectedStandards(List<Map<String,String>> standListArray){
    		getView().displaySelectedStandards(standListArray);
    	}
 
+	@Override
+	public void displayCropImage(String imageUrl) {
+		addToPopupSlot(imgUploadPresenter);
+		MediaUploadDo mediaUploadDo=new MediaUploadDo();
+		System.out.println("createDoObj.getThumbnails().getUrl()::"+imageUrl);
+		mediaUploadDo.setName("e6355260-d03f-484c-b6eb-dd6dcd075b12.png");
+		mediaUploadDo.setUrl(imageUrl);
+		imgUploadPresenter.getView().displayCropPopup(mediaUploadDo);
+		imgUploadPresenter.setCollectionImage(true);
+		imgUploadPresenter.setProfileImage(false);
+		imgUploadPresenter.setEditResourceImage(false);
+		imgUploadPresenter.setAnswerImage(false);
+	}
 }

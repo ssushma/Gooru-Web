@@ -463,9 +463,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		});
 	}
 	@Override
-	public boolean checkCopyOrMoveStatus(boolean copySelected,
-			boolean moveSelected,String clickedType) {
-		// TODO Auto-generated method stub
+	public boolean checkCopyOrMoveStatus(boolean copySelected,boolean moveSelected,String clickedType) {
 		this.isCopySelected=copySelected;
 		this.isMoveSelected= moveSelected;
 		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected,clickedType);
@@ -520,6 +518,12 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	public TreeItem getCurrentTreeItem() {
 		return shelfMainPresenter.getEditingWidget();
+	}
+	
+	
+	@Override
+	public void disableCopyPopupTabs(boolean isVisible, String copyType) {
+		searchAddResourceToCollectionPresenter.getView().disableTabs(isVisible,copyType);
 	}
 	
 }
