@@ -73,11 +73,13 @@ import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.application.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.representation.StringRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -2221,4 +2223,51 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		return userPlayedSessions;
 	}
 
+	@Override
+	public boolean getClassUsageDataSignal(String classpageId, String courseId) throws GwtException, ServerDownException {
+		boolean isUsageAvailable = true;
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_CLASS_USAGE_DATA_SIGNAL);
+		
+		if(classpageId!=null) {
+			partialUrl = partialUrl + "&classGooruId="+classpageId;
+		}
+		
+		if(courseId!=null) {
+			partialUrl = partialUrl + "&courseGooruId="+courseId;
+		}
+		
+		getLogger().info(partialUrl);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(), getRestPassword());
+
+		try {
+			if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==200) {
+				jsonRep = jsonResponseRep.getJsonRepresentation();
+				isUsageAvailable = jsonRep.getJsonObject().getJSONObject("message").getBoolean("userSignalsAvailable");
+			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return isUsageAvailable;
+	}
+
+	@Override
+	public String getXlsxReport(String tableData, String fileName) throws GwtException, ServerDownException {
+		StringRepresentation stringRepresentation= null;
+		String savedFileName="";
+		try{
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_HTML_TO_EXCEL_REPORT,getLoggedInSessionToken());
+			String jsonStr="{\"fileName\":\""+fileName+"\",\"html\":\""+tableData+"\"}";
+			logger.info("html to xlsx url: "+url);
+			logger.info("html to xlsx url json: "+jsonStr);
+			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),jsonStr);
+			savedFileName=stringRepresentation.getText();
+			logger.info("savedFileName "+savedFileName);
+		}catch(Exception e){
+			logger.error("Error while generating XLSX file ::", e);
+		}
+		return savedFileName;
+	}
 }

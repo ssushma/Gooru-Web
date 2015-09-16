@@ -31,6 +31,6 @@ public interface TeachStudentDashboardUiHandler extends BaseUiHandlers{
 
 	void openAddPopup();
 
-	void setHtmltopdf(String htmlString, String fileName, boolean isClickedOnEmail);
+	void getXlsxReport(String htmlString, String fileName);
 	
 }

@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.reports;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -35,9 +36,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
-import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.course.TeachCourseReportChildView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.lesson.TeachLessonReportChildView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.unit.TeachUnitReportChildView;
@@ -267,8 +266,13 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 	}
 	
 	public void setPrintIndividualSummayData(final boolean isClickedOnSave, final boolean isClickedOnEmail){
-		String outputData = bodyView.getElement().getInnerHTML().toString();
-		outputData = outputData.replaceAll("images/", urlDomain+"/images/");
-		getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+outputData.replaceAll("\"", "\\\\\""),"summary-data",isClickedOnEmail);
+		String outputData = "";
+		final Iterator<Widget> iterator = bodyView.iterator();
+        while (iterator.hasNext()) {
+            TeachLessonReportChildView reportView = (TeachLessonReportChildView) iterator.next();
+            outputData = reportView.getElement().getInnerHTML().toString();
+        }
+		String contentName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CONTENT_NAME, "");
+		getUiHandlers().getXlsxReport(outputData.replaceAll("\"", "\\\\\""),contentName.replaceAll(" ", "_")+"_teacher_summary_report");
 	}
 }
