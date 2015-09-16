@@ -76,7 +76,7 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 
 	@UiField SimplePanel bodyView;
 	
-	//@UiField Button deleteBtn;
+	@UiField Button deleteBtn;
 	
 	ClasspageDo classpageDo;
 	
@@ -106,10 +106,10 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		studentsAnr.getElement().setAttribute("alt",i18n.GL3403());
 		studentsAnr.getElement().setAttribute("title",i18n.GL3403());
 		
-		/*deleteBtn.setText(i18n.GL3450_18());
+		deleteBtn.setText(i18n.GL3450_18());
 		deleteBtn.getElement().setId("deleteBtnId");
 		deleteBtn.getElement().setAttribute("alt",i18n.GL3450_18());
-		deleteBtn.getElement().setAttribute("title",i18n.GL3450_18());*/
+		deleteBtn.getElement().setAttribute("title",i18n.GL3450_18());
 		
 
 		/*contentSettingsAnr.setText(i18n.GL3404());
@@ -126,7 +126,8 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 		classInfoAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_SETTINGS_INFO,classInfo));
 		minmumScoreAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SCORE,minLiPnl));
 		studentsAnr.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_STUDENTS_ROASTER,studentsPnl));
-		//deleteBtn.addClickHandler(new DleteClassHandler());
+		deleteBtn.addClickHandler(new DleteClassHandler());
+		deleteBtn.setVisible(false);
 		//settLiPanel.addClickHandler(new SubNavigationTabHandler(UrlNavigationTokens.TEACHER_CLASS_CONTENT_SUB_SETTINGS,settLiPanel));
 		
 	}
@@ -248,10 +249,8 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	}
 	
 	private class DleteClassHandler implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 			invokeDeletePopup();
 		}
 	}
@@ -259,10 +258,8 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 	public  void invokeDeletePopup() {
 		final String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
 		deleteContentPopup = new DeleteContentPopup() {
-
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
-				// TODO Auto-generated method stub
 				if(classpageId != null){
 					getUiHandlers().deleteClass(classpageId);
 				}
@@ -270,7 +267,6 @@ public class EditClassSettingsNavigationView extends BaseViewWithHandlers<EditCl
 
 			@Override
 			public void onClickNegitiveButton(ClickEvent event) {
-				// TODO Auto-generated method stub
 				hide();
 				Window.enableScrolling(true);
 			}
