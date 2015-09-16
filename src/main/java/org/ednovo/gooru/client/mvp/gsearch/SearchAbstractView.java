@@ -46,6 +46,7 @@ import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsBundle;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -966,6 +967,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 				@Override
 				public void onSuccess() {
+					removeActiveStylestoOtherSubjects();
 					if(liPanel.getStyleName().equals("active")){
 						liPanel.removeStyleName("active");
 						removeFilter(subjectVal);
@@ -979,6 +981,17 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					callSearch();
 				}
 			});
+		}
+	}
+	public void removeActiveStylestoOtherSubjects() {
+		Iterator<Widget> widgets = ulSubjectPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;				
+				obj.removeStyleName("active");
+				
+			}
 		}
 	}
 	/**
@@ -1119,11 +1132,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private void showSubjectsFilter() {
 		subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
 		if(subjects!=null){
-			String[] split = subjects.split(SUBJECTS_SEPARATOR);
-			for(int i=0; i<split.length; i++){
-				pnlAddFilters.add(createTagsLabel(split[i],"subjectsPanel"));
-				setStyleSelectedFilters(split[i],ulSubjectPanel);
-			}
+			//String[] split = subjects.split(SUBJECTS_SEPARATOR);
+			//for(int i=0; i<split.length; i++){
+				pnlAddFilters.add(createTagsLabel(subjects,"subjectsPanel"));
+				setStyleSelectedFilters(subjects,ulSubjectPanel);
+			//}
 		}else{
 			clearFilter(ulSubjectPanel);
 		}
@@ -1473,10 +1486,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					selectedAuthors += closeLabelSetting.getSourceText();
 				}
 				if("subjectsPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
-					if (!selectedSubjects.isEmpty()) {
-						selectedSubjects += SUBJECTS_SEPARATOR;
-					}
-					selectedSubjects += closeLabelSetting.getSourceText();
+					selectedSubjects = closeLabelSetting.getSourceText();
 				}
 				if("gradePanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 					if (!selectedGrades.isEmpty()) {
