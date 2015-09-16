@@ -862,7 +862,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 			}
 
-
 			newResourceDo.setSkillIds(centurySkillsList);
 			newResourceDo.setMediaType(mediaType);
 			ResourceFormatDo resourceFormat = new ResourceFormatDo();

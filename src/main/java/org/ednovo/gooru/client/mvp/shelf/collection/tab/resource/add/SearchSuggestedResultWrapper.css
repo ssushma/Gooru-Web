@@ -4,8 +4,6 @@
 }
 
 .resourceHeaderPanel {
-	width: 320px;
-	float: left;
 	height: 66px;
 }
 
@@ -67,10 +65,7 @@
 	cursor: pointer;
 }
 .contentPanel {
-	float: left;
-	padding: 45px 0px 0px;
-	left: -4%;
-	position: relative;
+	padding: 45px 10px 0 10px;
 }
 .searchPanel {
 	background: none repeat scroll 0 0 #FFFFFF;
@@ -82,20 +77,19 @@
 	-o-border-radius: 5px 5px 5px 5px;
 	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.1);
-	box-shadow: 0 0 10px rgba(0,0,0,0.1);	
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	-o-box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	-khtml-box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	-ms-box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	cursor: pointer;
 	margin-top: 9px;
 	margin-left: 9px;
-	float: left;
-	cursor: move;
-	width: 90%;
+	display: inline-block;
+	width: 48%;
 }
 .ratingWidgetPanel{
 	float: right;
-	padding-top: 10px;	
+	padding-top: 10px;
 	padding-right: 8px;
 	position: relative;
 }

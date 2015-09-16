@@ -356,7 +356,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}else{
 				disableCollabaratorOptions(true);
 			}*/
-			
 			if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 				lnkPreview.setVisible(true);
 				toggleButton.setVisible(true);
@@ -367,7 +366,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}else{
 				lnkPreview.setVisible(false);
 				toggleButton.setVisible(true);
-				copyLbl.setVisible(false);
+				boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
+				copyLbl.setVisible(isVisible);
 				moveLbl.setVisible(false);
 				myCollDelLbl.setVisible(true);
 				deletePnl.setVisible(false);
@@ -569,11 +569,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private class onCopyClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
-			isCopySelected= true;
-			isMoveSelected=false;
-			getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
-			getUiHandlers().enableAddButton();
+			if(!(COURSE.equalsIgnoreCase(currentTypeView))){
+				getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
+				getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
+				isCopySelected= true;
+				isMoveSelected=false;
+				getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
+				getUiHandlers().enableAddButton();
+			}
 		}
 	}
 	private class onMoveClickHandler implements ClickHandler{

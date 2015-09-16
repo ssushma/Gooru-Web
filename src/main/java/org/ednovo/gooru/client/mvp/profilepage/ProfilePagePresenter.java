@@ -146,7 +146,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(false));
 		callBack = "reveal";
 		isFollow(userId);
-		//createProfileUserData();
+		createProfileUserData();
 	
 	}
 
@@ -161,7 +161,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			if(userResetId != userId) {
 				callBack = "reveal";
 				userId = userResetId;
-				//createProfileUserData();
+				createProfileUserData();
 			}
 			int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";

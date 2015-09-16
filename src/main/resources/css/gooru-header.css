@@ -12,7 +12,11 @@ header {
 	background: -ms-linear-gradient(top, #515151, #333);
 	background: -o-linear-gradient(top, #515151, #333);
 }
-
+#headerMainPanel .goorusearchTextFont{
+	width: 200%;
+position: absolute;
+color: #fbb03b;
+}
 
 #headerMainPanel .menu {
 	color: white;

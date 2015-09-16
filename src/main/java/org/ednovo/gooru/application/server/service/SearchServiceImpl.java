@@ -108,7 +108,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String MY_STRING = "my";
 
 	private static final String TYPE = "type";
-	
+
 	private static final String COURSEID = "c-id";
 
 	private static final String SHARETYPE="shareType";
@@ -138,7 +138,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String LIBRARY_NAME = "libName";
 
 	private static final String USER_ID = "userId";
-	
+
 
 
 	@Autowired
@@ -218,7 +218,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	        	}
 	        }
 		}
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_RESOURCE_SEARCH);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_RESOURCE_SEARCH);
 		filtersMap.put(GooruConstants.Q, query);
 		filtersMap.put(GooruConstants.START,  String.valueOf(searchDo.getPageNum()));
 		filtersMap.put(GooruConstants.LENGTH,  String.valueOf(searchDo.getPageSize()));
@@ -269,7 +269,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(collectionQuery.equalsIgnoreCase("'*'")){
 			collectionQuery = "*";
 		}
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH);
 		Map<String,String> params = searchDo.getFilters();
 
 		params.put(GooruConstants.ACCESS_TYPE, MY_STRING);
@@ -300,7 +300,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public SearchDo<CollectionItemSearchResultDo> getCollectionItems(String collectionId) throws GwtException {
 		JsonRepresentation jsonRep=null;
 		SearchDo<CollectionItemSearchResultDo> searchDo=new SearchDo<CollectionItemSearchResultDo>();
-		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_COLLECTION_ITEMS_LIST, collectionId);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_COLLECTION_ITEMS_LIST, collectionId);
 		getLogger().info("getCollectionItems search::"+url);
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
@@ -313,7 +313,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public SearchDo<CollectionSearchResultDo> getResourceCollections(SearchDo<CollectionSearchResultDo> searchDo) {
 		JsonRepresentation jsonRep=null;
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_RESOURCE_COLLECTION_LIST);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_RESOURCE_COLLECTION_LIST);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.Q, searchDo.getSearchQuery());
 		params.put(GooruConstants.START, String.valueOf(searchDo.getPageNum()));
@@ -335,7 +335,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public SearchDo<String> getSuggestSource(SearchDo<String> searchDo) {
 		JsonRepresentation jsonRep=null;
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.v2_SEARCH_SUGGEST_SOURCE);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.v2_SEARCH_SUGGEST_SOURCE);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.Q, searchDo.getSearchQuery());
 		params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
@@ -352,7 +352,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public SearchDo<CodeDo> getSuggestStandard(SearchDo<CodeDo> searchDo) {
 		JsonRepresentation jsonRep=null;
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SEARCH_SUGGEST_STANDARD, searchDo.getType() != null ? searchDo.getType() : STANDARD);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_SEARCH_SUGGEST_STANDARD, searchDo.getType() != null ? searchDo.getType() : STANDARD);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.Q, searchDo.getSearchQuery());
 		params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
@@ -417,7 +417,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			}else{
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.NEWCLASSPAGEID.getUrl(), contentGooruOid, CLASSPAGE));
 			}
-			
+
 		}else {
 			if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
@@ -570,7 +570,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		    JsonRepresentation jsonRep=null;
 			SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
 			try{
-			String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_NO_RESULT);
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SEARCH_SUGGEST_NO_RESULT);
 			Map<String, String> params = searchDo.getFilters();
 			params.put(GooruConstants.CONTEXT, query);
 			String url = AddQueryParameter.constructQueryParams(partialUrl,params);
@@ -591,7 +591,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		String pageSize="5";
 		String pageNumber="1";
 		JsonRepresentation jsonRep=null;
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SEARCH_AUTO_SUGGEST_KEYWORD);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_SEARCH_AUTO_SUGGEST_KEYWORD);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.Q, searchDo.getSearchQuery());
 		params.put(GooruConstants.LENGTH, pageSize);
@@ -610,7 +610,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo)
 			throws GwtException {
 		JsonRepresentation jsonRep=null;
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SEARCH_SUGGEST_AGGREGATOR);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_SEARCH_SUGGEST_AGGREGATOR);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.Q, searchDo.getSearchQuery());
 		params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
@@ -627,7 +627,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		ArrayList<AutoSuggestContributorSearchDo> autoSuggestContributorSearchDo= new ArrayList<AutoSuggestContributorSearchDo>();
 		JsonRepresentation jsonRep=null;
 		try {
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.v2_SEARCH_SUGGEST_CONTRIBUTOR);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.v2_SEARCH_SUGGEST_CONTRIBUTOR);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.Q, query);
 		params.put(GooruConstants.CONTRIBUTOR_QUERY, contributorquery);
@@ -681,7 +681,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	        	}
 	        }
 		}
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES);
 		try{
 		filtersMap.put(GooruConstants.SEARCH_TERM, searchDo.getSearchQuery());
 		filtersMap.put(GooruConstants.EVENT, COLLECTION_EDIT_EVENT);
@@ -814,7 +814,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 
 	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep=null;
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.Q, searchDo.getSearchQuery());
 
 		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
@@ -913,7 +913,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				collectionQuery = "*";
 			}
 			}
-			String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH,getLoggedInSessionToken());
+			String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH,getLoggedInSessionToken());
 			Map<String,String> params = searchDo.getFilters();
 
 			//params.put(GooruConstants.ACCESS_TYPE, MY_STRING);
@@ -930,7 +930,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			getLogger().info("collection search url::::::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			
+
 			return descralizeCollectionSearchResults(jsonRep.getJsonObject().toString(),searchDo);
 		}catch(Exception e){
 			logger.error("Exception::", e);
@@ -964,7 +964,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 					{
 						query = "*";
 					}
-			
+
 				JsonRepresentation jsonRep=null;
 				Map<String,String> filtersMap=searchDo.getFilters();
 				if(filtersMap!=null){
@@ -984,7 +984,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			        	}
 			        }
 				}
-				String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_RESOURCE_SEARCH,getLoggedInSessionToken());
+				String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_RESOURCE_SEARCH,getLoggedInSessionToken());
 				filtersMap.put(GooruConstants.Q, query);
 				filtersMap.put(GooruConstants.START,  String.valueOf(searchDo.getPageNum()));
 				filtersMap.put(GooruConstants.LENGTH,  String.valueOf(searchDo.getPageSize()));
@@ -994,7 +994,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				filtersMap.put(GooruConstants.ALLOW_SCRIPTING,  TRUE);
 				filtersMap.put(GooruConstants.PROTOCOL_SUPPORTED, "http,https");
 				String url = AddQueryParameter.constructQueryParams(partialUrl, filtersMap);
-			
+
 				getLogger().info("getResourceSearchResultsJson:::::"+url);
 				JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 				jsonRep=jsonResponseRep.getJsonRepresentation();

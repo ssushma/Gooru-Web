@@ -756,17 +756,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			try {
 				String data = jsonRep.getJsonObject().getJSONObject("user").toString();
 				userDo = JsonDeserializer.deserialize(data, UserDo.class);
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					userDo.setBeforeProductionSwitch(false);
-				}else{
-					userDo.setBeforeProductionSwitch(true);
-				}
+
 			} catch (JSONException e) {
-				logger.error("Exception::", e);
-			}
-			catch (ParseException e) {
 				logger.error("Exception::", e);
 			}
 		}
@@ -932,13 +923,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			}else{
 				String data = jsonRep.getJsonObject().toString();
 				userDo = JsonDeserializer.deserialize(data, UserDo.class);
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					userDo.setBeforeProductionSwitch(false);
-				}else{
-					userDo.setBeforeProductionSwitch(true);
-				}
 				userDo.setToken(token);
 				setUserFilterProperties(userDo);
 			}
