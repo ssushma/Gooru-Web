@@ -977,8 +977,8 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 				isProtocolsMatched=!sourceUrl.contains("https");
 		}
 		else{
-			if(!sourceUrl.contains("docs.google.com")){
-				isProtocolsMatched=sourceUrl.contains("https");
+			if(sourceUrl.contains("docs.google.com")){
+				isProtocolsMatched=false;
 			}else{
 				isProtocolsMatched=true;
 			}
