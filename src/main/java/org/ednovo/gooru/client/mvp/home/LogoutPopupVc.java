@@ -275,6 +275,20 @@ public class LogoutPopupVc extends Composite{
 						}
 						map.put("flt.standard", standard);
 					}
+					if(map.containsKey("flt.subjectName"))
+					{
+						String subjectName = map.get("flt.subjectName");
+						subjectName = subjectName.replaceAll("%5C1", "&");
+						try
+						{
+							subjectName = URL.decodeQueryString(subjectName);
+						}
+						catch(Exception ex)
+						{
+							AppClientFactory.printSevereLogger(ex.getMessage());
+						}
+						map.put("flt.subjectName", subjectName);
+					}
 					if(map.containsKey("category"))
 					{
 						String category = map.get("category");
