@@ -97,6 +97,24 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	private String errorMsg;
 
 	private ResponseStatusDo responseDo;
+	
+	private boolean showProfilePage;
+
+	/**
+	 * @return the showProfilePage
+	 */
+	public boolean isShowProfilePage() {
+		return showProfilePage;
+	}
+
+
+	/**
+	 * @param showProfilePage the showProfilePage to set
+	 */
+	public void setShowProfilePage(boolean showProfilePage) {
+		this.showProfilePage = showProfilePage;
+	}
+
 
 	public UserDo(){}
 
@@ -479,6 +497,7 @@ public class UserDo extends ResponseStatusDo implements IsSerializable {
 	public void setResponseDo(ResponseStatusDo responseDo) {
 		this.responseDo = responseDo;
 	}
+
 
 
 }
