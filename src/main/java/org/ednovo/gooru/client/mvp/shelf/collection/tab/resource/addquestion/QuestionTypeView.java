@@ -698,6 +698,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addExplanationAnc.addStyleName("advancedOptionsTab");
 		addExplanationAnc.removeStyleName("advancedOptionsTabActive");
 		explanationContainer.setVisible(true);
+		explainationTextArea.showTinyMceToolBar();
 	}
 
 	public void resetToHints(){
