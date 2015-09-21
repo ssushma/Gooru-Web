@@ -1299,3 +1299,89 @@ margin-bottom: -10px;
   font-size: 14px;
   font-weight: bold;
 }
+.editClassDeleteBtnHover {
+	position: relative;
+	width: 100px;
+	margin: 0 auto;
+}
+
+.editClassDeleteBtnHover .deleteBtnMessagePopup {
+	position: absolute;
+	top: 14px;
+	display: none;
+	text-align: left;
+	z-index: 999;
+}
+
+.editClassDeleteBtnHover:hover .deleteBtnMessagePopup {
+	display: block;
+}
+
+.editClassDeleteBtnHover .bubble-arrow-style {
+	width: 0;
+	left: -123px;
+	top: -4px;
+	transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	-webkit-transform: rotate(270deg);
+	height: 0;
+	border: 15px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	margin: auto;
+	border-top: 0;
+	z-index: 100000;
+}
+
+.editClassDeleteBtnHover .standards-inner {
+	color: #515151;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	font-size: 12px;
+	padding: 30px;
+	width: 369px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.2);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+.editClassDeleteBtnHover .standards li div.standards-inner {
+	color:#515151;
+	background-color:white;
+	border: 1px solid #ddd;
+	font-size:12px;
+	padding:10px;
+	-moz-box-shadow:     0 0 10px rgba(0,0,0,.2);
+	-webkit-box-shadow:  0 0 10px rgba(0,0,0,.2);
+	box-shadow:          0 0 10px rgba(0,0,0,.2);
+	border-radius: 4px;
+}
+
+.editClassDeleteBtnHover .standards li:hover div.standard-popup {
+	display:block;
+}
+
+.editClassDeleteBtnHover .standards li div.standard-popup {
+	display:none;
+	position:absolute;
+	left:-50px;
+	top:20px;
+	width: 150px;
+}
+
+.editClassDeleteBtnHover .standards-Popup {
+	width: 350px;
+	padding: 20px;
+	margin-left: 111px;
+	margin-top: -53px;
+}
+.editClassDeletePopupNotes {
+	width: 300px;
+	margin: 0 auto;
+}
+.editClassDeletePopupVisibility {
+	display: none;
+}
