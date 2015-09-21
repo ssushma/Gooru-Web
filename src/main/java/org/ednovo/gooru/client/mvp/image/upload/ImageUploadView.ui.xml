@@ -196,7 +196,7 @@
 			background-image: url(./images/crop.png) !important;
 			background-color: #efefef !important;
 			background-repeat: no-repeat !important;
-			background-position: 10px 7px;
+			background-position: 10px 7px !important;
 			padding-left: 34px !important;
 			padding-right: 12px !important;
 			float: right;
