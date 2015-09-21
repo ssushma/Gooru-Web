@@ -100,7 +100,6 @@ public abstract class ImageCropView extends Composite{
 		backPageLinkLbl.getElement().setId("lblBackPageLinkLbl");
 		backPageLinkLbl.getElement().setAttribute("alt",i18n.GL1231());
 		backPageLinkLbl.getElement().setAttribute("title",i18n.GL1231());
-		backPageLinkLbl.setVisible(false);
 		
 		cropText.setHTML(i18n.GL1232());
 		cropText.getElement().setId("htmlCropText");

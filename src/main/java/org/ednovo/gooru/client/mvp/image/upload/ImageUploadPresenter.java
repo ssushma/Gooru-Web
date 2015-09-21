@@ -131,7 +131,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			public void onSuccess(MediaUploadDo mediaUploadDo) {
 				getView().glasspanelLoadingImage(false);
 				getView().setImageUpload(mediaUploadDo);
-				setUploadData(mediaUploadDo.getUrl(),mediaUploadDo);
+				//setUploadData(mediaUploadDo.getUrl(),mediaUploadDo);
 				isImageUploadedFromUrl=true;
 			}
 			@Override
@@ -143,7 +143,9 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		setCropImageAsyncCallback(new SimpleAsyncCallback<String>(){
 			@Override
 			public void onSuccess(String filename) {
-				setUploadData(filename,null);
+				//setUploadData(filename,null);
+				System.out.println("filename::"+filename);
+				getView().setCroppedImage(filename);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -213,7 +215,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			@Override
 			public void onSuccess(MediaUploadDo mediaUploadDo) {
 				getView().setImageUpload(mediaUploadDo);
-				setUploadData(mediaUploadDo.getUrl(),mediaUploadDo);
+				//setUploadData(mediaUploadDo.getUrl(),mediaUploadDo);
 				isImageUploadedFromUrl=false;
 			}
 		});
@@ -245,6 +247,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			}
 		});
 	}
+	@Override
 	public void setUploadData(String filename,MediaUploadDo mediaUploadDo){
 		if(mediaUploadDo!=null){
 			this.fileNameWithoutRepository=mediaUploadDo.getName();

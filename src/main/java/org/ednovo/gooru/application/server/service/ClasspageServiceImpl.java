@@ -2232,11 +2232,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_CLASS_USAGE_DATA_SIGNAL);
 		
 		if(classpageId!=null) {
-			partialUrl = partialUrl + "&classGooruId="+classpageId;
-		}
-		
-		if(courseId!=null) {
-			partialUrl = partialUrl + "&courseGooruId="+courseId;
+			partialUrl = partialUrl + "classGooruId="+classpageId;
 		}
 		
 		getLogger().info(partialUrl);

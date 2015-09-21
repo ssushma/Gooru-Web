@@ -78,4 +78,5 @@ public interface IsImageUploadView extends PopupView, IsViewWithHandlers<ImageUp
 	public void isFromEditQuestion(boolean isEdit);
 	
 	public void displayCropPopup(final MediaUploadDo mediaUploadDo);
+	void setCroppedImage(String filename);
 }
