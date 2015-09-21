@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.edit;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 
 /**
@@ -44,12 +43,14 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
  */
 public interface EditClassSettingsViewUiHandler extends BaseUiHandlers{
 
-	
 	void showImageUploadWidget();
-
 	
 	void generateShareLink(String classUid);
 
 	void updateClass(String title, String grade, String sharing, String fileName);
+
+	void deleteClass(String classpageId);
+
+	void checkDataStatus(String classpageId);
 
 }

@@ -15,15 +15,11 @@
 		}
 		
 		.imageUploadMinHeight {
-			min-height: 360px;
 			clear: both;
 		}
-		
 		.imageUploadMinHeightUrl {
 			clear: both;
-			min-height: 290px;
 		}
-		
 		.imagePopupRight {
 			background-color: #FFFFFF;
 			float: left;
@@ -48,16 +44,13 @@
 			display: block !important;
 		}
 		.imageUploadList:hover{
-	    text-decoration:none;
-
-	}
-		
+		    text-decoration:none;
+		}
 		.imageUploadInfo {
 			font-size: 15px;
 			padding: 5px;
 			margin: 0 0 1px;
 		}
-		
 		.uploadPicstureInfo {
 			margin-bottom: 10px;
 		}
@@ -65,20 +58,16 @@
 		.imageUploadOnWeb {
 			display: none;
 		}
-		
 		.imageUploadOnUrl {
 			display: block;
 		}
-		
 		.fileUploadUrl {
 			float: left;
 		}
-		
 		.uploadUrlContainer {
 			float: left;
 			width: 410px;
 		}
-		
 		.textboxonUrl {
 			border: 1px solid #CCCCCC;
 			float: left;
@@ -86,28 +75,23 @@
 			margin-right: 5px;
 			width: 270px;
 		}
-		
 		.textImageUrl {
 			float: left;
 			padding: 5px
 		}
-		
 		.uploadActive {
 			background: #ffffff;
 			border-right: 1px solid #C1D9FF;
 			display: block !important;
 		}
-		
 		.infoUrlUpload {
 			color: #777777;
 			font-size: 10px;
 		}
-		
 		.imageCropPanel {
 			min-width: 600px;
 			min-height: 400px;
 		}
-		
 		.uploadImageButtonOnWeb {
 			float: left;
 			margin: 0px;
@@ -198,6 +182,32 @@
 			color: #1076bb;
 			padding-left: 6px;
 		}
+		.cropImagePanel{
+			height: 273px;
+			width: 400px;
+			margin: 0 auto;
+			clear: both;
+			display: inline-block;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: contain;
+		}
+		.cropImageTxt{
+			background-image: url(./images/crop.png) !important;
+			background-color: #efefef !important;
+			background-repeat: no-repeat !important;
+			background-position: 10px 7px !important;
+			padding-left: 34px !important;
+			padding-right: 12px !important;
+			float: right;
+			margin-right: 3%;		
+		}
+		.displayImage{
+			display: none;
+		}
+		.setMarginLeft{
+			margin-right: 31px;
+		}
 	</ui:style>
 	<g:FlowPanel styleName="{style.imagePopupContainer}">
 		<g:FlowPanel ui:field="imagUploadFloPanel">
@@ -213,10 +223,13 @@
 					<g:Label styleName="{style.uploadPicstureInfo}"
 						ui:field="uploadFromComputer"/>
 					<g:FormPanel ui:field="fileuploadForm" encoding="multipart/form-data" method="post">
-						<g:FileUpload ui:field="fileUpload" name="imageUpload" />
+						<g:FileUpload ui:field="fileUpload" name="imageUpload"/>
 					</g:FormPanel>
-					<g:Label
-					ui:field="uploadLimitText"/>
+					<g:Label ui:field="uploadLimitText"/>
+					<g:Button ui:field="cropImage" styleName="{style.cropImageTxt} secondary">crop Image</g:Button>
+					<g:FlowPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel">
+						<g:Image ui:field="displayImage" styleName="{style.displayImage}"></g:Image>
+					</g:FlowPanel>
 					<g:FlowPanel styleName="{style.imageUploadMinHeight}">
 					<g:HTMLPanel ui:field="notWorkingPanel" styleName="{style.notWorkingPanel}">
 						<g:Label
@@ -225,7 +238,8 @@
 					</g:HTMLPanel>
 					</g:FlowPanel>
 					<g:FlowPanel styleName="{style.imageUploadAlign}">
-						<gg:BlueButtonUc ui:field="onSystemCancelBtn" />
+						<g:Button ui:field="onSystemCancelBtn"  styleName="secondary {style.setMarginLeft}"/>
+						<gg:BlueButtonUc ui:field="onOkButton" text="Use Image"/>
 					</g:FlowPanel>
 				</g:FlowPanel>
 				<g:FlowPanel styleName="{style.imageUploadOnUrl}"
@@ -241,22 +255,27 @@
 						<g:FlowPanel styleName="{style.imageUploadMinHeightUrl}">
 							<g:Label ui:field="typeImageurlText"></g:Label>
 						</g:FlowPanel>
+						<g:Button ui:field="cropImage1" styleName="secondary {style.cropImageTxt}">crop Image</g:Button>
+						<g:FlowPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel1">
+							<g:Image ui:field="displayImage1" styleName="{style.displayImage}"></g:Image>
+						</g:FlowPanel>
 						<g:Label styleName="{style.infoUrlUpload}" ui:field="infoUrlUploadText"/>
 						<g:FlowPanel styleName="{style.imageUploadAlign}">
-							<gg:BlueButtonUc ui:field="onWebCancelBtn" />
+							<g:Button ui:field="onWebCancelBtn" styleName="secondary {style.setMarginLeft}"/>
+							<gg:BlueButtonUc ui:field="onOkButton1" text="Use Image"/>
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
 				<g:FlowPanel styleName="{style.uploadGooruImagesContainer}" ui:field="uploadGooruImagesContainer">
 					<g:Label styleName="{style.uploadPicstureInfo}" ui:field="chooseFromText"/>
-						<g:FlowPanel styleName="{style.defaultImagesContainer}" ui:field="gooruProfileDefaultImagesContainer">
-							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Arts.png"></defaultImage:GooruImagesView>
-							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Geography.png"></defaultImage:GooruImagesView>
-							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Math.png"></defaultImage:GooruImagesView>
-							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Original.png"></defaultImage:GooruImagesView>
-							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Science.png"></defaultImage:GooruImagesView>
-							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Sports.png"></defaultImage:GooruImagesView>
-						</g:FlowPanel>
+					<g:FlowPanel styleName="{style.defaultImagesContainer}" ui:field="gooruProfileDefaultImagesContainer">
+						<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Arts.png"></defaultImage:GooruImagesView>
+						<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Geography.png"></defaultImage:GooruImagesView>
+						<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Math.png"></defaultImage:GooruImagesView>
+						<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Original.png"></defaultImage:GooruImagesView>
+						<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Science.png"></defaultImage:GooruImagesView>
+						<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Sports.png"></defaultImage:GooruImagesView>
+					</g:FlowPanel>
 					<g:FlowPanel>
 						<g:Button styleName="{style.okButtonOnUploadGooruImages}" ui:field="okButtonOnUploadGooruImages"></g:Button>
 						<g:Label styleName="{style.cancelButtonOnUploadGooruImages}" ui:field="cancelButtonOnUploadGooruImages"></g:Label>

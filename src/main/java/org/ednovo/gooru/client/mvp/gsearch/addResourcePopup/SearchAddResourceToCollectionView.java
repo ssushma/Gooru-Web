@@ -518,19 +518,25 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					if(item.getCourseSummary()!=null && item.getCourseSummary().getCollectionCount()!=null && item.getCourseSummary().getCollectionCount()>=10){
 						restrictionToAddResourcesData(i18n.GL3491());
 					}else{
-						if(COURSE.equalsIgnoreCase(currentFolderSelectedTreeItem.getType()) || UNIT.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
+						/*if(COURSE.equalsIgnoreCase(currentFolderSelectedTreeItem.getType()) || UNIT.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
 							restrictionToAddResourcesData("You can add Collections only to Lesson Level");
-						}else if(LESSON.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
+						}else if(LESSON.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){*/
 							if(isMoveSelected){
 								getUiHandlers().moveCollectionTOLesson("","",this.urlparams);
 							}else{
-								getUiHandlers().copyCollectionToLession("","",this.urlparams);
+								if(UNIT.equalsIgnoreCase(copyType)){
+									getUiHandlers().copyUnitToCourse();
+								}else if(LESSON.equalsIgnoreCase(copyType)){
+									getUiHandlers().copyLessonToUnit();
+								}else{
+									getUiHandlers().copyCollectionToLession("","",this.urlparams);
+								}
 							}
-						}
+//						}
 					}
-				}else{
+				}/*else{
 					restrictionToAddResourcesData("Please select lesson type to add a collection");
-				}
+				}*/
 			}else{
 				String collectionId= urlparams.get(ID);
 				if(isTopMostSelected){
@@ -819,11 +825,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				if(myCourseContainer.isVisible()){
 					enableDisableAddBtn((COURSE.equalsIgnoreCase(foldertypevalue) || UNIT.equalsIgnoreCase(foldertypevalue))?false:true);
 				}else{
-					if((COURSE.equalsIgnoreCase(foldertypevalue))){
+					if(LESSON.equalsIgnoreCase(copyType)&&(COURSE.equalsIgnoreCase(foldertypevalue))){
 						enableDisableAddBtn(false);
 					}
-					enableDisableAddBtn(((UNIT.equalsIgnoreCase(copyType) || LESSON.equalsIgnoreCase(copyType))&&!((COURSE.equalsIgnoreCase(foldertypevalue)))?true:false));
-					/*if(UNIT.equalsIgnoreCase(copyType)){
+					if(LESSON.equalsIgnoreCase(copyType)&&(UNIT.equalsIgnoreCase(foldertypevalue))){
+						enableDisableAddBtn(true);
+					}
+					/*enableDisableAddBtn(((UNIT.equalsIgnoreCase(copyType) || LESSON.equalsIgnoreCase(copyType))&&!((COURSE.equalsIgnoreCase(foldertypevalue)))?true:false));
+					if(UNIT.equalsIgnoreCase(copyType)){
 						enableDisableAddBtn(true);
 					}else if(LESSON.equalsIgnoreCase(copyType)){
 						enableDisableAddBtn(true);
@@ -860,9 +869,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					urlparams.put(O2_LEVEL, urlparams.get(O2_LEVEL));
 					urlparams.put(O3_LEVEL, folderTreeItemWidget.getGooruOid());
 				}
-				courseId=urlparams.get(O1_LEVEL);
-				unitId=urlparams.get(O2_LEVEL);
-				lessonId=urlparams.get(O3_LEVEL);
+				
 				
 				if (!folderTreeItemWidget.isApiCalled()) {
 					folderTreeItemWidget.setApiCalled(true);
@@ -870,6 +877,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					if(FOLDER.equalsIgnoreCase(typevalue)){
 						getFolderItems(item, folderTreeItemWidget.getGooruOid());
 					}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
+					}else if(!StringUtil.isEmpty(copyType)&& LESSON.equalsIgnoreCase(copyType)){ 
+						courseId=urlparams.get(O1_LEVEL);
+						if(!UNIT.equalsIgnoreCase(typevalue)){
+							getUiHandlers().getCourseItems(item,courseId,unitId,lessonId,typevalue);
+						}
 					}else{
 						courseId=urlparams.get(O1_LEVEL);
 						unitId=urlparams.get(O2_LEVEL);

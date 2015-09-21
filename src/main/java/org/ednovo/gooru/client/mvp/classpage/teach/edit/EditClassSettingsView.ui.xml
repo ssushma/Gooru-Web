@@ -3,6 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<ui:style src=""></ui:style>
 	<g:HTMLPanel styleName="geryBackgroundBody paddingBlock">
 	<g:HTMLPanel styleName="classSettingsContainer">
@@ -53,6 +54,15 @@
 	<g:HTMLPanel styleName="actionButtons">
 		<g:Button styleName="primary" ui:field="saveBtn"></g:Button>
 		<g:Label ui:field="saveLbl"></g:Label>
+	</g:HTMLPanel>
+	<g:HTMLPanel styleName="actionButtons">
+	    <g:HTMLPanel styleName="editClassDeleteBtnHover" ui:field="editClassDeleteBtnHover">
+			<g:Button styleName="btn btn-default btn-file" ui:field="deleteBtn"></g:Button>
+			<g:HTMLPanel styleName="deleteBtnMessagePopup" ui:field="deleteBtnMessagePopup">
+				<g:HTMLPanel styleName="bubble-arrow-style"></g:HTMLPanel>
+				<g:HTML styleName="standards-inner standards-Popup" ui:field="profileVisiblityMessage" text="{i18n.GL3586}"></g:HTML>
+			</g:HTMLPanel>
+	    </g:HTMLPanel>
 	</g:HTMLPanel>
 	</g:HTMLPanel>
 </g:HTMLPanel>
