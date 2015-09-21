@@ -427,6 +427,10 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		onClickNegitiveButton(event);
 	}
 	
+	public HTML getNotes() {
+		return htmlDescription;
+	}
+	
 	/* Abstract methods to handle button events*/
 	public abstract void onClickPositiveButton(ClickEvent event);
 

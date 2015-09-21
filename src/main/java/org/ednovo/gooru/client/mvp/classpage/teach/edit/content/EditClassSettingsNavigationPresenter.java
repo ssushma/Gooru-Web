@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -32,6 +33,7 @@ import org.ednovo.gooru.client.mvp.classpage.teach.edit.EditClassSettingsPresent
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.coursePopup.AddCourseToClassPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.student.EditClassStudentPresenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -63,6 +65,8 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 	
 	EditClassStudentPresenter editClassStudentPresenter;
 	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	@Inject
 	public EditClassSettingsNavigationPresenter(EventBus eventBus,IsEditClassSettingsNavigationView view,EditClassSettingsPresenter editClassSettingsPresenter,EditClassContentPresenter editClassContentPresenter,AddCourseToClassPresenter addCourseToClassPresenter,EditClassStudentPresenter editClassStudentPresenter){
 		super(eventBus, view);
@@ -172,40 +176,4 @@ public class EditClassSettingsNavigationPresenter extends PresenterWidget<IsEdit
 			}
 		}
 	}
-
-	@Override
-	public void deleteClass(final String classpageId) {
-		
-		AppClientFactory.getInjector().getClasspageService().getClassUsageDataSignal(classpageId, null, new AsyncCallback<Boolean>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				getView().onErrorPopup();
-			}
-
-			@Override
-			public void onSuccess(Boolean result) {
-				if(!result) {
-					AppClientFactory.getInjector().getClasspageService().V3DeleteClass(classpageId, new AsyncCallback<Integer>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							getView().onErrorPopup();
-						}
-
-						@Override
-						public void onSuccess(Integer result) {
-							AppClientFactory.printInfoLogger("result:"+result);
-							if(result == 200){
-							   getView().onDeleteClassSuccess();
-							}else{
-								getView().onErrorPopup();
-							}
-						}
-					});
-				} else {
-					getView().onErrorPopup();
-				}
-			}
-		});
-	}
-	
 }

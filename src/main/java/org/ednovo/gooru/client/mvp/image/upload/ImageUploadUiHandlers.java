@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.image.upload;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.event.shared.EventHandler;
 
@@ -68,4 +69,6 @@ public interface ImageUploadUiHandlers extends BaseUiHandlers, EventHandler {
 	void saveImage(String gooruOid, String fileName, String resourceId);
 
 	void saveImageCollection(String gooruOid, String fileName);
+	
+	void setUploadData(String filename,MediaUploadDo mediaUploadDo);
 }
