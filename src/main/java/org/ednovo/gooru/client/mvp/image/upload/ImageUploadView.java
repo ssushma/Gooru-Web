@@ -39,7 +39,10 @@ import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.GlassPanelWithLoadingUc;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -64,6 +67,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -101,18 +105,18 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	Anchor imageUploadOnComputerLbl,readThisLbl;
 
 	@UiField
-	FlowPanel imageUploadOnUrlFloPanel,gooruProfileDefaultImagesContainer;
-	@UiField Button okButtonOnUploadGooruImages;
+	FlowPanel imageUploadOnUrlFloPanel,gooruProfileDefaultImagesContainer,displayCromImagePanel1,displayCromImagePanel;
+	@UiField Button okButtonOnUploadGooruImages,cropImage,cropImage1;
 	@UiField Label cancelButtonOnUploadGooruImages;
 
 	@UiField
 	FlowPanel imageUploadOnWebFloPanel;
 
 	@UiField
-	BlueButtonUc onWebCancelBtn;
+	Button onWebCancelBtn,onSystemCancelBtn;
 
 	@UiField
-	BlueButtonUc onSystemCancelBtn;
+	BlueButtonUc onOkButton,onOkButton1;
 
 	@UiField
 	TextBox imageWebUploadUrlTxtBox;
@@ -145,7 +149,10 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	private static final String IMAGE_UPLOAD_URL_PATTERN = "(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|jpeg|png))(?:\\?([^#]*))?(?:#(.*))?";
 
 	private static final String IMAGE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:jpg|gif|jpeg|png))$)";
-
+	
+	MediaUploadDo mediaUploadDo;
+	
+	@UiField Image displayImage,displayImage1;
 
 	/**
 	 * See for more details  {@link PopupViewWithUiHandlers} for details.
@@ -230,6 +237,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		infoUrlUploadText.getElement().setId("lblInfoUrlUploadText");
 		infoUrlUploadText.getElement().setAttribute("alt",i18n.GL1227());
 		infoUrlUploadText.getElement().setAttribute("title",i18n.GL1227());
+		infoUrlUploadText.setVisible(false);
 
 		onWebCancelBtn.setText(i18n.GL0142());
 		onWebCancelBtn.getElement().setId("btnCancel");
@@ -297,31 +305,21 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				}
 				if (!"".equalsIgnoreCase(fileUpload.getFilename())) {
 					String size=getFileNameSize();
-
 					double sizeOfImage=Double.parseDouble(size);
 					if(sizeOfImage>5){
 						new AlertForImageUpload(i18n.GL0061(),i18n.GL1229());
 						 glasspanelLoadingImage(false);
 						fileuploadForm.reset();
 						event.cancel();
-				//		Window.enableScrolling(true);
-				//		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
-
 					}
-
-				}
-				else{
+				}else{
 					event.cancel(); // cancel the event
-				//	Window.enableScrolling(true);
-				//	AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
-
 			}
 		});
-
 		imagUploadFloPanel.getElement().setId("fpnlImagUploadFloPanel");
 		imageUploadOnWebFloPanel.getElement().setId("fpnlImageUploadOnWebFloPanel");
+		hideAndDisplayAllCropButtons(false);
 	}
 
 	@Override
@@ -331,19 +329,16 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUnload() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLoad() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -417,8 +412,43 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			imageUploadOnUrlFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.NONE);
 			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+			//setBooleanValues(true);
+			hideAndDisplayAllCropButtons(false);
 	}
-
+	/**
+	 * This method is used for hiding and enabling the crop and display buttons based on the selected widget.
+	 * @param isTrue
+	 */
+	public void setBooleanValues(boolean isTrue){
+		displayImage.setUrl("");
+		displayImage.setVisible(isTrue);
+		cropImage.setVisible(isTrue);
+		//displayCromImagePanel.getElement().getStyle().clearBackgroundImage();
+		
+		displayImage1.setUrl("");
+		displayImage1.setVisible(!isTrue);
+		cropImage1.setVisible(!isTrue);
+		//displayCromImagePanel1.getElement().getStyle().clearBackgroundImage();
+	}
+	/**
+	 * This method is used for hiding and enabling the crop and display buttons.
+	 * @param isTrue
+	 */
+	public void hideAndDisplayAllCropButtons(boolean isTrue){
+		displayImage.setVisible(isTrue);
+		cropImage.setVisible(isTrue);
+		displayImage1.setVisible(isTrue);
+		cropImage1.setVisible(isTrue);
+		setAndClearBorder(displayCromImagePanel.getElement(), isTrue);
+		setAndClearBorder(displayCromImagePanel1.getElement(), isTrue);
+	}
+  
+	public void setAndClearBorder(Element element,boolean isTure){
+		if(!isTure){
+			element.removeAttribute("style");
+		}
+	}
+	
 	/**
 	 * Upload image from web to enable or disable tab.
 	 * @param clickEvent instance of {@link ClickEvent}
@@ -443,6 +473,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
+		//setBooleanValues(false);
+		hideAndDisplayAllCropButtons(false);
 	}
 
 	@UiHandler("uploadGooruImages")
@@ -469,7 +501,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}
-
 	}
 
 	@UiHandler("cancelButtonOnUploadGooruImages")
@@ -483,8 +514,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}
 	}
-
-
 
 	/**
 	 * Hide {@link AppPopUp}
@@ -566,61 +595,14 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@Override
 	public void setImageUpload(final MediaUploadDo mediaUploadDo) {
-		imageCropPopup.clear();
-		imagUploadFloPanel.setVisible(false);
-		
-		appPopUp.hide();
 		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if (mediaUploadDo != null && mediaUploadDo.getStatusCode() == 200) {
-			//getUiHandlers().cropImage(mediaUploadDo.getName(),null, null,null,null,mediaUploadDo.getUrl());
-			ImageCropView imageCropView = new ImageCropView() {
-				@Override
-				public void onCancelCrop() {
-					resetImageUploadWidget();
-					appPopUp.hide();
-					imageCropPopup.hide();
-					Window.scrollTo(0, 0);
-					if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
-						Window.enableScrolling(false);
-					}else{
-						Window.enableScrolling(true);
-					}
-				}
-				@Override
-				public void onBackToUpload() {
-					resetImageUploadWidget();
-					imageCropPopup.clear();
-					imageCropPopup.hide();
-					Window.scrollTo(0, 0);
-					if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
-						Window.enableScrolling(false);
-					}else{
-						Window.enableScrolling(true);
-					}
-					appPopUp.show();
-				}
-				@Override
-				public void onCrop() {
-					glasspanelLoadingImage(true);
-					getUiHandlers().cropImage(mediaUploadDo.getName(), getSelectionHeight(), getSelectionWidth(), getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getUrl());
-				}
-				@Override
-				public void onLoad(){
-					super.onLoad();
-					imageCropPopup.center();
-				}
-			};
-			imageCropView.cropImage(mediaUploadDo.getUrl(),aspectRatio);
-			imageCropView.addCanvasLoadHandler(new LoadHandler() {
-				@Override
-				public void onLoad(LoadEvent event) {
-					imageCropPopup.center();
-					Window.enableScrolling(true);
-				}
-			});
-			imageCropPopup.clear();
-			imageCropPopup.add(imageCropView);
-			imageCropPopup.show();
+			this.mediaUploadDo=mediaUploadDo;
+			displayImage.setUrl(mediaUploadDo.getUrl());
+			displayImage1.setUrl(mediaUploadDo.getUrl());
+			hideAndDisplayAllCropButtons(true);		
+			displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+			displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
@@ -684,6 +666,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		imageCropPopup.clear();
 		imageCropPopup.hide();
 		notWorkingPanel.setVisible(false);
+		hideAndDisplayAllCropButtons(false);
 		if(isEdit){
 
 		}else{
@@ -698,37 +681,18 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	 */
 
 	public final native String getFileNameSize() /*-{
-
-	var fileSize;
-	      if ($wnd.$.support.msie)
-	         {
-
-	     	 var objFSO = new ActiveXObject("Scripting.FileSystemObject");
-	        var sPath =   $wnd.$("#fileUpload")[0].value;
-	        var objFile = objFSO.getFile(sPath);
-	         var iSize = objFile.size;
-	        fileSize = iSize/ 1048576;
-
+		  var fileSize;
+	      if ($wnd.$.support.msie){
+		     	var objFSO = new ActiveXObject("Scripting.FileSystemObject");
+		        var sPath =   $wnd.$("#fileUpload")[0].value;
+		        var objFile = objFSO.getFile(sPath);
+		        var iSize = objFile.size;
+		        fileSize = iSize/ 1048576;
+	        }else{
+	       		fileSize =  $wnd.$("#fileUpload")[0].files[0].size ;//size in kb
+	        	fileSize = fileSize / 1048576; //size in mb
 	        }
-
-
-
-	        else
-	        {
-
-	       fileSize =  $wnd.$("#fileUpload")[0].files[0].size ;//size in kb
-
-	        fileSize = fileSize / 1048576; //size in mb
-
-	         }
-
-
-
-
-	           return fileSize.toString();
-
-
-
+	        return fileSize.toString();
 	  }-*/;
 
 	public static native String getUserAgent() /*-{
@@ -743,16 +707,26 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	public void isFromEditQuestion(boolean isEdit) {
 		this.isEdit=isEdit;
 	}
+	
+	@UiHandler(value={"cropImage","cropImage1"})
+	public void clickEventOnCropImage(ClickEvent e){
+		if(mediaUploadDo!=null){
+			displayCropPopup(mediaUploadDo);
+		}
+	}
+	@UiHandler(value={"onOkButton","onOkButton1"})
+	public void clickEventOnUseImage(ClickEvent e){
+		if(mediaUploadDo!=null){
+			getUiHandlers().setUploadData(mediaUploadDo.getName(), mediaUploadDo);
+		}
+	}
+	
 	/**
 	 * This method is used to display crop popup
 	 * @param mediaUploadDo
 	 */
-	@Override
+	 @Override
 	 public void displayCropPopup(final MediaUploadDo mediaUploadDo){
-		imageCropPopup.clear();
-		imagUploadFloPanel.setVisible(false);
-		imageCropFloPanel.setVisible(false);
-		appPopUp.hide();
 		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		ImageCropView imageCropView = new ImageCropView() {
 			@Override
@@ -782,7 +756,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			}
 			@Override
 			public void onCrop() {
-				glasspanelLoadingImage(true);
+				//glasspanelLoadingImage(true);
 				getUiHandlers().cropImage(mediaUploadDo.getName(), getSelectionHeight(), getSelectionWidth(), getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getUrl());
 			}
 			@Override
@@ -799,7 +773,17 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				Window.enableScrolling(true);
 			}
 		});
+		imageCropPopup.clear();
 		imageCropPopup.add(imageCropView);
 		imageCropPopup.show();
 	 }
+
+	@Override
+	public void setCroppedImage(String filename) {
+		displayImage.setUrl(mediaUploadDo.getUrl());
+		displayImage1.setUrl(mediaUploadDo.getUrl());
+		displayCromImagePanel.getElement().getStyle().setBackgroundImage(mediaUploadDo.getUrl());
+		displayCromImagePanel1.getElement().getStyle().setBackgroundImage(mediaUploadDo.getUrl());
+		imageCropPopup.hide();
+	}
 }
