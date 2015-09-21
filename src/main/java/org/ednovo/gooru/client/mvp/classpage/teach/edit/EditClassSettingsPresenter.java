@@ -28,12 +28,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.event.UpdateClassTitleEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -59,6 +61,8 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 	private ImageUploadPresenter imageUploadPresenter;
 
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
+
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Inject
 	public EditClassSettingsPresenter(EventBus eventBus,IsEditClassSettingsView view,ImageUploadPresenter imageUploadPresenter) {
@@ -104,6 +108,8 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 
 	public void setClassData(ClasspageDo classpageDo) {
 		getView().setData(classpageDo);
+		final String classpageId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
+		checkDataStatus(classpageId);
 	}
 
 	/* (non-Javadoc)
@@ -159,6 +165,40 @@ public class EditClassSettingsPresenter extends PresenterWidget<IsEditClassSetti
 				}
 			});
 		}
+	}
+
+	@Override
+	public void deleteClass(final String classpageId) {
+		AppClientFactory.getInjector().getClasspageService().V3DeleteClass(classpageId, new AsyncCallback<Integer>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				getView().onErrorPopup(i18n.GL3578());
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result == 200){
+				   getView().onDeleteClassSuccess();
+				}else{
+					getView().onErrorPopup(i18n.GL3578());
+				}
+			}
+		});
+	}
+
+	@Override
+	public void checkDataStatus(String classpageId) {
+		AppClientFactory.getInjector().getClasspageService().getClassUsageDataSignal(classpageId, null, new AsyncCallback<Boolean>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				getView().onErrorPopup(i18n.GL3578());
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				getView().enableDeleteBtn(result);
+			}
+		});
 	}
 
 }
