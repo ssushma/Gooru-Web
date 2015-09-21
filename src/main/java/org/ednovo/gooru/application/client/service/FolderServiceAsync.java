@@ -102,6 +102,8 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	
 	void getAudienceList(AsyncCallback<List<ListValuesDo>> callback);
 	void updateCollectionDetails(CreateDo createDoObj,String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective,AsyncCallback<Void> asyncCallback);
-	void  getCourseDetails(String courseId, String unitId, String lessonId,AsyncCallback<FolderDo> callback);
+	void getCourseDetails(String courseId, String unitId, String lessonId,AsyncCallback<FolderDo> callback);
+	
+	void copyCourse(String courseId, String unitId, String lessonId,AsyncCallback<FolderDo> callback);
 
 }

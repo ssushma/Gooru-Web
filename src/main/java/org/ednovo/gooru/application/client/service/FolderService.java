@@ -199,7 +199,7 @@ public interface FolderService extends BaseService {
 	
 	Integer deleteCourse(String o1CourseId) throws GwtException,ServerDownException;
 	
-	Integer deleteUnit(String o1CourseId, String o2UnitId) throws GwtException,ServerDownException ;
+	Integer deleteUnit(String o1CourseId, String o2UnitId) throws GwtException,ServerDownException;
 	
 	Integer deleteLesson(String o1CourseId, String o2UnitId, String o3LessonId)throws GwtException,ServerDownException;
 	
@@ -220,5 +220,6 @@ public interface FolderService extends BaseService {
 	public FolderDo getCourseDetails(String courseId, String unitId, String lessonId)  throws GwtException;
 
 	void updateCollectionDetails(CreateDo createDoObj,String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective);
-
+    
+	FolderDo copyCourse(String courseId, String unitId, String lessonId) throws GwtException;
 }
