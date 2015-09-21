@@ -101,12 +101,13 @@ public class TinyMCE extends Composite{
         tinyMceTextArea.getElement().setAttribute("id", id);
         panel.add(tinyMceTextArea);
 //        timymceWrapper.add(toolBarOpenButton);
-        timymceWrapper.add(markAsBlankPanel);
+
         toolBarOpenButton.setVisible(false);
         markAsBlankPanel.setVisible(false);
         toolBarOpenButton.getElement().setId(id+BUTTONID);
         errorMessageLabel.getElement().setId(id+"_message");
         timymceWrapper.add(panel);
+        timymceWrapper.add(markAsBlankPanel);
         timymceWrapper.add(errorMessageLabel);
         initWidget(timymceWrapper);
 //        nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
@@ -456,7 +457,8 @@ public class TinyMCE extends Composite{
 	   this.parentWidth = parentWidth;
 	   setToolBarPosition(id, parentWidth);
 	   setFoucs(id);
-	   Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
+	   if (Document.get().getElementById(id + "_external_close") != null)
+		   Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
 	}
 	public void hideAllButtons(){
 		if(!lastButtonId.equalsIgnoreCase("") && Document.get().getElementById(lastButtonId+BUTTONID) != null){

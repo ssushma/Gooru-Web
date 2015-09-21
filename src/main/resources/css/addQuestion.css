@@ -1171,12 +1171,12 @@ table.imgAnsContainer tbody, table.imgAnsContainer tbody tr {
 .markAsBlankLabel {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	float: right;
+	float: left;
 	cursor: pointer;
 	color: rgb(16,118,186);
-	text-align: right;
+	text-align: left;
 	padding: 0px 0px 0px 0px;
-	margin: -16px 28px 0 0;
+	margin: 5px 0px 0 0;
 }
 .markAsBlankLabel:hover {
 	color: #87badd !important;
