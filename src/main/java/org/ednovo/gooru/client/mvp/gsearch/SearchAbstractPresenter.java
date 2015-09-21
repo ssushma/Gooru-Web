@@ -192,7 +192,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(SearchDo<T> result,boolean isApiCalled) {
 				setSearchDo(result);
-				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subject") || result.getFilters().containsKey("flt.standard"))))
+				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subjectName") || result.getFilters().containsKey("flt.standard"))))
 				{
 				getView().postSearch(result,isApiCalled);
 				}
@@ -205,7 +205,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		setSearchResultsJsonAsyncCallbackFirstLoad(new SearchAsyncCallbackForSearch<SearchDo<T>>() {
 			@Override
 			protected void run(SearchDo<T> searchDo) {
-				if(searchDo.getQuery()!=null && !searchDo.getQuery().isEmpty() && (!searchDo.getQuery().trim().equalsIgnoreCase("*")||(searchDo.getFilters().containsKey("flt.grade") || searchDo.getFilters().containsKey("flt.subject")|| searchDo.getFilters().containsKey("flt.standard"))))
+				if(searchDo.getQuery()!=null && !searchDo.getQuery().isEmpty() && (!searchDo.getQuery().trim().equalsIgnoreCase("*")||(searchDo.getFilters().containsKey("flt.grade") || searchDo.getFilters().containsKey("flt.subjectName")|| searchDo.getFilters().containsKey("flt.standard"))))
 				{
 				requestSearch(searchDo, this);
 				}
@@ -217,7 +217,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(SearchDo<T>  result) {
 				setSearchDo(result);
-				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subject")|| result.getFilters().containsKey("flt.standard"))))
+				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subjectName")|| result.getFilters().containsKey("flt.standard"))))
 				{
 				getView().postSearch(result,false);
 				}
@@ -258,7 +258,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(SearchDo<T> result) {
 				setSearchDo(result);
-				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subject")|| result.getFilters().containsKey("flt.standard"))))
+				if(result.getQuery()!=null && !result.getQuery().isEmpty() && (!result.getQuery().trim().equalsIgnoreCase("*")||(result.getFilters().containsKey("flt.grade") || result.getFilters().containsKey("flt.subjectName")|| result.getFilters().containsKey("flt.standard"))))
 				{
 				getView().postSearch(result,false);
 				}

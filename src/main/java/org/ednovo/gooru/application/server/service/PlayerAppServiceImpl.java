@@ -216,7 +216,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public ResoruceCollectionDo getResourceCollectionsList(String gooruOid,String pageNum,String pageSize) {
 		JsonRepresentation jsonRep = null;
 
-		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_RESOURCE_COLLECTION_LIST);
+		String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_RESOURCE_COLLECTION_LIST);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.Q, gooruOid);
 		params.put(GooruConstants.START, String.valueOf(pageNum));

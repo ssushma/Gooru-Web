@@ -103,7 +103,7 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 					autoSuggestKeywordDo.setType("");
 					autoSuggestKeywordDo.setType("collection");
 				}
-				if (text != null && text.trim().length() > 0) {
+				if (text != null && text.trim().length() > 2) {
 					requestAutoSuggestKeyword(autoSuggestKeywordDo);
 				}
 				else

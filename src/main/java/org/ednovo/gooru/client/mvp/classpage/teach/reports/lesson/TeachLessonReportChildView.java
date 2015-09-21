@@ -31,7 +31,6 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.MasterReportDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentEmptyDashboardView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentEmptyDataView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -46,7 +45,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -73,7 +71,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	
 	private final String ASSESSMENT_ORANGE = "#f1aa44 !important";
 
-	private final String WHITE = "#FFF";
+	private final String WHITE = "#ffffff";
 
 	private static final String VIEWRESPONSE = "View Answer";
 
@@ -150,13 +148,13 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
     				defaultUserDataForUsers=collectionProgressDataDo;
     				rowCount=rowCount+1;
     				if(collectionProgressDataDo.getType()!=null && collectionProgressDataDo.getType().equalsIgnoreCase(QUESTION)){
-    					HTML questionPnl=new HTML(collectionProgressDataDo.getSequence()+":&nbsp;Question");
+    					HTML questionPnl=new HTML(collectionProgressDataDo.getSequence()+": Question");
     					adTable.setHeaderWidget(rowCount+1,questionPnl);
     					 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
     						 noOfQuestions++;
     					 }
     				}else{
-    					HTML resourcePnl=new HTML(collectionProgressDataDo.getSequence()+":&nbsp;Resource");
+    					HTML resourcePnl=new HTML(collectionProgressDataDo.getSequence()+": Resource");
     					adTable.setHeaderWidget(rowCount+1,resourcePnl);
     				}
     			}
@@ -166,7 +164,6 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
     		        	  int score=0,position=0;
     		        	  for(int j=0;j<columnsSize;j++) {
     		        		  	  String color=WHITE;
-    		        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
     			        		  if(collectionProgressData.get(j).getType()!=null && !collectionProgressData.get(j).getType().equalsIgnoreCase(QUESTION)){
     				        		  
     			        		  }else{
@@ -196,26 +193,21 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
     			        				  }
     			        			  }
     			        		  }
-    			        		  adTable.setWidget(i, position+2,mainDataVpnl);
-    			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color: "+color);
     			        		  Label timeStamplbl=new Label(StringUtil.getElapsedTime(collectionProgressData.get(j).getUsageData().get(i).getTimeSpent()));
-    			        		  mainDataVpnl.add(timeStamplbl);
+    			        		  adTable.setWidget(i, position+2,timeStamplbl);
+    			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color:"+color);
     			        		  position++;
     		        	   }
     		        	  HTML studentName = new HTML(defaultUserDataForUsers.getUsageData().get(i).getUserName());
     		        	  adTable.setWidget(i, 0,studentName);
     		        	  studentName.addClickHandler(new StudentPlaySummary(defaultUserDataForUsers.getUsageData().get(i).getUserName(), defaultUserDataForUsers.getUsageData().get(i).getUserUId()));
     		        	  studentName.setStyleName("myclasses-mastery-unit-cell-style");
-    		        	  VerticalPanel scoreWidget=new VerticalPanel();
-    		        	  Label noOfQuestionAttened=new Label(score+"/"+noOfQuestions);
     		        	  int percent=0;
     		        	  if(noOfQuestions!=0){
     		        		  percent=((score*100)/noOfQuestions);
     		        	  }
-    		        	  Label percentage=new Label("("+percent+"%)");
-    		        	  scoreWidget.add(noOfQuestionAttened);
-    		        	  scoreWidget.add(percentage);
-    		        	  adTable.setHTML(i, 1,scoreWidget.toString());
+    		        	  Label scoreWidget=new Label(score+"/"+noOfQuestions+" ("+percent+"%)");
+    		        	  adTable.setWidget(i, 1,scoreWidget);
     		        }
     			}
     		}catch(Exception e){

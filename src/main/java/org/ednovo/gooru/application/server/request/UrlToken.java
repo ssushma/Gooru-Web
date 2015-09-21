@@ -26,7 +26,7 @@
 /**
  *
  */
- 
+
 package org.ednovo.gooru.application.server.request;
 
 /**
@@ -37,11 +37,11 @@ public enum UrlToken {
 
 	GET_USER("/v2/user/{0}"),
 
-	V2_RESOURCE_SEARCH("/gooru-search/rest/v2/search/resource?"),
+	V2_RESOURCE_SEARCH("/v2/search/resource?"),
 
-	V2_SIMPLE_COLLECTION_SEARCH("/gooru-search/rest/v2/search/scollection?"),
+	V2_SIMPLE_COLLECTION_SEARCH("/v2/search/scollection?"),
 
-	V2_RESOURCE_COLLECTION_LIST("/gooru-search/rest/v2/search/scollection?"),
+	V2_RESOURCE_COLLECTION_LIST("/v2/search/scollection?"),
 
 	COLLECTION_ITEMS_LIST("/scollection/{0}?"),
 
@@ -49,15 +49,15 @@ public enum UrlToken {
 
 	SEARCH_FILTER("/search/index/filters?"),
 
-	V2_SEARCH_SUGGEST_STANDARD("/gooru-search/rest/v2/search/{0}?"),
+	V2_SEARCH_SUGGEST_STANDARD("/v2/search/{0}?"),
 
 	SUGGEST_STANDARD_BY_FILTER("/v2/collection/standards?"),
 
-	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?"),
+	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/v2/search/searchquery?"),
 
-	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?"),
+	v2_SEARCH_SUGGEST_SOURCE("/v2/search/publisher?"),
 
-	v2_SEARCH_SUGGEST_CONTRIBUTOR("/gooru-search/rest/search/contributor?"),
+	v2_SEARCH_SUGGEST_CONTRIBUTOR("/search/contributor?"),
 
 	UPDATE_V2_COLLLECTION("/v2/collection/{0}?"),
 
@@ -112,7 +112,7 @@ public enum UrlToken {
 	UPDATE_COLLLECTION_ITEM_METADATA("/scollection/item/{0}/metadata?"),
 
 	V2_UPDATE_COLLLECTION_ITEM_METADATA("/v2/collection/item/{0}?"),
-	
+
 	V3_UPDATE_COLLLECTION_ITEM_METADATA("/v3/collection/{0}/item/{1}?"),
 
 	GET_COLLLECTION_ITEM("/v2/collection/item/{0}?"),
@@ -366,7 +366,7 @@ public enum UrlToken {
 	V1_CREATE_LESSON("/v1/course/{0}/unit/{1}/lesson?"),
 
 	V1_CREATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection?"),
-	
+
 	V3_CREATE_COLLECTION("/v3/collection?"),
 
 	V1_UPDATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
@@ -384,13 +384,13 @@ public enum UrlToken {
 	V2_UPDATE_FOLDER_METADATA("/v2/folder/{0}?"),
 
 	V1_UPDATE_COURSE_METADATA("/v1/course/{0}?"),
-	
+
 	V1_GET_UNIT_METADATA("/v1/course/{0}/unit/{1}"),
-	
+
 	V1_GET_LESSON_METADATA("/v1/course/{0}/unit/{1}/lesson/{2}"),
-	
+
 	V1_GET_COLLECTION_METADATA("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}"),
-	
+
 	V3_UPDATE_COLLECTONITEM_METADATA("/v3/collection/{0}/item/{1}"),
 
 	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
@@ -445,13 +445,13 @@ public enum UrlToken {
 
 	TEACH_STUDY("/v2/class/my/teach-study?"),
 
-	V2_SEARCH_SUGGEST_AGGREGATOR("/gooru-search/rest/v2/search/aggregator?"),
+	V2_SEARCH_SUGGEST_AGGREGATOR("/v2/search/aggregator?"),
 
 	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?"),
 
 	DELETE_RATINGS("/v2/rating/{0}?"),
 
-	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?"),
+	SEARCH_SUGGEST_RESOURCES("/suggest/v2/resource?"),
 
 	USER_FOLLOWERS("/v2/user/{0}/followers?"),
 
@@ -497,7 +497,7 @@ public enum UrlToken {
 
 	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?"),
 
-	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/gooru-search/rest/v2/search/standard?"),
+	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/v2/search/standard?"),
 
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 
@@ -508,9 +508,9 @@ public enum UrlToken {
 	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?"),
 
 	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?"),
-	
+
 	V3_UPDATE_QUESTION_ITEM("/v3/collection/{0}/question/{1}?"),
-	
+
 	V3_GET_QUESTION_ITEM("/v3/collection/{0}/question/{1}?"),
 
 	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?"),
@@ -524,7 +524,7 @@ public enum UrlToken {
 	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?"),
 
 	V1_GETCOLLECTIONMETADATA("/v1/collection/{1}/session/{0}/status?"),
-	
+
 	V1_OLDGETCOLLECTIONMETADATA("/v1/classpage/{0}.json?"),
 
 	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?"),
@@ -616,7 +616,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_LISTTEACHCLASSES("/v3/class/teach?"),
 
 	V3_GET_LISTSTUDYCLASSES("/v3/class/study?"),
-	
+
 	V3_GET_TEACHANDSTUDY("/v3/class/has-teach-study?"),
 
 	DELETE_COURSE("/v1/course/{0}?"),
@@ -628,9 +628,9 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_CLASSPAGE_BY_ID("/v3/class/{0}?"),
 
 	V3_DLETE_ACTIVE_USERS_CLASS("/v3/class/{0}/member/{1}?"),
-	
+
 	V3_GET_CLASS_COURSE_UNIT_LIST("/v3/class/{0}/course/{1}/unit?"),
-	
+
 	V3_GET_CLASS_COURSE_UNIT_LESSON_LIST("/v3/class/{0}/course/{1}/unit/{2}/lesson?"),
 
 	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
@@ -652,35 +652,48 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_GET_STUDENT_LESSON_PLAN("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/usage?"),
 
 	V1_GET_STUDENT_COURSE_PROGRESS("/v1/class/{0}/course/{1}/progress?"),
-	
+
 	GET_DEPTHOFKNOWLEDGELIST("/v1/meta/depth_of_knowledge?"),
-	
+
     GET_ASSESSMENT_SUMMARY_DETAILS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}?"),
-	
+
 	COPY_V3_COLLECTION("/v3/sourceCollection/{0}?"),
-	
+
 	MOVE_V1_COLLECTION("/v1/targetCourse/{0}/targetUnit/{1}/targetLesson/{2}/sourceCollection/{3}?"),
-	
+
 	V1_GET_STANDARDS_BY_DOMAIN("/v1/sub-domain/{0}/standards?"),
 
 	V1_GET_STUDENT_UNIT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/progress?"),
-	
+
 	V1_GET_MASTERY_UNIT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson?"),
-	
+
 	V1_GET_MASTERY_ALL_COLLECTION_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection/{4}/users?"),
-	
+
 	V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}/users?"),
-	
+
 	GET_AUDIENCELIST("/v1/meta/audience?"),
+	
 	V3_UPDATE_COLLECTION("/v3/collection/{0}"),
+	
 	V1_GET_COURSE("/v1/course/{0}?"),
+	
 	V1_GET_MOMENT_OF_LEARERNING("/v1/meta/moments_of_learning"),
+	
 	V1_GET_EDUCATIONAL_USE("/v1/meta/educational_use"),
+	
 	V1_GET_MEDIA_FEATURES("/v1/meta/media_feature"),
+	
 	V1_GET_ACCESS_HAZARD("/v1/meta/access_hazard"),
+	
 	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?"),
+	
 	V3_ADDQUESTION_COLLECTION("/v3/collection/{0}/question/{1}?"),
-	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?");
+	
+	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?"),
+	
+	V1_GET_CLASS_USAGE_DATA_SIGNAL("/v1/class/find/usage?"),
+	
+	V2_GET_HTML_TO_EXCEL_REPORT("/v2/media/htmltoexcel");
 
 	private String url;
 

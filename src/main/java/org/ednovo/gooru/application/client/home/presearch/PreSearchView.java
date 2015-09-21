@@ -142,7 +142,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 
 	TreeMap<Integer, Integer> selectedGrades = new TreeMap<Integer, Integer>();
-	HashMap<String, String> selectedSubjects = new HashMap<String, String>();
+	String selectedSubjects = "";
 
 	public PreSearchView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -348,10 +348,10 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 	@UiHandler("btnBrowseContent")
 	public void onClickBrowseContent(ClickEvent event){
-		if (selectedSubjects.size() <= 0 && selectedGrades.size() <= 0){
+		if (selectedSubjects.isEmpty()){
 			lblErrorMessage.setText(i18n.GL3329());
 			lblErrorMessage.setVisible(true);
-		}else if (selectedSubjects.size() <= 0){
+		}else if (selectedSubjects.isEmpty()){
 			lblErrorMessage.setText(i18n.GL3331());
 			lblErrorMessage.setVisible(true);
 		}else if (selectedGrades.size() <= 0){
@@ -361,7 +361,10 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			lblErrorMessage.setVisible(false);
 			Map<String, String> params = new HashMap<String, String>();
 			params.put(FLT_GRADE, getSelectedGrades());
-			params.put(FLT_SUBJECTNAME, getSelectedSubjects());
+			if(!selectedSubjects.isEmpty())
+			{
+			params.put(FLT_SUBJECTNAME, selectedSubjects);
+			}
 			params.put(CATEGORY,ALL);
 			params.put(FLT_COLLECTIONTYPE,COLLECTION);
 
@@ -653,13 +656,13 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 				}
 				@Override
 				public void onSuccess() {
+					removeActiveStylestoOtherSubjects();
 					if(liPanel.getStyleName().equals(CssTokens.ACTIVE)){
 						liPanel.removeStyleName(CssTokens.ACTIVE);
-						selectedSubjects.remove(subjectVal);
 						displaySelectedSbujects("remove");
 					}else{
 						liPanel.setStyleName(CssTokens.ACTIVE);
-						selectedSubjects.put(subjectVal, subjectVal);
+						selectedSubjects = subjectVal;
 						displaySelectedSbujects("add");
 					}
 
@@ -667,6 +670,17 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 				}
 
 			});
+		}
+	}
+	public void removeActiveStylestoOtherSubjects() {
+		Iterator<Widget> widgets = ulSubjectPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;				
+				obj.removeStyleName("active");
+				
+			}
 		}
 	}
 	/**
@@ -689,31 +703,15 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 */
 	private void displaySelectedSbujects(String action) {
-		int count=0;
-		StringBuffer selectedSubject = new StringBuffer();
-		Iterator it = selectedSubjects.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        String pairValue = pair.getValue().trim();
-
-	        if (count==0){
-	        	selectedSubject.append(pairValue);
-	        }else{
-	        	selectedSubject.append(", "+pairValue);
-	        }
-	        count++;
-	    }
-	    if (selectedSubjects.size() > 0){
-	    	btnSubjects.setText(selectedSubject.toString());
+	    if (!selectedSubjects.isEmpty()){
+	    	btnSubjects.setText(selectedSubjects);
 	    }else{
 	    	btnSubjects.setText(i18n.GL3291());
 	    }
 	    if ("add".equalsIgnoreCase(action)){
 //	    	btnSubjects.getElement().addClassName("ellipsis");
 	    }else{
-	    	if (selectedSubjects.size() <= 2){
-//	    		btnSubjects.getElement().removeClassName("ellipsis");
-	    	}
+
 	    }
 	}
 
@@ -796,7 +794,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 *
 	 */
-	public String getSelectedSubjects(){
+/*	public String getSelectedSubjects(){
 		int count=0;
 		StringBuffer selectedSubject = new StringBuffer();
 		Iterator it = selectedSubjects.entrySet().iterator();
@@ -812,7 +810,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	        count++;
 	    }
 	    return selectedSubject.toString();
-	}
+	}*/
 
 	@Override
 	public void setDefaults(){
