@@ -633,4 +633,16 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		getView().loadingImage();
 	}
 
+	@Override
+	public void copyLessonToUnit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void copyUnitToCourse() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
