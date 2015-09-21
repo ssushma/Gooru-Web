@@ -16,15 +16,13 @@
 
 	<g:HTMLPanel styleName="containerMarginTop">
 		<g:HTMLPanel styleName="answerHeadLbl" ui:field="questionText"></g:HTMLPanel>
-		<g:Label styleName="charLimit" ui:field="charLimitLbl"></g:Label>
+
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel>
 
 	<g:HTMLPanel styleName="textBoxContainer questionTextcontainer">
 	    <g:HTMLPanel ui:field="questionNameTextAreaContainer"></g:HTMLPanel>
-
-		<!-- <tinyMce:TinyMCE width="1" height="1"
-			ui:field="questionNameTextArea" characterLimit="500"></tinyMce:TinyMCE> -->
+		<g:Label styleName="charLimit" ui:field="charLimitLbl"></g:Label>
 		<g:Label ui:field="questionNameErrorLbl"></g:Label>
 	</g:HTMLPanel>
 
@@ -50,11 +48,11 @@
    <g:FlowPanel styleName="containerPadding" ui:field="explanationContainer">
           <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconExplanation"></HTMLEventPanel:HTMLEventPanel>
           <g:Label styleName="containerTitle" ui:field="explanationLabel"></g:Label>
-          <g:Label styleName="charLimitExplanationStyle" ui:field="charLimitExplanation"></g:Label>
+
           <g:HTMLPanel styleName="textBoxContainer questionTextcontainer">
-               <g:HTMLPanel ui:field="explainationTextAreaContainer"></g:HTMLPanel>
-      <!--     <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="500"></tinyMce:TinyMCE> -->
-          <g:Label ui:field="explainationErrorLbl"></g:Label>
+				<g:HTMLPanel ui:field="explainationTextAreaContainer"></g:HTMLPanel>
+				<g:Label styleName="charLimitExplanationStyle" ui:field="charLimitExplanation"></g:Label>
+				<g:Label ui:field="explainationErrorLbl"></g:Label>
           </g:HTMLPanel>
     </g:FlowPanel>
      <g:Label styleName="errorText errorMessage" ui:field="errorMessageForExplanation"></g:Label>

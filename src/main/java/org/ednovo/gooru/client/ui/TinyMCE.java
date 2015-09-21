@@ -44,6 +44,7 @@ import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.BorderStyle;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -455,6 +456,7 @@ public class TinyMCE extends Composite{
 	   this.parentWidth = parentWidth;
 	   setToolBarPosition(id, parentWidth);
 	   setFoucs(id);
+	   Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
 	}
 	public void hideAllButtons(){
 		if(!lastButtonId.equalsIgnoreCase("") && Document.get().getElementById(lastButtonId+BUTTONID) != null){
