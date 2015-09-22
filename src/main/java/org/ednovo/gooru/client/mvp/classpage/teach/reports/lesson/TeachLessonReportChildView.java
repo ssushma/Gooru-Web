@@ -167,30 +167,33 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
     			        		  if(collectionProgressData.get(j).getType()!=null && !collectionProgressData.get(j).getType().equalsIgnoreCase(QUESTION)){
     				        		  
     			        		  }else{
-    			        			  int attemptCount=collectionProgressData.get(j).getUsageData().get(i).getAttempts();
-    			        			  int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
-    			        			  
-    			        			  if(isCollection) {
-    			        				  if(attemptCount>1&&scoreValue>=1){
-    			        					  color = COLLECTION_ORANGE;
-    			        					  score++;
-    			        				  } else if(attemptCount==1&&scoreValue==1) {
-    			        					  color = COLLECTION_GREEN;
-    			        					  score++;
-    			        				  } else if(attemptCount>=1&&scoreValue==0) {
-    			        					  color=COLLECTION_RED;
-    			        				  } else {
-    			        					  color=WHITE;
-    			        				  }
-    			        			  } else {
-    			        				  if(attemptCount>=1&&scoreValue>=1){
-    			        					  color = ASSESSMENT_GREEN;
-    			        					  score++;
-    			        				  } else if(attemptCount>=1&&scoreValue==0) {
-    			        					  color = ASSESSMENT_ORANGE;
-    			        				  } else {
-    			        					  color=WHITE;
-    			        				  }
+    			        			  String questionType = collectionProgressData.get(j).getQuestionType()!=null?collectionProgressData.get(j).getQuestionType():"";
+    			        			  if(!questionType.equalsIgnoreCase("OE")) {
+        			        			  int attemptCount=collectionProgressData.get(j).getUsageData().get(i).getAttempts();
+        			        			  int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
+        			        			  
+        			        			  if(isCollection) {
+        			        				  if(attemptCount>1&&scoreValue>=1){
+        			        					  color = COLLECTION_ORANGE;
+        			        					  score++;
+        			        				  } else if(attemptCount==1&&scoreValue==1) {
+        			        					  color = COLLECTION_GREEN;
+        			        					  score++;
+        			        				  } else if(attemptCount>=1&&scoreValue==0) {
+        			        					  color=COLLECTION_RED;
+        			        				  } else {
+        			        					  color=WHITE;
+        			        				  }
+        			        			  } else {
+        			        				  if(attemptCount>=1&&scoreValue>=1){
+        			        					  color = ASSESSMENT_GREEN;
+        			        					  score++;
+        			        				  } else if(attemptCount>=1&&scoreValue==0) {
+        			        					  color = ASSESSMENT_ORANGE;
+        			        				  } else {
+        			        					  color=WHITE;
+        			        				  }
+        			        			  }
     			        			  }
     			        		  }
     			        		  Label timeStamplbl=new Label(StringUtil.getElapsedTime(collectionProgressData.get(j).getUsageData().get(i).getTimeSpent()));
