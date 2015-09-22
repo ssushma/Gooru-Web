@@ -73,4 +73,6 @@ public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers,
 	public void moveCollectionToMyCOllections(String gooruOid, String folderId,String searchType,String collectionTitle,HashMap<String, String> urlparams);
 	public void enableAddButton();
 	public void getLoadingImage();
+	public void copyLessonToUnit();
+	public void copyUnitToCourse();
 }
