@@ -707,7 +707,7 @@ public class StringUtil implements ClientConstants {
 		return count;
 	}
 	public static boolean checkUrlContainesGooruUrl(String url){
-		if (url.contains("goorulearning.org")|| url.contains("support.goorulearning.org")|| url.contains("about.goorulearning.org")) {
+		if (url.contains("goorulearning.org")|| url.contains("support.goorulearning.org")|| url.contains("about.goorulearning.org") || url.contains("gooru.org")|| url.contains("support.gooru.org")|| url.contains("about.gooru.org")) {
 			return true;
 		} else {
 			return false;

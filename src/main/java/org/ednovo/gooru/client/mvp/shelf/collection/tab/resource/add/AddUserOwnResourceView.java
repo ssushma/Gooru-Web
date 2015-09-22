@@ -141,7 +141,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 	@UiField
 	Label centuryDefaultText,resourceContentChkLbl, mandatoryTitleLbl,descCharcterLimit,standardsDefaultText,accessHazard,mediaLabel,mandatoryCategoryLbl;
-	
+
 	@UiField
 	HTMLEventPanel lblContentRights;
 
@@ -404,7 +404,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 						}
 						@Override
 						public void onFailure(Throwable caught) {
-						}							
+						}
 					});
 					centurySgstBox.showSuggestionList();
 				}
@@ -456,7 +456,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				hideDropDown(event);
 			}
-		}); 
+		});
 		standardsCont.getElement().setAttribute("style", "position:relative;");
 		AdvancedSetupContainer.add(addSetupAdvancedView);
 		standardsBrowseContainer.getElement().setId("standardsContainerBswn");
@@ -895,7 +895,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank","");
+				Window.open("http://support.gooru.org/hc/en-us/articles/200688506","_blank","");
 			}
 		});
 		categorypanel.setStyleName(texts.getStyleName());
@@ -910,7 +910,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 			@Override
 			public void onClick(ClickEvent event) {
-				
+
 				if(!hasClickedOnDropDwn){
 					educationalUsePanel.setVisible(false);
 					educationalDropDownLblOpen = false;
@@ -1288,13 +1288,13 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											mediaType = i18n.GL_GRR_NOT_MOBILE_FRIENDLY();
 										}
 										List<Integer> mediaFeaturesList = new ArrayList<>();
-										if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:")){	
+										if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:")){
 											mediaFeaturesList.add(Integer.parseInt(lblMediaPlaceHolder.getElement().getId()));
 											tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
 										}
 										hazardsAndMediaFeatures.put("media", mediaFeaturesList);
 										hazardsAndMediaFeatures.put("hazard", setAccessHazards());
-								
+
 										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase("")){
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
 												tagList.add("Educational Use : "+resourceEducationalLabel.getText());
@@ -1343,7 +1343,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				}
 			});
 		}
-		protected void parseUploadFileDetails(String jsonString,boolean showPreview, List<String> tagList,Map<String, List<Integer>> hazardsAndMediaFeatures,String mediaType, List<StandardFo> centuryDo) {  
+		protected void parseUploadFileDetails(String jsonString,boolean showPreview, List<String> tagList,Map<String, List<Integer>> hazardsAndMediaFeatures,String mediaType, List<StandardFo> centuryDo) {
 			if(jsonString!=null){
 				JSONValue jsonParseValue=JSONParser.parseStrict(jsonString);
 				JSONObject jsonObject=jsonParseValue.isObject();
@@ -1354,7 +1354,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				if(resourceCategory.equalsIgnoreCase("Image")||resourceCategory.equalsIgnoreCase("Text"))
 				{
 					//resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
-					 if(resourceCategory.equalsIgnoreCase("Image")){	
+					 if(resourceCategory.equalsIgnoreCase("Image")){
 						 resourceCategory="Image";
 					 }
 				}

@@ -65,7 +65,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : StudyClassCodeView.java
  *
- * @description : 
+ * @description :
  *
  *
  * @version : 1.0
@@ -74,31 +74,31 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Author tumbalam
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> implements IsStudyClassCodeView{
-	
-	
+
+
 	@UiField Anchor moreLinkAnr,courseAnr;
-	
+
 	@UiField TextBoxWithPlaceholder txtClassCode;
-	
+
 	@UiField Button codeBtnEnter,btnCreateClass;
-	
+
 	@UiField H3Panel studentHeader,createPanel,courseContentPanel,classCodePanel;
-	
+
 	@UiField H2Panel teacherHeader;
-	
+
 	@UiField PPanel hintPanel,courseNotesPanel;
-	
+
 	@UiField InlineLabel noteOne,noteTwo,noteThree;
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private NewClassPopupView newPopup = null;
-	
+
 	AlertMessageUc alertMessageUc;
-	
+
 	private boolean isValid=true;
 
 	Button goBtn;
@@ -117,97 +117,97 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 		Window.enableScrolling(true);
 	}
 
-		
+
 	private void setIds() {
-		
+
 		btnCreateClass.setText(i18n.GL1771());
 		btnCreateClass.getElement().setId("btnCreateClass");
 		btnCreateClass.getElement().setAttribute("alt",i18n.GL1771());
 		btnCreateClass.getElement().setAttribute("title",i18n.GL1771());
-		
+
 		moreLinkAnr.setText(i18n.GL3462_12());
-		moreLinkAnr.setHref("http://support.goorulearning.org/hc/en-us/sections/201152845");
+		moreLinkAnr.setHref("http://support.gooru.org/hc/en-us/sections/201152845");
 		moreLinkAnr.setTarget("_blank");
-		
-				
-		
-		
+
+
+
+
 		txtClassCode.setPlaceholder(i18n.GL1785());
 		txtClassCode.getElement().setId("txtCode");
-		
+
 		codeBtnEnter.setText(i18n.GL0213());
 		codeBtnEnter.getElement().setId("codeBtnEnter");
 		codeBtnEnter.getElement().setAttribute("alt",i18n.GL0213());
 		codeBtnEnter.getElement().setAttribute("title",i18n.GL0213());
-	
-		
+
+
 		studentHeader.setText(i18n.GL3450_1());
 		studentHeader.getElement().setId("studentHeaderId");
-		
-		
+
+
 		teacherHeader.setText(i18n.GL3450_2());
 		teacherHeader.getElement().setId("teacherHeaderId");
-		
-		
+
+
 		createPanel.setText(i18n.GL3450_3());
 		createPanel.getElement().setId("createPanelId");
-		
-		
+
+
 		hintPanel.setText(i18n.GL3450_4());
 		hintPanel.getElement().setId("hintPanelId");
-		
-		
+
+
 		courseContentPanel.setText(i18n.GL3450_5());
 		courseContentPanel.getElement().setId("courseContentPanelId");
-		
-		
+
+
 		courseNotesPanel.setText(i18n.GL3450_6());
 		courseNotesPanel.getElement().setId("courseNotesPanelId");
-		
-		
+
+
 		classCodePanel.setText(i18n.GL3450_7());
 		classCodePanel.getElement().setId("classCodePanelId");
-		
-		
+
+
 		noteOne.setText(i18n.GL_GRR_NUMERIC_ONE());
 		noteOne.getElement().setId("noteOneId");
-		
-		
+
+
 		noteTwo.setText(i18n.GL_GRR_NUMERIC_TWO());
 		noteTwo.getElement().setId("noteTwoId");
-	
-		
+
+
 		noteThree.setText(i18n.GL_GRR_NUMERIC_THREE());
 		noteThree.getElement().setId("noteThreeId");
-		
-		
+
+
 		courseAnr.setText(i18n.GL3450_8());
 		courseAnr.getElement().setId("courseAnrId");
-		
-		
+
+
 		txtClassCode.addFocusHandler(new FocusHandler() {
-			
+
 			@Override
 			public void onFocus(FocusEvent event) {
 				txtClassCode.getElement().addClassName("textTransform");
 			}
 		});
 		txtClassCode.addBlurHandler(new BlurHandler() {
-			
+
 			@Override
 			public void onBlur(BlurEvent event) {
 				if (txtClassCode.getText().length() > 0 ){
-					
+
 				}else{
 					txtClassCode.getElement().removeClassName("textTransform");
 				}
 			}
 		});
-		
-		
-		
+
+
+
 	}
-	
+
 	public void setEnterBtnVisiblity(Button enterBtn,boolean isVisible){
 		if(isVisible){
 			enterBtn.setEnabled(!isVisible);
@@ -217,7 +217,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 			enterBtn.removeStyleName(CssTokens.DISABLED);
 		}
 	}
-	
+
 	private class CreateNewClass implements ClickHandler{
 
 		/* (non-Javadoc)
@@ -227,7 +227,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 		public void onClick(ClickEvent event) {
 			MixpanelUtil.ClickOnNewClassPage();
 			newPopup = new NewClassPopupView() {
-				
+
 				@Override
 				public void createNewClasspage(String title, String grade, boolean sharing) {
 					try{
@@ -235,18 +235,18 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 					}catch(Exception e){
 						e.printStackTrace();
 					}
-					
+
 				}
 			};
 		}
-		
+
 	}
-	
+
 	private class OnEnterClassCodeOpen implements ClickHandler{
-		
+
 		Button enterBtn;
 		TextBoxWithPlaceholder classCodeTxt;
-		
+
 		public OnEnterClassCodeOpen(Button enterBtn,TextBoxWithPlaceholder classCodeTxt){
 			this.enterBtn=enterBtn;
 			this.classCodeTxt=classCodeTxt;
@@ -270,9 +270,9 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 					}
 				};
 				alertMessageUc.appPopUp.addDomHandler(alertHandler, ClickEvent.getType());
-				
+
 				alertMessageUc.okButton.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						isValid=false;
@@ -284,7 +284,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 			MixpanelUtil.ClickOnStudyNow();
 			getPresenter().getClassData(classCodeTxt.getText().trim());
 		}
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -298,9 +298,9 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 			OpenClasspageEdit(classpageId, PlaceTokens.EDIT_CLASS);
 			newPopup.ClosePopup();
 		}
-		
+
 	}
-	 
+
 	private void OpenClasspageEdit(String gooruOId, String token){
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(UrlNavigationTokens.CLASSPAGEID, gooruOId);
@@ -317,11 +317,11 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 	public void setClassData(ClasspageDo result) {
 
 		setEnterBtnVisiblity(goBtn,false);
-		
+
 		 String classUid = null;
 		 String status = null;
 		 boolean sharing = false;
-		 
+
 		 if(result.getClassType()!=null) {
 			 if(result.getClassType().equalsIgnoreCase("new-class")) {
 				 classUid = result.getClassUid();
@@ -335,7 +335,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 				 }
 			 }
 		 }
-		 
+
 		 if(classUid==null){
 			Window.enableScrolling(false);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
@@ -386,7 +386,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 					MixpanelUtil.Click_Study_LandingPage();
 				}
-				
+
 				 if(result.getClassType()!=null) {
 					 Map<String, String> params = new HashMap<String, String>();
 					 if(result.getClassType().equalsIgnoreCase("new-class")) {
@@ -413,7 +413,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 					MixpanelUtil.Click_Study_LandingPage();
 				}
-				
+
 				 if(result.getClassType()!=null) {
 					 Map<String, String> params = new HashMap<String, String>();
 					 if(result.getClassType().equalsIgnoreCase("new-class")) {
@@ -430,7 +430,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
 					 }
 				 }
-				
+
 				 txtClassCode.setText("");
 				if(alertMessageUc!=null)
 				alertMessageUc.hide();
@@ -440,7 +440,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 					MixpanelUtil.Click_Study_LandingPage();
 				}
-				
+
 				 if(result.getClassType()!=null) {
 					 Map<String, String> params = new HashMap<String, String>();
 					 if(result.getClassType().equalsIgnoreCase("new-class")) {
@@ -470,7 +470,7 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 		}
 		else
 		{
-			
+
 			 if(result.getClassType()!=null) {
 				 Map<String, String> params = new HashMap<String, String>();
 				 if(result.getClassType().equalsIgnoreCase("new-class")) {
@@ -487,18 +487,18 @@ public class StudyClassCodeView extends ChildView<StudyClassCodePresenter> imple
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
 				 }
 			 }
-			
+
 			 txtClassCode.setText("");
 			if(alertMessageUc!=null)
 			alertMessageUc.hide();
 		}
 		setEnterBtnVisiblity(goBtn,false);
 	}
-	
+
 	@UiHandler("moreLinkAnr")
 	public void onClickSupport(ClickEvent event){
 	}
-	
+
 	@UiHandler("courseAnr")
 	public void onCourseCreate(ClickEvent event){
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT);

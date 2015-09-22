@@ -53,7 +53,7 @@
 
 <g:Button ui:field="btnCreateCourse" styleName="primary">Create a Course</g:Button>
 
-<p><a href="http://support.goorulearning.org/hc/en-us/sections/201157015" target="_blank">More information in the Support Center</a></p>
+<p><a href="http://support.gooru.org/hc/en-us/sections/201157015" target="_blank">More information in the Support Center</a></p>
 
 </div>
 
@@ -71,4 +71,4 @@
 <div class="clearfix"></div>
 
 </g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

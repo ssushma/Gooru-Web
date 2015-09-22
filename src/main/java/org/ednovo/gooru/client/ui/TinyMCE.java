@@ -452,13 +452,16 @@ public class TinyMCE extends Composite{
 		AppClientFactory.printInfoLogger("hideTinyMceToolBar");
 	}
 	public void showTinyMceToolBar(){
-	   Document.get().getElementById(id+"_external").setAttribute("style", "display:block");
-	   int parentWidth = Document.get().getElementById(id+"_external").getParentElement().getOffsetWidth();
-	   this.parentWidth = parentWidth;
-	   setToolBarPosition(id, parentWidth);
-	   setFoucs(id);
-	   if (Document.get().getElementById(id + "_external_close") != null)
-		   Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
+		if (Document.get().getElementById(id + "_external") != null){
+			Document.get().getElementById(id+"_external").setAttribute("style", "display:block");
+			int parentWidth = Document.get().getElementById(id+"_external").getParentElement().getOffsetWidth();
+			this.parentWidth = parentWidth;
+			setToolBarPosition(id, parentWidth);
+			setFoucs(id);
+		}
+		if (Document.get().getElementById(id + "_external_close") != null){
+			Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
+		}
 	}
 	public void hideAllButtons(){
 		if(!lastButtonId.equalsIgnoreCase("") && Document.get().getElementById(lastButtonId+BUTTONID) != null){
