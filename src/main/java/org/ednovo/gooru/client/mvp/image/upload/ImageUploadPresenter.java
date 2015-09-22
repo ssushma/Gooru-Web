@@ -131,7 +131,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			public void onSuccess(MediaUploadDo mediaUploadDo) {
 				getView().glasspanelLoadingImage(false);
 				getView().setImageUpload(mediaUploadDo);
-				//setUploadData(mediaUploadDo.getUrl(),mediaUploadDo);
 				isImageUploadedFromUrl=true;
 			}
 			@Override
@@ -143,9 +142,8 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		setCropImageAsyncCallback(new SimpleAsyncCallback<String>(){
 			@Override
 			public void onSuccess(String filename) {
-				//setUploadData(filename,null);
-				System.out.println("filename::"+filename);
-				getView().setCroppedImage(filename);
+				//getView().setCroppedImage(filename);
+				setUploadData(filename);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -215,7 +213,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			@Override
 			public void onSuccess(MediaUploadDo mediaUploadDo) {
 				getView().setImageUpload(mediaUploadDo);
-				//setUploadData(mediaUploadDo.getUrl(),mediaUploadDo);
 				isImageUploadedFromUrl=false;
 			}
 		});
@@ -223,14 +220,13 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			@Override
 			public void onSuccess(String imageUrl) {
 				if(isProfileImage){
-					AppClientFactory.fireEvent(new SetUserProfileImageEvent(imageUrl));
+					AppClientFactory.fireEvent(new SetUserProfileImageEvent(fileNameWithRepository));
 				}else if(isUdateProfileImage){
-					AppClientFactory.fireEvent(new SetUpdateProfileImageEvent(imageUrl));
+					AppClientFactory.fireEvent(new SetUpdateProfileImageEvent(fileNameWithRepository));
+				}else{
+					AppClientFactory.fireEvent(new SetUserPublicProfileImageEvent(fileNameWithRepository));
 				}
-				else{
-					AppClientFactory.fireEvent(new SetUserPublicProfileImageEvent(imageUrl));
-				}
-				AppClientFactory.fireEvent(new UpdateProfileHeaderImageEvent(imageUrl));
+				AppClientFactory.fireEvent(new UpdateProfileHeaderImageEvent(fileNameWithRepository));
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
 			}
@@ -248,11 +244,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		});
 	}
 	@Override
-	public void setUploadData(String filename,MediaUploadDo mediaUploadDo){
-		if(mediaUploadDo!=null){
-			this.fileNameWithoutRepository=mediaUploadDo.getName();
-			this.fileNameWithRepository=mediaUploadDo.getUrl();
-		}
+	public void setUploadData(String filename){
 		if(isCollectionImage){
 			getShelfView().setCollectionImage(fileNameWithRepository,fileNameWithoutRepository);
 			getView().closeImageUploadWidget();
@@ -273,8 +265,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			AppClientFactory.fireEvent(new UpdateEditResourceImageEvent(filename,fileNameWithoutRepository,isEditUserOwnResourceImage));
 			getView().closeImageUploadWidget();
 			getView().resetImageUploadWidget();
-		}
-		else if(isProfileImage||isPublicProfileImage||isUdateProfileImage){
+		}else if(isProfileImage||isPublicProfileImage||isUdateProfileImage){
 			saveUserProfileImage(filename);
 		}else if(isuserOwnResourceImage){
 			AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
@@ -353,12 +344,11 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		this.getMediaUploadService().imageWebUpload(imageURL, getGooruDefaultProfileUploadAsyncCallback());
 	}
 	@Override
-	public void cropImage(String fileName, String height, String width, String xPostion, String yPosition,String imageUrl) {
+	public void cropImage(MediaUploadDo mediaUploadDo, String height, String width, String xPostion, String yPosition) {
 		Window.enableScrolling(true);
-		this.fileNameWithoutRepository=fileName;
-		this.fileNameWithRepository=imageUrl;
-		AppClientFactory.printInfoLogger("imageUrl::::"+imageUrl);
-		this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
+		this.fileNameWithoutRepository=mediaUploadDo.getName();
+		this.fileNameWithRepository=mediaUploadDo.getUrl();
+		this.getMediaUploadService().cropImage(mediaUploadDo.getName(), height, width, xPostion, yPosition,mediaUploadDo.getUrl(), getCropImageAsyncCallback());
 	}
 
 	@Override
