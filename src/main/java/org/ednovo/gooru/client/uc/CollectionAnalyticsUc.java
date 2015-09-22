@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.ednovo.gooru.client.uc;
 
@@ -32,24 +32,24 @@ public abstract class CollectionAnalyticsUc extends PopupPanel {
 
 	private static CollectionAnalyticsUcUiBinder uiBinder = GWT
 			.create(CollectionAnalyticsUcUiBinder.class);
-	
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionAnalyticsUcUiBinder extends
 			UiBinder<Widget, CollectionAnalyticsUc> {
 	}
-	
+
 	/* HTML5 Storage implementation for tab persistance */
 	private Storage stockStore = null;
-	
+
 	CollectionTabTitleVc presentTab = null;
-	
+
 	@UiField Label analyticsHeaderLbl,closeButton;
 
 	@UiField FlowPanel analyticsBodyLbl,headerPanel,contentPanel;
 
 	public CollectionAnalyticsUc(final String gooruOid ,String collectionName, CollectionTabTitleVc presentTab) {
-		setWidget(uiBinder.createAndBindUi(this));	
+		setWidget(uiBinder.createAndBindUi(this));
 		if (presentTab!=null){
 			this.presentTab = presentTab;
 		}
@@ -60,7 +60,7 @@ public abstract class CollectionAnalyticsUc extends PopupPanel {
 		this.getElement().getStyle().setHeight(100, Unit.PCT);
 		this.getElement().getStyle().setPadding(0, Unit.PX);
 		this.getElement().getStyle().setZIndex(99999);
-		
+
 		final int height = Window.getClientHeight()-40;
 		analyticsHeaderLbl.getElement().setId("lblAnalyticsHeaderLbl");
 		analyticsHeaderLbl.setText(i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
@@ -68,12 +68,11 @@ public abstract class CollectionAnalyticsUc extends PopupPanel {
 		analyticsHeaderLbl.getElement().setAttribute("title", i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
 		closeButton.getElement().setId("lblCloseButton");
 		Window.scrollTo(0, 0);
-				
+
 		AppClientFactory.getInjector().getAppService().getAnalyticsURL("collection", gooruOid, new SimpleAsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String analyticsUrl) {
-//				String url = "http://dev.insights.goorulearning.org/dashboard/#/collection/"+gooruOid+"?session_token=BE7683AC7B1627D491BB1A7A5012E77D";
 				Frame resourcePreviewFrame = new Frame(analyticsUrl);
 				resourcePreviewFrame.getElement().getStyle().setBorderWidth(0, Unit.PX);
 				resourcePreviewFrame.getElement().getStyle().setBorderStyle(BorderStyle.NONE);
@@ -82,18 +81,18 @@ public abstract class CollectionAnalyticsUc extends PopupPanel {
 				analyticsBodyLbl.add(resourcePreviewFrame);
 			}
 		});
-				
-		
+
+
      	this.setAutoHideOnHistoryEventsEnabled(true);
      	this.center();
      	this.show();
 	}
 	/**
-	 * 
-	 * @function clickOnCancelLabel 
-	 *  
+	 *
+	 * @function clickOnCancelLabel
+	 *
 	 * @description : To close the popup.
-	 *  
+	 *
 	 * @parm(s) : @param clickEvent {@link ClickEvent}
 	 *
 	 */
@@ -107,10 +106,10 @@ public abstract class CollectionAnalyticsUc extends PopupPanel {
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
-	
+
 	/**
 	 * Sets the incoming tabFlag into Persistant store
-	 * 
+	 *
 	 * @param flag
 	 *            generated when tabs are being switched
 	 */
@@ -122,7 +121,7 @@ public abstract class CollectionAnalyticsUc extends PopupPanel {
 		}
 
 	}
-	
+
 	public abstract void setDefaultTab();
-	
+
 }

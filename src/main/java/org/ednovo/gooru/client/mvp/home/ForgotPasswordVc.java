@@ -109,7 +109,7 @@ public class ForgotPasswordVc extends PopupPanel implements ClientConstants {
 		supportLink.setText(i18n.GL0299());
 		supportLink.getElement().setAttribute("alt",i18n.GL0299());
 		supportLink.getElement().setAttribute("title",i18n.GL0299());
-		supportLink.setHref("mailto:support@goorulearning.org");
+		supportLink.setHref("mailto:support@gooru.org");
 		pleaseContactLbl.setText(i18n.GL1145());
 		pleaseContactLbl.getElement().setId("spnPleaseContact");
 		pleaseContactLbl.getElement().setAttribute("alt",i18n.GL1145());

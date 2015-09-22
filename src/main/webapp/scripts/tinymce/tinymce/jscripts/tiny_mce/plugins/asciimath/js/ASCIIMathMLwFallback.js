@@ -32,7 +32,7 @@ for more details.
 //var AMTcgiloc = "http://www.imathas.com/cgi-bin/mimetex.cgi"; //path to CGI script that
 						     //can render a TeX strin
 //var AMTcgiloc = "http://mtex.goorulearning.org/cgi-bin/mimetex.cgi";
-var AMTcgiloc = "//mtex.goorulearning.org/cgi-bin/mimetex.cgi";
+var AMTcgiloc = "//mtex.gooru.org/cgi-bin/mimetex.cgi";
 var checkForMathML = true;   // check if browser can display MathML
 var notifyIfNoMathML = false; // display note if no MathML capability
 var alertIfNoMathML = false;  // show alert box if no MathML capability
