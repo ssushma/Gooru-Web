@@ -55,7 +55,7 @@ public interface ImageUploadUiHandlers extends BaseUiHandlers, EventHandler {
 	 * @param yPostion
 	 * <p>y-coordinates  of the  crop  selection</p>
 	 */
-	void cropImage(String fileName, String height, String width,  String xPostion, String yPostion,String imageUrl);
+	void cropImage(MediaUploadDo mediaUploadDo, String height, String width,  String xPostion, String yPostion);
 	/**
 	 * @param response 
 	 * <p>
@@ -70,5 +70,5 @@ public interface ImageUploadUiHandlers extends BaseUiHandlers, EventHandler {
 
 	void saveImageCollection(String gooruOid, String fileName);
 	
-	void setUploadData(String filename,MediaUploadDo mediaUploadDo);
+	void setUploadData(String filename);
 }
