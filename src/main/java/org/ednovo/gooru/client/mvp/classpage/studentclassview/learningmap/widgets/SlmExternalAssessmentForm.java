@@ -186,7 +186,7 @@ public class SlmExternalAssessmentForm extends Composite {
 			@Override
 			public void onSuccess(Boolean value) {
 				if (value){
-					evidenceErrorLbl.setText(i18n.GL3587());
+					evidenceErrorLbl.setText(i18n.GL0554());
 					evidenceErrorLbl.setVisible(true);
 					setButtonVisibility(true);
 				}else{
