@@ -37,12 +37,11 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.GlassPanelWithLoadingUc;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -144,7 +143,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	@UiField Label chooseText,uploadFromComputer,uploadLimitText,notWorkingLblText,
 	uploadFromWebText,imageURLLbl,typeImageurlText,infoUrlUploadText,chooseFromText;
 
-	private static final String IMAGE_UPLOAD_URL = "/media?sessionToken={0}&uploadFileName={1}&resize=true&width=600&height=450";
+	private static final String GET_CROPPED_IMAGE = "/v1/crop?height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}";
 
 	private static final String IMAGE_UPLOAD_URL_PATTERN = "(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|jpeg|png))(?:\\?([^#]*))?(?:#(.*))?";
 
@@ -153,6 +152,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	MediaUploadDo mediaUploadDo;
 
 	@UiField Image displayImage,displayImage1;
+	
+	String height=null,width=null,xVal=null,yVal=null;
 
 	/**
 	 * See for more details  {@link PopupViewWithUiHandlers} for details.
@@ -599,7 +600,9 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			this.mediaUploadDo=mediaUploadDo;
 			displayImage.setUrl(mediaUploadDo.getUrl());
 			displayImage1.setUrl(mediaUploadDo.getUrl());
-			hideAndDisplayAllCropButtons(true);
+			hideAndDisplayAllCropButtons(true);		
+			displayImage.setVisible(false);
+			displayImage1.setVisible(false);
 			displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 			displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 		} else {
@@ -633,11 +636,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 			@Override
 			public void onSubmitComplete(SubmitCompleteEvent event) {
-				AppClientFactory.printInfoLogger("onSubmitComplete-----");
 				glasspanelLoadingImage(false);
-				AppClientFactory.printInfoLogger("onSubmitCompleteevent-----"+event.getResults());
 				getUiHandlers().imageFileUpload(event.getResults());
-				AppClientFactory.printInfoLogger("onSubmitCompleteeventdebug-----"+event.toDebugString());
 			}
 		});
 	}
@@ -716,7 +716,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	@UiHandler(value={"onOkButton","onOkButton1"})
 	public void clickEventOnUseImage(ClickEvent e){
 		if(mediaUploadDo!=null){
-			getUiHandlers().setUploadData(mediaUploadDo.getName(), mediaUploadDo);
+			//getUiHandlers().setUploadData(mediaUploadDo.getName(), mediaUploadDo);
+			getUiHandlers().cropImage(mediaUploadDo, height, width, xVal, yVal);
 		}
 	}
 
@@ -755,8 +756,13 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			}
 			@Override
 			public void onCrop() {
-				//glasspanelLoadingImage(true);
-				getUiHandlers().cropImage(mediaUploadDo.getName(), getSelectionHeight(), getSelectionWidth(), getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getUrl());
+				String tempCropUrl=AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(GET_CROPPED_IMAGE,getSelectionHeight(),getSelectionWidth(),getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getName(),AppClientFactory.getLoggedInUser().getToken());
+				setCroppedImage(tempCropUrl+"&id="+Math.random());
+				height=getSelectionHeight();
+				width=getSelectionWidth();
+				xVal=getSelectionXCoordinate();
+				yVal=getSelectionYCoordinate();
+				//getUiHandlers().cropImage(mediaUploadDo.getName(), getSelectionHeight(), getSelectionWidth(), getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getUrl());
 			}
 			@Override
 			public void onLoad(){
@@ -779,10 +785,14 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@Override
 	public void setCroppedImage(String filename) {
-		displayImage.setUrl(mediaUploadDo.getUrl());
-		displayImage1.setUrl(mediaUploadDo.getUrl());
-		displayCromImagePanel.getElement().getStyle().setBackgroundImage(mediaUploadDo.getUrl());
-		displayCromImagePanel1.getElement().getStyle().setBackgroundImage(mediaUploadDo.getUrl());
+		displayImage.setUrl("");
+		displayImage1.setUrl("");
+		displayImage.setVisible(true);
+		displayImage1.setVisible(true);
+		displayImage.setUrl(filename);
+		displayImage1.setUrl(filename);
+		displayCromImagePanel.getElement().getStyle().clearBackgroundImage();
+		displayCromImagePanel1.getElement().getStyle().clearBackgroundImage();
 		imageCropPopup.hide();
 	}
 }

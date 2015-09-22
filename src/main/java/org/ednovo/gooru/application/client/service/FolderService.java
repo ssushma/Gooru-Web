@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/folderService")
@@ -221,5 +222,11 @@ public interface FolderService extends BaseService {
 
 	void updateCollectionDetails(CreateDo createDoObj,String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective);
     
-	FolderDo copyCourse(String courseId, String unitId, String lessonId) throws GwtException;
+	String copyCourse(String courseId, String unitId, String lessonId) throws GwtException;
+	
+	public Map<String,String> jobCheck(String result) throws GwtException;
+
+	
+
+	
 }

@@ -9,11 +9,9 @@
 			height: 480px;
 			float: left;
 		}
-		
 		.imageUploadAlign {
 			text-align: center;
 		}
-		
 		.imageUploadMinHeight {
 			clear: both;
 		}
@@ -203,7 +201,8 @@
 			margin-right: 3%;		
 		}
 		.displayImage{
-			display: none;
+			max-width: 100%;
+			max-height: 100%;
 		}
 		.setMarginLeft{
 			margin-right: 31px;
