@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -62,29 +62,29 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public static final String FORM_MIMETYPE="application/vnd.google-apps.form";
 	public static final String PRESENTATION_MIMETYPE="application/vnd.google-apps.presentation";
 	public static final String SPREADSHEET_MIMETYPE="application/vnd.google-apps.spreadsheet";
-	
+
 	@UiField FlowPanel panelDriveBreadCrums, panelFileList;
 	@UiField ScrollPanel driveScrollContainer;
 	@UiField GoogleDriveFilesStyleBundle driveStyle;
-	
+
 	private String pageToken=null;
-	
+
 	private static DriveViewUiBinder uiBinder = GWT.create(DriveViewUiBinder.class);
 
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	
+
+
 	interface DriveViewUiBinder extends UiBinder<Widget, DriveView> {
 	}
-	
+
 	String webResourceId;
 	String webResourceUrl;
 	String webResourceTitle;
 	String webResourceDescription;
 	String webResourceCategory;
 	String webResourceThumbnail;
-	Integer webResourceEnd; 
-	
+	Integer webResourceEnd;
+
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		driveScrollContainer.addScrollHandler(new DriveScrollEvent());
@@ -93,7 +93,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		panelFileList.getElement().setId("fpnlPanelFileList");
 	}
 
-	
+
 	/**
 	 * @return the panelFileList
 	 */
@@ -109,7 +109,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void setPanelFileList(FlowPanel panelFileList) {
 		this.panelFileList = panelFileList;
 	}
-	
+
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 
@@ -123,7 +123,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		panelFileList.add(new GoogleDocsResourceView(driveDo));
 
 	}
-	
+
 	private class DriveScrollEvent implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
@@ -134,7 +134,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 			}
 		}
 	}
-	
+
 	public String getFolderIdFromBreadCrumbs(){
 		int widgetCount=panelDriveBreadCrums.getWidgetCount();
 		Widget widget=panelDriveBreadCrums.getWidget(widgetCount-1);
@@ -175,13 +175,13 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 			showNoDriveAccess(0);
 		}
 	}
-	
-	
+
+
 	@Override
 	public void showNoDriveAccess(int errorCode) {
 		panelFileList.clear();
 		panelDriveBreadCrums.setVisible(false);
-		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
+		StringUtil.clearCookies("google-access-token", "/", ".www.gooru.org");
 		if (errorCode==401){
 			showErrorMessage(i18n.GL2013(),i18n.GL2014());
 		}else if (errorCode==0){
@@ -201,7 +201,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		Label lblErrorHeading=new Label();
 		lblErrorHeading.setStyleName(driveStyle.errorHeading());
 		lblErrorHeading.setText(errorHeading);
-		lblErrorHeading.getElement().setAttribute("alt", errorHeading); 
+		lblErrorHeading.getElement().setAttribute("alt", errorHeading);
 		lblErrorHeading.getElement().setAttribute("title", errorHeading);
 		Label lblErrorSubHeading=new Label();
 		lblErrorSubHeading.setStyleName("");
@@ -212,7 +212,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		errorContainer.add(lblErrorSubHeading);
 		panelFileList.add(errorContainer);
 	}
-	
+
 	public class DriveFileView extends Composite implements HasClickHandlers{
 		private FlowPanel conatiner=null;
 		private HTMLPanel fileTypeImage=new HTMLPanel("");
@@ -248,7 +248,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 			return addDomHandler(handler, ClickEvent.getType());
 		}
 	}
-	
+
 	private class GoogleFolderClickEvent implements ClickHandler{
 		private GoogleDriveItemDo googleDriveItemDo=null;
 		public  GoogleFolderClickEvent(GoogleDriveItemDo googleDriveItemDo){
@@ -266,12 +266,12 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 			}
 		}
 	}
-	
+
 	private void getGoogleFolderItems(String folderId){
 		getUiHandlers().getGoogleDriveFiles(folderId, null, true);
 	}
-	
-	
+
+
 	public void setBreadCrumbLabel(String folderId,String folderTitle){
 		if(folderId!=null){
 			BreadCrumbLabel  breadCrumbLabel=new BreadCrumbLabel(folderId);

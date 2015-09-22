@@ -840,7 +840,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank","");
+				Window.open("http://support.gooru.org/hc/en-us/articles/200688506","_blank","");
 			}
 		});
 
@@ -859,7 +859,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		mobileNo.getElement().setId("btnNo");
 		mobileNo.getElement().setAttribute("alt",i18n.GL1735());
 		mobileNo.getElement().setAttribute("title",i18n.GL1735());
-		
+
 		accessHazard.setText(i18n.GL1804());
 		accessHazard.getElement().setId("lblAccessHazard");
 		accessHazard.getElement().setAttribute("alt",i18n.GL1804());

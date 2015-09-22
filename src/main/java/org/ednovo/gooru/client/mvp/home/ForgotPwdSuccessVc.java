@@ -95,7 +95,7 @@ public class ForgotPwdSuccessVc extends PopupPanel{
        	supportlnk.setText(i18n.GL0299());
        	supportlnk.getElement().setAttribute("alt",i18n.GL0299());
        	supportlnk.getElement().setAttribute("title",i18n.GL0299());
-       	supportlnk.setHref("mailto:support@goorulearning.org");
+       	supportlnk.setHref("mailto:support@gooru.org");
 		lblLoginHeading.setText(i18n.GL0063());
 		lblLoginHeading.getElement().setId("lblLoginHeading");
 		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0063());

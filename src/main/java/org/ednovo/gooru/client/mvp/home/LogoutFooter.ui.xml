@@ -17,16 +17,16 @@
 							<tbp:H4Panel text="{i18n.GL2161}"></tbp:H4Panel>
 							<ul class="list-unstyled">
 								<li>
-									<g:Anchor href="http://about.goorulearning.org/" target="_blank" text="{i18n.GL1024}" />
+									<g:Anchor href="http://about.gooru.org/" target="_blank" text="{i18n.GL1024}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.goorulearning.org/about/careers/" target="_blank" text="{i18n.GL1244}" />
+								    <g:Anchor href="http://about.gooru.org/about/careers/" target="_blank" text="{i18n.GL1244}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://support.goorulearning.org/hc/en-us" target="_blank" text="{i18n.GL1307}" />
+								    <g:Anchor href="http://support.gooru.org/hc/en-us" target="_blank" text="{i18n.GL1307}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.goorulearning.org/contact/" target="_blank" text="{i18n.GL1245}" />
+								    <g:Anchor href="http://about.gooru.org/contact/" target="_blank" text="{i18n.GL1245}" />
 								</li>
 							</ul>
 						</div>
@@ -34,19 +34,19 @@
 							<tbp:H4Panel text="{i18n.GL1243}"></tbp:H4Panel>
 							<ul class="list-unstyled">
 								<li>
-								    <g:Anchor href="http://partners.goorulearning.org/school/partner-with-us" target="_blank" text="{i18n.GL2148}" />
+								    <g:Anchor href="http://partners.gooru.org/school/partner-with-us" target="_blank" text="{i18n.GL2148}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://partners.goorulearning.org/" target="_blank" text="{i18n.Gl2151}" />
+								    <g:Anchor href="http://partners.gooru.org/" target="_blank" text="{i18n.Gl2151}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.goorulearning.org/educators/coach-program/" target="_blank" text="{i18n.GL3327}" />
+								    <g:Anchor href="http://about.gooru.org/educators/coach-program/" target="_blank" text="{i18n.GL3327}" />
 								</li>
 								<!-- <li>
-								    <g:Anchor href="http://developers.goorulearning.org/" target="_blank" text="{i18n.GL2154}" />
+								    <g:Anchor href="http://developers.gooru.org/" target="_blank" text="{i18n.GL2154}" />
 								</li> -->
 								<li>
-								    <g:Anchor href="http://about.goorulearning.org/community/events" target="_blank" text="{i18n.GL2166}" />
+								    <g:Anchor href="http://about.gooru.org/community/events" target="_blank" text="{i18n.GL2166}" />
 								</li>
 							</ul>
 						</div>
@@ -92,4 +92,4 @@
 				</div>
 		</footer>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

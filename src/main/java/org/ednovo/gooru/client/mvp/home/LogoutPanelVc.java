@@ -90,7 +90,7 @@ public class LogoutPanelVc extends Composite{
 		supportAnr.getElement().setId("lnkSupport");
 		supportAnr.getElement().setAttribute("alt",i18n.GL0194());
 		supportAnr.getElement().setAttribute("title",i18n.GL0194());
-		supportAnr.setHref("http://support.goorulearning.org/hc/en-us");
+		supportAnr.setHref("http://support.gooru.org/hc/en-us");
 
 
 		gooruTutorialsAnr.setText(i18n.GL3205());

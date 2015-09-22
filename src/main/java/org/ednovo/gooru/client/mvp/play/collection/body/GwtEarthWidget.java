@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -40,30 +40,30 @@ import com.nitrous.gwt.earth.client.api.event.KmlLoadCallback;
 public class GwtEarthWidget extends Composite {
 	 private GoogleEarthWidget earth;
 	 private String url="";
-	    
+
      static {
              // Expose the walkKmlDom method to the JavaScript world
              registerMethod();
      }
 	 public  GwtEarthWidget(String url){
 		 this.url=url;
-		 
-		
+
+
 		earth = new GoogleEarthWidget();
 		earth.setStyleName("map3dcontainer");
 		 initWidget(earth);
-		
-		 
+
+
 		 GoogleEarth.loadApi(new Runnable(){
-			 
+
              @Override
              public void run() {
-            	
+
                      // start the application
-                     onApiLoaded(); 
-                    
-             }               
-});     
+                     onApiLoaded();
+
+             }
+});
 }
 	 private void onApiLoaded() {
 	  // construct the UI widget
@@ -72,7 +72,7 @@ public class GwtEarthWidget extends Composite {
                  public void pluginReady(GEPlugin ge) {
                 	// show map content once the plugin has loaded
                       loadMapContent();
-                         
+
                  }
 
                 public void pluginInitFailure() {
@@ -80,7 +80,7 @@ public class GwtEarthWidget extends Composite {
                         // Window.alert("Failed to initialize Google Earth Plug-in");
                  }
          });
-         
+
         // RootLayoutPanel.get().add(earth);
 
          // begin loading the Google Earth Plug-in
@@ -92,7 +92,6 @@ private void loadMapContent() {
      ge.getNavigationControl().setVisibility(GEVisibility.VISIBILITY_AUTO);
      ge.enableLayer(GELayerId.LAYER_BORDERS, true);
      ge.enableLayer(GELayerId.LAYER_ROADS, true);
-     //String href = GWT.getHostPageBaseURL() + "http://devrepo.goorulearning.org/qalive/f000/0004/9143/Interactions Among Living Things.kmz";
      GoogleEarth.fetchKml(ge, url, new KmlLoadCallback(){
          @Override
          public void onLoaded(KmlObject feature) {
@@ -101,7 +100,7 @@ private void loadMapContent() {
                         // Window.alert("Failed to load KML");
                          return;
                  }
-                 
+
                  // add the fetched KML into the Earth instance
          ge.getFeatures().appendChild(feature);
 
@@ -140,19 +139,19 @@ private static final native KmlTour findKmlTour(KmlObject root) /*-{
     }
     return true;
  });
- return tour;            
+ return tour;
 }-*/;
 
 /**
  * Register the walkKmlDom Java function so that it is accessible from the JavaScript world.
  */
 private static final native void registerMethod() /*-{
-        $wnd.walkKmlDom = $entry(@org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget::walkKmlDom(Lcom/nitrous/gwt/earth/client/api/KmlObject;Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;));            
+        $wnd.walkKmlDom = $entry(@org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget::walkKmlDom(Lcom/nitrous/gwt/earth/client/api/KmlObject;Lcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;));
 }-*/;
 
 /**
  * JavaScript method taken from here: http://earth-api-samples.googlecode.com/svn/trunk/lib/kmldomwalk.js
- * 
+ *
  * Walks a KML object, calling a given visit function for each object in
  * the KML DOM. The lone argument must be either a visit function or an
  * options literal.
