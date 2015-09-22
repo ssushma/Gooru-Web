@@ -2253,6 +2253,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	public String getXlsxReport(String tableData, String fileName) throws GwtException, ServerDownException {
 		StringRepresentation stringRepresentation= null;
 		String savedFileName="";
+		try {
+			fileName = URLEncoder.encode(fileName,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception::", e);
+		}
 		try{
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_HTML_TO_EXCEL_REPORT,getLoggedInSessionToken());
 			String jsonStr="{\"fileName\":\""+fileName+"\",\"html\":\""+tableData+"\"}";
