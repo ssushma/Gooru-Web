@@ -39,7 +39,7 @@
 .questionRightMain {
 	border-left: 1px solid #ddd;
 	background-color: white;
-	overflow-y: auto !important;
+	overflow-y: scroll !important;
 	overflow-x: hidden !important;
 	max-height: 567px;
 	min-height: 300px;

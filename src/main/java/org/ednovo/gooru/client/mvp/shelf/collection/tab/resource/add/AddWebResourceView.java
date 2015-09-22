@@ -915,7 +915,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506", "_blank", "");
+				Window.open("http://support.gooru.org/hc/en-us/articles/200688506", "_blank", "");
 			}
 		});
 
@@ -1383,9 +1383,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												final String categoryStr = resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
 												final String idStr = collectionDo.getGooruOid();
 
-												if (urlStr.contains("goorulearning.org")) {
+												if (urlStr.contains("goorulearning.org") || urlStr.contains("gooru.org")) {
 													if (urlStr.contains("support.goorulearning.org")
-															|| urlStr.contains("about.goorulearning.org")) {
+															|| urlStr.contains("about.goorulearning.org") || urlStr.contains("support.gooru.org")
+															|| urlStr.contains("about.gooru.org")) {
 														isValidate = true;
 													} else {
 														showUrlErrorMessage(i18n.GL0924());
@@ -1618,9 +1619,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								addResourceBtnLbl.setVisible(true);
 								addResourceBtnPanel.setVisible(true);
 								String userUrlStr = urlTextBox.getText().trim();
-								if (userUrlStr.contains("goorulearning.org")) {
+								if (userUrlStr.contains("goorulearning.org") ||userUrlStr.contains("gooru.org")) {
 									if (userUrlStr.contains("support.goorulearning.org")
-											|| userUrlStr.contains("about.goorulearning.org")) {
+											|| userUrlStr.contains("about.goorulearning.org") || userUrlStr.contains("support.gooru.org")
+											|| userUrlStr.contains("about.gooru.org")) {
 
 									} else {
 										showUrlErrorMessage(i18n.GL0924());
