@@ -46,6 +46,7 @@ public class MasterReportDo implements IsSerializable{
 	private String gooruOId;
 	private Integer sequence;
 	private String type;
+	private String questionType;
 	private ArrayList<MasterAssessmentDo> usageData;
 	private ArrayList<MetaDataDo> metaData;
 	public String getTitle() {
@@ -71,6 +72,12 @@ public class MasterReportDo implements IsSerializable{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getQuestionType() {
+		return questionType;
+	}
+	public void setQuestionType(String questionType) {
+		this.questionType = questionType;
 	}
 	public ArrayList<MasterAssessmentDo> getUsageData() {
 		return usageData;
