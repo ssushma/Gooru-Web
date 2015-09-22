@@ -509,28 +509,57 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
      * This method is used to remove cookie values after reading the values.
      */
     public void removeCookieValues(){
-        Cookies.removeCookie("sessionId");
-        Cookies.removeCookie("collectionDataLogEventId");
-        Cookies.removeCookie("collectionNewDataLogEventId");
-        Cookies.removeCookie("collectionStartTime");
-        Cookies.removeCookie("isRefreshed");
-        Cookies.removeCookie("collectionActivityEventId");
-        Cookies.removeCookie("resourceStartTime");
+        Cookies.removeCookie(getCookieKey()+"-sessionId");
+        Cookies.removeCookie(getCookieKey()+"-collectionDataLogEventId");
+        Cookies.removeCookie(getCookieKey()+"-collectionNewDataLogEventId");
+        Cookies.removeCookie(getCookieKey()+"-collectionStartTime");
+        Cookies.removeCookie(getCookieKey()+"-isRefreshed");
+        Cookies.removeCookie(getCookieKey()+"-collectionActivityEventId");
+        Cookies.removeCookie(getCookieKey()+"-resourceStartTime");
     }
     /**
      * This method is used to set cookies values when page is refreshed.
      */
     public void setCookieValues(){
     	if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
-			Cookies.setCookie("sessionId", sessionId);
+			Cookies.setCookie(getCookieKey()+"-sessionId", sessionId);
 
-			Cookies.setCookie("collectionActivityEventId",collectionActivityEventId);
-			Cookies.setCookie("collectionDataLogEventId",collectionDataLogEventId);
-			Cookies.setCookie("collectionNewDataLogEventId",collectionNewDataLogEventId);
-			Cookies.setCookie("collectionStartTime",String.valueOf(collectionStartTime));
-			Cookies.setCookie("isRefreshed","true");
-			Cookies.setCookie("resourceStartTime",String.valueOf(resourceStartTime));
+			Cookies.setCookie(getCookieKey()+"-collectionActivityEventId",collectionActivityEventId);
+			Cookies.setCookie(getCookieKey()+"-collectionDataLogEventId",collectionDataLogEventId);
+			Cookies.setCookie(getCookieKey()+"-collectionNewDataLogEventId",collectionNewDataLogEventId);
+			Cookies.setCookie(getCookieKey()+"-collectionStartTime",String.valueOf(collectionStartTime));
+			Cookies.setCookie(getCookieKey()+"-isRefreshed","true");
+			Cookies.setCookie(getCookieKey()+"-resourceStartTime",String.valueOf(resourceStartTime));
     	}
+    }
+
+    private String getCookieKey(){
+    	StringBuffer key = new StringBuffer("");
+
+    	String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
+		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
+		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+
+		if (courseId != null){
+			key.append(courseId);
+		}
+		if (unitId != null){
+			key.append(unitId);
+		}
+		if (lessonId != null){
+			key.append(lessonId);
+		}
+		if (cid != null){
+			key.append(cid);
+		}
+		if (id != null){
+			key.append(id);
+		}
+
+		key.append(AppClientFactory.getLoggedInUser().getGooruUId());
+    	return key.toString();
     }
 
     /**
@@ -2695,13 +2724,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	private void getOldValuesOnRefresh(){
-		String sessionOldId=Cookies.getCookie("sessionId");
-		String oldCollectionDataLogEventId=Cookies.getCookie("collectionDataLogEventId");
-		String oldCollectionNewDataLogEventId=Cookies.getCookie("collectionNewDataLogEventId");
-		String oldCollectionStartTime=Cookies.getCookie("collectionStartTime");
-		String refreshed=Cookies.getCookie("isRefreshed");
-		String resStartTime = Cookies.getCookie("resourceStartTime");
-		collectionActivityEventIdTemp = Cookies.getCookie("collectionActivityEventId");
+		String sessionOldId=Cookies.getCookie(getCookieKey()+"-sessionId");
+		String oldCollectionDataLogEventId=Cookies.getCookie(getCookieKey()+"-collectionDataLogEventId");
+		String oldCollectionNewDataLogEventId=Cookies.getCookie(getCookieKey()+"-collectionNewDataLogEventId");
+		String oldCollectionStartTime=Cookies.getCookie(getCookieKey()+"-collectionStartTime");
+		String refreshed=Cookies.getCookie(getCookieKey()+"-isRefreshed");
+		String resStartTime = Cookies.getCookie(getCookieKey()+"-resourceStartTime");
+		collectionActivityEventIdTemp = Cookies.getCookie(getCookieKey()+"-collectionActivityEventId");
         if(!StringUtil.isEmpty(sessionOldId) && !StringUtil.isEmpty(oldCollectionNewDataLogEventId)){
             sessionId=sessionOldId;
             collectionNewDataLogEventId = oldCollectionNewDataLogEventId;
