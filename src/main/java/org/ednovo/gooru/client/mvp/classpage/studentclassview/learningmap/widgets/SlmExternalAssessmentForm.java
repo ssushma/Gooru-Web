@@ -1,8 +1,12 @@
 package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widgets;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -92,8 +96,7 @@ public class SlmExternalAssessmentForm extends Composite {
 	private class SaveData implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			setButtonVisibility(false);
-			validateScoreEvidence();
+			checkProfanity();
 		}
 	}
 
@@ -156,6 +159,7 @@ public class SlmExternalAssessmentForm extends Composite {
 			evidenceErrorLbl.setVisible(false);
 		}else if(evidenceStr != null && evidenceStr.length()>0){
 			if(evidenceStr.length()>250) {
+				evidenceErrorLbl.setText(i18n.GL0143());
 				evidenceErrorLbl.setVisible(true);
 			} else {
 				evidenceErrorLbl.setVisible(false);
@@ -175,6 +179,24 @@ public class SlmExternalAssessmentForm extends Composite {
 		inProgressTxt.setVisible(!isVisible);
 	}
 
+	private void checkProfanity() {
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", evidence.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				if (value){
+					evidenceErrorLbl.setText(i18n.GL3587());
+					evidenceErrorLbl.setVisible(true);
+					setButtonVisibility(true);
+				}else{
+					setButtonVisibility(false);
+					validateScoreEvidence();
+				}
+			}
+		});
+	}
+	
 	private void logDataEvent() {
 			try
 			{
