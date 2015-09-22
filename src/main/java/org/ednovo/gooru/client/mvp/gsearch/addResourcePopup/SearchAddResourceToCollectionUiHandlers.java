@@ -74,5 +74,5 @@ public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers,
 	public void enableAddButton();
 	public void getLoadingImage();
 	public void copyLessonToUnit();
-	public void copyUnitToCourse();
+	public void copyUnitToCourse(HashMap<String, String> urlparams, String unitId);
 }

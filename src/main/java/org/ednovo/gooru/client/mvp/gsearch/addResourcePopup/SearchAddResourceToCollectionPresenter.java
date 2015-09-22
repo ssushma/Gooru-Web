@@ -29,6 +29,7 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
@@ -46,11 +47,13 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.uc.AlertForImageUpload;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -640,9 +643,50 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 
 	@Override
-	public void copyUnitToCourse() {
-		// TODO Auto-generated method stub
-		
+	public void copyUnitToCourse(final HashMap<String, String> urlparams,String unitId) {
+		if(urlparams!=null){
+			this.urlParameters=urlparams;
+			courseId=urlparams.get("o1");
+		}
+
+		AppClientFactory.getInjector().getfolderService().copyCourse(courseId, unitId, lessonId, new SimpleAsyncCallback<String>()  {
+			
+			@Override
+			public void onSuccess(String result) {
+				callJobSuccessApi(result,urlparams);
+			}
+		});
+	}
+
+	protected void callJobSuccessApi(final String jobUrl,final HashMap<String, String> urlparams) {
+		AppClientFactory.getInjector().getfolderService().jobCheck(jobUrl,new SimpleAsyncCallback<Map<String,String>>() {
+
+			@Override
+			public void onSuccess(Map<String, String> result) {
+				if(result.get("status").equalsIgnoreCase("completed")){
+					HashMap<String,String> params = new HashMap<String,String>();
+					if(urlparams!=null && urlparams.get("o1")!=null) {
+						params.put("o1", urlparams.get("o1"));
+					}
+					params.put("view", "Course");
+					getView().hidePopup();
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+				}else if(result.get("status").equalsIgnoreCase("inprogress")){
+					Timer timer = new Timer() {
+
+						@Override
+						public void run() {
+							callJobSuccessApi(jobUrl,urlparams);
+						}
+						
+					};
+					timer.schedule(150);
+				}else{
+					new AlertForImageUpload("Oops", "Something went wrong, plewase try again.");
+					getView().hidePopup();
+				}
+			}
+		});
 	}
 
 }
