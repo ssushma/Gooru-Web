@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,14 +27,14 @@ package org.ednovo.gooru.client.mvp.settings;
 
 
 *
-* @description : 
+* @description :
 *
 * @version :1.0
 *
 * @date: APR 19 2013
-   	
+
 * @Author Gooru Team
-* 
+*
 * Reviewer Gooru Team
 *
 */
@@ -117,25 +117,25 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			UiBinder<Widget, UserSettingsView> {
 
 	}
-	
+
 
 	boolean isChildAccount = false;
-	
+
 	//private final Widget widget;
 	private static final String PROFILE_DEFAULT_IMAGE="./images/settings/setting-user-image.png";
-	
+
 	@UiField(provided = false)
 	ProfileBiographyEditUC profileTextArea;
-	
+
 	@UiField(provided = true)
 	SettingEditLabelUc tbFirstNameUcLabel;
-	
+
 	@UiField(provided = true)
 	SettingLastNameEditLabelUC tbLastNameUcLabel;
-	
+
 	@UiField(provided = true)
 	SettingEmailEditLabelUc lbEmail;
-		
+
 	@UiField HTMLEventPanel pencilTextAreaImage,plAccount,plSecurity,plEducation,plContact,profileDescriptionlabel,biographyCancelButton,panelStandards,panelDrive;
 	@UiField HTMLPanel userAccount,userSecurity,userEducation,userContact,accountMiniusArrow,securityMiniusArrow,educationalMiniusArrow,contactMiniusArrow,standardsText,standardsSaveCancelButtonContainer,userStandardDefaultView,userStandardEditView,userStandardTextPanel,panelUserNameLabelContainer,panelGoogleDrive,
 	standardsEditButtonContainer,standardsButtonContainer;
@@ -153,25 +153,25 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiField Image uploadProfileImage;
 	@UiField HTMLPanel editButtonContainerAccount,settingsMainContainer,editButtonContainerEdu,editButtonContainerContact,buttonContainer,emailbuttonContainer,EduInfoButtonContainer,gradeContainer,DefaultGardeContainer,courseContainer, panelToolTipContent,panelTooltipContainer;
 	@UiField Button editButtonAccount,editButtonEdu,editButtonContact,settingCancelButton,emailCancelButton,emailSaveButton,eduInfoCancelButton,eduInfoSaveButton,standardsSaveButton,standardsCancelButton,standardsEditButton, btnConnect;
-	
+
 	@UiField Label panelHeading, lblPleaseWait,lblCommonCore,lblCaliforniaScience,description,standardSavingTextLabel,lblTexas,lblUserMessage,lblNgss,lblImageSubHeading, lblHeading, lblSubHeading,lblDisconnect;
-	
+
 	@UiField HTML htmlToolTipDesc, htmlConnectedAs;
 	@UiField TextBox txtUserName;
 	@UiField ErrorLabelUc userNameValidationUc;
 	@UiField HTMLPanel emailPanel;
 	@UiField Label lblCSS,lblCaliforniaSocialSciencesStandards,lblCaliforniaELDS;
-	
+
 	boolean isValidUserName=false;
 	boolean isAvailable = false;
 	boolean isProfanityCleared=false;
 	boolean isUserNameChanged = false;
-	
+
 	String USER_NAME_REGEX = "[A-Za-z0-9^]*";
-	
+
 	private static String BY_USERNAME = "username";
 	private static String DISABLED = "disabled";
-	
+
 	private ProfileDo profileDo;
 	private static String USER_META_ACTIVE_FLAG = "1";
 //	private static String NONE_ADDED = i18n.GL1476;
@@ -180,45 +180,45 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	private SettingDo settingDo;
 	private V2UserDo v2userDo;
 	private AlertContentUc alertContentUc;
-	
+
 	private ForgotPwdSuccessVc forgotPwdSuccessVc;
 	String gooruUid="";
 	boolean enableEdit = false;
 	boolean enableEditFirstName = false;
-	
+
 	CheckBox commonCoreChk = new CheckBox();
 	CheckBox texasChk = new CheckBox();
 	CheckBox ngssChk = new CheckBox();
-	
+
 	CheckBox californiaStandChk = new CheckBox();
 	CheckBox CSSChk = new CheckBox();
 	CheckBox CaliforniaSocialSciencesStandardsChk = new CheckBox();
 	CheckBox CaliforniaELDSChk = new CheckBox();
-	
+
 	String USER_TAXONOMY_ROOT_CODE="user_taxonomy_root_code";
 	List<String> userStandardPrefcode=new ArrayList<String>();
-	
+
 	boolean isDriveConnected = false;
-	
+
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	/** 
+
+	/**
 	 * This method is to get the settingDo
 	 */
 	public SettingDo getSettingDo() {
 		return settingDo;
 	}
- 
-	/** 
+
+	/**
 	 * This method is to set the settingDo
 	 */
 	public void setSettingDo(SettingDo settingDo) {
 		this.settingDo = settingDo;
 	}
-	
+
 	private String[] gendersArray=new String[]{"Male","Female","Others","Prefer not to share"};
-	
-	
+
+
 
 	public interface Binder extends UiBinder<Widget, UserSettingsView> {
 	}
@@ -228,62 +228,62 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 		//widget = binder.createAndBindUi(this);
 		tbLastNameUcLabel=new SettingLastNameEditLabelUC(){
-			
+
 			@Override
 			public void onEditDisabled(String text) {
 				enableEdit=true;
 				//getUiHandlers().saveSettingsInformation();
 			}
-			
+
 			public void checkCharacterLimit(String text) {
 				//	titleAlertMessageLbl.setText(MessageProperties.i18n.GL0143);
 					if (text.length() >= 25) {
-						charLimitFNameLbl.setVisible(true);	
+						charLimitFNameLbl.setVisible(true);
 					} else {
-						charLimitFNameLbl.setVisible(false);	
+						charLimitFNameLbl.setVisible(false);
 					}
-					
+
 				}
-			
+
 		};
-		
+
 		tbFirstNameUcLabel=new SettingEditLabelUc(){
 			@Override
 			public void onEditDisabled(String text) {
 				enableEditFirstName = true;
-		
+
 			}
 			public void checkCharacterLimit(String text) {
 			//	titleAlertMessageLbl.setText(MessageProperties.i18n.GL0143);
 				if (text.length() >= 25) {
-					charLimitFNameLbl.setVisible(true);	
+					charLimitFNameLbl.setVisible(true);
 				} else {
-					charLimitFNameLbl.setVisible(false);	
+					charLimitFNameLbl.setVisible(false);
 				}
-				
+
 			}
-			
+
 		};
-		
+
 		lbEmail=new SettingEmailEditLabelUc(){
 			@Override
 			public void onEditDisabled(String text) {
 				editButtonContact.setVisible(false);
 				emailbuttonContainer.setVisible(false);
 				getUiHandlers().saveEmail(false);
-				
+
 			}
-		
-			
+
+
 		};
-		
-		
-		
+
+
+
 		setWidget(uiBinder.createAndBindUi(this));
 		CollectionCBundle.INSTANCE.css().ensureInjected();
-		
+
 		MixpanelUtil.Loading_SettingsPage();
-		
+
 		panelHeading.setText(i18n.GL2007());
 		panelHeading.getElement().setId("lblPanelHeading");
 		panelHeading.getElement().setAttribute("alt", i18n.GL2007());
@@ -321,17 +321,17 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblSubHeading.getElement().setId("lblLblSubHeading");
 		lblSubHeading.getElement().setAttribute("alt", i18n.GL2010());
 		lblSubHeading.getElement().setAttribute("title", i18n.GL2010());
-		
-		
+
+
 		htmlConnectedAs.setVisible(false);
-		
+
 		editButtonContainerEdu.getElement().setId("pnlEditButtonContainerEdu");
 		lblDisconnect.setText(i18n.GL2011());
 		lblDisconnect.getElement().setId("lblLblDisconnect");
 		lblDisconnect.getElement().setAttribute("alt", i18n.GL2011());
 		lblDisconnect.getElement().setAttribute("title", i18n.GL2011());
 		gradeContainer.getElement().setId("pnlGradeContainer");
-		lblDisconnect.setVisible(false); 
+		lblDisconnect.setVisible(false);
 		btnConnect.setEnabled(true);
 		EduInfoButtonContainer.getElement().setId("pnlEduInfoButtonContainer");
 		plEducation.getElement().setId("epnlPlEducation");
@@ -576,7 +576,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		eduInfoCancelButton.getElement().setId("btnCancel");
 		eduInfoSaveButton.getElement().setId("btnSave");
 		editButtonEdu.addClickHandler(new onEducationInfo());
-		emailbuttonContainer.setVisible(false);		
+		emailbuttonContainer.setVisible(false);
 		charLimitFNameLbl.setVisible(false);
 		SavingTextLabel.setVisible(false);
 		emailTextConfirmation.setVisible(false);
@@ -595,7 +595,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		StringUtil.setAttributes(txtUserName, true);
 		//end
 		getForgetPassword().setVisible(false);
-		getForgetPasswordMsg().setVisible(false); 
+		getForgetPasswordMsg().setVisible(false);
 		aboutUsCharacterValidation.setVisible(false);
 		noAboutUsContainer.getElement().setId("focusPnlNoAboutUsContainer");
 		noAboutUsContainer.setVisible(false);
@@ -620,14 +620,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		profileImageContainer.addMouseOutHandler(new HideUploadImageButton());
 		aboutUsContainer.setVisible(false);
 		coursesPanel.clear();
-		
+
 		lblPleaseWait.setVisible(false);
-		
+
 	//	txtUserName.addBlurHandler(new OnBlurHandler());
 		txtUserName.addKeyUpHandler(new OnKeyUpHandler());
 		clearErrorMessage();
 		/*txtUserName.addKeyUpHandler(new KeyUpHandler() {
-			
+
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 				clearErrorMessage();
@@ -656,7 +656,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		standardsEditButtonContainer.getElement().setId("pnlStandardsEditButtonContainer");
 		userStandardDefaultView.getElement().setId("pnlUserStandardDefaultView");
 		standardsSaveCancelButtonContainer.setVisible(false);
-		
+
 		lblCommonCore.setText(i18n.GL1560());
 		lblCommonCore.getElement().setId("lblLblCommonCore");
 		lblCommonCore.getElement().setAttribute("alt",i18n.GL1560());
@@ -682,20 +682,20 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userStandardTextPanel.add(commonCoreChk);
 		userStandardTextPanel.add(texasChk);
 		userStandardTextPanel.add(ngssChk);
-		
+
 		commonCoreChk.setText(i18n.GL1560());
 		commonCoreChk.setName("27787,24146");
-		
+
 		californiaStandChk.setText(i18n.GL1561());
 		//californiaStandChk.setName("30424,42236,42237");
-		
+
 		texasChk.setText(i18n.GL1562());
 		texasChk.setName("72168");
 		ngssChk.setText(i18n.GL1655());
 		ngssChk.setName("77271");
-		
+
 		commonCoreChk.setStyleName("standardsCheckBox");
-	
+
 		texasChk.setStyleName("standardsCheckBox");
 
 		ngssChk.setStyleName("standardsCheckBox");
@@ -703,31 +703,31 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblCSS.setText(i18n.GL2105());
 		lblCaliforniaSocialSciencesStandards.setText(i18n.GL2106());
 		lblCaliforniaELDS.setText(i18n.GL2107());
-		
+
 		lblCSS.getElement().setId("lblCSS");
 		lblCSS.getElement().setAttribute("alt",i18n.GL2105());
 		lblCSS.getElement().setAttribute("title", i18n.GL2105());
-		
+
 		lblCaliforniaSocialSciencesStandards.getElement().setId("lblCaliforniaSocialSciencesStandards");
 		lblCaliforniaSocialSciencesStandards.getElement().setAttribute("alt",i18n.GL2106());
 		lblCaliforniaSocialSciencesStandards.getElement().setAttribute("title", i18n.GL2106());
-		
+
 		lblCaliforniaELDS.getElement().setId("lblCaliforniaELDS");
 		lblCaliforniaELDS.getElement().setAttribute("alt",i18n.GL2107());
 		lblCaliforniaELDS.getElement().setAttribute("title", i18n.GL2107());
-		
+
 		CSSChk.setText(i18n.GL2105());
-		
+
 		californiaStandChk.setName("42236,42237");
 		//californiaStandChk.setName("24553");
 		CaliforniaSocialSciencesStandardsChk.setText(i18n.GL2106());
 		CaliforniaELDSChk.setText(i18n.GL2107());
-		
+
 		CSSChk.setStyleName("standardsCheckBox");
 		CaliforniaSocialSciencesStandardsChk.setStyleName("substandardsCheckBox");
 		CaliforniaELDSChk.setStyleName("substandardsCheckBox");
 		californiaStandChk.setStyleName("substandardsCheckBox");
-		
+
 		userStandardTextPanel.add(CSSChk);
 		//CSSLabel.getElement().setAttribute("style", "margin-left: 14px;");
 		//CSSLabel.setText(i18n.GL2105());
@@ -738,14 +738,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		CaliforniaSocialSciencesStandardsChk.setName("30424");
 		CaliforniaELDSChk.setName("78320");
 		//CSSChk.setName("42236,42237");
-		
-		
+
+
 	//added in 6.4
 		btnViewAdmin.setText(i18n.GL1993() );
 		btnViewAdmin.getElement().setId("btnBtnViewAdmin");
 		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
 		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
-		
+
 		displayAdminPortal();
 
 		standardSavingTextLabel.setText("");
@@ -764,7 +764,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblUserMessage.getElement().setAttribute("title", i18n.GL1476() );
 		lblUserMessage.setVisible(false);
 		commonCoreChk.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				//if(commonCoreChk.isChecked()||californiaStandChk.isChecked()||texasChk.isChecked())
@@ -773,21 +773,21 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
 				}
-				
+
 			}
 		});
 		californiaStandChk.addClickHandler(new ClickHandler() {
-					
+
 					@Override
 					public void onClick(ClickEvent event) {
 						if(californiaStandChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked())
 						{
 							CSSChk.setChecked(true);
-							
+
 						}else{
 							CSSChk.setChecked(false);
-							
-						}			
+
+						}
 						if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 						{
 							standardsSaveButton.setEnabled(true);
@@ -796,7 +796,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					}
 				});
 		texasChk.addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 				//	if(commonCoreChk.isChecked()||californiaStandChk.isChecked()||texasChk.isChecked())
@@ -805,12 +805,12 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 						standardsSaveButton.setEnabled(true);
 						standardsSaveButton.getElement().removeClassName("disabled");
 					}
-					
-					
+
+
 				}
 			});
 		ngssChk.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
@@ -818,12 +818,12 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
 				}
-				
-				
+
+
 			}
 		});
 		CSSChk.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				if(CSSChk.isChecked())
@@ -841,55 +841,55 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
 				}
-				
+
 			}
 		});
 		CaliforniaSocialSciencesStandardsChk.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				if(CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 				{
 					CSSChk.setChecked(true);
-					
+
 				}else{
 					CSSChk.setChecked(false);
-					
-				}	
+
+				}
 				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 				{
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
 				}
-				
+
 			}
 		});
 		CaliforniaELDSChk.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				if(CaliforniaELDSChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||californiaStandChk.isChecked())
 				{
 					CSSChk.setChecked(true);
-					
+
 				}else{
 					CSSChk.setChecked(false);
-					
-				}	
+
+				}
 				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 				{
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
 				}
-				
+
 			}
 		});
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
-		
+
 		if (AppClientFactory.isAnonymous()){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 		}
-		
+
 		settingsMainContainer.getElement().setId("gooruSettings");
 	}
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
@@ -901,14 +901,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}
 			getUserCodeId(userStandardPrefcode);
 				return standPrefCode;
-			
+
 			}
 	};
 	/**
-	 * 
+	 *
 	 * @fileName : UserSettingsView.java
 	 *
-	 * @description : 
+	 * @description :
 	 *
 	 *
 	 * @version : 1.0
@@ -935,11 +935,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}
 			isUserNameChanged = true;
 			disableAccSaveButton();
-			
+
 			 if (event.getSource() == txtUserName
 					&& txtUserName.getText()!= null
 					&& !txtUserName.getText().equalsIgnoreCase("")) {
-								
+
 				boolean userNameValidate = txtUserName.getText().matches(USER_NAME_REGEX);
 				/// Words are clear then continue the next steps
 				if(!userNameValidate){
@@ -958,27 +958,27 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					if (txtUserName.isVisible())
 						checkProfanity(txtUserName.getText().trim());
 				}
-			} 
+			}
 		}
 
-		
+
 	}
 	/**
-	 * 
-	 * @function checkProfanity 
-	 * 
+	 *
+	 * @function checkProfanity
+	 *
 	 * @created_date : Mar 14, 2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @param inputString
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -987,7 +987,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text", inputString);
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-			
+
 			@Override
 			public void onSuccess(Boolean value) {
 				isProfanityCleared = !value;
@@ -1000,19 +1000,19 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					if (txtUserName.isVisible()){
 //						enableAccSaveButton();
 						clearErrorMessage();
-						
+
 						isValidUserName = checkUserAvailability(txtUserName.getText().trim(), BY_USERNAME);
 					}
 				}
 			}
-		});		
+		});
 	}
 	/**
 	 * Checks the availability of user name, entered by User.
-	 * 
+	 *
 	 * @param userName
 	 * @param type
-	 * 
+	 *
 	 */
 	public boolean checkUserAvailability(String userName, final String type) {
 
@@ -1031,7 +1031,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 						}else if (type.equalsIgnoreCase(BY_USERNAME) && !isAvailable) {
 							if (txtUserName.isVisible()){
 								isValidUserName = result.isAvailability();
-								
+
 								clearErrorMessage();
 								enableAccSaveButton();
 							}
@@ -1065,17 +1065,17 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			DefaultGardeContainer.setVisible(true);
 			collectionCourseDefaultLstPanel.setVisible(true);
 			courseContainer.setVisible(false);
-			
-			
+
+
 			txtUserName.setText(lbUName.getText());
 			txtUserName.getElement().setAttribute("alt", lbUName.getText());
 			txtUserName.getElement().setAttribute("title", lbUName.getText());
 			txtUserName.setFocus(true);
 //			disableAccSaveButton();
-			
+
 			clearErrorMessage();
 		}
-		
+
 	}
 	private class onEditForEmail implements ClickHandler{
 
@@ -1097,14 +1097,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			DefaultGardeContainer.setVisible(true);
 			collectionCourseDefaultLstPanel.setVisible(true);
 			courseContainer.setVisible(false);
-		
-		
+
+
 			lbUName.setVisible(true);
 			txtUserName.setVisible(false);
 			panelHelp.setVisible(false);
 			clearErrorMessage();
 		}
-		
+
 	}
 	private class onEducationInfo implements ClickHandler{
 
@@ -1121,7 +1121,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			lbEmail.cancel();
 			tbFirstNameUcLabel.switchToLabel();
 			tbLastNameUcLabel.switchToLabel();
-			
+
 			if(!AppClientFactory.loggedInUser.getLoginType().trim().equalsIgnoreCase("apps")){
 				//editButtonContact.setVisible(true);
 				editButtonContact.setVisible(!isChildAccount);
@@ -1129,33 +1129,31 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			radioButtonContainer.setVisible(false);
 			lblgender.setVisible(true);
 			editButtonAccount.setVisible(true);
-			
+
 			lbUName.setVisible(true);
 			txtUserName.setVisible(false);
 			panelHelp.setVisible(false);
 			clearErrorMessage();
 		}
-		
+
 	}
 	@UiHandler("btnConnect")
 	public void onClickConnect(ClickEvent event){
-		
-		
+
+
 		if (!isDriveConnected){
 			getUiHandlers().getGoogleDrive();
-			
+
 		}else{
 			getUiHandlers().revokeToken();
-			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
-			//googleDirveStatus(false);
 		}
 	}
-	
+
 	@UiHandler("settingsSaveButton")
 	public void OnClickSaveButton(ClickEvent event) {
-		
+
 		tbFirstNameUcLabel.switchToLabel();
-		tbLastNameUcLabel.switchToLabel(); 
+		tbLastNameUcLabel.switchToLabel();
 		if(enableEdit && enableEditFirstName){
 			enableEdit=false;
 			enableEditFirstName=false;
@@ -1165,21 +1163,21 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			lblgender.setVisible(true);
 			charLimitFNameLbl.setVisible(false);
 			accountSavingTextLabel.setVisible(true);
-			
+
 			lbUName.setVisible(true);
 			lbUName.setText(txtUserName.getText());
 			lbUName.getElement().setAttribute("alt", txtUserName.getText());
 			lbUName.getElement().setAttribute("title", txtUserName.getText());
 			txtUserName.setVisible(false);
 			panelHelp.setVisible(false);
-			
+
 			getUiHandlers().saveSettingsInformation();
-			
+
 		}else{
 			tbFirstNameUcLabel.switchToEdit();
 			tbLastNameUcLabel.switchToEdit();
 		}
-		
+
 	}
 	@UiHandler("settingCancelButton")
 	public void OnClickCancelSettingpage(ClickEvent event) {
@@ -1202,22 +1200,22 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			editButtonContact.setVisible(true);
 		}
 		clearErrorMessage();
-		
+
 	}
 	@UiHandler("emailSaveButton")
 	public void onClickEmailSaveButton(ClickEvent event) {
 		MixpanelUtil.Settings_email_change_saved();
 		lbEmail.switchToLabel();
-		
+
 	}
 	@UiHandler("emailCancelButton")
 	public void onClickEmailCancelButton(ClickEvent event) {
 		lbEmail.cancel();
 		emailbuttonContainer.setVisible(false);
 		editButtonContact.setVisible(true);
-		
+
 		clearErrorMessage();
-		
+
 	}
 	@UiHandler("eduInfoSaveButton")
 	public void onClickEduInfoSaveButton(ClickEvent event) {
@@ -1238,9 +1236,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				EduSavingTextLabel.setVisible(false);
 				editButtonEdu.setVisible(true);
 			}
-			
+
 		});
-		
+
 		}
 	@UiHandler("eduInfoCancelButton")
 	public void onClickEduInfoCancelButton(ClickEvent event) {
@@ -1250,18 +1248,18 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		DefaultGardeContainer.setVisible(true);
 		collectionCourseDefaultLstPanel.setVisible(true);
 		courseContainer.setVisible(false);
-		
+
 		clearErrorMessage();
 	}
-	
+
 	public Label getForgetPassword() {
 		return forgetPassword;
 	}
-	
+
 	public Label getForgetPasswordMsg() {
 		return forgetPasswordMsg;
 	}
-	
+
 	public HTMLEventPanel getPlAccount() {
 		return plAccount;
 	}
@@ -1274,7 +1272,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		return accountMiniusArrow;
 	}
 
-	
+
 	public HTMLEventPanel getPlSecurity() {
 		return plSecurity;
 	}
@@ -1329,7 +1327,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		return educationalMiniusArrow;
 	}
 
-	
+
 
 	public HTMLPanel getContactMiniusArrow() {
 		return contactMiniusArrow;
@@ -1343,7 +1341,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		return lbRole;
 	}
 
-	
+
 
 	public Label getLbName() {
 		return lbName;
@@ -1352,11 +1350,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public Label getLbUserName() {
 		return lbUserName;
 	}
-    
+
 	public Label getLbUName() {
 		return lbUName;
 	}
-	/** 
+	/**
 	 * This method is to get the txtUserName
 	 */
 	@Override
@@ -1364,14 +1362,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		return txtUserName;
 	}
 
-	/** 
+	/**
 	 * This method is to set the txtUserName
 	 */
 	public void setTxtUserName(TextBox txtUserName) {
 		this.txtUserName = txtUserName;
 	}
 	/*closeAllOpenedPopUp
-	 * To set the title based on Role 
+	 * To set the title based on Role
 	 */
 	@Override
 	public void setData(SettingDo settingDo) {
@@ -1396,13 +1394,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 //				gradeLbl.setText(i18n.GL1479);
 //				courseLbl.setText(i18n.GL1480);
 //			}
-//			
+//
 //		}
-		
-		
+
+
 	}
 	/*closeAllOpenedPopUp
-	 * To set the title based on Role 
+	 * To set the title based on Role
 	 */
 	@Override
 	public void setData(V2UserDo v2userDo) {
@@ -1444,10 +1442,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				courseLbl.getElement().setAttribute("alt",i18n.GL1480());
 				courseLbl.getElement().setAttribute("title", i18n.GL1480());
 			}
-			
+
 		}
-		
-		
+
+
 	}
 	@UiHandler("forgetPassword")
 	public void onForgotPwdClicked(ClickEvent clickEvent) {
@@ -1470,11 +1468,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 						forgotPwdSuccessVc.center();
 					}
 				}
-		
+
 			});
 		}
 	}
-	
+
 	public String getSelectedButton(){
 		return "radioButtonSelected";
 	}
@@ -1484,7 +1482,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 	@Override
 	public void clearPanels() {
-		
+
 		tbFirstNameUcLabel.setText("");
 		lbUName.setText("");
 		txtUserName.setText("");
@@ -1499,7 +1497,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		educationalMiniusArrow.getElement().getStyle().setDisplay(Display.NONE);
 		securityMiniusArrow.getElement().getStyle().setDisplay(Display.NONE);
 		accountMiniusArrow.getElement().getStyle().setDisplay(Display.NONE);
-		
+
 	    userAccount.getElement().getStyle().setDisplay(Display.BLOCK);
 	    userContact.getElement().getStyle().setDisplay(Display.BLOCK);
 	    userEducation.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1525,7 +1523,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		profileOffButton.removeStyleName("publicProfileOffButtonsDeActive");
 		profileOnButton.setStyleName("publicProfileOnButtonDeActive");
 		profileOnButton.removeStyleName("publicProfileOnButtonActive");
-	
+
 		return profileOffButton;
 	}
 
@@ -1544,7 +1542,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	return btnSeeMyProfile;
 	}
 
-	
+
 	@Override
 	public FocusPanel noAboutUsContainer() {
 		return noAboutUsContainer;
@@ -1559,8 +1557,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public Label getaboutUsCharacterValidation() {
 		return aboutUsCharacterValidation;
 	}
-	
-	
+
+
 	private class UploadProfileImage implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1568,7 +1566,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			getUiHandlers().showUploadProfileImageWidget();
 		}
 	}
-	
+
 	private class ProfileDefaultImage implements ErrorHandler{
 		@Override
 		public void onError(ErrorEvent event) {
@@ -1581,7 +1579,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
 					uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
 				}
-				
+
 			}catch(Exception exception){
 				AppClientFactory.printSevereLogger("ProfileDefaultImage:"+exception.getMessage());
 			}
@@ -1612,7 +1610,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		public void onMouseOver(MouseOverEvent event) {
 			uploadProfilImageButton.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
-		
+
 	}
 	private class HideUploadImageButton implements MouseOutHandler{
 
@@ -1620,7 +1618,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		public void onMouseOut(MouseOutEvent event) {
 			uploadProfilImageButton.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		
+
 	}
 
 	@Override
@@ -1631,7 +1629,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		setGradeList(profileDo.getGrade(), profileDo);
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();
-		
+
 		collectionCourseDefaultLstPanel.clear();
 		for (ProfileCodeDo code : codeDo) {
 			coursesPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
@@ -1639,7 +1637,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			defaultCoursePanel=new HTML(code.getCode().getLabel());
 			collectionCourseDefaultLstPanel.add(defaultCoursePanel);
 			defaultCoursePanel.setStyleName("deafaultCourse");
-			
+
 		}
 		if(profileDo.getCourses().size()==0){
 			Label defaultCourseLabel=new Label();
@@ -1648,9 +1646,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			defaultCourseLabel.setText(i18n.GL1476());
 			collectionCourseDefaultLstPanel.add(defaultCourseLabel);
 		}
-		
+
 	}
-	
+
 	/**
 	 * separate the view according to grade level of the user
 	 */
@@ -1714,32 +1712,32 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			defaulTextLabel.setStyleName("defaultTextcss");
 			defaulTextLabel.setText(i18n.GL1476());
 			DefaultGardeContainer.add(defaulTextLabel);
-			
+
 		}
-				
+
 		KinderGarten.clear();
 		higherEducation.clear();
 		gradeTopList.clear();
 		gradeMiddleList.clear();
-		
+
 		KinderGarten.add(new ProfilePageGradeLabel(i18n.GL0850(), profileDo));
 		higherEducation.add(new ProfilePageGradeLabel(i18n.GL0169(),profileDo));
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 6) {
 				gradeTopList.add(new ProfilePageGradeLabel(i + "", profileDo));
-				
+
 			}
 			if (i >= 7) {
 				gradeMiddleList.add(new ProfilePageGradeLabel(i + "", profileDo));
-				
+
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * New course is created for User
-	 * 
+	 *
 	 * @param courseLabel
 	 *            the course of the label widget which is used to get all
 	 *            courses
@@ -1763,9 +1761,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	}
 	/**
 	 * Set courses to the ListBox
-	 * 
-	 * @param libraryCode 
-	 *          To set library code for all courses.  
+	 *
+	 * @param libraryCode
+	 *          To set library code for all courses.
 	 */
 	@Override
 	public void setCourseList(List<LibraryCodeDo> libraryCode) {
@@ -1783,22 +1781,22 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		}
 		collectionCourseLstPanel.clear();
 		collectionCourseLstPanel.add(collectionCourseLst);
-		
+
 		collectionCourseLst.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 				addCourseEvent();
 			}
 		});
-			
+
 	}
-	
+
 	/**
 	 * Adding new course , will check it has more than five
 	 * courses and the selected course is repeated or not
-	 * 
+	 *
 	 */
-	
+
 	private void addCourseEvent() {
 			if (coursesPanel.getWidgetCount() < 5) {
 				final String courseCodeLabel = collectionCourseLst
@@ -1825,13 +1823,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			} else {
 				courseMaxShow();
 			}
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Will check it ,the selected course is repeated or not
-	 * 
+	 *
 	 * @param course
 	 *            to validate with already added course
 	 * @return true if repeated course is selected or false
@@ -1857,7 +1855,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		courseMaxMsg.setStyleName("courseMaxMsg");
 		courseMaxMsg.getElement().getStyle().setFloat(Float.LEFT);
 	}
-	
+
 	/**
 	 * to display message if course exceeds more than five
 	 */
@@ -1881,13 +1879,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 	@Override
 	public void disableContentAndSetOldContent(String aboutMe) {
-	
-		
+
+
 	}
 
 	@Override
 	public SettingLastNameEditLabelUC getTbLastName() {
-		 
+
 		return tbLastNameUcLabel;
 	}
 
@@ -1910,21 +1908,21 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public Label getEmailTextConfirmation() {
 		return emailTextConfirmation;
 	}
-	
+
 
 	@Override
 	public Label getGenderText() {
 		return lblgender;
 	}
 
-	/** 
+	/**
 	 * This method is to get the isChildAccount
 	 */
 	public boolean isChildAccount() {
 		return isChildAccount;
 	}
 
-	/** 
+	/**
 	 * This method is to set the isChildAccount
 	 */
 	@Override
@@ -1941,7 +1939,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public Button getEditButtonAccount() {
 		return editButtonAccount;
 	}
-	
+
 	private void setErrorMessage(String errorMessage){
 		userNameValidationUc.getElement().getStyle().setMarginLeft(85, Unit.PX);
 		userNameValidationUc.getElement().getStyle().setLineHeight(120, Unit.PCT);
@@ -1952,29 +1950,29 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userNameValidationUc.setText(errorMessage);
 		userNameValidationUc.getElement().setAttribute("alt", errorMessage);
 		userNameValidationUc.getElement().setAttribute("title", errorMessage);
-		
+
 		txtUserName.getElement().getStyle().setBorderColor("orange");
 	}
-	
+
 	private void clearErrorMessage(){
 		userNameValidationUc.setVisible(false);
 		userNameValidationUc.getElement().getStyle().setLineHeight(0, Unit.PCT);
 		txtUserName.getElement().getStyle().clearBackgroundColor();
 		txtUserName.getElement().getStyle().setBorderColor("#ccc");
-		
+
 	}
-	
+
 	private void disableAccSaveButton(){
 		settingsSaveButton.getElement().addClassName(DISABLED);
 		settingsSaveButton.setEnabled(false);
 	}
-	
+
 	private void enableAccSaveButton(){
 		settingsSaveButton.getElement().removeClassName(DISABLED);
 		settingsSaveButton.setEnabled(true);
 	}
 
-	/** 
+	/**
 	 * This method is to get the isUserNameChanged
 	 */
 	@Override
@@ -1982,14 +1980,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		return isUserNameChanged;
 	}
 
-	/** 
+	/**
 	 * This method is to set the isUserNameChanged
 	 */
 	public void setUserNameChanged(boolean isUserNameChanged) {
 		this.isUserNameChanged = isUserNameChanged;
 	}
 
-	/** 
+	/**
 	 * This method is to get the isValidUserName
 	 */
 	@Override
@@ -1997,7 +1995,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		return isValidUserName;
 	}
 
-	/** 
+	/**
 	 * This method is to set the isValidUserName
 	 */
 	public void setValidUserName(boolean isValidUserName) {
@@ -2011,7 +2009,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		tbFirstNameUcLabel.switchToLabel();
 		tbLastNameUcLabel.switchToLabel();
 		lbUName.setVisible(true);
-		
+
 	}
 	@UiHandler("standardsEditButton")
 	public void onClickOfstandardsEditButton(ClickEvent event)
@@ -2024,77 +2022,77 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	}
 	public String getcheckedValue(){
 		String codeId = "";
-		
+
 		if(commonCoreChk.isChecked()){
 			if(codeId!=""){
 				codeId=codeId+","+commonCoreChk.getName();
 			}
 			else
 			{
-				codeId=codeId+commonCoreChk.getName();	
+				codeId=codeId+commonCoreChk.getName();
 			}
 		}
 		else
 		{
-			
+
 		}
 		if(californiaStandChk.isChecked())
 		{
 			if(codeId!=""){
-				codeId=codeId+","+californiaStandChk.getName();	
+				codeId=codeId+","+californiaStandChk.getName();
 			}
 			else
 			{
-				codeId=codeId+californiaStandChk.getName();	
+				codeId=codeId+californiaStandChk.getName();
 			}
 		}
 		if(texasChk.isChecked())
 		{
 			if(codeId!=""){
-				codeId=codeId+","+texasChk.getName();	
+				codeId=codeId+","+texasChk.getName();
 			}
 			else
 			{
-				codeId=codeId+texasChk.getName();	
+				codeId=codeId+texasChk.getName();
 			}
 		}
 		if(ngssChk.isChecked())
 		{
 			if(codeId!=""){
-				codeId=codeId+","+ngssChk.getName();	
+				codeId=codeId+","+ngssChk.getName();
 			}
 			else
 			{
-				codeId=codeId+ngssChk.getName();	
+				codeId=codeId+ngssChk.getName();
 			}
 		}
 		if(CaliforniaSocialSciencesStandardsChk.isChecked())
 		{
 			if(codeId!=""){
-				codeId=codeId+","+CaliforniaSocialSciencesStandardsChk.getName();	
+				codeId=codeId+","+CaliforniaSocialSciencesStandardsChk.getName();
 			}
 			else
 			{
-				codeId=codeId+CaliforniaSocialSciencesStandardsChk.getName();	
+				codeId=codeId+CaliforniaSocialSciencesStandardsChk.getName();
 			}
 		}
 		if(CaliforniaELDSChk.isChecked())
 		{
 			if(codeId!=""){
-				codeId=codeId+","+CaliforniaELDSChk.getName();	
+				codeId=codeId+","+CaliforniaELDSChk.getName();
 			}
 			else
 			{
-				codeId=codeId+CaliforniaELDSChk.getName();	
+				codeId=codeId+CaliforniaELDSChk.getName();
 			}
 		}
-		
+
 		return codeId;
 	}
 	@UiHandler("standardsSaveButton")
 	public void onClickOfstandardsSaveButton(ClickEvent event)
 	{
-	
+
 		if(commonCoreChk.isChecked() || californiaStandChk.isChecked() || texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()){
 			getUiHandlers().updatePartyCustomField(USER_TAXONOMY_ROOT_CODE,getcheckedValue());
 		}
@@ -2116,8 +2114,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				standardsSaveButton.getElement().addClassName("disabled");
 			}
 		}
-	
-		
+
+
 	}
 	@UiHandler("standardsCancelButton")
 	public void onClickOfstandardsCancelButton(ClickEvent event)
@@ -2127,7 +2125,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userStandardEditView.setVisible(false);
 		userStandardDefaultView.setVisible(true);
 		getUserCodeId(userStandardPrefcode);
-	
+
 	}
 
 	@Override
@@ -2178,7 +2176,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}else{
 				texasChk.setChecked(false);
 				lblTexas.setVisible(false);
-				
+
 			}
 			if(list.contains("NGSS")){
 				ngssChk.setChecked(true);
@@ -2186,14 +2184,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}else{
 				ngssChk.setChecked(false);
 				lblNgss.setVisible(false);
-				
+
 			}
 			if(list.contains("CAELD")){
 				lblCaliforniaELDS.setVisible(true);
 				CaliforniaELDSChk.setChecked(true);
 				lblCSS.setVisible(true);
 				CSSChk.setChecked(true);
-				
+
 			}else{
 				lblCaliforniaELDS.setVisible(false);
 				CaliforniaELDSChk.setChecked(false);
@@ -2221,9 +2219,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				CSSChk.setChecked(false);
 				lblCSS.setVisible(false);
 			}
-			
+
 		}else{
-			lblCommonCore.setVisible(false);	
+			lblCommonCore.setVisible(false);
 			lblCaliforniaScience.setVisible(false);
 			lblTexas.setVisible(false);
 			lblNgss.setVisible(false);
@@ -2238,14 +2236,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			commonCoreChk.setChecked(false);
 			CSSChk.setChecked(false);
 			ngssChk.setChecked(false);
-			
+
 			CaliforniaSocialSciencesStandardsChk.setChecked(false);
 			CaliforniaELDSChk.setChecked(false);
 		}
 		}
 		else
 		{
-			lblCommonCore.setVisible(false);	
+			lblCommonCore.setVisible(false);
 			lblCaliforniaScience.setVisible(false);
 			lblTexas.setVisible(false);
 			lblNgss.setVisible(false);
@@ -2262,19 +2260,19 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			CaliforniaSocialSciencesStandardsChk.setChecked(false);
 			CaliforniaELDSChk.setChecked(false);
 			CSSChk.setChecked(false);
-			
+
 		}
-			
+
 	}
-	
+
 	@UiHandler("btnViewAdmin")
 	public void clickOnAdmin(ClickEvent clickEvent){
 		//String adminUrl=Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin";
 		String adminUrlnew = Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin/signin?sessionToken="+AppClientFactory.getLoginSessionToken();
 		Window.open(adminUrlnew, "_blank", "");
-			
+
 	}
-	
+
 	@Override
 	public Label getStandardSavingTextLabel() {
 		return standardSavingTextLabel;
@@ -2340,7 +2338,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				btnViewAdmin.setVisible(true);
 			}else{
 				btnViewAdmin.setVisible(false);
-				
+
 			}
 		}else {
 			btnViewAdmin.setVisible(false);

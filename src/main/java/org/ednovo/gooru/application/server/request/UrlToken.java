@@ -473,7 +473,7 @@ public enum UrlToken {
 
 	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?"),
 
-	SERVER_STATUS_URL("http://status.goorulearning.org/api/v1/services/gooru-production-api"),
+	SERVER_STATUS_URL("http://status.gooru.org/api/v1/services/gooru-production-api"),
 
 	GET_GOOGLEDRIVE_FIlES("/v2/files?maxResults=20&q={0}"),
 
@@ -672,27 +672,27 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}/users?"),
 
 	GET_AUDIENCELIST("/v1/meta/audience?"),
-	
+
 	V3_UPDATE_COLLECTION("/v3/collection/{0}"),
-	
+
 	V1_GET_COURSE("/v1/course/{0}?"),
-	
+
 	V1_GET_MOMENT_OF_LEARERNING("/v1/meta/moments_of_learning"),
-	
+
 	V1_GET_EDUCATIONAL_USE("/v1/meta/educational_use"),
-	
+
 	V1_GET_MEDIA_FEATURES("/v1/meta/media_feature"),
-	
+
 	V1_GET_ACCESS_HAZARD("/v1/meta/access_hazard"),
-	
+
 	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?"),
-	
+
 	V3_ADDQUESTION_COLLECTION("/v3/collection/{0}/question/{1}?"),
-	
+
 	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?"),
-	
+
 	V1_GET_CLASS_USAGE_DATA_SIGNAL("/v1/class/find/usage?"),
-	
+
 	V2_GET_HTML_TO_EXCEL_REPORT("/v2/media/htmltoexcel");
 
 	private String url;
