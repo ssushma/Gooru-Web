@@ -141,6 +141,8 @@ public class AddHotTextQuestionAnswerChoice extends Composite implements HasMous
 				@Override
 				public void execute() {
 						setRichTextData();
+						answerTextBox.showTinyMceToolBar();
+						highlightTextArea.showTinyMceToolBar();
 				}
 	       });
 	}

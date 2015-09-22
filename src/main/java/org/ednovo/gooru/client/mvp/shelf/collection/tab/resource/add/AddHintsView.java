@@ -118,6 +118,7 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 			@Override
 			public void execute() {
 				 setHintText();
+				 hintTextBox.showTinyMceToolBar();
 			}
         });
 	}
@@ -130,6 +131,7 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		  if(hintText!=null){
 			  hintTextBox.setText(hintText);
 		  }
+		  hintTextBox.showTinyMceToolBar();
 	  }
 	public interface Binder extends UiBinder<Widget, AddHintsView>
 	{
