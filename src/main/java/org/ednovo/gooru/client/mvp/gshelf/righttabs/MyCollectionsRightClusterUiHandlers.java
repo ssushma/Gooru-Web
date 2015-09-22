@@ -77,6 +77,8 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void deleteMyCollectionColl(String id);
 	
-	public void disableCopyPopupTabs(boolean isVisible, String copyType);   
+	public void disableCopyPopupTabs(boolean isVisible, String copyType);
+	
+	public void copyCourse(String gooruOid);   
 	
 }

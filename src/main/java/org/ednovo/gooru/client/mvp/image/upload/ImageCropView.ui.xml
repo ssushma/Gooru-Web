@@ -4,15 +4,14 @@
 	<ui:style>
 		.imageCropContainer {
 			min-height: 281px;
-			padding: 4px;
 			min-width: 160px;
 		}
-		
 		.backPageLink {
 			color: #0F76BB;
 			cursor: pointer;
+			background-color: #efefef;
+			padding: 10px;
 		}
-		
 		.overRideBlueButton {
 			background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat
 				scroll 0 0 transparent;
@@ -26,11 +25,10 @@
 			padding: 8px 9px;
 			position: relative;
 		}
-		
 		.collectionFormCancelButton {
 			clear: both;
 			cursor: pointer;
-			left: 25px;
+			right: 25px;
 			position: relative;
 			text-decoration: none;
 			top: 0;
@@ -55,8 +53,8 @@
 		.cropImageWidget {
 			min-width: 160px;
 			min-height: 120px;
-			margin:0 auto;
-			background-color: #000;
+			margin: 0 auto;
+			padding: 20px 40px 0px 40px;
 		}
 		
 		.cropImageWidgetLoading {
@@ -81,29 +79,35 @@
 		.cropImageDragText{
 			margin-bottom: -10px;
 		}
+		.imageCropContainerInnerPanel{
+			min-width: 160px;
+			min-height: 120px;
+			padding: 10px;
+	   }
 
 	</ui:style>
 	<g:FlowPanel styleName="{style.imageCropContainer}"
 		ui:field="imagCropContainer">
 		<g:Label styleName="{style.backPageLink}" ui:field="backPageLinkLbl"></g:Label>
-		<g:HTMLPanel>
-			<g:HTML styleName="{style.cropImageHeader}" ui:field="cropText"></g:HTML>
-			<g:HTML styleName="{style.cropImageDragText}" ui:field="dragText"></g:HTML>
+		<g:HTMLPanel styleName="{style.imageCropContainerInnerPanel}">
+			<g:HTMLPanel>
+				<g:HTML styleName="{style.cropImageHeader}" ui:field="cropText"></g:HTML>
+				<g:HTML styleName="{style.cropImageDragText}" ui:field="dragText"></g:HTML>
+			</g:HTMLPanel>
+			
+			<g:FlowPanel ui:field="cropImageWidgetFloPanel" styleName="{style.cropImageWidget}">
+				 <g:FlowPanel styleName="{style.cropImageWidgetLoading}">
+					<g:VerticalPanel styleName="{style.cropImageLoadingPanel}" ui:field="cropImageLoadingVerPanel">
+						<gg:LoadingUc ui:field="cropImageLoading" />
+					</g:VerticalPanel> 
+				</g:FlowPanel>
+			</g:FlowPanel>
 		</g:HTMLPanel>
 		
-		<g:FlowPanel ui:field="cropImageWidgetFloPanel" styleName="{style.cropImageWidget}">
-			 <g:FlowPanel styleName="{style.cropImageWidgetLoading}">
-				<g:VerticalPanel styleName="{style.cropImageLoadingPanel}" ui:field="cropImageLoadingVerPanel">
-					<gg:LoadingUc ui:field="cropImageLoading" />
-				</g:VerticalPanel> 
-			</g:FlowPanel>
-		</g:FlowPanel>
-		
 		<g:FlowPanel styleName="{style.actionField}" ui:field="buttonContainer">
+			<g:Button ui:field="cancelButtonAnr" styleName="secondary {style.collectionFormCancelButton}" />
 			<gg:BlueButtonUc ui:field="cropImageBtn"/>
-			<g:Anchor ui:field="cancelButtonAnr"
-				styleName="{style.collectionFormCancelButton}" />
 		</g:FlowPanel>
-		 <g:Label  styleName="{style.loadingTxtStyle}" ui:field="loadingTextLbl"></g:Label>
+		 <g:Label styleName="{style.loadingTxtStyle}" ui:field="loadingTextLbl"></g:Label>
 	</g:FlowPanel>
 </ui:UiBinder> 

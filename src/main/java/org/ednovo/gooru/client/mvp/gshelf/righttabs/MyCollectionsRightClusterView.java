@@ -576,6 +576,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				isMoveSelected=false;
 				getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
 				getUiHandlers().enableAddButton();
+			}else if((COURSE.equalsIgnoreCase(currentTypeView))){
+				System.out.println("folderObj.getGooruOid():"+folderObj.getGooruOid());
+				getUiHandlers().copyCourse(folderObj.getGooruOid());
 			}
 		}
 	}

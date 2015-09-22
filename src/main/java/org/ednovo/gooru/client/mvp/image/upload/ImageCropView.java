@@ -36,7 +36,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -62,7 +62,7 @@ public abstract class ImageCropView extends Composite{
 	BlueButtonUc cropImageBtn;
 
 	@UiField
-	Anchor cancelButtonAnr;
+	Button cancelButtonAnr;
 	
 	@UiField
 	VerticalPanel cropImageLoadingVerPanel;
@@ -110,6 +110,7 @@ public abstract class ImageCropView extends Composite{
 		dragText.getElement().setId("htmlDragText");
 		dragText.getElement().setAttribute("alt",i18n.GL1233());
 		dragText.getElement().setAttribute("title",i18n.GL1233());
+		dragText.setVisible(false);
 		
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageBtn.setText(i18n.GL1235());

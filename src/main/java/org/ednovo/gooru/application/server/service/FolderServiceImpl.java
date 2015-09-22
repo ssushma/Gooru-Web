@@ -945,4 +945,40 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return keyString;
 	}
+
+	@Override
+	public FolderDo copyCourse(String courseId, String unitId, String lessonId)
+			throws GwtException {
+		JsonRepresentation jsonRep = null,jsonRepGet=null;
+		String url = null;
+		FolderDo folderDo = new FolderDo();
+		if(courseId!=null && unitId==null && lessonId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
+		}else if(courseId!=null && unitId!=null && lessonId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
+		}else if(courseId!=null && unitId!=null && lessonId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
+		}
+		JSONObject courseObject=new JSONObject();
+		try {
+			
+			logger.info("copyCourse : "+url);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			logger.info("rest point: "+ getRestEndPoint());
+			logger.info("uri : "+jsonRep.getJsonObject().getString("uri"));
+			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+			logger.info("getURL : "+getURL);
+			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRepGet);
+			logger.info("folderDo obj : "+folderDo);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
 }
