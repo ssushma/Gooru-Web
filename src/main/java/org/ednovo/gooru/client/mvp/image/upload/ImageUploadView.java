@@ -42,6 +42,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -603,8 +604,13 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			hideAndDisplayAllCropButtons(true);		
 			displayImage.setVisible(false);
 			displayImage1.setVisible(false);
-			displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-			displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+			if(aspectRatio==4.53f){
+				displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+				displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+			}else{
+				displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+				displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+			}
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
@@ -731,7 +737,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		ImageCropView imageCropView = new ImageCropView() {
 			@Override
 			public void onCancelCrop() {
-				resetImageUploadWidget();
+				/*resetImageUploadWidget();
 				appPopUp.hide();
 				imageCropPopup.hide();
 				Window.scrollTo(0, 0);
@@ -739,11 +745,20 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 					Window.enableScrolling(false);
 				}else{
 					Window.enableScrolling(true);
+				}*/
+				imageCropPopup.clear();
+				imageCropPopup.hide();
+				Window.scrollTo(0, 0);
+				if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
 				}
+				appPopUp.show();
 			}
 			@Override
 			public void onBackToUpload() {
-				resetImageUploadWidget();
+				//resetImageUploadWidget();
 				imageCropPopup.clear();
 				imageCropPopup.hide();
 				Window.scrollTo(0, 0);
