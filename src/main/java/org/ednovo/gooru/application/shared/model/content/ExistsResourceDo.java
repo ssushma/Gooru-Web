@@ -49,6 +49,7 @@ public class ExistsResourceDo extends ContentDo {
     private String nativeurl;    //Some api's give url in nativeUrl key
     private String gooruOid;
     private String sharing;
+    private ResourceFormatDo resourceFormat;
 
     public String getSharing() {
 		return sharing;
@@ -174,6 +175,20 @@ public class ExistsResourceDo extends ContentDo {
 
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
+	}
+
+	/**
+	 * This method is to get the resourceFormat
+	 */
+	public ResourceFormatDo getResourceFormat() {
+		return resourceFormat;
+	}
+
+	/**
+	 * This method is to set the resourceFormat
+	 */
+	public void setResourceFormat(ResourceFormatDo resourceFormat) {
+		this.resourceFormat = resourceFormat;
 	}
 
 
