@@ -203,7 +203,10 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}catch(Exception ex){
 			logger.error("Exception::", ex);
 		}
-		if (imageUrl == null) {
+		/*String croppedURL = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CROPPED_IMAGE, height,width,xPosition,yPosition,fileName,getLoggedInSessionToken());
+		logger.info("croppedURL:"+croppedURL);
+		return croppedURL+"&id="+Math.random();*/
+		if (imageUrl == null){
 			return fileName;
 		}else{
 			return imageUrl;

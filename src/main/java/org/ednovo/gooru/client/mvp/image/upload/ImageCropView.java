@@ -212,7 +212,6 @@ public abstract class ImageCropView extends Composite{
 		loadingTextLbl.setVisible(true);
 		onCrop();
 	}
-
 	public abstract void onCancelCrop();
 
 	public abstract void onBackToUpload();

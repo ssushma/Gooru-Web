@@ -134,6 +134,8 @@ public enum UrlToken {
 	MEDIA_FILE_SAVE("/resource/{0}/media?"),
 
 	IMAGE_CROP("/media/{0}/crop?"),
+	
+	GET_CROPPED_IMAGE("/v1/crop?&height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}"),
 
 	UPDATE_USER_VIEW("/user/{0}/view/flag?"),
 
