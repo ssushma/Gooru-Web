@@ -637,8 +637,20 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 
 	@Override
-	public void copyLessonToUnit() {
-		// TODO Auto-generated method stub
+	public void copyLessonToUnit(final HashMap<String, String> urlparams, String lessonId) {
+		if(urlparams!=null){
+			this.urlParameters=urlparams;
+			courseId=urlparams.get("o1");
+			unitId=urlparams.get("o2");
+		}
+
+		AppClientFactory.getInjector().getfolderService().copyCourse(courseId, unitId, lessonId, new SimpleAsyncCallback<String>()  {
+			
+			@Override
+			public void onSuccess(String result) {
+				callJobSuccessApi(result,urlparams);
+			}
+		});
 		
 	}
 
@@ -647,6 +659,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		if(urlparams!=null){
 			this.urlParameters=urlparams;
 			courseId=urlparams.get("o1");
+			lessonId=null;
 		}
 
 		AppClientFactory.getInjector().getfolderService().copyCourse(courseId, unitId, lessonId, new SimpleAsyncCallback<String>()  {
@@ -667,6 +680,11 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					HashMap<String,String> params = new HashMap<String,String>();
 					if(urlparams!=null && urlparams.get("o1")!=null) {
 						params.put("o1", urlparams.get("o1"));
+						params.put("o2", result.get("gooruOid"));
+					}
+					if(urlparams!=null && urlparams.get("o2")!=null) {
+						params.put("o2", urlparams.get("o2"));
+						params.put("o3", result.get("gooruOid"));
 					}
 					params.put("view", "Course");
 					getView().hidePopup();
