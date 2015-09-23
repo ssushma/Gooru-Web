@@ -525,12 +525,14 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	public void disableCopyPopupTabs(boolean isVisible, String copyType) {
 		searchAddResourceToCollectionPresenter.getView().disableTabs(isVisible,copyType);
 	}
+	
+	
 	@Override
 	public void copyCourse(String gooruOid) {
-		AppClientFactory.getInjector().getfolderService().copyCourse(gooruOid, null, null, new SimpleAsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().copyCourse(gooruOid, null, null, new SimpleAsyncCallback<String>() {
 
 			@Override
-			public void onSuccess(FolderDo result) {
+			public void onSuccess(String result) {
 				
 			}
 		});

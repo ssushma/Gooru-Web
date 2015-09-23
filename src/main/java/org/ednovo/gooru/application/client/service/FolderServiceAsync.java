@@ -34,6 +34,8 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -104,6 +106,9 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void updateCollectionDetails(CreateDo createDoObj,String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective,AsyncCallback<Void> asyncCallback);
 	void getCourseDetails(String courseId, String unitId, String lessonId,AsyncCallback<FolderDo> callback);
 	
-	void copyCourse(String courseId, String unitId, String lessonId,AsyncCallback<FolderDo> callback);
+	void copyCourse(String courseId, String unitId, String lessonId,AsyncCallback<String> callback);
+
+	void jobCheck(String result, AsyncCallback<Map<String, String>> callback);
+
 
 }

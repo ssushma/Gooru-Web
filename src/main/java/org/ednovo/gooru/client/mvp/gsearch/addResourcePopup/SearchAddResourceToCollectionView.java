@@ -525,7 +525,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 								getUiHandlers().moveCollectionTOLesson("","",this.urlparams);
 							}else{
 								if(UNIT.equalsIgnoreCase(copyType)){
-									getUiHandlers().copyUnitToCourse();
+									getUiHandlers().copyUnitToCourse(this.urlparams,AppClientFactory.getPlaceManager().getRequestParameter("o2",null));
 								}else if(LESSON.equalsIgnoreCase(copyType)){
 									getUiHandlers().copyLessonToUnit();
 								}else{

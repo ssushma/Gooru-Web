@@ -27,6 +27,7 @@ package org.ednovo.gooru.application.server.service;
 import org.restlet.data.Form;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -947,38 +948,66 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public FolderDo copyCourse(String courseId, String unitId, String lessonId)
-			throws GwtException {
+	public String copyCourse(String courseId, String unitId, String lessonId) throws GwtException {
 		JsonRepresentation jsonRep = null,jsonRepGet=null;
 		String url = null;
-		FolderDo folderDo = new FolderDo();
 		if(courseId!=null && unitId==null && lessonId==null){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_COURSE);
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_UNIT,courseId,unitId);
 		}else if(courseId!=null && unitId!=null && lessonId==null){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_UNIT,courseId);
-		}else if(courseId!=null && unitId!=null && lessonId!=null){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_CREATE_LESSON,courseId,unitId);
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_UNIT,courseId,unitId);
 		}
-		JSONObject courseObject=new JSONObject();
+		String jobUri = "";
 		try {
 			
 			logger.info("copyCourse : "+url);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
-			logger.info("rest point: "+ getRestEndPoint());
-			logger.info("uri : "+jsonRep.getJsonObject().getString("uri"));
-			String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
+			jobUri = jsonRep.getJsonObject().getString("uri");
+			/*String getURL = getRestEndPoint()+jsonRep.getJsonObject().getString("uri");
 			logger.info("getURL : "+getURL);
 			JsonResponseRepresentation jsonResponseRep1 = ServiceProcessor.get(getURL, getRestUsername(), getRestPassword());
-			jsonRepGet=jsonResponseRep1.getJsonRepresentation();
-			folderDo = deserializeCreatedFolder(jsonRepGet);
-			logger.info("folderDo obj : "+folderDo);
+			jsonRepGet=jsonResponseRep1.getJsonRepresentation();*/
+			/*folderDo = deserializeCreatedFolder(jsonRepGet);
+			logger.info("folderDo obj : "+folderDo);*/
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		} catch (Exception e) {
 			logger.error("Exception::", e);
 		}
-		return folderDo;
+		return jobUri;
+	}
+
+	@Override
+	public Map<String, String> jobCheck(String result) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		Map<String, String> resultMap = new HashMap<>();
+		try {
+			url = getRestEndPoint()+result;
+			logger.info("JOB getURL : "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			resultMap = deserializeJob(jsonRep);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return resultMap;
+	}
+
+	private Map<String, String> deserializeJob(JsonRepresentation jsonRep) {
+		Map<String, String> resMap = new HashMap<>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				JSONObject jobObject=jsonRep.getJsonObject();
+				resMap.put("gooruOid", jobObject.isNull("gooruOid")?null:jobObject.getString("gooruOid"));
+				resMap.put("status", jobObject.isNull("status")?null:jobObject.getString("status"));
+			} catch (Exception e) {
+			}
+		}
+		return resMap;
 	}
 }

@@ -134,6 +134,8 @@ public enum UrlToken {
 	MEDIA_FILE_SAVE("/resource/{0}/media?"),
 
 	IMAGE_CROP("/media/{0}/crop?"),
+	
+	GET_CROPPED_IMAGE("/v1/crop?&height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}"),
 
 	UPDATE_USER_VIEW("/user/{0}/view/flag?"),
 
@@ -692,8 +694,11 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?"),
 
 	V1_GET_CLASS_USAGE_DATA_SIGNAL("/v1/class/find/usage?"),
+	
+	V2_GET_HTML_TO_EXCEL_REPORT("/v2/media/htmltoexcel"),
+	
+	V1_COPY_UNIT("/v1/course/{0}/unit/{1}");
 
-	V2_GET_HTML_TO_EXCEL_REPORT("/v2/media/htmltoexcel");
 
 	private String url;
 
