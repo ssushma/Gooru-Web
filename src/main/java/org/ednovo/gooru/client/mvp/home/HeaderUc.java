@@ -362,8 +362,14 @@ public class HeaderUc extends Composite
 				searchData = getEditSearchTxtBox().getText();
 				autoSuggestKeywordDo.setType("resource");
 				if (text != null && text.trim().length() > 2) {
+					editSearchBtn.setEnabled(true);
+					editSearchBtn.setStyleName("primary");
+					editSearchBtn.getElement().getStyle().clearColor();
 					requestAutoSuggestKeyword(autoSuggestKeywordDo);
 				} else {
+					editSearchBtn.setEnabled(false);
+					editSearchBtn.setStyleName("secondary");
+					editSearchBtn.getElement().setAttribute("style","color:gray;");
 					getEditSearchTxtBox().hideSuggestionList();
 				}
 
@@ -389,6 +395,9 @@ public class HeaderUc extends Composite
 							{
 							if(getEditSearchTxtBox().getText().length()>2)
 							{
+							editSearchBtn.setEnabled(true);
+							editSearchBtn.setStyleName("primary");
+							editSearchBtn.getElement().getStyle().clearColor();
 							gooruLabel.setVisible(false);
 							MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim()
 									.toLowerCase(), "HeaderUc");
@@ -508,7 +517,10 @@ public class HeaderUc extends Composite
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");
 		editSearchBtn.getElement().setId("btnEditSearch");
 		editSearchBtn.getElement().setAttribute("style","padding:7px 9px 9px 7px");
+		editSearchBtn.getElement().setAttribute("style","color:gray;");
 		editSearchBtn.setText(i18n.GL0176());
+		editSearchBtn.setEnabled(false);
+		editSearchBtn.setStyleName("secondary");
 		editSearchBtn.getElement().setAttribute("alt", i18n.GL0176());
 		editSearchBtn.getElement().setAttribute("title", i18n.GL0176());
 
@@ -1183,6 +1195,9 @@ public class HeaderUc extends Composite
 				{
 					if(getEditSearchTxtBox().getText().length()>2)
 					{
+					editSearchBtn.setEnabled(true);
+					editSearchBtn.setStyleName("primary");
+					editSearchBtn.getElement().getStyle().clearColor();
 					savePlaceRequest();
 					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
 							.toLowerCase(), "HeaderUc");
@@ -1442,6 +1457,10 @@ public class HeaderUc extends Composite
 							{
 							if(getEditSearchTxtBox().getText().length()>2)
 							{
+								System.out.println("iuam here");
+								editSearchBtn.setEnabled(true);
+								editSearchBtn.setStyleName("primary");
+								editSearchBtn.getElement().getStyle().clearColor();
 							if (AppClientFactory.getCurrentPlaceToken()
 									.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
 								MixpanelUtil.Perform_Search_FromTeach();
@@ -1835,6 +1854,9 @@ public class HeaderUc extends Composite
 			{
 			if(getEditSearchTxtBox().getText().length()>2)
 			{
+			editSearchBtn.setEnabled(true);
+			editSearchBtn.setStyleName("primary");
+			editSearchBtn.getElement().getStyle().clearColor();
 			MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim().toLowerCase(),"HeaderUc");
 			Map<String, String> params = new HashMap<String, String>();
 			params = updateParams(params);
