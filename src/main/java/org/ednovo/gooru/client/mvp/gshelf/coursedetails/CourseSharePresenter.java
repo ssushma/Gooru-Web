@@ -105,12 +105,7 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 
 				@Override
 				public void onSuccess(ArrayList<ClasspageDo> result) {
-					if(result!=null && result.size()>0){
-						getView().showClassesInList(result,courseId);
-					}else{
-						getView().getAssociatedClassesPnl().setVisible(false);
-					}
-					
+					getView().showClassesInList(result,courseId);
 				}
 			});
 		}
