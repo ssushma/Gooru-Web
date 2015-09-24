@@ -574,6 +574,9 @@ Back to top button
 }
 #gooruSearchMainContainer .seachRightNavigation li:hover {
     background: none repeat scroll 0 0 #c3ddee;
+    margin: 0px;
+  	width: 100%;
+  	border: 0px;
 }
 
 
@@ -638,6 +641,7 @@ Back to top button
 	padding:0 0;
 	list-style:none;
 	display:inline-block;
+	background: none !important;
 }
 #gooruSearchMainContainer .standards ul li{
 	margin:0 0;
@@ -645,9 +649,12 @@ Back to top button
 	list-style:none;
 	display:inline-block;
 	width:100%;
+	padding-top: 5px;
+	cursor: pointer;
 }
 #gooruSearchMainContainer .grade ul li:hover{
     background: none repeat scroll 0 0 #c3ddee;
+    width: 27px;
 }
 
 #gooruSearchMainContainer .grade ul li a{

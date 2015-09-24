@@ -234,6 +234,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			text = jsonRep.getText();
 			profileDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileDo.class);
 			setUserFilterProperties(profileDo.getUser());
+			profileDo.getUser().setToken(getLoggedInSessionToken());
 			if (params.containsKey(REGISTRATION_TYPE) && !params.get(REGISTRATION_TYPE).equalsIgnoreCase(CHILD)) {
 				setLoggedInSessionToken(token);
 				setLoggedInUserUid(profileDo.getUser().getGooruUId());
@@ -645,7 +646,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 				JSONArray followingList=followingUserObject.getJSONArray("searchResults");
 
-				for(int i=0;i<totatHintCount;i++){
+				for(int i=0;i<followingList.length();i++){
 					userFollowDo=new UserFollowDo();
 					UserSummaryDo userSummaryDo=new UserSummaryDo();
 
@@ -749,7 +750,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				int totatHintCount=tagUserObject.getInt("totalHitCount");
 				JSONArray tagList=tagUserObject.getJSONArray("searchResults");
 
-				for(int i=0;i<totatHintCount;i++){
+				for(int i=0;i<tagList.length();i++){
 					userTagsDo=new UserTagsDo();
 					JSONObject resultObj = tagList.getJSONObject(i);
 					userTagsDo.setLabel(resultObj.getString("label"));

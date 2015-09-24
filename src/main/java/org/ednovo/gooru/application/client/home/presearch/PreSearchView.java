@@ -139,7 +139,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
 
-	String[] standardsTypesArray = new String[]{i18n.GL3321(),i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325()};
+	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 
 	TreeMap<Integer, Integer> selectedGrades = new TreeMap<Integer, Integer>();
 	HashMap<String, String> selectedSubjects = new HashMap<String, String>();
@@ -1167,14 +1167,17 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	}
 
 	public final void populateStandardValues(){
+		standardsDropListValues.clear(); 
         for (String standardsTypesArray1 : standardsTypesArray) {
             List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
             LiPanel liPanel = new LiPanel();
             for(int j=0; j<standardsDescriptionList.size(); j++){
                 HTMLPanel headerDiv = new HTMLPanel("");
                 if(j==0){
-                    if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                	if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
                         liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
                     }else{
                         liPanel.getElement().setId(standardsDescriptionList.get(j));
                     }
@@ -1262,7 +1265,7 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 	}
 
 	public void getAddStandards() {
-		standardsDropListValues.clear();
+
 		if(!AppClientFactory.isAnonymous()){
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
