@@ -702,7 +702,6 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_COPY_UNIT("/v1/course/{0}/unit/{1}"),
 	
 	V1_COPY_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}");
-	
 
 
 	private String url;

@@ -42,7 +42,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -144,7 +143,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	@UiField Label chooseText,uploadFromComputer,uploadLimitText,notWorkingLblText,
 	uploadFromWebText,imageURLLbl,typeImageurlText,infoUrlUploadText,chooseFromText;
 
-	private static final String GET_CROPPED_IMAGE = "/v1/crop?height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}";
+	private static final String GET_CROPPED_IMAGE = "/gooruapi/rest/v1/crop?height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}";
 
 	private static final String IMAGE_UPLOAD_URL_PATTERN = "(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|jpeg|png))(?:\\?([^#]*))?(?:#(.*))?";
 
@@ -771,7 +770,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			}
 			@Override
 			public void onCrop() {
-				String tempCropUrl=AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(GET_CROPPED_IMAGE,getSelectionHeight(),getSelectionWidth(),getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getName(),AppClientFactory.getLoggedInUser().getToken());
+				String tempCropUrl=AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint() + StringUtil.generateMessage(GET_CROPPED_IMAGE,getSelectionHeight(),getSelectionWidth(),getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getName(),AppClientFactory.getLoggedInUser().getToken());
 				setCroppedImage(tempCropUrl+"&id="+Math.random());
 				height=getSelectionHeight();
 				width=getSelectionWidth();
