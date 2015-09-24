@@ -1002,8 +1002,46 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				resMap.put("gooruOid", jobObject.isNull("gooruOid")?null:jobObject.getString("gooruOid"));
 				resMap.put("status", jobObject.isNull("status")?null:jobObject.getString("status"));
 			} catch (Exception e) {
+				logger.error("Exception -- ",e); 
 			}
 		}
 		return resMap;
+	}
+
+	@Override
+	public Boolean isTiedWithStudentData(String o1CourseId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		Boolean status = null;
+		try {
+			url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_IS_STUDENT_DATA_AVAILABLE,o1CourseId);
+			logger.info("V1_IS_STUDENT_DATA_AVAILABLE URl : "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			status = deserializeStudentDataAvailability(jsonRep);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return status; 
+	}
+
+	private Boolean deserializeStudentDataAvailability(JsonRepresentation jsonRep) {
+		Boolean status = null;
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				JSONObject jsonObj=jsonRep.getJsonObject();
+				if(!jsonObj.isNull("message")){
+					JSONObject messageJsonObj=jsonObj.getJSONObject("message"); 
+					status =messageJsonObj.getBoolean("userSignalsAvailable");
+				}
+			} catch (Exception e) {
+				logger.error("Exception -- ",e); 
+			}
+		}
+
+		return status; 
 	}
 }
