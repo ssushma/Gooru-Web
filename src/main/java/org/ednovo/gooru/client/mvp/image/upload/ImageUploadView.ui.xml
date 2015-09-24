@@ -229,9 +229,11 @@
 						<g:FileUpload ui:field="fileUpload" name="imageUpload"/>
 					</g:FormPanel>
 					<g:Label ui:field="uploadLimitText"/>
-					<g:Button ui:field="cropImage" styleName="{style.cropImageTxt} secondary">crop Image</g:Button>
-					<g:FlowPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel">
-						<g:Image ui:field="displayImage" styleName="{style.displayImage}"></g:Image>
+					<g:FlowPanel>
+						<g:Button ui:field="cropImage" styleName="{style.cropImageTxt} secondary">crop Image</g:Button>
+						<g:FlowPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel">
+							<g:Image ui:field="displayImage" styleName="{style.displayImage}"></g:Image>
+						</g:FlowPanel>
 					</g:FlowPanel>
 					<g:FlowPanel styleName="{style.imageUploadMinHeight}">
 					<g:HTMLPanel ui:field="notWorkingPanel" styleName="{style.notWorkingPanel}">
@@ -258,9 +260,11 @@
 						<g:FlowPanel styleName="{style.imageUploadMinHeightUrl}">
 							<g:Label ui:field="typeImageurlText"></g:Label>
 						</g:FlowPanel>
-						<g:Button ui:field="cropImage1" styleName="secondary {style.cropImageTxt}">crop Image</g:Button>
-						<g:FlowPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel1">
-							<g:Image ui:field="displayImage1" styleName="{style.displayImage}"></g:Image>
+						<g:FlowPanel>
+							<g:Button ui:field="cropImage1" styleName="secondary {style.cropImageTxt}">crop Image</g:Button>
+							<g:FlowPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel1">
+								<g:Image ui:field="displayImage1" styleName="{style.displayImage}"></g:Image>
+							</g:FlowPanel>
 						</g:FlowPanel>
 						<g:Label styleName="{style.infoUrlUpload}" ui:field="infoUrlUploadText"/>
 						<g:FlowPanel styleName="{style.imageUploadAlign}">
