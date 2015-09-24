@@ -84,7 +84,14 @@
 			min-height: 120px;
 			padding: 10px;
 	   }
-
+		.cropContainer{
+			min-height: 271px;
+			width: 400px;
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+			border: 2px solid #efefef;
+		}
 	</ui:style>
 	<g:FlowPanel styleName="{style.imageCropContainer}"
 		ui:field="imagCropContainer">
@@ -101,6 +108,7 @@
 						<gg:LoadingUc ui:field="cropImageLoading" />
 					</g:VerticalPanel> 
 				</g:FlowPanel>
+				<g:HTMLPanel ui:field="panel" styleName="{style.cropContainer}"></g:HTMLPanel>
 			</g:FlowPanel>
 		</g:HTMLPanel>
 		
