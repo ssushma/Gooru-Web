@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.application.shared.model.user.UserDo;
+import org.ednovo.gooru.application.shared.model.user.UserMetaDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.event.AssessmentsSetPlayerLoginStatusEvent;
@@ -400,7 +401,9 @@ public abstract class LoginPopupUc extends PopupPanel{
 										public void onSuccess(final ProfileDo profileObj) {
 											if(profileObj.getUser().getMeta() != null && profileObj.getUser().getMeta().getTaxonomyPreference() != null && profileObj.getUser().getMeta().getTaxonomyPreference().getCode() != null){
 												UserDo user = AppClientFactory.getLoggedInUser();
-												user.getMeta().setTaxonomyPreference(profileObj.getUser().getMeta().getTaxonomyPreference());
+												UserMetaDo meta = new UserMetaDo();
+												meta.setTaxonomyPreference(profileObj.getUser().getMeta().getTaxonomyPreference());
+												user.setMeta(meta);
 
 												AppClientFactory.setLoggedInUser(user);
 										    	AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
