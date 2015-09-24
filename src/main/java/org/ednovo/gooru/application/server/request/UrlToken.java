@@ -697,6 +697,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V2_GET_HTML_TO_EXCEL_REPORT("/v2/media/htmltoexcel"),
 	
+	V1_COPY_COURSE("/v1/course/{0}"),
+	
 	V1_COPY_UNIT("/v1/course/{0}/unit/{1}"),
 	
 	V1_COPY_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}");
