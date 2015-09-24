@@ -637,7 +637,102 @@ button.btn-disabled{
     left:105px;
 }
 
-
+.ActionItemsNew{
+	display:table;
+}
+.ActionItemsNew .deleteButton, .ActionItemsNew .copyButton{
+	display:table-cell;
+	vertical-align:middle;
+}
+.ActionItemsNew .deleteButton span{
+	display:block;
+	vertical-align:middle;
+}
+.ActionItemsNew .copyButton span{
+	display:block;
+	vertical-align:middle;
+}
+.ActionItemsNew a{
+	display:block;
+	text-align:center;
+	font-size:11px;
+	padding:6px 8px;
+}
+#shareContentInClass{
+	padding:0 15px;
+}
+#shareContentInClass .siteInfo {
+	border-bottom:1px solid #dddddd;
+	padding:0 0 15px 0;
+}
+#shareContentInClass .ButtonRight {
+	text-align:right;
+}
+#shareContentInClass .siteInfo p {
+	color:#1076bb;
+	font-size:13px;
+	margin-bottom:5px;
+}
+#shareContentInClass .siteInfo p.small{
+	font-size:12px;
+	color:#515151;
+}
+#shareContentInClass .tableItems{
+	display:table;
+	width:100%;
+	border-collapse: collapse;
+}
+#shareContentInClass .tableItems .unitRow{
+	width: 720px;
+}
+#shareContentInClass .tableItems .tableRow{
+	display:table-row;
+	border-bottom:1px solid #dddddd;
+	border-collapse:separate;
+}
+#shareContentInClass .tableItems .tableCell{
+	display:table-cell;
+	padding:8px 0;
+	width: 400px;
+}
+#shareContentInClass .tableItems .statusTab{
+	text-align:right;
+}
+#shareContentInClass .tableItems .statusTab a{
+	display:inline-block;
+	border-right:1px solid #dddddd;
+	padding:0 10px 0 0;
+	vertical-align:middle;
+}
+#shareContentInClass .tableItems .statusTab .dottedButton{
+	width:22px;
+	height:22px;
+	background:#d8d8d8;
+	border-radius:50% 50%;
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:10px;
+	cursor: pointer;
+}
+#shareContentInClass .tableItems .statusTab .dottedButton.green{
+	background:#7ab075;
+}
+#shareContentInClass .tableItems .unitLessonDetailsTab.levelTwo{
+	margin-left:25px;
+}
+#shareContentInClass .tableItems .unitLessonDetailsTab.levelThree{
+	margin-left:50px;
+}
+#shareContentInClass .tableItems .unitLessonDetailsTab.cursor {
+	cursor: pointer;
+}
+.pageSubHeader{
+	padding:0 15px 15px 15px;
+	border-bottom:1px solid #dddddd;
+	margin-bottom:15px;
+	font-size:22px;
+	color:#515151;
+}
 @media (max-width: 767px) {
 
 	#gShelfMainContainer .floderLeftContainer{
@@ -4379,6 +4474,11 @@ right:1px;
 
 .custom-select select option {color:#6666;font-weight:bold; padding:8px 10px}
 
+.shareMainContainer {
+	min-height: 500px;
+	margin-top: 10px;
+}
+
 .shareMainContainer .selectClassBlock{
 	padding: 20px;
 	width: 100%;
@@ -4390,16 +4490,21 @@ right:1px;
 }
 
 .shareMainContainer .courseDetailsContainer{
-	padding:15px 15px;
+	padding:15px 5px;
+}
+.shareMainContainer .courseDetailsContainerBorder{
+	margin: 10px 5px;
+	padding: 10px;
+	border: 1px dashed #ddd;
 }
 .shareMainContainer .assign2Class .assignCourseBlock{
-	border-left: 1px solid #ddd;
 	padding: 15px 15px !important;
 }
 
 .shareMainContainer .createClassStyle{
 	display: inline-block;
 	margin-top: 4px;
+	margin: 5% 24%;
 }
 
 .shareMainContainer .errorMsgStyle{
@@ -4410,8 +4515,8 @@ right:1px;
 	font-style: italic;
 }
 .shareMainContainer .marginBottom{
-	margin-bottom: 10px;
-	margin-top: 10px;
+	padding-bottom: 20px;
+	padding-top: 20px;
 }
  .shareMainContainer .classListStyle{
 	 width: 100%;
@@ -4421,6 +4526,7 @@ right:1px;
 
 .shareMainContainer  button.primary{
 	margin-left: 5px;
+	margin: 5% 33%;
 }
 
 @media (max-width: 767px) {

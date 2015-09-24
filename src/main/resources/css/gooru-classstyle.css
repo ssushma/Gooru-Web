@@ -1622,6 +1622,7 @@ button.grey:hover {
 
 #addCourseToClasPopup{
 	padding:25px 0;
+	margin: 0% 25%;
 }
 #addCourseToClasPopup .modal-dialog{
 	width:438px;
