@@ -952,9 +952,11 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonRepresentation jsonRep = null,jsonRepGet=null;
 		String url = null;
 		if(courseId!=null && unitId==null && lessonId==null){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_UNIT,courseId,unitId);
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_COURSE,courseId);
 		}else if(courseId!=null && unitId!=null && lessonId==null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_UNIT,courseId,unitId);
+		}else if(courseId!=null && unitId!=null && lessonId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_LESSON,courseId,unitId,lessonId);
 		}
 		String jobUri = "";
 		try {
