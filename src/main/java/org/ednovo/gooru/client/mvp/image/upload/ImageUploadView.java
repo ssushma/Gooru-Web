@@ -606,6 +606,9 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			if(aspectRatio==4.53f){
 				displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 				displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+			}else if(aspectRatio==1.0f){
+				displayCromImagePanel.getElement().setAttribute("style","min-width: 300px;width:auto;min-height: 300px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+				displayCromImagePanel1.getElement().setAttribute("style","min-width: 300px;width:auto;min-height: 300px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 			}else{
 				displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 				displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
@@ -733,7 +736,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	 @Override
 	 public void displayCropPopup(final MediaUploadDo mediaUploadDo){
 		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		ImageCropView imageCropView = new ImageCropView() {
+		final ImageCropView imageCropView = new ImageCropView() {
 			@Override
 			public void onCancelCrop() {
 				/*resetImageUploadWidget();

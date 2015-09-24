@@ -410,7 +410,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setCollectionImage(boolean isCollectionImage) {
-		getView().setAspectRatio(1.0f);
+		getView().setAspectRatio(1.3f);
 		this.isCollectionImage = isCollectionImage;
 	}
 
@@ -494,7 +494,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setProfileImage(boolean isProfileImage) {
-		getView().setAspectRatio(1.0f);
+		getView().setAspectRatio(1.3f);
 		this.isProfileImage = isProfileImage;
 	}
 
@@ -516,7 +516,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setPublicProfileImage(boolean isPublicProfileImage) {
-		getView().setAspectRatio(1.0f);
+		getView().setAspectRatio(1.3f);
 		this.isPublicProfileImage = isPublicProfileImage;
 	}
 
@@ -558,7 +558,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setUdateProfileImage(boolean isUdateProfileImage) {
-		getView().setAspectRatio(1.0f);
+		getView().setAspectRatio(1.3f);
 		this.isUdateProfileImage = isUdateProfileImage;
 	}
 
@@ -576,6 +576,9 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setAnswerImage(boolean isAnswerImage) {
+		if(isAnswerImage){
+			getView().setAspectRatio(1.0f);
+		}
 		this.isAnswerImage = isAnswerImage;
 	}
 }

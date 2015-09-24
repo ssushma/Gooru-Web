@@ -551,9 +551,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					HashMap<String,String> params = new HashMap<String,String>();
 					params.put("o1", result.get("gooruOid"));
 					params.put("view", "Course");
-					//getView().hidePopup();
-					AppClientFactory.fireEvent(new LoadMyContentEvent("Course"));
-					shelfMainPresenter.callWorkspaceApi();
+					shelfMainPresenter.setVersion();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				}else if(result.get("status").equalsIgnoreCase("inprogress")){
 					Timer timer = new Timer() {
