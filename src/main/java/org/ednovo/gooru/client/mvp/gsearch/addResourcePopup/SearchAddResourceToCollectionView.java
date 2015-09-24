@@ -525,9 +525,23 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 								getUiHandlers().moveCollectionTOLesson("","",this.urlparams);
 							}else{
 								if(UNIT.equalsIgnoreCase(copyType)){
-									getUiHandlers().copyUnitToCourse(this.urlparams,AppClientFactory.getPlaceManager().getRequestParameter("o2",null));
+									if(item.getCourseSummary()!=null && item.getCourseSummary().getUnitCount()!=null&&item.getCourseSummary().getUnitCount()>=20){
+										lblError.setText("Unit limit reached");
+										lblError.setVisible(true);
+										enableDisableAddBtn(false);
+										
+									}else{
+										getUiHandlers().copyUnitToCourse(this.urlparams,AppClientFactory.getPlaceManager().getRequestParameter("o2",null));
+									}
 								}else if(LESSON.equalsIgnoreCase(copyType)){
-									getUiHandlers().copyLessonToUnit();
+									if(item.getCourseSummary()!=null && item.getCourseSummary().getUnitCount()!=null&&item.getCourseSummary().getUnitCount()>=20){
+										lblError.setText("Lesson limit reached");
+										lblError.setVisible(true);
+										enableDisableAddBtn(false);
+										
+									}else{
+										getUiHandlers().copyLessonToUnit(this.urlparams,AppClientFactory.getPlaceManager().getRequestParameter("o3",null));
+									}
 								}else{
 									getUiHandlers().copyCollectionToLession("","",this.urlparams);
 								}
@@ -816,6 +830,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			isTopMostSelected = false;
 			lblError.setVisible(false);
 			lblError.setText(i18n.GL1134());
+			enableDisableAddBtn(true);
 			final TreeItem item = (TreeItem) event.getSelectedItem();
 			Widget folderWidget= item.getWidget();
 			FolderTreeItem folderTreeItemWidget=null;
@@ -933,4 +948,5 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		
 		
 	}
+
 }

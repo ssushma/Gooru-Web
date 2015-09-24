@@ -143,7 +143,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	@UiField Label chooseText,uploadFromComputer,uploadLimitText,notWorkingLblText,
 	uploadFromWebText,imageURLLbl,typeImageurlText,infoUrlUploadText,chooseFromText;
 
-	private static final String GET_CROPPED_IMAGE = "/v1/crop?height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}";
+	private static final String GET_CROPPED_IMAGE = "/gooruapi/rest/v1/crop?height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}";
 
 	private static final String IMAGE_UPLOAD_URL_PATTERN = "(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|jpeg|png))(?:\\?([^#]*))?(?:#(.*))?";
 
@@ -603,8 +603,13 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			hideAndDisplayAllCropButtons(true);		
 			displayImage.setVisible(false);
 			displayImage1.setVisible(false);
-			displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-			displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+			if(aspectRatio==4.53f){
+				displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+				displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+			}else{
+				displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+				displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+			}
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
@@ -731,7 +736,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		ImageCropView imageCropView = new ImageCropView() {
 			@Override
 			public void onCancelCrop() {
-				resetImageUploadWidget();
+				/*resetImageUploadWidget();
 				appPopUp.hide();
 				imageCropPopup.hide();
 				Window.scrollTo(0, 0);
@@ -739,11 +744,20 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 					Window.enableScrolling(false);
 				}else{
 					Window.enableScrolling(true);
+				}*/
+				imageCropPopup.clear();
+				imageCropPopup.hide();
+				Window.scrollTo(0, 0);
+				if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
 				}
+				appPopUp.show();
 			}
 			@Override
 			public void onBackToUpload() {
-				resetImageUploadWidget();
+				//resetImageUploadWidget();
 				imageCropPopup.clear();
 				imageCropPopup.hide();
 				Window.scrollTo(0, 0);
@@ -756,7 +770,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			}
 			@Override
 			public void onCrop() {
-				String tempCropUrl=AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(GET_CROPPED_IMAGE,getSelectionHeight(),getSelectionWidth(),getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getName(),AppClientFactory.getLoggedInUser().getToken());
+				String tempCropUrl=AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint() + StringUtil.generateMessage(GET_CROPPED_IMAGE,getSelectionHeight(),getSelectionWidth(),getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getName(),AppClientFactory.getLoggedInUser().getToken());
 				setCroppedImage(tempCropUrl+"&id="+Math.random());
 				height=getSelectionHeight();
 				width=getSelectionWidth();

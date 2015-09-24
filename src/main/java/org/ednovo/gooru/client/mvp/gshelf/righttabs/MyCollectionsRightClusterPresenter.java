@@ -28,11 +28,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gshelf.LoadMyContentEvent;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
@@ -43,9 +45,11 @@ import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseSharePresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
+import org.ednovo.gooru.client.uc.AlertForImageUpload;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
@@ -532,8 +536,39 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		AppClientFactory.getInjector().getfolderService().copyCourse(gooruOid, null, null, new SimpleAsyncCallback<String>() {
 
 			@Override
-			public void onSuccess(String result) {
-				
+			public void onSuccess(String url) {
+				callJobSuccessApi(url,null);
+			}
+		});
+	}
+	
+	protected void callJobSuccessApi(final String jobUrl,final HashMap<String, String> urlparams) {
+		AppClientFactory.getInjector().getfolderService().jobCheck(jobUrl,new SimpleAsyncCallback<Map<String,String>>() {
+
+			@Override
+			public void onSuccess(Map<String, String> result) {
+				if(result.get("status").equalsIgnoreCase("completed")){
+					HashMap<String,String> params = new HashMap<String,String>();
+					params.put("o1", result.get("gooruOid"));
+					params.put("view", "Course");
+					//getView().hidePopup();
+					AppClientFactory.fireEvent(new LoadMyContentEvent("Course"));
+					shelfMainPresenter.callWorkspaceApi();
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+				}else if(result.get("status").equalsIgnoreCase("inprogress")){
+					Timer timer = new Timer() {
+
+						@Override
+						public void run() {
+							callJobSuccessApi(jobUrl,urlparams);
+						}
+						
+					};
+					timer.schedule(150);
+				}else{
+					new AlertForImageUpload("Oops", "Something went wrong, plewase try again.");
+					//getView().hidePopup();
+				}
 			}
 		});
 	}
