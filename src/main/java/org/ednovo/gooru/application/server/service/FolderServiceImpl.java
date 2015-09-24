@@ -951,7 +951,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	public String copyCourse(String courseId, String unitId, String lessonId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		if(courseId!=null && unitId!=null && lessonId==null){
+		if(courseId!=null && unitId==null && lessonId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_COURSE,courseId);
+		}else if(courseId!=null && unitId!=null && lessonId==null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_UNIT,courseId,unitId);
 		}else if(courseId!=null && unitId!=null && lessonId!=null){
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_LESSON,courseId,unitId,lessonId);
