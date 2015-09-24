@@ -408,34 +408,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 		}
 	}
 
-	/*public class MasteryReportPlace implements ClickHandler{
-
-		String subView;
-		LiPanel liPanel;
-
-		public MasteryReportPlace(String subView,LiPanel liPanel){
-			this.subView=subView;
-			this.liPanel=liPanel;
-		}
-
-		@Override
-		public void onClick(ClickEvent event) {
-			roasterPanel.removeStyleName(CssTokens.ACTIVE);
-			reportPanel.removeStyleName(CssTokens.ACTIVE);
-			liPanel.addStyleName(CssTokens.ACTIVE);
-			PlaceRequest request = new PlaceRequest(PlaceTokens.EDIT_CLASS);
-			Map<String, String> parms = StringUtil.splitQuery(Window.Location.getHref());
-			String id = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CLASSPAGEID);
-			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID);
-			request = request.with(UrlNavigationTokens.CLASSPAGEID, id);
-			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, courseId);
-			request = request.with(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.TEACHER_CLASS_STUDENTES);
-			request = request.with(UrlNavigationTokens.TEACHER_CLASS_SUBPAGE_VIEW, subView);
-			request = request.with(UrlNavigationTokens.TEACHER_CLASSPAGE_REPORT_TYPE, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
-			AppClientFactory.getPlaceManager().revealPlace(request);
-		}
-
-	}*/
 
 	public class EditClassStudentTabHandler implements ClickHandler{
 
@@ -725,6 +697,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public void onClickPendingListSeeMore(ClickEvent event){
 		lblPendingPleaseWait.setVisible(true);
 		ancPendingListSeeMore.setVisible(false);
+		System.out.println("classpageDo.getClassUid() 1 : "+classpageDo.getClassUid());
 		getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(),  pendingOffsetValue, pageSize, "pending",true,true);	//this will callback displayPendingMembersList method ....
 	}
 	@UiHandler("ancActiveListSeeMore")
@@ -838,7 +811,12 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	}
 
 	public void getPendingMembersList(){
-		getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(), 0, pageSize, "pending",true,false);	//this will callback displayPendingMembersList method ....
+		System.out.println("classpageDo.getClassUid() : "+classpageDo.getClassUid());
+		if (classpageDo.getClassUid() != null){
+			getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(), 0, pageSize, "pending",true,false);	//this will callback displayPendingMembersList method ....
+		}else{
+			AppClientFactory.printInfoLogger("Class Uid is null @ Edit Class Student View @ getPendingMembersList....");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -851,12 +829,10 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 			if(pendingContainer.getWidgetCount()==0){
 				ancPendingListSeeMore.setVisible(false);
 			}
-			//getUiHandlers().getMembersListByCollectionId(classpageDo.getClassUid(),0,pendingOffsetValue, "pending",false,false);
 		}else{
 			if(tableContainer.getWidgetCount()== 0){
 				ancActiveListSeeMore.setVisible(false);
 			}
-		//	getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClassUid(),  (activeListPageNum*pageSize)-1, 1, "active",false,false,false);
 		}
 	}
 
