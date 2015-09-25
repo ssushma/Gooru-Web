@@ -183,12 +183,12 @@
 		.cropImagePanel{
 			height: 273px;
 			width: 400px;
-			margin: 0 auto;
+			margin: 40px auto 0 auto;
 			clear: both;
-			display: inline-block;
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-size: contain;
+			position: relative;
 		}
 		.cropImageTxt{
 			background-image: url(./images/crop.png) !important;
@@ -198,7 +198,9 @@
 			padding-left: 34px !important;
 			padding-right: 12px !important;
 			float: right;
-			margin-right: 3%;		
+			position: absolute;
+			right: 0;
+			top: -31px;	
 		}
 		.displayImage{
 			/**
@@ -230,10 +232,10 @@
 					</g:FormPanel>
 					<g:Label ui:field="uploadLimitText"/>
 					<g:FlowPanel>
-						<g:Button ui:field="cropImage" styleName="{style.cropImageTxt} secondary">crop Image</g:Button>
-						<g:FlowPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel">
+						<g:HTMLPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel">
+							<g:Button ui:field="cropImage" styleName="{style.cropImageTxt} secondary">crop Image</g:Button>
 							<g:Image ui:field="displayImage" styleName="{style.displayImage}"></g:Image>
-						</g:FlowPanel>
+						</g:HTMLPanel> 
 					</g:FlowPanel>
 					<g:FlowPanel styleName="{style.imageUploadMinHeight}">
 					<g:HTMLPanel ui:field="notWorkingPanel" styleName="{style.notWorkingPanel}">
@@ -261,10 +263,10 @@
 							<g:Label ui:field="typeImageurlText"></g:Label>
 						</g:FlowPanel>
 						<g:FlowPanel>
-							<g:Button ui:field="cropImage1" styleName="secondary {style.cropImageTxt}">crop Image</g:Button>
-							<g:FlowPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel1">
+							<g:HTMLPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel1">
+								<g:Button ui:field="cropImage1" styleName="secondary {style.cropImageTxt}">crop Image</g:Button>
 								<g:Image ui:field="displayImage1" styleName="{style.displayImage}"></g:Image>
-							</g:FlowPanel>
+							</g:HTMLPanel> 
 						</g:FlowPanel>
 						<g:Label styleName="{style.infoUrlUpload}" ui:field="infoUrlUploadText"/>
 						<g:FlowPanel styleName="{style.imageUploadAlign}">
