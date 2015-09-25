@@ -49,7 +49,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiConstructor;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -59,8 +61,8 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class TinyMCE extends Composite{
-	private static List<String> richTextsList=new ArrayList<String>();
-	private static String lastButtonId="";
+    private static List<String> richTextsList=new ArrayList<String>();
+    private static String lastButtonId="";
     public TextArea tinyMceTextArea=null;
     private static final String BUTTONID="_richtext_button";
     private String id=null;
@@ -75,11 +77,11 @@ public class TinyMCE extends Composite{
     private int parentWidth=0;
 
     public  class OpenRichTextToolBar implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			MixpanelUtil.Rich_Text_Click();
-			showTinyMceToolBar();
-		}
+        @Override
+        public void onClick(ClickEvent event) {
+            MixpanelUtil.Rich_Text_Click();
+//            showTinyMceToolBar();
+        }
     }
     public TinyMCE() {
         super();
@@ -100,7 +102,8 @@ public class TinyMCE extends Composite{
         tinyMceTextArea.addStyleName("ta");
         tinyMceTextArea.getElement().setAttribute("id", id);
         panel.add(tinyMceTextArea);
-//        timymceWrapper.add(toolBarOpenButton);
+
+        timymceWrapper.add(toolBarOpenButton);
 
         toolBarOpenButton.setVisible(false);
         markAsBlankPanel.setVisible(false);
@@ -110,30 +113,34 @@ public class TinyMCE extends Composite{
         timymceWrapper.add(markAsBlankPanel);
         timymceWrapper.add(errorMessageLabel);
         initWidget(timymceWrapper);
-//        nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
-//        public void onPreviewNativeEvent(NativePreviewEvent event) {
-////        	hidePopup(event);
-//          }
-//        });
+        nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
+        public void onPreviewNativeEvent(NativePreviewEvent event) {
+        	hidePopup(event);
+          }
+        });
         this.addStyleName("tinyMCETable");
-
     }
-
     @UiConstructor
     public TinyMCE(Integer characterLimit) {
-    	this();
-    	tinyMceTextArea.getElement().setAttribute("charLimit", characterLimit.toString());
+        this();
+        tinyMceTextArea.getElement().setAttribute("charLimit", characterLimit.toString());
     }
     public void setCharacterLimit(int characterLimit){
-    	this.characterLimit=characterLimit;
+        this.characterLimit=characterLimit;
     }
 
     public void initializeTinyMce(){
-    	initilizeTinyMce(this,id);
-    	 this.addStyleName("tinyMCETable");
+        initilizeTinyMce(this,id);
+         this.addStyleName("tinyMCETable");
     }
     public void hidePopup(NativePreviewEvent event){
-
+        if(event.getTypeInt()==Event.ONCLICK){
+            Event nativeEvent = Event.as(event.getNativeEvent());
+            boolean target=eventTargetsPopup(nativeEvent);
+            if(!target){
+                hideTinyMceToolBar(id,true);
+            }
+        }
     }
 
     /**
@@ -153,11 +160,11 @@ public class TinyMCE extends Composite{
      * @param text
      */
     public void setTextData(String text) {
-    	tinyMceTextArea.setText(text);
+        tinyMceTextArea.setText(text);
     }
 
     public void setText(String text){
-    	setContent(text);
+        setContent(text);
     }
     public String getTextArea() {
         getTextData();
@@ -165,7 +172,7 @@ public class TinyMCE extends Composite{
     }
 
     public String getText(){
-    	return getContent();
+        return getContent();
     }
 
     /**
@@ -174,32 +181,31 @@ public class TinyMCE extends Composite{
     protected void onLoad() {
         super.onLoad();
         Scheduler.get().scheduleDeferred(new ScheduledCommand(){
-			@Override
-			public void execute() {
-				setWidth("100%");
-				try
-				{
-					setTextAreaToTinyMCE(id);
-					showTinyMceToolBar();
-				}
-				catch(JavaScriptException ex)
-				{
+            @Override
+            public void execute() {
+                setWidth("100%");
+                try
+                {
+                setTextAreaToTinyMCE(id);
+                }
+                catch(JavaScriptException ex)
+                {
 
-				}
+                }
                 setMarkAsBlankLabel();
-			}
+            }
         });
     }
 
 
     public void setMarkAsBlankLabel(){
-    	Element markAsBlankElement=getFibButton();
-    	if(markAsBlankElement!=null){
+        Element markAsBlankElement=getFibButton();
+        if(markAsBlankElement!=null){
         if(markAsBlankElement.hasChildNodes()){
-        	markAsBlankElement.getFirstChildElement().setInnerText(i18n.GL1507());
+            markAsBlankElement.getFirstChildElement().setInnerText(i18n.GL1507());
         }
         markAsBlankPanel.getElement().appendChild(markAsBlankElement);
-    	}
+        }
     }
 
     /**
@@ -259,58 +265,58 @@ public class TinyMCE extends Composite{
      *
      */
     public String getContent(){
-    	return getContent(id);
+        return getContent(id);
     }
 
     public String getRawContent(){
-    	return getRawContent(id);
+        return getRawContent(id);
     }
 
 
     public void getHighlightedText(){
-    	 getHighlightedText(id);
-    	// return "";
+         getHighlightedText(id);
+        // return "";
    }
 
 
     protected native String getContent(String idd)/*-{
-    	var rawData= $wnd.tinyMCE.get(idd).getContent();
-    	return rawData;
+        var rawData= $wnd.tinyMCE.get(idd).getContent();
+        return rawData;
     }-*/;
     protected native String getRawContent(String idd)/*-{
-		var rawData= $wnd.tinyMCE.get(idd).getContent({format : 'raw'});
-		return rawData;
-	}-*/;
+        var rawData= $wnd.tinyMCE.get(idd).getContent({format : 'raw'});
+        return rawData;
+    }-*/;
 
     protected native void getHighlightedText(String idd)/*-{
-    	$wnd.tinyMCE.get(idd).execCommand('mceFillInTheBlank',false,idd);
+        $wnd.tinyMCE.get(idd).execCommand('mceFillInTheBlank',false,idd);
 
-	}-*/;
+    }-*/;
 
     public void setContent(String text){
-    	try
-    	{
-    	setContent(id, text);
-    	}
-    	 catch(JavaScriptException e) {
-    	 }
+        try
+        {
+        setContent(id, text);
+        }
+         catch(JavaScriptException e) {
+         }
     }
     public void setEmptyContent(String text){
-    	setEmptyContent(id,text);
+        setEmptyContent(id,text);
     }
 
     public Element getFibButton(){
-    	return Document.get().getElementById(id+"_fillintheblank");
+        return Document.get().getElementById(id+"_fillintheblank");
     }
     public void removeFibButton(){
-    	 Document.get().getElementById(id+"_fillintheblank").removeFromParent();
+         Document.get().getElementById(id+"_fillintheblank").removeFromParent();
     }
     protected native void setContent(String editorUniqueId,String text)/*-{
-		$wnd.tinyMCE.get(editorUniqueId).setContent(text,{format : 'raw'});
-	}-*/;
+        $wnd.tinyMCE.get(editorUniqueId).setContent(text,{format : 'raw'});
+    }-*/;
     protected native void setEmptyContent(String editorUniqueId,String text)/*-{
-	$wnd.tinyMCE.get(editorUniqueId).setContent('');
-	}-*/;
+    $wnd.tinyMCE.get(editorUniqueId).setContent('');
+    }-*/;
 
 
     protected native void getTextData() /*-{
@@ -349,178 +355,194 @@ public class TinyMCE extends Composite{
     }-*/;
 
     protected native void setFoucs(String id) /*-{
-    	$wnd.tinyMCE.get(id).focus();
+        $wnd.tinyMCE.get(id).focus();
     }-*/;
 
     protected void setFoucs(){
-    	setFoucs(id);
+        setFoucs(id);
     }
     protected void setToolBarPosition(){
-    	setToolBarPosition(id, parentWidth);
+        setToolBarPosition(id, parentWidth);
     }
-
-
     protected native void setToolBarPosition(String id, int parentWidth) /*-{
-		$wnd.tinyMCE.DOM.setStyle($wnd.tinyMCE.DOM.get(id+'_external'),'top',0-$wnd.tinyMCE.DOM.getRect(id+'_tblext').h-2);
+        $wnd.tinyMCE.DOM.setStyle($wnd.tinyMCE.DOM.get(id+'_external'),'top',0-$wnd.tinyMCE.DOM.getRect(id+'_tblext').h-2);
 		$wnd.tinyMCE.DOM.setStyle($wnd.tinyMCE.DOM.get(id+'_external'),'left',parentWidth - $wnd.tinyMCE.DOM.getRect(id+'_tblext').w);
-	}-*/;
+    }-*/;
     protected void addClickEventToCloseButton(){
-    	addClickEventToCloseButton(id);
+        addClickEventToCloseButton(id);
     }
     protected native void addClickEventToCloseButton(String id) /*-{
-    	var f = $wnd.tinyMCE.dom.Event.add(id + '_external_close', 'click', function() {
-			$wnd.tinyMCE.DOM.hide(id + '_external');
-			$wnd.tinyMCE.dom.Event.remove(id + '_external_close', 'click', f);
-			return false;
-		});
+        var f = $wnd.tinyMCE.dom.Event.add(id + '_external_close', 'click', function() {
+            $wnd.tinyMCE.DOM.hide(id + '_external');
+            $wnd.tinyMCE.dom.Event.remove(id + '_external_close', 'click', f);
+            return false;
+        });
     }-*/;
     protected native void initilizeTinyMce(TinyMCE tinymce,String id) /*-{
-   		$wnd.tinyMCE.init({
-   		    mode : "specific_textareas",
-		    editor_selector : "textarea#"+id,
-		    theme : "advanced",
-		    theme_advanced_path : false,
-		    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,sub,sup,separator,forecolor,backcolor,separator,hr,link,unlink,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,numlist,bullist,outdent,indent,separator,charmap,asciimath,asciimathcharmap,fillintheblank, separator, removeformat",
-		    theme_advanced_buttons2 : "",
-		    theme_advanced_buttons3 : "",
-		    theme_advanced_fonts : "Arial=arial,helvetica,sans-serif,Courier New=courier new,courier,monospace,Georgia=georgia,times new roman,times,serif,Tahoma=tahoma,arial,helvetica,sans-serif,Times=times new roman,times,serif,Verdana=verdana,arial,helvetica,sans-serif",
-		    theme_advanced_toolbar_location : "external",
-		    theme_advanced_toolbar_align : "right",
-		    theme_advanced_statusbar_location : "none",
-		    plugins : 'asciimath,asciisvg,table,inlinepopups,fillintheblank',
-		  	     setup : function (ed) {
-		  	     	ed.onKeyPress.add(function(ed, event) {
-      				var content=this.getContent({format : 'raw'});
-      				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
-      				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
-      				  if(event.keyCode==8 || event.keyCode==46) {
+           $wnd.tinyMCE.init({
+               mode : "specific_textareas",
+            editor_selector : "textarea#"+id,
+            theme : "advanced",
+            theme_advanced_path : false,
+            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,sub,sup,separator,forecolor,backcolor,separator,hr,link,unlink, separator,justifyleft,justifycenter,justifyright,justifyfull,separator,numlist,bullist,outdent,indent,separator,charmap,asciimath,asciimathcharmap,fillintheblank, separator, removeformat",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            theme_advanced_fonts : "Arial=arial,helvetica,sans-serif,Courier New=courier new,courier,monospace,Georgia=georgia,times new roman,times,serif,Tahoma=tahoma,arial,helvetica,sans-serif,Times=times new roman,times,serif,Verdana=verdana,arial,helvetica,sans-serif",
+            theme_advanced_toolbar_location : "external",
+            theme_advanced_toolbar_align : "right",
+            theme_advanced_statusbar_location : "none",
+            plugins : 'asciimath,asciisvg,table,inlinepopups,fillintheblank',
+                   setup : function (ed) {
+                       ed.onKeyPress.add(function(ed, event) {
+                      var content=this.getContent({format : 'raw'});
+                      var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
+                      var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
+                        if(event.keyCode==8 || event.keyCode==46) {
 
-					  }else if(noOfCharacters>=parseInt(charLim)){
-      				 	 event.preventDefault();
-					}
-      				});
-    				ed.onClick.add(function(ed, e) {
-//    					tinymce.@org.ednovo.gooru.client.ui.TinyMCE::hideTinyMceToolBar(Ljava/lang/String;)(ed.id);
-  					});
-  					ed.onKeyUp.add(function(ed, event) {
-      				var content=this.getContent({format : 'raw'});
-      				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
-      				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
+                      }else if(noOfCharacters>=parseInt(charLim)){
+                            event.preventDefault();
+                    }
+                      });
+                    ed.onClick.add(function(ed, e) {
+                        tinymce.@org.ednovo.gooru.client.ui.TinyMCE::hideTinyMceToolBar(Ljava/lang/String;)(ed.id);
+                      });
+                      ed.onKeyUp.add(function(ed, event) {
+                      var content=this.getContent({format : 'raw'});
+                      var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
+                      var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
 
-	      				if(event.keyCode==8 || event.keyCode==46) {
+                          if(event.keyCode==8 || event.keyCode==46) {
 
-					  	   }else if(noOfCharacters>parseInt(charLim)){
-						 	 event.preventDefault();
-						}
-      				});
-      				ed.onKeyDown.add(function(ed, event) {
-	      				var keystroke = String.fromCharCode(event.keyCode).toLowerCase();
-						var content=this.getContent({format : 'raw'});
-	      				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
-	      				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
-		      				if(noOfCharacters>parseInt(charLim)){
-			      				if(event.keyCode==8 || event.keyCode==46) {
-									event.returnValue = true; // enable backspace and delete Key
-					  	     	}else if (event.ctrlKey && (keystroke == 'c' || keystroke == 'v')) {
-									event.preventDefault();
-									event.returnValue = false; // disable Ctrl+C
-								}
-							}
+                             }else if(noOfCharacters>parseInt(charLim)){
+                              event.preventDefault();
+                        }
+                      });
+                      ed.onKeyDown.add(function(ed, event) {
+                          var keystroke = String.fromCharCode(event.keyCode).toLowerCase();
+                        var content=this.getContent({format : 'raw'});
+                          var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
+                          var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
+                              if(noOfCharacters>parseInt(charLim)){
+                                  if(event.keyCode==8 || event.keyCode==46) {
+                                    event.returnValue = true; // enable backspace and delete Key
+                                   }else if (event.ctrlKey && (keystroke == 'c' || keystroke == 'v')) {
+                                    event.preventDefault();
+                                    event.returnValue = false; // disable Ctrl+C
+                                }
+                            }
 
-							if(event.keyCode==13) {
-				  	     		event.preventDefault();
-								event.returnValue = false; // disable Enter Key
-				  	     	}
-      				});
-				}
-		});
-	}-*/;
+                            if(event.keyCode==13) {
+                                   event.preventDefault();
+                                event.returnValue = false; // disable Enter Key
+                               }
+                      });
+                }
+        });
+    }-*/;
 
-	private boolean eventTargetsPopup(NativeEvent event) {
-	  EventTarget target = event.getEventTarget();
-	  if (Element.is(target)) {
-	    return getElement().isOrHasChild(Element.as(target));
-	  }
-	  return false;
-	}
-	public native void hideToolBar(String id)/*-{
-   	}-*/;
-	public void hideTinyMceToolBar(String id){
-		AppClientFactory.printInfoLogger("hideTinyMceToolBar 11");
-	}
-	public void hideTinyMceToolBar(String id,boolean toolBarButtonVisible){
-		AppClientFactory.printInfoLogger("hideTinyMceToolBar");
-	}
-	public void showTinyMceToolBar(){
-		if (Document.get().getElementById(id + "_external") != null){
-			Document.get().getElementById(id+"_external").setAttribute("style", "display:block");
-			int parentWidth = Document.get().getElementById(id+"_external").getParentElement().getOffsetWidth();
-			this.parentWidth = parentWidth;
-			setToolBarPosition(id, parentWidth);
-			setFoucs(id);
-		}
-		if (Document.get().getElementById(id + "_external_close") != null){
-			Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
-		}
-	}
-	public void hideAllButtons(){
-		if(!lastButtonId.equalsIgnoreCase("") && Document.get().getElementById(lastButtonId+BUTTONID) != null){
-		}
-	}
-	public void addStyleToBody(){
-		 IFrameElement ele= Document.get().getElementById(id+"_ifr").cast();
-		 Document document = IFrameElement.as(ele).getContentDocument();
+    private boolean eventTargetsPopup(NativeEvent event) {
+      EventTarget target = event.getEventTarget();
+      if (Element.is(target)) {
+        return getElement().isOrHasChild(Element.as(target));
+      }
+      return false;
+    }
+    public native void hideToolBar(String id)/*-{
+       $wnd.tinyMCE.getInstanceById(id).toolbarElement.style.display = 'none';
+       }-*/;
+    public void hideTinyMceToolBar(String id){
+        System.out.println("Hide TinyMCE tool bar wit id : "+id);
+           hideAllButtons();
+           if (Document.get().getElementById(id + "_external_close") != null)
+               Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
+//           try{
+//               if (id!=null && Document.get().getElementById(id+"_external") != null){
+//				   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
+//				   Document.get().getElementById(id+"_external").getStyle().setDisplay(Display.NONE);
+//            	   System.out.println("Hide TinyMCE tool bar wit id -- Not null");
+            	   showTinyMceToolBar(id);
+//               }
+//           }catch(Exception e){
+//               AppClientFactory.printSevereLogger("TinyMCE hideTinyMceToolBar:::"+e);
+//           }
+           lastButtonId=id;
+    }
+    public void hideTinyMceToolBar(String id,boolean toolBarButtonVisible){
+    	System.out.println("Hide TinyMCE tool bar wit id and boolean");
+        try{
+            if (id!=null  && Document.get().getElementById(id+"_external") != null){
+                 Document.get().getElementById(id+"_external").getStyle().setDisplay(Display.NONE);
+                 Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
+            }
+        }catch(Exception e){
+             AppClientFactory.printSevereLogger("TinyMCE hideTinyMceToolBar toolBarButtonVisible:::"+e);
+        }
+
+    }
+    public void showTinyMceToolBar(String id){
+    	parentWidth = Document.get().getElementById(id+"_external").getParentElement().getOffsetWidth();
+    	setToolBarPosition(id, parentWidth);
+    	setFoucs(id);
+    }
+    public void hideAllButtons(){
+        if(!lastButtonId.equalsIgnoreCase("") && Document.get().getElementById(lastButtonId+BUTTONID) != null){
+            Document.get().getElementById(lastButtonId+BUTTONID).getStyle().setDisplay(Display.NONE);
+        }
+    }
+    public void addStyleToBody(){
+         IFrameElement ele= Document.get().getElementById(id+"_ifr").cast();
+         Document document = IFrameElement.as(ele).getContentDocument();
          BodyElement body = document.getBody();
          body.addClassName("addBackGroundColor");
-	}
-	public void removeStyleToBody(){
-		 IFrameElement ele= Document.get().getElementById(id+"_ifr").cast();
-		 Document document = IFrameElement.as(ele).getContentDocument();
-	     BodyElement body = document.getBody();
-	     body.removeClassName("addBackGroundColor");
-	}
-	public int countCharcters(String content,String tinyMceId){
-		AddQuestionResourceView.errorMessageForQuestion.setText("");
-		int charLimit=AddQuestionResourceView.questionCharcterLimit;
-		//This regex is used to get text count with out html tags
-		String noHTMLString = content.replaceAll("\\<.*?>","");
-		if(noHTMLString.length()>=Integer.parseInt(getHiddenValue(tinyMceId))){
-			setErrorMessage(ERROR_MESSAGE,tinyMceId);
-			if(noHTMLString.length()>=charLimit+3)
-			{
-			setContent(tinyMceId,content.substring(0, charLimit+3));
-			}
-		}else{
-			clearErrorMessage(tinyMceId);
-		}
-		return noHTMLString.length();
-	}
+    }
+    public void removeStyleToBody(){
+         IFrameElement ele= Document.get().getElementById(id+"_ifr").cast();
+         Document document = IFrameElement.as(ele).getContentDocument();
+         BodyElement body = document.getBody();
+         body.removeClassName("addBackGroundColor");
+    }
+    public int countCharcters(String content,String tinyMceId){
+        AddQuestionResourceView.errorMessageForQuestion.setText("");
+        int charLimit=AddQuestionResourceView.questionCharcterLimit;
+        //This regex is used to get text count with out html tags
+        String noHTMLString = content.replaceAll("\\<.*?>","");
+        if(noHTMLString.length()>=Integer.parseInt(getHiddenValue(tinyMceId))){
+            setErrorMessage(ERROR_MESSAGE,tinyMceId);
+            if(noHTMLString.length()>=charLimit+3)
+            {
+            setContent(tinyMceId,content.substring(0, charLimit+3));
+            }
+        }else{
+            clearErrorMessage(tinyMceId);
+        }
+        return noHTMLString.length();
+    }
 
-	public void clearErrorMessage(String tinyMceId){
-		try{
-			Document.get().getElementById(tinyMceId+"_message").setInnerText("");
-		}catch(Exception e){
-			AppClientFactory.printSevereLogger("TinyMCE clearErrorMessage:::"+e);
-		}
-	}
-	public void setErrorMessage(String errorMessage,String tinyMceId){
-		try{
-			Document.get().getElementById(tinyMceId+"_message").setInnerText(errorMessage);
-		}catch(Exception e){
-			AppClientFactory.printSevereLogger("TinyMCE setErrorMessage:::"+e);
-		}
-	}
-	public String getHiddenValue(String tinyMceId){
-		try{
-			String charLimit=Document.get().getElementById(tinyMceId).getAttribute("charLimit");
-			return charLimit;
-		}catch(Exception e){
-			return "100";
-		}
-	}
+    public void clearErrorMessage(String tinyMceId){
+        try{
+            Document.get().getElementById(tinyMceId+"_message").setInnerText("");
+        }catch(Exception e){
+            AppClientFactory.printSevereLogger("TinyMCE clearErrorMessage:::"+e);
+        }
+    }
+    public void setErrorMessage(String errorMessage,String tinyMceId){
+        try{
+            Document.get().getElementById(tinyMceId+"_message").setInnerText(errorMessage);
+        }catch(Exception e){
+            AppClientFactory.printSevereLogger("TinyMCE setErrorMessage:::"+e);
+        }
+    }
+    public String getHiddenValue(String tinyMceId){
+        try{
+            String charLimit=Document.get().getElementById(tinyMceId).getAttribute("charLimit");
+            return charLimit;
+        }catch(Exception e){
+            return "100";
+        }
+    }
 
-	public void onKeypereesss(){
-	}
+    public void onKeypereesss(){
+    }
 
 
 }

@@ -227,7 +227,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		/*questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		questionNameTextArea.getElement().setAttribute("maxlength", "500");
 		questionNameTextArea.markAsBlankPanel.setVisible(false);*/
-//		questionNameTextArea.showTinyMceToolBar();
 		questionNameTextAreaContainer.getElement().setId("questionNameTextAreaContainer");
 		explainationTextAreaContainer.getElement().setId("explainationTextAreaContainer");
 		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
@@ -511,7 +510,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		questionNameTextAreaContainer.clear();
 		explainationTextAreaContainer.clear();
 		questionNameTextArea.setCharacterLimit(500);
-		questionNameTextArea.showTinyMceToolBar();
 		explainationTextArea.setCharacterLimit(500);
 		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		questionNameTextArea.getElement().setAttribute("maxlength", "500");
@@ -700,7 +698,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		addExplanationAnc.addStyleName("advancedOptionsTab");
 		addExplanationAnc.removeStyleName("advancedOptionsTabActive");
 		explanationContainer.setVisible(true);
-		explainationTextArea.showTinyMceToolBar();
 	}
 
 	public void resetToHints(){

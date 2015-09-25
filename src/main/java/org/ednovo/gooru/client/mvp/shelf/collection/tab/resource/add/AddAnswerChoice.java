@@ -119,7 +119,6 @@ public class AddAnswerChoice extends Composite implements HasMouseOutHandlers,Ha
 				@Override
 				public void execute() {
 						setRichTextData();
-						answerTextBox.showTinyMceToolBar();
 				}
 	       });
 	}

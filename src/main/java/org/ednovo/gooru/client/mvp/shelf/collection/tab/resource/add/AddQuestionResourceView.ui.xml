@@ -32,10 +32,6 @@
           </g:HTMLPanel>
         </g:HTMLPanel>
          <g:HTMLPanel styleName="{addWebResourceStyle.addQuestionImageButtonContainer}"><g:Anchor styleName="{addWebResourceStyle.advancedOptionsTabs} {addWebResourceStyle.addResourceBottmTitleAlign}" ui:field="addQuestionImg"></g:Anchor></g:HTMLPanel>
-        <!-- <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
-
-        </g:HTMLPanel> -->
-
         <g:HTMLPanel ui:field="addQuestImgContainer">
 
 	    </g:HTMLPanel>
@@ -72,11 +68,12 @@
         <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="explanationContainer">
           <uc:HTMLEventPanel styleName="{addWebResourceStyle.eHeader}" ui:field="eHearderIconExplanation"></uc:HTMLEventPanel>
           <g:Label styleName="{addWebResourceStyle.addResourceFormTitle}" ui:field="explanationLabel"></g:Label>
+
           <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputControl} questionTextcontainer">
           <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="500"></tinyMce:TinyMCE>
           <g:Label styleName="{addWebResourceStyle.charLimitExplanationStyle}" ui:field="charLimitExplanation"></g:Label>
           <g:Label ui:field="explainationErrorLbl"></g:Label>
-           <!--  <g:TextArea ui:field="explainationTextArea" styleName="{addWebResourceStyle.addResourceFormTextarea}"></g:TextArea> -->
+
           </g:HTMLPanel>
         </g:FlowPanel>
          <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForExplanation"></g:Label>

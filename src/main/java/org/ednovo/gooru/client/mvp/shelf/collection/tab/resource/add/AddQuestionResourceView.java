@@ -1410,8 +1410,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		addExplanationLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
 		addExplanationLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabActive());
 		explanationContainer.setVisible(true);
-		explainationTextArea.showTinyMceToolBar();
-
 	}
 
 	@UiHandler("addDepthOfKnowledgeLabel")
@@ -2536,52 +2534,45 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionNameTextArea.getElement().setAttribute("maxlength", "500");
 			questionCharcterLimit=500;
-			questionNameTextArea.showTinyMceToolBar();
 		}else if(tabType.equals("MA")){
 			questionTypeHeader.setText(i18n.GL0351());
 			questionTypeText.setText(i18n.GL0352());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionNameTextArea.getElement().setAttribute("maxlength", "500");
 			questionCharcterLimit=500;
-			questionNameTextArea.showTinyMceToolBar();
 		}else if(tabType.equals("T/F")){
 			questionTypeHeader.setText(i18n.GL0353());
 			questionTypeText.setText(i18n.GL0354());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionNameTextArea.getElement().setAttribute("maxlength", "500");
 			questionCharcterLimit=500;
-			questionNameTextArea.showTinyMceToolBar();
 		}else if(tabType.equals("FIB")){
 			questionTypeHeader.setText(i18n.GL0355());
 			questionTypeText.setText(i18n.GL0356());
 			questionNameTextArea.getElement().setAttribute("maxlength", "500");
 			questionCharcterLimit=500;
-			questionNameTextArea.showTinyMceToolBar();
 		}else if(tabType.equals("OE")){
 			questionTypeHeader.setText(i18n.GL0357());
 			questionTypeText.setText(i18n.GL0358());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionNameTextArea.getElement().setAttribute("maxlength", "500");
 			questionCharcterLimit=500;
-			questionNameTextArea.showTinyMceToolBar();
 		}else if(tabType.equals("HT_HL")){
 			questionTypeHeader.setText(i18n.GL3224_1());
 			questionTypeText.setText(i18n.GL3213_1());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionCharcterLimit=5000;
-			questionNameTextArea.showTinyMceToolBar();
 		}else if(tabType.equals("HT_RO")){
 			questionTypeHeader.setText(i18n.GL4009());
 			questionTypeText.setText(i18n.GL4010());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 			questionCharcterLimit=5000;
-			questionNameTextArea.showTinyMceToolBar();
 		}
 
 		questionNameTextArea.setCharacterLimit(questionCharcterLimit);
 		questionNameTextArea.getElement().setAttribute("maxlength", String.valueOf(questionCharcterLimit));
 		questionNameTextArea.tinyMceTextArea.getElement().setAttribute("charLimit",String.valueOf(questionCharcterLimit));
-//		questionNameTextArea.showTinyMceToolBar();
+
 		String value = StringUtil.generateMessage(i18n.GL2103(),String.valueOf(questionCharcterLimit));
 		charLimitLbl.setText(value);
 		StringUtil.setAttributes(charLimitLbl.getElement(), "charLimitLbl", value, value);
@@ -2605,7 +2596,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			tinyMce.showTinyMceToolBar();
+//			tinyMce.showTinyMceToolBar();
 		}
 
 	}
