@@ -43,15 +43,10 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -71,10 +66,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,toggleButton,deletePnl;
+	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,/*toggleButton,*/deletePnl;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview,lnkDeleteButton;
-	@UiField HTMLEventPanel popupPanelDropDwn,copyPopupPanel;
-	@UiField Label copyLbl,moveLbl,myCollDelLbl;
+	//@UiField HTMLEventPanel /*popupPanelDropDwn,*/copyPopupPanel;
+	@UiField HTMLEventPanel copyLbl,moveLbl,myCollDelLbl;
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
@@ -125,9 +120,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		myCollDelLbl.addClickHandler(new DeleteContentData()); 
 		
 		lnkPreview.setVisible(false);
-		toggleButton.setVisible(false);
-		copyLbl.setText(i18n.GL0827());
-		moveLbl.setText(i18n.GL1261());
+		//toggleButton.setVisible(false);
+		copyLbl.setTitle(i18n.GL0827());
+		moveLbl.setTitle(i18n.GL1261());
 		
 	/*	Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
@@ -358,14 +353,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}*/
 			if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 				lnkPreview.setVisible(true);
-				toggleButton.setVisible(true);
+				//toggleButton.setVisible(true);
 				deletePnl.setVisible(false);
 				copyLbl.setVisible(true);
 				disableCollabaratorOptions(isCollaborator);
 //				moveLbl.setVisible(true);
 			}else{
 				lnkPreview.setVisible(false);
-				toggleButton.setVisible(true);
+				//toggleButton.setVisible(true);
 				boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
 				copyLbl.setVisible(isVisible);
 				moveLbl.setVisible(false);
@@ -383,7 +378,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkshare.setVisible(isVisible);
 		}
-		toggleButton.setVisible(isVisible);
+		//toggleButton.setVisible(isVisible);
 		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);
 		}
@@ -791,7 +786,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 	
 	
-	public void hideDropDown(NativePreviewEvent event){
+	/*public void hideDropDown(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
@@ -806,7 +801,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			return copyPopupPanel.getElement().isOrHasChild(Element.as(target))||copyPopupPanel.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
-	}
+	}*/
 	
 
 	public void removeActiveStyle() {
@@ -826,7 +821,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		this.isCollaborator=isHide;
 	}
 	public void disableButtons(boolean isTrue){
-		toggleButton.setVisible(isTrue);
+		//toggleButton.setVisible(isTrue);
 		lnkPreview.setVisible(isTrue);
 	}
 }
