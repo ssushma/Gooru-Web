@@ -215,7 +215,7 @@ width: 100%;
 .addResourceFormAnswerContainer {
 	float: left;
 	width:100%;
-	margin: 29px 0px 0px 0px;
+	margin: 7px 0px 0px 0px;
 }
 .addResourceFormAnswerContainerAlign {
 	margin: 0px 0px 0px 0px;
@@ -1107,14 +1107,13 @@ vertical-align: middle;
 }
 .charLimitStyle{
 	display: inline-block;
+	margin-left: 10px;
 	color: #999;
-	float: right;
-  	margin-top: 5px;
 }
 .charLimitExplanationStyle{
+	display: inline-flex;
 	color: #999;
-	float: right;
-  	margin-top: 5px;
+	margin-left: 10px;
 }
 .hintsErrorValidation{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1208,5 +1207,6 @@ vertical-align: middle;
 }
 
 .addResourceContainer{
-	float: right;
+	margin-left: 398px;
+	float: left;
 }
