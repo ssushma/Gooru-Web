@@ -20,21 +20,19 @@
         <g:HTMLPanel>
           <g:HTMLPanel  styleName="{addWebResourceStyle.questionTextContainerStyle}">
          	 <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitle}" ui:field="questionText"></g:HTMLPanel>
-
+         	 <g:Label styleName="{addWebResourceStyle.charLimitStyle}" ui:field="charLimitLbl"></g:Label>
          	  <!-- <g:Anchor styleName="{addWebResourceStyle.markAsBlankLabel}" ui:field="makeBlank" >Mark as a blank</g:Anchor>  -->
          	<!--  <g:Button styleName="{addWebResourceStyle.tinyMceToolBarButton}" ui:field="questionNameTextAreaToolBarButton">A</g:Button> -->
           </g:HTMLPanel>
           <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputControl} questionTextcontainer">
           	<tinyMce:TinyMCE width="1" height="1" ui:field="questionNameTextArea" characterLimit="500"></tinyMce:TinyMCE>
-          	<g:Label styleName="{addWebResourceStyle.charLimitStyle}" ui:field="charLimitLbl"></g:Label>
-          	<g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForQuestion"></g:Label>
           	<g:Label ui:field="questionNameErrorLbl"></g:Label>
           </g:HTMLPanel>
         </g:HTMLPanel>
          <g:HTMLPanel styleName="{addWebResourceStyle.addQuestionImageButtonContainer}"><g:Anchor styleName="{addWebResourceStyle.advancedOptionsTabs} {addWebResourceStyle.addResourceBottmTitleAlign}" ui:field="addQuestionImg"></g:Anchor></g:HTMLPanel>
-        <!-- <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
-
-        </g:HTMLPanel> -->
+        <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
+           <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForQuestion"></g:Label>
+        </g:HTMLPanel>
 
         <g:HTMLPanel ui:field="addQuestImgContainer">
 
@@ -72,9 +70,9 @@
         <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="explanationContainer">
           <uc:HTMLEventPanel styleName="{addWebResourceStyle.eHeader}" ui:field="eHearderIconExplanation"></uc:HTMLEventPanel>
           <g:Label styleName="{addWebResourceStyle.addResourceFormTitle}" ui:field="explanationLabel"></g:Label>
+          <g:Label styleName="{addWebResourceStyle.charLimitExplanationStyle}" ui:field="charLimitExplanation"></g:Label>
           <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputControl} questionTextcontainer">
           <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="500"></tinyMce:TinyMCE>
-          <g:Label styleName="{addWebResourceStyle.charLimitExplanationStyle}" ui:field="charLimitExplanation"></g:Label>
           <g:Label ui:field="explainationErrorLbl"></g:Label>
            <!--  <g:TextArea ui:field="explainationTextArea" styleName="{addWebResourceStyle.addResourceFormTextarea}"></g:TextArea> -->
           </g:HTMLPanel>
@@ -322,9 +320,9 @@
      	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
 
       </g:HTMLPanel>
-
+     
      </g:HTMLPanel>
-
+     
       <g:Label  styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="loadingTextLbl"></g:Label>
       </g:FlowPanel>
   </g:FlowPanel>

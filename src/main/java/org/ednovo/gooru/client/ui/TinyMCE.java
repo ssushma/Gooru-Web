@@ -49,7 +49,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiConstructor;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -71,9 +74,6 @@ public class TinyMCE extends Composite{
     private int characterLimit=500;
     private MessageProperties i18n=GWT.create(MessageProperties.class);
     private String ERROR_MESSAGE=i18n.GL0143();
-
-    private int parentWidth=0;
-
     public  class OpenRichTextToolBar implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -100,7 +100,9 @@ public class TinyMCE extends Composite{
         tinyMceTextArea.addStyleName("ta");
         tinyMceTextArea.getElement().setAttribute("id", id);
         panel.add(tinyMceTextArea);
-//        timymceWrapper.add(toolBarOpenButton);
+
+        timymceWrapper.add(toolBarOpenButton);
+        timymceWrapper.add(markAsBlankPanel);
 
         toolBarOpenButton.setVisible(false);
         markAsBlankPanel.setVisible(false);
@@ -110,15 +112,13 @@ public class TinyMCE extends Composite{
         timymceWrapper.add(markAsBlankPanel);
         timymceWrapper.add(errorMessageLabel);
         initWidget(timymceWrapper);
-//        nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
-//        public void onPreviewNativeEvent(NativePreviewEvent event) {
-////        	hidePopup(event);
-//          }
-//        });
+        nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
+        public void onPreviewNativeEvent(NativePreviewEvent event) {
+        	hidePopup(event);
+          }
+        });
         this.addStyleName("tinyMCETable");
-
     }
-
     @UiConstructor
     public TinyMCE(Integer characterLimit) {
     	this();
@@ -133,7 +133,13 @@ public class TinyMCE extends Composite{
     	 this.addStyleName("tinyMCETable");
     }
     public void hidePopup(NativePreviewEvent event){
-
+    	if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		hideTinyMceToolBar(id,true);
+        	}
+    	}
     }
 
     /**
@@ -179,8 +185,7 @@ public class TinyMCE extends Composite{
 				setWidth("100%");
 				try
 				{
-					setTextAreaToTinyMCE(id);
-					showTinyMceToolBar();
+                setTextAreaToTinyMCE(id);
 				}
 				catch(JavaScriptException ex)
 				{
@@ -356,13 +361,10 @@ public class TinyMCE extends Composite{
     	setFoucs(id);
     }
     protected void setToolBarPosition(){
-    	setToolBarPosition(id, parentWidth);
+    	setToolBarPosition(id);
     }
-
-
-    protected native void setToolBarPosition(String id, int parentWidth) /*-{
-		$wnd.tinyMCE.DOM.setStyle($wnd.tinyMCE.DOM.get(id+'_external'),'top',0-$wnd.tinyMCE.DOM.getRect(id+'_tblext').h-2);
-		$wnd.tinyMCE.DOM.setStyle($wnd.tinyMCE.DOM.get(id+'_external'),'left',parentWidth - $wnd.tinyMCE.DOM.getRect(id+'_tblext').w);
+    protected native void setToolBarPosition(String id) /*-{
+		$wnd.tinyMCE.DOM.setStyle($wnd.tinyMCE.DOM.get(id+'_external'),'top',0-$wnd.tinyMCE.DOM.getRect(id+'_tblext').h-1);
 	}-*/;
     protected void addClickEventToCloseButton(){
     	addClickEventToCloseButton(id);
@@ -380,12 +382,12 @@ public class TinyMCE extends Composite{
 		    editor_selector : "textarea#"+id,
 		    theme : "advanced",
 		    theme_advanced_path : false,
-		    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,sub,sup,separator,forecolor,backcolor,separator,hr,link,unlink,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,numlist,bullist,outdent,indent,separator,charmap,asciimath,asciimathcharmap,fillintheblank, separator, removeformat",
-		    theme_advanced_buttons2 : "",
+		    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,sub,sup,separator,forecolor,backcolor,separator,hr,link,unlink",
+		    theme_advanced_buttons2 : "justifyleft,justifycenter,justifyright,justifyfull,separator,numlist,bullist,outdent,indent,separator,charmap,asciimath,asciimathcharmap,fillintheblank",
 		    theme_advanced_buttons3 : "",
 		    theme_advanced_fonts : "Arial=arial,helvetica,sans-serif,Courier New=courier new,courier,monospace,Georgia=georgia,times new roman,times,serif,Tahoma=tahoma,arial,helvetica,sans-serif,Times=times new roman,times,serif,Verdana=verdana,arial,helvetica,sans-serif",
 		    theme_advanced_toolbar_location : "external",
-		    theme_advanced_toolbar_align : "right",
+		    theme_advanced_toolbar_align : "left",
 		    theme_advanced_statusbar_location : "none",
 		    plugins : 'asciimath,asciisvg,table,inlinepopups,fillintheblank',
 		  	     setup : function (ed) {
@@ -400,7 +402,7 @@ public class TinyMCE extends Composite{
 					}
       				});
     				ed.onClick.add(function(ed, e) {
-//    					tinymce.@org.ednovo.gooru.client.ui.TinyMCE::hideTinyMceToolBar(Ljava/lang/String;)(ed.id);
+    					tinymce.@org.ednovo.gooru.client.ui.TinyMCE::hideTinyMceToolBar(Ljava/lang/String;)(ed.id);
   					});
   					ed.onKeyUp.add(function(ed, event) {
       				var content=this.getContent({format : 'raw'});
@@ -444,27 +446,40 @@ public class TinyMCE extends Composite{
 	  return false;
 	}
 	public native void hideToolBar(String id)/*-{
+	   $wnd.tinyMCE.getInstanceById(id).toolbarElement.style.display = 'none';
    	}-*/;
 	public void hideTinyMceToolBar(String id){
-		AppClientFactory.printInfoLogger("hideTinyMceToolBar 11");
+		   hideAllButtons();
+		   try{
+			   if (id!=null && Document.get().getElementById(id+"_external") != null){
+				   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.BLOCK);
+				   Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
+			   }
+		   }catch(Exception e){
+			   AppClientFactory.printSevereLogger("TinyMCE hideTinyMceToolBar:::"+e);
+		   }
+		   lastButtonId=id;
 	}
 	public void hideTinyMceToolBar(String id,boolean toolBarButtonVisible){
-		AppClientFactory.printInfoLogger("hideTinyMceToolBar");
+		try{
+			if (id!=null  && Document.get().getElementById(id+"_external") != null){
+				 Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
+				 Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
+			}
+		}catch(Exception e){
+			 AppClientFactory.printSevereLogger("TinyMCE hideTinyMceToolBar toolBarButtonVisible:::"+e);
+		}
+
 	}
 	public void showTinyMceToolBar(){
-		if (Document.get().getElementById(id + "_external") != null){
-			Document.get().getElementById(id+"_external").setAttribute("style", "display:block");
-			int parentWidth = Document.get().getElementById(id+"_external").getParentElement().getOffsetWidth();
-			this.parentWidth = parentWidth;
-			setToolBarPosition(id, parentWidth);
-			setFoucs(id);
-		}
-		if (Document.get().getElementById(id + "_external_close") != null){
-			Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
-		}
+	   Document.get().getElementById(id+"_external").setAttribute("style", "display:block");
+	   setToolBarPosition(id);
+	   setFoucs(id);
+	   addClickEventToCloseButton(id);
 	}
 	public void hideAllButtons(){
 		if(!lastButtonId.equalsIgnoreCase("") && Document.get().getElementById(lastButtonId+BUTTONID) != null){
+			Document.get().getElementById(lastButtonId+BUTTONID).getStyle().setDisplay(Display.NONE);
 		}
 	}
 	public void addStyleToBody(){
