@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.contentvisibility.ContentVisibilityChildView;
 import org.ednovo.gooru.client.mvp.gshelf.util.ClassListWidget;
 
 import com.google.gwt.core.client.GWT;
@@ -119,7 +120,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 							classPanel.setVisible(false);
 							contentVisibilityPanel.setVisible(true);
 							contentVisibilityPanel.clear();
-							ContentVisibilityWidget classListWidget = new ContentVisibilityWidget(classObj,courseId);
+							ContentVisibilityChildView classListWidget = new ContentVisibilityChildView(classObj,courseId);
 							classListWidget.getAnrAllClasses().addClickHandler(new ClickHandler() {
 								@Override
 								public void onClick(ClickEvent event) {

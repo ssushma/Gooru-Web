@@ -634,6 +634,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_CLASS_COURSE_UNIT_LIST("/v3/class/{0}/course/{1}/unit?"),
 
 	V3_GET_CLASS_COURSE_UNIT_LESSON_LIST("/v3/class/{0}/course/{1}/unit/{2}/lesson?"),
+	
+	V3_GET_CLASS_COURSE_UNIT_LESSON_COLLECTION_LIST("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}?"),
 
 	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
 

@@ -2,14 +2,14 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style src=""></ui:style>
     <panel:HTMLEventPanel ui:field="rowItem">
-		<div class="tableRow">
-	    	<div class="tableCell"><g:Label styleName="unitLessonDetailsTab" ui:field="lblContentName"></g:Label></div>
+		<g:HTMLPanel styleName="tableRow">
+	    	<g:HTMLPanel styleName="tableCell"><g:Label styleName="unitLessonDetailsTab" ui:field="lblContentName"></g:Label></g:HTMLPanel>
 			<panel:HTMLEventPanel styleName="tableCell" ui:field="rightRow">
-			    <div class="statusTab">
+			    <g:HTMLPanel styleName="statusTab">
 			        <g:Anchor ui:field="anrSelect">Select All</g:Anchor>
 			    	<panel:HTMLEventPanel styleName="dottedButton" ui:field="spanDot"></panel:HTMLEventPanel>
-				</div>
+				</g:HTMLPanel>
 			</panel:HTMLEventPanel>
-		</div>
+		</g:HTMLPanel>
 	</panel:HTMLEventPanel>
 </ui:UiBinder>
