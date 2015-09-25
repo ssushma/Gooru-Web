@@ -2271,4 +2271,37 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return savedFileName;
 	}
+
+	@Override
+	public ArrayList<PlanProgressDo> getContentVisibilityData(String classpageId, String courseId, String unitId, String lessonId) throws GwtException, ServerDownException {
+		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		String sessionToken=getLoggedInSessionToken();
+		String endPoint = getRestEndPoint();
+		if(lessonId==null&&unitId==null) {
+			url = UrlGenerator.generateUrl(endPoint, UrlToken.V3_GET_CLASS_COURSE_UNIT_LIST, classpageId, courseId);
+		} else if(lessonId==null&&unitId!=null) {
+			url = UrlGenerator.generateUrl(endPoint, UrlToken.V3_GET_CLASS_COURSE_UNIT_LESSON_LIST, classpageId, courseId, unitId);
+		} else if(lessonId!=null&&unitId!=null) {
+			url = UrlGenerator.generateUrl(endPoint, UrlToken.V3_GET_CLASS_COURSE_UNIT_LESSON_COLLECTION_LIST, classpageId, courseId, unitId, lessonId);
+		}
+		
+		getLogger().info(url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		JSONArray resourceObj;
+		try {
+			if(jsonRep!=null && jsonRep.getSize()!=1){
+				resourceObj = jsonRep.getJsonArray();
+				if(resourceObj!=null){
+					dataList = JsonDeserializer.deserialize(resourceObj.toString(), new TypeReference<ArrayList<PlanProgressDo>>() {});
+				}
+			}
+		}catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return dataList;
+	}
 }

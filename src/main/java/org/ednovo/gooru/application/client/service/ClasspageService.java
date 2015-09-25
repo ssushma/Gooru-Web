@@ -552,4 +552,6 @@ public interface ClasspageService extends BaseService {
 	
 	public String getXlsxReport(String tableData, String fileName) throws GwtException, ServerDownException;
 
+	public ArrayList<PlanProgressDo> getContentVisibilityData(String classpageId, String courseId, String unitId, String lessonId) throws GwtException, ServerDownException;
+
 }

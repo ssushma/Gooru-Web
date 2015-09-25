@@ -48,11 +48,10 @@
    <g:FlowPanel styleName="containerPadding" ui:field="explanationContainer">
           <HTMLEventPanel:HTMLEventPanel styleName="eHeader" ui:field="eHearderIconExplanation"></HTMLEventPanel:HTMLEventPanel>
           <g:Label styleName="containerTitle" ui:field="explanationLabel"></g:Label>
-
           <g:HTMLPanel styleName="textBoxContainer questionTextcontainer">
-				<g:HTMLPanel ui:field="explainationTextAreaContainer"></g:HTMLPanel>
-				<g:Label styleName="charLimitExplanationStyle" ui:field="charLimitExplanation"></g:Label>
-				<g:Label ui:field="explainationErrorLbl"></g:Label>
+               	<g:HTMLPanel ui:field="explainationTextAreaContainer"></g:HTMLPanel>
+               	<g:Label styleName="charLimitExplanationStyle" ui:field="charLimitExplanation"></g:Label>
+          		<g:Label ui:field="explainationErrorLbl"></g:Label>
           </g:HTMLPanel>
     </g:FlowPanel>
      <g:Label styleName="errorText errorMessage" ui:field="errorMessageForExplanation"></g:Label>
