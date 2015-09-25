@@ -475,6 +475,8 @@ public class TinyMCE extends Composite{
 	   setToolBarPosition(id);
 	   setFoucs(id);
 	   addClickEventToCloseButton(id);
+	   if (Document.get().getElementById(id + "_external_close") != null)
+		   Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
 	}
 	public void hideAllButtons(){
 		if(!lastButtonId.equalsIgnoreCase("") && Document.get().getElementById(lastButtonId+BUTTONID) != null){
