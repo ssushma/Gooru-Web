@@ -551,9 +551,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					HashMap<String,String> params = new HashMap<String,String>();
 					params.put("o1", result.get("gooruOid"));
 					params.put("view", "Course");
-					//getView().hidePopup();
-					AppClientFactory.fireEvent(new LoadMyContentEvent("Course"));
-					shelfMainPresenter.callWorkspaceApi();
+					shelfMainPresenter.setVersion();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 				}else if(result.get("status").equalsIgnoreCase("inprogress")){
 					Timer timer = new Timer() {
@@ -569,6 +567,17 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					new AlertForImageUpload("Oops", "Something went wrong, plewase try again.");
 					//getView().hidePopup();
 				}
+			}
+		});
+	}
+	@Override
+	public void isStudentDataAvailable(final String type, final String o1CourseId,final  String o2UnitId, final String o3LessonId, final String assessmentCollectionId) {
+		AppClientFactory.getInjector().getfolderService().isTiedWithStudentData(o1CourseId, new SimpleAsyncCallback<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean result) {
+				getView().isCourseDeleteStatus(result, type,  o1CourseId,  o2UnitId,  o3LessonId,  assessmentCollectionId);
+				
 			}
 		});
 	}

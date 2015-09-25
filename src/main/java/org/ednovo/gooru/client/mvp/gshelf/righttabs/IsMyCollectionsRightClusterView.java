@@ -81,4 +81,6 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	public void setIsCollaboratorValue(boolean isHide);
 	
 	public void disableButtons(boolean isTrue);
+	
+	public void isCourseDeleteStatus(Boolean status, String type, String o1CourseId, String o2UnitId, String o3LessonId, String assessmentCollectionId);
 }
