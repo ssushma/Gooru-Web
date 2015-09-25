@@ -79,6 +79,8 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void disableCopyPopupTabs(boolean isVisible, String copyType);
 	
-	public void copyCourse(String gooruOid);   
+	public void copyCourse(String gooruOid);
+	
+	public void isStudentDataAvailable(String type, String o1CourseId, String o2UnitId, String o3LessonId, String assessmentCollectionId);   
 	
 }

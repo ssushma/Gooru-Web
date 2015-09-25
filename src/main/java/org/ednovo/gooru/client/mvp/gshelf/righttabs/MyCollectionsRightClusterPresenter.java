@@ -570,5 +570,16 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			}
 		});
 	}
+	@Override
+	public void isStudentDataAvailable(final String type, final String o1CourseId,final  String o2UnitId, final String o3LessonId, final String assessmentCollectionId) {
+		AppClientFactory.getInjector().getfolderService().isTiedWithStudentData(o1CourseId, new SimpleAsyncCallback<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean result) {
+				getView().isCourseDeleteStatus(result, type,  o1CourseId,  o2UnitId,  o3LessonId,  assessmentCollectionId);
+				
+			}
+		});
+	}
 	
 }
