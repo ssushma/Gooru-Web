@@ -176,6 +176,8 @@ public class ProfileTopicListView extends Composite{
 
 	private static final String  ASSESSMENT_URL = "assessment/url";
 
+	private static final String LTI="illuminateed.com";
+	
 	private static final String  COLLECTION = "collection";
 
 	private String libraryGooruOid=null;
@@ -619,7 +621,11 @@ public class ProfileTopicListView extends Composite{
 
 									@Override
 									public void onClick(ClickEvent event) {
-										Window.open(conceptDo.getUrl(), "", "");
+										if(conceptDo.getUrl().contains(LTI)){
+											Window.open(StringUtil.getLTIAssessmentUrl(conceptDo.getUrl()), "", "");
+										}else{
+											Window.open(conceptDo.getUrl(), "", "");
+										}
 									}
 								});
 								showAssessmentButton(true);

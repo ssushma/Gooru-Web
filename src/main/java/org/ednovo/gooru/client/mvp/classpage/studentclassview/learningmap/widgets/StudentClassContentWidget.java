@@ -9,6 +9,7 @@ import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,6 +39,8 @@ public class StudentClassContentWidget extends Composite {
 	private final String DEFAULT_ASSESSMENT_IMAGE = "../images/default-assessment-image -160x120.png";
 
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
+	
+	private static final String LTI="illuminateed.com";
 	
 	private static StudentClassContentWidgetUiBinder uiBinder = GWT.create(StudentClassContentWidgetUiBinder.class);
 	
@@ -150,7 +153,12 @@ public class StudentClassContentWidget extends Composite {
 				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 			} else {
 				if(url!=null&&!url.isEmpty()) {
-					Window.open(url, "_blank", "");
+					if(url.contains(LTI)){
+						Window.open(StringUtil.getLTIAssessmentUrl(url), "", "");
+					}else{
+						Window.open(url, "_blank", "");
+					}
+					
 				}
 			}
 		}
