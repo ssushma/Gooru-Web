@@ -110,5 +110,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 
 	void jobCheck(String result, AsyncCallback<Map<String, String>> callback);
 
+	void isTiedWithStudentData(String o1CourseId, AsyncCallback<Boolean> callback);
+
 
 }

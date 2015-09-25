@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.FolderInfoWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
+import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.DeleteContentPopup;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -210,31 +211,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 */
 	public void setBreadCrumbs(String title, String type) {
 		getUiHandlers().setViewTitleWthicon(title,type);
-
-		/*if(COURSE.equalsIgnoreCase(type)){
-			pnlBreadCrumbMain.clear();
-			pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3347():title, type,"courseFolderCloseIcon"));
-		}else if(UNIT.equalsIgnoreCase(type)){
-			if(pnlBreadCrumbMain.getWidgetCount()<2){
-				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3364():title, type,"unitFolderCloseIcon"));
-			}else{
-				getBreadCrumbs(title,type,2);
-			}
-		}else if(LESSON.equalsIgnoreCase(type)){
-			if(pnlBreadCrumbMain.getWidgetCount()<3){
-				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3365():title, type,"lessonFolderCloseIcon"));
-			}else{
-				getBreadCrumbs(title,type,3); 
-			}
-		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
-			if(pnlBreadCrumbMain.getWidgetCount()<4){
-				pnlBreadCrumbMain.add(new BreadcrumbItem((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
-					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():
-					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type,type.contains(ASSESSMENT)?"breadcrumbsAssessmentIcon":"breadcrumbsCollectionIcon"));
-			}else{
-				getBreadCrumbs(title,type,4); 
-			}
-		}*/
 	}
 	
 	/**
@@ -572,7 +548,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
 				getUiHandlers().enableAddButton();
 			}else if((COURSE.equalsIgnoreCase(currentTypeView))){
-				System.out.println("folderObj.getGooruOid():"+folderObj.getGooruOid());
 				getUiHandlers().copyCourse(folderObj.getGooruOid());
 			}
 		}
@@ -707,7 +682,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				getUiHandlers().isAssignedToClassPage(currentTypeView,o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
 			}
 		}else{
-			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+			if(COURSE.equalsIgnoreCase(currentTypeView)){
+				getUiHandlers().isStudentDataAvailable(currentTypeView,o1CourseId,o2UnitId, o3LessonId,assessmentCollectionId);
+			}else{
+				invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+			}
 		}
 	}
 	
@@ -823,5 +802,15 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	public void disableButtons(boolean isTrue){
 		//toggleButton.setVisible(isTrue);
 		lnkPreview.setVisible(isTrue);
+	}
+	
+	
+	@Override
+	public void isCourseDeleteStatus(Boolean status, String type, String o1CourseId, String o2UnitId, String o3LessonId, String assessmentCollectionId) {
+		if(!status){
+			invokeDeletePopup(type,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+		}else{
+			new AlertContentUc(i18n.GL0061(),"Sorry this Course is tied with student data, you cannot delete the course");
+		}
 	}
 }
