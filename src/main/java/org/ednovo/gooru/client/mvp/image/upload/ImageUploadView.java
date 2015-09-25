@@ -104,7 +104,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	Anchor imageUploadOnComputerLbl,readThisLbl;
 
 	@UiField
-	FlowPanel imageUploadOnUrlFloPanel,gooruProfileDefaultImagesContainer,displayCromImagePanel1,displayCromImagePanel;
+	FlowPanel imageUploadOnUrlFloPanel,gooruProfileDefaultImagesContainer;
 	@UiField Button okButtonOnUploadGooruImages,cropImage,cropImage1;
 	@UiField Label cancelButtonOnUploadGooruImages;
 
@@ -138,7 +138,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	@UiField
 	ErrorLabelUc urlValidation;
 	@UiField
-	HTMLPanel notWorkingPanel;
+	HTMLPanel notWorkingPanel,displayCromImagePanel1,displayCromImagePanel;
 
 	@UiField Label chooseText,uploadFromComputer,uploadLimitText,notWorkingLblText,
 	uploadFromWebText,imageURLLbl,typeImageurlText,infoUrlUploadText,chooseFromText;
@@ -607,8 +607,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 				displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 			}else if(aspectRatio==1.0f){
-				displayCromImagePanel.getElement().setAttribute("style","min-width: 300px;width:auto;min-height: 300px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-				displayCromImagePanel1.getElement().setAttribute("style","min-width: 300px;width:auto;min-height: 300px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+				displayCromImagePanel.getElement().setAttribute("style","min-width: 100px;width: 250px;min-height: 100px;height: 250px;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
+				displayCromImagePanel1.getElement().setAttribute("style","min-width: 100px;width: 250px;min-height: 100px;height: 250px;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 			}else{
 				displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
 				displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
