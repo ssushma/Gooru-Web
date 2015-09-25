@@ -1,8 +1,11 @@
-package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
+package org.ednovo.gooru.client.mvp.gshelf.coursedetails.contentvisibility;
 
 import java.util.Iterator;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.HighlightContentSpanEvent;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.HighlightContentSpanHandler;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
@@ -25,6 +28,8 @@ public class ContentVisibilityItemWidget extends Composite {
 	@UiField Label lblContentName;
 	@UiField Anchor anrSelect;
 	
+	private String contentType = null, unitId = null, lessonId = null;
+	
 	private static ContentVisibilityItemWidgetUiBinder uiBinder = GWT
 			.create(ContentVisibilityItemWidgetUiBinder.class);
 
@@ -32,12 +37,16 @@ public class ContentVisibilityItemWidget extends Composite {
 			UiBinder<Widget, ContentVisibilityItemWidget> {
 	}
 
-	public ContentVisibilityItemWidget(String contentType, String contentName) {
+	public ContentVisibilityItemWidget(String contentType, String contentName, String unitId, String lessonId) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.contentType = contentType;
+		this.unitId = unitId;
+		this.lessonId = lessonId;
 		setData(contentType, contentName);
 		spanDot.addClickHandler(new SpanDot(contentType));
 		anrSelect.addClickHandler(new AllContentItems());
 		anrSelect.setVisible(false);
+		AppClientFactory.getEventBus().addHandler(HighlightContentSpanEvent.TYPE, highlightContentHandler);
 		if(!"collection".equalsIgnoreCase(contentType)) {
 			rightRow.addMouseOverHandler(new MouseOverShowAnchor());
 			rightRow.addMouseOutHandler(new MouseOverHideAnchor());
@@ -127,31 +136,24 @@ public class ContentVisibilityItemWidget extends Composite {
 		}
 	}
 	
-	public void addParentSpanDots(String contentType) {
-		/*	if("collection".equalsIgnoreCase(contentType)) {
-			ContentVisibilityItemWidget parentWidget1 = (ContentVisibilityItemWidget)rowItem.getParent().getParent();
-			
-			//System.out.println(rowItem.getParent().getParent().getParent().getParent());
-			
-			ContentVisibilityItemWidget parentWidget = (ContentVisibilityItemWidget)parentWidget1.getParent();
-			
-			System.out.println(parentWidget1.getParent());
-			
-			parentWidget.getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
-			ContentVisibilityItemWidget childWidget1 = (ContentVisibilityItemWidget)parentWidget.getRowItem().getParent();
-			System.out.println("parentWidget.getRowItem().getParent() "+parentWidget1.getRowItem().getParent());
-			
-			ContentVisibilityItemWidget childWidget = (ContentVisibilityItemWidget)childWidget1.getRowItem().getParent();
-			System.out.println("childWidget1.getRowItem().getParent() "+childWidget1.getRowItem().getParent());
-			
-			childWidget.getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
-			System.out.println("childWidget "+parentWidget.getStyleName());
-		} else if ("lesson".equalsIgnoreCase(contentType)) {
-			ContentVisibilityItemWidget parentWidget1 = (ContentVisibilityItemWidget)rowItem.getParent();
-			ContentVisibilityItemWidget parentWidget = (ContentVisibilityItemWidget)parentWidget1.getRowItem().getParent();
-			parentWidget.getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
-		}*/
+	public void addParentSpanDots(String contentValue) {
+		if("collection".equalsIgnoreCase(contentType)||"lesson".equalsIgnoreCase(contentType)) {
+			AppClientFactory.fireEvent(new HighlightContentSpanEvent(contentType,unitId,lessonId));
+		}
 	}
+	
+	HighlightContentSpanHandler highlightContentHandler = new HighlightContentSpanHandler() {
+		@Override
+		public void highlightContentSpan(String contentValue, String unitKey, String lessonKey) {
+			if("collection".equalsIgnoreCase(contentValue)&&!"collection".equalsIgnoreCase(contentType)&&unitId.equalsIgnoreCase(unitKey)&&(lessonId!=null&&lessonKey!=null&&lessonId.equalsIgnoreCase(lessonKey))) {
+				getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
+			} else if("collection".equalsIgnoreCase(contentValue)&&!"collection".equalsIgnoreCase(contentType)&&unitId.equalsIgnoreCase(unitKey)&&lessonId==null) {
+				getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
+			} else if("lesson".equalsIgnoreCase(contentValue)&&"unit".equalsIgnoreCase(contentType)&&unitId.equalsIgnoreCase(unitKey)) {
+				getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
+			}
+		}
+	};
 	
 	public void removeSpanDot() {
 		Iterator<Widget> widgets= rowItem.iterator();

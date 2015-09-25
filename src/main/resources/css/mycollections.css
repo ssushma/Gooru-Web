@@ -666,7 +666,7 @@ button.btn-disabled{
 	padding:0 0 15px 0;
 }
 #shareContentInClass .ButtonRight {
-	text-align:right;
+	text-align:text;
 }
 #shareContentInClass .siteInfo p {
 	color:#1076bb;
@@ -711,7 +711,7 @@ button.btn-disabled{
 	border-radius:50% 50%;
 	display:inline-block;
 	vertical-align:middle;
-	margin-left:10px;
+	margin-right:45px;
 	cursor: pointer;
 }
 #shareContentInClass .tableItems .statusTab .dottedButton.green{
@@ -4441,8 +4441,8 @@ right:1px;
 	height:40px;
 }
 
-    /* for Webkit's CSS-only solution */
-    @media screen and (-webkit-min-device-pixel-ratio:0) {
+/* for Webkit's CSS-only solution */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
 .shareMainContainer  .custom-select select {
 	padding-right: 30px;
 }
@@ -4524,9 +4524,9 @@ right:1px;
 	margin-top: 5px;
  }
 
-.shareMainContainer  button.primary{
+.shareMainContainer button.primary{
 	margin-left: 5px;
-	margin: 5% 33%;
+	margin: 5% 6%;
 }
 
 @media (max-width: 767px) {

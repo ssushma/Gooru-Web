@@ -102,7 +102,6 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 		final String courseId= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		if(courseId!=null){
 			AppClientFactory.getInjector().getClasspageService().getClassesAssociatedWithCourse(courseId, new SimpleAsyncCallback<ArrayList<ClasspageDo>>() {
-
 				@Override
 				public void onSuccess(ArrayList<ClasspageDo> result) {
 					getView().showClassesInList(result,courseId);
