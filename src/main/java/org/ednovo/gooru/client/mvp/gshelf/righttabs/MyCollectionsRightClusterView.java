@@ -37,21 +37,17 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.mvp.gshelf.util.FolderInfoWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
+import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.DeleteContentPopup;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -71,10 +67,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,toggleButton,deletePnl;
+	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,/*toggleButton,*/deletePnl;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview,lnkDeleteButton;
-	@UiField HTMLEventPanel popupPanelDropDwn,copyPopupPanel;
-	@UiField Label copyLbl,moveLbl,myCollDelLbl;
+	//@UiField HTMLEventPanel /*popupPanelDropDwn,*/copyPopupPanel;
+	@UiField HTMLEventPanel copyLbl,moveLbl,myCollDelLbl;
 	
 	@UiField FlowPanel pnlBreadCrumbMain;
 	
@@ -125,9 +121,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		myCollDelLbl.addClickHandler(new DeleteContentData()); 
 		
 		lnkPreview.setVisible(false);
-		toggleButton.setVisible(false);
-		copyLbl.setText(i18n.GL0827());
-		moveLbl.setText(i18n.GL1261());
+		//toggleButton.setVisible(false);
+		copyLbl.setTitle(i18n.GL0827());
+		moveLbl.setTitle(i18n.GL1261());
 		
 	/*	Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
@@ -215,31 +211,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 */
 	public void setBreadCrumbs(String title, String type) {
 		getUiHandlers().setViewTitleWthicon(title,type);
-
-		/*if(COURSE.equalsIgnoreCase(type)){
-			pnlBreadCrumbMain.clear();
-			pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3347():title, type,"courseFolderCloseIcon"));
-		}else if(UNIT.equalsIgnoreCase(type)){
-			if(pnlBreadCrumbMain.getWidgetCount()<2){
-				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3364():title, type,"unitFolderCloseIcon"));
-			}else{
-				getBreadCrumbs(title,type,2);
-			}
-		}else if(LESSON.equalsIgnoreCase(type)){
-			if(pnlBreadCrumbMain.getWidgetCount()<3){
-				pnlBreadCrumbMain.add(new BreadcrumbItem(StringUtil.isEmpty(title)?i18n.GL3365():title, type,"lessonFolderCloseIcon"));
-			}else{
-				getBreadCrumbs(title,type,3); 
-			}
-		}else if(COLLECTION.equalsIgnoreCase(type) || ASSESSMENT.equalsIgnoreCase(type) || ASSESSMENT_URL.equalsIgnoreCase(type)){
-			if(pnlBreadCrumbMain.getWidgetCount()<4){
-				pnlBreadCrumbMain.add(new BreadcrumbItem((COLLECTION.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3367():
-					                       (ASSESSMENT.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?i18n.GL3460():
-					                       (ASSESSMENT_URL.equalsIgnoreCase(type)&&StringUtil.isEmpty(title))?"UntitledExternalAssessment":title, type,type.contains(ASSESSMENT)?"breadcrumbsAssessmentIcon":"breadcrumbsCollectionIcon"));
-			}else{
-				getBreadCrumbs(title,type,4); 
-			}
-		}*/
 	}
 	
 	/**
@@ -358,14 +329,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}*/
 			if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 				lnkPreview.setVisible(true);
-				toggleButton.setVisible(true);
+				//toggleButton.setVisible(true);
 				deletePnl.setVisible(false);
 				copyLbl.setVisible(true);
 				disableCollabaratorOptions(isCollaborator);
 //				moveLbl.setVisible(true);
 			}else{
 				lnkPreview.setVisible(false);
-				toggleButton.setVisible(true);
+				//toggleButton.setVisible(true);
 				boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
 				copyLbl.setVisible(isVisible);
 				moveLbl.setVisible(false);
@@ -383,7 +354,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkshare.setVisible(isVisible);
 		}
-		toggleButton.setVisible(isVisible);
+		//toggleButton.setVisible(isVisible);
 		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);
 		}
@@ -577,7 +548,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
 				getUiHandlers().enableAddButton();
 			}else if((COURSE.equalsIgnoreCase(currentTypeView))){
-				System.out.println("folderObj.getGooruOid():"+folderObj.getGooruOid());
 				getUiHandlers().copyCourse(folderObj.getGooruOid());
 			}
 		}
@@ -712,7 +682,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				getUiHandlers().isAssignedToClassPage(currentTypeView,o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId);
 			}
 		}else{
-			invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+			if(COURSE.equalsIgnoreCase(currentTypeView)){
+				getUiHandlers().isStudentDataAvailable(currentTypeView,o1CourseId,o2UnitId, o3LessonId,assessmentCollectionId);
+			}else{
+				invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+			}
 		}
 	}
 	
@@ -791,7 +765,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 	
 	
-	public void hideDropDown(NativePreviewEvent event){
+	/*public void hideDropDown(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
@@ -806,7 +780,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			return copyPopupPanel.getElement().isOrHasChild(Element.as(target))||copyPopupPanel.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
-	}
+	}*/
 	
 
 	public void removeActiveStyle() {
@@ -826,7 +800,17 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		this.isCollaborator=isHide;
 	}
 	public void disableButtons(boolean isTrue){
-		toggleButton.setVisible(isTrue);
+		//toggleButton.setVisible(isTrue);
 		lnkPreview.setVisible(isTrue);
+	}
+	
+	
+	@Override
+	public void isCourseDeleteStatus(Boolean status, String type, String o1CourseId, String o2UnitId, String o3LessonId, String assessmentCollectionId) {
+		if(!status){
+			invokeDeletePopup(type,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
+		}else{
+			new AlertContentUc(i18n.GL0061(),"Sorry this Course is tied with student data, you cannot delete the course");
+		}
 	}
 }

@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.uc.LoadingUc;
 
 import com.google.code.gwt.crop.client.GWTCropper;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -40,9 +41,10 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -78,10 +80,9 @@ public abstract class ImageCropView extends Composite{
 	@UiField
 	FlowPanel buttonContainer;
 	
-	private GWTCropper crop;
+	@UiField HTMLPanel panel;
 	
-	private ScrollPanel scrollpanel = new ScrollPanel();
-
+	private GWTCropper crop;
 
 	private static ImageCropViewUiBinder uiBinder = GWT.create(ImageCropViewUiBinder.class);
 
@@ -137,6 +138,7 @@ public abstract class ImageCropView extends Composite{
 		cropImageLoadingVerPanel.getElement().setId("vpnlCropImageLoadingVerPanel");
 		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
 		buttonContainer.getElement().setId("fpnlButtonContainer");
+		panel.getElement().setId("cropContainer");
 	}
 
 	/**
@@ -144,10 +146,30 @@ public abstract class ImageCropView extends Composite{
 	 * @param imageURL of the image , which is to be cropped. 
 	 */
 	public void cropImage(String imageURL,float aspectRatio) {
+		Image img = new Image(imageURL);
 		crop = new GWTCropper(imageURL);
 		crop.setAspectRatio(aspectRatio);
-		scrollpanel.add(crop);
-		cropImageWidgetFloPanel.add(scrollpanel);
+		if(aspectRatio==1.0f){
+			if(img.getWidth()>=250 && img.getHeight()>=250){
+				crop.setSize(250, 250);
+				crop.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			}else{
+				crop.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			}
+		}else if(aspectRatio==4.53f){
+			if((img.getHeight()*2<=img.getWidth())){
+				crop.setSize(400,90);
+			}else{
+				crop.setSize(400,273);
+			}
+		}else{
+			if(img.getWidth()<=400){
+				crop.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			}else{
+				crop.setSize(400, 273);
+			}
+		}
+		panel.add(crop);
 		Timer timer = new Timer() {
 		    public void run() {
 		    	cropImageLoading.setVisible(false);
@@ -221,5 +243,12 @@ public abstract class ImageCropView extends Composite{
 	public void addCanvasLoadHandler(LoadHandler handler) {
 		crop.addCanvasLoadHandler(handler);
 	}
-	
+
+	public GWTCropper getCrop() {
+		return crop;
+	}
+
+	public HTMLPanel getPanel() {
+		return panel;
+	}
 }
