@@ -370,6 +370,7 @@ public class CourseInfoView extends BaseViewWithHandlers<CourseInfoUiHandlers> i
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,courseObj,currentShelfTreeWidget);
 				}
 			}else{
+				spinnerImageVisibility(false);
 				lblGradeErrorMsg.setVisible(true);
 				lblGradeErrorMsg.setText("Select at least one Course"); 
 			}
