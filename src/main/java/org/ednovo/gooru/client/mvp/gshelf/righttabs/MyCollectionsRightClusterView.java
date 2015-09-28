@@ -46,6 +46,9 @@ import org.ednovo.gooru.shared.util.PropertiesCache;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -68,8 +71,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,/*toggleButton,*/deletePnl,glassPanelDiv;
 
-	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,/*toggleButton,*/deletePnl;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview,lnkDeleteButton;
 	//@UiField HTMLEventPanel /*popupPanelDropDwn,*/copyPopupPanel;
 	@UiField HTMLEventPanel copyLbl,moveLbl,myCollDelLbl;
@@ -130,6 +134,13 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		//toggleButton.setVisible(false);
 		copyLbl.setTitle(i18n.GL0827());
 		moveLbl.setTitle(i18n.GL1261());
+
+		
+		glassPanelDiv.getElement().setAttribute("style", "position: absolute; left: 0px; top: 0px;");
+		glassPanelDiv.getElement().getStyle().setWidth(Window.getClientWidth(), Unit.PX);
+		glassPanelDiv.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
+		glassPanelDiv.setStyleName("gwt-PopupPanelGlass");
+		glassPanelDiv.setVisible(false);
 
 	/*	Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
@@ -564,6 +575,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private class onCopyClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			glassPanelDiv.setVisible(true);
+			Element element = Document.get().getDocumentElement();
+			element.appendChild(glassPanelDiv.getElement());
 			if(!(COURSE.equalsIgnoreCase(currentTypeView))){
 				getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
 				getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
@@ -575,6 +589,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				getUiHandlers().copyCourse(folderObj.getGooruOid());
 			}
 		}
+	}
+	@Override
+	public void hideglassPanel() {
+		glassPanelDiv.setVisible(false);
 	}
 	private class onMoveClickHandler implements ClickHandler{
 		@Override

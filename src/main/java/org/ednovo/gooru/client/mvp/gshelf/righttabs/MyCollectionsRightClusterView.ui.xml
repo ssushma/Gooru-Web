@@ -63,5 +63,10 @@
 			<div class="clearfix"></div>
 		</div>
 		<g:HTMLPanel ui:field="pnlSlotInnerContent"/>
+		<g:HTMLPanel ui:field="glassPanelDiv">
+		   <g:HTMLPanel ui:field="spinnerIconContainer" styleName="spinnerContainer">
+			<g:HTMLPanel styleName="loadingImage spinnerDisplayPosition"></g:HTMLPanel>
+		</g:HTMLPanel>
+		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
