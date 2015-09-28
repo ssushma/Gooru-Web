@@ -149,6 +149,12 @@ public interface ClientConstants {
 
 	String COMMUNITY_LIBRARY_ID = "community.library.gooruOid";
 
+	String LTI_LAUNCH_URL = "lti.launch.url";
+	String LTI_LAUNCH_ENDPOINT="lti.launch.endpoint";
+	String LTI_CLIENT_SECRET="lti.client.secret";
+	String LTI_CONTEXT_ID="lti.context.id";
+	String LTI_CLIENT_KEY="lti.client.key";
+
 	String HTTPS = "https";
 
 	String HTTP = "http";

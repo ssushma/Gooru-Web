@@ -43,7 +43,6 @@ import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
-import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.SpanPanel;
@@ -1031,17 +1030,5 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 				image = image.append(IMAGE_URL+WEBPAGE+PNG);
 			}
 	     return image.toString();
-	}
-	
-	public static String getLTIAssessmentUrl(String assessmentUrl){
-		String homeEndPoint=AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint();
-		String emailId=AppClientFactory.getLoggedInUser().getEmailId();
-		String gooruUid=AppClientFactory.getLoggedInUser().getGooruUId();
-		String sessionToken=AppClientFactory.getLoginSessionToken();
-		String userName=AppClientFactory.getLoggedInUser().getUserName();
-		String ltiUrl=homeEndPoint+"/gooru-auth/lti/consumer/launch.g?clientKey=abc123&clientSecret=abc123secret&emailId="+emailId+
-				"&ltiLaunchUrl=https%3A%2F%2Fgoorutest.portal2.mtaylor.devops.illuminateed.com%2Flti%2Fauth&contextId=12345&resourceLinkId=53dbb39337131c1b548b473a&returnUrl="+assessmentUrl+
-				"&gooruUId="+gooruUid+"&userToken="+sessionToken+"&username="+userName+"&roles=Student";
-		return ltiUrl;
 	}
 }

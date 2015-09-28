@@ -177,7 +177,7 @@ public class ProfileTopicListView extends Composite{
 	private static final String  ASSESSMENT_URL = "assessment/url";
 
 	private static final String LTI="illuminateed.com";
-	
+
 	private static final String  COLLECTION = "collection";
 
 	private String libraryGooruOid=null;
@@ -187,6 +187,8 @@ public class ProfileTopicListView extends Composite{
 	String collectionIdVal = "";
 	String folderIdVal = "";
 	String folderIdValGbl = "";
+
+	private String LTI_URL = "";
 
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
@@ -295,6 +297,14 @@ public class ProfileTopicListView extends Composite{
 
 		viewAllBtn.addClickHandler(new ViewAllBtnClickHandler(profileFolderDo.getGooruOid(),parentId));
 		go2Assessment.setVisible(false);
+
+		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(profileFolderDo.getUrl(), profileFolderDo.getGooruOid(), new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				LTI_URL= result;
+			}
+		});
 
 	}
 	public void setId(){
@@ -622,7 +632,7 @@ public class ProfileTopicListView extends Composite{
 									@Override
 									public void onClick(ClickEvent event) {
 										if(conceptDo.getUrl().contains(LTI)){
-											Window.open(StringUtil.getLTIAssessmentUrl(conceptDo.getUrl()), "", "");
+											Window.open(LTI_URL, "", "");
 										}else{
 											Window.open(conceptDo.getUrl(), "", "");
 										}
