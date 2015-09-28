@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
@@ -33,19 +34,21 @@ public class StudentClassContentWidget extends Composite {
 
 	@UiField HTMLEventPanel contentPanel;
 	@UiField Image imagePanel;
-	
+
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
-	
+
 	private final String DEFAULT_ASSESSMENT_IMAGE = "../images/default-assessment-image -160x120.png";
 
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
-	
+
 	private static final String LTI="illuminateed.com";
-	
+
+	private String LTI_URL = "";
+
 	private static StudentClassContentWidgetUiBinder uiBinder = GWT.create(StudentClassContentWidgetUiBinder.class);
-	
+
 	interface StudentClassContentWidgetUiBinder extends UiBinder<Widget, StudentClassContentWidget> {}
-	
+
 	public StudentClassContentWidget(final PlanProgressDo planDo, String contentStyle, String lessonId, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		String contentName = planDo.getTitle();
@@ -55,16 +58,16 @@ public class StudentClassContentWidget extends Composite {
 			contentPanel.addStyleName(contentStyle);
 		}
 		contentPanel.addClickHandler(new PlayClassContent(lessonId, planDo.getGooruOId(), planDo.getType(), status, userId, planDo.getUrl()));
-		
+
 		setDefaultThumbnail(planDo.getType());
-		
+
 		String url = "";
-		
+
 		if(planDo.getThumbnail()!=null) {
 			url = planDo.getThumbnail();
 			imagePanel.setUrl(url);
 		}
-		
+
 		imagePanel.setHeight("55px");
 		imagePanel.setWidth("75px");
 		imagePanel.addErrorHandler(new ErrorHandler() {
@@ -73,8 +76,17 @@ public class StudentClassContentWidget extends Composite {
 				setDefaultThumbnail(planDo.getType());
 			}
 		});
+
+		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(planDo.getUrl(), planDo.getGooruOId(), new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				LTI_URL= result;
+			}
+		});
+
 	}
-	
+
 	private void setDefaultThumbnail(String collectionType) {
 		if(collectionType!=null&&(collectionType.equalsIgnoreCase("assessment")||collectionType.equalsIgnoreCase("assessment/url"))) {
 			imagePanel.setUrl(DEFAULT_ASSESSMENT_IMAGE);
@@ -82,7 +94,7 @@ public class StudentClassContentWidget extends Composite {
 			imagePanel.setUrl(DEFAULT_COLLECTION_IMAGE);
 		}
 	}
-	
+
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
 		private String label = null;
 		public MouseOverShowClassCodeToolTip(String label) {
@@ -98,7 +110,7 @@ public class StudentClassContentWidget extends Composite {
 			toolTipPopupPanel.show();
 		}
 	}
-	
+
 	public class MouseOutHideToolTip implements MouseOutHandler{
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
@@ -114,7 +126,7 @@ public class StudentClassContentWidget extends Composite {
 		private String userId = null;
 		private String lessonId = null;
 		private String url = null;
-		
+
 		public PlayClassContent(String lessonId, String gooruOid, String type, String status, String userId, String url) {
 			if(type!=null) {
 				this.type = type;
@@ -125,7 +137,7 @@ public class StudentClassContentWidget extends Composite {
 			this.lessonId = lessonId;
 			this.url = url;
 		}
-		
+
 		@Override
 		public void onClick(ClickEvent event) {
 			String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
@@ -141,24 +153,24 @@ public class StudentClassContentWidget extends Composite {
 			if(status!=null&&status.equalsIgnoreCase("active")) {
 				params.put("isStudent", "true");
 			}
-			
+
 			params.put("id", gooruOid);
 			params.put("cid", classUId);
 			params.put("courseId", courseGooruOid);
 			params.put("unitId", unitId);
 			params.put("lessonId", lessonId);
-			
+
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(token, params);
 			if(!type.equalsIgnoreCase("assessment/url")) {
 				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 			} else {
 				if(url!=null&&!url.isEmpty()) {
 					if(url.contains(LTI)){
-						Window.open(StringUtil.getLTIAssessmentUrl(url), "", "");
+						Window.open(LTI_URL, "_blank", "");
 					}else{
 						Window.open(url, "_blank", "");
 					}
-					
+
 				}
 			}
 		}

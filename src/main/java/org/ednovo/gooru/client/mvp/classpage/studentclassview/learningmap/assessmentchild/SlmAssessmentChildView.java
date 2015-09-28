@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.asses
 import java.util.ArrayList;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
@@ -72,7 +73,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	@UiField Anchor reportUrl;
 
 	@UiField HTMLPanel reportView, imageContainer, resourceImgContainer, minimumScoreLblPanel;
-	
+
 	@UiField H3Panel contentName;
 
 	@UiField PPanel contentDescription;
@@ -82,9 +83,9 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	@UiField Image contentImage;
 
 	@UiField HTMLEventPanel viewReport, leftArrow, rightArrow;
-	
+
 	@UiField SpanPanel minScore;
-	
+
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 
 	private final String DEFAULT_ASSESSMENT_IMAGE = "../images/default-assessment-image -160x120.png";
@@ -100,17 +101,19 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	private PlanContentDo planContentDo = null;
 
 	ArrayList<PlanContentDo> dataList = new ArrayList<PlanContentDo>();
-	
+
 	int start = 0, end = 0;
 
 	private final static int CAROUSEL_LIMIT = 11;
-	
+
 	private static final String LTI="illuminateed.com";
 
 	private String collectionType = null;
-	
+
 	private String status = null;
-	
+
+	private String LTI_URL = "";
+
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static SlmAssessmentChildViewUiBinder uiBinder = GWT.create(SlmAssessmentChildViewUiBinder.class);
@@ -123,6 +126,14 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		this.planContentDo = planContentDo;
 		setData(planContentDo, status, minimumScore);
 		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
+
+		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(planContentDo.getUrl(), planContentDo.getGooruOid(), new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				LTI_URL= result;
+			}
+		});
 	}
 
 	public void setData(final PlanContentDo planContentDo, final String status, int minimumScore) {
@@ -132,7 +143,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		} else {
 			minScore.setText(minimumScore+"%");
 		}
-		
+
 		contentName.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -264,7 +275,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			if(rId!=null) {
 				placeRequest = placeRequest.with("rid", rId);
 			}
-			
+
 			placeRequest = placeRequest.with("courseId", courseGooruOid);
 			placeRequest = placeRequest.with("unitId", unitId);
 			placeRequest = placeRequest.with("lessonId", lessonId);
@@ -277,7 +288,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		} else {
 			if(planContentDo.getUrl()!=null&&!planContentDo.getUrl().isEmpty()) {
 				if(planContentDo.getUrl().contains(LTI)){
-					Window.open(StringUtil.getLTIAssessmentUrl(planContentDo.getUrl()), "_blank", "");
+					Window.open(LTI_URL, "_blank", "");
 				}else{
 					Window.open(planContentDo.getUrl(), "_blank", "");
 				}
@@ -402,7 +413,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getDetaultResourceImage(String category){
 		String categoryIcon=StringUtil.getEquivalentCategory(category==null?"":category.toLowerCase());
 		return categoryIcon ;
@@ -415,7 +426,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 		setArrows();
 	}
-	
+
 	private void setArrows() {
 		boolean leftArrowVisibile = false, rightArrowVisible = false;
 		if(end>CAROUSEL_LIMIT) {
@@ -426,12 +437,12 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 		setArrowVisibility(leftArrowVisibile,rightArrowVisible);
 	}
-	
+
 	private void setArrowVisibility(boolean leftArrowVisibile, boolean rightArrowVisible) {
 		leftArrow.setVisible(leftArrowVisibile);
 		rightArrow.setVisible(rightArrowVisible);
 	}
-	
+
 	@UiHandler("leftArrow")
 	public void clickLeftArrow(ClickEvent event) {
 		end = start;
@@ -442,7 +453,7 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		}
 		setData(start, end);
 	}
-	
+
 	@UiHandler("rightArrow")
 	public void clickRightArrow(ClickEvent event) {
 		start = end;
