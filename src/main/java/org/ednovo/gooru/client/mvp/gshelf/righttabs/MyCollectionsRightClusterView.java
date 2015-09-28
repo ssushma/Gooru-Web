@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.DeleteContentPopup;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.PropertiesCache;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -93,6 +94,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private static final String COLLECTION = "collection";
 	private static final String ASSESSMENT = "assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
+	
+	private static final String LTI="illuminateed.com";
 	final String PASTEURL="Paste URL here";
 	
 	private String currentTypeView;
@@ -417,12 +420,19 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}else{
 					if(!folderObj.getUrl().isEmpty() && !folderObj.getUrl().equalsIgnoreCase(PASTEURL)){
-						Window.open(folderObj.getUrl(), "", "");
+						if(folderObj.getUrl().contains(LTI)){
+							Window.open(StringUtil.getLTIAssessmentUrl(folderObj.getUrl()), "", "");
+						}else{
+							Window.open(folderObj.getUrl(), "", "");
+						}
+						
 					}
 				}
 			}
 		}
 	}
+	
+	
 	/**
 	 * Invokes the delete course popup.
 	 * 
@@ -485,6 +495,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		deleteContentPopup.show();
 		deleteContentPopup.center();
 	}
+	
 	
 	/**
 	 * This method defines functionality after deleting the course.

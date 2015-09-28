@@ -104,6 +104,8 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 	int start = 0, end = 0;
 
 	private final static int CAROUSEL_LIMIT = 11;
+	
+	private static final String LTI="illuminateed.com";
 
 	private String collectionType = null;
 	
@@ -274,7 +276,11 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 		} else {
 			if(planContentDo.getUrl()!=null&&!planContentDo.getUrl().isEmpty()) {
-				Window.open(planContentDo.getUrl(), "_blank", "");
+				if(planContentDo.getUrl().contains(LTI)){
+					Window.open(StringUtil.getLTIAssessmentUrl(planContentDo.getUrl()), "_blank", "");
+				}else{
+					Window.open(planContentDo.getUrl(), "_blank", "");
+				}
 			}
 		}
 	}
