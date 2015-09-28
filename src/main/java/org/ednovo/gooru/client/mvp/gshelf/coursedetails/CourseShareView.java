@@ -107,7 +107,6 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 			courseDetailsContainer.setVisible(true);
 			associatedClassesPnl.setVisible(true);
 			if(classPageDo!=null){
-				classListPnl.clear();
 				int rowCount = 0;
 				for(final ClasspageDo classObj:classPageDo){
 					ClassListWidget classListWidget = new ClassListWidget(classObj,courseId);
@@ -119,7 +118,6 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 						public void onClick(ClickEvent event) {
 							classPanel.setVisible(false);
 							contentVisibilityPanel.setVisible(true);
-							contentVisibilityPanel.clear();
 							ContentVisibilityChildView classListWidget = new ContentVisibilityChildView(classObj,courseId);
 							classListWidget.getAnrAllClasses().addClickHandler(new ClickHandler() {
 								@Override
@@ -149,6 +147,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	@Override
 	public void clearSharePlanes() {
 		classListPnl.clear();
+		contentVisibilityPanel.clear();
 	}
 	
 	/**
