@@ -90,7 +90,7 @@ public abstract class ImageCropView extends Composite{
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	Image img = new Image();
 	/**
 	 * Class constructor
 	 */
@@ -146,7 +146,7 @@ public abstract class ImageCropView extends Composite{
 	 * @param imageURL of the image , which is to be cropped. 
 	 */
 	public void cropImage(String imageURL,float aspectRatio) {
-		Image img = new Image(imageURL);
+		img.setUrl(imageURL);
 		crop = new GWTCropper(imageURL);
 		crop.setAspectRatio(aspectRatio);
 		if(aspectRatio==1.0f){
@@ -183,27 +183,35 @@ public abstract class ImageCropView extends Composite{
 	 * @return height of cropped image
 	 */
 	public String getSelectionHeight() {
-		return String.valueOf(crop.getSelectionHeight());
+		float ratioWiseHeight=((float)img.getHeight()/(float)crop.getCanvasHeight());
+		float calculatedHeight=ratioWiseHeight*crop.getSelectionHeight();
+		return String.valueOf(Math.round(calculatedHeight));
 	}
 	
 	/**
 	 * @return width of cropped image
 	 */
 	public String getSelectionWidth() {
-		return String.valueOf(crop.getSelectionWidth());
+		float ratioWiseWidth=((float)img.getWidth()/(float)crop.getCanvasWidth());
+		float calculatedWidth=ratioWiseWidth*crop.getSelectionWidth();
+		return String.valueOf(Math.round(calculatedWidth));
 	}
 	
 	/**
 	 * @return x-coordinate of cropped image
 	 */
 	public String getSelectionXCoordinate() {
-		return String.valueOf(crop.getSelectionXCoordinate());
+		float xCoordinate=((float)img.getWidth()/(float)crop.getCanvasWidth());
+		float calculatedXCoordinate=xCoordinate*crop.getSelectionXCoordinate();
+		return String.valueOf(Math.round(calculatedXCoordinate));
 	}
 	/**
 	 * @return y-coordinate of cropped image
 	 */
 	public String getSelectionYCoordinate() {
-		return String.valueOf(crop.getSelectionYCoordinate());
+		float yCoordinate=((float)img.getHeight()/(float)crop.getCanvasHeight());
+		float calculatedYCoordinate=yCoordinate*crop.getSelectionYCoordinate();
+		return String.valueOf(Math.round(calculatedYCoordinate));
 	}
 
 	/**
