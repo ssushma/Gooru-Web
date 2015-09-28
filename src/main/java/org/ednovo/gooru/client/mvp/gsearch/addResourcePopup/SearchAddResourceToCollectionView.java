@@ -839,6 +839,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				String foldertypevalue=	folderTreeItemWidget.getType();
 				if(myCourseContainer.isVisible()){
 					enableDisableAddBtn((COURSE.equalsIgnoreCase(foldertypevalue) || UNIT.equalsIgnoreCase(foldertypevalue))?false:true);
+					if(getStatus() && LESSON.equalsIgnoreCase(foldertypevalue))
+					{
+					enableDisableAddBtn(false);	
+					}
 				}else{
 					if(LESSON.equalsIgnoreCase(copyType)&&(COURSE.equalsIgnoreCase(foldertypevalue))){
 						enableDisableAddBtn(false);
