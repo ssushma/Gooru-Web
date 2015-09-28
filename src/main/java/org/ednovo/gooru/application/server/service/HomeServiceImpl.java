@@ -26,6 +26,7 @@ package org.ednovo.gooru.application.server.service;
 
 import java.util.List;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.HomeService;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.deserializer.FeaturedContentDeSerializer;
@@ -110,4 +111,25 @@ private static  Logger logger =LoggerFactory.getLogger(HomeServiceImpl.class);
 
 		return getRedirectUrl();
 	}
+
+	@Override
+	public String getLTIAssessmentUrl(String assessmentUrl, String assessmentId){
+
+		String ltiEndPoint=getLtiLaunchEndpoint();
+		String clientKey=getLtiClientKey();
+		String clientSecret=getLtiClientSecret();
+		String ltiLaunchUrl=getLtiLaunchUrl();
+		String contextId=getLtiContextId();
+
+		String emailId=AppClientFactory.getLoggedInUser().getEmailId();
+		String gooruUid=AppClientFactory.getLoggedInUser().getGooruUId();
+		String sessionToken=AppClientFactory.getLoginSessionToken();
+		String userName=AppClientFactory.getLoggedInUser().getUserName();
+
+		String ltiUrl=ltiEndPoint+"clientKey="+clientKey+"&clientSecret="+clientSecret+"&emailId="+emailId+
+				"&ltiLaunchUrl="+ltiLaunchUrl+"&contextId="+contextId+"&resourceLinkId="+assessmentId+"&returnUrl="+assessmentUrl+
+				"&gooruUId="+gooruUid+"&userToken="+sessionToken+"&username="+userName+"&roles=Student";
+		return ltiUrl;
+	}
+
 }

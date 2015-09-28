@@ -81,6 +81,11 @@
 				<prop key="community.library.gooruOid">${community.library.gooruOid}</prop>
 				<prop key="show.stories">${show.stories}</prop>
 				<prop key="clientside.loggers">${clientside.loggers}</prop>
+				<prop key="lti.launch.url">${lti.launch.url}</prop>
+				<prop key="lti.launch.endpoint">${lti.launch.endpoint}</prop>
+				<prop key="lti.client.secret">${lti.client.secret}</prop>
+				<prop key="lti.context.id">${lti.context.id}</prop>
+				<prop key="lti.client.key">${lti.client.key}</prop>
 			</props>
 		</property>
 	</bean>
