@@ -54,6 +54,7 @@
 				<prop key="search.password">${search.password}</prop>
 				<prop key="search.username">${search.username}</prop>
 				<prop key="search.endpoint">${search.endpoint}</prop>
+				<prop key="download.endpoint">${download.endpoint}</prop>
 				<prop key="api.key">${api.key}</prop>
 				<prop key="home.endpoint">${home.endpoint}</prop>
 				<prop key="domain.name">${domain.name}</prop>
