@@ -538,6 +538,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			@Override
 			public void onSuccess(String url) {
 				callJobSuccessApi(url,null);
+		
 			}
 		});
 	}
@@ -553,6 +554,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					params.put("view", "Course");
 					shelfMainPresenter.setVersion();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+					getView().hideglassPanel();
 				}else if(result.get("status").equalsIgnoreCase("inprogress")){
 					Timer timer = new Timer() {
 
@@ -567,6 +569,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					new AlertForImageUpload("Oops", "Something went wrong, plewase try again.");
 					//getView().hidePopup();
 				}
+			
 			}
 		});
 	}

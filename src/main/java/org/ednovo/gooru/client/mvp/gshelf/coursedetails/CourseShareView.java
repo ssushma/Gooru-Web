@@ -64,14 +64,14 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	@UiTemplate("CourseShareView.ui.xml")
 	interface CourseShareViewUiBinder extends UiBinder<Widget, CourseShareView> {
 	}
-	
+
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField VerticalPanel classListPnl;
 	@UiField HTMLPanel assinPnl, associatedClassesPnl, courseDetailsContainer, shareMainContainer, classPanel, contentVisibilityPanel;
 	@UiField Anchor createClassAchr;
 	@UiField Button courseBtn;
-	
+
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}
@@ -83,22 +83,22 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 		classListPnl.getElement().getStyle().setWidth(100, Unit.PCT);
 		shareMainContainer.setVisible(false);
 	}
-	
+
 	@Override
 	public void setClassesList(List<CollectionDo> searchResult) {
-		
+
 	}
-	
+
 	@UiHandler("courseBtn")
 	public void clickOnCourseBtn(ClickEvent clickEvent){
-		
+
 	}
-	
+
 	@UiHandler("createClassAchr")
 	public void createNewClass(ClickEvent clickEvent){
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,new String[] { UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS});
 	}
-	
+
 	@Override
 	public void showClassesInList(ArrayList<ClasspageDo> classPageDo, final String courseId) {
 		shareMainContainer.setVisible(true);
@@ -143,13 +143,13 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 			courseDetailsContainer.setVisible(false);
 		}
 	}
-	
+
 	@Override
 	public void clearSharePlanes() {
 		classListPnl.clear();
 		contentVisibilityPanel.clear();
 	}
-	
+
 	/**
 	 * @return the associatedClassesPnl
 	 */
