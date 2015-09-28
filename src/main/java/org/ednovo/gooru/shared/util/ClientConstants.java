@@ -63,6 +63,8 @@ public interface ClientConstants {
 
 	String SEARCH_ENDPOINT = "search.endpoint";
 
+	String DOWNLOAD_ENDPOINT = "download.endpoint";
+
 	String REST_USERNAME = "rest.username";
 
 	String REST_PASSWORD = "rest.password";
