@@ -272,29 +272,22 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		pdfName = pdfName + PDF_SUFFIX;
 		String savedFileName=null;
 		StringRepresentation stringRepresentation= null;
-		String downloadUrl="";
 		try{
 			//String url = "http://www.goorulearning.org/gooruapi/rest/v2/media/htmltopdf?sessionToken=aec96f9c-42df-11e4-8d6c-123141016e2a";
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
 			//To disable escape sequence enabled this line
 			htmlString=htmlString.replaceAll("max-height: 100%;", "");
 			htmlString = htmlString.replaceAll("[\n\r]", "<br>");
-			String jsonStr="{\"fileName\":\"Mymedia\",\"html\":\""+htmlString+"\"}";
+			String jsonStr="{\"fileName\":\""+fileName+"\",\"html\":\""+htmlString+"\"}";
 			//String jsonStr = setHTMLtoPDFJsonStr(htmlString);
 			logger.info("html to pdf url-- "+url);
 			logger.info("html to pdf url json -- "+jsonStr);
 			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),jsonStr);
 			savedFileName=stringRepresentation.getText();
-
-			if(isClickedOnEmail){
-				downloadUrl=savedFileName;
-			}else{
-				downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,savedFileName,pdfName,getLoggedInSessionToken());
-			}
 		}catch(Exception e){
 			logger.error("Exception::", e);
 		}
-		return downloadUrl;
+		return savedFileName;
 	}
 
 	@Override
