@@ -1022,8 +1022,10 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			status = deserializeStudentDataAvailability(jsonRep);
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
+			status = false;
 		} catch (Exception e) {
 			logger.error("Exception::", e);
+			status=false;
 		}
 		return status; 
 	}
