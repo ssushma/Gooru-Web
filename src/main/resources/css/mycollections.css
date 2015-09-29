@@ -597,12 +597,7 @@ button.btn-disabled{
     background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* W3C */
 }
 
-#gShelfMainContainer .folderLevel:hover {
-	background-color: white !important;
-	cursor: pointer !important;
-	margin: 0px;
-	color: #515151 !important;
-}
+
 
 #gShelfMainContainer .folderLevel:hover .arrow {
     display:block;
