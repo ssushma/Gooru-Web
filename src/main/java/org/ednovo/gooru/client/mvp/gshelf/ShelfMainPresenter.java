@@ -404,6 +404,8 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 			AppClientFactory.getInjector().getfolderService().getChildFoldersForCourse((getView().getChildPageNumber()-1)*20, 20,courseId, unitId, lessonId, null, null, false, new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
+					if(result.getSearchResult()!=null)
+					{
 					searchResult.addAll(result.getSearchResult());
 					if(result.getSearchResult().size()==20) {
 						getView().setChildPageNumber(getView().getChildPageNumber()+1);
@@ -412,6 +414,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 						getView().setChildPageNumber(1);
 						getView().getChildFolderItems(currentTreeItem,searchResult);
 						searchResult.clear();
+					}
 					}
 				}
 			});
