@@ -554,4 +554,6 @@ public interface ClasspageService extends BaseService {
 
 	public ArrayList<PlanProgressDo> getContentVisibilityData(String classpageId, String courseId, String unitId, String lessonId) throws GwtException, ServerDownException;
 
+	public boolean updateClassContentVisibility(String classId, List<PlanProgressDo> collectionIds) throws GwtException, ServerDownException;
+
 }

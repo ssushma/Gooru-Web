@@ -712,6 +712,24 @@ button.btn-disabled{
 #shareContentInClass .tableItems .statusTab .dottedButton.green{
 	background:#7ab075;
 }
+#shareContentInClass .tableItems .statusTab .dottedButton.green.tick{
+	display: inline-block;
+	padding-left: 7px;
+	padding-top: 4px;
+}
+#shareContentInClass .tableItems .statusTab .dottedButton.green.tick:after{
+	content: '';
+	display: block;
+	width: 7px;
+	height: 13px;
+	border: solid #fff;
+	border-width: 0 4px 4px 0;
+	-webkit-transform: rotate(40deg);
+	-moz-transform: rotate(40deg);
+	-ms-transform: rotate(40deg);
+	-o-transform: rotate(40deg);
+	transform: rotate(40deg);
+}
 #shareContentInClass .tableItems .unitLessonDetailsTab.levelTwo{
 	margin-left:25px;
 }

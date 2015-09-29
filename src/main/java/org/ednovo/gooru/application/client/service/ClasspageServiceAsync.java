@@ -247,5 +247,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void getXlsxReport(String tableData, String fileName, AsyncCallback<String> callback) throws GwtException, ServerDownException;
 
 	public void getContentVisibilityData(String classpageId, String courseId, String unitId, String lessonId, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
+
+	public void updateClassContentVisibility(String classId, List<PlanProgressDo> collectionIds, AsyncCallback<Boolean> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
 }
