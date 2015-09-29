@@ -152,31 +152,36 @@ public abstract class ImageCropView extends Composite{
 		if(aspectRatio==1.0f){
 			if(img.getWidth()>=250 && img.getHeight()>=250){
 				crop.setSize(250, 250);
-				crop.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-			}else{
-				crop.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 			}
 		}else if(aspectRatio==4.53f){
-			if((img.getHeight()*2<=img.getWidth())){
+			if((img.getWidth()*2<=img.getHeight())){
+				float calculateWidth=((float)img.getWidth()/(float)img.getHeight())*90;
+				crop.setSize(Math.round(calculateWidth),90);
+			}else if((img.getHeight()*2<=img.getWidth())){
 				crop.setSize(400,90);
 			}else{
-				crop.setSize(400,273);
+				crop.setSize(400,90);
 			}
 		}else{
-			if(img.getWidth()<=400){
-				crop.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			if((img.getWidth()*2<=img.getHeight())){
+				float calculateWidth=((float)img.getWidth()/(float)img.getHeight())*300;
+				crop.setSize(Math.round(calculateWidth),300);
+			}else if((img.getHeight()*2<=img.getWidth())){
+				float calculateHeiht=((float)img.getHeight()/(float)img.getWidth())*400;
+				crop.setSize(400,Math.round(calculateHeiht));
 			}else{
-				crop.setSize(400, 273);
+				crop.setSize(400, 300);
 			}
 		}
+		crop.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		panel.add(crop);
 		Timer timer = new Timer() {
 		    public void run() {
 		    	cropImageLoading.setVisible(false);
 		    }
 		};
-	   // Execute the timer to expire 7 seconds in the future
-	   timer.schedule(7000);	
+	   // Execute the timer to expire 5 seconds in the future
+	   timer.schedule(5000);	
 	}
 	
 	/**
