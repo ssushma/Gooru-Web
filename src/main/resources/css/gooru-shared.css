@@ -684,6 +684,10 @@
 	top: 500px;
 	position: relative;
 }
+.spinnerDisplayPositionCourse {
+	top: 300px;
+	position: relative;
+}
 
 /**************** Wait Confirmation Popup***************/
 .waitPopUp .waitPopupContainer {

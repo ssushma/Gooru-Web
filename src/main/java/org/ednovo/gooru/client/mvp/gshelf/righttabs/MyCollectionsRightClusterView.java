@@ -137,7 +137,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 
 		
 		glassPanelDiv.getElement().setAttribute("style", "position: absolute; left: 0px; top: 0px;");
-		glassPanelDiv.getElement().getStyle().setWidth(Window.getClientWidth(), Unit.PX);
+		glassPanelDiv.getElement().getStyle().setWidth(100, Unit.PCT);
 		glassPanelDiv.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
 		glassPanelDiv.setStyleName("gwt-PopupPanelGlass");
 		glassPanelDiv.setVisible(false);

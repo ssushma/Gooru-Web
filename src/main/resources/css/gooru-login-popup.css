@@ -868,7 +868,7 @@ button.secondary:hover {
 }
 
 
-.signUpCourseOption:hover, .active:hover {
+.signUpCourseOption:hover {
 	background-color: #4c98cc;
 	border: 1px solid #ddd;
 	color: white;
