@@ -132,6 +132,7 @@ private static  Logger logger =LoggerFactory.getLogger(HomeServiceImpl.class);
 		try{
 			if(getLtiLaunchUrl().length()!=0){ltiLaunchUrl=URLEncoder.encode(getLtiLaunchUrl(), "UTF-8");}
 			assessmentUrl = URLEncoder.encode(assessmentUrl, "UTF-8");
+			emailId = URLEncoder.encode(emailId, "UTF-8");
 		}catch (UnsupportedEncodingException ex) {
 			logger.error("Exception::", ex);
 		}
