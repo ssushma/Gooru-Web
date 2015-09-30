@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.image.upload;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -149,7 +150,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	private static final String IMAGE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:jpg|gif|jpeg|png))$)";
 
-	MediaUploadDo mediaUploadDo;
+	MediaUploadDo mediaUploadDo=new MediaUploadDo();
 
 	@UiField Image displayImage,displayImage1;
 	
@@ -592,27 +593,40 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 		return isValid;
 	}
+	@Override
+	public void uploadedImagetobeSet(CreateDo createDoObj){
+		System.out.println("createDoObj.getThumbnails().getUrl()::"+createDoObj.getUrl());
+/*		mediaUploadDo.setUrl(createDoObj.getUrl());
+		mediaUploadDo.setStatusCode(200);*/
+		setDataOnEdit(createDoObj.getUrl());
+		imageWebUploadUrlTxtBox.setText(createDoObj.getUrl());
+		getUiHandlers().imageWebUpload(createDoObj.getUrl());
+	}
 
+	public void setDataOnEdit(String imageUrl){
+		displayImage.setUrl(imageUrl);
+		displayImage1.setUrl(imageUrl);
+
+		hideAndDisplayAllCropButtons(true);		
+		displayImage.setVisible(false);
+		displayImage1.setVisible(false);
+		if(aspectRatio==4.53f){
+			displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+imageUrl+");");
+			displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+imageUrl+");");
+		}else if(aspectRatio==1.0f){
+			displayCromImagePanel.getElement().setAttribute("style","min-width: 100px;width: 250px;min-height: 100px;height: 250px;border: 2px solid #efefef;background-image:url("+imageUrl+");");
+			displayCromImagePanel1.getElement().setAttribute("style","min-width: 100px;width: 250px;min-height: 100px;height: 250px;border: 2px solid #efefef;background-image:url("+imageUrl+");");
+		}else{
+			displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+imageUrl+");");
+			displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+imageUrl+");");
+		}
+	}
 	@Override
 	public void setImageUpload(final MediaUploadDo mediaUploadDo) {
 		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if (mediaUploadDo != null && mediaUploadDo.getStatusCode() == 200) {
 			this.mediaUploadDo=mediaUploadDo;
-			displayImage.setUrl(mediaUploadDo.getUrl());
-			displayImage1.setUrl(mediaUploadDo.getUrl());
-			hideAndDisplayAllCropButtons(true);		
-			displayImage.setVisible(false);
-			displayImage1.setVisible(false);
-			if(aspectRatio==4.53f){
-				displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-				displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-			}else if(aspectRatio==1.0f){
-				displayCromImagePanel.getElement().setAttribute("style","min-width: 100px;width: 250px;min-height: 100px;height: 250px;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-				displayCromImagePanel1.getElement().setAttribute("style","min-width: 100px;width: 250px;min-height: 100px;height: 250px;border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-			}else{
-				displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-				displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+mediaUploadDo.getUrl()+");");
-			}
+			setDataOnEdit(mediaUploadDo.getUrl());
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
