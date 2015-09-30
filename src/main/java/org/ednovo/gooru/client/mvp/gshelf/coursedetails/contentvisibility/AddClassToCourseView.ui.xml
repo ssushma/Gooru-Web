@@ -11,12 +11,12 @@
 					</g:Button>
 					<uc:H4Panel styleName="my-content-class-modal-title" ui:field="addtocollHeaderText"></uc:H4Panel>
 				</div>
-				<div>
+				<div class="pull-left">
 					<g:HTML styleName="my-content-class-indications" ui:field="addingTextLbl"></g:HTML>
 					<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="dropdownListClassContainerScrollPanel">
 						<g:HTMLPanel ui:field="classListContainer" styleName="popBody" />
 					</g:ScrollPanel>
-					<g:Label ui:field="lblEmptyErrorMessage" styleName="my-content-class-error-msg" />
+					<g:Label ui:field="lblEmptyErrorMessage" styleName="my-content-class-error-msg my-content-class-error-msg-layout" />
 				</div>
 				<g:HTMLPanel styleName="modal-footer" ui:field="footerPanel">
 					<g:Label styleName="my-content-class-error-msg" ui:field="lblError" text="{i18n.GL3592}" title="{i18n.GL3592}" />

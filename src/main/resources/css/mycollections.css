@@ -855,7 +855,10 @@ button.btn-disabled{
 	font: 12px arial;
 	float: left;
 }
-
+.my-content-class-error-msg-layout {
+	width: 30%;
+	margin: 10% 35%;
+}
 @media (max-width: 767px) {
 
 	#gShelfMainContainer .floderLeftContainer{
