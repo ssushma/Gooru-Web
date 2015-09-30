@@ -100,8 +100,11 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				lessonWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						if(lessonWidget.getRowItem().getWidgetCount()<=1) {
-							getPresenter().getClassData(classId, courseId, unitId, lessonId, "collection",lessonWidget);
+						if(!lessonWidget.isClicked()) {
+							lessonWidget.setClicked(true);
+							if(lessonWidget.getRowItem().getWidgetCount()<=1) {
+								getPresenter().getClassData(classId, courseId, unitId, lessonId, "collection",lessonWidget);
+							}
 						}
 					}
 				});
@@ -133,8 +136,11 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				unitWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						if(unitWidget.getRowItem().getWidgetCount()<=1) {
-							getPresenter().getClassData(classId, courseId, unitId, null, "lesson",unitWidget);
+						if(!unitWidget.isClicked()) {
+							unitWidget.setClicked(true);
+							if(unitWidget.getRowItem().getWidgetCount()<=1) {
+								getPresenter().getClassData(classId, courseId, unitId, null, "lesson",unitWidget);
+							}
 						}
 					}
 				});
