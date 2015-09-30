@@ -61,7 +61,7 @@ public class ContentVisibilityChildPresenter extends ChildPresenter<ContentVisib
 	}
 	
 	@Override
-	public void updateContentVisibilityData(String classId, ArrayList<PlanProgressDo> data) {
+	public void updateContentVisibilityData(String classId, final ArrayList<PlanProgressDo> data) {
 		AppClientFactory.getInjector().getClasspageService().updateClassContentVisibility(classId, data, new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -69,7 +69,7 @@ public class ContentVisibilityChildPresenter extends ChildPresenter<ContentVisib
 			}
 			@Override
 			public void onSuccess(Boolean result) {
-				
+				getView().closePublishPopup(data);
 			}
 		});
 	}

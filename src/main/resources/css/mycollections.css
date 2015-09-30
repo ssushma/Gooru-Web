@@ -751,6 +751,116 @@ button.btn-disabled{
 	font-size:22px;
 	color:#515151;
 }
+.class-name-arrow-right {
+	width: 0;
+	height: 0;
+	float: left;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid #ddd;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+.class-name-arrow-down {
+	width: 0; 
+	height: 0; 
+	float: left;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #ddd;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+#gShelfMainContainer .contentVisibility.unit {
+	float: left;
+	background: url('${cdn.endpoint}/images/folders/panel/u-close.png') no-repeat;
+	height: 25px;
+	width: 35px;
+	margin-top: -5px;
+	margin-right: 5px;
+}
+#gShelfMainContainer .contentVisibility.lesson {
+	float: left;
+	height: 25px;
+	width: 35px;
+	margin-top: -5px;
+	margin-right: 5px;
+	background: url('${cdn.endpoint}/images/folders/panel/l-close.png') no-repeat;
+}
+#gShelfMainContainer .contentVisibility.unit.open {
+	width: 40px;
+	background-image: url('${cdn.endpoint}/images/folders/panel/u-open.png')!important;
+}
+#gShelfMainContainer .contentVisibility.lesson.open {
+	width: 40px;
+	background-image: url('${cdn.endpoint}/images/folders/panel/l-open.png')!important;
+}
+#gShelfMainContainer .contentVisibility.collection {
+	float: left;
+	height: 24px;
+	width: 30px;
+	margin-top: -5px;
+	margin-right: 5px;
+	background-image: url('${cdn.endpoint}/images/folders/panel/collection-icon.png') !important;
+	margin-left: 50px;
+}
+#gShelfMainContainer .contentVisibility.assessment {
+	float: left;
+	height: 24px;
+	width: 30px;
+	margin-top: -5px;
+	margin-right: 5px;
+	background-image: url('${cdn.endpoint}/images/folders/panel/assessment-type.png') !important;
+	margin-left: 50px;
+}
+.my-content-class-modal-dialog {
+	width: 400px;
+	margin: 30px auto;
+}
+.my-content-class-modal-header {
+	background-color: #515151 !important;
+	height: 50px;
+}
+.my-content-class-modal-title {
+	color: #fff!important;
+	float: left;
+	margin-top: 15px;
+	margin-left: 10px;
+}
+.my-content-class-modal-close-btn {
+	font-size: 35px;
+	color: #fff;
+	float: right;
+	background: #515151;
+	margin-right: 5px;
+}
+.my-content-class-indications {
+	padding: 6px 15px;
+	background: #ddd;
+}
+.my-content-class-individual-item {
+	border-top: 1px solid white;
+	height: 35px;
+	line-height: 35px;
+	position: relative;
+	box-sizing: content-box;
+	padding: 0px 15px;
+}
+.my-content-class-individual-item:hover {
+	cursor: pointer;
+	background-color: #cfe3f1!important;
+}
+.my-content-class-individual-item.selectedActiveItem {
+	background-color: #cfe3f1!important;
+}
+.my-content-class-error-msg {
+	font-weight: bold;
+	height: 10px;
+	color: #fab03a;
+	font: 12px arial;
+	float: left;
+}
+
 @media (max-width: 767px) {
 
 	#gShelfMainContainer .floderLeftContainer{

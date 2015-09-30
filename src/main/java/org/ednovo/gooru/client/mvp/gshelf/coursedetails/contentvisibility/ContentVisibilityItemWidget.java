@@ -10,6 +10,7 @@ import org.ednovo.gooru.client.mvp.gshelf.coursedetails.HighlightContentSpanHand
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -20,18 +21,21 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ContentVisibilityItemWidget extends Composite {
 
-	@UiField HTMLEventPanel rowItem, spanDot, rightRow;
+	@UiField HTMLEventPanel rowItem, contentPanel, spanDot, rightRow;
+	@UiField InlineLabel arrowPanel, iconPanel;
 	@UiField Label lblContentName;
 	@UiField Anchor anrSelect;
 	
 	private String contentType = null, unitId = null, lessonId = null;
 	private int collectionId;
-
+	private boolean isVisible = false;
+	
 	private static ContentVisibilityItemWidgetUiBinder uiBinder = GWT
 			.create(ContentVisibilityItemWidgetUiBinder.class);
 
@@ -41,11 +45,13 @@ public class ContentVisibilityItemWidget extends Composite {
 	
 	public ContentVisibilityItemWidget(String contentType, PlanProgressDo planProgressDo, String unitId, String lessonId) {
 		initWidget(uiBinder.createAndBindUi(this));
+		arrowPanel.setVisible(false);
 		this.contentType = contentType;
 		this.unitId = unitId;
 		this.lessonId = lessonId;
 		setCollectionId(planProgressDo.getCollectionId());
 		setData(contentType, planProgressDo);
+		setVisibility(planProgressDo.isVisibility());
 		spanDot.addClickHandler(new SpanDot(contentType,planProgressDo.isVisibility()));
 		anrSelect.addClickHandler(new AllContentItems());
 		anrSelect.setVisible(false);
@@ -84,13 +90,19 @@ public class ContentVisibilityItemWidget extends Composite {
 			rowItem.setStyleName("unitRow");
 			lblContentName.addStyleName("levelOne");
 			lblContentName.addStyleName("cursor");
+			arrowPanel.setVisible(true);
+			iconPanel.addStyleName("contentVisibility unit");
 		} else if("lesson".equalsIgnoreCase(contentType)) {
 			rowItem.setStyleName("lessonRow");
 			lblContentName.addStyleName("levelTwo");
 			lblContentName.addStyleName("cursor");
+			arrowPanel.setVisible(true);
+			arrowPanel.getElement().getStyle().setMarginLeft(25, Unit.PX);
+			iconPanel.addStyleName("contentVisibility lesson");
 		} else if("collection".equalsIgnoreCase(contentType)) {
 			rowItem.setStyleName("collectionRow");
 			lblContentName.addStyleName("levelThree");
+			iconPanel.addStyleName("contentVisibility collection");
 		}
 	}
 	
@@ -125,7 +137,7 @@ public class ContentVisibilityItemWidget extends Composite {
 			this.contentType = contentType;
 			this.isVisible = isVisible;
 		}
-
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			setSpanDot(contentType, isVisible);
@@ -135,11 +147,11 @@ public class ContentVisibilityItemWidget extends Composite {
 	public void setSpanDot(String contentType, boolean isVisible) {
 		String style = spanDot.getStyleName();
 		if(style.contains(CssTokens.GREEN_STYLE)) {
-			if(!isVisible) {
+			if(!isVisible()) {
 				spanDot.removeStyleName(CssTokens.GREEN_STYLE);
 			}
 			if ("lesson".equalsIgnoreCase(contentType) || "unit".equalsIgnoreCase(contentType)) {
-				removeSpanDot(isVisible);
+				removeSpanDot();
 			}
 		} else {
 			spanDot.addStyleName(CssTokens.GREEN_STYLE);
@@ -166,13 +178,13 @@ public class ContentVisibilityItemWidget extends Composite {
 		}
 	};
 	
-	public void removeSpanDot(boolean isVisible) {
+	public void removeSpanDot() {
 		Iterator<Widget> widgets= rowItem.iterator();
 		while (widgets.hasNext()){
 			  Widget widget = widgets.next();
 			  if (widget instanceof ContentVisibilityItemWidget) {
 				  ContentVisibilityItemWidget childWidget = (ContentVisibilityItemWidget)widget;
-				  if(!isVisible) {
+				  if(!childWidget.isVisible()) {
 					  childWidget.getSpanDot().removeStyleName(CssTokens.GREEN_STYLE);
 				  }
 				  Iterator<Widget> childWidgets= childWidget.getRowItem().iterator();
@@ -180,7 +192,7 @@ public class ContentVisibilityItemWidget extends Composite {
 					  Widget collectionWidget = childWidgets.next();
 					  if (collectionWidget instanceof ContentVisibilityItemWidget) {
 						  ContentVisibilityItemWidget collectionWidgetItem = (ContentVisibilityItemWidget)collectionWidget;
-						  if(!isVisible) {
+						  if(!collectionWidgetItem.isVisible()) {
 							  collectionWidgetItem.getSpanDot().removeStyleName(CssTokens.GREEN_STYLE);
 						  }
 					  }
@@ -189,8 +201,8 @@ public class ContentVisibilityItemWidget extends Composite {
 		}
 	}
 	
-	public Label getLblContentName() {
-		return lblContentName;
+	public HTMLEventPanel getLblContentName() {
+		return contentPanel;
 	}
 	
 	public HTMLEventPanel getRowItem() {
@@ -209,4 +221,25 @@ public class ContentVisibilityItemWidget extends Composite {
 		this.collectionId = collectionId;
 	}
 
+	public boolean isVisible() {
+		return isVisible;
+	}
+
+	public void setVisibility(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+	
+	public void setArrowStyle(boolean isVisible) {
+		arrowPanel.setVisible(isVisible);
+		arrowPanel.setStyleName("class-name-arrow-down");
+		if(isVisible) {
+			iconPanel.addStyleName("open");
+		} else {
+			if("unit".equalsIgnoreCase(contentType)) {
+				iconPanel.getElement().getStyle().setMarginLeft(15, Unit.PX);
+			} else if("lesson".equalsIgnoreCase(contentType)) {
+				iconPanel.getElement().getStyle().setMarginLeft(35, Unit.PX);
+			}
+		}
+	}
 }
