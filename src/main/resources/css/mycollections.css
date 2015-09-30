@@ -854,8 +854,9 @@ button.btn-disabled{
 	color: #fab03a;
 	font: 12px arial;
 	float: left;
+	width: 30%;
+	margin: 10% 35%;
 }
-
 @media (max-width: 767px) {
 
 	#gShelfMainContainer .floderLeftContainer{

@@ -11,7 +11,7 @@
 					</g:Button>
 					<uc:H4Panel styleName="my-content-class-modal-title" ui:field="addtocollHeaderText"></uc:H4Panel>
 				</div>
-				<div>
+				<div class="pull-left">
 					<g:HTML styleName="my-content-class-indications" ui:field="addingTextLbl"></g:HTML>
 					<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="dropdownListClassContainerScrollPanel">
 						<g:HTMLPanel ui:field="classListContainer" styleName="popBody" />
