@@ -365,10 +365,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				lnkPreview.setVisible(false);
 				//toggleButton.setVisible(true);
 				boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
+				int courseSize =folderObj.getCollectionItems().size();
 				copyLbl.setVisible(isVisible);
 				moveLbl.setVisible(false);
 				myCollDelLbl.setVisible(true);
 				deletePnl.setVisible(false);
+				if(COURSE.equalsIgnoreCase(currentTypeView)&& courseSize>=50){
+					copyLbl.setVisible(false);
+				}
 			}
 		}else{
 			lnkPreview.setVisible(false);
