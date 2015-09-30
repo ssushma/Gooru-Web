@@ -26,8 +26,10 @@ package org.ednovo.gooru.client.mvp.gshelf.coursedetails.contentvisibility;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
@@ -40,6 +42,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -55,6 +58,10 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		@UiField Button btnPublish;
 		@UiField Anchor anrAllClasses;
 		private String classId = null;
+		
+		PublishConfirmationPopup publishPopup = null;
+		
+		private MessageProperties i18n = GWT.create(MessageProperties.class);
 		
 		private static ContentVisibilityChildViewUiBinder uiBinder = GWT
 				.create(ContentVisibilityChildViewUiBinder.class);
@@ -82,13 +89,18 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		
 		public void setLessonData(ArrayList<PlanProgressDo> dataList, final String classId, final String courseId, final String unitId, final String contentType, final ContentVisibilityItemWidget widget) {
 			int size = dataList.size();
+			if(size>0) {
+				widget.setArrowStyle(true);
+			} else {
+				widget.setArrowStyle(false);
+			}
 			for(int i=0;i<size;i++) {
 				final String lessonId = dataList.get(i).getGooruOid();
 				final ContentVisibilityItemWidget lessonWidget = new ContentVisibilityItemWidget(contentType, dataList.get(i), unitId, lessonId);
 				lessonWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						if(lessonWidget.getRowItem().getWidgetCount()<=2) {
+						if(lessonWidget.getRowItem().getWidgetCount()<=1) {
 							getPresenter().getClassData(classId, courseId, unitId, lessonId, "collection",lessonWidget);
 						}
 					}
@@ -99,9 +111,14 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		
 		public void setCollectionData(ArrayList<PlanProgressDo> dataList, String unitId, String lessonId, ContentVisibilityItemWidget widget) {
 			int size = dataList.size();
+			if(size>0) {
+				widget.setArrowStyle(true);
+			} else {
+				widget.setArrowStyle(false);
+			}
 			for(int i=0;i<size;i++) {
 				final ContentVisibilityItemWidget collectionWidget = new ContentVisibilityItemWidget("collection",dataList.get(i),unitId,lessonId);
-				if(collectionWidget.getRowItem().getWidgetCount()<=2) {
+				if(collectionWidget.getRowItem().getWidgetCount()<=1) {
 					widget.getRowItem().add(collectionWidget);
 				}
 			}
@@ -116,7 +133,7 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				unitWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						if(unitWidget.getRowItem().getWidgetCount()<=2) {
+						if(unitWidget.getRowItem().getWidgetCount()<=1) {
 							getPresenter().getClassData(classId, courseId, unitId, null, "lesson",unitWidget);
 						}
 					}
@@ -138,6 +155,77 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		
 		@UiHandler("btnPublish")
 		public void updateContentVisibilityData(ClickEvent event) {
+			publishPopup = new PublishConfirmationPopup() {
+				@Override
+				public void onClickPositiveButton(ClickEvent event) {
+					getPresenter().updateContentVisibilityData(classId, getContentData());
+				}
+				@Override
+				public void onClickNegitiveButton(ClickEvent event) {
+					hide();
+					Window.enableScrolling(true);
+				}
+			};
+			publishPopup.getElement().getStyle().setZIndex(9999999);
+			publishPopup.setPopupTitle(i18n.GL3589());
+			publishPopup.setH3Data(i18n.GL3590(),i18n.GL3591());
+			publishPopup.setPositiveButtonText(i18n.GL1921());
+			publishPopup.setNegitiveButtonText(i18n.GL0142());
+			publishPopup.setPleaseWaitText(i18n.GL1924());
+			publishPopup.show();
+			publishPopup.center();
+		}
+		
+		@Override
+		public void closePublishPopup(ArrayList<PlanProgressDo> data) {
+			Window.enableScrolling(true);
+			if(publishPopup!=null){
+				updateContentData(data);
+				publishPopup.hide();
+			}
+		}
+		
+		private void updateContentData(ArrayList<PlanProgressDo> data) {
+			List<Integer> dataList = new ArrayList<Integer>();
+			for(int i = 0; i<data.size(); i++) {
+				dataList.add(data.get(i).getCollectionId());
+			}
+			Iterator<Widget> unitWidgets= tableItems.iterator();
+			while (unitWidgets.hasNext()){
+				  Widget unitWidget = unitWidgets.next();
+				  if (unitWidget instanceof ContentVisibilityItemWidget) {
+					  ContentVisibilityItemWidget unitWidgetItem = (ContentVisibilityItemWidget)unitWidget;
+					  if(dataList.indexOf(unitWidgetItem.getCollectionId())!=-1) {
+						  unitWidgetItem.getSpanDot().addStyleName("tick");
+						  unitWidgetItem.setVisibility(true);
+					  }
+					  Iterator<Widget> lessonWidgets= unitWidgetItem.getRowItem().iterator();
+					  while (lessonWidgets.hasNext()){
+						  Widget lessonWidget = lessonWidgets.next();
+						  if (lessonWidget instanceof ContentVisibilityItemWidget) {
+							  ContentVisibilityItemWidget lessonWidgetItem = (ContentVisibilityItemWidget)lessonWidget;
+							  if(dataList.indexOf(lessonWidgetItem.getCollectionId())!=-1) {
+								  lessonWidgetItem.getSpanDot().addStyleName("tick");
+								  lessonWidgetItem.setVisibility(true);
+							  }
+							  Iterator<Widget> collectionWidgets= lessonWidgetItem.getRowItem().iterator();
+							  while (collectionWidgets.hasNext()){
+								  Widget collectionWidget = collectionWidgets.next();
+								  if (collectionWidget instanceof ContentVisibilityItemWidget) {
+									  ContentVisibilityItemWidget collectionWidgetItem = (ContentVisibilityItemWidget)collectionWidget;
+									  if(dataList.indexOf(collectionWidgetItem.getCollectionId())!=-1) {
+										  collectionWidgetItem.getSpanDot().addStyleName("tick");
+										  collectionWidgetItem.setVisibility(true);
+									  }
+								  }
+							  }
+						  }
+					  }
+				  }
+			}
+		}
+		
+		private ArrayList<PlanProgressDo> getContentData() {
 			Iterator<Widget> unitWidgets= tableItems.iterator();
 			ArrayList<PlanProgressDo> data = new ArrayList<PlanProgressDo>();
 			while (unitWidgets.hasNext()){
@@ -178,7 +266,6 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 					  }
 				  }
 			}
-			getPresenter().updateContentVisibilityData(classId, data);
+			return data;
 		}
-		
 	}
