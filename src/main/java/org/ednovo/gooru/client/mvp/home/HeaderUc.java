@@ -110,6 +110,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -520,6 +521,7 @@ public class HeaderUc extends Composite
 		editSearchBtn.getElement().setAttribute("style","color:gray;");
 		editSearchBtn.setText(i18n.GL0176());
 		editSearchBtn.setEnabled(false);
+		
 		editSearchBtn.setStyleName("secondary");
 		editSearchBtn.getElement().setAttribute("alt", i18n.GL0176());
 		editSearchBtn.getElement().setAttribute("title", i18n.GL0176());

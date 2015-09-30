@@ -334,15 +334,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	@Override
 	public void uploadCollectionImage(CreateDo createDoObj) {
 		addToPopupSlot(imgUploadPresenter);
-		CreateDo createOrUpDate=new CreateDo();
-		createOrUpDate.setTitle(createDoObj.getTitle());
-		createOrUpDate.setDescription(createDoObj.getDescription());
-		createOrUpDate.setCollectionType(createDoObj.getCollectionType());
 		imgUploadPresenter.setCollectionData(createDoObj);
 		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setProfileImage(false);
 		imgUploadPresenter.setEditResourceImage(false);
 		imgUploadPresenter.setAnswerImage(false);
+		imgUploadPresenter.getView().uploadedImagetobeSet(createDoObj);
 /*		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setClassPageImage(false);
 		imgUploadPresenter.setUpdateQuestionImage(false);
@@ -459,8 +456,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void displayCropImage(String imageUrl) {
 		addToPopupSlot(imgUploadPresenter);
 		MediaUploadDo mediaUploadDo=new MediaUploadDo();
-		System.out.println("createDoObj.getThumbnails().getUrl()::"+imageUrl);
-		mediaUploadDo.setName("e6355260-d03f-484c-b6eb-dd6dcd075b12.png");
 		mediaUploadDo.setUrl(imageUrl);
 		imgUploadPresenter.getView().displayCropPopup(mediaUploadDo);
 		imgUploadPresenter.setCollectionImage(true);
