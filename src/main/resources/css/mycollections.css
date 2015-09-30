@@ -4605,6 +4605,7 @@ right:1px;
 .shareMainContainer {
 	min-height: 500px;
 	margin-top: 10px;
+	padding-bottom: 100px;
 }
 
 .shareMainContainer .selectClassBlock{

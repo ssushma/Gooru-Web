@@ -8,14 +8,14 @@
 					<div class="row">
 						<g:Label ui:field="lblTitle" styleName="col-md-9 col-xs-9 col-sm-9"></g:Label>
 						<div class="col-md-3 col-xs-3 col-sm-3 closeButtonpopupSteps">
-							<g:Image url="images/closeBig.png" ui:field="closeBtn"/>
+							<g:Image styleName="cursorPointer" url="images/closeBig.png" ui:field="closeBtn"/>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
 				<div class="popupPanelBody popupOrgBoxCheck">
 					<div class="alertIconPopup">
-						<img src="images/alert-icon-copy-2.png"/>
+						<img src="images/popup/publish-arrow.png"/>
 					</div>
 					<div class="indicationHeader lastStep">
 						<panel:H4Panel styleName="alignCenterAndBackground" ui:field="h3PanelDataTitle"></panel:H4Panel>
