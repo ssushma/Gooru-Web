@@ -34,7 +34,7 @@ public class ContentVisibilityItemWidget extends Composite {
 	
 	private String contentType = null, unitId = null, lessonId = null;
 	private int collectionId;
-	private boolean isVisible = false;
+	private boolean isVisible = false, isClicked = false;
 	
 	private static ContentVisibilityItemWidgetUiBinder uiBinder = GWT
 			.create(ContentVisibilityItemWidgetUiBinder.class);
@@ -229,6 +229,14 @@ public class ContentVisibilityItemWidget extends Composite {
 		this.isVisible = isVisible;
 	}
 	
+	public boolean isClicked() {
+		return isClicked;
+	}
+
+	public void setClicked(boolean isClicked) {
+		this.isClicked = isClicked;
+	}
+
 	public void setArrowStyle(boolean isVisible) {
 		arrowPanel.setVisible(isVisible);
 		arrowPanel.setStyleName("class-name-arrow-down");
