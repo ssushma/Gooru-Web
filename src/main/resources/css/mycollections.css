@@ -597,12 +597,7 @@ button.btn-disabled{
     background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* W3C */
 }
 
-#gShelfMainContainer .folderLevel:hover {
-	background-color: white !important;
-	cursor: pointer !important;
-	margin: 0px;
-	color: #515151 !important;
-}
+
 
 #gShelfMainContainer .folderLevel:hover .arrow {
     display:block;
@@ -3411,8 +3406,13 @@ display: table-cell;
   	  width: 120px;
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage{
-	position:relative;
-
+	height: 90px;
+	width: 120px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	position: relative;
+	border-left: 10px solid #1076bb;
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail{
 display: table-cell;
@@ -3425,7 +3425,7 @@ display: table-cell;
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage img{
 	width: 120px;
 	height:90px;
-	border-left:10px solid #1076bb;
+	display: none;
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage .cropImage{
 	cursor: pointer;

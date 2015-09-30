@@ -6,7 +6,7 @@
 		.imagePopupLeft {
 			width: 170px;
 			background-color: #E7E7E7;
-			height: 480px;
+			height: 500px;
 			float: left;
 		}
 		.imageUploadAlign {
@@ -181,7 +181,7 @@
 			padding-left: 6px;
 		}
 		.cropImagePanel{
-			height: 273px;
+			height: 300px;
 			width: 400px;
 			margin: 40px auto 0 auto;
 			clear: both;
