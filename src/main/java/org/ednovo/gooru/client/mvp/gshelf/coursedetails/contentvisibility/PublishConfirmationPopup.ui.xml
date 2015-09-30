@@ -1,0 +1,39 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
+	<g:HTMLPanel styleName="row">
+		<g:HTMLPanel ui:field="popupSteps">
+			<div class="popupPanelMain">
+				<div class="popupPanelHeader">
+					<div class="row">
+						<g:Label ui:field="lblTitle" styleName="col-md-9 col-xs-9 col-sm-9"></g:Label>
+						<div class="col-md-3 col-xs-3 col-sm-3 closeButtonpopupSteps">
+							<g:Image styleName="cursorPointer" url="images/closeBig.png" ui:field="closeBtn"/>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="popupPanelBody popupOrgBoxCheck">
+					<div class="alertIconPopup">
+						<img src="images/popup/publish-arrow.png"/>
+					</div>
+					<div class="indicationHeader lastStep">
+						<panel:H4Panel styleName="alignCenterAndBackground" ui:field="h3PanelDataTitle"></panel:H4Panel>
+						<panel:H4Panel styleName="padding-top-10 alignCenterAndBackground" ui:field="h3PanelDataDesc"></panel:H4Panel>
+					</div>
+				</div>
+				<div class="popupPanelFooter">
+					<div class="row">
+						<div class="col-md-8 deleteButtons">
+						    <g:Label styleName="pleaseWaitMessage" ui:field="lblRemoving"/>
+							<g:Button ui:field="btnNegitive" styleName="secondary"></g:Button>
+							<g:Button ui:field="btnPositive" styleName="primary margin-left-5"></g:Button>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+		</g:HTMLPanel>
+		<div class="clearfix"></div>
+	</g:HTMLPanel>
+</ui:UiBinder>

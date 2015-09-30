@@ -203,7 +203,7 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 							setCollectionContent(folderDo);
 						}
 					}
-				}else if(collection.getStatusCode()!=400){
+				}else if(collection.getStatusCode()!=400 && collection.getStatusCode()!=404){
 					errorPopup = null;
 					invokeErrorPopup();
 				}
