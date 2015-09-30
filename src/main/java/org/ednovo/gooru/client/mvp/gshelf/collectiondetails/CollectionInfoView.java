@@ -1081,6 +1081,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		element.removeAttribute("src");
 		element.setAttribute("src", url+"?id="+Math.random());
 		element.setAttribute("filename", mediaFileName);
+		element.setAttribute("style", "display:none");
 		Element elementPnl=Document.get().getElementById("mycollectionUploadPnl");
 		elementPnl.removeAttribute("style");
 		elementPnl.setAttribute("style", "background-image:url("+ url+"?id="+Math.random()+");");
