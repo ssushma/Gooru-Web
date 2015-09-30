@@ -553,7 +553,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					params.put("view", "Course");
 					shelfMainPresenter.setVersion();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
-					getView().hideglassPanel();
+					
 				}else if(result.get("status").equalsIgnoreCase("inprogress")){
 					Timer timer = new Timer() {
 
