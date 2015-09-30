@@ -38,4 +38,5 @@ import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
  */
 public interface IsContentVisibilityView extends IsChildView<ContentVisibilityChildPresenter> {
 	public void setData(ArrayList<PlanProgressDo> dataList, String classId, String courseId, String unitId, String lessonId, String contentType, ContentVisibilityItemWidget widget);
+	public void closePublishPopup(ArrayList<PlanProgressDo> data);
 }

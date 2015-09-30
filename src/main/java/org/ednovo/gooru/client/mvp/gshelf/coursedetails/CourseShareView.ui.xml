@@ -26,7 +26,7 @@
 	            <g:HTMLPanel ui:field="associatedClassesPnl">
 					<h3>This course is assigned to students in these classes:</h3>
 					<g:VerticalPanel styleName="classListStyle" ui:field="classListPnl"></g:VerticalPanel>
-					<h4 class="courseDetailsContainerBorder">+ Add Class</h4>
+					<uc:H4Panel styleName="courseDetailsContainerBorder cursorPointer" ui:field="addClassBtn"></uc:H4Panel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 	    </g:HTMLPanel>
