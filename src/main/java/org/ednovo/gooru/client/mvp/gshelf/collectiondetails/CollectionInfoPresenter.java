@@ -256,12 +256,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		}
 		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);	
 		String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
-		if(view!=null && view.equalsIgnoreCase("Folder")){
+		if(view!=null){
 			if(idVal!=null){
-			if(folderObj!=null && folderObj.getGooruOid()!=null)
-			{
+		/*	if(folderObj!=null && folderObj.getGooruOid()!=null)
+			{*/
 			getCollectionDo(idVal);
-			}
+			/*}*/
 			}
 		}
 	}
@@ -334,6 +334,10 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	@Override
 	public void uploadCollectionImage(CreateDo createDoObj) {
 		addToPopupSlot(imgUploadPresenter);
+		CreateDo createOrUpDate=new CreateDo();
+		createOrUpDate.setTitle(createDoObj.getTitle());
+		createOrUpDate.setDescription(createDoObj.getDescription());
+		createOrUpDate.setCollectionType(createDoObj.getCollectionType());
 		imgUploadPresenter.setCollectionData(createDoObj);
 		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setProfileImage(false);
