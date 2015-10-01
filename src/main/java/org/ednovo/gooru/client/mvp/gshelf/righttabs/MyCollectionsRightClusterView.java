@@ -187,7 +187,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setBreadCrumbSlot(FolderDo folderObj, String type, HashMap<String, String> selectedWidgetsTitleType){
 		this.folderObj=folderObj;
-
+if(folderObj!=null)
+{
 		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(folderObj.getUrl(), folderObj.getGooruOid(), new SimpleAsyncCallback<String>() {
 
 			@Override
@@ -195,6 +196,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				LTI_URL= result;
 			}
 		});
+}
 
 
 
