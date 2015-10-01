@@ -2304,4 +2304,31 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return dataList;
 	}
+
+	@Override
+	public boolean updateClassContentVisibility(String classId, List<PlanProgressDo> collectionIds) throws GwtException, ServerDownException {
+		boolean isUpdated = false;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_CONTENT_VISIBILITY, classId);
+		getLogger().info("updateClassContentVisibility: "+url);
+		try{
+			JSONArray payload=new JSONArray();
+			for(int i=0;i<collectionIds.size();i++) {
+				JSONObject content= new JSONObject();
+				content.put(COLLECTIONID, collectionIds.get(i).getCollectionId());
+				content.put(VISIBILITY, collectionIds.get(i).isVisibility());
+				payload.put(content);
+			}
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),payload.toString());
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			getLogger().info("updateClassContentVisibility payload:"+payload.toString());
+			if(jsonResponseRep.getStatusCode()==200){
+				isUpdated = true;
+				getLogger().info("###update success######");
+			}
+		}catch(Exception e){
+			getLogger().error("v3 updateClassContentVisibility ..:"+e.getMessage());
+		}
+		return isUpdated;
+	}
 }

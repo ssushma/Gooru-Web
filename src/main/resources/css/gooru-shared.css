@@ -599,6 +599,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	text-align: center;
+	float:right;
 }
 
 .copyLblStyle.selected {
@@ -681,6 +682,10 @@
 
 .spinnerDisplayPosition {
 	top: 500px;
+	position: relative;
+}
+.spinnerDisplayPositionCourse {
+	top: 300px;
 	position: relative;
 }
 

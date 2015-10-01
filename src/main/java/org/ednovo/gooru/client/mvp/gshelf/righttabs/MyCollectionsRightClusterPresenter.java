@@ -34,7 +34,6 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
-import org.ednovo.gooru.client.mvp.gshelf.LoadMyContentEvent;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectioncontent.CollectionContentPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.CollectionInfoPresenter;
@@ -538,6 +537,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			@Override
 			public void onSuccess(String url) {
 				callJobSuccessApi(url,null);
+		
 			}
 		});
 	}
@@ -553,6 +553,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					params.put("view", "Course");
 					shelfMainPresenter.setVersion();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+					
 				}else if(result.get("status").equalsIgnoreCase("inprogress")){
 					Timer timer = new Timer() {
 
@@ -567,6 +568,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					new AlertForImageUpload("Oops", "Something went wrong, plewase try again.");
 					//getView().hidePopup();
 				}
+			
 			}
 		});
 	}

@@ -3,7 +3,13 @@
 	<ui:style src=""></ui:style>
     <panel:HTMLEventPanel ui:field="rowItem">
 		<g:HTMLPanel styleName="tableRow">
-	    	<g:HTMLPanel styleName="tableCell"><g:Label styleName="unitLessonDetailsTab" ui:field="lblContentName"></g:Label></g:HTMLPanel>
+	    	<g:HTMLPanel styleName="tableCell">
+	    	    <panel:HTMLEventPanel styleName="cursorPointer" ui:field="contentPanel">
+		    	    <g:InlineLabel ui:field="arrowPanel" styleName="class-name-arrow-right"></g:InlineLabel>
+		    	    <g:InlineLabel ui:field="iconPanel"></g:InlineLabel>
+		    	    <g:Label styleName="unitLessonDetailsTab" ui:field="lblContentName"></g:Label>
+	    	    </panel:HTMLEventPanel>
+	    	</g:HTMLPanel>
 			<panel:HTMLEventPanel styleName="tableCell" ui:field="rightRow">
 			    <g:HTMLPanel styleName="statusTab">
 			        <g:Anchor ui:field="anrSelect">Select All</g:Anchor>

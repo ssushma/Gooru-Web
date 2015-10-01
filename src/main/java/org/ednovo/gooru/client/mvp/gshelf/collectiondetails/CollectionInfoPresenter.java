@@ -256,12 +256,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		}
 		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);	
 		String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
-		if(view!=null && view.equalsIgnoreCase("Folder")){
+		if(view!=null){
 			if(idVal!=null){
-			if(folderObj!=null && folderObj.getGooruOid()!=null)
-			{
+		/*	if(folderObj!=null && folderObj.getGooruOid()!=null)
+			{*/
 			getCollectionDo(idVal);
-			}
+			/*}*/
 			}
 		}
 	}
@@ -343,6 +343,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		imgUploadPresenter.setProfileImage(false);
 		imgUploadPresenter.setEditResourceImage(false);
 		imgUploadPresenter.setAnswerImage(false);
+		imgUploadPresenter.getView().uploadedImagetobeSet(createDoObj);
 /*		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setClassPageImage(false);
 		imgUploadPresenter.setUpdateQuestionImage(false);
@@ -459,8 +460,6 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	public void displayCropImage(String imageUrl) {
 		addToPopupSlot(imgUploadPresenter);
 		MediaUploadDo mediaUploadDo=new MediaUploadDo();
-		System.out.println("createDoObj.getThumbnails().getUrl()::"+imageUrl);
-		mediaUploadDo.setName("e6355260-d03f-484c-b6eb-dd6dcd075b12.png");
 		mediaUploadDo.setUrl(imageUrl);
 		imgUploadPresenter.getView().displayCropPopup(mediaUploadDo);
 		imgUploadPresenter.setCollectionImage(true);

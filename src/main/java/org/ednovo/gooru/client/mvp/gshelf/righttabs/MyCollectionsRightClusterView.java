@@ -46,6 +46,9 @@ import org.ednovo.gooru.shared.util.PropertiesCache;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -68,8 +71,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,/*toggleButton,*/deletePnl,glassPanelDiv;
 
-	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,/*toggleButton,*/deletePnl;
 	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview,lnkDeleteButton;
 	//@UiField HTMLEventPanel /*popupPanelDropDwn,*/copyPopupPanel;
 	@UiField HTMLEventPanel copyLbl,moveLbl,myCollDelLbl;
@@ -131,6 +135,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		copyLbl.setTitle(i18n.GL0827());
 		moveLbl.setTitle(i18n.GL1261());
 
+		glassPanelDiv.setVisible(false);
+
 	/*	Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hideDropDown(event);
@@ -181,7 +187,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setBreadCrumbSlot(FolderDo folderObj, String type, HashMap<String, String> selectedWidgetsTitleType){
 		this.folderObj=folderObj;
-
+if(folderObj!=null)
+{
 		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(folderObj.getUrl(), folderObj.getGooruOid(), new SimpleAsyncCallback<String>() {
 
 			@Override
@@ -189,6 +196,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				LTI_URL= result;
 			}
 		});
+}
 
 
 
@@ -354,10 +362,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				lnkPreview.setVisible(false);
 				//toggleButton.setVisible(true);
 				boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
+	
 				copyLbl.setVisible(isVisible);
 				moveLbl.setVisible(false);
 				myCollDelLbl.setVisible(true);
 				deletePnl.setVisible(false);
+
 			}
 		}else{
 			lnkPreview.setVisible(false);
@@ -564,6 +574,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	private class onCopyClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			
+			
 			if(!(COURSE.equalsIgnoreCase(currentTypeView))){
 				getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
 				getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
@@ -576,6 +588,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			}
 		}
 	}
+	
 	private class onMoveClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {

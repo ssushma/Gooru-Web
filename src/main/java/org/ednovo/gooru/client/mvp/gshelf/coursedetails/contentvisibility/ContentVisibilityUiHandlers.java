@@ -24,8 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails.contentvisibility;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 
 public interface ContentVisibilityUiHandlers extends BaseUiHandlers{
 	public void getClassData(String classId, String courseId, String unitId,String lessonId, String contentType, ContentVisibilityItemWidget widget);
+	public void updateContentVisibilityData(String classId, ArrayList<PlanProgressDo> data);
 }

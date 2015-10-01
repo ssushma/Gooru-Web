@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.classpages;
 
-import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
