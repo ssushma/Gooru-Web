@@ -786,7 +786,7 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		}
 		TreeItem treeItem = new TreeItem(shelfTreeWidget);
 		treeItem.getElement().scrollIntoView();
-		shelfFolderTree.insertItem(shelfFolderTree.getItemCount(), treeItem);
+		shelfFolderTree.insertItem(COURSE.equalsIgnoreCase(getViewType())?shelfFolderTree.getItemCount():0, treeItem);
 		treeChildSelectedItem=treeItem;
 		correctStyle(treeItem);
 		floderTreeContainer.add(shelfFolderTree);

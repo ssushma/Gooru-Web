@@ -50,7 +50,6 @@ import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -548,5 +547,13 @@ public interface ClasspageService extends BaseService {
 	public PlanContentDo getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException;
 
 	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId)throws GwtException, ServerDownException;
+
+	public boolean getClassUsageDataSignal(String classpageId, String courseId) throws GwtException, ServerDownException;
+	
+	public String getXlsxReport(String tableData, String fileName) throws GwtException, ServerDownException;
+
+	public ArrayList<PlanProgressDo> getContentVisibilityData(String classpageId, String courseId, String unitId, String lessonId) throws GwtException, ServerDownException;
+
+	public boolean updateClassContentVisibility(String classId, List<PlanProgressDo> collectionIds) throws GwtException, ServerDownException;
 
 }

@@ -1432,6 +1432,7 @@ public class SearchInfoWidget extends Composite {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
 			Window.enableScrolling(false);
+
 			popup=new AddTagesPopupView(searchResultDo.getGooruOid()) {
 				@Override
 				public void closePoup(boolean isCancelclicked) {
@@ -1481,6 +1482,7 @@ public class SearchInfoWidget extends Composite {
 					
 				}
 			};
+			popup.getAddStandards();
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}

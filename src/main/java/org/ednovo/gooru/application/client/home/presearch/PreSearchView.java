@@ -142,14 +142,12 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	String[] standardsTypesArray = new String[]{i18n.GL3379(),i18n.GL3322(),i18n.GL3323(),i18n.GL3324(),i18n.GL3325(),i18n.GL3321()};
 
 	TreeMap<Integer, Integer> selectedGrades = new TreeMap<Integer, Integer>();
-	HashMap<String, String> selectedSubjects = new HashMap<String, String>();
+	String selectedSubjects = "";
 
 	public PreSearchView() {
 		setWidget(uiBinder.createAndBindUi(this));
 
 		setDebugIds();
-
-//		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 
 		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
 
@@ -182,7 +180,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
 		classCodeTxtBox.getElement().setId("txtClassCode");
 		classCodeTxtBox.getElement().setAttribute("placeholder", i18n.GL1785());
-		
+
 		AdvancedFlexTable table = new AdvancedFlexTable();
 
 		// create headers and put them in the thead tag
@@ -259,11 +257,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 	/* UI Handlers...*/
 
-	/*@UiHandler("btnStudentSignUp")
-	public void onClickStudentSignUp(ClickEvent event){
-		openSignUp();
-	}*/
-
 	@UiHandler("btnLearnAboutApproach")
 	public void onClickLearnAboutApproach(ClickEvent event){
 
@@ -293,23 +286,32 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 	@UiHandler("btnSubjects")
 	public void onClickSubject(ClickEvent event){
-		setSubjectVisibility();
-		if (panelGrades.isVisible()){
-			setGradeVisibility();
-		}
-		if (standardsDropListValues.isVisible()){
-			setStandardsVisibility();
+
+		if (ulSubjectPanel.getWidgetCount() == 0){
+			getUiHandlers().loadSubjects();
+		}else{
+			setSubjectVisibility();
+			if (panelGrades.isVisible()){
+				setGradeVisibility();
+			}
+			if (standardsDropListValues.isVisible()){
+				setStandardsVisibility();
+			}
 		}
 	}
 
 	@UiHandler("btnSubjectCaret")
 	public void onClickSubjectCaret(ClickEvent event){
-		setSubjectVisibility();
-		if (panelGrades.isVisible()){
-			setGradeVisibility();
-		}
-		if (standardsDropListValues.isVisible()){
-			setStandardsVisibility();
+		if (ulSubjectPanel.getWidgetCount() == 0){
+			getUiHandlers().loadSubjects();
+		}else{
+			setSubjectVisibility();
+			if (panelGrades.isVisible()){
+				setGradeVisibility();
+			}
+			if (standardsDropListValues.isVisible()){
+				setStandardsVisibility();
+			}
 		}
 	}
 
@@ -346,10 +348,10 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 
 	@UiHandler("btnBrowseContent")
 	public void onClickBrowseContent(ClickEvent event){
-		if (selectedSubjects.size() <= 0 && selectedGrades.size() <= 0){
+		if (selectedSubjects.isEmpty()){
 			lblErrorMessage.setText(i18n.GL3329());
 			lblErrorMessage.setVisible(true);
-		}else if (selectedSubjects.size() <= 0){
+		}else if (selectedSubjects.isEmpty()){
 			lblErrorMessage.setText(i18n.GL3331());
 			lblErrorMessage.setVisible(true);
 		}else if (selectedGrades.size() <= 0){
@@ -359,7 +361,10 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			lblErrorMessage.setVisible(false);
 			Map<String, String> params = new HashMap<String, String>();
 			params.put(FLT_GRADE, getSelectedGrades());
-			params.put(FLT_SUBJECTNAME, getSelectedSubjects());
+			if(!selectedSubjects.isEmpty())
+			{
+			params.put(FLT_SUBJECTNAME, selectedSubjects);
+			}
 			params.put(CATEGORY,ALL);
 			params.put(FLT_COLLECTIONTYPE,COLLECTION);
 
@@ -375,41 +380,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 		if (slot == PreSearchPresenter.GRADES){
 			panelGrades.add(content);
 		}
-	}
-
-
-	/**
-	 *
-	 * @function openSignUp
-	 *
-	 * @created_date : 22-Jun-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	private void openSignUp(){
-		GWT.runAsync(new SimpleRunAsyncCallback() {
-
-			@Override
-			public void onSuccess() {
-				Map<String, String> map = StringUtil.splitQuery(Window.Location
-						.getHref());
-				map.put("callback", "signup");
-				map.put("type", "1");
-				AppClientFactory.getPlaceManager().revealPlace(
-						AppClientFactory.getCurrentPlaceToken(), map);
-			}
-		});
 	}
 
 	/**
@@ -478,19 +448,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 			standardsDropListValues.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		}
 	}
-
-	ClickHandler rootHandler= new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
-			GWT.runAsync(new SimpleRunAsyncCallback() {
-
-				@Override
-				public void onSuccess() {
-
-				}
-			});
-		}
-	};
 
 
 	/* Browse Standards */
@@ -657,7 +614,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 *
 	 */
-	public void renderSubjects(List<String> list){
+	private void renderSubjects(List<String> list){
 		InlineLabel text=new InlineLabel(i18n.GL3234()+i18n.GL_SPL_SEMICOLON());
 		ulSubjectPanel.add(text);
 		for (String subject : list) {
@@ -699,13 +656,13 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 				}
 				@Override
 				public void onSuccess() {
+					removeActiveStylestoOtherSubjects();
 					if(liPanel.getStyleName().equals(CssTokens.ACTIVE)){
 						liPanel.removeStyleName(CssTokens.ACTIVE);
-						selectedSubjects.remove(subjectVal);
 						displaySelectedSbujects("remove");
 					}else{
 						liPanel.setStyleName(CssTokens.ACTIVE);
-						selectedSubjects.put(subjectVal, subjectVal);
+						selectedSubjects = subjectVal;
 						displaySelectedSbujects("add");
 					}
 
@@ -713,6 +670,17 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 				}
 
 			});
+		}
+	}
+	public void removeActiveStylestoOtherSubjects() {
+		Iterator<Widget> widgets = ulSubjectPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				LiPanel obj=(LiPanel) widget;				
+				obj.removeStyleName("active");
+				
+			}
 		}
 	}
 	/**
@@ -735,37 +703,28 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 */
 	private void displaySelectedSbujects(String action) {
-		int count=0;
-		StringBuffer selectedSubject = new StringBuffer();
-		Iterator it = selectedSubjects.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry<String,String> pair = (Map.Entry<String,String>)it.next();
-	        String pairValue = pair.getValue().trim();
-
-	        if (count==0){
-	        	selectedSubject.append(pairValue);
-	        }else{
-	        	selectedSubject.append(", "+pairValue);
-	        }
-	        count++;
-	    }
-	    if (selectedSubjects.size() > 0){
-	    	btnSubjects.setText(selectedSubject.toString());
+	    if (!selectedSubjects.isEmpty()){
+	    	btnSubjects.setText(selectedSubjects);
 	    }else{
 	    	btnSubjects.setText(i18n.GL3291());
 	    }
 	    if ("add".equalsIgnoreCase(action)){
 //	    	btnSubjects.getElement().addClassName("ellipsis");
 	    }else{
-	    	if (selectedSubjects.size() <= 2){
-//	    		btnSubjects.getElement().removeClassName("ellipsis");
-	    	}
+
 	    }
 	}
 
 	@Override
 	public void setSearchFilter(SearchFilterDo searchFilterDo) {
 		if(searchFilterDo.getSubjects()!=null && searchFilterDo.getSubjects().size()>=0){
+			if (panelGrades.isVisible()){
+				setGradeVisibility();
+			}
+			if (standardsDropListValues.isVisible()){
+				setStandardsVisibility();
+			}
+			setSubjectVisibility();
 			renderSubjects(searchFilterDo.getSubjects());
 		}
 	}
@@ -835,7 +794,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 *
 	 */
-	public String getSelectedSubjects(){
+/*	public String getSelectedSubjects(){
 		int count=0;
 		StringBuffer selectedSubject = new StringBuffer();
 		Iterator it = selectedSubjects.entrySet().iterator();
@@ -851,7 +810,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	        count++;
 	    }
 	    return selectedSubject.toString();
-	}
+	}*/
 
 	@Override
 	public void setDefaults(){
@@ -1167,7 +1126,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	}
 
 	public final void populateStandardValues(){
-		standardsDropListValues.clear(); 
+		standardsDropListValues.clear();
         for (String standardsTypesArray1 : standardsTypesArray) {
             List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
             LiPanel liPanel = new LiPanel();

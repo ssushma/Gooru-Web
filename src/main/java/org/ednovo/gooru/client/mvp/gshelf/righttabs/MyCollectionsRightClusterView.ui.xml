@@ -7,20 +7,38 @@
 			<g:FlowPanel styleName="breadcrumbMain" ui:field="pnlBreadCrumbMain"/>
 		</div>
 		<div class="folderBlockSitemap">
-			<div class="col-md-9 col-sm-9">
+			<div class="col-md-7 col-sm-7">
 				<g:Anchor ui:field="lnkInfo" styleName="active" text="{i18n.GL0828}"></g:Anchor>
 				<g:Anchor ui:field="lnkContent" text="{i18n.GL3488}"></g:Anchor>
 				<g:Anchor ui:field="lnkshare" text="{i18n.GL0536}"></g:Anchor>
 			</div>
-			<div class="col-md-3 col-sm-3 actions">
+			<div class="col-md-5 col-sm-5 actions">
 				<div class="deleteButton">
 					<g:Anchor ui:field="lnkPreview" text="{i18n.GL1714}">Preview</g:Anchor>
 				</div>
 				<g:HTMLPanel styleName="deleteButton" ui:field="deletePnl">
 					<g:Anchor ui:field="lnkDeleteButton" text="Delete"></g:Anchor>
 				</g:HTMLPanel>
+				<hpanel:HTMLEventPanel styleName="copyLblStyle" ui:field="myCollDelLbl">
+				    <g:Image url="images/Trashcan.png"  title="Delete"/>
+				    <div style="color: #6FA3BC;" text="Delete">Delete</div>
+				</hpanel:HTMLEventPanel>
+				<hpanel:HTMLEventPanel styleName="copyLblStyle" ui:field="moveLbl">
+				   <g:Image url="images/Move.png"/>
+				    <div style="color: #6FA3BC;" text="Move">Move</div>
+				</hpanel:HTMLEventPanel>
+				<hpanel:HTMLEventPanel styleName="copyLblStyle" ui:field="copyLbl">
+				    <g:Image url="images/Copy.png" />
+				    <div style="color: #6FA3BC;" text="Copy">Copy</div>
+				</hpanel:HTMLEventPanel>
+				
+				
+				
 				<div id="gooruSearchMainContainer" style="display:inline;float:right;">
-					<g:HTMLPanel styleName="gridToggle" ui:field="toggleButton">
+				   
+					
+					
+					<!-- <g:HTMLPanel styleName="gridToggle" ui:field="toggleButton">
 						<g:HTMLPanel styleName="btn-group">
 							 <hpanel:HTMLEventPanel ui:field="popupPanelDropDwn">
 								<button type="button" class="btn btn-primary">
@@ -39,11 +57,16 @@
 								<g:Label ui:field="myCollDelLbl" text="Delete" styleName="copyLblStyle"></g:Label>
 							</hpanel:HTMLEventPanel>
 						</g:HTMLPanel>
-					</g:HTMLPanel>
+					</g:HTMLPanel> -->
 				</div>
 		</div>
 			<div class="clearfix"></div>
 		</div>
 		<g:HTMLPanel ui:field="pnlSlotInnerContent"/>
+		<g:HTMLPanel ui:field="glassPanelDiv">
+		   <g:HTMLPanel ui:field="spinnerIconContainer" styleName="spinnerContainer">
+			<g:HTMLPanel styleName="loadingImage spinnerDisplayPositionCourse"></g:HTMLPanel>
+		</g:HTMLPanel>
+		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

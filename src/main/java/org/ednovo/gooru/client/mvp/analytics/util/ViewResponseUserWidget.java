@@ -293,10 +293,8 @@ public class ViewResponseUserWidget extends Composite {
 	}
 
 	private String getTextFromHTML(String html){
-		if (!"+".equalsIgnoreCase(html)){
-			html = URL.decodeQueryString(html);
-		}
-		AppClientFactory.printInfoLogger("html : "+html);
+		html = html.replaceAll("\\+", "%2B");
+		html = URL.decodeQueryString(html);
 		return html;
 	}
 }

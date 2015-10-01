@@ -176,7 +176,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 								}
 								collectionList.setItems(contentList);
 							}
-							getView().setLessonContent(collectionList,getClasspageDo().getStatus(),getClasspageDo().getUser().getGooruUId());
+							getView().setLessonContent(collectionList,getClasspageDo().getStatus(),getClasspageDo().getUser().getGooruUId(),getClasspageDo().getMinimumScore());
 						}
 						@Override
 						public void onFailure(Throwable caught) {

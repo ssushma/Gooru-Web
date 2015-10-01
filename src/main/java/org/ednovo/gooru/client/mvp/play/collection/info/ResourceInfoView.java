@@ -670,56 +670,44 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				}
 				setmediafeaturesDetails(mediafeaturesdetails);
 				}
-			
 			}
 	
 		List<String> eduUsedetails = new ArrayList<String>();
-
-		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getEducationalUse()!=null){
-		if(collectionItemDo.getResource().getEducationalUse().size()>0){
-		for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
-			if(collectionItemDo.getResource().getEducationalUse().get(i).isSelected())
-			{
-			eduUsedetails.add(collectionItemDo.getResource().getEducationalUse().get(i).getValue());
+		if(collectionItemDo.getEducationalUse()!=null && collectionItemDo.getEducationalUse().size()>0){
+			for(int i=0;i<collectionItemDo.getEducationalUse().size();i++){
+				eduUsedetails.add(collectionItemDo.getEducationalUse().get(i).getName());
 			}
-		}
-		seteducationaluseDetails(eduUsedetails);
+			seteducationaluseDetails(eduUsedetails);
 		}else{
 			eduUsePanel.setVisible(false);
 		}
-		}
+
 		List<String> depthofknowledgedetails = new ArrayList<String>();
 		List<String> momentoflearningdetails = new ArrayList<String>();
 		
 		if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-		 depthofknowledgedetails = new ArrayList<String>();
-			if(collectionItemDo.getResource().getDepthOfKnowledge()!=null){
-			if(collectionItemDo.getResource().getDepthOfKnowledge().size()>0){
-			for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledge().size();i++){
-				if(collectionItemDo.getResource().getDepthOfKnowledge().get(i).isSelected())
-				{
-				depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledge().get(i).getValue());
+			depthofknowledgedetails = new ArrayList<String>();
+			if(collectionItemDo.getDepthOfKnowledge()!=null){
+				if(collectionItemDo.getDepthOfKnowledge().size()>0){
+					for(int i=0;i<collectionItemDo.getDepthOfKnowledge().size();i++){
+						depthofknowledgedetails.add(collectionItemDo.getDepthOfKnowledge().get(i).getName());
+					}
+					setDepthofknowledgeDetails(depthofknowledgedetails);
+				}else{
+					dKnowledgePanel.setVisible(false);
 				}
-			}
-			setDepthofknowledgeDetails(depthofknowledgedetails);
-			}else{
-				dKnowledgePanel.setVisible(false);
-			}
 			}else{
 				dKnowledgePanel.setVisible(false);
 			}
 			momentsoflearningPanel.setVisible(false);
 		}
 		else{
-			 momentoflearningdetails = new ArrayList<String>();
-			if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
-			if(collectionItemDo.getResource().getMomentsOfLearning().size()>0){
-			for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
-				if(collectionItemDo.getResource().getMomentsOfLearning().get(i).isSelected())
-				{
-				momentoflearningdetails.add(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue());
+			momentoflearningdetails = new ArrayList<String>();
+			if(collectionItemDo.getMomentsOfLearning()!=null){
+				if(collectionItemDo.getMomentsOfLearning().size()>0){
+				for(int i=0;i<collectionItemDo.getMomentsOfLearning().size();i++){
+					momentoflearningdetails.add(collectionItemDo.getMomentsOfLearning().get(i).getName());
 				}
-			}
 			setmonentoflearningDetails(momentoflearningdetails);
 			}else{
 				momentsoflearningPanel.setVisible(false);	
@@ -1252,35 +1240,34 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			educationallLbl.setText(i18n.GL1720());
 			educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
 			educationallLbl.getElement().setAttribute("title",i18n.GL1720());
-					if(eduUsedetails.size()>0){
-						final Label eduUseLabel=new Label(" "+eduUsedetails.get(0));
-						eduUseLabel.getElement().setAttribute("style", "float: left;");
-						eduUseType.add(eduUseLabel);
-						eduUsePanel.setVisible(true);
-						educationallLbl.setText(i18n.GL1720());
-						educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
-						educationallLbl.getElement().setAttribute("title",i18n.GL1720());
-						eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-						eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
-						eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
-						educationallLbl.setVisible(true);
-					}else if(eduUsedetails.size()>2){
-						final Label eduUseLabel=new Label("+"+(eduUsedetails.size()-2)); 
-						eduUseLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-						eduUseType.add(eduUseLabel);
-						Widget eduusewidget = getCommonwidget(eduUsedetails);
-						eduUseLabel.addMouseOverHandler(new MouseOverShowToolTip(eduusewidget));
-						eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
-						eduUsePanel.setVisible(true);
-						educationallLbl.setText(i18n.GL1720());
-						educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
-						educationallLbl.getElement().setAttribute("title",i18n.GL1720());
-						eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-						eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
-						eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
-						educationallLbl.setVisible(true);
-					}
-		
+				if(eduUsedetails.size()>0){
+					final Label eduUseLabel=new Label(" "+eduUsedetails.get(0));
+					eduUseLabel.getElement().setAttribute("style", "float: left;");
+					eduUseType.add(eduUseLabel);
+					eduUsePanel.setVisible(true);
+					educationallLbl.setText(i18n.GL1720());
+					educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+					educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+					eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
+					eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
+					educationallLbl.setVisible(true);
+				}else if(eduUsedetails.size()>2){
+					final Label eduUseLabel=new Label("+"+(eduUsedetails.size()-2)); 
+					eduUseLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					eduUseType.add(eduUseLabel);
+					Widget eduusewidget = getCommonwidget(eduUsedetails);
+					eduUseLabel.addMouseOverHandler(new MouseOverShowToolTip(eduusewidget));
+					eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					eduUsePanel.setVisible(true);
+					educationallLbl.setText(i18n.GL1720());
+					educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+					educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+					eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
+					eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
+					educationallLbl.setVisible(true);
+				}
 		}else{
 			eduUsePanel.setVisible(false);
 		}
@@ -2147,7 +2134,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
+	
 			popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
+	
 				public void getAddedResourceTags(){
 					getUiHandlers().getAddedResourceTags(collectionItemDoGlobal.getResource().getGooruOid());
 				}
@@ -2185,6 +2174,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					
 				}
 			};
+			popup.getAddStandards();
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}

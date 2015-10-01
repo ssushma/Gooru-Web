@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,10 +23,10 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 /**
- * 
+ *
  * @fileName : LibraryView.java
  *
- * @description : 
+ * @description :
  *
  * @version : 1.0
  *
@@ -68,7 +68,6 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoHandler;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -125,31 +124,31 @@ public class LibraryView extends Composite implements  ClickHandler {
 	HTMLPanel featuredCourses,folderListPanel;
 
 	@UiField Label featuredCousesLbl,featuredContributor,comingSoonLbl,folderTopicTitleLbl;
-	
+
 	@UiField HTML courseTitle;
-	
+
 	@UiField Anchor featuredContributorsLink;
-	
+
 	@UiField LibraryStyleBundle libraryStyleUc;
 
 	@UiField HTMLPanel scrollPanel, loadingIconPanel,partnerLogo;
-	
+
 	@UiField Image courseImage, educatorPhoto;
-	
+
 	@UiField Button listViewBtn;
-	
+
 	private FlowPanel paginationFloPanel;
-		
+
 	ArrayList<CourseDo> courseDo = new ArrayList<CourseDo>();
-	
+
 	HashMap<String, SubjectDo> courseMap = new HashMap<String, SubjectDo>();
-	
+
 	HashMap<String, StandardsDo> standardsMap = new HashMap<String, StandardsDo>();
-	
+
 	CourseDo subjectCourseDo = new CourseDo();
 	String onRefCourseId=null;
 	List<UnitDo> unitDoListTemp;
-	
+
 	private static final String COURSE_PAGE = "course-page";
 	private static final String FEATURED_CONTRIBUTORS = "featured-contributors";
 	private static final String FEATURED_COURSE_PAGE = "featured-course";
@@ -161,9 +160,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 	private static final String FEATURED_LABEL = "featured";
 	private static final String ACTIVE_STYLE = "active";
 	private static final String CALLBACK = "callback";
-	
+
 	private static final String COURSEMAPDATASERIALIZEDSTR = "courseMapDataSerializedStr";
-	
+
 	private String defaultCourseId = "";
 	private String previousCallBack = "";
 	private String previousCourseId = "";
@@ -174,56 +173,56 @@ public class LibraryView extends Composite implements  ClickHandler {
 	private String subjectListId = "";
 	private String unitListId = "";
 	private String standardListId = "";
-	
+
 	private String STANDARDS="standard";
-	
+
 	private final static String COURSE_DEFAULT_IMG = "../images/library/course-1000x300.png";
-	
+
 	private final static String STANDARD_DEFAULT_IMG = "../images/library/common_core.png";
-	
+
 	private final static String TEKS_MATHS = "../images/library/standards/teks_maths.png";
-	
+
 	private final static String TEKS_SCIENCE = "../images/library/standards/teks_science.png";
-	
+
 	private static final String EDUCATOR_DEFAULT_IMG = "../images/settings/setting-user-image.png";
-	
+
 	private static final String PNG = ".png";
-	
+
 	private final static String FEMALE = "female";
 
 	private final static String MALE = "male";
 
 	private int INITIAL_OFFSET = 0;
-	
+
 //	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
 
 	private Storage stockStore = Storage.getLocalStorageIfSupported();
-	
+
 	LibraryMenuNav libraryMenuNavigation = null;
-    
+
     private String placeToken = null;
-    
+
 	private static final String PREVIOUS = "PREVIOUS";
 
 	private static final String NEXT = "NEXT";
 
 	private static final String PARTNER_PAGE = "partner-page";
-	
+
 	private String standardLibraryName = "";
-	
+
 	private static final String TEXAS = "TEKS";
-	
+
 	private static final String CCSS = "ccss";
-	
+
 	private static final String SHARING_TYPE = "public";
-	
+
 	ArrayList<PartnerFolderDo> partnerFolderList = new ArrayList<PartnerFolderDo>();
-	
+
 	private static LibraryViewUiBinder uiBinder = GWT.create(LibraryViewUiBinder.class);
 
 	interface LibraryViewUiBinder extends UiBinder<Widget, LibraryView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LibraryView(String placeToken) {
@@ -255,17 +254,17 @@ public class LibraryView extends Composite implements  ClickHandler {
 		StringUtil.setAttributes(folderListPanel.getElement(), "folderListPanel", "", "");
 		folderListPanel.setVisible(false);
 	}
-	
+
 	/**
-	 * 
-	 * @function setDebugId 
-	 * 
+	 *
+	 * @function setDebugId
+	 *
 	 * @created_date : 02-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -320,25 +319,24 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredContributorsLink.setHref("#"+getPlaceToken()+"&page="+FEATURED_CONTRIBUTORS);
 		}
 	}
-	
+
 	@Override
 	public void onLoad() {
-		
+
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  courseTabs.getElement().getStyle().setPosition( (isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) || (isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click) ? Position.RELATIVE : Position.FIXED);
+
+		courseTabs.getElement().getStyle().setPosition( (isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) || (isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click) ? Position.RELATIVE : Position.FIXED);
 		courseTabs.getElement().setId("courseTabs");
 		container.getElement().setId("container");
-		
+
 		featuredCourseTabs.getElement().setId("featuredCourseTabs");
 		leftNav.getElement().setId("leftNav");
 		contentScroll.getElement().setId("contentScroll");
 		courseBanner.getElement().setId("courseBanner");
 		featuredEducator.getElement().setId("featuredEducator");
-		
+
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingRusdBanner");
 			landingBanner.setHeight("250px");
@@ -370,23 +368,23 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredCousesLbl.getElement().setAttribute("title",i18n.GL0587());
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function setLibraryTopicListData 
-	 * 
+	 *
+	 * @function setLibraryTopicListData
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param topicDoList
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -401,14 +399,14 @@ public class LibraryView extends Composite implements  ClickHandler {
 			AppClientFactory.printSevereLogger("LibraryView setLibraryTopicListData:::"+e);
 		}
 	}
-	
+
 	public void setLibraryConceptOnlyData(ArrayList<ConceptDo> conceptDoList, final Integer collectionTotalCount) {
 		contentScroll.clear();
 		try {
 			for(int i = 0; i <conceptDoList.size(); i++) {
 				contentScroll.add(new LibraryTopicListView(conceptDoList.get(i), (i+1), getPlaceToken()));
 			}
-			
+
 			if(collectionTotalCount!=null&&collectionTotalCount>10) {
 				paginationFloPanel = new FlowPanel();
 				paginationFloPanel.setStyleName(libraryStyleUc.paginationPanel());
@@ -431,7 +429,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			AppClientFactory.printSevereLogger("LibraryView setLibraryConceptOnlyData::"+e);
 		}
 	}
-	
+
 	@Override
 	public void onClick(ClickEvent event) {
 		if (event.getSource() instanceof PaginationButtonUc) {
@@ -445,17 +443,17 @@ public class LibraryView extends Composite implements  ClickHandler {
 			getTopicsOnPagination(subjectListId, unitListId, INITIAL_OFFSET, totalCount,standardListId);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function loadContributorsPage 
-	 * 
+	 *
+	 * @function loadContributorsPage
+	 *
 	 * @created_date : 03-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @param placeToken 
-	 * 
+	 *
+	 * @param placeToken
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -473,10 +471,10 @@ public class LibraryView extends Composite implements  ClickHandler {
 				placeToken.equalsIgnoreCase(PlaceTokens.PSDPAL)||
 				placeToken.equalsIgnoreCase(PlaceTokens.LESSONOPOLY)||
 				placeToken.equalsIgnoreCase(PlaceTokens.WSPWH)||
-				placeToken.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || 
-				placeToken.equalsIgnoreCase(PlaceTokens.ESYP)|| 
-				placeToken.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC)|| 
-				placeToken.equalsIgnoreCase(PlaceTokens.TICAL)|| 
+				placeToken.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.ESYP)||
+				placeToken.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC)||
+				placeToken.equalsIgnoreCase(PlaceTokens.TICAL)||
 				placeToken.equalsIgnoreCase(PlaceTokens.ASPIRE_EPACS)){
 			container.getElement().getStyle().setWidth(1000, Unit.PX);
 		}else{
@@ -492,7 +490,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		standardListId = standardId;
 		selectedPage = 1;
 		String callBackSignup = AppClientFactory.getPlaceManager().getRequestParameter(CALLBACK,null);
-		String discoverUrl = Window.Location.getHref();		
+		String discoverUrl = Window.Location.getHref();
 		if (!AppClientFactory.isAnonymous()){
 			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 			int flag = AppClientFactory.getLoggedInUser().getViewFlag();
@@ -504,7 +502,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		}else{
 			Window.enableScrolling(true);
 		}
-		
+
 		if(callBack.equalsIgnoreCase(FEATURED_CONTRIBUTORS)){
 			discoverUrl.replaceAll("&page="+FEATURED_CONTRIBUTORS, "");
 			AppClientFactory.fireEvent(new SetDiscoverLinkEvent(discoverUrl));
@@ -538,9 +536,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredEducator.setVisible(true);
 			courseBanner.setVisible(true);
 			container.setVisible(true);
-			
+
 			if(standardId == null) {
-		
+
 				String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
 				CourseDo courseDo = null;
 				if(subjectName!=null&&courseMap.get(subjectName)!=null&&courseId!=null) {
@@ -562,7 +560,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 					libraryMenuNavigation.getTaxonomyData(subjectName,subjectId,courseId);
 				}
 			}
-			
+
 		} else if(callBack.equalsIgnoreCase(FEATURED_COURSE_PAGE)){
 			libraryMenuNavigation.setTabSelection(FEATURED_LABEL);
 			if(callBackSignup!=null) {
@@ -576,7 +574,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			container.setVisible(true);
 			featuredCourseTabs.setVisible(true);
 			featuredCousesLbl.setVisible(true);
-			
+
 			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
 				if(courseMap!=null&&courseMap.get("featured")!=null) {
 						setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
@@ -592,7 +590,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			educatorPhoto.setVisible(false);
 			featuredContributor.setVisible(false);
 			featuredContributorsLink.setVisible(true);
-			
+
 			featuredCourseTabs.setVisible(false);
 			featuredCousesLbl.setVisible(false);
 			courseBanner.setVisible(true);
@@ -601,21 +599,21 @@ public class LibraryView extends Composite implements  ClickHandler {
 		this.previousCallBack = callBack;
 		this.previousCourseId = courseId;
 	}
-	
+
 	private void getRefreshedSubjects() {
-		
+
 	}
-	
+
 	/**
-	 * 
-	 * @function setFeaturedCourses 
-	 * 
+	 *
+	 * @function setFeaturedCourses
+	 *
 	 * @created_date : 04-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -632,7 +630,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						libraryMenuNavigation.setSubjectPanelIdsForStandards(standardsMap);
 						setFeaturedCourseWidgets(standardsMap.get(featuredLabel).getData().get(0).getCourse(), false);
 					}
-				});	
+				});
 			}
 			else
 			{
@@ -644,21 +642,21 @@ public class LibraryView extends Composite implements  ClickHandler {
 				} catch (Exception e) {
 					AppClientFactory.printSevereLogger("LibraryView getFeaturedCourses:::"+e);
 				}
-				
+
 				if(stockStore!=null&&stockStore.getItem(libraryToken+COURSEMAPDATASERIALIZEDSTR)!=null&&params.size()==0){
 					map = stockStore.getItem(libraryToken+COURSEMAPDATASERIALIZEDSTR);
-					
+
 					deserializeAndDisplay(featuredLabel, isNotHomePage, libraryToken, map, onRefCourseId);
 				} else {
-					
+
 					if((AppClientFactory.getPlaceManager().getRequestParameter("page")!=null?AppClientFactory.getPlaceManager().getRequestParameter("page"):"").equals("featured-course")){
 						onRefCourseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId")!=null?AppClientFactory.getPlaceManager().getRequestParameter("courseId"):null;
 					}else{
 						onRefCourseId=null;
 					}
-					
+
 					AppClientFactory.getInjector().getLibraryService().getLibrarySubjectsJson(featuredLabel, onRefCourseId, libraryToken, new SimpleAsyncCallback<String>() {
-						
+
 						@Override
 						public void onSuccess(String subjectDoList) {
 							if(stockStore!=null) {
@@ -671,32 +669,32 @@ public class LibraryView extends Composite implements  ClickHandler {
 				}
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function deserializeAndDisplay 
-	 * 
+	 *
+	 * @function deserializeAndDisplay
+	 *
 	 * @created_date : 28-Apr-2015
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param featuredLabel
 	 * @parm(s) : @param isNotHomePage
 	 * @parm(s) : @param libraryToken
 	 * @parm(s) : @param jsonResponse
 	 * @parm(s) : @param onRefCourseId
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	void deserializeAndDisplay(final String featuredLabel, final boolean isNotHomePage, String libraryToken, String jsonResponse, String onRefCourseId){
-		
+
 		AppClientFactory.getInjector().getLibraryService().deserializeLibrarySubjects(featuredLabel, onRefCourseId, libraryToken, jsonResponse, new SimpleAsyncCallback<HashMap<String,SubjectDo>>() {
 
 			@Override
@@ -707,8 +705,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 		});
 	}
-	
-	
+
+
 	void setLibraryInitialData(String featuredLabel, boolean isNotHomePage) {
 		libraryMenuNavigation.setSubjectPanelIds(courseMap);
 		if(isNotHomePage) {
@@ -720,17 +718,17 @@ public class LibraryView extends Composite implements  ClickHandler {
 			setFeaturedCourseWidgets(courseMap.get(featuredLabel).getData(), false);
 		}
 	}
-	
+
 	/**
-	 * @function setFeaturedCourseWidgets 
-	 * 
+	 * @function setFeaturedCourseWidgets
+	 *
 	 * @created_date : 14-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param courseDoList
 	 * @parm(s) : @param isFeaturedCourseSelected
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -740,11 +738,11 @@ public class LibraryView extends Composite implements  ClickHandler {
 		featuredCourses.clear();
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 		for(int i = 0; i<courseDoList.size(); i++) {
-			
+
 			//TEMPORARY QA fix as there is no data
 			String userName = "rusdlearns";//courseDoList.get(i).getCreator().getUsername();
 			//TEMPORARY QA fix as there is no data
-			
+
 			featuredCourses.add(new FeaturedCourseListView(courseDoList.get(i)));
 			if(!isFeaturedCourseSelected) {
 				if(i==0&&(courseId==null)) {
@@ -774,14 +772,14 @@ public class LibraryView extends Composite implements  ClickHandler {
 						//setUnitListData(courseDoList.get(i).getUnit());
 					}
 					else{
-						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);	
+						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);
 					}
 				} else {
 					featuredCourses.getWidget(i).removeStyleName(ACTIVE_STYLE);
 				}
 			}
 		}
-		
+
 		final Iterator<Widget> widgets = featuredCourses.iterator();
 		int widgetCount = 0;
 		while (widgets.hasNext()) {
@@ -802,7 +800,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						}
 					}
 					else{
-						getPopularList(courseDoList.get(widgetCount).getUnit(), courseDoList.get(widgetCount).getCodeId(), true);	
+						getPopularList(courseDoList.get(widgetCount).getUnit(), courseDoList.get(widgetCount).getCodeId(), true);
 					}
 					widget.addStyleName(ACTIVE_STYLE);
 				}
@@ -812,7 +810,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredCourseListView.getfeaturedCoursePanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					
+
 					MixpanelUtil.mixpanelEvent("FeaturedCourse_SelectsCourse");
 					final Iterator<Widget> widgetsPanel = featuredCourses.iterator();
 					while (widgetsPanel.hasNext()) {
@@ -843,18 +841,18 @@ public class LibraryView extends Composite implements  ClickHandler {
 			widgetCount++;
 		}
 	}
-	
+
 
 	/**
-	 * @param unitDoList 
-	 * @function setUnitListData 
-	 * 
+	 * @param unitDoList
+	 * @function setUnitListData
+	 *
 	 * @created_date : 04-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -888,7 +886,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		{
 			loadingPanel(true);
 		}
-		
+
 		int widgetCount = 0;
 		final Iterator<Widget> widgets = leftNav.iterator();
 		while (widgets.hasNext()) {
@@ -902,7 +900,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						unitListId = unitDoList.get(widgetCountTemp).getCodeId()+"";
 						if(unitDoList.get(widgetCountTemp).getTopic()!=null&&unitDoList.get(widgetCountTemp).getTopic().size()>0) {
 							setLibraryTopicListData(unitDoList.get(widgetCountTemp).getTopic());
-							
+
 						} else {
 							setLibraryConceptOnlyData(unitDoList.get(widgetCountTemp).getCollection(), libraryUnitMenuView.getChildCount());
 						}
@@ -915,7 +913,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			} catch(Exception e) {
 				AppClientFactory.printSevereLogger("LibraryView setUnitListData:::"+e);
 			}
-			
+
 			libraryUnitMenuView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -952,9 +950,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 						} else {
 							loadingPanel(true);
 							getTopicsOnPagination(subjectId, libraryUnitMenuView.getUnitId(), INITIAL_OFFSET, libraryUnitMenuView.getChildCount(),standardsId);
-						}	
+						}
 					}
-					
+
 					Map<String,String> params = new HashMap<String, String>();
 					params.put(LIBRARY_PAGE, callBack);
 					if(courseId!=null) {
@@ -977,20 +975,20 @@ public class LibraryView extends Composite implements  ClickHandler {
 				}
 			});
 			widgetCount++;
-			
+
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @function getTopicsOnPagination 
-	 * 
+	 *
+	 * @function getTopicsOnPagination
+	 *
 	 * @created_date : 18-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param unitId
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1010,7 +1008,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 		});
 	}
-	
+
 	OpenSubjectCourseHandler openSubjectCourseHandler = new OpenSubjectCourseHandler() {
 		@Override
 		public void openSubjectCourse(String subjectCode, CourseDo courseDo) {
@@ -1024,14 +1022,14 @@ public class LibraryView extends Composite implements  ClickHandler {
 			courseMap.put(subjectCode, subjectDo);
 		}
 	};
-	
+
 	SetStandardDoHandler setStandardDoHandler = new SetStandardDoHandler() {
 		@Override
 		public void setStandardDo(String subjectCode, StandardsDo standardDo) {
 			standardsMap.put(subjectCode, standardDo);
 		}
 	};
-	
+
 	public void getUnitDataFromService(final CourseDo courseDo, String subjectCode, String courseId) {
 		AppClientFactory.getInjector().getLibraryService().getLibraryUnits(subjectCode, courseId, StringUtil.getPublicLibraryName(getPlaceToken()), new SimpleAsyncCallback<ArrayList<UnitDo>>() {
 			@Override
@@ -1044,25 +1042,25 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 		});
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param courseDo
-	 * @function setCourseData 
-	 * 
+	 * @function setCourseData
+	 *
 	 * @created_date : 09-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * @parm(s) : 
-	 * 
+	 *
+	 * @parm(s) :
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
 	public void setCourseData(final CourseDo courseDo) {
-			
+
 			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)){
 //				courseTitle.setHTML(i18n.GL2054());
@@ -1103,7 +1101,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 					districtSpecificPartnersMain.setVisible(true);
 					districtLibraryHeaderText.getElement().setInnerText(i18n.GL2108());
 					districtLibrarySubHeaderText.getElement().setInnerText(i18n.GL2172());
-					
+
 					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainCore());
 					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainCore());
 					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogoCore());
@@ -1130,7 +1128,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 					districtSpecificPartnersMain.setVisible(true);
 					districtLibraryHeaderText.getElement().setInnerText(i18n.GL2053());
 					districtLibrarySubHeaderText.getElement().setInnerText(i18n.GL2054());
-					
+
 					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainlps());
 					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainlps());
 					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogolps());
@@ -1154,21 +1152,21 @@ public class LibraryView extends Composite implements  ClickHandler {
 					} else {
 						courseImage.setUrl(courseDo.getThumbnails().getUrl());
 					}
-					
+
 					courseImage.addErrorHandler(new ErrorHandler() {
 						@Override
 						public void onError(ErrorEvent event) {
 							setDefaultCourseImage(standardId, courseDo.getLabel());
 						}
 					});
-					
+
 					courseTitle.setHTML(courseDo.getLabel());
 					courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
 					courseTitle.getElement().setAttribute("title",courseDo.getLabel());
 					try {
 						educatorPhoto.setHeight("46px");
 						educatorPhoto.setWidth("46px");
-						
+
 						String authorName = "";
 						String authorProfileImage = "";
 						/// In User Object is null
@@ -1180,16 +1178,15 @@ public class LibraryView extends Composite implements  ClickHandler {
 									break;
 								}
 							}
-						
-							if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
+							if(MALE.equalsIgnoreCase(courseDo.getUser().get(j).getGender())) {
 								authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
-							} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
+							} else if(FEMALE.equalsIgnoreCase(courseDo.getUser().get(j).getGender())) {
 								authorName = (i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
 							} else {
 								authorName = courseDo.getUser().get(j).getLastName();
 							}
-							
-							
+
+
 							if (courseDo.getUser().size()>1){
 								featuredContributor.setText(authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
 								featuredContributor.getElement().setAttribute("alt",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
@@ -1199,23 +1196,27 @@ public class LibraryView extends Composite implements  ClickHandler {
 								featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 								featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							}
-							
+
 							authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
-							
+
 						}else{
-							if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
-								authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getCreator().getLastName();
-							} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
-								authorName = i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" "+courseDo.getCreator().getLastName();
-							} else {
-								authorName = courseDo.getCreator().getLastName();
+							if (courseDo.getCreator() != null){
+								if(MALE.equalsIgnoreCase(courseDo.getCreator().getGender())) {
+									authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getCreator().getLastName();
+								} else if(FEMALE.equalsIgnoreCase(courseDo.getCreator().getGender())) {
+									authorName = i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" "+courseDo.getCreator().getLastName();
+								} else {
+									authorName = courseDo.getCreator().getLastName();
+								}
 							}
-							
+
 							featuredContributor.setText(authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
-							authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
-							
+							if (courseDo.getCreator() != null){
+								authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG;
+							}
+
 						}
 
 						educatorPhoto.setUrl(authorProfileImage);
@@ -1232,16 +1233,16 @@ public class LibraryView extends Composite implements  ClickHandler {
 						AppClientFactory.printSevereLogger("LibraryView setCourseData:::"+e);
 					}
 				}
-				
+
 				String libraryPage = AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE,"emptyPage");
 				if(!isUnitLoaded&&libraryPage.equals(COURSE_PAGE)) {
 					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						setUnitListData(courseDo.getUnit());
 					}
 					else{
-						getPopularList(courseDo.getUnit(), courseDo.getCodeId(), false);	
+						getPopularList(courseDo.getUnit(), courseDo.getCodeId(), false);
 					}
-					
+
 					isUnitLoaded=true;
 				}
 				if(courseDo.getUnit()!=null) {
@@ -1253,9 +1254,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 					}
 				}
 			}
-			
+
 	}
-	
+
 	private void setDefaultCourseImage(String standardId, String courseLabel) {
 		if(standardId != null)
 			{
@@ -1274,7 +1275,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				courseImage.setUrl(TEKS_MATHS);
 				}
 				}else{
-				courseImage.setUrl(STANDARD_DEFAULT_IMG);	
+				courseImage.setUrl(STANDARD_DEFAULT_IMG);
 				}
 				}
 			}
@@ -1284,19 +1285,19 @@ public class LibraryView extends Composite implements  ClickHandler {
 		}
 
 	}
-	
+
 	/**
-	 * 
-	 * @function getSubjectNameBySubjectId 
-	 * 
+	 *
+	 * @function getSubjectNameBySubjectId
+	 *
 	 * @created_date : 12-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param subjectList
 	 * @parm(s) : @param subjectId
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1310,17 +1311,17 @@ public class LibraryView extends Composite implements  ClickHandler {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * @function getSubjectIdBySubjectName 
-	 * 
+	 * @function getSubjectIdBySubjectName
+	 *
 	 * @created_date : 08-Jan-2014
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param subjectList
 	 * @parm(s) : @param subjectName
-	 * 
+	 *
 	 * @return : String
 	 */
 	public String getSubjectIdBySubjectName(HashMap<String, SubjectDo> subjectList, String subjectName) {
@@ -1333,16 +1334,16 @@ public class LibraryView extends Composite implements  ClickHandler {
 	}
 
 	/**
-	 * @function getCourseDoFromCourseId 
-	 * 
+	 * @function getCourseDoFromCourseId
+	 *
 	 * @created_date : 13-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param subjectDo
 	 * @parm(s) : @param courseId
 	 * @parm(s) : @return
-	 * 
+	 *
 	 * @return : CourseDo
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -1359,11 +1360,11 @@ public class LibraryView extends Composite implements  ClickHandler {
 		}
 		return new CourseDo();
 	}
-	
+
 	public CourseDo getCourseDoFromCourseIdStandards(StandardsDo standardsDo, String standardId, String courseId) {
 		int count = 0;
 		final Iterator<StandardCourseDo> standards = standardsDo.getData().iterator();
-		while (standards.hasNext()) { 
+		while (standards.hasNext()) {
 			int standardValue = Integer.parseInt(standardId);
 			StandardCourseDo standardCourseDo = standards.next();
 			if(standardCourseDo.getCodeId().intValue()==standardValue) {
@@ -1378,7 +1379,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		}
 		return new CourseDo();
 	}
-	
+
 	public CourseDo getCourseDofromStandard(StandardsDo standardsDo, String courseId, Integer count) {
 		final Iterator<CourseDo> courses = standardsDo.getData().get(count).getCourse().iterator();
 		while (courses.hasNext()) {
@@ -1390,7 +1391,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		}
 		return new CourseDo();
 	}
-	
+
 	public String getPlaceToken() {
 		return placeToken;
 	}
@@ -1398,7 +1399,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	private void setPlaceToken(String placeToken) {
 		this.placeToken = placeToken;
 	}
-	
+
 	public void getPopularList(List<UnitDo> unitDoTempList, final int courseId, boolean isRefresh) {
 			unitDoListTemp = new ArrayList<UnitDo>();
 			unitDoListTemp = unitDoTempList;
@@ -1414,34 +1415,34 @@ public class LibraryView extends Composite implements  ClickHandler {
 							unitDo.setLabel(i18n.GL1008);
 							unitDo.setCollection(result);
 							unitDo.setCount(result.size());
-							unitDoListTemp.add(0, unitDo);	
+							unitDoListTemp.add(0, unitDo);
 						}
 						setUnitListData(unitDoListTemp);
 					}
 					@Override
 					public void onFailure(Throwable caught) {
-						
+
 					}
 			});
 			} else {
 				setUnitListData(unitDoListTemp);
 			}
 			}
-*/				
+*/
 	}
-	
+
 	public HTMLPanel getLeftNav() {
 		return leftNav;
 	}
-	
+
 	public HTMLPanel getLoadingIconPanel() {
 		return loadingIconPanel;
 	}
-	
+
 	public Label getComingSoonLabel(){
 		return comingSoonLbl;
 	}
-	
+
 	public HTMLPanel getContentScroll() {
 		return contentScroll;
 	}
@@ -1469,14 +1470,14 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 		});
 	}
-	
+
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
 		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 20,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
 				//getView().setTopicListData(result.getSearchResult(), folderId);
 			}
-			
+
 		});
 	}
 
@@ -1499,7 +1500,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				}
 			}
 		}
-		
+
 		final Iterator<Widget> widgets = getLeftNav().iterator();
 		int widgetCount = 0;
 		while (widgets.hasNext()) {
@@ -1527,11 +1528,11 @@ public class LibraryView extends Composite implements  ClickHandler {
 			widgetCount++;
 		}
 	}
-	
+
 	public static void onClosingAndriodorIpaddiv() {
 		 courseTabs.getElement().setAttribute("style", "position:fixed;");
 	}
-	
+
 	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId) {
 		getContentScroll().clear();
 		try {
@@ -1549,11 +1550,11 @@ public class LibraryView extends Composite implements  ClickHandler {
 	public HTMLPanel getCourseTabs() {
 		return courseTabs;
 	}
-	
+
 	public HTMLPanel getContainer() {
 		return container;
 	}
-	
+
 	public void loadingPanel(boolean isVisible) {
 		loadingIconPanel.setVisible(isVisible);
 		contentScroll.setVisible(!isVisible);
@@ -1567,6 +1568,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 	public HTMLPanel getFolderListPanel() {
 		return folderListPanel;
 	}
-	
+
 
 }

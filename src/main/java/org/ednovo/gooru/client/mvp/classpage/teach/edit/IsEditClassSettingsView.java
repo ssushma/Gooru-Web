@@ -54,4 +54,10 @@ public interface IsEditClassSettingsView extends IsViewWithHandlers<EditClassSet
 
 	void clearAllErrorLabel();
 
+	void onDeleteClassSuccess();
+
+	void onErrorPopup(String message);
+	
+	void enableDeleteBtn(boolean isEnabled);
+
 }

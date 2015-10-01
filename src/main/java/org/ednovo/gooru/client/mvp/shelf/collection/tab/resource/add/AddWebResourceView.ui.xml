@@ -8,8 +8,6 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res1" />
-	<ui:with type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
-		field="res2" />
 	<ui:with field="i18n"
 		type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
 	<g:ScrollPanel styleName="{res.css.myFolderCollectionFormContainer}"
@@ -183,13 +181,13 @@
 								ui:field="audioText"></g:HTMLPanel>
 						</g:HTMLPanel>
 					</tinyMce:HTMLEventPanel>
-					<!-- <tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" 
-						ui:field="otherResourcePanel"> <g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}"> 
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}"> 
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}"> 
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteOther}" 
-						ui:field="other"> </g:HTMLPanel> </g:HTMLPanel> </g:HTMLPanel> <g:HTMLPanel 
-						styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="otherText"></g:HTMLPanel> 
+					<!-- <tinyMce:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+						ui:field="otherResourcePanel"> <g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteOther}"
+						ui:field="other"> </g:HTMLPanel> </g:HTMLPanel> </g:HTMLPanel> <g:HTMLPanel
+						styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="otherText"></g:HTMLPanel>
 						</g:HTMLPanel> </tinyMce:HTMLEventPanel> -->
 				</g:HTMLPanel>
 			</g:HTMLPanel>
@@ -225,7 +223,7 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbOrtextWeb}"
 						ui:field="orText"></g:HTMLPanel>
-					<!-- <g:Label styleName="{res.css.myFolderCollectionThumbUploadImagetext}" 
+					<!-- <g:Label styleName="{res.css.myFolderCollectionThumbUploadImagetext}"
 						ui:field="uploadImageLbl"></g:Label> -->
 					<g:Button styleName="secondary" ui:field="uploadImageLbl"></g:Button>
 				</g:HTMLPanel>
@@ -326,7 +324,7 @@
 									<g:Button ui:field="browseStandards" styleName="secondary"
 										text="{i18n.GL0902}" title="{i18n.GL0902}"></g:Button>
 								</g:HTMLPanel> -->
-								
+
 								<tinyMce:HTMLEventPanel styleName="btn-group"
 									ui:field="btnStandardsBrowse">
 									<g:Button styleName="btn standardsContainerBswnbtn" text="{i18n.GL3479}"
@@ -340,7 +338,7 @@
 									<g:HTMLPanel ui:field="standardsCont">
 									<uc:UlPanel styleName="dropdown-menu"
 									ui:field="standardsDropListValues"></uc:UlPanel></g:HTMLPanel>
-								
+
 								<g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}"
 									ui:field="standardMaxMsg" />

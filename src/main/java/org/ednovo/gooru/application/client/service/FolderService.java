@@ -36,7 +36,9 @@ import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/folderService")
@@ -199,7 +201,7 @@ public interface FolderService extends BaseService {
 	
 	Integer deleteCourse(String o1CourseId) throws GwtException,ServerDownException;
 	
-	Integer deleteUnit(String o1CourseId, String o2UnitId) throws GwtException,ServerDownException ;
+	Integer deleteUnit(String o1CourseId, String o2UnitId) throws GwtException,ServerDownException;
 	
 	Integer deleteLesson(String o1CourseId, String o2UnitId, String o3LessonId)throws GwtException,ServerDownException;
 	
@@ -220,5 +222,14 @@ public interface FolderService extends BaseService {
 	public FolderDo getCourseDetails(String courseId, String unitId, String lessonId)  throws GwtException;
 
 	void updateCollectionDetails(CreateDo createDoObj,String collectionId,Map<Integer, String> audience, Map<Integer, String> dok,Map<Long, String> centurySkills, String languageObjective);
+    
+	String copyCourse(String courseId, String unitId, String lessonId) throws GwtException;
+	
+	public Map<String,String> jobCheck(String result) throws GwtException;
+	
+	public Boolean isTiedWithStudentData(String o1CourseId) throws GwtException;
 
+	
+
+	
 }

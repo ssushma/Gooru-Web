@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.content.ListValuesDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.library.DomainStandardsDo;
+import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.righttabs.MyCollectionsRightClusterPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.taxonomy.TaxonomyPopupPresenter;
@@ -125,10 +126,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 
 	@Override
 	protected void onReset() {
-		// TODO Auto-generated method stub
 		super.onReset();
-		
-	
 	}
 	@Override
 	protected void onReveal(){
@@ -258,12 +256,12 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		}
 		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);	
 		String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
-		if(view!=null && view.equalsIgnoreCase("Folder")){
+		if(view!=null){
 			if(idVal!=null){
-			if(folderObj!=null && folderObj.getGooruOid()!=null)
-			{
+		/*	if(folderObj!=null && folderObj.getGooruOid()!=null)
+			{*/
 			getCollectionDo(idVal);
-			}
+			/*}*/
 			}
 		}
 	}
@@ -345,6 +343,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		imgUploadPresenter.setProfileImage(false);
 		imgUploadPresenter.setEditResourceImage(false);
 		imgUploadPresenter.setAnswerImage(false);
+		imgUploadPresenter.getView().uploadedImagetobeSet(createDoObj);
 /*		imgUploadPresenter.setCollectionImage(true);
 		imgUploadPresenter.setClassPageImage(false);
 		imgUploadPresenter.setUpdateQuestionImage(false);
@@ -453,10 +452,19 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		TreeItem shelfTreeWidget = myCollectionsRightClusterPresenter.getShelfMainPresenter().getEditingWidget();
 		return shelfTreeWidget;
 	}
-
-
    	public void setSelectedStandards(List<Map<String,String>> standListArray){
    		getView().displaySelectedStandards(standListArray);
    	}
 
+	@Override
+	public void displayCropImage(String imageUrl) {
+		addToPopupSlot(imgUploadPresenter);
+		MediaUploadDo mediaUploadDo=new MediaUploadDo();
+		mediaUploadDo.setUrl(imageUrl);
+		imgUploadPresenter.getView().displayCropPopup(mediaUploadDo);
+		imgUploadPresenter.setCollectionImage(true);
+		imgUploadPresenter.setProfileImage(false);
+		imgUploadPresenter.setEditResourceImage(false);
+		imgUploadPresenter.setAnswerImage(false);
+	}
 }

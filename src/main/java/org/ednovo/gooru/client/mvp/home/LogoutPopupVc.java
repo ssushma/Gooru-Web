@@ -133,8 +133,6 @@ public class LogoutPopupVc extends Composite{
 	 */
 	@UiHandler("okBtnUc")
 	public void userLogout(ClickEvent clickEvent) {
-//		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
-//		StringUtil.clearCookies("google-refresh-token", "/", ".www.goorulearning.org");
 		AppClientFactory.getInjector().getAppService().v2Signout(new SimpleAsyncCallback<UserDo>() {
 
 			@Override
@@ -274,6 +272,20 @@ public class LogoutPopupVc extends Composite{
 							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						map.put("flt.standard", standard);
+					}
+					if(map.containsKey("flt.subjectName"))
+					{
+						String subjectName = map.get("flt.subjectName");
+						subjectName = subjectName.replaceAll("%5C1", "&");
+						try
+						{
+							subjectName = URL.decodeQueryString(subjectName);
+						}
+						catch(Exception ex)
+						{
+							AppClientFactory.printSevereLogger(ex.getMessage());
+						}
+						map.put("flt.subjectName", subjectName);
 					}
 					if(map.containsKey("category"))
 					{

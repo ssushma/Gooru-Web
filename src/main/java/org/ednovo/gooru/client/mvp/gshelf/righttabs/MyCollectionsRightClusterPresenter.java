@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -43,9 +44,11 @@ import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseSharePresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
+import org.ednovo.gooru.client.uc.AlertForImageUpload;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
@@ -83,11 +86,6 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	final String COLLECTION="collection";
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
-	
-	
-	private static final String O1_LEVEL = "o1";
-	private static final String O2_LEVEL = "o2";
-	private static final String O3_LEVEL = "o3";
 	
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
@@ -171,7 +169,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 						getView().disableAndEnableBreadCums(true);
 					}
 					getView().enableAndHideTabs(false);
-					getView().getPreviewLink().setVisible(true);
+					if(folderObj!=null && folderObj.getGooruOid()!=null){
+						getView().disableButtons(true);
+					}else{
+						getView().disableButtons(false);
+					}
 					externalAssessmentInfoPresenter.setData(folderObj);
 					setInSlot(INNER_SLOT, externalAssessmentInfoPresenter);
 				}
@@ -464,12 +466,10 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		});
 	}
 	@Override
-	public boolean checkCopyOrMoveStatus(boolean copySelected,
-			boolean moveSelected) {
-		// TODO Auto-generated method stub
+	public boolean checkCopyOrMoveStatus(boolean copySelected,boolean moveSelected,String clickedType) {
 		this.isCopySelected=copySelected;
 		this.isMoveSelected= moveSelected;
-		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected);
+		searchAddResourceToCollectionPresenter.selectedCopyOrMoveStatus(isCopySelected,isMoveSelected,clickedType);
 		return false;
 	}
 	@Override
@@ -521,6 +521,67 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	public TreeItem getCurrentTreeItem() {
 		return shelfMainPresenter.getEditingWidget();
+	}
+	
+	
+	@Override
+	public void disableCopyPopupTabs(boolean isVisible, String copyType) {
+		searchAddResourceToCollectionPresenter.getView().disableTabs(isVisible,copyType);
+	}
+	
+	
+	@Override
+	public void copyCourse(String gooruOid) {
+		AppClientFactory.getInjector().getfolderService().copyCourse(gooruOid, null, null, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String url) {
+				callJobSuccessApi(url,null);
+		
+			}
+		});
+	}
+	
+	protected void callJobSuccessApi(final String jobUrl,final HashMap<String, String> urlparams) {
+		AppClientFactory.getInjector().getfolderService().jobCheck(jobUrl,new SimpleAsyncCallback<Map<String,String>>() {
+
+			@Override
+			public void onSuccess(Map<String, String> result) {
+				if(result.get("status").equalsIgnoreCase("completed")){
+					HashMap<String,String> params = new HashMap<String,String>();
+					params.put("o1", result.get("gooruOid"));
+					params.put("view", "Course");
+					shelfMainPresenter.setVersion();
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+					
+				}else if(result.get("status").equalsIgnoreCase("inprogress")){
+					Timer timer = new Timer() {
+
+						@Override
+						public void run() {
+							callJobSuccessApi(jobUrl,urlparams);
+						}
+						
+					};
+					timer.schedule(150);
+				}else{
+					new AlertForImageUpload("Oops", "Something went wrong, plewase try again.");
+					//getView().hidePopup();
+				}
+			
+			}
+		});
+	}
+	@Override
+	public void isStudentDataAvailable(final String type, final String o1CourseId,final  String o2UnitId, final String o3LessonId, final String assessmentCollectionId) {
+		AppClientFactory.getInjector().getfolderService().isTiedWithStudentData(o1CourseId, new SimpleAsyncCallback<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean result) {
+				getView().isCourseDeleteStatus(result, type,  o1CourseId,  o2UnitId,  o3LessonId,  assessmentCollectionId);
+				
+			}
+		});
 	}
 	
 }

@@ -27,6 +27,7 @@ package org.ednovo.gooru.application.server.service;
 import org.restlet.data.Form;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -944,5 +945,105 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			keyString.add(key+"");
 		}
 		return keyString;
+	}
+
+	@Override
+	public String copyCourse(String courseId, String unitId, String lessonId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		if(courseId!=null && unitId==null && lessonId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_COURSE,courseId);
+		}else if(courseId!=null && unitId!=null && lessonId==null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_UNIT,courseId,unitId);
+		}else if(courseId!=null && unitId!=null && lessonId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_COPY_LESSON,courseId,unitId,lessonId);
+		}
+		String jobUri = "";
+		try {
+			
+			logger.info("copyCUL : "+url);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			jobUri = jsonRep.getJsonObject().getString("uri");
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return jobUri;
+	}
+
+	@Override
+	public Map<String, String> jobCheck(String result) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		Map<String, String> resultMap = new HashMap<>();
+		try {
+			url = getRestEndPoint()+result;
+			logger.info("JOB getURL : "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			resultMap = deserializeJob(jsonRep);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return resultMap;
+	}
+
+	private Map<String, String> deserializeJob(JsonRepresentation jsonRep) {
+		Map<String, String> resMap = new HashMap<>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				JSONObject jobObject=jsonRep.getJsonObject();
+				resMap.put("gooruOid", jobObject.isNull("gooruOid")?null:jobObject.getString("gooruOid"));
+				resMap.put("status", jobObject.isNull("status")?null:jobObject.getString("status"));
+			} catch (Exception e) {
+				logger.error("Exception -- ",e); 
+			}
+		}
+		return resMap;
+	}
+
+	@Override
+	public Boolean isTiedWithStudentData(String o1CourseId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		Boolean status = null;
+		try {
+			url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_IS_STUDENT_DATA_AVAILABLE,o1CourseId);
+			logger.info("V1_IS_STUDENT_DATA_AVAILABLE URl : "+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			logger.info("jsonRep result: "+ jsonRep.getJsonObject().toString());
+			status = deserializeStudentDataAvailability(jsonRep);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+			status = false;
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+			status=false;
+		}
+		return status; 
+	}
+
+	private Boolean deserializeStudentDataAvailability(JsonRepresentation jsonRep) {
+		Boolean status = null;
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				JSONObject jsonObj=jsonRep.getJsonObject();
+				if(!jsonObj.isNull("message")){
+					JSONObject messageJsonObj=jsonObj.getJSONObject("message"); 
+					status =messageJsonObj.getBoolean("userSignalsAvailable");
+				}
+			} catch (Exception e) {
+				logger.error("Exception -- ",e); 
+			}
+		}
+
+		return status; 
 	}
 }

@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -43,7 +43,6 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
@@ -98,9 +97,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -233,9 +232,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	InlineLabel advancedText;
 
-	@UiField(provided = true)
-	AddTagesCBundle res2;
-
 	Integer videoDuration = 0;
 
 	private CopyRightPolicyVc copyRightPolicy;
@@ -284,7 +280,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	String thumbnailUrlStr = null;
 
 	CollectionDo collectionDo;
-	
+
 	public FolderDo courseObjG;
 
 	boolean isHavingBadWordsInTextbox = false, isHavingBadWordsInRichText = false;
@@ -300,11 +296,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	private GoogleDriveItemDo googleDriveItemDo = null;
 
-	private boolean isBrowseTooltip = false;
-
 	BrowseStandardsTooltip browseStandardsTooltip;
 
-	private boolean isBrowseStandardsToolTip = false;
 
 	private boolean isGenerateURL = false;
 
@@ -325,7 +318,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private boolean isNGSSAvailable = false;
 	private boolean isTEKSAvailable = false;
 	private boolean isCAAvailable = false;
-	
+
 	List<Integer> selectedValues=new ArrayList<>();
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
@@ -334,8 +327,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	public AddWebResourceView(CollectionDo collectionDo, boolean isGoogleDriveFile,
 			GoogleDriveItemDo googleDriveItemDo) {
-		this.res2 = AddTagesCBundle.INSTANCE;
-		res2.css().ensureInjected();
 		AddSetupAdvancedCBundle.INSTANCE.css().ensureInjected();
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		this.isGoogleDriveFile = isGoogleDriveFile;
@@ -416,7 +407,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			@Override
 			public void onSelection(SelectionEvent<Suggestion> event) {
 				Map<String, String> standard = new HashMap<>();
-				
+
 				standard.put("selectedCodeId", String.valueOf(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
 				standard.put("selectedCodeVal", standardSgstBox.getValue());
 				standard.put("selectedDifferenceId", String.valueOf(3));
@@ -502,7 +493,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				hideDropDown(event);
 			}
-		}); 
+		});
 		advancedSetupContainer.add(addSetupAdvancedView);
 		generateFromUrlBtn.setText(i18n.GL3092());
 		disableGenerateBtn();
@@ -619,7 +610,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
 
 		generateFromUrlBtn.addClickHandler(new onGenerateFromUrlBtnClick());
-		
+
 
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
@@ -829,7 +820,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		 * classpageTitleText()); titleLabel.getElement().setAttribute("id",
 		 * mediaTitleVal); //Set Click event for title
 		 * titleLabel.addClickHandler(new ClickHandler() {
-		 * 
+		 *
 		 * @Override public void onClick(ClickEvent event) { String
 		 * optionSelected = titleLabel.getElement().getId();
 		 * lblMediaPlaceHolder.setText(optionSelected);
@@ -924,14 +915,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506", "_blank", "");
+				Window.open("http://support.gooru.org/hc/en-us/articles/200688506", "_blank", "");
 			}
 		});
 
 		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));
 		descriptionTxtAera
 				.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords));
-		
+
 
 		ClickHandler rootHandler = new ClickHandler() {
 			@Override
@@ -1028,7 +1019,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	/**
 	 * new label is created for the 21 century which needs to be added
-	 * 
+	 *
 	 * @param standardCode
 	 *            update standard code
 	 * @return instance of {@link DownToolTipWidgetUc}
@@ -1150,14 +1141,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	/**
 	 * get the standards are added for collection
-	 * 
+	 *
 	 * @param flowPanel
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
 	 */
 	private List<String> getAddedStandards() {
 		List<String> suggestions = new ArrayList<String>();
-		
+
 		Iterator<Widget> widgets = ulSelectedItems.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
@@ -1170,7 +1161,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	/**
 	 * get the standards are added for collection
-	 * 
+	 *
 	 * @param flowPanel
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
@@ -1256,15 +1247,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 	}
 
-	private class onBrowseStandarsCLick implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			browseStandardsInfo();
-		}
-	}
-
 	/**
-	 * 
+	 *
 	 * @author GooruTeam This method is used to generate image on button click
 	 *
 	 */
@@ -1311,25 +1295,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal) {
 		if (mobileFriendlyVal.contains(mobileYes.getText())) {
-			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+			mobileYes.getElement().setClassName("at-OffButtonsActive");
+			mobileNo.getElement().setClassName("at-OnButtonDeActive");
 		} else if (mobileFriendlyVal.contains(mobileNo.getText())) {
-			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+			mobileNo.getElement().setClassName("at-OffButtonsActive");
+			mobileYes.getElement().setClassName("at-OnButtonDeActive");
 		}
 	}
 
 	@UiHandler("mobileYes")
 	public void onmobileYesClick(ClickEvent click) {
-		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		mobileYes.getElement().setClassName("at-OffButtonsActive");
+		mobileNo.getElement().setClassName("at-OnButtonDeActive");
 		updateMobileFriendlyAdvancedStyles();
 	}
 
 	@UiHandler("mobileNo")
 	public void onmobileNoClick(ClickEvent click) {
-		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
-		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		mobileNo.getElement().setClassName("at-OffButtonsActive");
+		mobileYes.getElement().setClassName("at-OnButtonDeActive");
 		updateMobileFriendlyAdvancedStyles();
 	}
 
@@ -1344,32 +1328,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			if (label.getStyleName().contains("select")) {
 				accessHazardsSelected.add(Integer.parseInt(label.getElement().getId()));
 			}
-
 		}
-
-		/*
-		 * if(flashingHazard.getElement().getClassName().contains("select")){
-		 * String hazardsStr = accessHazard.getText()+" : "
-		 * +flashingHazard.getText(); accessHazardsSelected.add(hazardsStr); }
-		 * if(motionSimulationHazard.getElement().getClassName().contains(
-		 * "select")) { String hazardsStr = accessHazard.getText()+" : "
-		 * +motionSimulationHazard.getText();
-		 * accessHazardsSelected.add(hazardsStr); }
-		 * if(soundHazard.getElement().getClassName().contains("select")) {
-		 * String hazardsStr = accessHazard.getText()+" : "
-		 * +soundHazard.getText(); accessHazardsSelected.add(hazardsStr); }
-		 */
-		// accessHazardsArr = accessHazardsSelected.toArray(new
-		// String[accessHazardsSelected.size()]);
 		setAdvancedAccessHazardStyles(accessHazardsSelected.size());
 		return accessHazardsSelected;
 	}
 
 	public abstract void resourceImageUpload();
-
-	public abstract void browseStandardsInfo();
-
-	public abstract void closeStandardsPopup();
 
 	private class AddClickHandler implements ClickHandler {
 
@@ -1419,9 +1383,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												final String categoryStr = resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
 												final String idStr = collectionDo.getGooruOid();
 
-												if (urlStr.contains("goorulearning.org")) {
+												if (urlStr.contains("goorulearning.org") || urlStr.contains("gooru.org")) {
 													if (urlStr.contains("support.goorulearning.org")
-															|| urlStr.contains("about.goorulearning.org")) {
+															|| urlStr.contains("about.goorulearning.org") || urlStr.contains("support.gooru.org")
+															|| urlStr.contains("about.gooru.org")) {
 														isValidate = true;
 													} else {
 														showUrlErrorMessage(i18n.GL0924());
@@ -1501,18 +1466,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												}
 												String mediaType = "";
 												if (mobileYes.getStyleName()
-														.contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive())) {
+														.contains("at-OffButtonsActive")) {
 													mediaType = i18n.GL_GRR_MOBILE_FRIENDLY();
 													tagList.add("Mobile Friendly : " + mobileYes.getText());
 
-												}
-
-										else if (mobileNo.getStyleName()
-												.contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive())) {
-
+												}else if (mobileNo.getStyleName()
+												.contains("at-OffButtonsActive")) {
 													tagList.add("Mobile Friendly : " + mobileNo.getText());
 													mediaType = i18n.GL_GRR_NOT_MOBILE_FRIENDLY();
-
 												}
 												List<Integer> mediaFeaturesList = new ArrayList<>();
 												if (!lblMediaPlaceHolder.getText()
@@ -1529,16 +1490,16 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												/*
 												 * // String hazardArr[] =
 												 * setAccessHazards();
-												 * 
+												 *
 												 * if(hazardArr != null) {
 												 * for(int
 												 * i=0;i<hazardArr.length;i++) {
-												 * 
-												 * 
+												 *
+												 *
 												 * //tagList.add('
 												 * "' + hazardArr[i].toString() +'"
 												 * ');
-												 * 
+												 *
 												 * tagList.add(hazardArr[i].
 												 * toString()); } }
 												 */
@@ -1599,14 +1560,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function addResource
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param idStr @parm(s) : @param urlStr @parm(s)
 	 *              : @param titleStr @parm(s) : @param descriptionStr @parm(s)
 	 *              : @param categoryStr @parm(s) : @param
@@ -1615,13 +1576,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *              : @param momentsOfLearning @parm(s) : @param
 	 *              standards @parm(s) : @param hostName @parm(s) : @param
 	 *              tagList
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -1658,9 +1619,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								addResourceBtnLbl.setVisible(true);
 								addResourceBtnPanel.setVisible(true);
 								String userUrlStr = urlTextBox.getText().trim();
-								if (userUrlStr.contains("goorulearning.org")) {
+								if (userUrlStr.contains("goorulearning.org") ||userUrlStr.contains("gooru.org")) {
 									if (userUrlStr.contains("support.goorulearning.org")
-											|| userUrlStr.contains("about.goorulearning.org")) {
+											|| userUrlStr.contains("about.goorulearning.org") || userUrlStr.contains("support.gooru.org")
+											|| userUrlStr.contains("about.gooru.org")) {
 
 									} else {
 										showUrlErrorMessage(i18n.GL0924());
@@ -1881,7 +1843,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		activeImageIndex--;
 		setImageThumbnail();
 	}
-	
+
 	protected void hideDropDown(NativePreviewEvent event) {
 		if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
@@ -1891,7 +1853,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
         	}
     	}
 	}
-	
+
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
@@ -1902,7 +1864,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	/**
 	 * This method will check all additional tags are open or not.
-	 * 
+	 *
 	 * @return allAdditionalTagInVisisble
 	 */
 	public boolean isAllAdditionalTagsOpen() {
@@ -1928,22 +1890,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setVideoCategory
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2062,22 +2024,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setImageThumbnail
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2151,23 +2113,23 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private RegExp urlPlusTldValidator;
 
 	/**
-	 * 
+	 *
 	 * @function isValidUrl
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param url @parm(s) : @param
 	 *              topLevelDomainRequired @parm(s) : @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2185,22 +2147,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function returnCount
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param url @parm(s) : @return
-	 * 
+	 *
 	 * @return : Integer
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2242,22 +2204,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function getYoutubeVideoId
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param youtubeUrl @parm(s) : @return
-	 * 
+	 *
 	 * @return : String
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2304,7 +2266,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @fileName : AddWebResourceView.java
 	 *
 	 * @description :
@@ -2360,22 +2322,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function hasValidateResource
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2390,28 +2352,28 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	}
 
-	
 
-	
+
+
 
 
 	/**
-	 * 
+	 *
 	 * @function eventTargetsPopup
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param event @parm(s) : @return
-	 * 
+	 *
 	 * @return : boolean
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2428,23 +2390,23 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function enableGenerateBtn
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to enable the generatefromURL button
 	 *              based on the url entered.
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2462,23 +2424,23 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function disableGenerateBtn
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to disable the generatefromURL button
 	 *              based on the url entered.
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2497,23 +2459,23 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setAdvancedOptionsStyles
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to set styles for
 	 *              educationaluse,momentsoflearning and mediafeature based on
 	 *              dropdown selection.
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2548,23 +2510,23 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function setAdvancedAccessHazardStyles
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to set styles for accesshazard on click
 	 *              of perticular panel.
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param length
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2580,7 +2542,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 	}
 
-	
+
 
 	public void updateCenturyAdvancedSetupStyle() {
 		if (centuryPanel.getWidgetCount() == 0) {
@@ -2594,33 +2556,33 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function updateMobileFriendlyAdvancedStyles
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to set styles for MobileFriendly tags
 	 *              based on the user selection(Yes/No).
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
 	public void updateMobileFriendlyAdvancedStyles() {
-		if (mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive())) {
+		if (mobileYes.getStyleName().contains("at-OffButtonsActive")) {
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer
 					.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer
 					.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
-		} else if (mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive())) {
+		} else if (mobileNo.getStyleName().contains("at-OffButtonsActive")) {
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer
 					.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 			/*
@@ -2631,22 +2593,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function showUrlErrorMessage
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description : This method is used to show UrlErrorMessage.
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param message
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2660,22 +2622,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function clearUrlErrorMessage
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to clear the URL Error Message.
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2687,22 +2649,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function showTitleErrorMessage
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description : This method is used to show the error message for title
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param message
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2716,22 +2678,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function clearTitleErrorMessage
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to clear the error message for title
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2743,22 +2705,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function showCategoryErrorMessage
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to show the error message for category
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) : @param message
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2773,22 +2735,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 	/**
-	 * 
+	 *
 	 * @function clearCategoryErrorMessage
-	 * 
+	 *
 	 * @created_date : 15-Dec-2014
-	 * 
+	 *
 	 * @description This method is used to clear the error message for category
-	 * 
-	 * 
+	 *
+	 *
 	 * 				@parm(s) :
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws :
 	 *             <Mentioned if any exceptions>
 	 *
-	 * 
+	 *
 	 *
 	 *
 	 */
@@ -2831,7 +2793,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	/**
 	 * This will handle the click event on the browser century
-	 * 
+	 *
 	 * @param e
 	 */
 	@UiHandler("browseCentury")
@@ -3022,10 +2984,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
-							if (label.getStyleName().toString().contains("select")) {
-								label.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+							if (label.getStyleName().toString().contains("at-select")) {
+								label.getElement().removeClassName("at-select");
 							} else {
-								label.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+								label.getElement().addClassName("at-select");
 							}
 
 						}
@@ -3118,8 +3080,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			standardsDropListValues.add(liPanel);
 		}
 	}
-	
-	
+
+
 
 	public void checkStandarsList(List<String> standarsPreferencesList) {
 
@@ -3179,7 +3141,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	public abstract void showStandardsPopup(String standardVal, String standardsDesc,
 			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
-	
+
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
@@ -3207,7 +3169,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			if (!selectedValues.contains(standard.get("selectedCodeId"))){
 				ulSelectedItems.add(generateLiPanel(standard, "standards"));
 			}
-		
+
 	}
 	private LiPanelWithClose generateLiPanel(final Map<String, String> standard, String tagValue) {
 		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(standard.get("selectedCodeVal"));
@@ -3250,7 +3212,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 		}
 	}
-	
+
 	/**
 	 * This method is used to get the selected Std id's
 	 * @return

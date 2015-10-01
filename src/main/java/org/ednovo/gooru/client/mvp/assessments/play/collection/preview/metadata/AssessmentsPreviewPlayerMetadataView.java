@@ -40,13 +40,9 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
-import org.ednovo.gooru.application.shared.model.player.CommentsDo;
-import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.metadata.comment.CommentWidgetChildView;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.CollaboratorsUc;
@@ -55,7 +51,6 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -64,13 +59,11 @@ import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
@@ -186,8 +179,6 @@ public class AssessmentsPreviewPlayerMetadataView extends BaseViewWithHandlers<A
 
 		Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
 
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {

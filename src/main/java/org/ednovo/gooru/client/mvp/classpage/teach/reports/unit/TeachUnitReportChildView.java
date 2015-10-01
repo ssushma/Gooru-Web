@@ -30,6 +30,8 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentEmptyDashboardView;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentEmptyDataView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -93,122 +95,126 @@ public class TeachUnitReportChildView extends ChildView<TeachUnitReportChildPres
 	
 	@Override
 	public void setAssessmentTableData(ArrayList<PlanProgressDo> userList) {
-		boolean isCollection = false;
-		String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
-		if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
-			isCollection = true;
-		}
-		
-		unitTablePanel.clear();
-		assessmentTableWidget.getElement().setId("unit-table-report-data-id");
-		unitTablePanel.add(assessmentTableWidget);
-		unitTablePanel.getElement().setId("courseTableID");
-		unitTablePanel.getElement().setClassName("scrollTBL");
-		assessmentTableWidget.addStyleName("table table-bordered tableStyle");
-		
 		int rowCount = userList.size();
-		
-		Label studentNameLbl = new Label("");
-		studentNameLbl.setStyleName("");
-		studentNameLbl.setWidth("100px");
-		assessmentTableWidget.setWidget(0,1,studentNameLbl);
-		assessmentTableWidget.getWidget(0, 1).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
-		
-		for(int rowWidgetCount=0;rowWidgetCount<rowCount;rowWidgetCount++) {
-			String color = "#fff";
-			if(rowWidgetCount%2==1) {
-				color = "#f8fafb";
+		if(rowCount>0) {
+			boolean isCollection = false;
+			String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+			if(contentView.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+				isCollection = true;
 			}
-			int columnWidgetCount = 0;
-			if(columnWidgetCount==0) {
-				Anchor studentName = new Anchor(userList.get(rowWidgetCount).getUserName()); //
-				studentName.setStyleName("myclasses-mastery-unit-cell-style");
-				studentName.addClickHandler(new StudentUnitView(userList.get(rowWidgetCount).getUserName(), userList.get(rowWidgetCount).getUserUId()));
-				assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,studentName);
-				assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
-				
-				if(rowWidgetCount==0) {
-					HTML studentNameTitle = new HTML("Student");
-					assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,studentNameTitle);
-					assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
-					assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
+			
+			unitTablePanel.clear();
+			assessmentTableWidget.getElement().setId("unit-table-report-data-id");
+			unitTablePanel.add(assessmentTableWidget);
+			unitTablePanel.getElement().setId("courseTableID");
+			unitTablePanel.getElement().setClassName("scrollTBL");
+			assessmentTableWidget.addStyleName("table table-bordered tableStyle");
+			
+			Label studentNameLbl = new Label("");
+			studentNameLbl.setStyleName("");
+			studentNameLbl.setWidth("100px");
+			assessmentTableWidget.setWidget(0,1,studentNameLbl);
+			assessmentTableWidget.getWidget(0, 1).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
+			
+			for(int rowWidgetCount=0;rowWidgetCount<rowCount;rowWidgetCount++) {
+				String color = "#fff";
+				if(rowWidgetCount%2==1) {
+					color = "#f8fafb";
 				}
-				columnWidgetCount++;
-			}
-			ArrayList<PlanProgressDo> lessonList = userList.get(rowWidgetCount).getUsageData();
-			int lessonCount = lessonList.size();
-			for(int lessonWidgetCount=0;lessonWidgetCount<lessonCount;lessonWidgetCount++) {
-				ArrayList<PlanProgressDo> collectionList = lessonList.get(lessonWidgetCount).getUsageData();
-				int collectionCount = collectionList.size();
-				for(int collectionWidgetCount=0;collectionWidgetCount<collectionCount;collectionWidgetCount++) {
+				int columnWidgetCount = 0;
+				if(columnWidgetCount==0) {
+					Anchor studentName = new Anchor(userList.get(rowWidgetCount).getUserName()); //
+					studentName.setStyleName("myclasses-mastery-unit-cell-style");
+					studentName.addClickHandler(new StudentUnitView(userList.get(rowWidgetCount).getUserName(), userList.get(rowWidgetCount).getUserUId()));
+					assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,studentName);
+					assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
+					
 					if(rowWidgetCount==0) {
-						String A_STRING = "A";
-						if(isCollection) {
-							A_STRING = "C";
-						}
-						Label scoreLblTitle = new Label(A_STRING+(collectionWidgetCount+1));
-						scoreLblTitle.setWidth("80px");
-						String type = collectionList.get(collectionWidgetCount).getType();
-						if(type!=null&&type.equalsIgnoreCase("assessment/url")) {
-							scoreLblTitle.addMouseOverHandler(new MouseOverShowClassCodeToolTip("External Assessment"));
-							scoreLblTitle.addMouseOutHandler(new MouseOutHideToolTip());
-						} else {
-							scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
-							scoreLblTitle.addClickHandler(new CollectionAssessmentView(lessonList.get(lessonWidgetCount).getGooruOId(),collectionList.get(collectionWidgetCount).getGooruOId(),contentView,A_STRING+" "+(collectionWidgetCount+1)+" "+collectionList.get(collectionWidgetCount).getTitle()));
-						}
-						assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,scoreLblTitle);
+						HTML studentNameTitle = new HTML("Student");
+						assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,studentNameTitle);
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
 						assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
 					}
-					final Label contentLabel = new Label("");
-					if(isCollection) {
-						contentLabel.setText(StringUtil.getFormattedDate(collectionList.get(collectionWidgetCount).getTimeSpent(), ""));
-						assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
-						assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
-					} else {
-						int score = collectionList.get(collectionWidgetCount).getScoreInPercentage();
-						int views = collectionList.get(collectionWidgetCount).getViews();
-						String scoreStr = "--";
-						if(views>0&&score>=0) {
-							scoreStr = score+"%";
+					columnWidgetCount++;
+				}
+				ArrayList<PlanProgressDo> lessonList = userList.get(rowWidgetCount).getUsageData();
+				int lessonCount = lessonList.size();
+				for(int lessonWidgetCount=0;lessonWidgetCount<lessonCount;lessonWidgetCount++) {
+					ArrayList<PlanProgressDo> collectionList = lessonList.get(lessonWidgetCount).getUsageData();
+					int collectionCount = collectionList.size();
+					for(int collectionWidgetCount=0;collectionWidgetCount<collectionCount;collectionWidgetCount++) {
+						if(rowWidgetCount==0) {
+							String A_STRING = "A";
+							if(isCollection) {
+								A_STRING = "C";
+							}
+							Label scoreLblTitle = new Label(A_STRING+(collectionWidgetCount+1));
+							scoreLblTitle.setWidth("80px");
+							String type = collectionList.get(collectionWidgetCount).getType();
+							if(type!=null&&type.equalsIgnoreCase("assessment/url")) {
+								scoreLblTitle.addMouseOverHandler(new MouseOverShowClassCodeToolTip("External Assessment"));
+								scoreLblTitle.addMouseOutHandler(new MouseOutHideToolTip());
+							} else {
+								scoreLblTitle.addStyleName("myclasses-mastery-collection-cell-style");
+								scoreLblTitle.addClickHandler(new CollectionAssessmentView(lessonList.get(lessonWidgetCount).getGooruOId(),collectionList.get(collectionWidgetCount).getGooruOId(),contentView,A_STRING+" "+(collectionWidgetCount+1)+" "+collectionList.get(collectionWidgetCount).getTitle()));
+							}
+							assessmentTableWidget.setWidget(rowWidgetCount+1, columnWidgetCount,scoreLblTitle);
+							assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
+							assessmentTableWidget.getWidget(rowWidgetCount+1, columnWidgetCount).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
 						}
-						contentLabel.setText(scoreStr);
-						contentLabel.setWidth("80px");
-						if(!scoreStr.equalsIgnoreCase("--")) {
-							contentLabel.setStyleName("cursorPointer");
-							contentLabel.addClickHandler(new StudentPlaySummary(userList.get(rowWidgetCount).getUserName(), userList.get(rowWidgetCount).getUserUId(), lessonList.get(lessonWidgetCount).getGooruOId(), collectionList.get(collectionWidgetCount).getGooruOId(), collectionList.get(collectionWidgetCount).getType()));
-						}
-						assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
-						if(score>=0&&score<=100) {
-							if(views>0) {
-								assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+						final Label contentLabel = new Label("");
+						if(isCollection) {
+							contentLabel.setText(StringUtil.getFormattedDate(collectionList.get(collectionWidgetCount).getTimeSpent(), ""));
+							assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
+							assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
+						} else {
+							int score = collectionList.get(collectionWidgetCount).getScoreInPercentage();
+							int views = collectionList.get(collectionWidgetCount).getViews();
+							String scoreStr = "--";
+							if(views>0&&score>=0) {
+								scoreStr = score+"%";
+							}
+							contentLabel.setText(scoreStr);
+							contentLabel.setWidth("80px");
+							if(!scoreStr.equalsIgnoreCase("--")) {
+								contentLabel.setStyleName("cursorPointer");
+								contentLabel.addClickHandler(new StudentPlaySummary(userList.get(rowWidgetCount).getUserName(), userList.get(rowWidgetCount).getUserUId(), lessonList.get(lessonWidgetCount).getGooruOId(), collectionList.get(collectionWidgetCount).getGooruOId(), collectionList.get(collectionWidgetCount).getType()));
+							}
+							assessmentTableWidget.setWidget(rowWidgetCount+2, columnWidgetCount,contentLabel);
+							if(score>=0&&score<=100) {
+								if(views>0) {
+									assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().setClassName(StringUtil.getHighlightStyle(score));
+								} else {
+									assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
+								}
 							} else {
 								assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 							}
-						} else {
-							assessmentTableWidget.getWidget(rowWidgetCount+2, columnWidgetCount).getElement().getParentElement().getStyle().setBackgroundColor(color);
 						}
+						columnWidgetCount++;
 					}
-					columnWidgetCount++;
 				}
 			}
-		}
-		if(userList!=null&&userList.size()>0&&userList.get(0)!=null) {
-			int lessonSize = userList.get(0).getUsageData().size();
-			
-			for(int headerColumnCount=0;headerColumnCount<lessonSize;headerColumnCount++) {
-				int colSpan = 0;
-				PlanProgressDo lessonDo = userList.get(0).getUsageData().get(headerColumnCount);
-				if(lessonDo.getUsageData().size()>0) {
-					HTML unitName = new HTML("L"+(headerColumnCount+1)+"&nbsp;"+lessonDo.getTitle());
-					unitName.setStyleName("");
-					assessmentTableWidget.setWidget(0, headerColumnCount+1,unitName);
-					assessmentTableWidget.getWidget(0, headerColumnCount+1).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
-					assessmentTableWidget.getWidget(0, headerColumnCount+1).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
-					colSpan = colSpan + lessonDo.getUsageData().size();
-					assessmentTableWidget.getFlexCellFormatter().setColSpan(0, (headerColumnCount+1), colSpan);
+			if(userList!=null&&userList.size()>0&&userList.get(0)!=null) {
+				int lessonSize = userList.get(0).getUsageData().size();
+				
+				for(int headerColumnCount=0;headerColumnCount<lessonSize;headerColumnCount++) {
+					int colSpan = 0;
+					PlanProgressDo lessonDo = userList.get(0).getUsageData().get(headerColumnCount);
+					if(lessonDo.getUsageData().size()>0) {
+						HTML unitName = new HTML("L"+(headerColumnCount+1)+"&nbsp;"+lessonDo.getTitle());
+						unitName.setStyleName("");
+						assessmentTableWidget.setWidget(0, headerColumnCount+1,unitName);
+						assessmentTableWidget.getWidget(0, headerColumnCount+1).getElement().getParentElement().getStyle().setBackgroundColor("#f8fafb");
+						assessmentTableWidget.getWidget(0, headerColumnCount+1).getElement().getParentElement().getStyle().setFontWeight(FontWeight.BOLD);
+						colSpan = colSpan + lessonDo.getUsageData().size();
+						assessmentTableWidget.getFlexCellFormatter().setColSpan(0, (headerColumnCount+1), colSpan);
+					}
 				}
 			}
+		} else {
+			unitTablePanel.clear();
+			unitTablePanel.add(new TeachStudentEmptyDataView());
 		}
 	}
 	

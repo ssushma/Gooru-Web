@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpage.teach.edit.student;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
@@ -33,6 +34,7 @@ import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -199,7 +201,7 @@ public abstract class MembersViewVc extends Composite {
 		btnRemove.getElement().setId("" + position);
 		btnRemove.getElement().setAttribute("alt",i18N.GL0237());
 		btnRemove.getElement().setAttribute("title",i18N.GL0237());
-
+		imgProfileImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+collaboratorsDo.getGooruUId()+ClientConstants.PNG);
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
 
 			@Override
@@ -247,7 +249,7 @@ public abstract class MembersViewVc extends Composite {
 			//lbllastandFirstName.setText(firstandlastName);
 			lblEmailId.getElement().setAttribute("alt",emailId != null ? emailId : email);
 			lblEmailId.getElement().setAttribute("title",emailId != null ? emailId : email);
-			imgProfileImage.setUrl(defaultProfileImage);
+			imgProfileImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+collaboratorsDo.getGooruUId()+ClientConstants.PNG);
 		}
 		lblUserName.getElement().setId(emailId);
 		lblEmailId.getElement().setId(emailId);

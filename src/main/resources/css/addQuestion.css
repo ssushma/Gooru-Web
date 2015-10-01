@@ -39,7 +39,7 @@
 .questionRightMain {
 	border-left: 1px solid #ddd;
 	background-color: white;
-	overflow-y: auto !important;
+	overflow-y: scroll !important;
 	overflow-x: hidden !important;
 	max-height: 567px;
 	min-height: 300px;
@@ -75,6 +75,7 @@
 	font-style: italic;
 	padding-left: 0;
 	width: 65%;
+	margin-bottom: 5px;
 }
 
 .htQAnswerHeadings input[type="radio"] {
@@ -274,6 +275,7 @@
 	position: relative;
 	box-sizing: content-box;
 	padding-left: 18px;
+	margin-top: 20px;
 }
 
 .hsQAnsContainer {
@@ -309,14 +311,18 @@
 }
 .charLimit{
 	display: inline-block;
-	margin-left: 10px;
 	color: #999;
+	margin-top: 5px;
+  	float: right;
+  	margin-bottom: 5px;
 }
 
 .charLimitExplanationStyle{
-	display: inline-flex;	
+	display: inline-flex;
 	color: #999;
-	margin-left: 10px;
+	margin-top: 5px;
+	float: right;
+	margin-bottom: 5px;
 }
 
 .textBoxContainer {
@@ -580,6 +586,7 @@
 	float: right;
 	margin-right: 1%;
 	padding: 3px 0px 0px 3px;
+	margin-top:22px;
 }
 .answerMarkDeselected,.answerMarkSelected, .answerMarkDelete {
 	width: 640px;
@@ -1159,23 +1166,25 @@ table.imgAnsContainer tbody, table.imgAnsContainer tbody tr {
 	font-family: Arial, sans-serif;
 	font-style:italic;
 	float:right;
-	
+
 }
 .markAsBlankLabel {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	float: right;
-	cursor: pointer;
-	color: rgb(16,118,186);
-	text-align: right;
-	padding: 0px 0px 0px 0px;
-	margin: -16px 28px 0 0;
+ 	font-size: 12px;
+	float: left;
+ 	cursor: pointer;
+ 	color: rgb(16,118,186);
+	text-align: left;
+ 	padding: 0px 0px 0px 0px;
+	margin: 5px 0px 0 0;
 }
 .markAsBlankLabel:hover {
 	color: #87badd !important;
 }
 
-
+#pnlTextBoxContainer .htQLabelNum{
+	margin-top: 20px;
+}
 
 @media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {
@@ -1230,12 +1239,12 @@ table.imgAnsContainer tbody, table.imgAnsContainer tbody tr {
 		vertical-align: bottom;
 		margin-right: 0.5ex !important;
 	}
-	
+
 	.htQInLbl {
 		padding: 0;
         margin-top: 2px;
 	}
-	
+
 }
 
 @media only screen and (min-width:992px) and (max-width:1024px) {

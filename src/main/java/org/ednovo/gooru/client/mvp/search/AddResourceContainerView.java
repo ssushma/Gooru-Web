@@ -385,7 +385,7 @@ public class AddResourceContainerView extends
 
 			floderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
-			floderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
+			floderName.addStyleName("arav-addResource");
 			folderContainer.add(floderName);
 		}
 
@@ -443,7 +443,7 @@ public class AddResourceContainerView extends
 			folderName = new Label();
 			folderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
-			folderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
+			folderName.addStyleName("arav-addResource");
 			folderContainer.add(folderName);
 		}
 

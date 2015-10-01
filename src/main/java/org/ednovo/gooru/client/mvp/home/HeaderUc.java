@@ -39,13 +39,10 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.SimpleRunAsyncCallback;
 import org.ednovo.gooru.client.UrlNavigationTokens;
-import org.ednovo.gooru.client.mvp.classpages.ClasspageListVc;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListHandler;
-import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
-import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.gshelf.LoadMyContentEvent;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
@@ -62,7 +59,6 @@ import org.ednovo.gooru.client.uc.BPanel;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.HeaderPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
-import org.ednovo.gooru.client.uc.tooltip.DashBoardToolTip;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTipUc;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
@@ -82,7 +78,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -100,9 +95,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -118,6 +110,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -139,14 +132,6 @@ public class HeaderUc extends Composite
 	}
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
-	OpenClasspageListHandler openClasspageListHandler = new OpenClasspageListHandler() {
-
-		@Override
-		public void openClasspageList() {
-			OpenClasspageList();
-		}
-	};
 
 	ClearClasspageListHandler clearHandler = new ClearClasspageListHandler() {
 
@@ -255,7 +240,7 @@ public class HeaderUc extends Composite
 	Anchor resendEmailAncr;
 
 	@UiField
-	Label logoutDownArrowLbl, loginLink, confirmEmailText;
+	Label logoutDownArrowLbl, loginLink, confirmEmailText,gooruLabel;
 
 	@UiField
 	HTMLEventPanel acctActivationPl;
@@ -267,8 +252,6 @@ public class HeaderUc extends Composite
 	Button toggleButton;
 
 	DiscoverToolTipUc discoverToolTip;
-
-	//OrganizeToolTip organizeToolTip;
 
 	static String stadardCode="";
 
@@ -293,15 +276,13 @@ public class HeaderUc extends Composite
 	@UiField
 	HTMLPanel settingOptionsPopup;
 
-	@UiField HTMLPanel discovertooltippop,myDashBoardPop;
+	@UiField HTMLPanel discovertooltippop;
 
 	@UiField static HTMLPanel myClassesPop;
 
 	String classpageId = "";
 
 	private LogoutPanelVc logoutPanelVc;
-
-	private ClasspageListVc classpageListVc;
 
 	@UiField
 	AnchorElement gooruLearning;
@@ -311,9 +292,6 @@ public class HeaderUc extends Composite
 
 	@UiField
 	FlowPanel headerSearchBarFloPanel;
-
-	@UiField
-	Label lblBeta;
 
 	@UiField
 
@@ -326,16 +304,11 @@ public class HeaderUc extends Composite
 	@UiField
 	public static HTMLPanel dropDownImgforDashboard, panelArrow;
 
-
 	@UiField
 	Anchor discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl;
 
 	@UiField
 	Label thanksLbl;
-
-	/*@UiField
-	static Label arrowLbl;*/
-
 
 	@UiField
 	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,organizeLinkMain,teachLinkMain,discoverLinkMain,
@@ -347,7 +320,6 @@ public class HeaderUc extends Composite
 	HeaderPanel headerMainPanel;
 
 	private UserDo userDo;
-	private LoginPopupUc popup;
 
 	private StudyNowToolTip studyNowToolTip;
 	private static boolean addedAccounts = false;
@@ -368,8 +340,6 @@ public class HeaderUc extends Composite
 
 
 	private static String DEFAULT_PROFILE_IMAGE = "images/settings/setting-user-image.png";
-
-	DashBoardToolTip dashBoardToolTip;
 
 	/**
 	 * Class constructor , set logged in user , gooru classic view link
@@ -392,9 +362,15 @@ public class HeaderUc extends Composite
 				autoSuggestKeywordDo.setQuery(text);
 				searchData = getEditSearchTxtBox().getText();
 				autoSuggestKeywordDo.setType("resource");
-				if (text != null && text.trim().length() > 0) {
+				if (text != null && text.trim().length() > 2) {
+					editSearchBtn.setEnabled(true);
+					editSearchBtn.setStyleName("primary");
+					editSearchBtn.getElement().getStyle().clearColor();
 					requestAutoSuggestKeyword(autoSuggestKeywordDo);
 				} else {
+					editSearchBtn.setEnabled(false);
+					editSearchBtn.setStyleName("secondary");
+					editSearchBtn.getElement().setAttribute("style","color:gray;");
 					getEditSearchTxtBox().hideSuggestionList();
 				}
 
@@ -416,6 +392,14 @@ public class HeaderUc extends Composite
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						if (editSearchTxtBox.getText() != null
 								&& editSearchTxtBox.getText().length() > 0) {
+							if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+							{
+							if(getEditSearchTxtBox().getText().length()>2)
+							{
+							editSearchBtn.setEnabled(true);
+							editSearchBtn.setStyleName("primary");
+							editSearchBtn.getElement().getStyle().clearColor();
+							gooruLabel.setVisible(false);
 							MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim()
 									.toLowerCase(), "HeaderUc");
 							Map<String, String> params = new HashMap<String, String>();
@@ -439,19 +423,29 @@ public class HeaderUc extends Composite
 							AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 							editSearchTxtBox.hideSuggestionList();
 							getEditSearchTxtBox().setText(searchText.trim());
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3583());
+							}
+						}
+						else
+						{
+							gooruLabel.setVisible(true);
+							getEditSearchTxtBox().setText("");
+							gooruLabel.setText(i18n.GL3581());
+						}
 						}
 						else
 						{
 							//else is for * query search.
 							if(getEditSearchTxtBox().getText().isEmpty())
 							{
+								gooruLabel.setVisible(true);
 								getEditSearchTxtBox().setText("");
-								Map<String, String> params = new HashMap<String, String>();
-								params = updateParams(params);
-								Map<String, String> map = params;
-								map.put("query", "*");
-								AppClientFactory.getPlaceManager().revealPlace(
-										PlaceTokens.SEARCH_COLLECTION, map);
+								gooruLabel.setText(i18n.GL3582());
 							}
 						}
 
@@ -470,6 +464,7 @@ public class HeaderUc extends Composite
 			}
 		});
 		initWidget(uiBinder.createAndBindUi(this));
+		gooruLabel.setVisible(false);
 		headerMainPanel.getElement().setAttribute("id", "headerMainPanel");
 
 		logoutPanelVc = new LogoutPanelVc();
@@ -516,59 +511,18 @@ public class HeaderUc extends Composite
 		organizeLinkContainer
 				.addClickHandler(new OnClickOrganizeEventHandler());
 
-		//organizeToolTip = new OrganizeToolTip();
-		/*organizeToolTip.getElement().getStyle()
-				.setBackgroundColor("transparent");
-		organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-		organizeToolTip.getElement().getStyle().setZIndex(99);*/
-		//myCollectionsPop.add(organizeToolTip);
-		/*myCollectionsPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
-		myCollectionsPop.getElement().getStyle().setZIndex(99);*/
-		//myCollectionsPop.setVisible(false);
-		//organizeToolTip.getElement().getStyle().setMarginLeft(78, Unit.PCT);
-	//	organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-
-
 		teachLinkContainer.addClickHandler(new OnClickTeachEventHandler());
-
-		classpageListVc = new ClasspageListVc(false, null);
-
-		myClassesPop.add(classpageListVc);
-		myClassesPop.setVisible(false);
-
-		/*teachLinkMain.addMouseOverHandler(new TeachMouseOver());
-		teachLinkMain.addMouseOutHandler(new TeachMouseOut());*/
-
-
-		dashBoardToolTip=new DashBoardToolTip() {
-
-			@Override
-			public void fireSelectionEvent() {
-				if (!AppClientFactory.isAnonymous()){
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
-					manageDotsMenuSelection(loggedInfoLbl);
-				}
-
-			}
-		};
-		dashBoardToolTip.getElement().getStyle().setBackgroundColor("transparent");
-		dashBoardToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-		dashBoardToolTip.getElement().getStyle().setZIndex(99);
-		dashBoardToolTip.getElement().getStyle().setLeft(loggedInfoLbl.getAbsoluteLeft(), Unit.PX);
-		myDashBoardPop.add(dashBoardToolTip);
-		myDashBoardPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
-		myDashBoardPop.getElement().getStyle().setZIndex(99);
-		myDashBoardPop.setVisible(false);
-
-
-
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
 
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");
 		editSearchBtn.getElement().setId("btnEditSearch");
 		editSearchBtn.getElement().setAttribute("style","padding:7px 9px 9px 7px");
+		editSearchBtn.getElement().setAttribute("style","color:gray;");
 		editSearchBtn.setText(i18n.GL0176());
+		editSearchBtn.setEnabled(false);
+		
+		editSearchBtn.setStyleName("secondary");
 		editSearchBtn.getElement().setAttribute("alt", i18n.GL0176());
 		editSearchBtn.getElement().setAttribute("title", i18n.GL0176());
 
@@ -590,14 +544,6 @@ public class HeaderUc extends Composite
 
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
 				i18n.GL0177());
-
-		lblBeta.setText(i18n.GL0178());
-		lblBeta.getElement().setId("lblBeta");
-		lblBeta.getElement().setAttribute("alt", i18n.GL0178());
-		lblBeta.getElement().setAttribute("title", i18n.GL0178());
-		lblBeta.getElement().getStyle().setDisplay(Display.NONE);
-
-		getBetaStatus();
 
 		discoverLink.setText(i18n.GL1748_1());
 		discoverLink.getElement().setId("lblDiscoverLink");
@@ -717,8 +663,6 @@ public class HeaderUc extends Composite
 				setZindex);
 		AppClientFactory.getEventBus().addHandler(ClearClasspageListEvent.TYPE,
 				clearHandler);
-		AppClientFactory.getEventBus().addHandler(OpenClasspageListEvent.TYPE,
-				openClasspageListHandler);
 		AppClientFactory.getEventBus().addHandler(ConfirmStatusPopupEvent.TYPE,
 				confirmUser);
 
@@ -767,6 +711,7 @@ public class HeaderUc extends Composite
 		editSearchTxtBox.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
+				gooruLabel.setVisible(false);
 				int key=event.getNativeEvent().getKeyCode();
 				if(key==KeyCodes.KEY_ENTER){
 					String searchText = editSearchTxtBox.getText();
@@ -775,88 +720,6 @@ public class HeaderUc extends Composite
 				}
 			}
 		});
-	}
-
-
-
-	/**
-	 * @function getBetaStatus
-	 *
-	 * @created_date : Aug 14, 2014
-	 *
-	 * @description
-	 *
-	 *
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-
-	private void getBetaStatus() {
-		lblBeta.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-
-//		try {
-//			new RequestBuilder(RequestBuilder.GET,
-//					"./images/json/product-beta-status.json").sendRequest("",
-//					new RequestCallback() {
-//						@Override
-//						public void onResponseReceived(Request req,
-//								Response resp) {
-//							boolean status = getStatus(resp.getText());
-//							if (status) {
-//								lblBeta.getElement().getStyle()
-//										.setVisibility(Visibility.VISIBLE);
-//							} else {
-//								lblBeta.getElement().getStyle()
-//										.setVisibility(Visibility.HIDDEN);
-//							}
-//						}
-//
-//						@Override
-//						public void onError(Request res, Throwable throwable) {
-//
-//						}
-//					});
-//		} catch (RequestException e) {
-//			AppClientFactory.printSevereLogger(e.getMessage());
-//		}
-	}
-
-	/**
-	 *
-	 * @function getStatus
-	 *
-	 * @created_date : Aug 14, 2014
-	 *
-	 * @description
-	 *
-	 *
-	 * @param text
-	 * @return
-	 *
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	private boolean getStatus(String text) {
-		boolean status = false;
-
-		JSONValue jsonValue = JSONParser.parse(text);
-		JSONObject jsonObject = jsonValue.isObject();
-
-		status = jsonObject.get("betaStatus").isBoolean() != null ? jsonObject
-				.get("betaStatus").isBoolean().booleanValue() : false;
-
-		return status;
 	}
 
 	public void clearClasspageList() {
@@ -871,7 +734,7 @@ public class HeaderUc extends Composite
 	 */
 	@UiHandler("loginLink")
 	public void onLinkPopupClicked(ClickEvent clickEvent) {
-		popup = new LoginPopupUc(this) {
+		final LoginPopupUc popup = new LoginPopupUc(this) {
 			@Override
 			public void onLoginSuccess() {
 
@@ -1019,7 +882,7 @@ public class HeaderUc extends Composite
 
 		@Override
 		public void onClick(final ClickEvent event) {
-
+			gooruLabel.setVisible(false);
 			Window.enableScrolling(true);
 			Cookies.setCookie("searchvalue", "");
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
@@ -1053,7 +916,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					AppClientFactory.setPreviousPlaceRequest(AppClientFactory
 							.getPlaceManager().getCurrentPlaceRequest());
 					Storage stockStore = Storage.getLocalStorageIfSupported();
@@ -1088,7 +951,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 					if (userDo != null && !userDo.getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
@@ -1118,7 +981,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					name = "dashboard";
 
 					Window.enableScrolling(true);
@@ -1131,16 +994,6 @@ public class HeaderUc extends Composite
 			});
 		}
 	}
-
-
-	public void OpenClasspageList() {
-		/*
-		 * int left = teachLinkContainer.getAbsoluteLeft(); int top =
-		 * teachLinkContainer.getAbsoluteTop() + 50; showTeachPanelAsPopup(left,
-		 * top);
-		 */
-	}
-
 
 	/* On mouse over and out handlers */
 	public class DiscoverMouseOver implements MouseOverHandler {
@@ -1159,27 +1012,6 @@ public class HeaderUc extends Composite
 		}
 	}
 
-
-
-	public class DashBoardMouseOver implements MouseOverHandler {
-
-		@Override
-		public void onMouseOver(final MouseOverEvent event) {
-			if (!AppClientFactory.isAnonymous()){
-				myDashBoardPop.setVisible(true);
-			}
-		}
-	}
-
-	public class DashBoardMouseOut implements MouseOutHandler {
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			if (!AppClientFactory.isAnonymous()){
-				myDashBoardPop.setVisible(false);
-			}
-		}
-	}
 	public class TeachMouseOver implements MouseOverHandler {
 
 		@Override
@@ -1361,6 +1193,13 @@ public class HeaderUc extends Composite
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
+				if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+				{
+					if(getEditSearchTxtBox().getText().length()>2)
+					{
+					editSearchBtn.setEnabled(true);
+					editSearchBtn.setStyleName("primary");
+					editSearchBtn.getElement().getStyle().clearColor();
 					savePlaceRequest();
 					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
 							.toLowerCase(), "HeaderUc");
@@ -1382,18 +1221,28 @@ public class HeaderUc extends Composite
 					}
 					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 					getEditSearchTxtBox().hideSuggestionList();
+					}
+					else
+					{
+						gooruLabel.setVisible(true);
+						getEditSearchTxtBox().setText("");
+						gooruLabel.setText(i18n.GL3583());
+					}
+				}
+				else
+				{
+					gooruLabel.setVisible(true);
+					getEditSearchTxtBox().setText("");
+					gooruLabel.setText(i18n.GL3581());
+				}
 				}else{
 					//else is for * query search.
 
 					if(getEditSearchTxtBox().getText().isEmpty())
 					{
-						Map<String, String> params = new HashMap<String, String>();
-						params = updateParams(params);
-						Map<String, String> map = params;
-						String queryVal = params.get("query");
-						map.put("query", "*");
-						AppClientFactory.getPlaceManager().revealPlace(
-								PlaceTokens.SEARCH_COLLECTION, map);
+						gooruLabel.setVisible(true);
+						getEditSearchTxtBox().setText("");
+						gooruLabel.setText(i18n.GL3582());
 					}
 				}
 
@@ -1530,12 +1379,6 @@ public class HeaderUc extends Composite
 
 			this.switchToClassicView();
 
-			if (userDo.isBeforeProductionSwitch()) {
-				logoutPanelVc.displayClassicGooruLink(true);
-			} else {
-				logoutPanelVc.displayClassicGooruLink(false);
-			}
-
 		} else {
 			mainDotsPanel.getElement().getStyle().clearWidth();
 			mainInnerDotsPanel.getElement().getStyle().clearWidth();
@@ -1608,10 +1451,18 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 						if (getEditSearchTxtBox().getText() != null
 								&& getEditSearchTxtBox().getText().length() > 0) {
+							if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+							{
+							if(getEditSearchTxtBox().getText().length()>2)
+							{
+								System.out.println("iuam here");
+								editSearchBtn.setEnabled(true);
+								editSearchBtn.setStyleName("primary");
+								editSearchBtn.getElement().getStyle().clearColor();
 							if (AppClientFactory.getCurrentPlaceToken()
 									.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
 								MixpanelUtil.Perform_Search_FromTeach();
@@ -1659,6 +1510,20 @@ public class HeaderUc extends Composite
 							AppClientFactory.fireEvent(new HomeEvent(
 									HeaderTabType.DISCOVER));
 							getEditSearchTxtBox().hideSuggestionList();
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3583());
+							}
+							}
+							else
+							{
+								gooruLabel.setVisible(true);
+								getEditSearchTxtBox().setText("");
+								gooruLabel.setText(i18n.GL3581());
+							}
 						}
 					}
 
@@ -1681,7 +1546,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					isStudyNow = true;
 					if (isClassCodePopupOpen) {
 						if (studyNowToolTip != null && studyNowToolTip.isShowing()) {
@@ -1760,15 +1625,6 @@ public class HeaderUc extends Composite
 		editSearchInputFloPanel.setVisible(enabled);
 	}
 
-	/**
-	 * Set classic link location
-	 *
-	 * @param enabled
-	 *            to left view or right view
-	 */
-	public void setClassicButtonEnabled(boolean enabled) {
-
-	}
 
 	/**
 	 * Set logout popup location
@@ -1845,7 +1701,7 @@ public class HeaderUc extends Composite
 
 				@Override
 				public void onSuccess() {
-
+					gooruLabel.setVisible(false);
 					Map<String, String> params = new HashMap<String, String>();
 					params.put(GOORU_UID, userDo.getGooruUId());
 
@@ -1996,6 +1852,13 @@ public class HeaderUc extends Composite
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		if (editSearchTxtBox.getText() != null && editSearchTxtBox.getText().length() > 0) {
+			if(!getEditSearchTxtBox().getText().trim().equalsIgnoreCase("*"))
+			{
+			if(getEditSearchTxtBox().getText().length()>2)
+			{
+			editSearchBtn.setEnabled(true);
+			editSearchBtn.setStyleName("primary");
+			editSearchBtn.getElement().getStyle().clearColor();
 			MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim().toLowerCase(),"HeaderUc");
 			Map<String, String> params = new HashMap<String, String>();
 			params = updateParams(params);
@@ -2017,19 +1880,29 @@ public class HeaderUc extends Composite
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 			editSearchTxtBox.hideSuggestionList();
 			getEditSearchTxtBox().setText(searchText.trim());
+			}
+			else
+			{
+				gooruLabel.setVisible(true);
+				getEditSearchTxtBox().setText("");
+				gooruLabel.setText(i18n.GL3583());
+			}
+			}
+			else
+			{
+				gooruLabel.setVisible(true);
+				getEditSearchTxtBox().setText("");
+				gooruLabel.setText(i18n.GL3581());
+			}
 		}
 		else
 		{
 			//else is for * query search.
 			if(getEditSearchTxtBox().getText().isEmpty())
 			{
+				gooruLabel.setVisible(true);
 				getEditSearchTxtBox().setText("");
-				Map<String, String> params = new HashMap<String, String>();
-				params = updateParams(params);
-				Map<String, String> map = params;
-				map.put("query", "*");
-				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.SEARCH_RESOURCE, map);
+				gooruLabel.setText(i18n.GL3582());
 			}
 		}
 

@@ -134,6 +134,8 @@ public enum UrlToken {
 	MEDIA_FILE_SAVE("/resource/{0}/media?"),
 
 	IMAGE_CROP("/media/{0}/crop?"),
+	
+	GET_CROPPED_IMAGE("/v1/crop?&height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}"),
 
 	UPDATE_USER_VIEW("/user/{0}/view/flag?"),
 
@@ -473,7 +475,7 @@ public enum UrlToken {
 
 	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?"),
 
-	SERVER_STATUS_URL("http://status.goorulearning.org/api/v1/services/gooru-production-api"),
+	SERVER_STATUS_URL("http://status.gooru.org/api/v1/services/gooru-production-api"),
 
 	GET_GOOGLEDRIVE_FIlES("/v2/files?maxResults=20&q={0}"),
 
@@ -632,6 +634,8 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V3_GET_CLASS_COURSE_UNIT_LIST("/v3/class/{0}/course/{1}/unit?"),
 
 	V3_GET_CLASS_COURSE_UNIT_LESSON_LIST("/v3/class/{0}/course/{1}/unit/{2}/lesson?"),
+	
+	V3_GET_CLASS_COURSE_UNIT_LESSON_COLLECTION_LIST("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}?"),
 
 	DELETE_UNIT("/v1/course/{0}/unit/{1}?"),
 
@@ -672,15 +676,38 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_GET_MASTERY_ALL_ASSESSMENT_PROGRESS("/v1/class/{0}/course/{1}/unit/{2}/lesson/{3}/assessment/{4}/users?"),
 
 	GET_AUDIENCELIST("/v1/meta/audience?"),
+
 	V3_UPDATE_COLLECTION("/v3/collection/{0}"),
+
 	V1_GET_COURSE("/v1/course/{0}?"),
+
 	V1_GET_MOMENT_OF_LEARERNING("/v1/meta/moments_of_learning"),
+
 	V1_GET_EDUCATIONAL_USE("/v1/meta/educational_use"),
+
 	V1_GET_MEDIA_FEATURES("/v1/meta/media_feature"),
+
 	V1_GET_ACCESS_HAZARD("/v1/meta/access_hazard"),
+
 	V3_GET_CLASS_COLLECTIONS("/v3/class/{0}/course/{1}/unit/{2}/lesson/{3}/collection?"),
+
 	V3_ADDQUESTION_COLLECTION("/v3/collection/{0}/question/{1}?"),
-	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?");
+
+	V3_ADDRESOURCE_COLLECTION("/v3/collection/{0}/resource/{1}?"),
+
+	V1_GET_CLASS_USAGE_DATA_SIGNAL("/v1/class/find/usage?"),
+	
+	V2_GET_HTML_TO_EXCEL_REPORT("/v2/media/htmltoexcel"),
+	
+	V1_COPY_COURSE("/v1/course/{0}"),
+	
+	V1_COPY_UNIT("/v1/course/{0}/unit/{1}"),
+	
+	V1_COPY_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}"),
+	
+	V1_IS_STUDENT_DATA_AVAILABLE("/v1/class/find/usage?courseGooruId={0}"),
+	
+	V3_UPDATE_CONTENT_VISIBILITY("/v3/class/{0}/setting");
 
 	private String url;
 

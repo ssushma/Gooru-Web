@@ -37,7 +37,6 @@ import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.search.SearchFilterDo;
 
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 /**
@@ -106,8 +105,6 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
      */
 	HTMLPanel getGradePanel();
 
-	void OnStandardsClickEvent(Button addBtn);
-
 	void setUpdatedStandards(List<Map<String, String>> list);
 
 	void setSourceSuggestions(SearchDo<String> result);
@@ -119,4 +116,6 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	void setCollectionContributorSuggestions(ArrayList<AutoSuggestContributorSearchDo> result);
 
 	Map<String, String> getStandardsSelectedFilters(String viewToken);
+
+	void noStarSearchResult();
 }

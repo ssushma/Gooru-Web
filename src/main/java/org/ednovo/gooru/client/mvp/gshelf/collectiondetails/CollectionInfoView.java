@@ -61,6 +61,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -108,7 +109,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 	}
 
 
-	@UiField HTMLPanel collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer,pnlStandards,spinnerIconContainer;
+	@UiField HTMLPanel pnlThumbnailImage,collectionInfo,newdok,newtype,centurySkillContainer,standardsUI,thumbnailImageContainer,pnlStandards,spinnerIconContainer;
 
 	@UiField TextBox collectionTitle;
 	@UiField Button saveCollectionBtn,uploadImageLbl,taxonomyBtn;
@@ -188,12 +189,13 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		languageObjectiveContainer.setVisible(false);
 		centurySkillContainer.setVisible(false);
 		uploadImageLbl.setText(i18n.GL0912());
-		getAddStandards();
+		
 		taxonomyBtn.addClickHandler(new OnClickTaxonomy());
 		taxonomyToggleBtn.addClickHandler(new OnClickTaxonomy());
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				getAddStandards();
 				if(!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;")){
 					standardsDropListValues.getElement().setAttribute("style", "display:block;");
 				}else{
@@ -213,10 +215,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
+				collThumbnail.getElement().getStyle().setDisplay(Display.BLOCK);
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
 		collThumbnail.getElement().setId("mycollectionUploadImage");
+		pnlThumbnailImage.getElement().setId("mycollectionUploadPnl");
 		learningObjective.addKeyUpHandler(new TitleKeyUpHandler(2));
 		learningObjective.addKeyPressHandler(new KeyPressHandler() {
 			@Override
@@ -328,15 +332,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 
 	@Override
 	public void setCollectionType(String collectionType) {
-		if(collectionType.equalsIgnoreCase("collection"))
-		{
+		collThumbnail.getElement().getStyle().setDisplay(Display.BLOCK);
+		if(collectionType.equalsIgnoreCase("collection")){
 			collThumbnail.setUrl(DEFULT_COLLECTION_IMG);
-		}
-		else
-		{
+		}else{
 			collThumbnail.setUrl(DEFULT_ASSESSMENT_IMG);
 		}
-
 	}
         @Override
 	public void displayStandardsList(final List<DomainStandardsDo> standardsList){
@@ -649,6 +650,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		}
 	}
 	public final void populateStandardValues(){
+		standardsDropListValues.clear();
             for (String standardsTypesArray1 : standardsTypesArray) {
                 List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
                 LiPanel liPanel = new LiPanel();
@@ -735,8 +737,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		
 		if(courseObj!=null){
 			courseObjG.setCollectionType(type);
+			pnlThumbnailImage.getElement().removeAttribute("style");
+			collThumbnail.getElement().getStyle().setDisplay(Display.BLOCK);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+				collThumbnail.getElement().getStyle().setDisplay(Display.NONE);
+				pnlThumbnailImage.getElement().setAttribute("style", "background-image:url("+courseObj.getThumbnails().getUrl()+");");
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
@@ -823,6 +829,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		collThumbnail.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
+				collThumbnail.getElement().getStyle().setDisplay(Display.BLOCK);
 				collThumbnail.setUrl((COLLECTION.equalsIgnoreCase(CollectionInfoView.this.type))?DEFULT_COLLECTION_IMG:DEFULT_ASSESSMENT_IMG);
 			}
 		});
@@ -893,6 +900,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		createOrUpDate.setDescription(learningObjective.getText());
 		createOrUpDate.setCollectionType(type);
 		createOrUpDate.setDescription(learningObjective.getText());
+		createOrUpDate.setUrl(courseObjG.getThumbnails().getUrl());
 		getUiHandlers().uploadCollectionImage(createOrUpDate);
 	}
 
@@ -1074,6 +1082,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		element.removeAttribute("src");
 		element.setAttribute("src", url+"?id="+Math.random());
 		element.setAttribute("filename", mediaFileName);
+		element.setAttribute("style", "display:none");
+		Element elementPnl=Document.get().getElementById("mycollectionUploadPnl");
+		elementPnl.removeAttribute("style");
+		elementPnl.setAttribute("style", "background-image:url("+ url+"?id="+Math.random()+");");
 	}
 
 	@Override
@@ -1312,7 +1324,9 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
         }
 	}
-
-	
+	/*@UiHandler("cropImage")
+	public void onClickOfCropImage(ClickEvent event){
+		getUiHandlers().displayCropImage(collThumbnail.getUrl());
+	}*/
 }
 

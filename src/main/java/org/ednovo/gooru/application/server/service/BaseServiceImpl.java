@@ -28,9 +28,6 @@
 package org.ednovo.gooru.application.server.service;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
@@ -245,6 +242,29 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getFacebookFeedUrl(){
 		return  getPropertyByKey(FACEBOOK_FEED_URL);
+	}
+
+	public String getLtiLaunchUrl(){
+		String ltiLaunchUrl = getPropertyByKey(LTI_LAUNCH_URL);
+		return ltiLaunchUrl;
+	}
+	public String getLtiLaunchEndpoint(){
+		String ltiLaunchEndpoint = getPropertyByKey(LTI_LAUNCH_ENDPOINT);
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			ltiLaunchEndpoint = ltiLaunchEndpoint.replaceAll(HTTP, HTTPS);
+		}
+		return ltiLaunchEndpoint;
+	}
+	public String getLtiClientSecret(){
+		return getPropertyByKey(LTI_CLIENT_SECRET);
+	}
+
+	public String getLtiContextId(){
+		return getPropertyByKey(LTI_CONTEXT_ID);
+	}
+
+	public String getLtiClientKey(){
+		return getPropertyByKey(LTI_CLIENT_KEY);
 	}
 
 	public String getTaxonomyPreferences(){
@@ -764,17 +784,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			try {
 				String data = jsonRep.getJsonObject().getJSONObject("user").toString();
 				userDo = JsonDeserializer.deserialize(data, UserDo.class);
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					userDo.setBeforeProductionSwitch(false);
-				}else{
-					userDo.setBeforeProductionSwitch(true);
-				}
+
 			} catch (JSONException e) {
-				logger.error("Exception::", e);
-			}
-			catch (ParseException e) {
 				logger.error("Exception::", e);
 			}
 		}
@@ -940,13 +951,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			}else{
 				String data = jsonRep.getJsonObject().toString();
 				userDo = JsonDeserializer.deserialize(data, UserDo.class);
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					userDo.setBeforeProductionSwitch(false);
-				}else{
-					userDo.setBeforeProductionSwitch(true);
-				}
 				userDo.setToken(token);
 				setUserFilterProperties(userDo);
 			}

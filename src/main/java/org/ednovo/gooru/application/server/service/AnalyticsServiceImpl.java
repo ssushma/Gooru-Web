@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.server.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -33,6 +35,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.AnalyticsService;
 import org.ednovo.gooru.application.server.ArrayListSorter;
@@ -268,8 +272,13 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public String setHTMLtoPDF(String htmlString,String fileName,boolean isClickedOnEmail) {
-		String pdfName=fileName.replaceAll(" ", "_");
-		pdfName = pdfName + PDF_SUFFIX;
+		String pdfName = "";
+		try {
+			fileName = URLEncoder.encode(fileName,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception::", e);
+		}
+		pdfName = fileName + PDF_SUFFIX;
 		String savedFileName=null;
 		StringRepresentation stringRepresentation= null;
 		String downloadUrl="";

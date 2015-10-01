@@ -29,10 +29,8 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
-import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.collectiondetails.widgets.centuryskills.CenturySkillsPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
-import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.user.client.ui.TreeItem;
 
@@ -78,5 +76,7 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 	CenturySkillsPresenter getCenturySkillsPresenters();
 
 	public TreeItem getSelectedWidget();
+
+	public void displayCropImage(String imageUrl);
 
 }

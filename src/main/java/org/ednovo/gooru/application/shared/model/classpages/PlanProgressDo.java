@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.shared.model.classpages;
 
-import com.google.gwt.user.client.rpc.IsSerializable; 
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -43,6 +42,7 @@ public class PlanProgressDo implements IsSerializable {
 	private static final long serialVersionUID = 1L;
 	private String title;
 	private String gooruOId;
+	private String gooruOid;
 	private String scoreStatus;
 	private String type;
 	private int views;
@@ -61,6 +61,8 @@ public class PlanProgressDo implements IsSerializable {
 	private String userUId;
 	private String url;
 	private String thumbnail;
+	private boolean visibility;
+	private int collectionId;
 	private ArrayList<PlanProgressDo> item;
 	private ArrayList<PlanProgressDo> usageData;
 	
@@ -75,6 +77,12 @@ public class PlanProgressDo implements IsSerializable {
 	}
 	public void setGooruOId(String gooruOId) {
 		this.gooruOId = gooruOId;
+	}
+	public String getGooruOid() {
+		return gooruOid;
+	}
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
 	}
 	public String getScoreStatus() {
 		return scoreStatus;
@@ -195,5 +203,17 @@ public class PlanProgressDo implements IsSerializable {
 	}
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+	public boolean isVisibility() {
+		return visibility;
+	}
+	public void setVisibility(boolean visibility) {
+		this.visibility = visibility;
+	}
+	public int getCollectionId() {
+		return collectionId;
+	}
+	public void setCollectionId(int collectionId) {
+		this.collectionId = collectionId;
 	}
 }

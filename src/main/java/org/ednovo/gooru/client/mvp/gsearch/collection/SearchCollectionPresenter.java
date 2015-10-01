@@ -47,8 +47,6 @@ import org.ednovo.gooru.client.mvp.gsearch.ViewMorePopup.ViewMorePeoplePresenter
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
-import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.client.mvp.standards.StandardsPopupPresenter;
@@ -79,11 +77,7 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	private SearchServiceAsync searchService;
 	SearchDo<CollectionSearchResultDo> searchDo=new SearchDo<CollectionSearchResultDo>();
 	Map<String, String> filterMap = new HashMap<String, String>();
-	
-	AddStandardsPresenter addStandardsPresenter = null;
 
-	AddCenturyPresenter addCenturyPresenter;
-	
 	GooruGradesPresenter gooruGradesPresenter;
 	
 	StandardsPopupPresenter standardsPopupPresenter;
@@ -91,7 +85,7 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
 	ShelfMainPresenter shelfMainPresenter;
 	
-	ViewMorePeoplePresenter viewmorePeoplePresenter=null;
+	ViewMorePeoplePresenter viewmorePeoplePresenter;
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SEARCH_COLLECTION)
@@ -100,10 +94,8 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	}
 
 	@Inject
-	public SearchCollectionPresenter(IsSearchCollectionView view, IsSearchCollectionProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,ShelfMainPresenter shelfMainPresenter,StandardsPopupPresenter standardsPopupPresenter) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter,standardsPopupPresenter);
-		this.addStandardsPresenter = addStandardsPresenter;
-		this.addCenturyPresenter=addCenturyPresenter;
+	public SearchCollectionPresenter(IsSearchCollectionView view, IsSearchCollectionProxy proxy,SignUpPresenter signUpViewPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,ViewMorePeoplePresenter viewmorePeoplePresenter,ShelfMainPresenter shelfMainPresenter,StandardsPopupPresenter standardsPopupPresenter) {
+		super(view, proxy, signUpViewPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter,viewmorePeoplePresenter,standardsPopupPresenter);
 		this.gooruGradesPresenter=gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		this.viewmorePeoplePresenter=viewmorePeoplePresenter;
@@ -209,4 +201,5 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo,CollectionResourceWidget displayAddResourcePoup) {
 		
 	}
+
 }

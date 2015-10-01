@@ -829,3 +829,28 @@ table.dataTable thead .sorting_desc {
 table.dataTable thead .sorting {
 	background-image: url("${cdn.endpoint}/images/sort_both.png");
 }
+
+#collectionBreakDown thead tr {
+	font-weight: bold;
+	text-align: center;
+}
+
+#collectionBreakDown thead tr th {
+	border: 1px solid #eee;
+	padding: 6px;
+	background: -moz-linear-gradient(top,rgba(255,255,255,1) 0,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(255,255,255,1)),color-stop(30%,rgba(249,250,253,1)),color-stop(60%,rgba(238,242,247,1)),color-stop(100%,rgba(228,233,244,1)));
+	background: -webkit-linear-gradient(top,rgba(255,255,255,1) 0,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+	background: -o-linear-gradient(top,rgba(255,255,255,1) 0,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+	background: -ms-linear-gradient(top,rgba(255,255,255,1) 0,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+	background: linear-gradient(to bottom,rgba(255,255,255,1) 0,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#e4e9f4',GradientType=0);
+}
+
+#collectionBreakDown tbody tr td {
+	border: solid #eee;
+    border-width: 0 1px 1px 0;
+    padding: 2px .35em;
+	white-space: nowrap;
+	text-align: center;
+}

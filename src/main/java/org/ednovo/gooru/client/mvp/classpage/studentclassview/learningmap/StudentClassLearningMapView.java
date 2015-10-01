@@ -282,7 +282,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 			if(contentGooruIds!=null&&!contentGooruIds.isEmpty()) {
 				getUiHandlers().getLessonPlanData(contentGooruIds);
 			} else {
-				setLessonContent(null, null, null);
+				setLessonContent(null, null, null,0);
 			}
 		}
 		
@@ -311,7 +311,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 	}
 
 	@Override
-	public void setLessonContent(PlanContentDo collectionList, String status, String userId) {
+	public void setLessonContent(PlanContentDo collectionList, String status, String userId, int minimumScore) {
 		learningMapContainer.clear();
 		String page = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_PREVIEW_MODE, UrlNavigationTokens.FALSE);
 		if(page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
@@ -341,7 +341,7 @@ public class StudentClassLearningMapView extends BaseViewWithHandlers<StudentCla
 		if(size>0) {
 			setScoreMapVisiblity(true);
 			for(int i=0;i<size;i++) {
-				learningMapContainer.add(new SlmAssessmentChildView(collectionList.getItems().get(i), status, userId));
+				learningMapContainer.add(new SlmAssessmentChildView(collectionList.getItems().get(i), status, userId, minimumScore));
 			}
 			setContentVisiblity(true);
 		} else {

@@ -115,11 +115,10 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
 	}
 
 	@Override
-	public void setHtmltopdf(final String htmlString, final String fileName, final boolean isClickedOnEmail) {
-		AppClientFactory.getInjector().getAnalyticsService().setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
+	public void getXlsxReport(String htmlString, String fileName) {
+		AppClientFactory.getInjector().getClasspageService().getXlsxReport(htmlString, fileName, new AsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
-
 				if(!StringUtil.checkNull(result)){
 					getView().getFrame().setUrl(result);
 				}
@@ -146,4 +145,5 @@ public class TeachStudentDashboardPresenter extends PresenterWidget<IsTeachStude
         addCourseToClassPresenter.getView().getAppPopUp().center();
         addCourseToClassPresenter.getView().getAppPopUp().setGlassEnabled(true);
 	}
+
 }
