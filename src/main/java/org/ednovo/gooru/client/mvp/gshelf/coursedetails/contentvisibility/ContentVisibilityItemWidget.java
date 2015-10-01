@@ -54,29 +54,9 @@ public class ContentVisibilityItemWidget extends Composite {
 		setVisibility(planProgressDo.isVisibility());
 		spanDot.addClickHandler(new SpanDot(contentType,planProgressDo.isVisibility()));
 		anrSelect.addClickHandler(new AllContentItems());
-		anrSelect.setVisible(false);
 		AppClientFactory.getEventBus().addHandler(HighlightContentSpanEvent.TYPE, highlightContentHandler);
-		if(!"collection".equalsIgnoreCase(contentType)) {
-			rightRow.addMouseOverHandler(new MouseOverShowAnchor());
-			rightRow.addMouseOutHandler(new MouseOverHideAnchor());
-		}
-	}
-	
-	public class MouseOverShowAnchor implements MouseOverHandler{
-		@Override
-		public void onMouseOver(MouseOverEvent event) {
-			if(rowItem.getWidgetCount()>2) {
-				anrSelect.setVisible(true);
-			}
-		}
-	}
-	
-	public class MouseOverHideAnchor implements MouseOutHandler{
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			if(rowItem.getWidgetCount()>2) {
-				anrSelect.setVisible(false);
-			}
+		if("collection".equalsIgnoreCase(contentType)) {
+			anrSelect.setVisible(false);
 		}
 	}
 	
@@ -102,7 +82,11 @@ public class ContentVisibilityItemWidget extends Composite {
 		} else if("collection".equalsIgnoreCase(contentType)) {
 			rowItem.setStyleName("collectionRow");
 			lblContentName.addStyleName("levelThree");
-			iconPanel.addStyleName("contentVisibility collection");
+			if(data.getCollectionType()!=null&&data.getCollectionType().equalsIgnoreCase("collection")) {
+				iconPanel.addStyleName("contentVisibility collection");
+			} else {
+				iconPanel.addStyleName("contentVisibility assessment");
+			}
 		}
 	}
 	

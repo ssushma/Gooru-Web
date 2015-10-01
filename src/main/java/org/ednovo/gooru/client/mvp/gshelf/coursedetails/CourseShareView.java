@@ -25,14 +25,12 @@
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.contentvisibility.AddClassToCourseView;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.contentvisibility.ContentVisibilityChildView;
@@ -149,17 +147,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 					classListWidget.getEditClassAnchor().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							classPanel.setVisible(false);
-							contentVisibilityPanel.setVisible(true);
-							ContentVisibilityChildView classListWidget = new ContentVisibilityChildView(classObj,courseId);
-							classListWidget.getAnrAllClasses().addClickHandler(new ClickHandler() {
-								@Override
-								public void onClick(ClickEvent event) {
-									classPanel.setVisible(true);
-									contentVisibilityPanel.setVisible(false);
-								}
-							});
-							contentVisibilityPanel.add(classListWidget);
+							redirectToContentVisibility(classObj, courseId);
 						}
 					});
 					classListPnl.add(classListWidget);
@@ -172,7 +160,23 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 			courseDetailsContainer.setVisible(false);
 		}
 	}
-
+	
+	@Override
+	public void redirectToContentVisibility(ClasspageDo classObj, String courseId) {
+		classPanel.setVisible(false);
+		contentVisibilityPanel.clear();
+		contentVisibilityPanel.setVisible(true);
+		ContentVisibilityChildView classListWidget = new ContentVisibilityChildView(classObj,courseId);
+		classListWidget.getAnrAllClasses().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				classPanel.setVisible(true);
+				contentVisibilityPanel.setVisible(false);
+			}
+		});
+		contentVisibilityPanel.add(classListWidget);
+	}
+	
 	@Override
 	public void clearSharePlanes() {
 		classListPnl.clear();
