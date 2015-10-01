@@ -451,7 +451,6 @@ public class TinyMCE extends Composite{
        $wnd.tinyMCE.getInstanceById(id).toolbarElement.style.display = 'none';
        }-*/;
     public void hideTinyMceToolBar(String id){
-        System.out.println("Hide TinyMCE tool bar wit id : "+id);
            hideAllButtons();
            if (Document.get().getElementById(id + "_external_close") != null)
                Document.get().getElementById(id + "_external_close").getStyle().setDisplay(Display.NONE);
@@ -459,7 +458,6 @@ public class TinyMCE extends Composite{
 //               if (id!=null && Document.get().getElementById(id+"_external") != null){
 //				   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
 //				   Document.get().getElementById(id+"_external").getStyle().setDisplay(Display.NONE);
-//            	   System.out.println("Hide TinyMCE tool bar wit id -- Not null");
             	   showTinyMceToolBar(id);
 //               }
 //           }catch(Exception e){
@@ -468,7 +466,6 @@ public class TinyMCE extends Composite{
            lastButtonId=id;
     }
     public void hideTinyMceToolBar(String id,boolean toolBarButtonVisible){
-    	System.out.println("Hide TinyMCE tool bar wit id and boolean");
         try{
             if (id!=null  && Document.get().getElementById(id+"_external") != null){
                  Document.get().getElementById(id+"_external").getStyle().setDisplay(Display.NONE);
