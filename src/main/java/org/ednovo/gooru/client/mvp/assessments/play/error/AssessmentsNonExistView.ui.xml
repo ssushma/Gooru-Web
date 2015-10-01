@@ -11,9 +11,6 @@
 		<g:FlowPanel styleName="{errorStyle.collectionSpecsRight}">
 			<g:HTMLPanel styleName="{errorStyle.h3Header}" ui:field="noLongerText"></g:HTMLPanel>
 			<g:HTMLPanel styleName="{errorStyle.collectionDesc}" ui:field="madePrivateOrDeletedText"></g:HTMLPanel>
-			<!-- or deleted for not meeting our <g:Anchor styleName="{errorStyle.communityStandardStyle}" 
-				href=" http://support.goorulearning.org/entries/24471116-Gooru-Community-Standards" 
-				target="_blank">Community Standards.</g:Anchor> -->
 		</g:FlowPanel>
 		<g:HTMLPanel styleName="{errorStyle.clearFloats}"></g:HTMLPanel>
 		<g:HTMLPanel styleName="{errorStyle.collectionSpecs}" ui:field="meanTimetext"></g:HTMLPanel>
@@ -23,4 +20,4 @@
 		</g:FlowPanel>
 	</g:FlowPanel>
 
-</ui:UiBinder> 
+</ui:UiBinder>

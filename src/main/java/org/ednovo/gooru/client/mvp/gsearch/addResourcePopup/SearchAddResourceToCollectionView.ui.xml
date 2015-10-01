@@ -13,7 +13,7 @@
 		<div class="clearfix"></div>
 		</div>
 		<g:Label ui:field="addingTextLbl" styleName="remixMenuTitle"/>
-						<g:HTMLPanel styleName="myCourseContainer">
+						<g:HTMLPanel styleName="myCourseContainer" ui:field="myCourseContainer">
 							<g:HTMLPanel styleName="myCousesTabMenu"  ui:field="remixPopupTabPnl">
 								<g:Anchor ui:field="mycontentLbl" styleName="mycourseMenu" text="{i18n.GL3335}" title="{i18n.GL3335}"/>
 								<g:Anchor styleName="mycollectionMenu" ui:field="mycollectionsLbl" text="{i18n.GL0180}" title="{i18n.GL0180}" />

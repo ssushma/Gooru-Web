@@ -12,8 +12,6 @@
 					<g:HTMLPanel styleName="col-md-2 col-sm-3 col-xs-3 logo">
 						<a ui:field="gooruLearning" style="opacity: 1;">
 							<div class="gooruLearningIcon"></div>
-							<g:Label styleName="gooruLearningCaption"
-								ui:field="lblBeta"></g:Label>
 						</a>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="mobileStyle">
@@ -23,8 +21,7 @@
 									styleName="form-group">
 									<uc:AppSuggestBox ui:field="editSearchTxtBox"
 										styleName="form-control" />
-									<!-- <g:Label ui:field="gooruLabel" styleName="goorusearchTextFont"></g:Label> -->
-									<!-- <g:Label styleName="arrowLable" ui:field="arrowLbl" visible="true"></g:Label> DO-7870-->
+									<g:Label ui:field="gooruLabel" styleName="goorusearchTextFont"></g:Label>
 								</g:FlowPanel>
 								<g:Button styleName="primary" ui:field="editSearchBtn" />
 							</g:HTMLPanel>
@@ -50,10 +47,6 @@
 														<event:HTMLEventPanel ui:field="discoverLinkContainer">
 															<g:Anchor ui:field="discoverLink" styleName="dropdown-toggle" />
 															<uc:BPanel styleName="caret" ui:field="dropDownImg" />
-															<!-- <div style="border-right: 1px solid #616161; height: 
-																34px; /* margin-left: 69px; */ position: absolute; margin-left: 80px; margin-top: 
-																-9px;"></div> -->
-
 														</event:HTMLEventPanel>
 														<g:HTMLPanel ui:field="discovertooltippop"></g:HTMLPanel>
 													</event:HTMLEventPanel>
@@ -63,7 +56,7 @@
 														<event:HTMLEventPanel ui:field="organizeLinkContainer">
 															<g:Anchor ui:field="organizeLink" />
 														</event:HTMLEventPanel>
-												
+
 													</event:HTMLEventPanel>
 												</uc:LiPanel>
 												<uc:LiPanel styleName="noborder">
@@ -87,14 +80,13 @@
 															ui:field="imgUserProfile"></g:Image>
 														<g:Anchor styleName="username" ui:field="loggedInfoLbl" />
 														<g:HTMLPanel styleName="discoverDropDown" ui:field="dropDownImgforDashboard"/>
-														<g:HTMLPanel styleName="" ui:field="myDashBoardPop" />
 														<g:HTMLPanel styleName="teachUserNameArrowContainerNew" ui:field="panelArrow">
 								                         	<g:HTMLPanel styleName="downArrow"></g:HTMLPanel>
 														</g:HTMLPanel>
 													</event:HTMLEventPanel>
-														
+
 												</uc:LiPanel>
-											
+
 												<uc:LiPanel styleName="noborder">
 													<g:FlowPanel ui:field="logInfoFloPanel">
 														<g:HTMLPanel styleName="col-md-6 login">
@@ -138,4 +130,4 @@
 		</uc:HeaderPanel>
 		<!-- New Header End -->
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

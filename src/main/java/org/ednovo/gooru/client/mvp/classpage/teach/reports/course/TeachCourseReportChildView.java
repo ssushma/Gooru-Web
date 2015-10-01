@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentEmptyDataView;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.studentreport.TeachStudentReportPopupWidget;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
@@ -82,68 +83,75 @@ public class TeachCourseReportChildView extends ChildView<TeachCourseReportChild
 	
 	@Override
 	public void setTableData(ArrayList<PlanProgressDo> result) {
-		ArrayList<PlanProgressDo> usageData = null;
-		final AdvancedFlexTable courseTableWidget = new AdvancedFlexTable();
-		courseTableWidget.getElement().setId("course-table-report-data-id");
-		courseTable.add(courseTableWidget);
-		courseTable.getElement().setId("courseTableID");
-		courseTable.getElement().setClassName("scrollTBL");
-		courseTableWidget.addStyleName("table table-bordered tableStyle");
-		
-		int rowCount = result.size();
-		
-		for(int rowWidgetCount=0;rowWidgetCount<rowCount;rowWidgetCount++) {
-			String color = "#fff";
-			if(rowWidgetCount%2==1) {
-				color = "#f8fafb";
-			}
-			PlanProgressDo planDo = result.get(rowWidgetCount);
-			HTML studentName = new HTML(planDo.getUserName());
-			studentName.setStyleName("myclasses-mastery-unit-cell-style");
-			studentName.addClickHandler(new StudentCourseView("Course View", planDo.getUserName(), planDo.getUserUId()));
-			courseTableWidget.setWidget(rowWidgetCount,0,studentName);
-			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setBackgroundColor(color);
-			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
-			usageData = planDo.getUsageData();
-			int columnCount = usageData.size();
-			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
-				int score = usageData.get(columnWidgetCount).getScoreInPercentage();
-				int views = usageData.get(columnWidgetCount).getViews();
-				String scoreStr = "--";
-				if(views>0&&score>=0) {
-					scoreStr = score+"%";
-				}
-				Label scoreLbl = new Label(scoreStr);
-				courseTableWidget.setWidget(rowWidgetCount, columnWidgetCount+1,scoreLbl);
-				String highlightStyle = StringUtil.getHighlightStyle(score);
-				if(highlightStyle!=null&&highlightStyle.equalsIgnoreCase("grey")) {
-					courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setBackgroundColor(color);
-				} else {
-					if(views>0) {
-						courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(highlightStyle);
-					} else {
-						courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setBackgroundColor(color);
-					}
-				}
-				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
-			}
-		}
-		
-		Label studentNameLbl = new Label("Student");
-		studentNameLbl.setStyleName("");
-		studentNameLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
-		studentNameLbl.setWidth("150px");
-		courseTableWidget.setHeaderWidget(0, studentNameLbl);
-		
-		int columnCount = usageData.size();
-		
-		for(int headerColumnCount=0;headerColumnCount<columnCount;headerColumnCount++) {
-			String unitNameLbl = usageData.get(headerColumnCount).getTitle();
-			HTML unitName = new HTML(unitNameLbl);
-			unitName.setStyleName("myclasses-mastery-unit-cell-style");
-			unitName.addClickHandler(new ClickUnitName(usageData.get(headerColumnCount).getGooruOId(),"Unit "+(headerColumnCount+1)+" "+unitNameLbl));
-			courseTableWidget.setHeaderWidget(headerColumnCount+1, unitName);
-		}
+        int rowSize=result.size();
+        if(rowSize>0) {
+    		ArrayList<PlanProgressDo> usageData = null;
+    		final AdvancedFlexTable courseTableWidget = new AdvancedFlexTable();
+    		courseTableWidget.getElement().setId("course-table-report-data-id");
+    		courseTable.add(courseTableWidget);
+    		courseTable.getElement().setId("courseTableID");
+    		courseTable.getElement().setClassName("scrollTBL");
+    		courseTableWidget.addStyleName("table table-bordered tableStyle");
+    		
+    		int rowCount = result.size();
+    		
+    		for(int rowWidgetCount=0;rowWidgetCount<rowCount;rowWidgetCount++) {
+    			String color = "#fff";
+    			if(rowWidgetCount%2==1) {
+    				color = "#f8fafb";
+    			}
+    			PlanProgressDo planDo = result.get(rowWidgetCount);
+    			HTML studentName = new HTML(planDo.getUserName());
+    			studentName.setStyleName("myclasses-mastery-unit-cell-style");
+    			studentName.addClickHandler(new StudentCourseView("Course View", planDo.getUserName(), planDo.getUserUId()));
+    			courseTableWidget.setWidget(rowWidgetCount,0,studentName);
+    			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setBackgroundColor(color);
+    			courseTableWidget.getWidget(rowWidgetCount,0).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
+    			usageData = planDo.getUsageData();
+    			int columnCount = usageData.size();
+    			for(int columnWidgetCount=0;columnWidgetCount<columnCount;columnWidgetCount++) {
+    				int score = usageData.get(columnWidgetCount).getScoreInPercentage();
+    				int views = usageData.get(columnWidgetCount).getViews();
+    				String scoreStr = "--";
+    				if(views>0&&score>=0) {
+    					scoreStr = score+"%";
+    				}
+    				Label scoreLbl = new Label(scoreStr);
+    				courseTableWidget.setWidget(rowWidgetCount, columnWidgetCount+1,scoreLbl);
+    				String highlightStyle = StringUtil.getHighlightStyle(score);
+    				if(highlightStyle!=null&&highlightStyle.equalsIgnoreCase("grey")) {
+    					courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setBackgroundColor(color);
+    				} else {
+    					if(views>0) {
+    						courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().setClassName(highlightStyle);
+    					} else {
+    						courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setBackgroundColor(color);
+    					}
+    				}
+    				courseTableWidget.getWidget(rowWidgetCount, columnWidgetCount+1).getElement().getParentElement().getStyle().setWidth(150, Unit.PX);
+    			}
+    		}
+    		
+    		Label studentNameLbl = new Label("Student");
+    		studentNameLbl.setStyleName("");
+    		studentNameLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+    		studentNameLbl.setWidth("150px");
+    		courseTableWidget.setHeaderWidget(0, studentNameLbl);
+    		
+    		int columnCount = usageData.size();
+    		
+    		for(int headerColumnCount=0;headerColumnCount<columnCount;headerColumnCount++) {
+    			String unitNameLbl = usageData.get(headerColumnCount).getTitle();
+    			HTML unitName = new HTML(unitNameLbl);
+    			unitName.setStyleName("myclasses-mastery-unit-cell-style");
+    			unitName.addClickHandler(new ClickUnitName(usageData.get(headerColumnCount).getGooruOId(),"Unit "+(headerColumnCount+1)+" "+unitNameLbl));
+    			courseTableWidget.setHeaderWidget(headerColumnCount+1, unitName);
+    		}
+        } else {
+        	courseTable.clear();
+        	courseTable.add(new TeachStudentEmptyDataView());
+        }
+
 	}
 	
 	public static native void sortAndFixed() /*-{

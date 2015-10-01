@@ -51,8 +51,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	/*AnalyticsCssBundle res;*/
-
 	@UiField Button btnCollectionSummary,btnCollectionProgress,btnCollectionResponses;
 
 	@UiField ListBox loadCollections;
@@ -77,8 +75,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 * Default constructor
 	 */
 	public AnalyticsView() {
-		/*this.res = AnalyticsCssBundle.INSTANCE;
-		res.unitAssignment().ensureInjected();*/
 		setWidget(uiBinder.createAndBindUi(this));
 		analyticsViewPnl.getElement().setId("analyticsViewPnl");
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
@@ -332,16 +328,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	}
 	public HTMLPanel getCollectionProgressSlot(){
 		return collectionProgressSlot;
-	}
-	/**
-	 * This will set the styles for the data table cells.
-	 * @return
-	 */
-	com.google.gwt.visualization.client.Properties getPropertiesCell(){
-			  Properties properties=Properties.create();
-			  properties.set("style", "text-align:center;font-weight:bold;background-color: red;");
-			  com.google.gwt.visualization.client.Properties p=properties.cast();
-			  return p;
 	}
 	/**
      * This method is used to enable the no data message text.

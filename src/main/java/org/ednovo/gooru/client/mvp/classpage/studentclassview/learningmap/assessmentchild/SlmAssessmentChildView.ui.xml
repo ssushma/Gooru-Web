@@ -21,6 +21,10 @@
 	        <g:HTMLPanel styleName="col-md-7 col-sm-7">
 	           <g:HTMLPanel styleName="no-gutter">
 	              <g:HTMLPanel styleName="col-md-6 col-sm-6">
+	                  <g:HTMLPanel styleName="minimumScoreLblPanel" ui:field="minimumScoreLblPanel">
+		                  <uc:SpanPanel styleName="minimumScoreLblKey" text="{i18n.GL3580}"/>
+		                  <uc:SpanPanel ui:field="minScore" styleName="minimumScoreLblValue"/>
+	                  </g:HTMLPanel>
 	              </g:HTMLPanel>
 	              <g:HTMLPanel styleName="col-md-6 col-sm-6">
 	                 <g:HTMLPanel styleName="fraNumbers" ui:field="reportView">

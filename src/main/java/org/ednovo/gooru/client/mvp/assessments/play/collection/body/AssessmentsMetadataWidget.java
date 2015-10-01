@@ -116,12 +116,12 @@ public class AssessmentsMetadataWidget extends Composite {
 		if(collectionDo!=null){
 		this.collectionDo = collectionDo;
 		teamContainer.clear();
-		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
-			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
-			 teamContainer.add(collaboratorsUc);
-			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsernameDisplay()!=null)?collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND():"");
+		if (collectionDo.isIsCollaborator()){
+			CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
+			teamContainer.add(collaboratorsUc);
+			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername() +" " + i18n.GL_GRR_AND():"");
 		}else{
-			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsernameDisplay()!=null)?collectionDo.getUser().getUsernameDisplay():"");
+			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
 		}
 		if(!StringUtil.isEmpty(collectionDo.getViews())){
 			setViewCount(collectionDo.getViews());
@@ -158,31 +158,29 @@ public class AssessmentsMetadataWidget extends Composite {
 		}
 	}
 	public void setUserName(String userName){
-		if(collectionDo.getUser()!=null && collectionDo.getUser().getCustomFields()!=null){
-			if(collectionDo.getUser().getCustomFields().get(0).getOptionalValue()!=null){
-				String getUserProfileStatus	=collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
-				if(ClientConstants.TRUE.equalsIgnoreCase(getUserProfileStatus)){
-					usernameAnchor = new Anchor();
-					if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()!=null?collectionDo.getUser().getUsername():"")){
-						usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
-					}
-				else{
+		if(collectionDo.getUser()!=null){
+			if(collectionDo.getUser().isShowProfilePage()){
+				usernameAnchor = new Anchor();
+				if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()!=null?collectionDo.getUser().getUsername():"")){
+					usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+				}else{
 					String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
 					usernameAnchor.setHref(token);
 				}
-					usernameAnchor.setText(userName);
-					usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
-					usernameAnchor.setTarget("_blank");
-					userNameLabel.setText("");
-					userNameLabel.getElement().appendChild(usernameAnchor.getElement());
-				}
-				else{
-					userNameLabel.setText(userName);
-					userNameLabel.getElement().setAttribute("alt",userName);
-					userNameLabel.getElement().setAttribute("title",userName);
-				}
+				usernameAnchor.setText(userName);
+				usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+				usernameAnchor.setTarget("_blank");
+				userNameLabel.setText("");
+				userNameLabel.getElement().appendChild(usernameAnchor.getElement());
+			}else{
+				userNameLabel.setText(userName);
+				userNameLabel.getElement().setAttribute("alt",userName);
+				userNameLabel.getElement().setAttribute("title",userName);
 			}
-
+		}else if(collectionDo.getUser()!=null){
+			userNameLabel.setText(userName);
+			userNameLabel.getElement().setAttribute("alt",userName);
+			userNameLabel.getElement().setAttribute("title",userName);
 		}
 	}
 	public void setViewCount(String viewCount){

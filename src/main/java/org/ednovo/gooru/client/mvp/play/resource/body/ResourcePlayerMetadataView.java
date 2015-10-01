@@ -1004,8 +1004,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				isProtocolsMatched=!sourceUrl.contains("https");
 		}
 		else{
-			if(!sourceUrl.contains("docs.google.com")){
-				isProtocolsMatched=sourceUrl.contains("https");
+			if(sourceUrl.contains("docs.google.com")){
+				isProtocolsMatched=false;
 			}else{
 				isProtocolsMatched=true;
 			}
@@ -1890,6 +1890,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
+
 			addTagesPopupView=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()) {
 				public void getAddedResourceTags(){
 					getUiHandlers().getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
@@ -1929,6 +1930,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					
 				}
 			};
+			addTagesPopupView.getAddStandards();
 			addTagesPopupView.show();
 			addTagesPopupView.setPopupPosition(addTagesPopupView.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}

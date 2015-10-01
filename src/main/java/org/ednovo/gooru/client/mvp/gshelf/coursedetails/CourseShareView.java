@@ -25,34 +25,31 @@
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.contentvisibility.AddClassToCourseView;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.contentvisibility.ContentVisibilityChildView;
 import org.ednovo.gooru.client.mvp.gshelf.util.ClassListWidget;
-import org.ednovo.gooru.client.uc.PPanel;
-import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.client.uc.H4Panel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -68,16 +65,16 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	@UiTemplate("CourseShareView.ui.xml")
 	interface CourseShareViewUiBinder extends UiBinder<Widget, CourseShareView> {
 	}
-	
+
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	@UiField ListBox classListBox;
-	@UiField Button assignCourseBtn;
+
 	@UiField VerticalPanel classListPnl;
-	@UiField Label errorMsgLbl;
-	@UiField HTMLPanel assinPnl,associatedClassesPnl;
-	@UiField PPanel titlePanel;
+	@UiField HTMLPanel assinPnl, associatedClassesPnl, courseDetailsContainer, shareMainContainer, classPanel, contentVisibilityPanel;
 	@UiField Anchor createClassAchr;
+	@UiField Button courseBtn;
+	@UiField H4Panel addClassBtn;
+	
+	AddClassToCourseView addClassPopup = null;
 	
 	/**
 	 * Class constructor
@@ -86,81 +83,104 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	@Inject
 	public CourseShareView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		classListBox.addChangeHandler(new SelectClassHandler());
-		errorMsgLbl.setVisible(false);
 		assinPnl.getElement().setId("addCourseToClasPopup");
-		titlePanel.getElement().getStyle().setFontSize(18, Unit.PX);
-		titlePanel.setText(i18n.GL3474());
 		classListPnl.getElement().getStyle().setWidth(100, Unit.PCT);
+		shareMainContainer.setVisible(false);
+		addClassBtn.setText("+ Add Class");
+		addClassBtn.addClickHandler(new AddClass());
+		courseBtn.addClickHandler(new AddClass());
 	}
 	
-	private class SelectClassHandler implements ChangeHandler{
-
+	public class AddClass implements ClickHandler{
 		@Override
-		public void onChange(ChangeEvent event) {
-			// TODO Auto-generated method stub
-			classListBox.getValue(classListBox.getSelectedIndex());
-		}
-	}
-
-	@Override
-	public void setClassesList(List<CollectionDo> searchResult) {
-		classListBox.clear();
-		classListBox.addItem("---Select the class--");
-		for(CollectionDo collectiondo :searchResult){
-			classListBox.addItem(collectiondo.getName(), collectiondo.getClassUid());
+		public void onClick(ClickEvent event) {
+			addClassPopup = new AddClassToCourseView() {
+				@Override
+				public void onClickPositiveButton(ClickEvent event) {
+					if(addClassPopup.getClassId()==null) {
+						addClassPopup.getErrorLabel().setVisible(true);
+					} else {
+						addClassPopup.getErrorLabel().setVisible(false);
+						getUiHandlers().assign2ClassPage(addClassPopup.getClassId(), AppClientFactory.getPlaceManager().getRequestParameter("o1", ""));
+					}
+				}
+			};
+			addClassPopup.getElement().getStyle().setZIndex(9999999);
+			addClassPopup.show();
+			addClassPopup.center();
 		}
 	}
 	
-	@UiHandler("assignCourseBtn")
-	public void clickOnAssignBtn(ClickEvent clickEvent){
-		String courseId= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-		if(courseId!=null){
-			if(classListBox.getSelectedIndex()!=0 && !StringUtil.isEmpty(classListBox.getValue(classListBox.getSelectedIndex()))){
-				errorMsgLbl.setVisible(false);
-			/*	ClasspageDo classpageObj= new ClasspageDo();
-				classpageObj.setCourseGooruOid(courseId);*/
-				//classpageObj.setTitle(title)(courseId);
-				getUiHandlers().assign2ClassPage(classListBox.getValue(classListBox.getSelectedIndex()),courseId);
-			}else{
-				errorMsgLbl.setVisible(true);
-				errorMsgLbl.setText("Please select the class");
-			}
-			
-		}else{
-			errorMsgLbl.setVisible(true);
-			errorMsgLbl.setText("Please save this course");
+	@Override
+	public void setDefaultClass() {
+		if(addClassPopup!=null) {
+			addClassPopup.hide();
 		}
+		Window.enableScrolling(true);
+	}
+
+	@UiHandler("courseBtn")
+	public void clickOnCourseBtn(ClickEvent clickEvent){
 		
 	}
 
-	@Override
-	public void showClassesInList(ArrayList<ClasspageDo> classPageDo, String courseId) {
-		associatedClassesPnl.setVisible(true);
-		if(classPageDo!=null){
-			classListPnl.clear();
-			for(ClasspageDo classObj:classPageDo){
-				ClassListWidget classListWidget = new ClassListWidget(classObj.getName(),classObj.getClassUid(),courseId);
-				classListPnl.add(classListWidget);
-			}
-		}else{
-			String name=classListBox.getItemText(classListBox.getSelectedIndex());
-			String classId= classListBox.getValue(classListBox.getSelectedIndex());
-			ClassListWidget classListWidget = new ClassListWidget(name,classId,courseId);
-			classListPnl.insert(classListWidget,0);
-		}
-		
-	}
-
-	@Override
-	public void clearSharePlanes() {
-		classListPnl.clear();
-		errorMsgLbl.setVisible(false);
-	}
-	
 	@UiHandler("createClassAchr")
 	public void createNewClass(ClickEvent clickEvent){
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,new String[] { UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.MYCLASS});
+	}
+
+	@Override
+	public void showClassesInList(ArrayList<ClasspageDo> classPageDo, final String courseId) {
+		shareMainContainer.setVisible(true);
+		setDefaultClass();
+		if(classPageDo!=null&&classPageDo.size()>0) {
+			assinPnl.setVisible(false);
+			courseDetailsContainer.setVisible(true);
+			associatedClassesPnl.setVisible(true);
+			if(classPageDo!=null){
+				int rowCount = 0;
+				for(final ClasspageDo classObj:classPageDo){
+					ClassListWidget classListWidget = new ClassListWidget(classObj,courseId);
+					if(rowCount%2!=0) {
+						classListWidget.getElement().getStyle().setBackgroundColor("#F8FAFB");
+					}
+					classListWidget.getEditClassAnchor().addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							redirectToContentVisibility(classObj, courseId);
+						}
+					});
+					classListPnl.add(classListWidget);
+					rowCount++;
+				}
+			}
+		} else {
+			classPanel.setVisible(true);
+			assinPnl.setVisible(true);
+			courseDetailsContainer.setVisible(false);
+		}
+	}
+	
+	@Override
+	public void redirectToContentVisibility(ClasspageDo classObj, String courseId) {
+		classPanel.setVisible(false);
+		contentVisibilityPanel.clear();
+		contentVisibilityPanel.setVisible(true);
+		ContentVisibilityChildView classListWidget = new ContentVisibilityChildView(classObj,courseId);
+		classListWidget.getAnrAllClasses().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				classPanel.setVisible(true);
+				contentVisibilityPanel.setVisible(false);
+			}
+		});
+		contentVisibilityPanel.add(classListWidget);
+	}
+	
+	@Override
+	public void clearSharePlanes() {
+		classListPnl.clear();
+		contentVisibilityPanel.clear();
 	}
 
 	/**
@@ -170,6 +190,4 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	public HTMLPanel getAssociatedClassesPnl() {
 		return associatedClassesPnl;
 	}
-	
-	
 }

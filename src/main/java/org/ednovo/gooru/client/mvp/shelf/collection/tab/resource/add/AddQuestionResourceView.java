@@ -50,7 +50,6 @@ import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.search.SearchDo;
 import org.ednovo.gooru.application.shared.model.user.ProfileDo;
-import org.ednovo.gooru.application.shared.util.ClientConstants;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -157,12 +156,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private CopyRightPolicyVc copyRightPolicy;
 
 	@UiField Image depthOfKnoweldgeToolTip;
-	
+
 	@UiField
 	HTMLEventPanel btnStandardsBrowse;
-	
+
 	@UiField UlPanel ulSelectedItems;
-	
+
 	@UiField
 	UlPanel standardsDropListValues;
 
@@ -173,7 +172,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	ToolTip toolTip=null;
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
-	
+
 	String codeID="",code="",label="";
 
 	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
@@ -227,7 +226,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final int EXPLAINATION_TEXT_LENGTH =500;
 	private static final int HT_ANSWER_CHOICE_HINTS_TEXT_LENGTH =500;
 	private static final int HT_QUESTION_TEXT_LENGTH =5000;
-	
+
 	private static String DELIMITER_SPACE="[\\s\\xA0]+";
 
 	public static int questionCharcterLimit=0;
@@ -263,14 +262,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
 	ArrayList<String> isValidHintsList = new ArrayList<String>();
-	
+
 	private boolean isCCSSAvailable = false;
 	private boolean isNGSSAvailable = false;
 	private boolean isTEKSAvailable = false;
 	private boolean isCAAvailable = false;
-	
+
 	List<Integer> selectedValues=new ArrayList<>();
-	
+
 	public FolderDo courseObjG;
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
@@ -395,9 +394,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if(alphaLetterA.getParent().getElement().getChildNodes().getLength()>3)
 				{
 					alphaLetterA.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
-				
+
 				}else {
-					
+
 					alphaLetterA.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 				}
 			}
@@ -565,7 +564,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:65%;height:19px");
 		centurySgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:85%;height:19px");
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
-		
+
 		lblContentRights.getElement().setId("epnlLblContentRights");
 		panelContentRights.getElement().setId("pnlPanelContentRights");
 		rightsContent.getElement().setId("pnlRightsContent");
@@ -629,7 +628,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		});
 	}
-	
+
 	protected void hideDropDown(NativePreviewEvent event) {
 		if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
@@ -639,7 +638,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
         	}
     	}
 	}
-	
+
 	private boolean eventTargetsStandardPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
@@ -742,7 +741,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onSelection(SelectionEvent<Suggestion> event) {
 				Map<String, String> standard = new HashMap<>();
-				
+
 				standard.put("selectedCodeId", String.valueOf(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
 				standard.put("selectedCodeVal", standardSgstBox.getValue());
 				standard.put("selectedDifferenceId", String.valueOf(3));
@@ -832,20 +831,20 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
 
 		addClickEventsForCheckBox();
-		getAddStandards();
-		
+
+
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 			@Override
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				hideDropDown(event);
 			}
-		}); 
-		
+		});
+
 
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-
+				getAddStandards();
 				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:33.5em;color:#515151;")) {
 					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:33.5em;color:#515151;");
 				} else {
@@ -2597,7 +2596,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			tinyMce.showTinyMceToolBar();
+//			tinyMce.showTinyMceToolBar();
 		}
 
 	}
@@ -2764,7 +2763,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					addHotTextAnsChoice.setHeadLabelFields(false);
 					addHotTextQuesetionAnswerOptionTextArea(addHotTextAnsChoice,widgetCount);
 					questionHotTextAnswerChoiceContainer.add(addHotTextAnsChoice);
-					
+
 				}
 				k++;
 			}
@@ -2823,6 +2822,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				ulSelectedItems.add(liPanelWithClose);
 			}
 		}
+		setStandardContainer();
 		setExplanationContainer();
 		setDepthOfKnowledgeContainer();
 		setHintsContainer();
@@ -3032,7 +3032,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 	@UiHandler("commuGuideLinesAnr")
 	public void onClickCommunityGuide(ClickEvent event){
-		Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank","");
+		Window.open("http://support.gooru.org/hc/en-us/articles/200688506","_blank","");
 
 	}
 
@@ -3144,7 +3144,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	public abstract void closeStandardsPopup();
 
-	
+
 
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
@@ -3179,7 +3179,28 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addExplanationLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
 			addExplanationLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
 		}
-
+	}
+	public void setStandardContainer(){
+		boolean isSelected=false;
+		isSelected=isStandardsAdded();
+		if(isSelected){
+			addStandardsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabs());
+			addStandardsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabActive());
+		}else{
+			addStandardsLabel.addStyleName(addWebResourceStyle.advancedOptionsTabs());
+			addStandardsLabel.removeStyleName(addWebResourceStyle.advancedOptionsTabActive());
+		}
+	}
+	public boolean isStandardsAdded(){
+		Iterator<Widget> widgets=ulSelectedItems.iterator();
+		boolean isSelected=false;
+		while(widgets.hasNext()){
+			Widget widget=widgets.next();
+			if(widget instanceof LiPanelWithClose){
+				isSelected=true;
+			}
+		}
+		return isSelected;
 	}
 
 	public void setDepthOfKnowledgeContainer(){
@@ -3272,7 +3293,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				standardContainer.setVisible(false);
 				addStandardsLabel.setVisible(true);
 				addStandardsLabel.setText(i18n.GL0575());
-				setStandardsContainer();
+				setStandardContainer();
 			}else if(event.getRelativeElement().getId().equalsIgnoreCase("eHearderIconCentury")){
 				centuryContainer.setVisible(false);
 				addCenturyLabel.setVisible(true);
@@ -3405,6 +3426,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		return depthOfKnowledge;
 	}
 	public final void populateStandardValues() {
+		standardsDropListValues.clear();
 		for (String standardsTypesArray1 : standardsTypesArray) {
 			List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
 			LiPanel liPanel = new LiPanel();
@@ -3464,8 +3486,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			standardsDropListValues.add(liPanel);
 		}
 	}
-	
-	
+
+
 
 	public void checkStandarsList(List<String> standarsPreferencesList) {
 
@@ -3525,7 +3547,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	public abstract void showStandardsPopup(String standardVal, String standardsDesc,
 			List<LiPanelWithClose> collectionLiPanelWithCloseArray);
-	
+
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
@@ -3553,7 +3575,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			if (!selectedValues.contains(standard.get("selectedCodeId"))){
 				ulSelectedItems.add(generateLiPanel(standard, "standards"));
 			}
-		
+
 	}
 	private LiPanelWithClose generateLiPanel(final Map<String, String> standard, String tagValue) {
 		final LiPanelWithClose liPanelWithClose=new LiPanelWithClose(standard.get("selectedCodeVal"));
@@ -3596,7 +3618,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 	}
-	
+
 	/**
 	 * This method is used to get the selected Std id's
 	 * @return
@@ -3633,14 +3655,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 	/**
 	 * get the standards are added for collection
-	 * 
+	 *
 	 * @param flowPanel
 	 *            having all added standards label
 	 * @return standards text in list which are added for the collection
 	 */
 	private List<String> getAddedStandards() {
 		List<String> suggestions = new ArrayList<String>();
-		
+
 		Iterator<Widget> widgets = ulSelectedItems.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();

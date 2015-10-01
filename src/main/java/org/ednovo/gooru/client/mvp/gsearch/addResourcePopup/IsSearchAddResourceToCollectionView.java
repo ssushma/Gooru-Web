@@ -63,7 +63,7 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	void restrictionToAddResourcesData(String message);
 	public void clearUrlParams();
     PopupPanel getAppPopUp();
-	public void setCopyAndMoveStatus(boolean isCopySelected,boolean isMoveSelected);
+	public void setCopyAndMoveStatus(boolean isCopySelected,boolean isMoveSelected,String selectedType);
 	public Anchor getMycollectionsLbl();
 	public Label getMycollectionsDefaultLbl();
 	public Anchor getMycontentLbl();
@@ -72,4 +72,6 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	public void isFromCopyResource(boolean isFromCopyResource);
 	public Image loadingImage();
 	public void closeTabView();
+	
+	public void disableTabs(boolean isVisible, String copyType);
 }

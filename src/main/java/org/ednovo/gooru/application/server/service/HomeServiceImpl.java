@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.server.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.HomeService;
 import org.ednovo.gooru.application.server.annotation.ServiceURL;
 import org.ednovo.gooru.application.server.deserializer.FeaturedContentDeSerializer;
@@ -110,4 +113,33 @@ private static  Logger logger =LoggerFactory.getLogger(HomeServiceImpl.class);
 
 		return getRedirectUrl();
 	}
+
+	@Override
+	public String getLTIAssessmentUrl(String assessmentUrl, String assessmentId){
+
+		String ltiEndPoint=getLtiLaunchEndpoint();
+		String clientKey=getLtiClientKey();
+		String clientSecret=getLtiClientSecret();
+		String ltiLaunchUrl="";
+		
+		
+		String contextId=getLtiContextId();
+
+		String emailId=AppClientFactory.getLoggedInUser().getEmailId();
+		String gooruUid=AppClientFactory.getLoggedInUser().getGooruUId();
+		String sessionToken=AppClientFactory.getLoginSessionToken();
+		String userName=AppClientFactory.getLoggedInUser().getUsername();
+		try{
+			if(getLtiLaunchUrl().length()!=0){ltiLaunchUrl=URLEncoder.encode(getLtiLaunchUrl(), "UTF-8");}
+			assessmentUrl = URLEncoder.encode(assessmentUrl, "UTF-8");
+			emailId = URLEncoder.encode(emailId, "UTF-8");
+		}catch (UnsupportedEncodingException ex) {
+			logger.error("Exception::", ex);
+		}
+		String ltiUrl=ltiEndPoint+"clientKey="+clientKey+"&clientSecret="+clientSecret+"&emailId="+emailId+
+				"&ltiLaunchUrl="+ltiLaunchUrl+"&contextId="+contextId+"&resourceLinkId="+assessmentId+"&returnUrl="+assessmentUrl+
+				"&gooruUId="+gooruUid+"&userToken="+sessionToken+"&username="+userName+"&roles=Student";
+		return ltiUrl;
+	}
+
 }

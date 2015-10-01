@@ -9,7 +9,6 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
-import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
@@ -35,7 +34,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.visualization.client.visualizations.Table;
 
 public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionProgressUiHandlers> implements IsCollectionProgressView  {
 
@@ -47,9 +45,6 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField(provided = true)
-	CollectionProgressCBundle res;
-
 	@UiField VerticalPanel htmlpnlProgress;
 	@UiField ListBox filterDropDown;
 	@UiField HTMLPanel scrollForCollectionProgress,loadingImageLabel1;
@@ -58,7 +53,6 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	@UiField Image exportImage;
 	@UiField Frame downloadFile;
 
-	DataView operationsView;
 	private final String GREEN = "#BCD1B9 !important";
 	private final String RED = "#EAB4B3 !important";
 	private final String ORANGE = "#FFE7C2 !important";
@@ -72,15 +66,15 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	ArrayList<CollectionProgressDataDo> questionProgressdata=new ArrayList<CollectionProgressDataDo>();
 	ArrayList<CollectionProgressDataDo> resourceProgressData=new ArrayList<CollectionProgressDataDo>();
 
-	Table table;
 	boolean isDropDownClicked=false,isCollectionView;
 	String collectionTitle;
+
+	AdvancedFlexTable adTable=new AdvancedFlexTable();
+
 	/**
 	 * Constructor
 	 */
 	public CollectionProgressWidget() {
-		this.res=CollectionProgressCBundle.INSTANCE;
-		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 		downloadFile.setVisible(false);
@@ -101,16 +95,16 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
  		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(table != null){
-					if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
+				if(adTable != null){
+					if(adTable.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
 						leftArrow.setVisible(true);
 						rightArrow.setVisible(true);
 				}else{
 						leftArrow.setVisible(false);
 						rightArrow.setVisible(false);
-						}
+					}
 				}
-				
+
 			}
 		};
 		scrollForCollectionProgress.addDomHandler(mouseOver, MouseOverEvent.getType());
@@ -173,7 +167,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 
 			destoryTables();
 			htmlpnlProgress.clear();
-			final AdvancedFlexTable adTable=new AdvancedFlexTable();
+			adTable = new AdvancedFlexTable();
 			adTable.getElement().setId("example");
 			htmlpnlProgress.add(adTable);
 			// create headers and put them in the thead tag
@@ -188,9 +182,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 					exportImage.setVisible(false);
 				}
 				if(!isCollectionView){
-					scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgress());
+					scrollForCollectionProgress.setStyleName("cpw-htmlpanlProgress");
 				}else{
-					scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgressCollectionView());
+					scrollForCollectionProgress.setStyleName("cpw-htmlpanlProgressCollectionView");
 				}
 			}
 			int questionColumnIndex=0,resourceColumnIndex=0;
@@ -242,22 +236,22 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 					        		 if(reaction == 0){
 					        			 reactionlbl.setText("--");
 					        		 }else{
-					        			  String customClass=res.css().reaction_redneedhelp();
+					        			  String customClass="cpw-reaction_redneedhelp";
 						        		  if (reaction==1) {
-											  customClass = res.css().reaction_redneedhelp();
+											  customClass = "cpw-reaction_redneedhelp";
 										  } else if (reaction==2) {
-											  customClass = res.css().reaction_reddontunderstand();
+											  customClass = "cpw-reaction_reddontunderstand";
 										  } else if (reaction==3) {
-											  customClass =res.css().reaction_mean1();
+											  customClass ="cpw-reaction_mean1";
 										  } else if (reaction==4) {
-											  customClass = res.css().reaction_understand1();
+											  customClass = "cpw-reaction_understand1";
 										  }else if (reaction>4) {
-											  customClass = res.css().reaction_explain1();
+											  customClass = "cpw-reaction_explain1";
 										  }
 						        		  reactionlbl.addStyleName(customClass);
 					        		 }
 				        		  mainDataVpnl.add(reactionlbl);
-				        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
+				        		  reactionlbl.getElement().getParentElement().addClassName("cpw-alignCenterAndBackground");
 			        		  }else{
 			        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
 			        			//  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions().toString();
@@ -271,7 +265,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			        				  String answerText="--";
 			        				  if(answerOption!=null){
 						        		  answerText=VIEWRESPONSE;
-						        		  viewResponselbl.getElement().getParentElement().addClassName(res.css().viewResponseInCollectionProgress());
+						        		  viewResponselbl.getElement().getParentElement().addClassName("cpw-viewResponseInCollectionProgress");
 			        				  }else{
 			        					  answerText="--";
 			        					  viewResponselbl.getElement().getParentElement().getStyle().setBackgroundColor(WHITE);
@@ -309,7 +303,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 					        		  }
 			        				  Label answerlbl=new Label(answerText);
 					        		  mainDataVpnl.add(answerlbl);
-					        		  answerlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
+					        		  answerlbl.getElement().getParentElement().addClassName("cpw-alignCenterAndBackground");
 			        			  }
 			        			  if(answerOption!=null && collectionProgressData.get(j).getMetaData()!=null){
 			        					int scoreValue=collectionProgressData.get(j).getUserData().get(i).getScore();
@@ -329,8 +323,8 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			        		  }
 			        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUserData().get(i).getTimeSpent()));
 			        		  mainDataVpnl.add(timeStamplbl);
-			        		  timeStamplbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
-			        		  mainDataVpnl.addStyleName(res.css().mainDataVpnl());
+			        		  timeStamplbl.getElement().getParentElement().addClassName("cpw-alignCenterAndBackground");
+			        		  mainDataVpnl.addStyleName("cpw-mainDataVpnl");
 			        		  adTable.setWidget(i, position+2,mainDataVpnl);
 			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color: "+color);
 			        		  position++;
@@ -365,14 +359,14 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			Element ele=event.getNativeEvent().getEventTarget().cast();
 			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("question"))){
 				showResponsesPopup=new ViewResponsesPopup(ele.getAttribute("questionCount"),ele.getAttribute("question"),ele.getAttribute("questionAnswer"), ele.getAttribute("questionType"));
-				showResponsesPopup.setStyleName(res.css().setOETextPopupCenter());
+				showResponsesPopup.setStyleName("cpw-setOETextPopupCenter");
 				if(showResponsesPopup.isShowing()){
 					showResponsesPopup.hide();
 			    	 Window.enableScrolling(true);
 			     }else{
 			    	 Window.enableScrolling(false);
 			    	 showResponsesPopup.setGlassEnabled(true);
-			    	 showResponsesPopup.setGlassStyleName(res.css().setGlassStyleName());
+			    	 showResponsesPopup.setGlassStyleName("cpw-setGlassStyleName");
 			    	 showResponsesPopup.setAutoHideEnabled(true);
 			    	 showResponsesPopup.show();
 			    	 showResponsesPopup.center();

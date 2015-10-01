@@ -60,8 +60,5 @@ public interface EditClassSettingsNavigationUiHandler extends BaseUiHandlers{
 
 	void setClearAllPanel();
 
-	void deleteClass(String classpageId);
-	
-	
 
 }

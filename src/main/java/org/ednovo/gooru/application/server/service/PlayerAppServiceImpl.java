@@ -59,7 +59,6 @@ import org.ednovo.gooru.application.shared.model.player.CommentsDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.application.shared.model.player.FeaturedContentDo;
 import org.ednovo.gooru.application.shared.model.player.InsightsCollectionDo;
-import org.ednovo.gooru.application.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.application.shared.model.user.CreatorDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
@@ -236,15 +235,15 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return deserializeResourceCollection(jsonRep);
 	}
 
-	public ResourceInfoObjectDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {
+	public CollectionItemDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceInfoObjectDo.class);
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
 		}
-		return new ResourceInfoObjectDo();
+		return new CollectionItemDo();
 	}
 
 	@Override
@@ -484,7 +483,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 					"Content-Type" +
 					" content=" +
 					"text/html; charset=UTF-8" +
-					" /> </head> <body style='font-family: arial, sans-serif;color: #515151;height:375px;font-size: 12px; background-color: #f0f0f0;text-align: center;'> <img id='logo-header' src='http://sfs.goorulearning.org/media/mail/v1/images/gooru-logo-small.png' style='width:100px;height:30px;margin: 30px auto 10px auto;'" +
+					" /> </head> <body style='font-family: arial, sans-serif;color: #515151;height:375px;font-size: 12px; background-color: #f0f0f0;text-align: center;'> <img id='logo-header' src='http://sfs.gooru.org/media/mail/v1/images/gooru-logo-small.png' style='width:100px;height:30px;margin: 30px auto 10px auto;'" +
 					"></img> <div class='content-block img-desc' style='text-align: left;width: 500px;padding: 35px;margin: 0px auto 30px auto;background-color: white;border: 1px solid #DDD;-moz-box-shadow: 0 0 10px rgba(0,0,0,.1); -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);box-shadow: 0 0 10px rgba(0,0,0,.1);'> <div style='font-family: arial;width: 520px;color:#666;height:150px'>"+ message +
 					"</body> </html>";
 

@@ -899,6 +899,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		String query1=searchDo.getSearchQuery();
 		collectionQuery= query1 ;
 		try{
+			if(collectionQuery.length()>2)
+			{
 			if(searchDo.getFilters()!=null){
 			/*for (String key : searchDo.getFilters().keySet()) {
 					  String value = searchDo.getFilters().get(key);
@@ -932,6 +934,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 
 			return descralizeCollectionSearchResults(jsonRep.getJsonObject().toString(),searchDo);
+			}
+			else
+			{
+				return new SearchDo<CollectionSearchResultDo>();	
+			}
 		}catch(Exception e){
 			logger.error("Exception::", e);
 		}

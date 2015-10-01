@@ -1,7 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" >
-	<ui:style field="SocialShare" src="SocialShareStyles.css" />
 	<g:HTMLPanel styleName="PopupMainVVSmall">
 		<g:HTMLPanel styleName="popupInnerGrey">
 			<g:HTMLPanel styleName="popupgreyHeader">
@@ -10,9 +9,9 @@
 			    </g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="col-md-12 col-xs-12">
-				<g:HTMLPanel styleName="{SocialShare.classPageEmailBlueText}" ui:field="thanksEmailText"></g:HTMLPanel>
-				<g:Label styleName="{SocialShare.classPageEmailDescText}" ui:field="toEmailLbl"></g:Label>
-				<g:HTMLPanel styleName="{SocialShare.clear}"></g:HTMLPanel>
+				<g:HTMLPanel styleName="ssv-classPageEmailBlueText" ui:field="thanksEmailText"></g:HTMLPanel>
+				<g:Label styleName="ssv-classPageEmailDescText" ui:field="toEmailLbl"></g:Label>
+				<g:HTMLPanel styleName="ssv-clear"></g:HTMLPanel>
 				<g:HTMLPanel styleName="formViewButtonContainer">
 					<g:Button styleName="primary" ui:field="okLbl"/>
 				</g:HTMLPanel>

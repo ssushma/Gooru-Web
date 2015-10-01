@@ -73,11 +73,13 @@ import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.application.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.representation.StringRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -692,7 +694,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		"Content-Type" +
 		" content=" +
 		"text/html; charset=UTF-8" +
-		" /> </head> <body style='font-family: arial, sans-serif;color: #515151;height:345px;font-size: 12px; background-color: #f0f0f0;'><div style='text-align: center;'> <img id='logo-header' src='http://sfs.goorulearning.org/media/mail/v1/images/gooru-logo-small.png' style='width:100px;height:30px;margin: 20px auto 10px auto;'" +
+		" /> </head> <body style='font-family: arial, sans-serif;color: #515151;height:345px;font-size: 12px; background-color: #f0f0f0;'><div style='text-align: center;'> <img id='logo-header' src='http://sfs.gooru.org/media/mail/v1/images/gooru-logo-small.png' style='width:100px;height:30px;margin: 20px auto 10px auto;'" +
 		"></img></div> <div class='content-block img-desc' style='width: 500px;padding: 35px;background-color: white;border: 1px solid #DDD;margin:0px auto 30px auto;-moz-box-shadow: 0 0 10px rgba(0,0,0,.1); -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);box-shadow: 0 0 10px rgba(0,0,0,.1);'> <div style='font-family: arial;width: 520px;color:#666;height:150px'>"+ msgTxt +
 		"</body> </html>";
 
@@ -2221,4 +2223,112 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		return userPlayedSessions;
 	}
 
+	@Override
+	public boolean getClassUsageDataSignal(String classpageId, String courseId) throws GwtException, ServerDownException {
+		boolean isUsageAvailable = true;
+		JsonRepresentation jsonRep = null;
+		String partialUrl = null;
+		String sessionToken=getLoggedInSessionToken();
+		partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GET_CLASS_USAGE_DATA_SIGNAL);
+		
+		if(classpageId!=null) {
+			partialUrl = partialUrl + "classGooruId="+classpageId;
+		}
+		
+		getLogger().info(partialUrl);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(partialUrl, getRestUsername(), getRestPassword());
+
+		try {
+			if(jsonResponseRep!=null&&jsonResponseRep.getStatusCode()==200) {
+				jsonRep = jsonResponseRep.getJsonRepresentation();
+				isUsageAvailable = jsonRep.getJsonObject().getJSONObject("message").getBoolean("userSignalsAvailable");
+			}
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return isUsageAvailable;
+	}
+
+	@Override
+	public String getXlsxReport(String tableData, String fileName) throws GwtException, ServerDownException {
+		StringRepresentation stringRepresentation= null;
+		String savedFileName="";
+		try {
+			fileName = URLEncoder.encode(fileName,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception::", e);
+		}
+		try{
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_HTML_TO_EXCEL_REPORT,getLoggedInSessionToken());
+			String jsonStr="{\"fileName\":\""+fileName+"\",\"html\":\""+tableData+"\"}";
+			logger.info("html to xlsx url: "+url);
+			logger.info("html to xlsx url json: "+jsonStr);
+			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),jsonStr);
+			savedFileName=stringRepresentation.getText();
+			logger.info("savedFileName "+savedFileName);
+		}catch(Exception e){
+			logger.error("Error while generating XLSX file ::", e);
+		}
+		return savedFileName;
+	}
+
+	@Override
+	public ArrayList<PlanProgressDo> getContentVisibilityData(String classpageId, String courseId, String unitId, String lessonId) throws GwtException, ServerDownException {
+		ArrayList<PlanProgressDo> dataList = new ArrayList<PlanProgressDo>();
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		String sessionToken=getLoggedInSessionToken();
+		String endPoint = getRestEndPoint();
+		if(lessonId==null&&unitId==null) {
+			url = UrlGenerator.generateUrl(endPoint, UrlToken.V3_GET_CLASS_COURSE_UNIT_LIST, classpageId, courseId);
+		} else if(lessonId==null&&unitId!=null) {
+			url = UrlGenerator.generateUrl(endPoint, UrlToken.V3_GET_CLASS_COURSE_UNIT_LESSON_LIST, classpageId, courseId, unitId);
+		} else if(lessonId!=null&&unitId!=null) {
+			url = UrlGenerator.generateUrl(endPoint, UrlToken.V3_GET_CLASS_COURSE_UNIT_LESSON_COLLECTION_LIST, classpageId, courseId, unitId, lessonId);
+		}
+		
+		getLogger().info(url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		JSONArray resourceObj;
+		try {
+			if(jsonRep!=null && jsonRep.getSize()!=1){
+				resourceObj = jsonRep.getJsonArray();
+				if(resourceObj!=null){
+					dataList = JsonDeserializer.deserialize(resourceObj.toString(), new TypeReference<ArrayList<PlanProgressDo>>() {});
+				}
+			}
+		}catch (JSONException e) {
+			logger.error("Exception::", e);
+		}
+		return dataList;
+	}
+
+	@Override
+	public boolean updateClassContentVisibility(String classId, List<PlanProgressDo> collectionIds) throws GwtException, ServerDownException {
+		boolean isUpdated = false;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_CONTENT_VISIBILITY, classId);
+		getLogger().info("updateClassContentVisibility: "+url);
+		try{
+			JSONArray payload=new JSONArray();
+			for(int i=0;i<collectionIds.size();i++) {
+				JSONObject content= new JSONObject();
+				content.put(COLLECTIONID, collectionIds.get(i).getCollectionId());
+				content.put(VISIBILITY, collectionIds.get(i).isVisibility());
+				payload.put(content);
+			}
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),payload.toString());
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			getLogger().info("updateClassContentVisibility payload:"+payload.toString());
+			if(jsonResponseRep.getStatusCode()==200){
+				isUpdated = true;
+				getLogger().info("###update success######");
+			}
+		}catch(Exception e){
+			getLogger().error("v3 updateClassContentVisibility ..:"+e.getMessage());
+		}
+		return isUpdated;
+	}
 }

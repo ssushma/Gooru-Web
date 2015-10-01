@@ -832,6 +832,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				resourcesInside.setVisible(true);
 				noCollectionLbl.setVisible(false);
 				final String collectionType=StringUtil.isEmpty(conceptDo.getCollectionType())?null:conceptDo.getCollectionType();
+				StringUtil.setDefaultImages(collectionType, collectionImage, "high");
 					if(conceptDo.getThumbnails()!=null && conceptDo.getThumbnails().getUrl()!=null){
 					collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
 					}else{

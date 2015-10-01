@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.image.upload;
 
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.service.MediaUploadServiceAsync;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
@@ -47,7 +46,6 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -76,9 +74,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	private String classpageId=null;
 
 	CreateDo createDoObj = new CreateDo();
-
-
-
 
 	@Inject
 	private MediaUploadServiceAsync mediaUploadService;
@@ -132,7 +127,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	public void onBind() {
 		super.onBind();
 		setImageWebUploadAsyncCallback(new SimpleAsyncCallback<MediaUploadDo>() {
-
 			@Override
 			public void onSuccess(MediaUploadDo mediaUploadDo) {
 				getView().glasspanelLoadingImage(false);
@@ -145,55 +139,11 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 				getView().glasspanelLoadingImage(false);
 			}
 		});
-		setCropImageAsyncCallback(new SimpleAsyncCallback<String>() {
+		setCropImageAsyncCallback(new SimpleAsyncCallback<String>(){
 			@Override
 			public void onSuccess(String filename) {
-
-				if(isCollectionImage){
-					getShelfView().setCollectionImage(fileNameWithRepository,fileNameWithoutRepository);
-					getView().closeImageUploadWidget();
-					getView().resetImageUploadWidget();
-
-
-				}else if(isClassPageImage){
-					saveImageClass(getClasspageId(), filename);
-				}
-				else if(isQuestionImage){
-					AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
-					getView().closeImageUploadWidget();
-					getView().resetImageUploadWidget();
-
-				}else if(isUpdateQuestionImage){
-
-					saveQuestionImage(filename);
-				}else if (isEditResourceImage){
-//					saveImage(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
-					AppClientFactory.fireEvent(new UpdateEditResourceImageEvent(filename,fileNameWithoutRepository,isEditUserOwnResourceImage));
-					getView().closeImageUploadWidget();
-					getView().resetImageUploadWidget();
-				}else if(isEditUserOwnResourceImage){
-					AppClientFactory.fireEvent(new UpdateEditResourceImageEvent(filename,fileNameWithoutRepository,isEditUserOwnResourceImage));
-					getView().closeImageUploadWidget();
-					getView().resetImageUploadWidget();
-				}
-				else if(isProfileImage||isPublicProfileImage||isUdateProfileImage){
-					saveUserProfileImage(filename);
-				}else if(isuserOwnResourceImage){
-					AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
-					getView().closeImageUploadWidget();
-					getView().resetImageUploadWidget();
-				}else if(isAnswerImage){
-					AppClientFactory.fireEvent(new AddAnswerImageEvent(filename,fileNameWithoutRepository,isAnswerImage,false));
-					getView().closeImageUploadWidget();
-					getView().resetImageUploadWidget();
-				}
-				else{
-				    //getAddResourceView().setImageUrl(filename);
-					AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
-					getView().closeImageUploadWidget();
-					getView().resetImageUploadWidget();
-				}
-
+				//getView().setCroppedImage(filename);
+				setUploadData(filename);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -212,7 +162,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					}else{
 						MixpanelUtil.AddImageFromMyComputer();
 					}
-					//getShelfView().setCouseData(cco)
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
@@ -235,7 +184,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					}else{
 						MixpanelUtil.AddImageFromMyComputer();
 					}
-
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
@@ -261,7 +209,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 				getView().glasspanelLoadingImage(false);
 			}
 		});
-
 		setImageFileUploadAsyncCallback(new SimpleAsyncCallback<MediaUploadDo>() {
 			@Override
 			public void onSuccess(MediaUploadDo mediaUploadDo) {
@@ -269,25 +216,22 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 				isImageUploadedFromUrl=false;
 			}
 		});
-
 		setUploadProfileImage(new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String imageUrl) {
 				if(isProfileImage){
-					AppClientFactory.fireEvent(new SetUserProfileImageEvent(imageUrl));
+					AppClientFactory.fireEvent(new SetUserProfileImageEvent(fileNameWithRepository));
 				}else if(isUdateProfileImage){
-					AppClientFactory.fireEvent(new SetUpdateProfileImageEvent(imageUrl));
+					AppClientFactory.fireEvent(new SetUpdateProfileImageEvent(fileNameWithRepository));
+				}else{
+					AppClientFactory.fireEvent(new SetUserPublicProfileImageEvent(fileNameWithRepository));
 				}
-				else{
-					AppClientFactory.fireEvent(new SetUserPublicProfileImageEvent(imageUrl));
-				}
-				AppClientFactory.fireEvent(new UpdateProfileHeaderImageEvent(imageUrl));
+				AppClientFactory.fireEvent(new UpdateProfileHeaderImageEvent(fileNameWithRepository));
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
 			}
 		});
 		setGooruDefaultProfileUploadAsyncCallback(new SimpleAsyncCallback<MediaUploadDo>() {
-
 			@Override
 			public void onSuccess(MediaUploadDo mediaUploadDo) {
 				saveUserProfileImage(mediaUploadDo);
@@ -298,6 +242,44 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 				getView().glasspanelLoadingImage(false);
 			}
 		});
+	}
+	@Override
+	public void setUploadData(String filename){
+		if(isCollectionImage){
+			getShelfView().setCollectionImage(fileNameWithRepository,fileNameWithoutRepository);
+			getView().closeImageUploadWidget();
+			getView().resetImageUploadWidget();
+		}else if(isClassPageImage){
+			saveImageClass(getClasspageId(), filename);
+		}else if(isQuestionImage){
+			AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
+			getView().closeImageUploadWidget();
+			getView().resetImageUploadWidget();
+		}else if(isUpdateQuestionImage){
+			saveQuestionImage(filename);
+		}else if (isEditResourceImage){
+			AppClientFactory.fireEvent(new UpdateEditResourceImageEvent(filename,fileNameWithoutRepository,isEditUserOwnResourceImage));
+			getView().closeImageUploadWidget();
+			getView().resetImageUploadWidget();
+		}else if(isEditUserOwnResourceImage){
+			AppClientFactory.fireEvent(new UpdateEditResourceImageEvent(filename,fileNameWithoutRepository,isEditUserOwnResourceImage));
+			getView().closeImageUploadWidget();
+			getView().resetImageUploadWidget();
+		}else if(isProfileImage||isPublicProfileImage||isUdateProfileImage){
+			saveUserProfileImage(filename);
+		}else if(isuserOwnResourceImage){
+			AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
+			getView().closeImageUploadWidget();
+			getView().resetImageUploadWidget();
+		}else if(isAnswerImage){
+			AppClientFactory.fireEvent(new AddAnswerImageEvent(filename,fileNameWithoutRepository,isAnswerImage,false));
+			getView().closeImageUploadWidget();
+			getView().resetImageUploadWidget();
+		}else{
+			AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
+			getView().closeImageUploadWidget();
+			getView().resetImageUploadWidget();
+		}
 	}
 	/**
 	 * This method is to get the editResourceImageAysncCallback
@@ -362,13 +344,11 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		this.getMediaUploadService().imageWebUpload(imageURL, getGooruDefaultProfileUploadAsyncCallback());
 	}
 	@Override
-	public void cropImage(String fileName, String height, String width, String xPostion, String yPosition,String imageUrl) {
+	public void cropImage(MediaUploadDo mediaUploadDo, String height, String width, String xPostion, String yPosition) {
 		Window.enableScrolling(true);
-		this.fileNameWithoutRepository=fileName;
-		this.fileNameWithRepository=imageUrl;
-		AppClientFactory.printInfoLogger("imageUrl::::"+imageUrl);
-		this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
-		
+		this.fileNameWithoutRepository=mediaUploadDo.getName();
+		this.fileNameWithRepository=mediaUploadDo.getUrl();
+		this.getMediaUploadService().cropImage(mediaUploadDo.getName(), height, width, xPostion, yPosition,mediaUploadDo.getUrl(), getCropImageAsyncCallback());
 	}
 
 	@Override
@@ -430,7 +410,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setCollectionImage(boolean isCollectionImage) {
-		getView().setAspectRatio(1.0f);
+		getView().setAspectRatio(1.3f);
 		this.isCollectionImage = isCollectionImage;
 	}
 
@@ -514,7 +494,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setProfileImage(boolean isProfileImage) {
-		getView().setAspectRatio(1.0f);
+		getView().setAspectRatio(1.3f);
 		this.isProfileImage = isProfileImage;
 	}
 
@@ -536,7 +516,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setPublicProfileImage(boolean isPublicProfileImage) {
-		getView().setAspectRatio(1.0f);
+		getView().setAspectRatio(1.3f);
 		this.isPublicProfileImage = isPublicProfileImage;
 	}
 
@@ -578,7 +558,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setUdateProfileImage(boolean isUdateProfileImage) {
-		getView().setAspectRatio(1.0f);
+		getView().setAspectRatio(1.3f);
 		this.isUdateProfileImage = isUdateProfileImage;
 	}
 
@@ -596,10 +576,9 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	public void setAnswerImage(boolean isAnswerImage) {
+		if(isAnswerImage){
+			getView().setAspectRatio(1.0f);
+		}
 		this.isAnswerImage = isAnswerImage;
 	}
-
-
-
-
 }

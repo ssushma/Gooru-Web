@@ -597,12 +597,7 @@ button.btn-disabled{
     background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* W3C */
 }
 
-#gShelfMainContainer .folderLevel:hover {
-	background-color: white !important;
-	cursor: pointer !important;
-	margin: 0px;
-	color: #515151 !important;
-}
+
 
 #gShelfMainContainer .folderLevel:hover .arrow {
     display:block;
@@ -637,7 +632,233 @@ button.btn-disabled{
     left:105px;
 }
 
-
+.ActionItemsNew{
+	display:table;
+}
+.ActionItemsNew .deleteButton, .ActionItemsNew .copyButton{
+	display:table-cell;
+	vertical-align:middle;
+}
+.ActionItemsNew .deleteButton span{
+	display:block;
+	vertical-align:middle;
+}
+.ActionItemsNew .copyButton span{
+	display:block;
+	vertical-align:middle;
+}
+.ActionItemsNew a{
+	display:block;
+	text-align:center;
+	font-size:11px;
+	padding:6px 8px;
+}
+#shareContentInClass{
+	padding:0 15px;
+}
+#shareContentInClass .siteInfo {
+	border-bottom:1px solid #dddddd;
+	padding:0 0 15px 0;
+}
+#shareContentInClass .ButtonRight {
+	text-align:text;
+}
+#shareContentInClass .siteInfo p {
+	color:#1076bb;
+	font-size:13px;
+	margin-bottom:5px;
+}
+#shareContentInClass .siteInfo p.small{
+	font-size:12px;
+	color:#515151;
+}
+#shareContentInClass .tableItems{
+	display:table;
+	width:100%;
+	border-collapse: collapse;
+}
+#shareContentInClass .tableItems .unitRow{
+	width: 720px;
+}
+#shareContentInClass .tableItems .tableRow{
+	display:table-row;
+	border-bottom:1px solid #dddddd;
+	border-collapse:separate;
+}
+#shareContentInClass .tableItems .tableCell{
+	display:table-cell;
+	padding:8px 0;
+	width: 400px;
+}
+#shareContentInClass .tableItems .statusTab{
+	text-align:right;
+}
+#shareContentInClass .tableItems .statusTab a{
+	display:inline-block;
+	border-right:1px solid #dddddd;
+	padding:0 10px 0 0;
+	vertical-align:middle;
+}
+#shareContentInClass .tableItems .statusTab .dottedButton{
+	width:22px;
+	height:22px;
+	background:#d8d8d8;
+	border-radius:50% 50%;
+	display:inline-block;
+	vertical-align:middle;
+	margin-right:45px;
+	cursor: pointer;
+}
+#shareContentInClass .tableItems .statusTab .dottedButton.green{
+	background:#7ab075;
+}
+#shareContentInClass .tableItems .statusTab .dottedButton.green.tick{
+	display: inline-block;
+	padding-left: 7px;
+	padding-top: 4px;
+}
+#shareContentInClass .tableItems .statusTab .dottedButton.green.tick:after{
+	content: '';
+	display: block;
+	width: 7px;
+	height: 13px;
+	border: solid #fff;
+	border-width: 0 4px 4px 0;
+	-webkit-transform: rotate(40deg);
+	-moz-transform: rotate(40deg);
+	-ms-transform: rotate(40deg);
+	-o-transform: rotate(40deg);
+	transform: rotate(40deg);
+}
+#shareContentInClass .tableItems .unitLessonDetailsTab.levelTwo{
+	margin-left:25px;
+}
+#shareContentInClass .tableItems .unitLessonDetailsTab.levelThree{
+	margin-left:50px;
+}
+#shareContentInClass .tableItems .unitLessonDetailsTab.cursor {
+	cursor: pointer;
+}
+.pageSubHeader{
+	padding:0 15px 15px 15px;
+	border-bottom:1px solid #dddddd;
+	margin-bottom:15px;
+	font-size:22px;
+	color:#515151;
+}
+.class-name-arrow-right {
+	width: 0;
+	height: 0;
+	float: left;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid #ddd;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+.class-name-arrow-down {
+	width: 0; 
+	height: 0; 
+	float: left;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #ddd;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+#gShelfMainContainer .contentVisibility.unit {
+	float: left;
+	background: url('${cdn.endpoint}/images/folders/panel/u-close.png') no-repeat;
+	height: 25px;
+	width: 35px;
+	margin-top: -5px;
+	margin-right: 5px;
+}
+#gShelfMainContainer .contentVisibility.lesson {
+	float: left;
+	height: 25px;
+	width: 35px;
+	margin-top: -5px;
+	margin-right: 5px;
+	background: url('${cdn.endpoint}/images/folders/panel/l-close.png') no-repeat;
+}
+#gShelfMainContainer .contentVisibility.unit.open {
+	width: 40px;
+	background-image: url('${cdn.endpoint}/images/folders/panel/u-open.png')!important;
+}
+#gShelfMainContainer .contentVisibility.lesson.open {
+	width: 40px;
+	background-image: url('${cdn.endpoint}/images/folders/panel/l-open.png')!important;
+}
+#gShelfMainContainer .contentVisibility.collection {
+	float: left;
+	height: 24px;
+	width: 30px;
+	margin-top: -5px;
+	margin-right: 5px;
+	background-image: url('${cdn.endpoint}/images/folders/panel/collection-icon.png') !important;
+	margin-left: 50px;
+}
+#gShelfMainContainer .contentVisibility.assessment {
+	float: left;
+	height: 24px;
+	width: 30px;
+	margin-top: -5px;
+	margin-right: 5px;
+	background-image: url('${cdn.endpoint}/images/folders/panel/assessment-type.png') !important;
+	margin-left: 50px;
+}
+.my-content-class-modal-dialog {
+	width: 400px;
+	margin: 30px auto;
+}
+.my-content-class-modal-header {
+	background-color: #515151 !important;
+	height: 50px;
+}
+.my-content-class-modal-title {
+	color: #fff!important;
+	float: left;
+	margin-top: 15px;
+	margin-left: 10px;
+}
+.my-content-class-modal-close-btn {
+	font-size: 35px;
+	color: #fff;
+	float: right;
+	background: #515151;
+	margin-right: 5px;
+}
+.my-content-class-indications {
+	padding: 6px 15px;
+	background: #ddd;
+}
+.my-content-class-individual-item {
+	border-top: 1px solid white;
+	height: 35px;
+	line-height: 35px;
+	position: relative;
+	box-sizing: content-box;
+	padding: 0px 15px;
+}
+.my-content-class-individual-item:hover {
+	cursor: pointer;
+	background-color: #cfe3f1!important;
+}
+.my-content-class-individual-item.selectedActiveItem {
+	background-color: #cfe3f1!important;
+}
+.my-content-class-error-msg {
+	font-weight: bold;
+	height: 10px;
+	color: #fab03a;
+	font: 12px arial;
+	float: left;
+}
+.my-content-class-error-msg-layout {
+	width: 30%;
+	margin: 10% 35%;
+}
 @media (max-width: 767px) {
 
 	#gShelfMainContainer .floderLeftContainer{
@@ -3188,8 +3409,13 @@ display: table-cell;
   	  width: 120px;
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage{
-	position:relative;
-
+	height: 90px;
+	width: 120px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	position: relative;
+	border-left: 10px solid #1076bb;
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail{
 display: table-cell;
@@ -3200,12 +3426,26 @@ display: table-cell;
 
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage img{
-	  width: 120px;
+	width: 120px;
 	height:90px;
-	border-left:10px solid #1076bb;
+	display: none;
+}
+#pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage .cropImage{
+	cursor: pointer;
+	padding: 25px;
+	position: relative;
+	top: 9px;
+	margin: 0 0 26px 0;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage .cropImage{
+	cursor: pointer;
+	padding: 25px;
+	position: relative;
+	top: 9px;
+	margin: 0 0 26px 0;
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage img{
-	  width: 120px;
+	width: 120px;
 	height:90px;
 	border-left: 10px solid #feae29;
 }
@@ -4332,8 +4572,8 @@ right:1px;
 	height:40px;
 }
 
-    /* for Webkit's CSS-only solution */
-    @media screen and (-webkit-min-device-pixel-ratio:0) {
+/* for Webkit's CSS-only solution */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
 .shareMainContainer  .custom-select select {
 	padding-right: 30px;
 }
@@ -4365,6 +4605,12 @@ right:1px;
 
 .custom-select select option {color:#6666;font-weight:bold; padding:8px 10px}
 
+.shareMainContainer {
+	min-height: 500px;
+	margin-top: 10px;
+	padding-bottom: 100px;
+}
+
 .shareMainContainer .selectClassBlock{
 	padding: 20px;
 	width: 100%;
@@ -4376,16 +4622,21 @@ right:1px;
 }
 
 .shareMainContainer .courseDetailsContainer{
-	padding:15px 15px;
+	padding:15px 5px;
+}
+.shareMainContainer .courseDetailsContainerBorder{
+	margin: 10px 5px;
+	padding: 10px;
+	border: 1px dashed #ddd;
 }
 .shareMainContainer .assign2Class .assignCourseBlock{
-	border-left: 1px solid #ddd;
 	padding: 15px 15px !important;
 }
 
 .shareMainContainer .createClassStyle{
 	display: inline-block;
 	margin-top: 4px;
+	margin: 5% 24%;
 }
 
 .shareMainContainer .errorMsgStyle{
@@ -4396,8 +4647,8 @@ right:1px;
 	font-style: italic;
 }
 .shareMainContainer .marginBottom{
-	margin-bottom: 10px;
-	margin-top: 10px;
+	padding-bottom: 20px;
+	padding-top: 20px;
 }
  .shareMainContainer .classListStyle{
 	 width: 100%;
@@ -4405,8 +4656,9 @@ right:1px;
 	margin-top: 5px;
  }
 
-.shareMainContainer  button.primary{
+.shareMainContainer button.primary{
 	margin-left: 5px;
+	margin: 5% 6%;
 }
 
 @media (max-width: 767px) {

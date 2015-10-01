@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.uc.SpanPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -30,7 +32,10 @@ public class ClassListWidget extends Composite {
 	interface ClassListWidgetUiBinder extends UiBinder<Widget, ClassListWidget> {
 	}
 
-	@UiField Anchor classNameAnch/*,editClassAnch*/;
+	@UiField Anchor classNameAnch ,editClassAnch;
+	
+	@UiField SpanPanel studentCount;
+	
 	String courseId;
 	/**
 	 * Because this class has a default constructor, it can
@@ -46,12 +51,17 @@ public class ClassListWidget extends Composite {
 	 * @param name 
 	 * @param courseId 
 	 */
-	public ClassListWidget(String name, String classId, String courseId) {
+	public ClassListWidget(ClasspageDo classObj, String courseId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.courseId=courseId;
-		classNameAnch.setText(name);
-		classNameAnch.addClickHandler(new ClassNameClickHandler(classId));
+		classNameAnch.setText(classObj.getName());
+		classNameAnch.addClickHandler(new ClassNameClickHandler(classObj.getClassUid()));
+		studentCount.setText("("+classObj.getMemberCount()+" Students)");
 		//editClassAnch.addClickHandler(new ClassNameClickHandler(classId));
+	}
+	
+	public Anchor getEditClassAnchor() {
+		return editClassAnch;
 	}
 	
 	private class ClassNameClickHandler implements ClickHandler{
@@ -70,7 +80,6 @@ public class ClassListWidget extends Composite {
 			params.put("subpage-view", "reports");
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASS,params);
 		}
-		
 	}
 
 }

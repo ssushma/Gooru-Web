@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+	<ui:style src=""></ui:style>
+    <panel:HTMLEventPanel ui:field="rowItem">
+		<g:HTMLPanel styleName="tableRow">
+	    	<g:HTMLPanel styleName="tableCell">
+	    	    <panel:HTMLEventPanel styleName="cursorPointer" ui:field="contentPanel">
+		    	    <g:InlineLabel ui:field="arrowPanel" styleName="class-name-arrow-right"></g:InlineLabel>
+		    	    <g:InlineLabel ui:field="iconPanel"></g:InlineLabel>
+		    	    <g:Label styleName="unitLessonDetailsTab" ui:field="lblContentName"></g:Label>
+	    	    </panel:HTMLEventPanel>
+	    	</g:HTMLPanel>
+			<panel:HTMLEventPanel styleName="tableCell" ui:field="rightRow">
+			    <g:HTMLPanel styleName="statusTab">
+			        <g:Anchor ui:field="anrSelect">Select All</g:Anchor>
+			    	<panel:HTMLEventPanel styleName="dottedButton" ui:field="spanDot"></panel:HTMLEventPanel>
+				</g:HTMLPanel>
+			</panel:HTMLEventPanel>
+		</g:HTMLPanel>
+	</panel:HTMLEventPanel>
+</ui:UiBinder>

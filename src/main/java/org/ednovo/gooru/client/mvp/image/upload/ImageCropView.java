@@ -30,19 +30,21 @@ import org.ednovo.gooru.client.uc.LoadingUc;
 
 import com.google.code.gwt.crop.client.GWTCropper;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -62,7 +64,7 @@ public abstract class ImageCropView extends Composite{
 	BlueButtonUc cropImageBtn;
 
 	@UiField
-	Anchor cancelButtonAnr;
+	Button cancelButtonAnr;
 	
 	@UiField
 	VerticalPanel cropImageLoadingVerPanel;
@@ -78,10 +80,9 @@ public abstract class ImageCropView extends Composite{
 	@UiField
 	FlowPanel buttonContainer;
 	
-	private GWTCropper crop;
+	@UiField HTMLPanel panel;
 	
-	private ScrollPanel scrollpanel = new ScrollPanel();
-
+	private GWTCropper crop;
 
 	private static ImageCropViewUiBinder uiBinder = GWT.create(ImageCropViewUiBinder.class);
 
@@ -89,7 +90,7 @@ public abstract class ImageCropView extends Composite{
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	Image img = new Image();
 	/**
 	 * Class constructor
 	 */
@@ -110,6 +111,7 @@ public abstract class ImageCropView extends Composite{
 		dragText.getElement().setId("htmlDragText");
 		dragText.getElement().setAttribute("alt",i18n.GL1233());
 		dragText.getElement().setAttribute("title",i18n.GL1233());
+		dragText.setVisible(false);
 		
 		cropImageLoading.setLoadingText(i18n.GL1234());
 		cropImageBtn.setText(i18n.GL1235());
@@ -136,6 +138,7 @@ public abstract class ImageCropView extends Composite{
 		cropImageLoadingVerPanel.getElement().setId("vpnlCropImageLoadingVerPanel");
 		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
 		buttonContainer.getElement().setId("fpnlButtonContainer");
+		panel.getElement().setId("cropContainer");
 	}
 
 	/**
@@ -143,44 +146,77 @@ public abstract class ImageCropView extends Composite{
 	 * @param imageURL of the image , which is to be cropped. 
 	 */
 	public void cropImage(String imageURL,float aspectRatio) {
+		img.setUrl(imageURL);
 		crop = new GWTCropper(imageURL);
 		crop.setAspectRatio(aspectRatio);
-		scrollpanel.add(crop);
-		cropImageWidgetFloPanel.add(scrollpanel);
+		if(aspectRatio==1.0f){
+			if(img.getWidth()>=250 && img.getHeight()>=250){
+				crop.setSize(250, 250);
+			}
+		}else if(aspectRatio==4.53f){
+			if((img.getWidth()*2<=img.getHeight())){
+				float calculateWidth=((float)img.getWidth()/(float)img.getHeight())*90;
+				crop.setSize(Math.round(calculateWidth),90);
+			}else if((img.getHeight()*2<=img.getWidth())){
+				crop.setSize(400,90);
+			}else{
+				crop.setSize(400,90);
+			}
+		}else{
+			if((img.getWidth()*2<=img.getHeight())){
+				float calculateWidth=((float)img.getWidth()/(float)img.getHeight())*300;
+				crop.setSize(Math.round(calculateWidth),300);
+			}else if((img.getHeight()*2<=img.getWidth())){
+				float calculateHeiht=((float)img.getHeight()/(float)img.getWidth())*400;
+				crop.setSize(400,Math.round(calculateHeiht));
+			}else{
+				crop.setSize(400, 300);
+			}
+		}
+		crop.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+		panel.add(crop);
 		Timer timer = new Timer() {
 		    public void run() {
 		    	cropImageLoading.setVisible(false);
 		    }
 		};
-	   // Execute the timer to expire 7 seconds in the future
-	   timer.schedule(7000);	
+	   // Execute the timer to expire 5 seconds in the future
+	   timer.schedule(5000);	
 	}
 	
 	/**
 	 * @return height of cropped image
 	 */
 	public String getSelectionHeight() {
-		return String.valueOf(crop.getSelectionHeight());
+		float ratioWiseHeight=((float)img.getHeight()/(float)crop.getCanvasHeight());
+		float calculatedHeight=ratioWiseHeight*crop.getSelectionHeight();
+		return String.valueOf(Math.round(calculatedHeight));
 	}
 	
 	/**
 	 * @return width of cropped image
 	 */
 	public String getSelectionWidth() {
-		return String.valueOf(crop.getSelectionWidth());
+		float ratioWiseWidth=((float)img.getWidth()/(float)crop.getCanvasWidth());
+		float calculatedWidth=ratioWiseWidth*crop.getSelectionWidth();
+		return String.valueOf(Math.round(calculatedWidth));
 	}
 	
 	/**
 	 * @return x-coordinate of cropped image
 	 */
 	public String getSelectionXCoordinate() {
-		return String.valueOf(crop.getSelectionXCoordinate());
+		float xCoordinate=((float)img.getWidth()/(float)crop.getCanvasWidth());
+		float calculatedXCoordinate=xCoordinate*crop.getSelectionXCoordinate();
+		return String.valueOf(Math.round(calculatedXCoordinate));
 	}
 	/**
 	 * @return y-coordinate of cropped image
 	 */
 	public String getSelectionYCoordinate() {
-		return String.valueOf(crop.getSelectionYCoordinate());
+		float yCoordinate=((float)img.getHeight()/(float)crop.getCanvasHeight());
+		float calculatedYCoordinate=yCoordinate*crop.getSelectionYCoordinate();
+		return String.valueOf(Math.round(calculatedYCoordinate));
 	}
 
 	/**
@@ -211,7 +247,6 @@ public abstract class ImageCropView extends Composite{
 		loadingTextLbl.setVisible(true);
 		onCrop();
 	}
-
 	public abstract void onCancelCrop();
 
 	public abstract void onBackToUpload();
@@ -221,5 +256,12 @@ public abstract class ImageCropView extends Composite{
 	public void addCanvasLoadHandler(LoadHandler handler) {
 		crop.addCanvasLoadHandler(handler);
 	}
-	
+
+	public GWTCropper getCrop() {
+		return crop;
+	}
+
+	public HTMLPanel getPanel() {
+		return panel;
+	}
 }

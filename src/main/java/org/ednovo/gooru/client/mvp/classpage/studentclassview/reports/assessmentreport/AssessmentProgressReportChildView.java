@@ -474,7 +474,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 				adTable.setWidget(i, 0,new Label(String.valueOf(result.get(i).getSequence())));
 	            Image categorylbl=new Image();
 	            String  resourceCategory =result.get(i).getResourceFormat()!=null?result.get(i).getResourceFormat().trim():"";
-	            categorylbl.addStyleName(StringUtil.getResourceFormatImage(resourceCategory));
+	            categorylbl.setUrl(urlDomain+StringUtil.getResourceTypeImage(resourceCategory.toLowerCase()));
 				adTable.setWidget(i, 1,categorylbl);
 				adTable.setWidget(i, 2,questionTitle);
 
@@ -619,7 +619,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 								String fibtext =getTextFromHTML(attemptsObj.get(j).isObject().get("text").isString().stringValue());
 								if(skip == false)
 								{
-									AppClientFactory.printInfoLogger("fibtext: "+fibtext);
+									AppClientFactory.printInfoLogger("fibtext: "+fibtext+";-- status: "+status);
 									answerChoice.setText(fibtext);
 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 										answerChoice.getElement().getStyle().setColor(INCORRECT);
@@ -1044,10 +1044,9 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 	}
 
 	private String getTextFromHTML(String html){
-		if (!"+".equalsIgnoreCase(html)){
-			html = URL.decodeQueryString(html);
-		}
-		AppClientFactory.printInfoLogger("html : "+html);
+		html = html.replaceAll("\\+", "%2B");
+		html = URL.decodeQueryString(html);
+
 		return html;
 	}
 

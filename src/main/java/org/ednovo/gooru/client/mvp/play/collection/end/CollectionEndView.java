@@ -290,7 +290,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		  }
 			sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 
-			StringUtil.loadVisualizationLibraries();
 	}
 	 public class StudentsSessionsChangeHandler implements ChangeHandler{
 			@Override

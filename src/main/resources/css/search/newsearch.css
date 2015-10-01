@@ -842,12 +842,13 @@ button#btnSearchType .caret {
 }
 
 .overrideFilterColor{
-	background-color: #C3DDEE;
-	background: -moz-linear-gradient(center top, #C3DDEE, #C3DDEE) repeat scroll 0 0 transparent;
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#C3DDEE), to(#C3DDEE));
-	background: -webkit-linear-gradient(top, #C3DDEE, #C3DDEE);
-	background-image: -ms-linear-gradient(top, #C3DDEE, #C3DDEE);
-	background: -o-linear-gradient(top, #C3DDEE, #C3DDEE);
+	background-color: #87badd !important;
+	background: -moz-linear-gradient(center top,#c3ddee,#c3ddee) repeat scroll 0 0 transparent !important;
+	background: -webkit-gradient(linear,0 0,0 100%,from(#87badd),to(#87badd)) !important;
+	background: -webkit-linear-gradient(top,#87badd,#87badd) !important;
+	background-image: -ms-linear-gradient(top,#87badd,#87badd) !important;
+	background: -o-linear-gradient(top,#87badd,#87badd) !important;
+	border-color: #7cb1d5 !important;
 }
 
 
@@ -870,6 +871,76 @@ button#btnSearchType .caret {
   	text-align: right;
 }
 
+
+/* Add Resource Assessments View */
+.arav-addResource{
+	display:block;
+}
+/* End - Add Resource Assessments View */
+/* Social Share View */
+.ssv-facebookbtn{
+    background: #3b5996 url(../images/FTE.png) -15px -15px;
+    border-radius: 4px;
+	padding:8px 18px 8px 43px !important;
+	font-weight:bold;
+	display:block;
+	color:#ffffff !important;
+	transition:all 0.5s ease-in-out 0s;
+}
+.ssv-facebookbtn:hover{
+	background:#4b6baa url(../images/FTE.png) -20px -15px;
+}
+
+.ssv-twitterbtn{
+    background:#00acf0 url(../images/FTE.png) -15px -42px;
+    border-radius: 4px;
+	padding:8px 18px 8px 43px !important;
+	font-weight:bold;
+	display:block;
+	color:#ffffff !important;
+	transition:all 0.5s ease-in-out 0s;
+}
+.ssv-twitterbtn:hover{
+	background:#1ebaf8 url(../images/FTE.png) -20px -42px;
+}
+
+.ssv-emailbtn{
+    background: #1076bb url(../images/FTE.png) -15px -67px;
+    border-radius: 4px;
+	padding:8px 18px 8px 43px !important;
+	font-weight:bold;
+	display:block;
+	color:#ffffff !important;
+	transition:all 0.5s ease-in-out 0s;
+}
+.ssv-emailbtn:hover{
+	background:#1688d5 url(../images/FTE.png) -20px -67px;
+}
+/* End - Social Share View */
+
+/* Collection Image UC */
+.iu-resourceThumbnail{
+	display:inline-block;
+	vertical-align:top;
+	margin-right:10px;
+	margin-bottom:6px;
+	width:80px;
+	height:60px;
+	cursor: pointer;
+}
+
+.iu-resourceThumbnail a{
+	background:rgba(0,0,0,1);
+	display:block;
+}
+.iu-resourceThumbnail a:hover img{
+	opacity:0.9;
+}
+.iu-resourceThumbnail a:hover{
+	background:rgba(0,0,0,0.5);
+}
+
+/* End - Collection Image UC */
 
 @media (min-width: 240px) and (max-width: 319px){
 	#gooruSearchMainContainer .searchFilters{

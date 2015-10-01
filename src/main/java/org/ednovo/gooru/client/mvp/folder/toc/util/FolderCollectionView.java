@@ -105,10 +105,11 @@ public class FolderCollectionView extends Composite {
 		 if(folderDo.getCollectionItems().size()>0){
 			 pnlResources.add(new FolderCollectionResourceView(folderDo,parentId));
 		 }
+		 final String collectionType=folderDo.getCollectionType();
 		 lblCollectionTitle.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if(ASSESSMENT_URL.equalsIgnoreCase(folderDo.getCollectionType())){
+				if(ASSESSMENT_URL.equalsIgnoreCase(collectionType)){
 					Window.open(folderDo.getUrl(), "", "");
 				}else{
 					HashMap<String,String> params = new HashMap<String,String>();
@@ -121,7 +122,12 @@ public class FolderCollectionView extends Composite {
 					}
 					
 					params.put("folderItemId", folderDo.getCollectionItemId());
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					PlaceRequest placeRequest;
+					if(ASSESSMENT.equalsIgnoreCase(collectionType)){
+						placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.ASSESSMENT_PLAY, params);
+					}else{
+						placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					}
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}
 			}

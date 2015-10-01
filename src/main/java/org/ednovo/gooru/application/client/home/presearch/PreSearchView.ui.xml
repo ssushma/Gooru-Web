@@ -51,7 +51,7 @@
 									    <g:Button ui:field="btnBrowseStandard" styleName="btn btn-primary primary" text="{i18n.GL3294}"></g:Button>
 									    <tbp:UlPanel styleName="dropdown-menu" ui:field="standardsDropListValues"/>
 									</span>
-									
+
 								</div>
 								<div class="clearfix"></div>
 							</div>
@@ -73,7 +73,7 @@
 								<div class="catBody">
 									<g:Label styleName="contentPane" text="{i18n.GL3296}"></g:Label>
 									<div class="callToAction">
-										<g:Anchor href="http://about.goorulearning.org/educators/stories/" target="_blank" styleName="primary" ui:field="ancSeeStories" text="{i18n.GL3328}"></g:Anchor>
+										<g:Anchor href="http://about.gooru.org/educators/stories/" target="_blank" styleName="primary" ui:field="ancSeeStories" text="{i18n.GL3328}"></g:Anchor>
 									</div>
 								</div>
 							</div>
@@ -98,7 +98,7 @@
 								<div class="catBody">
 									<g:Label styleName="contentPane" text="{i18n.GL3300}"></g:Label>
 									<div class="callToAction">
-										<g:Anchor href="http://about.goorulearning.org/mission/impact/" text="{i18n.GL3301}" target="_blank" styleName="primary" ui:field="ancSeeOurImpact"></g:Anchor>
+										<g:Anchor href="http://about.gooru.org/mission/impact/" text="{i18n.GL3301}" target="_blank" styleName="primary" ui:field="ancSeeOurImpact"></g:Anchor>
 									</div>
 								</div>
 							</div>
@@ -109,7 +109,7 @@
 								<div class="catBody">
 									<g:Label styleName="contentPane" text="{i18n.GL3303}" />
 									<div class="callToAction">
-									    <g:Anchor href="http://about.goorulearning.org/partners/" text="{i18n.GL3304}" target="_blank" styleName="primary" ui:field="ancLearnMore"></g:Anchor>
+									    <g:Anchor href="http://about.gooru.org/partners/" text="{i18n.GL3304}" target="_blank" styleName="primary" ui:field="ancLearnMore"></g:Anchor>
 									</div>
 								</div>
 							</div>
@@ -120,20 +120,20 @@
 			</section>
 			<section class="gettingStarted no-gutter">
 				<div class="col-md-5 col-sm-6 gettingStartedBanner">
-					<img src="images/newlandingpage/getting-started-banner.png" class="img-responsive" />
+					<img src="images/newlandingpage/getting-started-banner.jpg" class="img-responsive" />
 				</div>
 				<div class="col-md-7 col-sm-6">
 					<div class="gettingContentPane">
 						<tbp:H2Panel text="{i18n.GL3305}"/>
 						<div class="blocks">
 						    <h3>
-						    <g:Anchor styleName="h3" target="_blank" href="http://about.goorulearning.org/educators/get-started/" text="{i18n.GL2134}" />
+						    <g:Anchor styleName="h3" target="_blank" href="http://about.gooru.org/educators/get-started/" text="{i18n.GL2134}" />
 						    </h3>
 							<tbp:PPanel text="{i18n.GL3307}" />
 						</div>
 						<div class="blocks">
 						    <h3>
-								<g:Anchor styleName="h3" target="_blank" href="http://about.goorulearning.org/educators/stories/" text="{i18n.GL2144}" />
+								<g:Anchor styleName="h3" target="_blank" href="http://about.gooru.org/educators/stories/" text="{i18n.GL2144}" />
 							</h3>
 							<tbp:PPanel text="{i18n.GL2146}" />
 						</div>
@@ -142,7 +142,7 @@
 						    </div>
 						    <div class="events">
 						        <h3>
-									<g:Anchor target="_blank" styleName="h3" href="http://about.goorulearning.org/community/events" text="{i18n.GL2143}" />
+									<g:Anchor target="_blank" styleName="h3" href="http://about.gooru.org/community/events" text="{i18n.GL2143}" />
 								</h3>
 								<tbp:PPanel text="{i18n.GL2142}" />
 							</div>
@@ -194,7 +194,7 @@
 			</section>
 			<section class="freeToOpenBlock">
 				<div class="focusBannerAlwys">
-					<img src="images/newlandingpage/free-to-open-banner.png" class="img-responsive" />
+					<img src="images/newlandingpage/free-to-open-banner.jpg" class="img-responsive" />
 				</div>
 				<div class="focusTextAlwys">
 					<div class="container">
@@ -209,7 +209,7 @@
 							    <tbp:PPanel text="{i18n.GL3314}"></tbp:PPanel>
 							</div>
 							<div class="callToAction">
-								<g:Anchor href="http://about.goorulearning.org/mission/approach/" target="_blank" ui:field="btnLearnAboutApproach" styleName="primary aboutApproach" text="{i18n.GL3315}"></g:Anchor>
+								<g:Anchor href="http://about.gooru.org/mission/approach/" target="_blank" ui:field="btnLearnAboutApproach" styleName="primary aboutApproach" text="{i18n.GL3315}"></g:Anchor>
 							</div>
 						</div>
 						<div class="clearfix"></div>

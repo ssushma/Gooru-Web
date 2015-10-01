@@ -66,7 +66,7 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void deleteMyCollectionContent(String id, String folderCollection);
 
-	public boolean checkCopyOrMoveStatus(boolean copySelected, boolean moveSelected);
+	public boolean checkCopyOrMoveStatus(boolean copySelected, boolean moveSelected,String clickedType);
 
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle);
 	
@@ -75,6 +75,12 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void setViewTitleWthicon(String title, String type);
 	
-	public void deleteMyCollectionColl(String id); 
+	public void deleteMyCollectionColl(String id);
+	
+	public void disableCopyPopupTabs(boolean isVisible, String copyType);
+	
+	public void copyCourse(String gooruOid);
+	
+	public void isStudentDataAvailable(String type, String o1CourseId, String o2UnitId, String o3LessonId, String assessmentCollectionId);   
 	
 }

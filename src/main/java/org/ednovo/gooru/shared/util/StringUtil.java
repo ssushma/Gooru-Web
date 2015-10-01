@@ -43,7 +43,6 @@ import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderTocDo;
-import org.ednovo.gooru.application.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.SpanPanel;
@@ -84,13 +83,13 @@ public class StringUtil implements ClientConstants {
  	 private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 
  	 public static Map<String, String> categoryMap =null;
- 	 
+
  	public static final String YUMA_COUNTY_SCIENCE = "YumaCountyScience";
 	public static final String YUMA_COUNTY_MATH = "YumaCountyMath";
 	public static final String YUMA_COUNTY_SS = "YumaCountySS";
 	public static final String YUMA_COUNTY_ELA = "YumaCountyELA";
 	public static final String YUMA_COUNTY_PD = "YumaCountyPD";
-	
+
 	public static final String EPISD_SCIENCE="EPISDScience";
 	public static final String EPISD_MATH="EPISDmath";
 	public static final String EPISD_SOC_SCI="EPISDSocSci";
@@ -102,6 +101,7 @@ public class StringUtil implements ClientConstants {
 
 	private final static byte[] key = CRYPTO_KEY.getBytes();
 
+	private static final String IMAGE_URL = "/images/ratings/";
 
 	static{
 		addAllCategories();
@@ -273,7 +273,7 @@ public class StringUtil implements ClientConstants {
 	}
 
 	public static List<String> getUserTaxPreferences() {
-		String taxonomyPrefStr = AppClientFactory.getLoggedInUser().getSettings().getTaxonomyPreferences();
+//		String taxonomyPrefStr = AppClientFactory.getLoggedInUser().getSettings().getTaxonomyPreferences();
 
 		List<String> preferences = new ArrayList<String>();
 		if(AppClientFactory.isAnonymous()) {
@@ -706,7 +706,7 @@ public class StringUtil implements ClientConstants {
 		return count;
 	}
 	public static boolean checkUrlContainesGooruUrl(String url){
-		if (url.contains("goorulearning.org")|| url.contains("support.goorulearning.org")|| url.contains("about.goorulearning.org")) {
+		if (url.contains("goorulearning.org")|| url.contains("support.goorulearning.org")|| url.contains("about.goorulearning.org") || url.contains("gooru.org")|| url.contains("support.gooru.org")|| url.contains("about.gooru.org")) {
 			return true;
 		} else {
 			return false;
@@ -743,49 +743,6 @@ public class StringUtil implements ClientConstants {
 			  resourceCategory="other";
 		  }
 		return resourceCategory;
-	}
-
-
-	/**
-	 *
-	 * @function loadVisualizationLibraries
-	 *
-	 * @created_date : 17-Jun-2015
-	 *
-	 * @description
-	 *
-	 *
-	 * @parm(s) :
-	 *
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 *
-	 *
-	 */
-	public static void loadVisualizationLibraries(){
-//		boolean status = getScriptStatus();
-//		AppClientFactory.printInfoLogger("status : "+status);
-//		if (!status){
-//			Runnable onLoad = new Runnable() {
-//	            @Override
-//	            public void run() {
-//
-//	            }
-//	        };
-//	        VisualizationUtils.loadVisualizationApi(onLoad, PieChart.PACKAGE);
-//	        VisualizationUtils.loadVisualizationApi(onLoad, Table.PACKAGE);
-
-//			AjaxLoaderOptions options = AjaxLoaderOptions.newInstance();
-//            options.setPackages(PieChart.PACKAGE,Table.PACKAGE);
-//            AjaxLoader.loadApi("visualization", "1", new Runnable() {
-//              public void run() {
-//              }
-//            }, options);
-//
-//		}
 	}
 
 	public static String capitalizeFirstLetter(String original){
@@ -867,15 +824,15 @@ public class StringUtil implements ClientConstants {
 
 			long d = different / daysInMilli;
 			different = different % daysInMilli;
-			
+
 			long h = different / hoursInMilli;
 			different = different % hoursInMilli;
 
 			long m = different / minutesInMilli;
 			different = different % minutesInMilli;
-			
+
 			long s = Math.round(((double)((double)different / (double)secondsInMilli)));
-			
+
 	    	if(d>0) {
 	    		h = (24*d)+h;
 	    	}
@@ -977,7 +934,7 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		errorLbl.setStyleName(style);
 		return errorLbl;
 	}
-	
+
 	public static String getResourceFormatImage(String resourceCategory) {
 		String categoryStyle="";
 		if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory)){
@@ -1006,7 +963,7 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		}
 		return categoryStyle;
 	}
-	
+
 	public static String getHotTextHiglightText(String text){
 		String HTText="";
 		HTText=text.replaceAll(",", ", ");
@@ -1016,31 +973,31 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 		HTText=HTText.replaceAll("\\.", ". ");
 		HTText=HTText.replaceAll("\\]\\[", "\\] \\[");
 		return HTText;
-		
+
 	}
 
-	public static String getLibNameOnClickAuthorName(String author) { 
+	public static String getLibNameOnClickAuthorName(String author) {
 		String libName="";
-		if(YUMA_COUNTY_SCIENCE.equals(author)|| 
+		if(YUMA_COUNTY_SCIENCE.equals(author)||
 				YUMA_COUNTY_MATH.equals(author)||
-				YUMA_COUNTY_SS.equals(author) || 
+				YUMA_COUNTY_SS.equals(author) ||
 				YUMA_COUNTY_ELA.equals(author)||
 				YUMA_COUNTY_PD.equals(author)){
 			libName = PlaceTokens.YCGL_LIBRARY;
-			
-		}else if(EPISD6.equals(author)|| 
+
+		}else if(EPISD6.equals(author)||
 				EPISD_CL.equals(author)||
-				EPISD_ELA.equals(author) || 
+				EPISD_ELA.equals(author) ||
 				EPISD_MATH.equals(author)||
 				EPISD_SCIENCE.equals(author)||
 				EPISD_SOC_SCI.equals(author)){
-			
+
 			libName = PlaceTokens.EPISD_LIBRARY;
-			
+
 		}
 		return libName;
 	}
-	
+
 	public static String removeHtmlTags(String htmlText){
 		htmlText = htmlText.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return htmlText;
@@ -1051,5 +1008,27 @@ public static List<StandardFo> getStandardFos(Map<Long,String> detailsMap){
 			isTrue=true;
 		}
 		return isTrue;
+	}
+
+	public static String getResourceTypeImage(String resourceCategory) {
+		 StringBuilder image = new StringBuilder();
+			if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory) || EXAM.equalsIgnoreCase(resourceCategory)){
+				image = image.append(IMAGE_URL+WEBPAGE+PNG);
+			} else if(SLIDE.equalsIgnoreCase(resourceCategory) || IMAGE.equalsIgnoreCase(resourceCategory)){
+				image = image.append(IMAGE_URL+IMAGE+PNG);
+			} else if(HANDOUT.equalsIgnoreCase(resourceCategory) || LESSON.equalsIgnoreCase(resourceCategory) || TEXTBOOK.equalsIgnoreCase(resourceCategory)|| TEXT.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+TEXT+PNG);
+			} else if(VIDEO.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+VIDEO+PNG);
+			} else if(INTERACTIVE.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+INTERACTIVE+PNG);
+			}else if(AUDIO.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+AUDIO+PNG);
+			}else if(QUESTION.equalsIgnoreCase(resourceCategory)) {
+				image = image.append(IMAGE_URL+QUESTION+PNG);
+			} else{
+				image = image.append(IMAGE_URL+WEBPAGE+PNG);
+			}
+	     return image.toString();
 	}
 }

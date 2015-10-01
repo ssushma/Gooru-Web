@@ -458,9 +458,6 @@ import org.ednovo.gooru.client.mvp.search.TagsTabView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.IsAddCenturyView;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsView;
-import org.ednovo.gooru.client.mvp.search.standards.IsAddStandardsView;
 import org.ednovo.gooru.client.mvp.settings.IsUserSettingsView;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter.IsUserSettingProxy;
@@ -647,7 +644,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(YouthVoicesLibraryPresenter.class, IsYouthVoicesLibraryView.class, YouthVoicesLibraryView.class,IsYouthVoicesLibraryProxy.class);
 		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
 
-		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
 		bindPresenterWidget(AddCenturyPresenter.class, IsAddCenturyView.class, AddCenturyView.class);
 		bindPresenterWidget(GooruGradesPresenter.class, IsGooruGradesView.class, GooruGradesView.class);
 		bindPresenterWidget(ContributorsPresenter.class, IsContributorsView.class, ContributorsView.class);

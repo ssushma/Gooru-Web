@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.image.upload;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.application.shared.model.folder.CreateDo;
 import org.ednovo.gooru.application.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -40,6 +41,7 @@ import org.ednovo.gooru.client.uc.GlassPanelWithLoadingUc;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -65,6 +67,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -103,17 +106,17 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@UiField
 	FlowPanel imageUploadOnUrlFloPanel,gooruProfileDefaultImagesContainer;
-	@UiField Button okButtonOnUploadGooruImages;
+	@UiField Button okButtonOnUploadGooruImages,cropImage,cropImage1;
 	@UiField Label cancelButtonOnUploadGooruImages;
 
 	@UiField
 	FlowPanel imageUploadOnWebFloPanel;
 
 	@UiField
-	BlueButtonUc onWebCancelBtn;
+	Button onWebCancelBtn,onSystemCancelBtn;
 
 	@UiField
-	BlueButtonUc onSystemCancelBtn;
+	BlueButtonUc onOkButton,onOkButton1;
 
 	@UiField
 	TextBox imageWebUploadUrlTxtBox;
@@ -136,17 +139,22 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	@UiField
 	ErrorLabelUc urlValidation;
 	@UiField
-	HTMLPanel notWorkingPanel;
+	HTMLPanel notWorkingPanel,displayCromImagePanel1,displayCromImagePanel;
 
 	@UiField Label chooseText,uploadFromComputer,uploadLimitText,notWorkingLblText,
 	uploadFromWebText,imageURLLbl,typeImageurlText,infoUrlUploadText,chooseFromText;
 
-	private static final String IMAGE_UPLOAD_URL = "/media?sessionToken={0}&uploadFileName={1}&resize=true&width=600&height=450";
+	private static final String GET_CROPPED_IMAGE = "/gooruapi/rest/v1/crop?height={0}&width={1}&x={2}&y={3}&mediaFileName={4}&sessionToken={5}";
 
 	private static final String IMAGE_UPLOAD_URL_PATTERN = "(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|jpeg|png))(?:\\?([^#]*))?(?:#(.*))?";
 
 	private static final String IMAGE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:jpg|gif|jpeg|png))$)";
 
+	MediaUploadDo mediaUploadDo=new MediaUploadDo();
+
+	@UiField Image displayImage,displayImage1;
+	
+	String height=null,width=null,xVal=null,yVal=null;
 
 	/**
 	 * See for more details  {@link PopupViewWithUiHandlers} for details.
@@ -231,6 +239,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		infoUrlUploadText.getElement().setId("lblInfoUrlUploadText");
 		infoUrlUploadText.getElement().setAttribute("alt",i18n.GL1227());
 		infoUrlUploadText.getElement().setAttribute("title",i18n.GL1227());
+		infoUrlUploadText.setVisible(false);
 
 		onWebCancelBtn.setText(i18n.GL0142());
 		onWebCancelBtn.getElement().setId("btnCancel");
@@ -298,31 +307,21 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				}
 				if (!"".equalsIgnoreCase(fileUpload.getFilename())) {
 					String size=getFileNameSize();
-
 					double sizeOfImage=Double.parseDouble(size);
 					if(sizeOfImage>5){
 						new AlertForImageUpload(i18n.GL0061(),i18n.GL1229());
 						 glasspanelLoadingImage(false);
 						fileuploadForm.reset();
 						event.cancel();
-				//		Window.enableScrolling(true);
-				//		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
-
 					}
-
-				}
-				else{
+				}else{
 					event.cancel(); // cancel the event
-				//	Window.enableScrolling(true);
-				//	AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
-
 			}
 		});
-
 		imagUploadFloPanel.getElement().setId("fpnlImagUploadFloPanel");
 		imageUploadOnWebFloPanel.getElement().setId("fpnlImageUploadOnWebFloPanel");
+		hideAndDisplayAllCropButtons(false);
 	}
 
 	@Override
@@ -332,19 +331,16 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUnload() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLoad() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -418,6 +414,41 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			imageUploadOnUrlFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.NONE);
 			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+			//setBooleanValues(true);
+			hideAndDisplayAllCropButtons(false);
+	}
+	/**
+	 * This method is used for hiding and enabling the crop and display buttons based on the selected widget.
+	 * @param isTrue
+	 */
+	public void setBooleanValues(boolean isTrue){
+		displayImage.setUrl("");
+		displayImage.setVisible(isTrue);
+		cropImage.setVisible(isTrue);
+		//displayCromImagePanel.getElement().getStyle().clearBackgroundImage();
+
+		displayImage1.setUrl("");
+		displayImage1.setVisible(!isTrue);
+		cropImage1.setVisible(!isTrue);
+		//displayCromImagePanel1.getElement().getStyle().clearBackgroundImage();
+	}
+	/**
+	 * This method is used for hiding and enabling the crop and display buttons.
+	 * @param isTrue
+	 */
+	public void hideAndDisplayAllCropButtons(boolean isTrue){
+		displayImage.setVisible(isTrue);
+		cropImage.setVisible(isTrue);
+		displayImage1.setVisible(isTrue);
+		cropImage1.setVisible(isTrue);
+		setAndClearBorder(displayCromImagePanel.getElement(), isTrue);
+		setAndClearBorder(displayCromImagePanel1.getElement(), isTrue);
+	}
+
+	public void setAndClearBorder(Element element,boolean isTure){
+		if(!isTure){
+			element.removeAttribute("style");
+		}
 	}
 
 	/**
@@ -444,6 +475,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
+		//setBooleanValues(false);
+		hideAndDisplayAllCropButtons(false);
 	}
 
 	@UiHandler("uploadGooruImages")
@@ -470,7 +503,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}
-
 	}
 
 	@UiHandler("cancelButtonOnUploadGooruImages")
@@ -484,8 +516,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}
 	}
-
-
 
 	/**
 	 * Hide {@link AppPopUp}
@@ -515,7 +545,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			GooruImagesView gooruImagesView=(GooruImagesView)gooruProfileDefaultImagesContainer.getWidget(selectedWidgetIndex);
 			String url=gooruImagesView.gooruDefaultImage.getUrl();
 			getUiHandlers().uploadGooruDefaultImage(url);
-			//getUiHandlers().uploadGooruDefaultImage("http://devrepo.goorulearning.org/qalive/f000/0237/5845/63daa896-aaa4-43f2-a6fb-c67e15514e00-280x215.png");
 		}
 	}
 	/**
@@ -564,69 +593,40 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 		return isValid;
 	}
+	@Override
+	public void uploadedImagetobeSet(CreateDo createDoObj){
+		System.out.println("createDoObj.getThumbnails().getUrl()::"+createDoObj.getUrl());
+/*		mediaUploadDo.setUrl(createDoObj.getUrl());
+		mediaUploadDo.setStatusCode(200);*/
+		setDataOnEdit(createDoObj.getUrl());
+		imageWebUploadUrlTxtBox.setText(createDoObj.getUrl());
+		getUiHandlers().imageWebUpload(createDoObj.getUrl());
+	}
 
+	public void setDataOnEdit(String imageUrl){
+		displayImage.setUrl(imageUrl);
+		displayImage1.setUrl(imageUrl);
+
+		hideAndDisplayAllCropButtons(true);		
+		displayImage.setVisible(false);
+		displayImage1.setVisible(false);
+		if(aspectRatio==4.53f){
+			displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+imageUrl+");");
+			displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+imageUrl+");");
+		}else if(aspectRatio==1.0f){
+			displayCromImagePanel.getElement().setAttribute("style","min-width: 100px;width: 250px;min-height: 100px;height: 250px;border: 2px solid #efefef;background-image:url("+imageUrl+");");
+			displayCromImagePanel1.getElement().setAttribute("style","min-width: 100px;width: 250px;min-height: 100px;height: 250px;border: 2px solid #efefef;background-image:url("+imageUrl+");");
+		}else{
+			displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+imageUrl+");");
+			displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+imageUrl+");");
+		}
+	}
 	@Override
 	public void setImageUpload(final MediaUploadDo mediaUploadDo) {
-		imageCropPopup.clear();
-		imagUploadFloPanel.setVisible(false);
-		appPopUp.hide();
 		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if (mediaUploadDo != null && mediaUploadDo.getStatusCode() == 200) {
-			ImageCropView imageCropView = new ImageCropView() {
-				@Override
-				public void onCancelCrop() {
-					resetImageUploadWidget();
-					appPopUp.hide();
-					imageCropPopup.hide();
-					Window.scrollTo(0, 0);
-					if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
-						Window.enableScrolling(false);
-					}else{
-						Window.enableScrolling(true);
-					}
-//					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				}
-
-				@Override
-				public void onBackToUpload() {
-					resetImageUploadWidget();
-					imageCropPopup.clear();
-					imageCropPopup.hide();
-					Window.scrollTo(0, 0);
-					if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
-						Window.enableScrolling(false);
-					}else{
-						Window.enableScrolling(true);
-					}
-					appPopUp.show();
-//					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-				}
-
-				@Override
-				public void onCrop() {
-					glasspanelLoadingImage(true);
-					getUiHandlers().cropImage(mediaUploadDo.getName(), getSelectionHeight(), getSelectionWidth(), getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getUrl());
-				}
-				@Override
-				public void onLoad(){
-					super.onLoad();
-					imageCropPopup.center();
-				}
-			};
-			imageCropView.cropImage(mediaUploadDo.getUrl(),aspectRatio);
-			imageCropView.addCanvasLoadHandler(new LoadHandler() {
-				@Override
-				public void onLoad(LoadEvent event) {
-					imageCropPopup.center();
-					Window.enableScrolling(true);
-				}
-			});
-			//imageCropFloPanel.add(imageCropView);
-//			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
-			imageCropPopup.clear();
-			imageCropPopup.add(imageCropView);
-			imageCropPopup.show();
-			/*Window.enableScrolling(true);*/
+			this.mediaUploadDo=mediaUploadDo;
+			setDataOnEdit(mediaUploadDo.getUrl());
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
@@ -647,7 +647,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			@Override
 			public void onChange(ChangeEvent event) {
 				if(hasValidateImage()){
-					glasspanelLoadingImage(true); 
+					glasspanelLoadingImage(true);
 					fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet?sessionToken="+AppClientFactory.getLoginSessionToken());
 					fileuploadForm.submit();
 				} else {
@@ -658,11 +658,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		fileuploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 			@Override
 			public void onSubmitComplete(SubmitCompleteEvent event) {
-				AppClientFactory.printInfoLogger("onSubmitComplete-----");
 				glasspanelLoadingImage(false);
-				AppClientFactory.printInfoLogger("onSubmitCompleteevent-----"+event.getResults());
 				getUiHandlers().imageFileUpload(event.getResults());
-				AppClientFactory.printInfoLogger("onSubmitCompleteeventdebug-----"+event.toDebugString());
 			}
 		});
 	}
@@ -690,6 +687,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		imageCropPopup.clear();
 		imageCropPopup.hide();
 		notWorkingPanel.setVisible(false);
+		hideAndDisplayAllCropButtons(false);
 		if(isEdit){
 
 		}else{
@@ -704,41 +702,22 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	 */
 
 	public final native String getFileNameSize() /*-{
-
-	var fileSize;
-	      if ($wnd.$.support.msie)
-	         {
-
-	     	 var objFSO = new ActiveXObject("Scripting.FileSystemObject");
-	        var sPath =   $wnd.$("#fileUpload")[0].value;
-	        var objFile = objFSO.getFile(sPath);
-	         var iSize = objFile.size;
-	        fileSize = iSize/ 1048576;
-
+		  var fileSize;
+	      if ($wnd.$.support.msie){
+		     	var objFSO = new ActiveXObject("Scripting.FileSystemObject");
+		        var sPath =   $wnd.$("#fileUpload")[0].value;
+		        var objFile = objFSO.getFile(sPath);
+		        var iSize = objFile.size;
+		        fileSize = iSize/ 1048576;
+	        }else{
+	       		fileSize =  $wnd.$("#fileUpload")[0].files[0].size ;//size in kb
+	        	fileSize = fileSize / 1048576; //size in mb
 	        }
-
-
-
-	        else
-	        {
-
-	       fileSize =  $wnd.$("#fileUpload")[0].files[0].size ;//size in kb
-
-	        fileSize = fileSize / 1048576; //size in mb
-
-	         }
-
-
-
-
-	           return fileSize.toString();
-
-
-
+	        return fileSize.toString();
 	  }-*/;
 
 	public static native String getUserAgent() /*-{
-	return navigator.userAgent.toLowerCase();
+		return navigator.userAgent.toLowerCase();
 	}-*/;
 
 	public void setAspectRatio(float aspectRatio){
@@ -750,5 +729,101 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		this.isEdit=isEdit;
 	}
 
+	@UiHandler(value={"cropImage","cropImage1"})
+	public void clickEventOnCropImage(ClickEvent e){
+		if(mediaUploadDo!=null){
+			displayCropPopup(mediaUploadDo);
+		}
+	}
+	@UiHandler(value={"onOkButton","onOkButton1"})
+	public void clickEventOnUseImage(ClickEvent e){
+		if(mediaUploadDo!=null){
+			//getUiHandlers().setUploadData(mediaUploadDo.getName(), mediaUploadDo);
+			getUiHandlers().cropImage(mediaUploadDo, height, width, xVal, yVal);
+		}
+	}
 
+	/**
+	 * This method is used to display crop popup
+	 * @param mediaUploadDo
+	 */
+	 @Override
+	 public void displayCropPopup(final MediaUploadDo mediaUploadDo){
+		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		final ImageCropView imageCropView = new ImageCropView() {
+			@Override
+			public void onCancelCrop() {
+				/*resetImageUploadWidget();
+				appPopUp.hide();
+				imageCropPopup.hide();
+				Window.scrollTo(0, 0);
+				if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
+				}*/
+				imageCropPopup.clear();
+				imageCropPopup.hide();
+				Window.scrollTo(0, 0);
+				if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
+				}
+				appPopUp.show();
+			}
+			@Override
+			public void onBackToUpload() {
+				//resetImageUploadWidget();
+				imageCropPopup.clear();
+				imageCropPopup.hide();
+				Window.scrollTo(0, 0);
+				if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
+				}
+				appPopUp.show();
+			}
+			@Override
+			public void onCrop() {
+				String tempCropUrl=AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint() + StringUtil.generateMessage(GET_CROPPED_IMAGE,getSelectionHeight(),getSelectionWidth(),getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getName(),AppClientFactory.getLoggedInUser().getToken());
+				setCroppedImage(tempCropUrl+"&id="+Math.random());
+				height=getSelectionHeight();
+				width=getSelectionWidth();
+				xVal=getSelectionXCoordinate();
+				yVal=getSelectionYCoordinate();
+				//getUiHandlers().cropImage(mediaUploadDo.getName(), getSelectionHeight(), getSelectionWidth(), getSelectionXCoordinate(), getSelectionYCoordinate(),mediaUploadDo.getUrl());
+			}
+			@Override
+			public void onLoad(){
+				super.onLoad();
+				imageCropPopup.center();
+			}
+		};
+		imageCropView.cropImage(mediaUploadDo.getUrl(),aspectRatio);
+		imageCropView.addCanvasLoadHandler(new LoadHandler() {
+			@Override
+			public void onLoad(LoadEvent event) {
+				imageCropPopup.center();
+				Window.enableScrolling(true);
+			}
+		});
+		imageCropPopup.clear();
+		imageCropPopup.add(imageCropView);
+		imageCropPopup.show();
+	 }
+
+	@Override
+	public void setCroppedImage(String filename) {
+		displayImage.setUrl("");
+		displayImage1.setUrl("");
+		displayImage.setVisible(true);
+		displayImage1.setVisible(true);
+		displayImage.setUrl(filename);
+		displayImage1.setUrl(filename);
+		displayCromImagePanel.getElement().getStyle().clearBackgroundImage();
+		displayCromImagePanel1.getElement().getStyle().clearBackgroundImage();
+		imageCropPopup.hide();
+	}
 }
