@@ -220,7 +220,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
 		});
 		collThumbnail.getElement().setId("mycollectionUploadImage");
-		pnlThumbnailImage.getElement().setId("mycollectionUploadPnl");
+		//pnlThumbnailImage.getElement().setId("mycollectionUploadPnl");
 		learningObjective.addKeyUpHandler(new TitleKeyUpHandler(2));
 		learningObjective.addKeyPressHandler(new KeyPressHandler() {
 			@Override
@@ -737,12 +737,12 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		
 		if(courseObj!=null){
 			courseObjG.setCollectionType(type);
-			pnlThumbnailImage.getElement().removeAttribute("style");
+			//pnlThumbnailImage.getElement().removeAttribute("style");
 			collThumbnail.getElement().getStyle().setDisplay(Display.BLOCK);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
-				collThumbnail.getElement().getStyle().setDisplay(Display.NONE);
-				pnlThumbnailImage.getElement().setAttribute("style", "background-image:url("+courseObj.getThumbnails().getUrl()+");");
+				//collThumbnail.getElement().getStyle().setDisplay(Display.NONE);
+			//	pnlThumbnailImage.getElement().setAttribute("style", "background-image:url("+courseObj.getThumbnails().getUrl()+");");
 			}else{
 				setDetaultImage(courseObj.getType());
 			}
@@ -900,7 +900,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		createOrUpDate.setDescription(learningObjective.getText());
 		createOrUpDate.setCollectionType(type);
 		createOrUpDate.setDescription(learningObjective.getText());
+		if(courseObjG.getThumbnails()!=null)
+		{
 		createOrUpDate.setUrl(courseObjG.getThumbnails().getUrl());
+		}
 		getUiHandlers().uploadCollectionImage(createOrUpDate);
 	}
 
@@ -1082,10 +1085,10 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		element.removeAttribute("src");
 		element.setAttribute("src", url+"?id="+Math.random());
 		element.setAttribute("filename", mediaFileName);
-		element.setAttribute("style", "display:none");
-		Element elementPnl=Document.get().getElementById("mycollectionUploadPnl");
+/*		element.setAttribute("style", "display:none");*/
+/*		Element elementPnl=Document.get().getElementById("mycollectionUploadPnl");
 		elementPnl.removeAttribute("style");
-		elementPnl.setAttribute("style", "background-image:url("+ url+"?id="+Math.random()+");");
+		elementPnl.setAttribute("style", "background-image:url("+ url+"?id="+Math.random()+");");*/
 	}
 
 	@Override
