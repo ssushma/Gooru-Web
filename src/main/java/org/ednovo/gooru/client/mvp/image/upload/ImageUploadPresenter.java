@@ -46,6 +46,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -299,6 +300,28 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	public void imageWebUpload(String imageURL) {
 		AppClientFactory.printInfoLogger("imageURL---"+imageURL);
 		this.getMediaUploadService().imageWebUpload(imageURL, getImageWebUploadAsyncCallback());
+	}
+	
+	@Override
+	public void checkFor404(final String imageURL) {
+		this.getMediaUploadService().getResponseCode(imageURL, new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				if(result==200)
+				{
+				getMediaUploadService().imageWebUpload(imageURL, getImageWebUploadAsyncCallback());
+				getView().setDataUrlText(imageURL);
+				}
+				
+			}
+		});
 	}
 
 	@Override

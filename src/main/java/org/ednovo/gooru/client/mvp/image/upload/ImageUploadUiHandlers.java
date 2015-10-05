@@ -41,6 +41,8 @@ public interface ImageUploadUiHandlers extends BaseUiHandlers, EventHandler {
 	 * </p> 
 	 */
 	void imageWebUpload(String imageUrl);
+	
+	void checkFor404(String imageUrl);
 
 	/**
 	 * 

@@ -2472,9 +2472,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.MOVE_V1_COLLECTION, courseId,unitId,LessonId,CollectionId);
 		try{
+			JSONObject sourceCourseIdJsonObject=new JSONObject();
+			sourceCourseIdJsonObject.put("sourceCourseId", courseId);
 			getLogger().info("--- moveCollectionTOLesson CopyCollectionToLesson URl -- "+url);
-			getLogger().info("-- moveCollectionTOLesson CopyCollectionToLesson payload (Put method) -- ");
-			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), "");
+			getLogger().info("-- moveCollectionTOLesson CopyCollectionToLesson payload (Put method) -- "+sourceCourseIdJsonObject.toString());
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), sourceCourseIdJsonObject.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			logger.info("status code moveCollectionTOLesson:::::"+jsonResponseRep.getStatusCode());
 			try{

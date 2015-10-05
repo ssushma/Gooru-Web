@@ -52,4 +52,6 @@ public interface MediaUploadServiceAsync extends BaseServiceAsync {
 	
 	void uploadProfileImage(String fileNameWithOutRepository,String fileName,AsyncCallback<String> callback);
 	
+	void getResponseCode(String urlVal,AsyncCallback<Integer> callback);
+	
 }
