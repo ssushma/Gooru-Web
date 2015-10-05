@@ -134,9 +134,5 @@ public class SearchResourceView extends
 			CollectionResourceWidget collectionResourceWidget) {
 		this.collectionResourceWidget = collectionResourceWidget;
 	}
-	@Override
-	public void setUpdatedStandards(List<Map<String, String>> list) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }

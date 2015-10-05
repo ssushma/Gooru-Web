@@ -440,7 +440,15 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 		if(folderObj!=null && folderObj.getGooruOid()!=null){
 			//when displaying the existing data at that time we are opening the content tab.
 			getMyCollectionsRightClusterPresenter().setFolderListDoChild(folderListDoChild);
-			getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
+			String share = AppClientFactory.getPlaceManager().getRequestParameter("share",null);
+			String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+			String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+			String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+			if(share!=null&&share.equalsIgnoreCase("true")&&o1!=null&&o2==null&&o3==null) {
+				getMyCollectionsRightClusterPresenter().setTabItems(3, clickedItemType,folderObj);
+			} else {
+				getMyCollectionsRightClusterPresenter().setTabItems(2, clickedItemType,folderObj);
+			}
 		}else{
 			//when creating the default course we are opening the info tab
 			getMyCollectionsRightClusterPresenter().setTabItems(1, clickedItemType,folderObj);

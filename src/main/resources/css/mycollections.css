@@ -859,6 +859,10 @@ button.btn-disabled{
 	width: 30%;
 	margin: 10% 35%;
 }
+.my-contentclass-collection-share{
+	margin-top: 30px;
+    display: block;
+}
 @media (max-width: 767px) {
 
 	#gShelfMainContainer .floderLeftContainer{
