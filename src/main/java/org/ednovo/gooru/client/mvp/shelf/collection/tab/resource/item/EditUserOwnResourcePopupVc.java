@@ -289,7 +289,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	//Added for centruy popup
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues=new HashMap<Long, String>();
-	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	AddCenturyPresenter centuryPresenterWidget;
 
 	private boolean isCCSSAvailable = false;
 	private boolean isNGSSAvailable = false;
@@ -1009,6 +1009,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 		/** Add Advanced Setup Changes End**/
 		//This will hide the popup when clicked on the cancel button
+		centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		centuryPresenterWidget.loadStateStandards();
 		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

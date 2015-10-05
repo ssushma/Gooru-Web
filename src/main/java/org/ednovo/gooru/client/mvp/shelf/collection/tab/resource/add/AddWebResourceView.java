@@ -312,7 +312,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
 
-	AddCenturyPresenter centuryPresenterWidget = null;
+	AddCenturyPresenter centuryPresenterWidget;
 
 	private boolean isCCSSAvailable = false;
 	private boolean isNGSSAvailable = false;
@@ -332,6 +332,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		this.isGoogleDriveFile = isGoogleDriveFile;
 		this.googleDriveItemDo = googleDriveItemDo;
 		centuryPresenterWidget = AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		centuryPresenterWidget.loadStateStandards();
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		centurySuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
