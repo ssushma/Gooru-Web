@@ -172,7 +172,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
-	AddCenturyPresenter centuryPresenterWidget=null;
+	AddCenturyPresenter centuryPresenterWidget;
 
 	ArrayList<Integer> depthOfKnowledges= new ArrayList<Integer>();
 	private HandlerRegistration handlerRegistration=null;
@@ -500,6 +500,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void getRevealType() {
 		getHideRightsToolTip();
 		centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		centuryPresenterWidget.loadStateStandards();
 		setCenturyData();
 		setTextForTheFields();
 	}

@@ -302,7 +302,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
 
-	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	AddCenturyPresenter centuryPresenterWidget;
 
 	/**
 	 *  Class constructor
@@ -958,6 +958,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 		/** Add Advanced Setup Changes End**/
 		//This will hide the popup when clicked on the cancel button
+		centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		centuryPresenterWidget.loadStateStandards();
 		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
