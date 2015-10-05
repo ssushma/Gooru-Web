@@ -260,7 +260,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
-	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	AddCenturyPresenter centuryPresenterWidget;
 	ArrayList<String> isValidHintsList = new ArrayList<String>();
 
 	private boolean isCCSSAvailable = false;
@@ -596,6 +596,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 	public void setCenturyData(){
 		//This will hide the popup when clicked on the cancel button
+		centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		centuryPresenterWidget.loadStateStandards();
 		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

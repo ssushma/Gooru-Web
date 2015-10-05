@@ -134,6 +134,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 		shareMainContainer.setVisible(true);
 		setDefaultClass();
 		if(classPageDo!=null&&classPageDo.size()>0) {
+			classPanel.setVisible(true);
 			assinPnl.setVisible(false);
 			courseDetailsContainer.setVisible(true);
 			associatedClassesPnl.setVisible(true);
