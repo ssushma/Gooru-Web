@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.application.server.service;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -93,6 +96,8 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 		String responseText ="";
 			try {
+				getLogger().info("mediaupload::"+url);
+				getLogger().info("mediauploadjson::"+jsonObj.toString());
 				responseText = fileUploadImage(jsonObj.toString(), url);
 			} catch (Exception e) {
 				logger.error("Exception::", e);
@@ -379,6 +384,15 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		c.setEntityBuffering(true);
 	    Representation cr = c.post(fds, MediaType.MULTIPART_FORM_DATA);
 		respStr = cr.getText();
+		getLogger().info("mediaupload1::"+cr.getText());
 		return respStr;
+	}
+	@Override
+	public Integer getResponseCode(String urlString) throws IOException {
+	    URL u = new URL(urlString); 
+	    HttpURLConnection huc =  (HttpURLConnection)  u.openConnection(); 
+	    huc.setRequestMethod("GET"); 
+	    huc.connect(); 
+	    return huc.getResponseCode();
 	}
 }

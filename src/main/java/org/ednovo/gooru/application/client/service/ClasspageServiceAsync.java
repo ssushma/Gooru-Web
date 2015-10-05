@@ -240,7 +240,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 
 	public void getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType, AsyncCallback<PlanContentDo> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
-	public void getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId, AsyncCallback<List<UserPlayedSessionDo>> callback) throws GwtException,ServerDownException;
+	public void getContentPlayAllSessions(String gooruUid, String collectionType, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId, AsyncCallback<List<UserPlayedSessionDo>> callback) throws GwtException,ServerDownException;
 	
 	public void getClassUsageDataSignal(String classpageId, String courseId, AsyncCallback<Boolean> callback) throws GwtException, ServerDownException;
 	
