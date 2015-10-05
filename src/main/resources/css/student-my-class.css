@@ -1901,6 +1901,9 @@ th.headcol.whitebg {
 	margin: 0 auto;
 	background: #fafafa;
 }
+.text-underline {
+	text-decoration: underline !important;
+}
 .modal-widget-1000 .rowContainer:last-child {
 	border-bottom: 1px solid #ddd;
 }

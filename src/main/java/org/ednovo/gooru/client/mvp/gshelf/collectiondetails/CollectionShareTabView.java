@@ -65,11 +65,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -84,12 +86,13 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	}
 
 	@UiField TextArea shareTextArea;
-	@UiField Anchor bitlyLink,embedLink;
+	@UiField Anchor bitlyLink,embedLink,contentRedirectionLbl;
 	@UiField HTMLEventPanel privateShareFloPanel,publicShareFloPanel,linkShareFloPanel;
 	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel;
 	@UiField Button rbPublic;
 	@UiField Label lblPublishPending,lblPublish,shareLbl,visiblityLbl;
-
+	@UiField InlineLabel supportMsg;
+	
 	CollectionDo collectionDo;
 
 	FolderDo folderDo;
@@ -164,6 +167,11 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		this.folderDo = folderDo;
 		shareLbl.setText("collection".equalsIgnoreCase(folderDo.getType())?i18n.GL0598():i18n.GL3485());
 		visiblityLbl.setText("collection".equalsIgnoreCase(folderDo.getType())?i18n.GL0842():i18n.GL3186());
+		String message = i18n.GL3594();
+		if(!"collection".equalsIgnoreCase(folderDo.getType())) {
+			message = message.replaceAll(i18n.GL2001(), i18n.GL3007().toLowerCase());
+		}
+		supportMsg.setText(message);
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		getUserType();
 		// Hiding private functionality in 1.6
@@ -563,5 +571,12 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		return collaboratorPanel;
 	}
 
+	@UiHandler("contentRedirectionLbl")
+	public void redirectContentVisibility(ClickEvent event){
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1", ""));
+		params.put("share", "true");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params,true);
+	}
 
 }

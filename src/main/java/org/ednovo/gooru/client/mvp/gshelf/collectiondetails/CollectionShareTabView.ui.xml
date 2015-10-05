@@ -9,6 +9,7 @@
                 <g:TextArea styleName="form-control" ui:field="shareTextArea" readOnly="true"></g:TextArea>
               </p>
               <div class="linkFormat"><g:Anchor ui:field="bitlyLink">Bit.ly</g:Anchor> <span class="devider">|</span> <g:Anchor ui:field="embedLink">Embed</g:Anchor></div>
+              <g:HTMLPanel styleName="my-contentclass-collection-share"><g:InlineLabel ui:field="supportMsg"></g:InlineLabel><g:Anchor styleName="text-underline margin-left-5" ui:field="contentRedirectionLbl" text="{i18n.GL3595}"></g:Anchor></g:HTMLPanel>
             </div>
             <div class="collectionVisibility no-gutter">
               <h5><g:Label ui:field="visiblityLbl"></g:Label></h5>

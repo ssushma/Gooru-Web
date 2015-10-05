@@ -20,6 +20,7 @@
 					   <g:Label styleName="numaricCircle" ui:field="countTwo">2</g:Label>
 					   <g:HTMLPanel styleName="StepsContent" ui:field="stepsContentTwo">
 					      <span:H3Panel ui:field="txt2Msg"></span:H3Panel>
+					      <g:Anchor styleName="text-underline" ui:field="contentRedirectionLbl"></g:Anchor>
 					   </g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="contenFolderbuttonGroup" ui:field="coursePanel">
