@@ -644,7 +644,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	GET_CLASSES_ASSOCIATED_WITH_COURSE("/v1/course/{0}/classes?"),
 
 
-	GET_LAST_PLAYER_ASSESSMENT_INFO("/v1/assessment/{0}/sessions?"),
+	GET_LAST_PLAYER_ASSESSMENT_INFO("/v1/{0}/{1}/sessions?"),
 
 
     DELETE_LESSON_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
