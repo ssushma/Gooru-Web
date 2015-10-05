@@ -13,9 +13,14 @@
             <uc:PPanel styleName="help-block" ui:field="studentsNotes"></uc:PPanel>
             <div class="selectCourseButton">
                <g:Button styleName="primary" ui:field="createCourseBtn"></g:Button>
-               <g:HTMLPanel styleName="coureEditActions" ui:field="coursePanel">
-                   <span class="folderIcon"></span>
-                   <g:InlineLabel styleName="classTitle" ui:field="titleLbl"></g:InlineLabel> 
+               <g:HTMLPanel styleName="coureEditActions no-gutter" ui:field="coursePanel">
+                   <g:HTMLPanel styleName="col-md-6">
+	                   <span class="folderIcon"></span>
+	                   <g:InlineLabel styleName="classTitle" ui:field="titleLbl"></g:InlineLabel> 
+                   </g:HTMLPanel>
+                   <g:HTMLPanel styleName="col-md-6 padding-top-10">
+	                   <g:Anchor styleName="text-underline" ui:field="contentRedirectionLbl"></g:Anchor>
+                   </g:HTMLPanel>
 				</g:HTMLPanel>
             </div>
          </div>
