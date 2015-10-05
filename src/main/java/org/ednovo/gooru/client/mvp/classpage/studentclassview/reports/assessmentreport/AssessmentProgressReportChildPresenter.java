@@ -315,8 +315,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	}
 
 	@Override
-	public void getContentPlayAllSessions(final String gooruUid, final String classGooruId, final String lessonGooruId, final String unitGooruId, final String courseGooruId, final String assessmentId, final String currentSessionId) {
-		AppClientFactory.getInjector().getClasspageService().getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, new SimpleAsyncCallback<List<UserPlayedSessionDo>>() {
+	public void getContentPlayAllSessions(final String gooruUid, String collectionType, final String classGooruId, final String lessonGooruId, final String unitGooruId, final String courseGooruId, final String assessmentId, final String currentSessionId) {
+		AppClientFactory.getInjector().getClasspageService().getContentPlayAllSessions(gooruUid, collectionType, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, new SimpleAsyncCallback<List<UserPlayedSessionDo>>() {
 			@Override
 			public void onSuccess(List<UserPlayedSessionDo> result) {
 				if(result!=null&&result.size()>0) {

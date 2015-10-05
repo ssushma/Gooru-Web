@@ -547,6 +547,6 @@ public interface ClasspageService extends BaseService {
 
 	public PlanContentDo getClasspageCollections(String classpageId, String courseId, String unitId, String lessonId, String collectionType) throws GwtException, ServerDownException;
 
-	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId)throws GwtException, ServerDownException;
+	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String collectionType, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId)throws GwtException, ServerDownException;
 
 }
