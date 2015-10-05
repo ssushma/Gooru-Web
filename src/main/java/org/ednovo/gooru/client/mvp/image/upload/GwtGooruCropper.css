@@ -23,7 +23,6 @@
 .selection IMG{
 	background-color: #FFF;
 	position: absolute;
-	left: 0px !important;
 	top: 0px;
 	text-align: center;
 	right: 0px;
