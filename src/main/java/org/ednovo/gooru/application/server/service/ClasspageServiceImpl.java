@@ -2187,11 +2187,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	}
 
 	@Override
-	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId){
+	public List<UserPlayedSessionDo> getContentPlayAllSessions(String gooruUid, String collectionType, String classGooruId, String lessonGooruId, String unitGooruId, String courseGooruId, String assessmentId){
 		List<UserPlayedSessionDo> userPlayedSessions = null;
 
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_LAST_PLAYER_ASSESSMENT_INFO, assessmentId);
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_LAST_PLAYER_ASSESSMENT_INFO, collectionType, assessmentId);
 
 		url = AddQueryParameter.constructQueryParams(url, "classGooruId", classGooruId);
 		url = AddQueryParameter.constructQueryParams(url, "userUid", gooruUid);
