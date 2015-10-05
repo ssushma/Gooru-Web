@@ -99,9 +99,5 @@ public class SearchCollectionView extends
 		}
 		getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo,collectionSearchWidget);
 	}
-	@Override
-	public void setUpdatedStandards(List<Map<String, String>> list) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }
