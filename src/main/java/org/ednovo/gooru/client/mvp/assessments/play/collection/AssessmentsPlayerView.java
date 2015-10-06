@@ -572,8 +572,8 @@ public class AssessmentsPlayerView extends BasePopupViewWithHandlers<Assessments
 			getUiHandlers().setLastEventType(PlayerDataLogEvents.STOP_EVENT_TYPE);
 		}
 
-		hide();
 		getUiHandlers().resetCollectionPlayer();
+		hide();
 	}
 
 	@Override

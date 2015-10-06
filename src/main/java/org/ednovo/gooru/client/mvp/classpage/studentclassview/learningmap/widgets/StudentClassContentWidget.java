@@ -76,14 +76,15 @@ public class StudentClassContentWidget extends Composite {
 				setDefaultThumbnail(planDo.getType());
 			}
 		});
+		if (planDo != null && planDo.getUrl() != null){
+			AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(planDo.getUrl(), planDo.getGooruOId(), new SimpleAsyncCallback<String>() {
 
-		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(planDo.getUrl(), planDo.getGooruOId(), new SimpleAsyncCallback<String>() {
-
-			@Override
-			public void onSuccess(String result) {
-				LTI_URL= result;
-			}
-		});
+				@Override
+				public void onSuccess(String result) {
+					LTI_URL= result;
+				}
+			});
+		}
 
 	}
 
