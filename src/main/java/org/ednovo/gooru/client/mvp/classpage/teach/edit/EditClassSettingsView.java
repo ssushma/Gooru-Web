@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.classpage.event.setClassImageHandler;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView.ClickOnListAll;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.PPanel;
@@ -66,6 +67,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -135,6 +137,8 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	ClasspageDo classpageDo;
 
 	DeletePopupViewVc deletePopup = null;
+	
+	HandlerRegistration handler = null;
 	
 	private static EditClassSettingsViewUiBinder uiBinder = GWT.create(EditClassSettingsViewUiBinder.class);
 
@@ -774,7 +778,10 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 			deleteBtn.removeStyleName("disabled");
 			editClassDeleteBtnHover.removeStyleName("editClassDeleteBtnHover");
 			deleteBtnMessagePopup.addStyleName("editClassDeletePopupVisibility");
-			deleteBtn.addClickHandler(new DleteClassHandler());
+			if(handler!=null){
+				handler.removeHandler();
+			}
+			handler=deleteBtn.addClickHandler(new DleteClassHandler());
 		}
 	}
 }
