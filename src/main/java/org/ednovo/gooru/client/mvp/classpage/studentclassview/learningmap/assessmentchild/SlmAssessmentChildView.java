@@ -127,13 +127,15 @@ public class SlmAssessmentChildView extends ChildView<SlmAssessmentChildPresente
 		setData(planContentDo, status, minimumScore);
 		viewReport.addClickHandler(new IndividualReportView(planContentDo.getGooruOid(),planContentDo.getCollectionType()));
 
-		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(planContentDo.getUrl(), planContentDo.getGooruOid(), new SimpleAsyncCallback<String>() {
+		if (planContentDo != null && planContentDo.getUrl() != null){
+			AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(planContentDo.getUrl(), planContentDo.getGooruOid(), new SimpleAsyncCallback<String>() {
 
-			@Override
-			public void onSuccess(String result) {
-				LTI_URL= result;
-			}
-		});
+				@Override
+				public void onSuccess(String result) {
+					LTI_URL= result;
+				}
+			});
+		}
 	}
 
 	public void setData(final PlanContentDo planContentDo, final String status, int minimumScore) {
