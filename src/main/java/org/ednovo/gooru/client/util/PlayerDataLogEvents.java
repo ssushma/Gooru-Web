@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.ClassDo;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -212,13 +213,14 @@ public class PlayerDataLogEvents {
 	}
 
 	public static JSONString getDataLogContextObject(String collectionId,String parentGooruId,String parentEventId,String eventType,String mode,
-							String resourceType,String reactionType,String path,String pageLocation, int totalQuestionsCount){
+							String resourceType,String reactionType,String path,String pageLocation, int totalQuestionsCount, ClassDo classDo){
 		JSONObject contextMap=new JSONObject();
-		String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId", null);
-		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
-		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
-		String cid = AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
-		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter("isStudent", null);
+		String courseId = classDo.getCourseId();
+		String unitId = classDo.getUnitId();
+		String lessonId = classDo.getLessonId();
+		String cid = classDo.getClassId();
+		String isStudent = classDo.getIsStudent();
+
 		String collectionType = null;
 
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
