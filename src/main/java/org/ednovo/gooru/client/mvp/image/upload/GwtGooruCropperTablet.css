@@ -11,6 +11,12 @@
 .imageCanvas {
 	opacity: 0.4;
 	background-color: #FFF;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	text-align: center;
+	right: 0px;
+	margin: 0 auto;
 }
 
 .selection {
@@ -19,6 +25,11 @@
 }
 .selection IMG{
 	background-color: #FFF;
+	position: absolute;
+	top: 0px;
+	text-align: center;
+	right: 0px;
+	margin: 0 auto;
 }
 .selectionDraggableBackground{
 	background: rgba(255, 255, 255, 0);

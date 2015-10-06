@@ -859,6 +859,10 @@ button.btn-disabled{
 	width: 30%;
 	margin: 10% 35%;
 }
+.my-contentclass-collection-share{
+	margin-top: 30px;
+    display: block;
+}
 @media (max-width: 767px) {
 
 	#gShelfMainContainer .floderLeftContainer{
@@ -3411,11 +3415,8 @@ display: table-cell;
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage{
 	height: 90px;
 	width: 120px;
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: contain;
-	position: relative;
 	border-left: 10px solid #1076bb;
+	position: relative;
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail{
 display: table-cell;
@@ -3426,9 +3427,12 @@ display: table-cell;
 
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage img{
-	width: 120px;
-	height:90px;
-	display: none;
+	max-width: 120px;
+	max-height: 90px;	
+	width: auto;
+	height: auto;
+	margin: 0 auto;
+
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage .cropImage{
 	cursor: pointer;
@@ -3436,6 +3440,12 @@ display: table-cell;
 	position: relative;
 	top: 9px;
 	margin: 0 0 26px 0;
+}
+#pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage{
+	height: 90px;
+	width: 120px;
+	border-left: 10px solid #feae29;
+	position: relative;
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage .cropImage{
 	cursor: pointer;
@@ -3445,9 +3455,13 @@ display: table-cell;
 	margin: 0 0 26px 0;
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage img{
-	width: 120px;
-	height:90px;
-	border-left: 10px solid #feae29;
+		max-width: 120px;
+	max-height: 90px;
+	width: auto;
+	height: auto;
+	margin: 0 auto;
+	
+
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage .thunailHover{
 	position:absolute;

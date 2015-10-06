@@ -114,10 +114,15 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 					standards.add(standard);
 				}
 				searchResult.setStandards(standards);
+				if(taxonomyDataSet.has(TAXONOMY_SUBJECT))
 				searchResult.setSubjectNames(convertJSONArrayToList(((JSONArray) taxonomyDataSet.get(TAXONOMY_SUBJECT))));
+				if(taxonomyDataSet.has(TAXONOMY_COURSE))
 				searchResult.setCourseNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_COURSE)));
+				if(taxonomyDataSet.has(TAXONOMY_UNIT))
 				searchResult.setUnitNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_UNIT)));
+				if(taxonomyDataSet.has(TAXONOMY_TOPIC))
 				searchResult.setTopicNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_TOPIC)));
+				if(taxonomyDataSet.has(TAXONOMY_LESSON))
 				searchResult.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
 
 			}

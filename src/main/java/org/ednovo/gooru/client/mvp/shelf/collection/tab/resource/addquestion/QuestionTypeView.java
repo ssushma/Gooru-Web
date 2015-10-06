@@ -172,7 +172,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
-	AddCenturyPresenter centuryPresenterWidget=null;
+	AddCenturyPresenter centuryPresenterWidget;
 
 	ArrayList<Integer> depthOfKnowledges= new ArrayList<Integer>();
 	private HandlerRegistration handlerRegistration=null;
@@ -500,6 +500,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public void getRevealType() {
 		getHideRightsToolTip();
 		centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+		centuryPresenterWidget.loadStateStandards();
 		setCenturyData();
 		setTextForTheFields();
 	}
@@ -867,48 +868,72 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
 			depthObj.setValue(chkLevelRecall.getText());
+			if(depthObj.getId()!=null)
+			{
 			depthOfKnowledges.add(depthObj.getId());
+			}
 		}else{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelRecall.getText());
+			if(depthObj.getId()!=null)
+			{
 			depthOfKnowledges.add(depthObj.getId());
+			}
 		}
 
 		if(chkLevelSkillConcept.getValue()){
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
 			depthObj.setValue(chkLevelSkillConcept.getText());
+			if(depthObj.getId()!=null)
+			{
 			depthOfKnowledges.add(depthObj.getId());
+			}
 		}else{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelSkillConcept.getText());
+			if(depthObj.getId()!=null)
+			{
 			depthOfKnowledges.add(depthObj.getId());
+			}
 		}
 
 		if(chkLevelStrategicThinking.getValue()){
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
 			depthObj.setValue(chkLevelStrategicThinking.getText());
+			if(depthObj.getId()!=null)
+			{
 			depthOfKnowledges.add(depthObj.getId());
+			}
 		}else{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelStrategicThinking.getText());
+			if(depthObj.getId()!=null)
+			{
 			depthOfKnowledges.add(depthObj.getId());
+			}
 		}
 
 		if(chkLevelExtendedThinking.getValue()){
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(true);
 			depthObj.setValue(chkLevelExtendedThinking.getText());
+			if(depthObj.getId()!=null)
+			{
 			depthOfKnowledges.add(depthObj.getId());
+			}
 		}else{
 			checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			depthObj.setSelected(false);
 			depthObj.setValue(chkLevelExtendedThinking.getText());
+			if(depthObj.getId()!=null)
+			{
 			depthOfKnowledges.add(depthObj.getId());
+			}
 		}
 	}
 
@@ -2256,6 +2281,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		collectionQuestionItemDo.setExplanation(explainationTextArea!=null && explainationTextArea.getText()!=null?explainationTextArea.getText():"");
 			}
 		};
+		System.out.println("depthOfKnowledges:::"+depthOfKnowledges);
 		collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledges);
 
 		ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();

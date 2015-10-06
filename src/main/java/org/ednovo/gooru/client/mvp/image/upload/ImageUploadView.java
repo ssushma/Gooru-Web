@@ -598,9 +598,15 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		System.out.println("createDoObj.getThumbnails().getUrl()::"+createDoObj.getUrl());
 /*		mediaUploadDo.setUrl(createDoObj.getUrl());
 		mediaUploadDo.setStatusCode(200);*/
-		setDataOnEdit(createDoObj.getUrl());
-		imageWebUploadUrlTxtBox.setText(createDoObj.getUrl());
-		getUiHandlers().imageWebUpload(createDoObj.getUrl());
+		if(createDoObj.getUrl() !=null && !createDoObj.getUrl().isEmpty())
+		{
+		getUiHandlers().checkFor404(createDoObj.getUrl());
+		}
+	}
+	public void setDataUrlText(String imageUrl)
+	{
+		setDataOnEdit(imageUrl);
+		imageWebUploadUrlTxtBox.setText(imageUrl);
 	}
 
 	public void setDataOnEdit(String imageUrl){

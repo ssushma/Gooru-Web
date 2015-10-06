@@ -661,9 +661,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					userSummaryDo.setFollowing(summaryObj.getInt("following"));
 					userSummaryDo.setFollowers(summaryObj.getInt("followers"));
 					userFollowDo.setSummary(userSummaryDo);
-
+					
+					if(followingList.getJSONObject(i).has("customFields"))
+					{
 					ArrayList<CustomFieldDo> customFields = JsonDeserializer.deserialize( followingList.getJSONObject(i).getJSONArray("customFields").toString(), new TypeReference<ArrayList<CustomFieldDo>>() {});
 					userFollowDo.setCustomFields(customFields);
+					}
 
 
 					userFollowDo.setTotalHintCount(totatHintCount);

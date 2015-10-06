@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.reports;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
@@ -36,7 +37,7 @@ public abstract class TeachStudentEmptyDashboardView extends Composite {
 	
 	@UiField Label countTwo, countThree;
 	
-	@UiField Anchor myContentAnr;
+	@UiField Anchor myContentAnr, contentRedirectionLbl;
 	
 	private static final String GREEN_CIRCLE = "greenCircle";
 	
@@ -64,6 +65,7 @@ public abstract class TeachStudentEmptyDashboardView extends Composite {
 		joinClassErrorMsg.setText(i18n.GL3462_9());
 		btnCourse.setText(i18n.GL3462_6());
 		btnInviteStudents.setText(i18n.GL3462_8());
+		contentRedirectionLbl.setText(i18n.GL3593());
 		
 		if(isNoCourse) {
 			headerText.setText(i18n.GL3462_2());
@@ -82,12 +84,21 @@ public abstract class TeachStudentEmptyDashboardView extends Composite {
 	
 	private void setPanelVisiblity(boolean isNoCourse, boolean isNoStudent) {
 		coursePanel.setVisible(isNoCourse);
+		contentRedirectionLbl.setVisible(!isNoCourse);
 		studentPanel.setVisible(isNoStudent);
 	}
 	
 	@UiHandler("btnCourse")
 	public void clickBtnCourse(ClickEvent event) {
 		clickBtnCourse();
+	}
+	
+	@UiHandler("contentRedirectionLbl")
+	public void redirectContentVisibility(ClickEvent event){
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("c-id", ""));
+		params.put("share", "true");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 	}
 	
 	@UiHandler("btnInviteStudents")

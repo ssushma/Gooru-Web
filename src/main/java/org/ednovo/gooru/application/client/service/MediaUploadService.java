@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.application.client.service;
 
+import java.io.IOException;
+
 import org.ednovo.gooru.application.shared.exception.GwtException;
 import org.ednovo.gooru.application.shared.exception.ServerDownException;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
@@ -91,4 +93,6 @@ public interface MediaUploadService extends BaseService {
 
 	
 	String saveImageCollection(String courseId, String unitId, String lessonId, String collectionId, CreateDo createDo, String fileName) throws GwtException, ServerDownException;
+	
+	Integer getResponseCode(String imageUrl)  throws IOException;
 }

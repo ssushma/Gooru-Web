@@ -25,8 +25,12 @@
 package org.ednovo.gooru.client.mvp.classpage.teach.edit.content;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.application.client.PlaceTokens;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClassLessonDo;
@@ -48,6 +52,7 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -88,6 +93,8 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	@UiField H2Panel pacingWorks;
 	
 	@UiField PPanel courseAssigned,studentsNotes,minimumScrPanel,miniNotesPanel,pacingNotes;
+	
+	@UiField Anchor contentRedirectionLbl;
 	
 	ClasspageDo classpageDo;
 	
@@ -165,6 +172,14 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		getUiHandlers().updateClass(score);
 	}
 	
+	@UiHandler("contentRedirectionLbl")
+	public void redirectContentVisibility(ClickEvent event){
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("o1", classpageDo.getCourseGooruOid());
+		params.put("share", "true");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+	}
+	
 	private class NumbersOnly implements KeyPressHandler{
 
 		@Override
@@ -197,7 +212,6 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	}
 	
 	public void setId(){
-		
 		saveBtn.setText(i18n.GL0141());
 		saveBtn.getElement().setId("saveBtnId");
 		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
@@ -219,7 +233,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		pacingNotes.setText(i18n.GL3448());
 		assessmentsLbl.setText(i18n.GL3449());
 		collectionLbl.setText(i18n.GL3450());
-		
+		contentRedirectionLbl.setText(i18n.GL3593());
 	}
 	@Override
 	public void setClassData(ClasspageDo classpageDo) {
@@ -230,7 +244,6 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		}else{
 			scoreTextBox.setText("0");
 		}
-		
 	}
 
 

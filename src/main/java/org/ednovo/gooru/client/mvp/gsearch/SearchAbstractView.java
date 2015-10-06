@@ -640,6 +640,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void setUpdatedStandards(List<Map<String, String>> standsListArray){
+		if(standsListArray.size()!=0){
+			for(int i=0; i<standsListArray.size(); i++){
+				pnlAddFilters.add(createTagsLabel(standsListArray.get(i).get("selectedCodeVal"),"standardPanel"));
+			}
+			callSearch();
+		}
+	}
 
 	@Override
 	public void postSearch(SearchDo<T> searchDo,boolean isApiCalled) {
@@ -1811,15 +1821,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		});
 	}
-	@Override
-	public void setUpdatedStandards(List<Map<String, String>> standsListArray){
-		if(standsListArray.size()!=0){
-			for(int i=0; i<standsListArray.size(); i++){
-				pnlAddFilters.add(createTagsLabel(standsListArray.get(i).get("selectedCodeVal"),"standardPanel"));
-			}
-			callSearch();
-		}
-	}
+
 	public class MouseOverOnImage implements MouseOverHandler{
 		String mouseOverTxt;
 
