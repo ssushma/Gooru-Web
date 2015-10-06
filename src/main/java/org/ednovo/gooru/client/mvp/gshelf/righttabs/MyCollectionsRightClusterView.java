@@ -131,6 +131,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		myCollDelLbl.addClickHandler(new DeleteContentData());
 
 		lnkPreview.setVisible(false);
+		moveLbl.setVisible(false);
+		copyLbl.setVisible(false);
 		//toggleButton.setVisible(false);
 		copyLbl.setTitle(i18n.GL0827());
 		moveLbl.setTitle(i18n.GL1261());
@@ -337,8 +339,12 @@ if(folderObj!=null)
 	private void enableOrHideShareTab() {
 		if(UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView) || ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
 			lnkshare.setVisible(false);
+			moveLbl.setVisible(false);
+			copyLbl.setVisible(false);
 		}else{
 			lnkshare.setVisible(true);
+			moveLbl.setVisible(true);
+			copyLbl.setVisible(true);
 		}
 	}
 	/**
@@ -353,6 +359,7 @@ if(folderObj!=null)
 			}*/
 			if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 				lnkPreview.setVisible(true);
+				moveLbl.setVisible(true);
 				//toggleButton.setVisible(true);
 				deletePnl.setVisible(false);
 				copyLbl.setVisible(true);
@@ -371,6 +378,8 @@ if(folderObj!=null)
 			}
 		}else{
 			lnkPreview.setVisible(false);
+			moveLbl.setVisible(false);
+			copyLbl.setVisible(false);
 
 		}
 	}
@@ -383,6 +392,8 @@ if(folderObj!=null)
 		//toggleButton.setVisible(isVisible);
 		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);
+			moveLbl.setVisible(isVisible);
+			copyLbl.setVisible(isVisible);
 		}
 	}
 	/**
