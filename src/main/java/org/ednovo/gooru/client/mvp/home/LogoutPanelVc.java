@@ -137,13 +137,6 @@ public class LogoutPanelVc extends Composite{
 		hide();
 	}
 
-	@UiHandler("classicGooruAnr")
-	public void classicGooruClicked(ClickEvent clickEvent) {
-		MixpanelUtil.Click_On_ClassicGooru();
-		Window.Location.replace(AppClientFactory.getLoggedInUser().getSettings().getClassicEndPoint());
-		hide();
-	}
-
 	public void show(){
 		logPanel.setVisible(true);
 	}
