@@ -166,6 +166,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	private boolean isTEKSAvailable = false;
 	private boolean isCAAvailable = false;
 
+	private static String CSSNAME_AT_SELECT = "at-select";
+	private static String CSSNAME_AT_SELECTED = "at-selected";
+
 	List<String> selectedValues=new ArrayList<>();
 
 	List<LiPanelWithClose> collectionLiPanelWithCloseArray = new ArrayList<>();
@@ -842,143 +845,143 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	public void onKindergardenClick(ClickEvent click){
 		if(kindergarden.getStyleName().toString().contains("selected"))
 		{
-			kindergarden.getElement().removeClassName("at-selected");
+			kindergarden.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			kindergarden.getElement().addClassName("at-selected");
+			kindergarden.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level1")
 	public void onLevel1Click(ClickEvent click){
 		if(level1.getStyleName().toString().contains("selected"))
 		{
-			level1.getElement().removeClassName("at-selected");
+			level1.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level1.getElement().addClassName("at-selected");
+			level1.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level2")
 	public void onLevel2Click(ClickEvent click){
 		if(level2.getStyleName().toString().contains("selected"))
 		{
-			level2.getElement().removeClassName("at-selected");
+			level2.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level2.getElement().addClassName("at-selected");
+			level2.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level3")
 	public void onLevel3Click(ClickEvent click){
 		if(level3.getStyleName().toString().contains("selected"))
 		{
-			level3.getElement().removeClassName("at-selected");
+			level3.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level3.getElement().addClassName("at-selected");
+			level3.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level4")
 	public void onLevel4Click(ClickEvent click){
 		if(level4.getStyleName().toString().contains("selected"))
 		{
-			level4.getElement().removeClassName("at-selected");
+			level4.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level4.getElement().addClassName("at-selected");
+			level4.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level5")
 	public void onLevel5Click(ClickEvent click){
 		if(level5.getStyleName().toString().contains("selected"))
 		{
-			level5.getElement().removeClassName("at-selected");
+			level5.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level5.getElement().addClassName("at-selected");
+			level5.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level6")
 	public void onLevel6Click(ClickEvent click){
 		if(level6.getStyleName().toString().contains("selected"))
 		{
-			level6.getElement().removeClassName("at-selected");
+			level6.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level6.getElement().addClassName("at-selected");
+			level6.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level7")
 	public void onLevel7Click(ClickEvent click){
 		if(level7.getStyleName().toString().contains("selected"))
 		{
-			level7.getElement().removeClassName("at-selected");
+			level7.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level7.getElement().addClassName("at-selected");
+			level7.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level8")
 	public void onLevel8Click(ClickEvent click){
 		if(level8.getStyleName().toString().contains("selected"))
 		{
-			level8.getElement().removeClassName("at-selected");
+			level8.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level8.getElement().addClassName("at-selected");
+			level8.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level9")
 	public void onLevel9Click(ClickEvent click){
 		if(level9.getStyleName().toString().contains("selected"))
 		{
-			level9.getElement().removeClassName("at-selected");
+			level9.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level9.getElement().addClassName("at-selected");
+			level9.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level10")
 	public void onLevel10Click(ClickEvent click){
 		if(level10.getStyleName().toString().contains("selected"))
 		{
-			level10.getElement().removeClassName("at-selected");
+			level10.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level10.getElement().addClassName("at-selected");
+			level10.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level11")
 	public void onLevel11Click(ClickEvent click){
 		if(level11.getStyleName().toString().contains("selected"))
 		{
-			level11.getElement().removeClassName("at-selected");
+			level11.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level11.getElement().addClassName("at-selected");
+			level11.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("level12")
 	public void onLevel12Click(ClickEvent click){
 		if(level12.getStyleName().toString().contains("selected"))
 		{
-			level12.getElement().removeClassName("at-selected");
+			level12.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			level12.getElement().addClassName("at-selected");
+			level12.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	/**
@@ -1001,21 +1004,21 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 */
 	public void removeClassNameForAllEducationalUse(){
-		 activity.getElement().removeClassName("at-selected");
-		 handout.getElement().removeClassName("at-selected");
-		 homework.getElement().removeClassName("at-selected");
-		 game.getElement().removeClassName("at-selected");
-		 presentation.getElement().removeClassName("at-selected");
-		 refMaterial.getElement().removeClassName("at-selected");
-		 quiz.getElement().removeClassName("at-selected");
-		 currPlan.getElement().removeClassName("at-selected");
-		 lessonPlan.getElement().removeClassName("at-selected");
-		 unitPlan.getElement().removeClassName("at-selected");
-		 projectPlan.getElement().removeClassName("at-selected");
-		 reading.getElement().removeClassName("at-selected");
-		 textbook.getElement().removeClassName("at-selected");
-		 article.getElement().removeClassName("at-selected");
-		 book.getElement().removeClassName("at-selected");
+		 activity.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 handout.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 homework.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 game.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 presentation.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 refMaterial.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 quiz.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 currPlan.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 lessonPlan.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 unitPlan.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 projectPlan.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 reading.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 textbook.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 article.getElement().removeClassName(CSSNAME_AT_SELECTED);
+		 book.getElement().removeClassName(CSSNAME_AT_SELECTED);
 	}
 
 	@UiHandler("activity")
@@ -1023,166 +1026,166 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 
 		if(activity.getStyleName().toString().contains("selected"))
 		{
-			activity.getElement().removeClassName("at-selected");
+			activity.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			activity.getElement().addClassName("at-selected");
+			activity.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("handout")
 	public void onhandoutClick(ClickEvent click){
 		if(handout.getStyleName().toString().contains("selected"))
 		{
-			handout.getElement().removeClassName("at-selected");
+			handout.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			handout.getElement().addClassName("at-selected");
+			handout.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("homework")
 	public void onhomeworkClick(ClickEvent click){
 		if(homework.getStyleName().toString().contains("selected"))
 		{
-			homework.getElement().removeClassName("at-selected");
+			homework.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			homework.getElement().addClassName("at-selected");
+			homework.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("game")
 	public void ongameClick(ClickEvent click){
 		if(game.getStyleName().toString().contains("selected"))
 		{
-			game.getElement().removeClassName("at-selected");
+			game.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			game.getElement().addClassName("at-selected");
+			game.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("presentation")
 	public void onpresentationClick(ClickEvent click){
 		if(presentation.getStyleName().toString().contains("selected"))
 		{
-			presentation.getElement().removeClassName("at-selected");
+			presentation.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			presentation.getElement().addClassName("at-selected");
+			presentation.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("refMaterial")
 	public void onrefMaterialClick(ClickEvent click){
 		if(refMaterial.getStyleName().toString().contains("selected"))
 		{
-			refMaterial.getElement().removeClassName("at-selected");
+			refMaterial.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			refMaterial.getElement().addClassName("at-selected");
+			refMaterial.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("quiz")
 	public void onquizClick(ClickEvent click){
 		if(quiz.getStyleName().toString().contains("selected"))
 		{
-			quiz.getElement().removeClassName("at-selected");
+			quiz.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			quiz.getElement().addClassName("at-selected");
+			quiz.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("currPlan")
 	public void oncurrPlanClick(ClickEvent click){
 		if(currPlan.getStyleName().toString().contains("selected"))
 		{
-			currPlan.getElement().removeClassName("at-selected");
+			currPlan.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			currPlan.getElement().addClassName("at-selected");
+			currPlan.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("lessonPlan")
 	public void onlessonPlanClick(ClickEvent click){
 		if(lessonPlan.getStyleName().toString().contains("selected"))
 		{
-			lessonPlan.getElement().removeClassName("at-selected");
+			lessonPlan.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			lessonPlan.getElement().addClassName("at-selected");
+			lessonPlan.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("unitPlan")
 	public void onunitPlanClick(ClickEvent click){
 		if(unitPlan.getStyleName().toString().contains("selected"))
 		{
-			unitPlan.getElement().removeClassName("at-selected");
+			unitPlan.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			unitPlan.getElement().addClassName("at-selected");
+			unitPlan.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("projectPlan")
 	public void onprojectPlanClick(ClickEvent click){
 		if(projectPlan.getStyleName().toString().contains("selected"))
 		{
-			projectPlan.getElement().removeClassName("at-selected");
+			projectPlan.getElement().removeClassName(CSSNAME_AT_SELECTED);
 
 		}
 		else
 		{
-			projectPlan.getElement().addClassName("at-selected");
+			projectPlan.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("reading")
 	public void onreadingClick(ClickEvent click){
 		if(reading.getStyleName().toString().contains("selected"))
 		{
-			reading.getElement().removeClassName("at-selected");
+			reading.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			reading.getElement().addClassName("at-selected");
+			reading.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("textbook")
 	public void ontextbookClick(ClickEvent click){
 		if(textbook.getStyleName().toString().contains("selected"))
 		{
-			textbook.getElement().removeClassName("at-selected");
+			textbook.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			textbook.getElement().addClassName("at-selected");
+			textbook.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("article")
 	public void onarticleClick(ClickEvent click){
 		if(article.getStyleName().toString().contains("selected"))
 		{
-			article.getElement().removeClassName("at-selected");
+			article.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			article.getElement().addClassName("at-selected");
+			article.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	@UiHandler("book")
 	public void onbookClick(ClickEvent click){
 		if(book.getStyleName().toString().contains("selected"))
 		{
-			book.getElement().removeClassName("at-selected");
+			book.getElement().removeClassName(CSSNAME_AT_SELECTED);
 		}
 		else
 		{
-			book.getElement().addClassName("at-selected");
+			book.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	public void closeFunction()
@@ -1248,9 +1251,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 
 			@Override
 			public void onSuccess() {
-				noAds.getElement().removeClassName("at-selected");
-				modAds.getElement().removeClassName("at-selected");
-				aggreAds.getElement().removeClassName("at-selected");
+				noAds.getElement().removeClassName(CSSNAME_AT_SELECTED);
+				modAds.getElement().removeClassName(CSSNAME_AT_SELECTED);
+				aggreAds.getElement().removeClassName(CSSNAME_AT_SELECTED);
 			}
 		});
 	}
@@ -1262,16 +1265,16 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			public void onSuccess() {
 				if(noAds.getStyleName().toString().contains("selected"))
 				{
-					noAds.getElement().removeClassName("at-selected");
+					noAds.getElement().removeClassName(CSSNAME_AT_SELECTED);
 				}
 				else if(modAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
 				{
 					removeClassNameForAllAds();
-					noAds.getElement().addClassName("at-selected");
+					noAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 				}
 				else
 				{
-					noAds.getElement().addClassName("at-selected");
+					noAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 				}
 			}
 		} );
@@ -1284,17 +1287,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			public void onSuccess() {
 				if(modAds.getStyleName().toString().contains("selected"))
 				{
-					modAds.getElement().removeClassName("at-selected");
+					modAds.getElement().removeClassName(CSSNAME_AT_SELECTED);
 				}
 				else if(noAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
 				{
 					removeClassNameForAllAds();
-					modAds.getElement().addClassName("at-selected");
+					modAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 
 				}
 				else
 				{
-					modAds.getElement().addClassName("at-selected");
+					modAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 				}
 			}
 		});
@@ -1307,16 +1310,16 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			public void onSuccess() {
 				if(aggreAds.getStyleName().toString().contains("selected"))
 				{
-					aggreAds.getElement().removeClassName("at-selected");
+					aggreAds.getElement().removeClassName(CSSNAME_AT_SELECTED);
 				}
 				else if(noAds.getStyleName().toString().contains("selected") || modAds.getStyleName().toString().contains("selected"))
 				{
 					removeClassNameForAllAds();
-					aggreAds.getElement().addClassName("at-selected");
+					aggreAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 				}
 				else
 				{
-					aggreAds.getElement().addClassName("at-selected");
+					aggreAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 				}
 			}
 		});
@@ -1341,59 +1344,38 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 */
 	public void removeClassNamesForAllAccessHazard(){
-		soundHazard.getElement().removeClassName("select");
-		flashingHazard.getElement().removeClassName("select");
-		motionSimulationHazard.getElement().removeClassName("select");
+		soundHazard.getElement().removeClassName(CSSNAME_AT_SELECT);
+		flashingHazard.getElement().removeClassName(CSSNAME_AT_SELECT);
+		motionSimulationHazard.getElement().removeClassName(CSSNAME_AT_SELECT);
 	}
 
 	@UiHandler("flashingHazard")
 	public void onflashingHazardClick(ClickEvent click){
-		if(flashingHazard.getStyleName().toString().contains("select"))
+		if(flashingHazard.getStyleName().toString().contains(CSSNAME_AT_SELECT))
 		{
-			flashingHazard.getElement().removeClassName("select");
-		}
-		/*else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || motionSimulation.getStyleName().toString().contains("select"))
-		{
-			removeClassNamesForAllAccessHazard();
-			flashingHazard.getElement().addClassName("select");
-		}*/
-		else
-		{
-			flashingHazard.getElement().addClassName("select");
+			flashingHazard.getElement().removeClassName(CSSNAME_AT_SELECT);
+		}else{
+			flashingHazard.getElement().addClassName(CSSNAME_AT_SELECT);
 		}
 	}
 
 	@UiHandler("motionSimulationHazard")
 	public void onmotionSimulationHazardClick(ClickEvent click){
-		if(motionSimulationHazard.getStyleName().toString().contains("select"))
+		if(motionSimulationHazard.getStyleName().toString().contains(CSSNAME_AT_SELECT))
 		{
-			motionSimulationHazard.getElement().removeClassName("select");
-		}
-		/*else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
-		{
-			removeClassNamesForAllAccessHazard();
-			motionSimulationHazard.getElement().addClassName("select");
-		}*/
-		else
-		{
-			motionSimulationHazard.getElement().addClassName("select");
+			motionSimulationHazard.getElement().removeClassName(CSSNAME_AT_SELECT);
+		}else{
+			motionSimulationHazard.getElement().addClassName(CSSNAME_AT_SELECT);
 		}
 	}
 
 	@UiHandler("soundHazard")
 	public void onsoundHazardClick(ClickEvent click){
-		if(soundHazard.getStyleName().toString().contains("select"))
+		if(soundHazard.getStyleName().toString().contains(CSSNAME_AT_SELECT))
 		{
-			soundHazard.getElement().removeClassName("select");
-		}
-		/*else if(sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
-		{
-			removeClassNamesForAllAccessHazard();
-			soundHazard.getElement().addClassName("select");
-		}*/
-		else
-		{
-			soundHazard.getElement().addClassName("select");
+			soundHazard.getElement().removeClassName(CSSNAME_AT_SELECT);
+		}else{
+			soundHazard.getElement().addClassName(CSSNAME_AT_SELECT);
 		}
 	}
 
@@ -1749,15 +1731,15 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		if(stringArry.length!=0){
 			if(stringArry[1].trim().equalsIgnoreCase(flashingHazard.getText()))
 			{
-					flashingHazard.getElement().addClassName("select");
+				flashingHazard.getElement().addClassName(CSSNAME_AT_SELECT);
 			}
 			if(stringArry[1].trim().equalsIgnoreCase(motionSimulationHazard.getText()))
 			{
-				motionSimulationHazard.getElement().addClassName("select");
+				motionSimulationHazard.getElement().addClassName(CSSNAME_AT_SELECT);
 			}
 			if(stringArry[1].trim().equalsIgnoreCase(soundHazard.getText()))
 			{
-				soundHazard.getElement().addClassName("select");
+				soundHazard.getElement().addClassName(CSSNAME_AT_SELECT);
 			}
 		}
 	}
@@ -1778,15 +1760,15 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	{
 		if(adsStr.contains(noAds.getText()))
 		{
-			noAds.getElement().addClassName("at-selected");
+			noAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(adsStr.contains(modAds.getText()))
 		{
-			modAds.getElement().addClassName("at-selected");
+			modAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(adsStr.contains(aggreAds.getText()))
 		{
-			aggreAds.getElement().addClassName("at-selected");
+			aggreAds.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	/**
@@ -1806,61 +1788,61 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	{
 		if(lexileStr.contains(kindergarden.getText()))
 		{
-			kindergarden.getElement().addClassName("at-selected");
+			kindergarden.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level1.getText()))
 		{
 			String[] stringArry=lexileStr.split(":");
 			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL_GRR_NUMERIC_ONE())){
-				level1.getElement().addClassName("at-selected");
+				level1.getElement().addClassName(CSSNAME_AT_SELECTED);
 			}
 		}
 		if(lexileStr.contains(level2.getText()))
 		{
 			String[] stringArry=lexileStr.split(":");
 			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL_GRR_NUMERIC_TWO())){
-				level2.getElement().addClassName("at-selected");
+				level2.getElement().addClassName(CSSNAME_AT_SELECTED);
 			}
 		}
 		if(lexileStr.contains(level3.getText()))
 		{
-			level3.getElement().addClassName("at-selected");
+			level3.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level4.getText()))
 		{
-			level4.getElement().addClassName("at-selected");
+			level4.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level5.getText()))
 		{
-			level5.getElement().addClassName("at-selected");
+			level5.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level6.getText()))
 		{
-			level6.getElement().addClassName("at-selected");
+			level6.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level7.getText()))
 		{
-			level7.getElement().addClassName("at-selected");
+			level7.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level8.getText()))
 		{
-			level8.getElement().addClassName("at-selected");
+			level8.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level9.getText()))
 		{
-			level9.getElement().addClassName("at-selected");
+			level9.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level10.getText()))
 		{
-			level10.getElement().addClassName("at-selected");
+			level10.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level11.getText()))
 		{
-			level11.getElement().addClassName("at-selected");
+			level11.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		if(lexileStr.contains(level12.getText()))
 		{
-			level12.getElement().addClassName("at-selected");
+			level12.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	/**
@@ -1881,63 +1863,63 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	{
 		if(educationalStr.contains(activity.getText()))
 		{
-			activity.getElement().addClassName("at-selected");
+			activity.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(handout.getText()))
 		{
-			handout.getElement().addClassName("at-selected");
+			handout.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr .contains(homework.getText()))
 		{
-			homework.getElement().addClassName("at-selected");
+			homework.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if( educationalStr.contains(game.getText()))
 		{
-			game.getElement().addClassName("at-selected");
+			game.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(presentation.getText()))
 		{
-			presentation.getElement().addClassName("at-selected");
+			presentation.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(refMaterial.getText()))
 		{
-			refMaterial.getElement().addClassName("at-selected");
+			refMaterial.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(quiz.getText()))
 		{
-			quiz.getElement().addClassName("at-selected");
+			quiz.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(currPlan.getText()))
 		{
-			currPlan.getElement().addClassName("at-selected");
+			currPlan.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(lessonPlan.getText()))
 		{
-			lessonPlan.getElement().addClassName("at-selected");
+			lessonPlan.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(unitPlan.getText()))
 		{
-			unitPlan.getElement().addClassName("at-selected");
+			unitPlan.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(projectPlan.getText()))
 		{
-			projectPlan.getElement().addClassName("at-selected");
+			projectPlan.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(reading.getText()))
 		{
-			reading.getElement().addClassName("at-selected");
+			reading.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(textbook.getText()))
 		{
-			textbook.getElement().addClassName("at-selected");
+			textbook.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(article.getText()))
 		{
-			article.getElement().addClassName("at-selected");
+			article.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 		else if(educationalStr.contains(book.getText()))
 		{
-			book.getElement().addClassName("at-selected");
+			book.getElement().addClassName(CSSNAME_AT_SELECTED);
 		}
 	}
 	/**
@@ -1992,17 +1974,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		String[] accessHazardsArr = null;
 		List<String> accessHazardsSelected = new ArrayList<String>();
 
-		if(flashingHazard.getElement().getClassName().contains("select"))
+		if(flashingHazard.getElement().getClassName().contains(CSSNAME_AT_SELECT))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
-		if(motionSimulationHazard.getElement().getClassName().contains("select"))
+		if(motionSimulationHazard.getElement().getClassName().contains(CSSNAME_AT_SELECT))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
-		if(soundHazard.getElement().getClassName().contains("select"))
+		if(soundHazard.getElement().getClassName().contains(CSSNAME_AT_SELECT))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
@@ -2028,78 +2010,78 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	{
 		String[] educationalUseArr = null;
 		List<String> educationalUseSelected = new ArrayList<String>();
-		if(activity.getElement().getClassName().contains("selected"))
+		if(activity.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + activity.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(handout.getElement().getClassName().contains("selected"))
+		if(handout.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + handout.getText();
 			educationalUseSelected.add(educationalUse);
 
 		}
-		if(homework.getElement().getClassName().contains("selected"))
+		if(homework.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + homework.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(game.getElement().getClassName().contains("selected"))
+		if(game.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + game.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(presentation.getElement().getClassName().contains("selected"))
+		if(presentation.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + presentation.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(refMaterial.getElement().getClassName().contains("selected"))
+		if(refMaterial.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + refMaterial.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(quiz.getElement().getClassName().contains("selected"))
+		if(quiz.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + quiz.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(currPlan.getElement().getClassName().contains("selected"))
+		if(currPlan.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + currPlan.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(lessonPlan.getElement().getClassName().contains("selected"))
+		if(lessonPlan.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + lessonPlan.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(unitPlan.getElement().getClassName().contains("selected"))
+		if(unitPlan.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + unitPlan.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(projectPlan.getElement().getClassName().contains("selected"))
+		if(projectPlan.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + projectPlan.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(reading.getElement().getClassName().contains("selected"))
+		if(reading.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + reading.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(textbook.getElement().getClassName().contains("selected"))
+		if(textbook.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + textbook.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(article.getElement().getClassName().contains("selected"))
+		if(article.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + article.getText();
 			educationalUseSelected.add(educationalUse);
 		}
-		if(book.getElement().getClassName().contains("selected"))
+		if(book.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String educationalUse = headerEducationalUse.getText() + " : " + book.getText();
 			educationalUseSelected.add(educationalUse);
@@ -2125,67 +2107,67 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		String[] lexileLevelArr = null;
 		List<String> lexileSelectedOptions = new ArrayList<String>();
 
-		if(kindergarden.getElement().getClassName().contains("selected"))
+		if(kindergarden.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + kindergarden.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level1.getElement().getClassName().contains("selected"))
+		if(level1.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level1.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level2.getElement().getClassName().contains("selected"))
+		if(level2.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level2.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level3.getElement().getClassName().contains("selected"))
+		if(level3.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level3.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level4.getElement().getClassName().contains("selected"))
+		if(level4.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level4.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level5.getElement().getClassName().contains("selected"))
+		if(level5.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level5.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level6.getElement().getClassName().contains("selected"))
+		if(level6.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level6.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level7.getElement().getClassName().contains("selected"))
+		if(level7.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level7.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level8.getElement().getClassName().contains("selected"))
+		if(level8.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level8.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level9.getElement().getClassName().contains("selected"))
+		if(level9.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level9.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level10.getElement().getClassName().contains("selected"))
+		if(level10.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level10.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level11.getElement().getClassName().contains("selected"))
+		if(level11.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level11.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		if(level12.getElement().getClassName().contains("selected"))
+		if(level12.getElement().getClassName().contains(CSSNAME_AT_SELECTED))
 		{
 			String lexileStr = lexileHeader.getText() + " : " + level12.getText();
 			lexileSelectedOptions.add(lexileStr);
