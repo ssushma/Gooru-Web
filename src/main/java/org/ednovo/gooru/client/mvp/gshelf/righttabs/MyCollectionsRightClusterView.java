@@ -71,7 +71,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	}
 
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@UiField HTMLPanel mainPanel,pnlSlotInnerContent,/*toggleButton,*/deletePnl,glassPanelDiv;
 
 	@UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview,lnkDeleteButton;
@@ -131,6 +131,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		myCollDelLbl.addClickHandler(new DeleteContentData());
 
 		lnkPreview.setVisible(false);
+		moveLbl.setVisible(false);
+		copyLbl.setVisible(false);
 		//toggleButton.setVisible(false);
 		copyLbl.setTitle(i18n.GL0827());
 		moveLbl.setTitle(i18n.GL1261());
@@ -187,44 +189,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	@Override
 	public void setBreadCrumbSlot(FolderDo folderObj, String type, HashMap<String, String> selectedWidgetsTitleType){
 		this.folderObj=folderObj;
-if(folderObj!=null)
-{
-		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(folderObj.getUrl(), folderObj.getGooruOid(), new SimpleAsyncCallback<String>() {
+		if(folderObj!=null && folderObj.getUrl() != null)
+		{
+			AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(folderObj.getUrl(), folderObj.getGooruOid(), new SimpleAsyncCallback<String>() {
 
-			@Override
-			public void onSuccess(String result) {
-				LTI_URL= result;
-			}
-		});
-}
-
-
-
-		/*if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
-		this.folderObj=folderObj;
-		if(selectedWidgetsTitleType!=null && selectedWidgetsTitleType.containsKey(COURSE)){
-			if(selectedWidgetsTitleType.containsKey(COURSE)){
-				setBreadCrumbs(selectedWidgetsTitleType.get(COURSE), COURSE);
-			}
-			if(selectedWidgetsTitleType.containsKey(UNIT)){
-				setBreadCrumbs(selectedWidgetsTitleType.get(UNIT), UNIT);
-			}
-			if(selectedWidgetsTitleType.containsKey(LESSON)){
-				setBreadCrumbs(selectedWidgetsTitleType.get(LESSON), LESSON);
-			}
-			if(selectedWidgetsTitleType.containsKey(COLLECTION)){
-				setBreadCrumbs(selectedWidgetsTitleType.get(COLLECTION), COLLECTION);
-			}
-			if(selectedWidgetsTitleType.containsKey(ASSESSMENT)){
-				setBreadCrumbs(selectedWidgetsTitleType.get(ASSESSMENT), ASSESSMENT);
-			}
-			if(selectedWidgetsTitleType.containsKey(ASSESSMENT_URL)){
-				setBreadCrumbs(selectedWidgetsTitleType.get(ASSESSMENT_URL), ASSESSMENT_URL);
-			}
-		}else{
-			String title=folderObj!=null?folderObj.getTitle():"";
-			setBreadCrumbs(title,type);
-		}*/
+				@Override
+				public void onSuccess(String result) {
+					LTI_URL= result;
+				}
+			});
+		}
 	}
 
 
@@ -337,8 +311,12 @@ if(folderObj!=null)
 	private void enableOrHideShareTab() {
 		if(UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView) || ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
 			lnkshare.setVisible(false);
+			moveLbl.setVisible(false);
+			copyLbl.setVisible(false);
 		}else{
 			lnkshare.setVisible(true);
+			moveLbl.setVisible(true);
+			copyLbl.setVisible(true);
 		}
 	}
 	/**
@@ -353,6 +331,7 @@ if(folderObj!=null)
 			}*/
 			if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 				lnkPreview.setVisible(true);
+				moveLbl.setVisible(true);
 				//toggleButton.setVisible(true);
 				deletePnl.setVisible(false);
 				copyLbl.setVisible(true);
@@ -362,7 +341,7 @@ if(folderObj!=null)
 				lnkPreview.setVisible(false);
 				//toggleButton.setVisible(true);
 				boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
-	
+
 				copyLbl.setVisible(isVisible);
 				moveLbl.setVisible(false);
 				myCollDelLbl.setVisible(true);
@@ -371,6 +350,8 @@ if(folderObj!=null)
 			}
 		}else{
 			lnkPreview.setVisible(false);
+			moveLbl.setVisible(false);
+			copyLbl.setVisible(false);
 
 		}
 	}
@@ -383,6 +364,8 @@ if(folderObj!=null)
 		//toggleButton.setVisible(isVisible);
 		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);
+			moveLbl.setVisible(isVisible);
+			copyLbl.setVisible(isVisible);
 		}
 	}
 	/**
@@ -574,8 +557,8 @@ if(folderObj!=null)
 	private class onCopyClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			
-			
+
+
 			if(!(COURSE.equalsIgnoreCase(currentTypeView))){
 				getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
 				getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
@@ -588,7 +571,7 @@ if(folderObj!=null)
 			}
 		}
 	}
-	
+
 	private class onMoveClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {

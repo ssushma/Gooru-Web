@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.QuestionAnswerDo;
@@ -244,7 +245,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 						if(StringUtil.isEmpty(textBoxAnswerDoAnswerText)){
 							answerAttemptDo.setSkip(true);
 						}
-						if(questionAnswerDoAnswerText.equalsIgnoreCase(textBoxAnswerDoAnswerText)){
+						if(questionAnswerDoAnswerText.equalsIgnoreCase(StringUtil.replaceSpecial(textBoxAnswerDoAnswerText))){
 							answerAttemptDo.setStatus("1");
 							if(isFibStatus){
 								isFibStatus=true;

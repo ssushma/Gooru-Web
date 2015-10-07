@@ -252,6 +252,7 @@ public interface ClientConstants {
 	String COURSEID="courseId";
 	String UNITID="unitId";
 	String LESSONID="lessonId";
+	String ISSTUDENT="isStudent";
 	String CID="cid";
 
 	/*************** Analytics End **************************************************/

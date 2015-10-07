@@ -1135,6 +1135,8 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 		int loggedInUserAge = 0;
 		com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss.S");
 		if(AppClientFactory.getLoggedInUser().getDateOfBirth()!=null&&!AppClientFactory.getLoggedInUser().getDateOfBirth().equals("")){
+			try
+			{
 			convertedDOB = dateFormat.parse(AppClientFactory.getLoggedInUser().getDateOfBirth());
 			loggedInUserAge = getAge(convertedDOB);
 			if(loggedInUserAge<=CHILD_AGE){
@@ -1142,6 +1144,12 @@ public class AssessmentsResourcePlayerMetadataView extends BaseViewWithHandlers<
 			}else if(loggedInUserAge>CHILD_AGE){
 				isChild=false;
 			}
+			}
+			catch(Exception ex)
+			{
+				isChild=false;
+			}
+
 		}
 
 		return isChild;
