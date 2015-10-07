@@ -622,7 +622,6 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 								String fibtext =getTextFromHTML(attemptsObj.get(j).isObject().get("text").isString().stringValue());
 								if(skip == false)
 								{
-									AppClientFactory.printInfoLogger("fibtext: "+fibtext+";-- status: "+status);
 									answerChoice.setText(fibtext);
 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 										answerChoice.getElement().getStyle().setColor(INCORRECT);
