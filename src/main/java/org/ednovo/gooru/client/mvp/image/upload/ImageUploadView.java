@@ -616,6 +616,9 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		hideAndDisplayAllCropButtons(true);		
 		displayImage.setVisible(false);
 		displayImage1.setVisible(false);
+		
+
+		
 		if(aspectRatio==4.53f){
 			displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+imageUrl+");");
 			displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+imageUrl+");");
@@ -626,6 +629,33 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			displayCromImagePanel.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+imageUrl+");");
 			displayCromImagePanel1.getElement().setAttribute("style","border: 2px solid #efefef;background-image:url("+imageUrl+");");
 		}
+
+
+		
+		displayImage.addLoadHandler(new LoadHandler() {
+
+	        @Override
+	        public void onLoad(LoadEvent event) {
+	    		boolean isDivisibleBy4 = displayImage.getWidth() % 4 == 0;
+	    		boolean isDivisibleBy3 = displayImage.getHeight() % 3 == 0;
+	    		if((isDivisibleBy4||isDivisibleBy3) && (aspectRatio==4.53f))
+	    		{
+	    			displayCromImagePanel.getElement().getStyle().setBackgroundImage("");
+	    			displayCromImagePanel1.getElement().getStyle().setBackgroundImage("");
+	    			
+	    			displayImage.setWidth("100%");
+	    			displayImage1.setWidth("100%");
+	    			
+	    			displayImage.setVisible(true);
+	    			displayImage1.setVisible(true);
+	    			displayImage.setHeight("100%");
+	    			displayImage1.setHeight("100%");
+	    			
+	    		}
+	        }
+	    });
+		
+		
 	}
 	@Override
 	public void setImageUpload(final MediaUploadDo mediaUploadDo) {
