@@ -911,6 +911,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		createOrUpDate.setDescription(learningObjective.getText());
 		createOrUpDate.setCollectionType(type);
 		createOrUpDate.setDescription(learningObjective.getText());
+		if(courseObjG!=null)
 		if(courseObjG.getThumbnails()!=null)
 		{
 		createOrUpDate.setUrl(courseObjG.getThumbnails().getUrl());
