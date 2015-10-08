@@ -3,14 +3,18 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style src=""></ui:style>
+	<ui:with field="i18n" type="org.ednovo.gooru.application.shared.i18n.MessageProperties" />
+    	<ui:style src=""></ui:style>
 <g:HTMLPanel>
    <div class="setScoreContainer">
       <div class="col-md-6 col-sm-6">
          <div class="AssignedCourseBlock">
             <uc:H4Panel ui:field="assignedCourse"></uc:H4Panel>
             <uc:PPanel ui:field="courseAssigned"></uc:PPanel>
-            <uc:PPanel styleName="help-block" ui:field="studentsNotes"></uc:PPanel>
+            <g:HTMLPanel styleName="no-gutter">
+	            <g:InlineLabel styleName="col-md-10 help-block" ui:field="studentsNotes"></g:InlineLabel>
+	            <g:Anchor styleName="pull-left margin-left-5 padding-top-5" ui:field="learnMoreLnk" text="{i18n.GL3304}"></g:Anchor>
+            </g:HTMLPanel>
             <div class="selectCourseButton">
                <g:Button styleName="primary" ui:field="createCourseBtn"></g:Button>
                <g:HTMLPanel styleName="coureEditActions no-gutter" ui:field="coursePanel">

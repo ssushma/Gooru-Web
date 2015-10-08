@@ -86,15 +86,15 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	
 	@UiField HTMLPanel coursePanel;
 	
-	@UiField InlineLabel titleLbl,assessmentsLbl,collectionLbl;
+	@UiField InlineLabel titleLbl,assessmentsLbl,collectionLbl,studentsNotes;
 	
 	@UiField H4Panel assignedCourse,lessonPacingPanel;
 	
 	@UiField H2Panel pacingWorks;
 	
-	@UiField PPanel courseAssigned,studentsNotes,minimumScrPanel,miniNotesPanel,pacingNotes;
+	@UiField PPanel courseAssigned,minimumScrPanel,miniNotesPanel,pacingNotes;
 	
-	@UiField Anchor contentRedirectionLbl;
+	@UiField Anchor contentRedirectionLbl, learnMoreLnk;
 	
 	ClasspageDo classpageDo;
 	
@@ -160,6 +160,8 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 		scoreTextBox.getElement().setAttribute("maxlength", "3");
 		scoreTextBox.addKeyPressHandler(new NumbersOnly());
 		createCourseBtn.addClickHandler(new AddCourseHandler());
+		learnMoreLnk.setHref(i18n.GL_CONTENT_VISIBILITY());
+		learnMoreLnk.setTarget("_blank");
 	}
 	
 	@UiHandler("saveBtn")
