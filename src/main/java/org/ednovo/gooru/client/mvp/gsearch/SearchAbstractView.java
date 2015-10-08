@@ -298,8 +298,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				try{
+
 					String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
+
+						publisherSgstBox.hideSuggestionList();
+						aggregatorSgstBox.hideSuggestionList();
+
 						if(resultCountVal>=8 && isApiInProgress){
 							if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
 								lblLoadingText.setVisible(true);
