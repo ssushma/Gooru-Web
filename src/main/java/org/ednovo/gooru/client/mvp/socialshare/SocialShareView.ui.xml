@@ -45,7 +45,7 @@
 				</panel:HTMLEventPanel>
 
 
-				<panel:HTMLEventPanel styleName="classPageShareButtonsOuterDiv"
+				<panel:HTMLEventPanel styleName="ssv-classPageShareButtonsOuterDiv"
 					ui:field="emailIconPanel">
 					<g:HTMLPanel styleName="ssv-classPageShareButtonsFTEBg"  ui:field="panelEmailIcon">
 						<g:HTMLPanel

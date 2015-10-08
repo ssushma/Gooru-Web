@@ -239,7 +239,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					sourceSearchDo.setQuery(text);
 					if (text != null && text.trim().length() >=3) {
 						getUiHandlers().requestSourceSuggestions(sourceSearchDo);
-				     }
+				    }else{
+				    	publisherSgstBox.hideSuggestionList();
+				    }
 			}
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
@@ -259,7 +261,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					aggregatorSearchDo.setQuery(text);
 					if (text != null && text.trim().length() >= 3) {
 						getUiHandlers().requestAggregatorSuggestions(aggregatorSearchDo);
-				   }
+					}else{
+						aggregatorSgstBox.hideSuggestionList();
+					}
 			}
 		};
 		setWidget(uiBinder.createAndBindUi(this));
