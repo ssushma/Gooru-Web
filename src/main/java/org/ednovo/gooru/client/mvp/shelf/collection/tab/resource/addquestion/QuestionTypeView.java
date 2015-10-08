@@ -1108,8 +1108,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			CodeDo codeObjStandard=new CodeDo();
 			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
 			codeObjStandard.setCode(centurySgstBox.getValue());
-			standardsDo.add(codeObjStandard);
-
 			centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
 			centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
 		}
@@ -1293,15 +1291,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				for(final CodeDo codeObj:standardsDo){
-					if(id.equalsIgnoreCase(String.valueOf(codeObj.getCodeId()))){
-						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					if(id.equalsIgnoreCase(String.valueOf(entry.getKey()))){
+						int idVal=Integer.parseInt(id);
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(),idVal, new SimpleAsyncCallback<Void>() {
 							@Override
 							public void onSuccess(Void result) {
-								CodeDo deletedObj=new CodeDo();
-								deletedObj.setCodeId(codeObj.getCodeId());
-								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);
 								centurySelectedValues.remove(Long.parseLong(id));
 							}
 						});
@@ -1311,7 +1306,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				}
 			}
 		};
-		return new DownToolTipWidgetUc(closeLabel, description);
+		DownToolTipWidgetUc downToolTipWidgetUc=new DownToolTipWidgetUc(closeLabel, description);
+		downToolTipWidgetUc.getElement().setId(id);
+		return downToolTipWidgetUc;
 	}
 
 	/**
@@ -1354,7 +1351,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						CodeDo codeObjStandard=new CodeDo();
 						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObjStandard.setCode(entry.getValue());
-						standardsDo.add(codeObjStandard);
+						/*	standardsDo.add(codeObjStandard);
+						 */	
 						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 					}
 				}
@@ -2061,13 +2059,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			}
 				if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
 					centuryPanel.clear();
-					for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
-						 CodeDo codeObj=new CodeDo();
-						 codeObj.setCodeId(standardObj.getCodeId());
-						 codeObj.setCode(standardObj.getLabel());
-						 standardsDo.add(codeObj);
-						 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
-						 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
+					for (StandardFo standardObj : collectionItemDo.getSkills()) {
+						CodeDo codeObj=new CodeDo();
+						codeObj.setCodeId(standardObj.getId());
+						codeObj.setCode(standardObj.getLabel());
+						centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
+						centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"",""));
 					}
 				}
 
@@ -2226,7 +2223,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		//standardsPanel.clear();
 		standardsDo.clear();
 
-		Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
+	/*	Map<Long, String> centurySkills=collectionQuestionItemDo.getCenturySelectedValues();
 
 		for (Map.Entry<Long, String> entry : centurySkills.entrySet())
 		{
@@ -2237,11 +2234,21 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			standardsDo.add(codeDo);
 			centurySelectedValues.put(entry.getKey(),entry.getValue());
 			centuryPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"", centuryCodesMap.get(entry.getKey())));
+		}*/
+		if(collectionItemDo.getSkills()!= null && collectionItemDo.getSkills().size()>0){
+			centuryPanel.clear();
+			for (StandardFo standardObj : collectionItemDo.getSkills()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(standardObj.getId());
+				codeObj.setCode(standardObj.getLabel());
+				centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
+				centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"",""));
+			}
 		}
 
 		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
 			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();
-			if(!centurySkills.containsKey(codeID.longValue())){
+			if(!collectionItemDo.getSkills().contains(codeID.longValue())){
 			CodeDo codeDo=new CodeDo();
 			codeDo.setDepth((short) 2);
 			String label=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getLabel();
@@ -2253,6 +2260,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			ulSelectedItems.add(createStandardLabel(code,String.valueOf(codeID),label));
 			}
 		}
+		
+		
 
 		HashMap<String,Boolean> moreOptions= collectionQuestionItemDo.getMoreOptions();
 
@@ -2281,7 +2290,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		collectionQuestionItemDo.setExplanation(explainationTextArea!=null && explainationTextArea.getText()!=null?explainationTextArea.getText():"");
 			}
 		};
-		System.out.println("depthOfKnowledges:::"+depthOfKnowledges);
 		collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledges);
 
 		ArrayList<QuestionHintsDo> enteredHints = new ArrayList<QuestionHintsDo>();
@@ -2301,8 +2309,6 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		}
 		hintsMap.put("hint",enteredHints);
 		collectionQuestionItemDo.setHints(hintsMap);
-
-
 		collectionQuestionItemDo.setCenturySelectedValues(centurySelectedValues);
 
 		if(collectionQuestionItemDo.getTaxonomySet()!=null){
@@ -2695,9 +2701,9 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	public List<Integer> getSelectedCenturySkills(){
 		List<Integer> selectedValues=new ArrayList<Integer>();
 		int size=centuryPanel.getWidgetCount();
-		System.out.println("AsdfADS::"+size);
 		for(int i=0;i<size;i++){
 			DownToolTipWidgetUc downToolTipWidgetUc=(DownToolTipWidgetUc)centuryPanel.getWidget(i);
+			if(downToolTipWidgetUc.getElement().getId() != null && !downToolTipWidgetUc.getElement().getId().isEmpty())
 			selectedValues.add(Integer.parseInt(downToolTipWidgetUc.getElement().getId()));
 		}
 		return selectedValues;

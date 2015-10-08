@@ -1,18 +1,18 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	
+
 	<g:HTMLPanel ui:field="mainContainer">
 		<g:FlowPanel ui:field="logPanel">
 			<uc:UlPanel
 				styleName="dropdown-menu dropdowDisplay displayRight">
 				<uc:LiPanel>
 					<g:Anchor styleName="logoutText" ui:field="anrSettings"></g:Anchor>
-				</uc:LiPanel>
-				<uc:LiPanel>
-					<g:Anchor styleName="logoutText" ui:field="classicGooruAnr"></g:Anchor>
 					<g:HTMLPanel styleName="userMenuBottomLine" />
 				</uc:LiPanel>
+				<!-- <uc:LiPanel>
+					<g:Anchor styleName="logoutText" ui:field="classicGooruAnr"></g:Anchor>
+				</uc:LiPanel> -->
 				<uc:LiPanel>
 					<g:Anchor styleName="logoutText" ui:field="gooruTutorialsAnr"
 						target="_blank"></g:Anchor>
@@ -33,4 +33,4 @@
 
 		</g:FlowPanel>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

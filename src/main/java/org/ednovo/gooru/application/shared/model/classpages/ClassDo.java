@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,18 +29,18 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @fileName : AssessmentSummaryStatusDo.java
- * 
+ *
  * @Author :Gooru Team
- * 
+ *
  * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
 public class ClassDo implements IsSerializable{
 
 	/**
-	 * 
+	 *
 	 */
-	
+
 	private static final long serialVersionUID = 1L;
 	private String classId;
 	private String courseId;
@@ -48,7 +48,8 @@ public class ClassDo implements IsSerializable{
 	private String lessonId;
 	private String assessmentId;
 	private String sessionId;
-	
+	private String isStudent;
+
 	public String getClassId() {
 		return classId;
 	}
@@ -85,6 +86,18 @@ public class ClassDo implements IsSerializable{
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-	
-	
+	/**
+	 * This method is to get the isStudent
+	 */
+	public String getIsStudent() {
+		return isStudent;
+	}
+	/**
+	 * This method is to set the isStudent
+	 */
+	public void setIsStudent(String isStudent) {
+		this.isStudent = isStudent;
+	}
+
+
 }

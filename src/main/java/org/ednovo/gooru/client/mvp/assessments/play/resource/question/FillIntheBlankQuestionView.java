@@ -48,6 +48,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
@@ -247,7 +248,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 						if(StringUtil.isEmpty(textBoxAnswerDoAnswerText)){
 							answerAttemptDo.setSkip(true);
 						}
-						if(questionAnswerDoAnswerText.equalsIgnoreCase(textBoxAnswerDoAnswerText)){
+						if(questionAnswerDoAnswerText.equalsIgnoreCase(StringUtil.replaceSpecial(textBoxAnswerDoAnswerText))){
 							answerAttemptDo.setStatus("1");
 							if(isFibStatus){
 								isFibStatus=true;

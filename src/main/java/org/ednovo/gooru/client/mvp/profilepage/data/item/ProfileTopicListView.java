@@ -297,14 +297,15 @@ public class ProfileTopicListView extends Composite{
 
 		viewAllBtn.addClickHandler(new ViewAllBtnClickHandler(profileFolderDo.getGooruOid(),parentId));
 		go2Assessment.setVisible(false);
+		if (profileFolderDo != null && profileFolderDo.getUrl() != null){
+			AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(profileFolderDo.getUrl(), profileFolderDo.getGooruOid(), new SimpleAsyncCallback<String>() {
 
-		AppClientFactory.getInjector().getHomeService().getLTIAssessmentUrl(profileFolderDo.getUrl(), profileFolderDo.getGooruOid(), new SimpleAsyncCallback<String>() {
-
-			@Override
-			public void onSuccess(String result) {
-				LTI_URL= result;
-			}
-		});
+				@Override
+				public void onSuccess(String result) {
+					LTI_URL= result;
+				}
+			});
+		}
 
 	}
 	public void setId(){
