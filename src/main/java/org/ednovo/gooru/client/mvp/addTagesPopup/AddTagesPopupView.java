@@ -473,9 +473,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		btnStandardsBrowse.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-
-				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:19.5em;color:#515151;")) {
-					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:19.5em;color:#515151;");
+				if (!standardsDropListValues.getElement().getAttribute("style").equalsIgnoreCase("display:block;top:0;left:0.85em;color:#515151;")) {
+					standardsDropListValues.getElement().setAttribute("style", "display:block;top:0;left:0.85em;color:#515151;");
 				} else {
 					standardsDropListValues.getElement().removeAttribute("style");
 				}
