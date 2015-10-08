@@ -833,7 +833,17 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         } else {
         	if(!i18n.GL3367().equalsIgnoreCase(courseObj.getTitle()) && !i18n.GL3396().equalsIgnoreCase(courseObj.getTitle()) && !"UntitledExternalAssessment".equalsIgnoreCase(courseObj.getTitle())){
+        		String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
+        		if(idVal!=null)
+        		{
         		 collectionTitle.setText(courseObj.getTitle());
+        		}
+        		else
+        		{
+        			ulSelectedItems.clear();
+        			selectedValues.clear();
+        			resetErrorMessages();
+        		}
         	}
         }
 		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
@@ -937,10 +947,18 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),true,1,collectionType,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==1){
+				String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
+				if(idVal==null && (collectionType.equalsIgnoreCase("collection")||collectionType.equalsIgnoreCase("assessment")))
+				{
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
+				}
+				else
+				{
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG,currentShelfTreeWidget);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
+				}
 				}
 			}
 		}
