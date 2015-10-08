@@ -2235,6 +2235,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			centurySelectedValues.put(entry.getKey(),entry.getValue());
 			centuryPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"", centuryCodesMap.get(entry.getKey())));
 		}*/
+		if(collectionItemDo!=null)
+		{
 		if(collectionItemDo.getSkills()!= null && collectionItemDo.getSkills().size()>0){
 			centuryPanel.clear();
 			for (StandardFo standardObj : collectionItemDo.getSkills()) {
@@ -2245,9 +2247,12 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"",""));
 			}
 		}
+		}
 
 		for(int j=0;j<collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").size();j++){
 			Integer codeID=collectionQuestionItemDo.getTaxonomySet().get("taxonomyCode").get(j).getCodeId();
+			if(collectionItemDo!=null && collectionItemDo.getSkills()!=null)
+			{
 			if(!collectionItemDo.getSkills().contains(codeID.longValue())){
 			CodeDo codeDo=new CodeDo();
 			codeDo.setDepth((short) 2);
@@ -2258,6 +2263,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			codeDo.setCodeId(codeID);
 			standardsDo.add(codeDo);
 			ulSelectedItems.add(createStandardLabel(code,String.valueOf(codeID),label));
+			}
 			}
 		}
 

@@ -146,8 +146,12 @@ public abstract class ImageCropView extends Composite{
 	 * @param imageURL of the image , which is to be cropped. 
 	 */
 	public void cropImage(String imageURL,float aspectRatio) {
+
 		img.setUrl(imageURL);
+/*		img.getElement().setAttribute("width", "auto");
+		img.getElement().setAttribute("height","auto");*/
 		crop = new GWTCropper(imageURL);
+		crop.setAspectRatio(4.53f);
 		crop.setAspectRatio(aspectRatio);
 		if(aspectRatio==1.0f){
 			if(img.getWidth()>=250 && img.getHeight()>=250){

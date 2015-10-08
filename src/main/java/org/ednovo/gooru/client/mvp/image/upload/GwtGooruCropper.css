@@ -16,6 +16,10 @@
 	text-align: center;
 	right: 0px;
 	margin: 0 auto;
+	width: auto;
+	height: auto;
+	max-width: 400px;
+	max-height: 300px;
 }
 .selection {
 	border: 1px dashed white;
@@ -23,10 +27,15 @@
 .selection IMG{
 	background-color: #FFF;
 	position: absolute;
-	top: 0px;
+	top: 50%;
+	margin-top:-120px;
+	width: auto;
+	height: auto;
 	text-align: center;
 	right: 0px;
 	margin: 0 auto;
+	max-width: 400px;
+	max-height: 300px;
 }
 .selectionDraggableBackground {
     background: rgba(255, 255, 255, 0);

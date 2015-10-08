@@ -3417,6 +3417,7 @@ display: table-cell;
 	width: 120px;
 	border-left: 10px solid #1076bb;
 	position: relative;
+	text-align:center;
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail{
 display: table-cell;
@@ -3424,13 +3425,14 @@ display: table-cell;
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage{
 	position:relative;
+	text-align:center;
 
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage img{
 	max-width: 120px;
 	max-height: 90px;	
 	width: auto;
-	height: auto;
+	height: 90px;
 	margin: 0 auto;
 
 }
@@ -3458,7 +3460,7 @@ display: table-cell;
 		max-width: 120px;
 	max-height: 90px;
 	width: auto;
-	height: auto;
+	height: 90px;
 	margin: 0 auto;
 	
 
