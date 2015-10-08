@@ -3030,7 +3030,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 		copyRightPolicy.show();
 		copyRightPolicy.center();
-		copyRightPolicy.getElement().getStyle().setZIndex(999);
+		copyRightPolicy.getElement().getStyle().setZIndex(99999);
 	}
 	@UiHandler("commuGuideLinesAnr")
 	public void onClickCommunityGuide(ClickEvent event){
