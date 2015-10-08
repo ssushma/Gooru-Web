@@ -315,7 +315,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			copyLbl.setVisible(false);
 		}else{
 			lnkshare.setVisible(true);
-			moveLbl.setVisible(true);
 			copyLbl.setVisible(true);
 		}
 	}
