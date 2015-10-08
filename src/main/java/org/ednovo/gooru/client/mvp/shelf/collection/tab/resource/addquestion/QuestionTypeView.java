@@ -1352,7 +1352,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObjStandard.setCode(entry.getValue());
 						/*	standardsDo.add(codeObjStandard);
-						 */	
+						 */
 						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 					}
 				}
@@ -2260,8 +2260,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 			ulSelectedItems.add(createStandardLabel(code,String.valueOf(codeID),label));
 			}
 		}
-		
-		
+
+
 
 		HashMap<String,Boolean> moreOptions= collectionQuestionItemDo.getMoreOptions();
 
@@ -2395,7 +2395,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 		copyRightPolicy.show();
 		copyRightPolicy.center();
-		copyRightPolicy.getElement().getStyle().setZIndex(999);
+		copyRightPolicy.getElement().getStyle().setZIndex(99999);
 	}
 	@UiHandler("commuGuideLinesAnr")
 	public void onClickCommunityGuide(ClickEvent event){

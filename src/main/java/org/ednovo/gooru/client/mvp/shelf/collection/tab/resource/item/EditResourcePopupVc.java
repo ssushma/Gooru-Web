@@ -730,7 +730,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 				copyRightPolicy.show();
 				copyRightPolicy.center();
-				copyRightPolicy.getElement().getStyle().setZIndex(999);
+				copyRightPolicy.getElement().getStyle().setZIndex(99999);
 
 			}
 		});
@@ -752,7 +752,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 				termsOfUse.show();
 				termsOfUse.center();
-				termsOfUse.getElement().getStyle().setZIndex(999);
+				termsOfUse.getElement().getStyle().setZIndex(99999);
 			}
 
 		});
@@ -770,7 +770,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 				termsAndPolicyVc.show();
 				termsAndPolicyVc.center();
-				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
+				termsAndPolicyVc.getElement().getStyle().setZIndex(99999);
 			}
 
 		});

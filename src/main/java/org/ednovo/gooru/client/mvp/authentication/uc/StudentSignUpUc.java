@@ -388,7 +388,7 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 
 		termsOfUse.show();
 		termsOfUse.center();
-		termsOfUse.getElement().getStyle().setZIndex(999);
+		termsOfUse.getElement().getStyle().setZIndex(99999);
 
 	}
 
@@ -411,7 +411,7 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 
 		termsAndPolicyVc.show();
 		termsAndPolicyVc.center();
-		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
+		termsAndPolicyVc.getElement().getStyle().setZIndex(99999);
 
 	}
 
@@ -434,7 +434,7 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 
 		copyRightPolicy.show();
 		copyRightPolicy.center();
-		copyRightPolicy.getElement().getStyle().setZIndex(999);
+		copyRightPolicy.getElement().getStyle().setZIndex(99999);
 	}
 	/**
 	 *
@@ -523,7 +523,7 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 			txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 			isValid= false;
 		}
-		
+
 		if (!password.equalsIgnoreCase(confirmPassword)) {
 			txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 			txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
@@ -533,7 +533,7 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 			passwordValidUc.setVisible(true);
 			isValid = false;
 		}
-		
+
 		try {
 			RegExp reg = RegExp.compile(PWD_PATTERN, "gi");
 			if (password == null || (password != null && password.isEmpty())) {
