@@ -42,13 +42,9 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.DeleteContentPopup;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
-import org.ednovo.gooru.shared.util.PropertiesCache;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -133,6 +129,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkPreview.setVisible(false);
 		moveLbl.setVisible(false);
 		copyLbl.setVisible(false);
+		myCollDelLbl.setVisible(false);
 		//toggleButton.setVisible(false);
 		copyLbl.setTitle(i18n.GL0827());
 		moveLbl.setTitle(i18n.GL1261());
@@ -309,14 +306,15 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 * To enable and disable the share tab based on type.
 	 */
 	private void enableOrHideShareTab() {
-		if(UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView) || ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
+		if(UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView)){
 			lnkshare.setVisible(false);
 			moveLbl.setVisible(false);
 			copyLbl.setVisible(false);
+			myCollDelLbl.setVisible(false);
 		}else{
 			lnkshare.setVisible(true);
-			moveLbl.setVisible(true);
 			copyLbl.setVisible(true);
+			myCollDelLbl.setVisible(true);
 		}
 	}
 	/**
@@ -324,24 +322,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	 */
 	private void enableOrHidePreviewBtn() {
 		if(currentTypeView!=null){
-			/*if(COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
-				disableCollabaratorOptions(isCollaborator);
-			}else{
-				disableCollabaratorOptions(true);
-			}*/
 			if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 				lnkPreview.setVisible(true);
 				moveLbl.setVisible(true);
-				//toggleButton.setVisible(true);
 				deletePnl.setVisible(false);
 				copyLbl.setVisible(true);
+				myCollDelLbl.setVisible(false);
 				disableCollabaratorOptions(isCollaborator);
-//				moveLbl.setVisible(true);
 			}else{
 				lnkPreview.setVisible(false);
-				//toggleButton.setVisible(true);
 				boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
-
 				copyLbl.setVisible(isVisible);
 				moveLbl.setVisible(false);
 				myCollDelLbl.setVisible(true);
@@ -352,6 +342,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			lnkPreview.setVisible(false);
 			moveLbl.setVisible(false);
 			copyLbl.setVisible(false);
+			myCollDelLbl.setVisible(false);
 
 		}
 	}
@@ -361,11 +352,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
 			lnkshare.setVisible(isVisible);
 		}
-		//toggleButton.setVisible(isVisible);
-		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.contains(ASSESSMENT)){
+		if(COLLECTION.equalsIgnoreCase(currentTypeView) || currentTypeView.equalsIgnoreCase(ASSESSMENT)){
 			lnkPreview.setVisible(isVisible);
 			moveLbl.setVisible(isVisible);
 			copyLbl.setVisible(isVisible);
+			myCollDelLbl.setVisible(isVisible);
 		}
 	}
 	/**
@@ -832,5 +823,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}else{
 			new AlertContentUc(i18n.GL0061(),"Sorry this Course is tied with student data, you cannot delete the course");
 		}
+	}
+	@Override
+	public void showCopyErrorMsg() {
+		new AlertContentUc(i18n.GL0061(),i18n.GL3567());
 	}
 }

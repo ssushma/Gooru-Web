@@ -1354,10 +1354,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
            	standardsJsonArray.set(i,new JSONNumber(standardsDo.get(i).getCodeId()));
         }
         attach.put("standardIds", standardsJsonArray);
+        if(momentsOfLearning!=null && !momentsOfLearning.isEmpty())
         momentsOfLearningArrValue.set(0, new JSONNumber(Integer.parseInt(momentsOfLearning)));
 
         attach.put("momentsOfLearningIds", momentsOfLearningArrValue);
-
+        if(educationalLevel!=null && !educationalLevel.isEmpty())
         educatUseArrValue.set(0,new JSONNumber(Integer.parseInt(educationalLevel)));
 
         attach.put("educationalUseIds", educatUseArrValue);

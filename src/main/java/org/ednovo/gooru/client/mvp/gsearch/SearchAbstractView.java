@@ -237,9 +237,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void keyAction(String text,KeyUpEvent event) {
 					sourceSearchDo.setSearchResults(null);
 					sourceSearchDo.setQuery(text);
-					if (text != null && text.trim().length() > 0) {
+					if (text != null && text.trim().length() >=3) {
 						getUiHandlers().requestSourceSuggestions(sourceSearchDo);
-				     }
+				    }else{
+				    	publisherSgstBox.hideSuggestionList();
+				    }
 			}
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
@@ -257,9 +259,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void keyAction(String text,KeyUpEvent event) {
 					aggregatorSearchDo.setSearchResults(null);
 					aggregatorSearchDo.setQuery(text);
-					if (text != null && text.trim().length() > 0) {
+					if (text != null && text.trim().length() >= 3) {
 						getUiHandlers().requestAggregatorSuggestions(aggregatorSearchDo);
-				   }
+					}else{
+						aggregatorSgstBox.hideSuggestionList();
+					}
 			}
 		};
 		setWidget(uiBinder.createAndBindUi(this));
@@ -298,8 +302,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				try{
+
 					String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
+
+						publisherSgstBox.hideSuggestionList();
+						aggregatorSgstBox.hideSuggestionList();
+
 						if(resultCountVal>=8 && isApiInProgress){
 							if ((event.getScrollTop() + Window.getClientHeight()) >= (Document.get().getBody().getClientHeight()-(Document.get().getBody().getClientHeight()/12))) {
 								lblLoadingText.setVisible(true);
@@ -640,7 +649,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void setUpdatedStandards(List<Map<String, String>> standsListArray){
 		if(standsListArray.size()!=0){
@@ -998,9 +1007,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if(widget instanceof LiPanel){
-				LiPanel obj=(LiPanel) widget;				
+				LiPanel obj=(LiPanel) widget;
 				obj.removeStyleName("active");
-				
+
 			}
 		}
 	}
@@ -2121,7 +2130,7 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 		 }
 		 return filtersMap;
 	}
-	
+
 	@Override
 	public void noStarSearchResult(){
 		searchResults.setText("There are no results for *");

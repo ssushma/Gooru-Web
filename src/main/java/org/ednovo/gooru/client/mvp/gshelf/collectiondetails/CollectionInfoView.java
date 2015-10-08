@@ -741,6 +741,17 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			collThumbnail.getElement().getStyle().setDisplay(Display.BLOCK);
 			if(courseObj.getThumbnails()!=null){
 				collThumbnail.setUrl(courseObj.getThumbnails().getUrl());
+				boolean isDivisibleBy4 = collThumbnail.getWidth() % 4 == 0;
+				boolean isDivisibleBy3 = collThumbnail.getHeight() % 3 == 0;
+				if(isDivisibleBy4 || isDivisibleBy3)
+				{
+					collThumbnail.getElement().setAttribute("style", "width:100%;");
+				}
+				else
+				{
+					collThumbnail.getElement().setAttribute("style", "width:auto;");
+				}
+	
 				//collThumbnail.getElement().getStyle().setDisplay(Display.NONE);
 			//	pnlThumbnailImage.getElement().setAttribute("style", "background-image:url("+courseObj.getThumbnails().getUrl()+");");
 			}else{
@@ -822,7 +833,17 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
             }
         } else {
         	if(!i18n.GL3367().equalsIgnoreCase(courseObj.getTitle()) && !i18n.GL3396().equalsIgnoreCase(courseObj.getTitle()) && !"UntitledExternalAssessment".equalsIgnoreCase(courseObj.getTitle())){
+        		String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
+        		if(idVal!=null)
+        		{
         		 collectionTitle.setText(courseObj.getTitle());
+        		}
+        		else
+        		{
+        			ulSelectedItems.clear();
+        			selectedValues.clear();
+        			resetErrorMessages();
+        		}
         	}
         }
 		learningObjective.setText(courseObj!=null?(courseObj.getDescription()!=null?courseObj.getDescription():""):"");
@@ -900,6 +921,7 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		createOrUpDate.setDescription(learningObjective.getText());
 		createOrUpDate.setCollectionType(type);
 		createOrUpDate.setDescription(learningObjective.getText());
+		if(courseObjG!=null)
 		if(courseObjG.getThumbnails()!=null)
 		{
 		createOrUpDate.setUrl(courseObjG.getThumbnails().getUrl());
@@ -925,10 +947,18 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			if(index==0){
 				getUiHandlers().checkProfanity(createOrUpDate.getDescription().trim(),true,1,collectionType,createOrUpDate,currentShelfTreeWidget);
 			}else if(index==1){
+				String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
+				if(idVal==null && (collectionType.equalsIgnoreCase("collection")||collectionType.equalsIgnoreCase("assessment")))
+				{
+					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
+				}
+				else
+				{
 				if(courseObjG!=null && courseObjG.getGooruOid()!=null){
 					getUiHandlers().updateCourseDetails(createOrUpDate,courseObjG.getGooruOid(),isCreate,courseObjG,currentShelfTreeWidget);
 				}else{
 					getUiHandlers().createAndSaveCourseDetails(createOrUpDate,isCreate,currentShelfTreeWidget);
+				}
 				}
 			}
 		}
@@ -1085,6 +1115,18 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 		element.removeAttribute("src");
 		element.setAttribute("src", url+"?id="+Math.random());
 		element.setAttribute("filename", mediaFileName);
+		Image collImage = new Image();
+		collImage.setUrl(url+"?id="+Math.random());
+		boolean isDivisibleBy4 = collImage.getWidth() % 4 == 0;
+		boolean isDivisibleBy3 = collImage.getHeight() % 3 == 0;
+		if(isDivisibleBy4 || isDivisibleBy3)
+		{
+			element.setAttribute("style", "width:100%;");
+		}
+		else
+		{
+			element.setAttribute("style", "width:auto;");
+		}
 /*		element.setAttribute("style", "display:none");*/
 /*		Element elementPnl=Document.get().getElementById("mycollectionUploadPnl");
 		elementPnl.removeAttribute("style");

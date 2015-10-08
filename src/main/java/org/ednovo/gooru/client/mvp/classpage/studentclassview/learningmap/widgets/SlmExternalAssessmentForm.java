@@ -136,14 +136,21 @@ public class SlmExternalAssessmentForm extends Composite {
 		if(score.isEmpty()){
 			scoreTextBox.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
 		}else if(score != null || score != ""){
-			if(Integer.parseInt(score) >100 || Integer.parseInt(score) <0){
+			if(score.contains(".")) {
 				scoreErrorLbl.setVisible(true);
+				scoreErrorLbl.setText(i18n.GL3596());
 				scoreTextBox.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
-			}else{
-				scoreErrorLbl.setVisible(false);
-				scoreTextBox.getElement().getStyle().setBorderColor("");
-				attemptedScore=Integer.valueOf(score);
-				isScore = true;
+			} else {
+				if(Integer.parseInt(score) >100 || Integer.parseInt(score) <0){
+					scoreErrorLbl.setVisible(true);
+					scoreErrorLbl.setText(i18n.GL3425());
+					scoreTextBox.getElement().getStyle().setBorderColor(ERROR_LBL_COLOR);
+				}else{
+					scoreErrorLbl.setVisible(false);
+					scoreTextBox.getElement().getStyle().setBorderColor("");
+					attemptedScore=Integer.valueOf(score);
+					isScore = true;
+				}
 			}
 		}
 		return isScore;

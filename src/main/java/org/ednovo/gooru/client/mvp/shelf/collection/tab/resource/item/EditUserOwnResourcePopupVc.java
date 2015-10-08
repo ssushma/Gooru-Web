@@ -795,7 +795,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 				copyRightPolicy.show();
 				copyRightPolicy.center();
-				copyRightPolicy.getElement().getStyle().setZIndex(999);
+				copyRightPolicy.getElement().getStyle().setZIndex(99999);
 
 			}
 		});
@@ -814,7 +814,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 				termsOfUse.show();
 				termsOfUse.center();
-				termsOfUse.getElement().getStyle().setZIndex(999);
+				termsOfUse.getElement().getStyle().setZIndex(99999);
 			}
 
 		});
@@ -832,7 +832,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 				termsAndPolicyVc.show();
 				termsAndPolicyVc.center();
-				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
+				termsAndPolicyVc.getElement().getStyle().setZIndex(99999);
 			}
 
 		});
