@@ -824,4 +824,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			new AlertContentUc(i18n.GL0061(),"Sorry this Course is tied with student data, you cannot delete the course");
 		}
 	}
+	@Override
+	public void showCopyErrorMsg() {
+		new AlertContentUc(i18n.GL0061(),i18n.GL3567());
+	}
 }
