@@ -172,6 +172,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		this.unitId = unitId;
 		this.courseId = courseId;
 		this.assessmentId = assessmentId;
+		getPresenter().setCollection(isCollection);
 		if(AppClientFactory.isAnonymous()) {
 			setAnonymousData();
 		} else {
