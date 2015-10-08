@@ -32,6 +32,7 @@ import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
@@ -531,13 +532,24 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	
 	
 	@Override
-	public void copyCourse(String gooruOid) {
+	public void copyCourse(final String gooruOid) {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(0, 50, null, "Course", false, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo result) {
+				if(result.getSearchResult().size()<50) {
+					copyDataCourse(gooruOid);
+				} else {
+					getView().showCopyErrorMsg();
+				}
+			}
+		});
+	}
+	
+	private void copyDataCourse(String gooruOid) {
 		AppClientFactory.getInjector().getfolderService().copyCourse(gooruOid, null, null, new SimpleAsyncCallback<String>() {
-
 			@Override
 			public void onSuccess(String url) {
 				callJobSuccessApi(url,null);
-		
 			}
 		});
 	}
