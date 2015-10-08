@@ -133,6 +133,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		lnkPreview.setVisible(false);
 		moveLbl.setVisible(false);
 		copyLbl.setVisible(false);
+		myCollDelLbl.setVisible(false);
 		//toggleButton.setVisible(false);
 		copyLbl.setTitle(i18n.GL0827());
 		moveLbl.setTitle(i18n.GL1261());
@@ -313,10 +314,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			lnkshare.setVisible(false);
 			moveLbl.setVisible(false);
 			copyLbl.setVisible(false);
+			myCollDelLbl.setVisible(false);
 		}else{
 			lnkshare.setVisible(true);
-			moveLbl.setVisible(true);
 			copyLbl.setVisible(true);
+			myCollDelLbl.setVisible(true);
 		}
 	}
 	/**
@@ -335,6 +337,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				//toggleButton.setVisible(true);
 				deletePnl.setVisible(false);
 				copyLbl.setVisible(true);
+				myCollDelLbl.setVisible(false);
 				disableCollabaratorOptions(isCollaborator);
 //				moveLbl.setVisible(true);
 			}else{
@@ -352,6 +355,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			lnkPreview.setVisible(false);
 			moveLbl.setVisible(false);
 			copyLbl.setVisible(false);
+			myCollDelLbl.setVisible(false);
 
 		}
 	}
@@ -366,6 +370,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			lnkPreview.setVisible(isVisible);
 			moveLbl.setVisible(isVisible);
 			copyLbl.setVisible(isVisible);
+			myCollDelLbl.setVisible(isVisible);
 		}
 	}
 	/**

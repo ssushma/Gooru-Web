@@ -26,13 +26,13 @@
 .selection {
 	border: 1px dashed white;
 	background: #FFFFFF;
+	display:inline-block;
 }
 .selection IMG{
 	background-color: #FFF;
 	position: absolute;
-	top: 50%;
-	margin-top:-120px;
-	width: auto;
+	top: 0px;
+	width:auto;
 	height: auto;
 	text-align: center;
 	right: 0px;
