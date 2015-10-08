@@ -71,7 +71,6 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -88,7 +87,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	@UiField TextArea shareTextArea;
 	@UiField Anchor bitlyLink,embedLink,contentRedirectionLbl;
 	@UiField HTMLEventPanel privateShareFloPanel,publicShareFloPanel,linkShareFloPanel;
-	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel;
+	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel,classCollectionShareMsg;
 	@UiField Button rbPublic;
 	@UiField Label lblPublishPending,lblPublish,shareLbl,visiblityLbl;
 	@UiField InlineLabel supportMsg;
@@ -171,7 +170,12 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		if(!"collection".equalsIgnoreCase(folderDo.getType())) {
 			message = message.replaceAll(i18n.GL2001(), i18n.GL3007().toLowerCase());
 		}
-		supportMsg.setText(message);
+		if(AppClientFactory.getPlaceManager().getRequestParameter("o1", "").isEmpty()) {
+			classCollectionShareMsg.setVisible(false);
+		} else {
+			classCollectionShareMsg.setVisible(true);
+			supportMsg.setText(message);
+		}
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		getUserType();
 		// Hiding private functionality in 1.6
