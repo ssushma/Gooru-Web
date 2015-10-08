@@ -42,13 +42,9 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.DeleteContentPopup;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
-import org.ednovo.gooru.shared.util.PropertiesCache;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -837,5 +833,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		}else{
 			new AlertContentUc(i18n.GL0061(),"Sorry this Course is tied with student data, you cannot delete the course");
 		}
+	}
+	@Override
+	public void showCopyErrorMsg() {
+		new AlertContentUc(i18n.GL0061(),i18n.GL3567());
 	}
 }
