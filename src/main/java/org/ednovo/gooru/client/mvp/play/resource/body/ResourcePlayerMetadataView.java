@@ -452,7 +452,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 			getUiHandlers().showQuestionView(collectionItemDo);
 		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")||resourceTypeName.equalsIgnoreCase("vimeo/video")){
-			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(collectionItemDo.getResource().getUrl())){
+			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||!isProtocolMatched(collectionItemDo.getResource().getUrl())){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
@@ -1929,13 +1929,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				@Override
 				public void onSelection(SelectionEvent<Suggestion> event) {
 					// TODO Auto-generated method stub
-					
+
 				}
 				@Override
 				public void showStandardsPopup(String standardVal, String standardsDesc,
 						List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
 					getUiHandlers().showStandardsPopup(standardVal,standardsDesc,collectionLiPanelWithCloseArray);
-					
+
 				}
 			};
 			addTagesPopupView.getAddStandards();
@@ -1996,7 +1996,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void displaySelectedStandards(List<Map<String, String>> standListArray) {
 		addTagesPopupView.displaySelectedStandards(standListArray);
-		
+
 	}
 
 }
