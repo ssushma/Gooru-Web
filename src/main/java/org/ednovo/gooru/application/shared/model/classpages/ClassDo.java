@@ -49,6 +49,7 @@ public class ClassDo implements IsSerializable{
 	private String assessmentId;
 	private String sessionId;
 	private String isStudent;
+	private boolean isCollection;
 
 	public String getClassId() {
 		return classId;
@@ -86,18 +87,16 @@ public class ClassDo implements IsSerializable{
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-	/**
-	 * This method is to get the isStudent
-	 */
 	public String getIsStudent() {
 		return isStudent;
 	}
-	/**
-	 * This method is to set the isStudent
-	 */
 	public void setIsStudent(String isStudent) {
 		this.isStudent = isStudent;
 	}
-
-
+	public boolean isCollection() {
+		return isCollection;
+	}
+	public void setCollection(boolean isCollection) {
+		this.isCollection = isCollection;
+	}
 }
