@@ -237,7 +237,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void keyAction(String text,KeyUpEvent event) {
 					sourceSearchDo.setSearchResults(null);
 					sourceSearchDo.setQuery(text);
-					if (text != null && text.trim().length() > 0) {
+					if (text != null && text.trim().length() >=3) {
 						getUiHandlers().requestSourceSuggestions(sourceSearchDo);
 				     }
 			}
@@ -257,7 +257,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			public void keyAction(String text,KeyUpEvent event) {
 					aggregatorSearchDo.setSearchResults(null);
 					aggregatorSearchDo.setQuery(text);
-					if (text != null && text.trim().length() > 0) {
+					if (text != null && text.trim().length() >= 3) {
 						getUiHandlers().requestAggregatorSuggestions(aggregatorSearchDo);
 				   }
 			}
@@ -640,7 +640,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void setUpdatedStandards(List<Map<String, String>> standsListArray){
 		if(standsListArray.size()!=0){
@@ -998,9 +998,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if(widget instanceof LiPanel){
-				LiPanel obj=(LiPanel) widget;				
+				LiPanel obj=(LiPanel) widget;
 				obj.removeStyleName("active");
-				
+
 			}
 		}
 	}
@@ -2121,7 +2121,7 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 		 }
 		 return filtersMap;
 	}
-	
+
 	@Override
 	public void noStarSearchResult(){
 		searchResults.setText("There are no results for *");
