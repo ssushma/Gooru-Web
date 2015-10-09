@@ -78,6 +78,7 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 			className.setText(classObj.getName());
 			setIds();
 			classId = classObj.getClassUid();
+			enableDeleteBtn(false);
 			getPresenter().getClassData(classObj.getClassUid(), courseId, null, null, "unit", null);
 		}
 
@@ -164,8 +165,6 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 
 		@Override
 		public void setData(ArrayList<PlanProgressDo> dataList, String classId, String courseId, String unitId, String lessonId, String contentType, ContentVisibilityItemWidget widget) {
-			if(dataList!=null&&dataList.size()>0) {
-				enableDeleteBtn(false);
 				if("unit".equalsIgnoreCase(contentType)) {
 					setUnitData(dataList, classId, courseId, contentType);
 				} else if ("lesson".equalsIgnoreCase(contentType)) {
@@ -173,9 +172,9 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				} else if ("collection".equalsIgnoreCase(contentType)) {
 					setCollectionData(dataList,unitId,lessonId,widget);
 				}
-			} else {
-				enableDeleteBtn(true);
-			}
+				if(dataList!=null&&dataList.size()==0&&"unit".equalsIgnoreCase(contentType)) {
+					enableDeleteBtn(true);	
+				}
 		}
 		
 		private class ContentVisibilityDataHandler implements ClickHandler {
