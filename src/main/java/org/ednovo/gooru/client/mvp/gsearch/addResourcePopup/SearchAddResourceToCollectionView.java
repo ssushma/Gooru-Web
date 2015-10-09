@@ -634,7 +634,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 							restrictionToAddResourcesData("You can add Collections only to Lesson Level");
 						}else if(LESSON.equalsIgnoreCase(currentFolderSelectedTreeItem.getType())){
 							if(isMoveSelected){
-								getUiHandlers().moveCollectionTOLesson("","",this.urlparams);
+								getUiHandlers().moveCollectionTOLesson("","",this.urlparams,AppClientFactory.getPlaceManager().getRequestParameter("o1",null));
 							}else{
 								getUiHandlers().copyCollectionToLession("","",this.urlparams);
 							}
