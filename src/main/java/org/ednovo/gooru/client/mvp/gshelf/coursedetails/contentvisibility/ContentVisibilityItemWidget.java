@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.EnablePublishButtonEvent;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.HighlightContentSpanEvent;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.HighlightContentSpanHandler;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -107,6 +108,7 @@ public class ContentVisibilityItemWidget extends Composite {
 				  }
 			}
 			addParentSpanDots(contentType);
+			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
 		}
 	}
 	
@@ -122,6 +124,7 @@ public class ContentVisibilityItemWidget extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			setSpanDot(contentType, isVisible);
+			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
 		}
 	}
 	
