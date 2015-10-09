@@ -29,10 +29,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.ednovo.gooru.application.client.child.ChildView;
+import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.EnablePublishButtonEvent;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.EnablePublishButtonHandler;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
@@ -78,9 +81,22 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 			className.setText(classObj.getName());
 			setIds();
 			classId = classObj.getClassUid();
+			enableDeleteBtn(true);
 			getPresenter().getClassData(classObj.getClassUid(), courseId, null, null, "unit", null);
+			AppClientFactory.getEventBus().addHandler(EnablePublishButtonEvent.TYPE, enablePublishButtonHandler);
 		}
 
+		EnablePublishButtonHandler enablePublishButtonHandler = new EnablePublishButtonHandler() {
+			@Override
+			public void enablePublishButton(boolean isPublish) {
+				if(getContentData().size()>0) {
+					enableDeleteBtn(!isPublish);
+				} else {
+					enableDeleteBtn(isPublish);
+				}
+			}
+		};
+		
 		private void setIds() {
 			allClassPanel.getElement().setId("shareContentInClass");
 		}
@@ -164,8 +180,6 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 
 		@Override
 		public void setData(ArrayList<PlanProgressDo> dataList, String classId, String courseId, String unitId, String lessonId, String contentType, ContentVisibilityItemWidget widget) {
-			if(dataList!=null&&dataList.size()>0) {
-				enableDeleteBtn(false);
 				if("unit".equalsIgnoreCase(contentType)) {
 					setUnitData(dataList, classId, courseId, contentType);
 				} else if ("lesson".equalsIgnoreCase(contentType)) {
@@ -173,9 +187,6 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				} else if ("collection".equalsIgnoreCase(contentType)) {
 					setCollectionData(dataList,unitId,lessonId,widget);
 				}
-			} else {
-				enableDeleteBtn(true);
-			}
 		}
 		
 		private class ContentVisibilityDataHandler implements ClickHandler {
