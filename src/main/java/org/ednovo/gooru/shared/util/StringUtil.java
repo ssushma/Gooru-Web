@@ -801,11 +801,13 @@ public class StringUtil implements ClientConstants {
 		String courseId=AppClientFactory.getPlaceManager().getRequestParameter(COURSEID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(COURSEID):"";
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter(UNITID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(UNITID):"";
 		String lessonId=AppClientFactory.getPlaceManager().getRequestParameter(LESSONID)!=null?AppClientFactory.getPlaceManager().getRequestParameter(LESSONID):"";
+		String isStudent = AppClientFactory.getPlaceManager().getRequestParameter(ISSTUDENT, null);
 
 		classObj.setClassId(classId);
 		classObj.setCourseId(courseId);
 		classObj.setLessonId(lessonId);
 		classObj.setUnitId(unitId);
+		classObj.setIsStudent(isStudent);
 		return classObj;
 	}
 

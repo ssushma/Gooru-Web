@@ -533,8 +533,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public void closePreviewPlayer() {
 		AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
-		hide();
 		getUiHandlers().resetCollectionPlayer();
+		hide();
 	}
 
 	@Override

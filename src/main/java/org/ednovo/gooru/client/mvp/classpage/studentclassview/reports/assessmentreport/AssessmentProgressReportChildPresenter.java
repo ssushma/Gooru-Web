@@ -83,6 +83,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 	boolean isSession = true;
 	
+	boolean isCollection = false;
+	
 	public AssessmentProgressReportChildPresenter(IsAssessmentProgressReportView childView) {
 		super(childView);
 	}
@@ -133,47 +135,41 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String courseId, final String unitId, final String lessonId, final String userId, final String sessionId,final PrintUserDataDO printData) {
 		if (sessionId != null){
-			ClassDo classObj=new ClassDo();
+			final ClassDo classObj=new ClassDo();
 			classObj.setAssessmentId(collectionId);
 			classObj.setClassId(classId);
 			classObj.setCourseId(courseId);
 			classObj.setUnitId(unitId);
 			classObj.setLessonId(lessonId);
 			classObj.setSessionId(sessionId);
+			classObj.setCollection(isCollection());
 			
 			AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 				@Override
 				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-					if(result!=null && result.size()!=0){
-						getView().loaderVisibility(false);
-						getView().errorPanelData(false, true);
-						count=0;
-						if(!isSession()) {
-							if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
-								int sessionSize=result.get(0).getSession().size();
-								int day=result.get(0).getSession().get(sessionSize-1).getSequence();
-								getView().setAttemptsData(result.get(0).getSession());
-							}
-							setSession(true);
-						}
-						displayScoreCountData(result.get(0));
-						getView().setCollectionMetaDataByUserAndSession(result);
-						setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData,null);
-					}else{
-						Timer timer = new Timer() {
-							@Override
-							public void run() {
-								if (count < 10){
-									getSessionsDataByUser(collectionId, classId, courseId, unitId, lessonId, userId);
-									count++;
-								}else{
-									if (count >= 10){
-										getView().errorMsg();
+					System.out.println("1");
+					if(isCollection()) {
+						System.out.println("2");
+						setAnalyticsData(result, collectionId, classId, userId, sessionId, printData);
+					} else {
+						if(result!=null && result.size()!=0){
+							setAnalyticsData(result, collectionId, classId, userId, sessionId, printData);
+						}else{
+							Timer timer = new Timer() {
+								@Override
+								public void run() {
+									if (count < 10){
+										getSessionsDataByUser(collectionId, classId, courseId, unitId, lessonId, userId);
+										count++;
+									}else{
+										if (count >= 10){
+											getView().errorMsg();
+										}
 									}
 								}
-							}
-						};
-						timer.schedule(100);
+							};
+							timer.schedule(100);
+						}
 					}
 				}
 				
@@ -183,6 +179,28 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 				}
 			});
 		}else{
+			getView().errorMsg();
+		}
+	}
+	
+	private void setAnalyticsData(ArrayList<CollectionSummaryMetaDataDo> result, final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
+		System.out.println("result "+result);
+		if(result!=null && result.size()!=0){
+			getView().loaderVisibility(false);
+			getView().errorPanelData(false, true);
+			count=0;
+			if(!isSession()) {
+				if(result.get(0).getSession()!=null && result.get(0).getSession().size()!=0){
+					int sessionSize=result.get(0).getSession().size();
+					int day=result.get(0).getSession().get(sessionSize-1).getSequence();
+					getView().setAttemptsData(result.get(0).getSession());
+				}
+				setSession(true);
+			}
+			displayScoreCountData(result.get(0));
+			getView().setCollectionMetaDataByUserAndSession(result);
+			setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData,null);
+		} else {
 			getView().errorMsg();
 		}
 	}
@@ -315,8 +333,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	}
 
 	@Override
-	public void getContentPlayAllSessions(final String gooruUid, final String classGooruId, final String lessonGooruId, final String unitGooruId, final String courseGooruId, final String assessmentId, final String currentSessionId) {
-		AppClientFactory.getInjector().getClasspageService().getContentPlayAllSessions(gooruUid, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, new SimpleAsyncCallback<List<UserPlayedSessionDo>>() {
+	public void getContentPlayAllSessions(final String gooruUid, String collectionType, final String classGooruId, final String lessonGooruId, final String unitGooruId, final String courseGooruId, final String assessmentId, final String currentSessionId) {
+		AppClientFactory.getInjector().getClasspageService().getContentPlayAllSessions(gooruUid, collectionType, classGooruId, lessonGooruId, unitGooruId, courseGooruId, assessmentId, new SimpleAsyncCallback<List<UserPlayedSessionDo>>() {
 			@Override
 			public void onSuccess(List<UserPlayedSessionDo> result) {
 				if(result!=null&&result.size()>0) {
@@ -338,6 +356,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		classObj.setAssessmentId(collectionId);
 		classObj.setClassId(classId);
 		classObj.setSessionId(sessionId);
+		classObj.setCollection(isCollection());
 		AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
@@ -369,6 +388,14 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 
 	public void setPrintDataDo(ArrayList<UserDataDo> printDataDo) {
 		this.printDataDo = printDataDo;
+	}
+
+	public boolean isCollection() {
+		return isCollection;
+	}
+
+	public void setCollection(boolean isCollection) {
+		this.isCollection = isCollection;
 	}
 	
 }

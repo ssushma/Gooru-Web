@@ -501,14 +501,14 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 
 	@Override
-	public void moveCollectionTOLesson(String collectionId,String collectionTitle, final HashMap<String, String> urlparams) {
+	public void moveCollectionTOLesson(String collectionId,String collectionTitle, final HashMap<String, String> urlparams, String targetCourseId) {
 		if(urlparams!=null){
 			this.urlParameters=urlparams;
 			courseId=urlparams.get("o1");
 			unitId=urlparams.get("o2");
 			lessonId=urlparams.get("o3");
 		}
-		AppClientFactory.getInjector().getResourceService().moveCollectionTOLesson(courseId, unitId, lessonId, getCollectionGooruId(), new org.ednovo.gooru.application.client.SimpleAsyncCallback<CollectionDo>() {
+		AppClientFactory.getInjector().getResourceService().moveCollectionTOLesson(courseId, unitId, lessonId, getCollectionGooruId(),targetCourseId, new org.ednovo.gooru.application.client.SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
 				if(result!=null && result.getStatusCode()==200){

@@ -172,11 +172,15 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 		this.unitId = unitId;
 		this.courseId = courseId;
 		this.assessmentId = assessmentId;
+		getPresenter().setCollection(isCollection);
 		if(AppClientFactory.isAnonymous()) {
 			setAnonymousData();
 		} else {
 			if(sessionId==null) {
-				getPresenter().getContentPlayAllSessions(userId, classId, lessonId, unitId, courseId, assessmentId, sessionId);
+				if(contentType.equalsIgnoreCase(UrlNavigationTokens.EXTERNAL_ASSESSMENT)) {
+					contentType = UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT;
+				}
+				getPresenter().getContentPlayAllSessions(userId, contentType, classId, lessonId, unitId, courseId, assessmentId, sessionId);
 			} else {
 				getPresenter().setSessionId(sessionId);
 				getPresenter().setSession(false);
