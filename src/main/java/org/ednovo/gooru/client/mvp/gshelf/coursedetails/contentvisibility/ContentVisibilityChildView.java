@@ -39,9 +39,9 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -60,6 +60,8 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		private String classId = null;
 		
 		PublishConfirmationPopup publishPopup = null;
+		
+		HandlerRegistration publishHandler = null;
 		
 		private MessageProperties i18n = GWT.create(MessageProperties.class);
 		
@@ -162,36 +164,44 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 
 		@Override
 		public void setData(ArrayList<PlanProgressDo> dataList, String classId, String courseId, String unitId, String lessonId, String contentType, ContentVisibilityItemWidget widget) {
-			if("unit".equalsIgnoreCase(contentType)) {
-				setUnitData(dataList, classId, courseId, contentType);
-			} else if ("lesson".equalsIgnoreCase(contentType)) {
-				setLessonData(dataList,classId,courseId,unitId,contentType,widget);
-			} else if ("collection".equalsIgnoreCase(contentType)) {
-				setCollectionData(dataList,unitId,lessonId,widget);
+			if(dataList!=null&&dataList.size()>0) {
+				enableDeleteBtn(false);
+				if("unit".equalsIgnoreCase(contentType)) {
+					setUnitData(dataList, classId, courseId, contentType);
+				} else if ("lesson".equalsIgnoreCase(contentType)) {
+					setLessonData(dataList,classId,courseId,unitId,contentType,widget);
+				} else if ("collection".equalsIgnoreCase(contentType)) {
+					setCollectionData(dataList,unitId,lessonId,widget);
+				}
+			} else {
+				enableDeleteBtn(true);
 			}
 		}
 		
-		@UiHandler("btnPublish")
-		public void updateContentVisibilityData(ClickEvent event) {
-			publishPopup = new PublishConfirmationPopup() {
-				@Override
-				public void onClickPositiveButton(ClickEvent event) {
-					getPresenter().updateContentVisibilityData(classId, getContentData());
-				}
-				@Override
-				public void onClickNegitiveButton(ClickEvent event) {
-					hide();
-					Window.enableScrolling(true);
-				}
-			};
-			publishPopup.getElement().getStyle().setZIndex(9999999);
-			publishPopup.setPopupTitle(i18n.GL3589());
-			publishPopup.setH3Data(i18n.GL3590(),i18n.GL3591());
-			publishPopup.setPositiveButtonText(i18n.GL1921());
-			publishPopup.setNegitiveButtonText(i18n.GL0142());
-			publishPopup.setPleaseWaitText(i18n.GL1924());
-			publishPopup.show();
-			publishPopup.center();
+		private class ContentVisibilityDataHandler implements ClickHandler {
+			@Override
+			public void onClick(ClickEvent event) {
+				publishPopup = new PublishConfirmationPopup() {
+					@Override
+					public void onClickPositiveButton(ClickEvent event) {
+						getPresenter().updateContentVisibilityData(classId, getContentData());
+					}
+					@Override
+					public void onClickNegitiveButton(ClickEvent event) {
+						hide();
+						Window.enableScrolling(true);
+					}
+					
+				};
+				publishPopup.getElement().getStyle().setZIndex(9999999);
+				publishPopup.setPopupTitle(i18n.GL3589());
+				publishPopup.setH3Data(i18n.GL3590(),i18n.GL3591());
+				publishPopup.setPositiveButtonText(i18n.GL1921());
+				publishPopup.setNegitiveButtonText(i18n.GL0142());
+				publishPopup.setPleaseWaitText(i18n.GL1924());
+				publishPopup.show();
+				publishPopup.center();
+			}
 		}
 		
 		@Override
@@ -286,4 +296,17 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 			}
 			return data;
 		}
+		
+		public void enableDeleteBtn(boolean isDisabled) {
+			if(isDisabled) {
+				btnPublish.addStyleName("disabled");
+			} else {
+				btnPublish.removeStyleName("disabled");
+				if(publishHandler!=null){
+					publishHandler.removeHandler();
+				}
+				publishHandler=btnPublish.addClickHandler(new ContentVisibilityDataHandler());
+			}
+		}
+
 	}
