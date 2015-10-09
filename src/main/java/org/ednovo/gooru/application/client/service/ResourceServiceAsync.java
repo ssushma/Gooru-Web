@@ -199,7 +199,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     
     void moveCollectionToMyCOllections(String collectionId, String FolderId,String collectionTitle,AsyncCallback<CollectionDo> callback);
    
-    void moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId,AsyncCallback<CollectionDo> callback);
+    void moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId,String targetCourseId,AsyncCallback<CollectionDo> callback);
     
     void getCourseDataById(String courseID,AsyncCallback<FolderDo> callback) throws GwtException,ServerDownException;
     

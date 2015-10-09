@@ -437,7 +437,7 @@ public interface ResourceService extends BaseService {
 	public CollectionDo CopyToplevelMyCollections(String collectionId, String FolderId,String collectionTitle)  throws GwtException, ServerDownException;
 	public CollectionDo CopyCollectionToLesson(String courseId,String unitId,String LessonId,String CollectionId,String collectionTitle) throws GwtException, ServerDownException;
 	public CollectionDo moveCollectionToMyCOllections(String collectionId, String FolderId,String collectionTitle) throws GwtException, ServerDownException;
-	public CollectionDo moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId) throws GwtException, ServerDownException;
+	public CollectionDo moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId,String targetCourseId) throws GwtException, ServerDownException;
 	
 	public FolderDo getCourseDataById(String courseId) throws GwtException,ServerDownException;
 	

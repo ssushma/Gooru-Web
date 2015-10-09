@@ -2467,13 +2467,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public CollectionDo moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId) {
+	public CollectionDo moveCollectionTOLesson(String courseId,String unitId,String LessonId,String CollectionId,String targetCourseId) {
 		CollectionDo collectionDoObj=new CollectionDo();
 		JsonRepresentation jsonRep = null,jsonResponseRepget=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.MOVE_V1_COLLECTION, courseId,unitId,LessonId,CollectionId);
 		try{
 			JSONObject sourceCourseIdJsonObject=new JSONObject();
-			sourceCourseIdJsonObject.put("sourceCourseId", courseId);
+			sourceCourseIdJsonObject.put("sourceCourseId", targetCourseId);
 			getLogger().info("--- moveCollectionTOLesson CopyCollectionToLesson URl -- "+url);
 			getLogger().info("-- moveCollectionTOLesson CopyCollectionToLesson payload (Put method) -- "+sourceCourseIdJsonObject.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), sourceCourseIdJsonObject.toString());
