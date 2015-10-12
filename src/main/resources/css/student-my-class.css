@@ -155,14 +155,14 @@
     margin: 0px 22px;
     display: block;
 }
-.rowContainer .progressBlock .circle-main-container div {
+.rowContainer .progressBlock .circle-main-container .circle-container {
     margin: 0 13px 0 0;
     padding: 0 0;
     list-style: none;
     display: inline-block;
     vertical-align: middle;
 }
-.rowContainer .progressBlock .circle-main-container div span {
+.rowContainer .progressBlock .circle-main-container .circle-container span {
     width: 50px;
     height: 50px;
     border-radius: 50% 50%;
@@ -185,10 +185,10 @@
 .rowContainer .viewReport a:focus {
     text-decoration: none;
 }
-.rowContainer .progressBlock .circle-main-container div.green-circle span {
+.rowContainer .progressBlock .circle-main-container .circle-container.green-circle span {
     background: #78B173 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat 12px 13px;
 }
-.rowContainer .progressBlock .circle-main-container div.green-text span {
+.rowContainer .progressBlock .circle-main-container .circle-container.green-text span {
     background: #a5cba1;
 	text-align: center;
 	padding-top: 11px;
@@ -196,10 +196,10 @@
 	font-size: 16px;
 	font-weight: 100;
 }
-.rowContainer .progressBlock .circle-main-container div.blue-circle span {
+.rowContainer .progressBlock .circle-main-container .circle-container.blue-circle span {
     background: #fdc564;
 }
-.rowContainer .progressBlock .circle-main-container div.grey-circle span {
+.rowContainer .progressBlock .circle-main-container .circle-container.grey-circle span {
     background: #78b172;
 }
 .LearningMapContainer {
@@ -336,6 +336,9 @@
 }
 .empty-plan-collection-selected {
     opacity: 0.5 !important;
+}
+.empty-plan-collection-selected section {
+    opacity: 1 !important;
 }
 .LearningMapContainer .lessonDescription .scoreWidget {
 	color: #fff;
@@ -2358,6 +2361,22 @@ button.primary.previewBtnIcon {
 .minimumScoreLblValue {
 	font-size: 18px;
 }
+.hasTooltip {
+    position:relative;
+}
+.hasTooltip section {
+    display:none;
+}
+.hasTooltip:hover section {
+	display: inline-block;
+	position: absolute;
+	line-height: 14px;
+	top: 25px;
+	z-index: 100;
+}
+.toolTipPopupContainerBlock {
+    width: 174px;
+}
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     .custom-select select {
         padding-right: 30px;
@@ -2485,7 +2504,7 @@ button.primary.previewBtnIcon {
     .rowContainer .viewReport {
         text-align: left;
     }
-    .rowContainer .progressBlock .circle-main-container div {
+    .rowContainer .progressBlock .circle-main-container .circle-container {
         margin: 0 0 5px 0;
     }
     .rowContainer .progressBlock,
@@ -2501,14 +2520,14 @@ button.primary.previewBtnIcon {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .rowContainer .progressBlock .circle-main-container div span {
+    .rowContainer .progressBlock .circle-main-container .circle-container span {
         width: 35px;
         height: 35px;
     }
-    .rowContainer .progressBlock .circle-main-container div {
+    .rowContainer .progressBlock .circle-main-container .circle-container {
         margin: 0 5px 0 0;
     }
-    .rowContainer .progressBlock .circle-main-container div.green-circle span {
+    .rowContainer .progressBlock .circle-main-container .circle-container.green-circle span {
         background: #a5cba1 url("${cdn.endpoint}/images/Classpage/student/checkmark-big.png") no-repeat scroll 4px 7px;
     }
 }

@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview.learningmap.widge
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.uc.SpanPanel;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -24,6 +25,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class StudentClassLearningMapCircle extends Composite {
 	
 	@UiField HTMLEventPanel circleField;
+	@UiField SectionTag spanTxtToolTip;
 	@UiField SpanPanel spanTxt;
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 	
@@ -52,9 +54,10 @@ public class StudentClassLearningMapCircle extends Composite {
 		}
 		
 		String lessonName = planProgressDo.getTitle();
-		circleField.addMouseOverHandler(new MouseOverShowClassCodeToolTip(lessonName));
+		spanTxtToolTip.add(new GlobalToolTip(lessonName));
+/*		circleField.addMouseOverHandler(new MouseOverShowClassCodeToolTip(lessonName));
 		circleField.addMouseOutHandler(new MouseOutHideToolTip());
-		circleField.addClickHandler(new LessonViewNavigation());
+*/		circleField.addClickHandler(new LessonViewNavigation());
 		if(!circleType.isEmpty()) {
 			circleField.addStyleName(circleType);
 		}
