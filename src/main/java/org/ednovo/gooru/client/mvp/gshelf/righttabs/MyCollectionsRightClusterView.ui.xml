@@ -16,9 +16,6 @@
 				<div class="deleteButton">
 					<g:Anchor ui:field="lnkPreview" text="{i18n.GL1714}">Preview</g:Anchor>
 				</div>
-				<g:HTMLPanel styleName="deleteButton" ui:field="deletePnl">
-					<g:Anchor ui:field="lnkDeleteButton" text="Delete"></g:Anchor>
-				</g:HTMLPanel>
 				<hpanel:HTMLEventPanel styleName="copyLblStyle" ui:field="myCollDelLbl">
 				    <g:Image url="images/Trashcan.png"  title="Delete"/>
 				    <div style="color: #6FA3BC;" text="Delete">Delete</div>
@@ -31,34 +28,6 @@
 				    <g:Image url="images/Copy.png" />
 				    <div style="color: #6FA3BC;" text="Copy">Copy</div>
 				</hpanel:HTMLEventPanel>
-				
-				
-				
-				<div id="gooruSearchMainContainer" style="display:inline;float:right;">
-				   
-					
-					
-					<!-- <g:HTMLPanel styleName="gridToggle" ui:field="toggleButton">
-						<g:HTMLPanel styleName="btn-group">
-							 <hpanel:HTMLEventPanel ui:field="popupPanelDropDwn">
-								<button type="button" class="btn btn-primary">
-									<span class="glyphicon gliphIconImage"
-										aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-primary dropdown-toggle"
-									data-toggle="dropdown" aria-expanded="false">
-									<span class="caret"></span>
-									<span class="sr-only">Toggle Dropdown</span>
-								</button>
-							</hpanel:HTMLEventPanel>
-							<hpanel:HTMLEventPanel styleName="dropdown-menu copyPopupPanel" ui:field="copyPopupPanel">
-								<g:Label ui:field="copyLbl" styleName="copyLblStyle"/>
-								<g:Label ui:field="moveLbl" styleName="copyLblStyle"/>
-								<g:Label ui:field="myCollDelLbl" text="Delete" styleName="copyLblStyle"></g:Label>
-							</hpanel:HTMLEventPanel>
-						</g:HTMLPanel>
-					</g:HTMLPanel> -->
-				</div>
 		</div>
 			<div class="clearfix"></div>
 		</div>
