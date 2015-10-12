@@ -250,20 +250,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	public void setData(FolderDo folderObj, String type) {
-/*	
 
-		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);	
-		String idVal=AppClientFactory.getPlaceManager().getRequestParameter("id",null);
-		System.out.println("idVal::"+idVal);
-		if(view!=null){
-			if(idVal!=null){*/
 			if(folderObj!=null && folderObj.getGooruOid()!=null)
 			{
 			getCollectionDo(folderObj.getGooruOid());
 			}			
 			else
 			{
-				System.out.println("type::"+type);
 				getView().setCouseData(folderObj,type);
 				if(!getViewType().equalsIgnoreCase(FOLDER)){
 					callCourseInfoTaxonomy();

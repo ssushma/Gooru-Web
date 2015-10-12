@@ -425,6 +425,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		displayImage.setUrl("");
 		displayImage.setVisible(isTrue);
 		cropImage.setVisible(isTrue);
+		onOkButton.setVisible(isTrue);
+		onOkButton1.setVisible(!isTrue);
 		//displayCromImagePanel.getElement().getStyle().clearBackgroundImage();
 
 		displayImage1.setUrl("");
@@ -440,6 +442,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		displayImage.setVisible(isTrue);
 		cropImage.setVisible(isTrue);
 		displayImage1.setVisible(isTrue);
+		onOkButton.setVisible(isTrue);
+		onOkButton1.setVisible(isTrue);
 		cropImage1.setVisible(isTrue);
 		setAndClearBorder(displayCromImagePanel.getElement(), isTrue);
 		setAndClearBorder(displayCromImagePanel1.getElement(), isTrue);
