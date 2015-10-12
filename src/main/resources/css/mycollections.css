@@ -757,8 +757,8 @@ button.btn-disabled{
 	margin-top: 2px;
 }
 .class-name-arrow-down {
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	float: left;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
@@ -1618,6 +1618,9 @@ button.btn-disabled {
 #gShelfCourseInfo .deleteButton{
 	display: inline-block;
 	float: right;
+}
+#gShelfCourseInfo .actions{
+	text-align: right;
 }
 #gShelfCourseInfo .actions .deleteButton{
 	display: inline-block;
@@ -3430,7 +3433,7 @@ display: table-cell;
 }
 #pnlCollectionInfo .collectionImageDetails .collectionThumbnail .thimbnailImage img{
 	max-width: 120px;
-	max-height: 90px;	
+	max-height: 90px;
 	width: auto;
 	height: 90px;
 	margin: 0 auto;
@@ -3462,7 +3465,7 @@ display: table-cell;
 	width: auto;
 	height: 90px;
 	margin: 0 auto;
-	
+
 
 }
 #pnlCollectionInfo .collectionImageDetails .assessmentThumbnail .thimbnailImage .thunailHover{
@@ -4674,7 +4677,7 @@ right:1px;
 
 .shareMainContainer button.primary{
 	margin-left: 5px;
-	margin: 5% 6%;
+	margin: 4% 33%;
 }
 
 @media (max-width: 767px) {

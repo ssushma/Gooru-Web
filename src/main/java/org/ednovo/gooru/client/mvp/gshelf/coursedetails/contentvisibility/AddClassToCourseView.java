@@ -52,6 +52,7 @@ public abstract class AddClassToCourseView extends PopupPanel {
 		addtocollHeaderText.setText("Assign Course");
 		addingTextLbl.setText("Assign this course to a class. Note that classes that are already tied to a course will not show up here.");
 		lblError.setVisible(false);
+		assignBtn.setVisible(false);
 		getTeachClassesList();
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
@@ -83,6 +84,7 @@ public abstract class AddClassToCourseView extends PopupPanel {
 				});
 				classListContainer.add(classname);
 			}
+			assignBtn.setVisible(true);
 		} else {
 			lblEmptyErrorMessage.setText("No Classes available");
 		}

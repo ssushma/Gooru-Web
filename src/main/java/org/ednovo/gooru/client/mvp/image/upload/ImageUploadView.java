@@ -153,7 +153,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	MediaUploadDo mediaUploadDo=new MediaUploadDo();
 
 	@UiField Image displayImage,displayImage1;
-	
+
 	String height=null,width=null,xVal=null,yVal=null;
 
 	/**
@@ -599,7 +599,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	}
 	@Override
 	public void uploadedImagetobeSet(CreateDo createDoObj){
-		System.out.println("createDoObj.getThumbnails().getUrl()::"+createDoObj.getUrl());
 /*		mediaUploadDo.setUrl(createDoObj.getUrl());
 		mediaUploadDo.setStatusCode(200);*/
 		if(createDoObj.getUrl() !=null && !createDoObj.getUrl().isEmpty())
@@ -617,12 +616,12 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		displayImage.setUrl(imageUrl);
 		displayImage1.setUrl(imageUrl);
 
-		hideAndDisplayAllCropButtons(true);		
+		hideAndDisplayAllCropButtons(true);
 		displayImage.setVisible(false);
 		displayImage1.setVisible(false);
-		
 
-		
+
+
 		if(aspectRatio==4.53f){
 			displayCromImagePanel.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+imageUrl+");");
 			displayCromImagePanel1.getElement().setAttribute("style","min-height: 90px;height: auto;border: 2px solid #efefef;background-image:url("+imageUrl+");");
@@ -635,7 +634,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 
 
-		
+
 		displayImage.addLoadHandler(new LoadHandler() {
 
 	        @Override
@@ -646,20 +645,20 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	    		{
 	    			displayCromImagePanel.getElement().getStyle().setBackgroundImage("");
 	    			displayCromImagePanel1.getElement().getStyle().setBackgroundImage("");
-	    			
+
 	    			displayImage.setWidth("100%");
 	    			displayImage1.setWidth("100%");
-	    			
+
 	    			displayImage.setVisible(true);
 	    			displayImage1.setVisible(true);
 	    			displayImage.setHeight("100%");
 	    			displayImage1.setHeight("100%");
-	    			
+
 	    		}
 	        }
 	    });
-		
-		
+
+
 	}
 	@Override
 	public void setImageUpload(final MediaUploadDo mediaUploadDo) {

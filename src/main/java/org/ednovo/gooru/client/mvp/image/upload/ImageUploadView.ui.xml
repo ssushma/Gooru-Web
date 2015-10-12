@@ -26,11 +26,11 @@
 			width: 410px;
 			box-sizing:content-box;
 		}
-		
+
 		.imagePopupContainer {
 			float: left;
 		}
-		
+
 		.imageUploadList {
 			min-height: 20px;
 			border-bottom: 1px solid #C1D9FF;
@@ -52,7 +52,7 @@
 		.uploadPicstureInfo {
 			margin-bottom: 10px;
 		}
-		
+
 		.imageUploadOnWeb {
 			display: none;
 		}
@@ -129,7 +129,7 @@
 			margin-bottom:110px;
 		}
 		.okButtonOnUploadGooruImages{
-            background-color:#1076bb;	
+            background-color:#1076bb;
 			background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat scroll 0 0 transparent;
 			background: -o-linear-gradient(top, #4C98CC, #1076BB);
 			background: -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC), to(#1076BB));
@@ -183,7 +183,7 @@
 		.cropImagePanel{
 			height: 300px;
 			width: 400px;
-			margin: 40px auto 0 auto;
+			margin: 20px auto 0 auto;
 			clear: both;
 			background-position: center center;
 			background-repeat: no-repeat;
@@ -201,7 +201,7 @@
 			float: right;
 			position: absolute;
 			right: 0;
-			top: -31px;	
+			top: -31px;
 		}
 		.displayImage{
 			/**
@@ -238,7 +238,7 @@
 						<g:HTMLPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel">
 							<g:Button ui:field="cropImage" styleName="{style.cropImageTxt} secondary">crop Image</g:Button>
 							<g:Image ui:field="displayImage" styleName="{style.displayImage}"></g:Image>
-						</g:HTMLPanel> 
+						</g:HTMLPanel>
 					</g:FlowPanel>
 					<g:FlowPanel styleName="{style.imageUploadMinHeight}">
 					<g:HTMLPanel ui:field="notWorkingPanel" styleName="{style.notWorkingPanel}">
@@ -260,7 +260,7 @@
 						<g:FlowPanel styleName="{style.uploadUrlContainer}">
 							<g:TextBox styleName="{style.textboxonUrl}" ui:field="imageWebUploadUrlTxtBox" />
 							<gg:BlueButtonUc styleName="{style.uploadImageButtonOnWeb}" ui:field="uploadImageButtonOnWeb" />
-							<gg:ErrorLabelUc ui:field="urlValidation"/>	
+							<gg:ErrorLabelUc ui:field="urlValidation"/>
 						</g:FlowPanel>
 						<g:FlowPanel styleName="{style.imageUploadMinHeightUrl}">
 							<g:Label ui:field="typeImageurlText"></g:Label>
@@ -269,7 +269,7 @@
 							<g:HTMLPanel styleName="{style.cropImagePanel}" ui:field="displayCromImagePanel1">
 								<g:Button ui:field="cropImage1" styleName="secondary {style.cropImageTxt}">crop Image</g:Button>
 								<g:Image ui:field="displayImage1" styleName="{style.displayImage}"></g:Image>
-							</g:HTMLPanel> 
+							</g:HTMLPanel>
 						</g:FlowPanel>
 						<g:Label styleName="{style.infoUrlUpload}" ui:field="infoUrlUploadText"/>
 						<g:FlowPanel styleName="{style.imageUploadAlign}">
@@ -298,4 +298,4 @@
 		<g:FlowPanel ui:field="imageCropFloPanel" styleName="{style.imageCropPanel}"></g:FlowPanel>
 		<gg:GlassPanelWithLoadingUc ui:field="glassPanelWithLoadingUc" />
 	</g:FlowPanel>
-</ui:UiBinder> 
+</ui:UiBinder>
