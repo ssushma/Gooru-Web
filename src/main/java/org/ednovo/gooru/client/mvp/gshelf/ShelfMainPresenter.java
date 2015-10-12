@@ -521,10 +521,12 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	@Override
 	public void getMoreListItems(int pageSize, Integer pageNumber, boolean clearShelfPanel) {
 		String typeVal=type;
-		if(type.equalsIgnoreCase(FOLDER)){
+		if(getView().getViewType().equalsIgnoreCase(FOLDER)){
 			typeVal=null;//if we are passing as null we get all the folders and collections
+			getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,typeVal,false,getUserCollectionAsyncCallback(clearShelfPanel));
 		}
-		getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,typeVal,false,getUserCollectionAsyncCallback(clearShelfPanel));
+
+		
 	}
 
 	public void createNewUnitItem(String type, TreeItem currentShelfTreeWidget) {

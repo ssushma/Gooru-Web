@@ -570,7 +570,7 @@ public class MyCollectionsListView  extends BaseViewWithHandlers<MyCollectionsLi
 		}else{
 			params.put(VIEW,"Course");
 		}
-		if(o1==null && o2==null && o3==null && id==null && !COLLECTION.equalsIgnoreCase(folderObj.getType())){
+		if(o1==null && o2==null && o3==null && id==null && (!COLLECTION.equalsIgnoreCase(folderObj.getType()) && !ASSESSMENT.equalsIgnoreCase(folderObj.getType()) && !ASSESSMENT_URL.equalsIgnoreCase(folderObj.getType()))){
 			params.put(O1_LEVEL,folderObj.getGooruOid());
 		} else if(o1!=null && o2==null && o3==null && id==null && !COLLECTION.equalsIgnoreCase(folderObj.getType())){
 			params.put(O1_LEVEL, o1);

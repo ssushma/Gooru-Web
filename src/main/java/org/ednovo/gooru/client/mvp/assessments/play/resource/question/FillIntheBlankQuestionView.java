@@ -235,7 +235,7 @@ public class FillIntheBlankQuestionView extends Composite implements ClientConst
 						QuestionAnswerDo questionAnswerDo=answersIterator.next();
 						String 	questionAnswerDoAnswerText	=	questionAnswerDo.getAnswerText()!=null?questionAnswerDo.getAnswerText().trim():"";
 					  	String 	textBoxAnswerDoAnswerText	=	textBoxArray.get(i).getText().trim();
-					  	questionAnswerDoAnswerText 	=questionAnswerDoAnswerText.replaceAll("<[^>]*>", "");
+					  	questionAnswerDoAnswerText 	=questionAnswerDoAnswerText.replaceAll("<[^>]*>", "").replaceAll("&lt;", "<").replaceAll("&gt;", ">");
 					  	questionAnswerDoAnswerText = StringUtil.replaceSpecial(questionAnswerDoAnswerText);
 					  	attemptedAnswersList.add(textBoxAnswerDoAnswerText);
 					  	attemptAnswerIds.add(questionAnswerDo.getAnswerId());

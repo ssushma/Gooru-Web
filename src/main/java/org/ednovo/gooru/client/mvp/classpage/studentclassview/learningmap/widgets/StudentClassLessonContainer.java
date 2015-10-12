@@ -103,9 +103,7 @@ public class StudentClassLessonContainer extends Composite {
 				styleName = "orgBorder ";
 			}
 			if(!page.equalsIgnoreCase(UrlNavigationTokens.TRUE)) {
-				if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("Viewed")) {
-					styleName = styleName + "empty-plan-collection-selected";
-				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
+				if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreNotMet")) {
 					styleName = styleName + "blueselected";
 				} else if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("ScoreMet")) {
 					styleName = styleName + "selected";

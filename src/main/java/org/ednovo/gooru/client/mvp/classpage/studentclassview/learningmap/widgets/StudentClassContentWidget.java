@@ -8,11 +8,12 @@ import org.ednovo.gooru.application.client.SimpleAsyncCallback;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.UrlNavigationTokens;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -34,7 +35,8 @@ public class StudentClassContentWidget extends Composite {
 
 	@UiField HTMLEventPanel contentPanel;
 	@UiField Image imagePanel;
-
+	@UiField SectionTag spanTxtToolTip;
+	
 	private final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 
 	private final String DEFAULT_ASSESSMENT_IMAGE = "../images/default-assessment-image -160x120.png";
@@ -52,8 +54,11 @@ public class StudentClassContentWidget extends Composite {
 	public StudentClassContentWidget(final PlanProgressDo planDo, String contentStyle, String lessonId, String status, String userId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		String contentName = planDo.getTitle();
-		contentPanel.addMouseOverHandler(new MouseOverShowClassCodeToolTip(contentName));
-		contentPanel.addMouseOutHandler(new MouseOutHideToolTip());
+		GlobalToolTip golbalToolTip = new GlobalToolTip(contentName);
+		golbalToolTip.setStyleName("toolTipPopupContainerBlock");
+		spanTxtToolTip.add(golbalToolTip);
+		spanTxtToolTip.getElement().getStyle().setTop(70, Unit.PX);
+		spanTxtToolTip.getElement().getStyle().setLeft(-50, Unit.PX);
 		if(!contentStyle.isEmpty()) {
 			contentPanel.addStyleName(contentStyle);
 		}
@@ -93,6 +98,7 @@ public class StudentClassContentWidget extends Composite {
 			imagePanel.setUrl(DEFAULT_ASSESSMENT_IMAGE);
 		} else {
 			imagePanel.setUrl(DEFAULT_COLLECTION_IMAGE);
+			imagePanel.setStyleName("empty-plan-collection-selected");
 		}
 	}
 

@@ -1,7 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:span="urn:import:org.ednovo.gooru.client.ui"
+    xmlns:htmltags="urn:import:org.ednovo.gooru.client.htmltags">
 	<ui:style src="" />
-	<span:HTMLEventPanel styleName="cursorPointer divcontainer" ui:field="contentPanel">
+	<span:HTMLEventPanel styleName="cursorPointer divcontainer hasTooltip" ui:field="contentPanel">
 	    <g:Image ui:field="imagePanel"/>
+	    <htmltags:SectionTag ui:field="spanTxtToolTip"/>
 	</span:HTMLEventPanel>
 </ui:UiBinder>
