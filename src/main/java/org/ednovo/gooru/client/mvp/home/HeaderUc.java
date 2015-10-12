@@ -521,7 +521,7 @@ public class HeaderUc extends Composite
 		editSearchBtn.getElement().setAttribute("style","color:gray;");
 		editSearchBtn.setText(i18n.GL0176());
 		editSearchBtn.setEnabled(false);
-		
+
 		editSearchBtn.setStyleName("secondary");
 		editSearchBtn.getElement().setAttribute("alt", i18n.GL0176());
 		editSearchBtn.getElement().setAttribute("title", i18n.GL0176());
@@ -1459,7 +1459,6 @@ public class HeaderUc extends Composite
 							{
 							if(getEditSearchTxtBox().getText().length()>2)
 							{
-								System.out.println("iuam here");
 								editSearchBtn.setEnabled(true);
 								editSearchBtn.setStyleName("primary");
 								editSearchBtn.getElement().getStyle().clearColor();

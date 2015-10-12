@@ -72,19 +72,19 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	String sessionId=null;
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	int count=0;
 
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
-	
+
 	ArrayList<UserDataDo> printDataDo=new ArrayList<UserDataDo>();
-	
+
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 
 	boolean isSession = true;
-	
+
 	boolean isCollection = false;
-	
+
 	public AssessmentProgressReportChildPresenter(IsAssessmentProgressReportView childView) {
 		super(childView);
 	}
@@ -143,13 +143,11 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			classObj.setLessonId(lessonId);
 			classObj.setSessionId(sessionId);
 			classObj.setCollection(isCollection());
-			
+
 			AppClientFactory.getInjector().getAnalyticsService().getCollectionMetaDataByUserAndSession(classObj,collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 				@Override
 				public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-					System.out.println("1");
 					if(isCollection()) {
-						System.out.println("2");
 						setAnalyticsData(result, collectionId, classId, userId, sessionId, printData);
 					} else {
 						if(result!=null && result.size()!=0){
@@ -172,7 +170,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 						}
 					}
 				}
-				
+
 				@Override
 				public void onFailure(Throwable caught) {
 					getView().errorMsg();
@@ -182,9 +180,8 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			getView().errorMsg();
 		}
 	}
-	
+
 	private void setAnalyticsData(ArrayList<CollectionSummaryMetaDataDo> result, final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
-		System.out.println("result "+result);
 		if(result!=null && result.size()!=0){
 			getView().loaderVisibility(false);
 			getView().errorPanelData(false, true);
@@ -204,7 +201,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			getView().errorMsg();
 		}
 	}
-	
+
 	/*analytics*/
 
 	public void setIndividualData(final String collectionId, final String classpageId,final String userId, final String sessionId,final String pathwayId,final boolean isSummary,final PrintUserDataDO printUserDataDO, final String type) {
@@ -237,7 +234,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			}
 		});
 	}
-	
+
 	public void setIndividualData(final ArrayList<UserDataDo> result, final String type) {
 		GWT.runAsync(new SimpleRunAsyncCallback() {
 
@@ -327,7 +324,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 			}
 		});
 	}
-	
+
 	public void setSessionId(String sessionId){
 		this.sessionId=sessionId;
 	}
@@ -372,7 +369,7 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 		});
 
 	}
-	
+
 	public boolean isSession() {
 		return isSession;
 	}
@@ -397,5 +394,5 @@ public class AssessmentProgressReportChildPresenter extends ChildPresenter<Asses
 	public void setCollection(boolean isCollection) {
 		this.isCollection = isCollection;
 	}
-	
+
 }
