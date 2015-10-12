@@ -250,20 +250,26 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 	}
 
 	public void setData(FolderDo folderObj, String type) {
-		getView().setCouseData(folderObj,type);
-		if(!getViewType().equalsIgnoreCase(FOLDER)){
-			callCourseInfoTaxonomy();
-		}
-		String view=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view",null);	
-		String idVal=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("id",null);
+/*	
+
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);	
+		String idVal=AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		System.out.println("idVal::"+idVal);
 		if(view!=null){
-			if(idVal!=null){
-		/*	if(folderObj!=null && folderObj.getGooruOid()!=null)
-			{*/
-			getCollectionDo(idVal);
-			/*}*/
+			if(idVal!=null){*/
+			if(folderObj!=null && folderObj.getGooruOid()!=null)
+			{
+			getCollectionDo(folderObj.getGooruOid());
+			}			
+			else
+			{
+				System.out.println("type::"+type);
+				getView().setCouseData(folderObj,type);
+				if(!getViewType().equalsIgnoreCase(FOLDER)){
+					callCourseInfoTaxonomy();
+				}
 			}
-		}
+
 	}
 	@Override
 	public void showStandardsPopup(String standardVal, String standardsDesc,List<LiPanelWithClose> collectionLiPanelWithCloseArray) {
@@ -387,6 +393,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					folderDoObj.setTitle(result.getTitle());
 					folderDoObj.setLanguageObjective(result.getLanguageObjective());
 					folderDoObj.setAudience(result.getAudience());
+					System.out.println("result.getCollectionType()::::"+result.getCollectionType());
 					folderDoObj.setType(result.getCollectionType());
 					folderDoObj.setDescription(result.getDescription());
 					folderDoObj.setDepthOfKnowledge(result.getDepthOfKnowledges());
