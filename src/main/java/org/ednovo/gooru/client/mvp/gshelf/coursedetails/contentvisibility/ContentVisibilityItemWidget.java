@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.mvp.gshelf.coursedetails.EnablePublishButtonEvent;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.HighlightContentSpanEvent;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.HighlightContentSpanHandler;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -13,10 +14,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
@@ -110,6 +107,8 @@ public class ContentVisibilityItemWidget extends Composite {
 					  }
 				  }
 			}
+			addParentSpanDots(contentType);
+			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
 		}
 	}
 	
@@ -125,6 +124,7 @@ public class ContentVisibilityItemWidget extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			setSpanDot(contentType, isVisible);
+			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
 		}
 	}
 	
