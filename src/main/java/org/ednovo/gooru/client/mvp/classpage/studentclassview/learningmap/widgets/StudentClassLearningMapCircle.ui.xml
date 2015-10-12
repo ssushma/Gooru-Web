@@ -1,8 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
-    xmlns:span="urn:import:org.ednovo.gooru.client.ui">
+    xmlns:span="urn:import:org.ednovo.gooru.client.ui" xmlns:htmltags="urn:import:org.ednovo.gooru.client.htmltags">
 	<ui:style src="" />
-	<span:HTMLEventPanel ui:field="circleField" styleName="cursorPointer">
+	<span:HTMLEventPanel ui:field="circleField" styleName="circle-container cursorPointer hasTooltip">
 	    <uc:SpanPanel ui:field="spanTxt"></uc:SpanPanel>
+	    <htmltags:SectionTag ui:field="spanTxtToolTip"/>
 	</span:HTMLEventPanel>
 </ui:UiBinder>
