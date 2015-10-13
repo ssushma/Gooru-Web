@@ -654,6 +654,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					userFollowDo.setGooruUid(resultObj.getString("gooruUid"));
 
 					userFollowDo.setUsername(resultObj.getString("username"));
+					userFollowDo.setShowProfilePage(resultObj.getBoolean("showProfilePage"));
 					userFollowDo.setProfileImageUrl(resultObj.getString("profileImageUrl"));
 
 					JSONObject summaryObj = followingList.getJSONObject(i).getJSONObject("summary");
@@ -661,7 +662,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					userSummaryDo.setFollowing(summaryObj.getInt("following"));
 					userSummaryDo.setFollowers(summaryObj.getInt("followers"));
 					userFollowDo.setSummary(userSummaryDo);
-					
+
 					if(followingList.getJSONObject(i).has("customFields"))
 					{
 					ArrayList<CustomFieldDo> customFields = JsonDeserializer.deserialize( followingList.getJSONObject(i).getJSONArray("customFields").toString(), new TypeReference<ArrayList<CustomFieldDo>>() {});

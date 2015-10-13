@@ -1,6 +1,6 @@
 package org.ednovo.gooru.application.shared.model.user;
 
-import com.google.gwt.user.client.rpc.IsSerializable; 
+import com.google.gwt.user.client.rpc.IsSerializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +15,9 @@ public class UserFollowDo implements IsSerializable{
 	private String profileImageUrl;
 	private UserSummaryDo summary;
 	private int totalHintCount;
+	private Boolean showProfilePage;
 	private ArrayList<CustomFieldDo> customFields;
-	
+
 	public UserFollowDo(){}
 
 	public String getGooruUid() {
@@ -59,18 +60,26 @@ public class UserFollowDo implements IsSerializable{
 		this.totalHintCount = totalHintCount;
 	}
 
-	/** 
+	/**
 	 * This method is to get the customFields
 	 */
 	public List<CustomFieldDo> getCustomFields() {
 		return customFields;
 	}
 
-	/** 
+	/**
 	 * This method is to set the customFields
 	 */
 	public void setCustomFields(ArrayList<CustomFieldDo> customFields) {
 		this.customFields = customFields;
 	}
-	
+
+	public Boolean getShowProfilePage() {
+		return showProfilePage;
+	}
+
+	public void setShowProfilePage(Boolean showProfilePage) {
+		this.showProfilePage = showProfilePage;
+	}
+
 }
