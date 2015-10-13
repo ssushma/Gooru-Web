@@ -169,7 +169,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					}else{
 						getView().disableAndEnableBreadCums(true);
 					}
-					getView().enableAndHideTabs(false);
+//					getView().enableAndHideTabs(false);
 					if(folderObj!=null && folderObj.getGooruOid()!=null){
 						getView().disableButtons(true);
 					}else{
