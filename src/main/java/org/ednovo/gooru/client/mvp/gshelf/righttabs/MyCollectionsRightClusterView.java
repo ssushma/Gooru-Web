@@ -311,18 +311,21 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	    	lnkPreview.setVisible(false);
     	}else{
 	    	myCollDelLbl.setVisible(true);
-	    	moveLbl.setVisible(true);
 	    	copyLbl.setVisible(true);
 	        if (COURSE.equalsIgnoreCase(currentTypeView)){
 	        	lnkPreview.setVisible(false);
+	        	moveLbl.setVisible(false);
 	        	lnkPreview.getElement().getStyle().clearFloat();
 	        }else if (UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
 	        	lnkPreview.setVisible(false);
+	        	moveLbl.setVisible(true);
 	        	lnkPreview.getElement().getStyle().clearFloat();
 	        }else if (ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
+	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
 	        	lnkPreview.getElement().getStyle().setFloat(Float.RIGHT);
 	        }else if (COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
+	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
 	        	lnkPreview.getElement().getStyle().clearFloat();
 	        }
@@ -394,11 +397,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             lnkshare.setVisible(isVisible);
         }
 
+        if(COURSE.equalsIgnoreCase(currentTypeView) || UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
+            moveLbl.setVisible(false);
+        }else{
+        	moveLbl.setVisible(isVisible);
+        }
+
         if(ASSESSMENT_URL.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
             lnkPreview.setVisible(isVisible);
         }
 
-        moveLbl.setVisible(isVisible);
         copyLbl.setVisible(isVisible);
         myCollDelLbl.setVisible(isVisible);
     }
