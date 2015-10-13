@@ -397,7 +397,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             lnkshare.setVisible(isVisible);
         }
 
-        if(COURSE.equalsIgnoreCase(currentTypeView)){
+        if(COURSE.equalsIgnoreCase(currentTypeView) || UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
             moveLbl.setVisible(false);
         }else{
         	moveLbl.setVisible(isVisible);
