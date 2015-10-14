@@ -392,11 +392,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     }
     @Override
     public void enableAndHideTabs(boolean isVisible){
-        lnkContent.setVisible(isVisible);
-        if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
-            lnkshare.setVisible(isVisible);
-        }
-
         if(COURSE.equalsIgnoreCase(currentTypeView) || UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
             moveLbl.setVisible(false);
         }else{
