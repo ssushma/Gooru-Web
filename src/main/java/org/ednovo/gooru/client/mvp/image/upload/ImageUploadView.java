@@ -425,8 +425,20 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		displayImage.setUrl("");
 		displayImage.setVisible(isTrue);
 		cropImage.setVisible(isTrue);
-		onOkButton.setVisible(isTrue);
-		onOkButton1.setVisible(!isTrue);
+		if(isTrue)
+		{
+		onOkButton.setStyleName("secondary");
+		onOkButton.setEnabled(isTrue);
+		onOkButton1.setStyleName("primary");
+		onOkButton1.setEnabled(!isTrue);
+		}
+		else
+		{
+		onOkButton.setStyleName("primary");
+		onOkButton.setEnabled(isTrue);
+		onOkButton1.setStyleName("secondary");
+		onOkButton1.setEnabled(!isTrue);	
+		}
 		//displayCromImagePanel.getElement().getStyle().clearBackgroundImage();
 
 		displayImage1.setUrl("");
@@ -442,8 +454,22 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		displayImage.setVisible(isTrue);
 		cropImage.setVisible(isTrue);
 		displayImage1.setVisible(isTrue);
-		onOkButton.setVisible(isTrue);
-		onOkButton1.setVisible(isTrue);
+		if(isTrue)
+		{
+		onOkButton.setStyleName("primary");
+		onOkButton.setEnabled(isTrue);
+		onOkButton1.setStyleName("primary");
+		onOkButton1.setEnabled(isTrue);
+		}
+		else
+		{
+		onOkButton.setStyleName("secondary");
+		onOkButton.setEnabled(isTrue);
+		onOkButton1.setStyleName("secondary");
+		onOkButton1.setEnabled(isTrue);	
+		}
+/*		onOkButton.setVisible(isTrue);
+		onOkButton1.setVisible(isTrue);*/
 		cropImage1.setVisible(isTrue);
 		setAndClearBorder(displayCromImagePanel.getElement(), isTrue);
 		setAndClearBorder(displayCromImagePanel1.getElement(), isTrue);
