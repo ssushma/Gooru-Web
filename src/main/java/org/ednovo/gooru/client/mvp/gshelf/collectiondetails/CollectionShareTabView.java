@@ -85,12 +85,11 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	}
 
 	@UiField TextArea shareTextArea;
-	@UiField Anchor bitlyLink,embedLink,contentRedirectionLbl;
+	@UiField Anchor bitlyLink,embedLink;
 	@UiField HTMLEventPanel privateShareFloPanel,publicShareFloPanel,linkShareFloPanel;
-	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel,classCollectionShareMsg;
+	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel;
 	@UiField Button rbPublic;
 	@UiField Label lblPublishPending,lblPublish,shareLbl,visiblityLbl;
-	@UiField InlineLabel supportMsg;
 	
 	CollectionDo collectionDo;
 
@@ -169,12 +168,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		String message = i18n.GL3594();
 		if(!"collection".equalsIgnoreCase(folderDo.getType())) {
 			message = message.replaceAll(i18n.GL2001(), i18n.GL3007().toLowerCase());
-		}
-		if(AppClientFactory.getPlaceManager().getRequestParameter("o1", "").isEmpty()) {
-			classCollectionShareMsg.setVisible(false);
-		} else {
-			classCollectionShareMsg.setVisible(true);
-			supportMsg.setText(message);
 		}
 		String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
 		getUserType();
@@ -573,14 +566,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	@Override
 	public HTMLPanel getCollaboratorPanel() {
 		return collaboratorPanel;
-	}
-
-	@UiHandler("contentRedirectionLbl")
-	public void redirectContentVisibility(ClickEvent event){
-		Map<String,String> params = new HashMap<String,String>();
-		params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("o1", ""));
-		params.put("share", "true");
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params,true);
 	}
 
 }
