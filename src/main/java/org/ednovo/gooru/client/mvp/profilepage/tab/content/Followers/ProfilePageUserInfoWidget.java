@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -52,7 +52,7 @@ public class ProfilePageUserInfoWidget extends Composite{
 	@UiField Image profileThumbnailImage;
 	@UiField Label userNameLabel,userCollections,userFollowDetails;
 	@UiField HTMLPanel authorPanel;
-	
+
 	UserFollowDo userFollowDo=new UserFollowDo();
 	String tab;
 	public ProfilePageUserInfoWidget(UserFollowDo userFollowDo,String tab) {
@@ -74,18 +74,18 @@ public class ProfilePageUserInfoWidget extends Composite{
 			setView(userFollowDo);
 		}
 	}
-	
+
 	public void	setView(UserFollowDo userFollowDo){
 		profileThumbnailImage.setUrl(userFollowDo.getProfileImageUrl());
 		profileThumbnailImage.addErrorHandler(new ErrorHandler() {
-			
+
 			@Override
 			public void onError(ErrorEvent event) {
 				profileThumbnailImage.setUrl("images/settings/setting-user-image.png");
-				
+
 			}
 		});
-		
+
 		//userNameLabel.setText(userFollowDo.getUsername());
 		userNameLabel.getElement().setId(userFollowDo.getGooruUid());
 
@@ -97,27 +97,27 @@ public class ProfilePageUserInfoWidget extends Composite{
 		userFollowDetails.setText(userFollowDo.getSummary().getFollowers()+(userFollowDo.getSummary().getFollowers()==1?" Follower":" Followers")+" | " +userFollowDo.getSummary().getFollowing()+" Following");
 		userFollowDetails.getElement().setAttribute("alt",userFollowDo.getSummary().getFollowers()+(userFollowDo.getSummary().getFollowers()==1?" Follower":" Followers")+" | " +userFollowDo.getSummary().getFollowing()+" Following");
 		userFollowDetails.getElement().setAttribute("title",userFollowDo.getSummary().getFollowers()+(userFollowDo.getSummary().getFollowers()==1?" Follower":" Followers")+" | " +userFollowDo.getSummary().getFollowing()+" Following");
-		
+
 		String gooruUid = userNameLabel.getElement().getId();
 		Anchor anchor = new Anchor();
 		String userName=userFollowDo.getUsername();
-		
+
 		String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+userName;
 		anchor.setHref(token);
 		anchor.setText(userName);
-		anchor.getElement().setAttribute("style","font-size: 18px !important");		
+		anchor.getElement().setAttribute("style","font-size: 18px !important");
 		anchor.setTarget("_blank");
 		userNameLabel.setText("");
 		userNameLabel.getElement().setAttribute("alt","");
 		userNameLabel.getElement().setAttribute("title","");
 //		boolean isEnabled =  userFollowDo.getCustomFields() != null && userFollowDo.getCustomFields().get(0).getOptionalValue() != null && userFollowDo.getCustomFields().get(0).getOptionalValue().equalsIgnoreCase("true") ? true : false;
-		boolean isEnabled = false;
-		if(userFollowDo.getCustomFields() != null){
-			for(int i=0;i<userFollowDo.getCustomFields().size(); i++)
-			if(userFollowDo.getCustomFields().get(i).getOptionalKey().equalsIgnoreCase("show_profile_page")){
-				 isEnabled = userFollowDo.getCustomFields().get(i).getOptionalValue().equalsIgnoreCase("true") ? true : false;
-			}
-		}
+		boolean isEnabled = userFollowDo.getShowProfilePage() != null ? userFollowDo.getShowProfilePage() : false;
+//		if(userFollowDo.getCustomFields() != null){
+//			for(int i=0;i<userFollowDo.getCustomFields().size(); i++)
+//			if(userFollowDo.getCustomFields().get(i).getOptionalKey().equalsIgnoreCase("show_profile_page")){
+//				 isEnabled = userFollowDo.getCustomFields().get(i).getOptionalValue().equalsIgnoreCase("true") ? true : false;
+//			}
+//		}
 		if (isEnabled){
 			userNameLabel.getElement().appendChild(anchor.getElement());
 		}else{
@@ -126,8 +126,8 @@ public class ProfilePageUserInfoWidget extends Composite{
 			userNameLabel.getElement().setAttribute("title",userFollowDo.getUsername());
 			userNameLabel.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		}
-			
-		
+
+
 	}
 	public void clearAll()
 	{
@@ -142,5 +142,5 @@ public class ProfilePageUserInfoWidget extends Composite{
 		userFollowDetails.getElement().setAttribute("alt","");
 		userFollowDetails.getElement().setAttribute("title","");
 	}
-	
+
 }
