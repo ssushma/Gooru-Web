@@ -108,7 +108,9 @@ public class ContentVisibilityItemWidget extends Composite {
 				  }
 			}
 			addParentSpanDots(contentType);
-			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+			if(!spanDot.getStyleName().contains("tick")) {
+				AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+			}
 		}
 	}
 	
@@ -124,7 +126,9 @@ public class ContentVisibilityItemWidget extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			setSpanDot(contentType, isVisible);
-			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+			if(!spanDot.getStyleName().contains("tick")) {
+				AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+			}
 		}
 	}
 	

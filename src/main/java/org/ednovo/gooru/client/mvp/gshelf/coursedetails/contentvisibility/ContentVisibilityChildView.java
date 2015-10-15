@@ -192,26 +192,27 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		private class ContentVisibilityDataHandler implements ClickHandler {
 			@Override
 			public void onClick(ClickEvent event) {
-				publishPopup = new PublishConfirmationPopup() {
-					@Override
-					public void onClickPositiveButton(ClickEvent event) {
-						getPresenter().updateContentVisibilityData(classId, getContentData());
-					}
-					@Override
-					public void onClickNegitiveButton(ClickEvent event) {
-						hide();
-						Window.enableScrolling(true);
-					}
-					
-				};
-				publishPopup.getElement().getStyle().setZIndex(9999999);
-				publishPopup.setPopupTitle(i18n.GL3589());
-				publishPopup.setH3Data(i18n.GL3590(),i18n.GL3591());
-				publishPopup.setPositiveButtonText(i18n.GL1921());
-				publishPopup.setNegitiveButtonText(i18n.GL0142());
-				publishPopup.setPleaseWaitText(i18n.GL1924());
-				publishPopup.show();
-				publishPopup.center();
+				if(!btnPublish.getStyleName().contains("disabled")) {
+					publishPopup = new PublishConfirmationPopup() {
+						@Override
+						public void onClickPositiveButton(ClickEvent event) {
+							getPresenter().updateContentVisibilityData(classId, getContentData());
+						}
+						@Override
+						public void onClickNegitiveButton(ClickEvent event) {
+							hide();
+							Window.enableScrolling(true);
+						}
+					};
+					publishPopup.getElement().getStyle().setZIndex(9999999);
+					publishPopup.setPopupTitle(i18n.GL3589());
+					publishPopup.setH3Data(i18n.GL3590(),i18n.GL3591());
+					publishPopup.setPositiveButtonText(i18n.GL1921());
+					publishPopup.setNegitiveButtonText(i18n.GL0142());
+					publishPopup.setPleaseWaitText(i18n.GL1924());
+					publishPopup.show();
+					publishPopup.center();
+				}
 			}
 		}
 		
@@ -219,6 +220,7 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		public void closePublishPopup(ArrayList<PlanProgressDo> data) {
 			Window.enableScrolling(true);
 			if(publishPopup!=null){
+				enableDeleteBtn(true);
 				updateContentData(data);
 				publishPopup.hide();
 			}
@@ -271,7 +273,7 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				  Widget unitWidget = unitWidgets.next();
 				  if (unitWidget instanceof ContentVisibilityItemWidget) {
 					  ContentVisibilityItemWidget unitWidgetItem = (ContentVisibilityItemWidget)unitWidget;
-					  if(unitWidgetItem.getSpanDot().getStyleName().contains(CssTokens.GREEN_STYLE)) {
+					  if(unitWidgetItem.getSpanDot().getStyleName().contains(CssTokens.GREEN_STYLE)&&!unitWidgetItem.getSpanDot().getStyleName().contains("tick")) {
 							PlanProgressDo unitPlan = new PlanProgressDo();
 							unitPlan.setCollectionId(unitWidgetItem.getCollectionId());
 							unitPlan.setVisibility(true);
@@ -282,7 +284,7 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 						  Widget lessonWidget = lessonWidgets.next();
 						  if (lessonWidget instanceof ContentVisibilityItemWidget) {
 							  ContentVisibilityItemWidget lessonWidgetItem = (ContentVisibilityItemWidget)lessonWidget;
-							  if(lessonWidgetItem.getSpanDot().getStyleName().contains(CssTokens.GREEN_STYLE)) {
+							  if(lessonWidgetItem.getSpanDot().getStyleName().contains(CssTokens.GREEN_STYLE)&&!lessonWidgetItem.getSpanDot().getStyleName().contains("tick")) {
 									PlanProgressDo lessonPlan = new PlanProgressDo();
 									lessonPlan.setCollectionId(lessonWidgetItem.getCollectionId());
 									lessonPlan.setVisibility(true);
@@ -293,7 +295,7 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 								  Widget collectionWidget = collectionWidgets.next();
 								  if (collectionWidget instanceof ContentVisibilityItemWidget) {
 									  ContentVisibilityItemWidget collectionWidgetItem = (ContentVisibilityItemWidget)collectionWidget;
-									  if(collectionWidgetItem.getSpanDot().getStyleName().contains(CssTokens.GREEN_STYLE)) {
+									  if(collectionWidgetItem.getSpanDot().getStyleName().contains(CssTokens.GREEN_STYLE)&&!collectionWidgetItem.getSpanDot().getStyleName().contains("tick")) {
 										  PlanProgressDo collectionPlan = new PlanProgressDo();
 										  collectionPlan.setCollectionId(collectionWidgetItem.getCollectionId());
 										  collectionPlan.setVisibility(true);
