@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
@@ -36,18 +37,26 @@ import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfTreeWidget;
 import org.ednovo.gooru.client.mvp.gshelf.util.FolderInfoWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.DeleteContentPopup;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -57,6 +66,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
@@ -71,9 +81,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 
     @UiField HTMLPanel mainPanel,pnlSlotInnerContent,/*toggleButton,deletePnl,*/glassPanelDiv;
 
-    @UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview/*,lnkDeleteButton*/;
+    @UiField Anchor lnkInfo,lnkContent,lnkshare,lnkPreview,lnkPublish/*,lnkDeleteButton*/;
     //@UiField HTMLEventPanel /*popupPanelDropDwn,*/copyPopupPanel;
-    @UiField HTMLEventPanel copyLbl,moveLbl,myCollDelLbl;
+    @UiField HTMLEventPanel copyLbl,moveLbl,myCollDelLbl,tootltipContainer;
 
     @UiField FlowPanel pnlBreadCrumbMain;
 
@@ -111,6 +121,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     private boolean isMoveSelected= false;
 
     private boolean isCollaborator= false;
+	private HandlerRegistration handlerRegistration=null;
+	private HandlerRegistration handlerRegistrationHover=null;
+	
+	AddCollectionToClassView addtoClassPopup = null;
 
 
     public MyCollectionsRightClusterView() {
@@ -125,19 +139,69 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         lnkContent.addClickHandler(new TabClickHandler(2,lnkContent));
         lnkshare.addClickHandler(new TabClickHandler(3,lnkshare));
         lnkPreview.addClickHandler(new PreviewClickHandler());
+        handlerRegistration = lnkPublish.addClickHandler(new PublishClickHandler());
+      
 
         copyLbl.addClickHandler(new onCopyClickHandler());
         moveLbl.addClickHandler(new onMoveClickHandler());
         myCollDelLbl.addClickHandler(new DeleteContentData());
 
         lnkPreview.setVisible(false);
+        lnkPublish.setVisible(false);
+        lnkshare.setText(i18n.GL0536());
         moveLbl.setVisible(false);
         copyLbl.setVisible(false);
         myCollDelLbl.setVisible(false);
-
+        
+        GlobalToolTip gblTlp = new GlobalToolTip(StringUtil.generateMessage(i18n.GL3601(),""),"here",true);
+        gblTlp.getLinkLbl().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// here
+				tootltipContainer.setVisible(false);
+				if(getUiHandlers().getCurrentTreeItem().getParentItem()!=null && getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem()!=null && getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem().getParentItem()!=null)
+				{
+				TreeItem shelfTreeWidget = getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem().getParentItem();
+				TreeItem unitshelfTreeWidget = getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem();
+				TreeItem lessonshelfTreeWidget = getUiHandlers().getCurrentTreeItem().getParentItem();
+				TreeItem oldshelfTreeWidget = getUiHandlers().getCurrentTreeItem();				
+				ShelfTreeWidget widget = (ShelfTreeWidget)shelfTreeWidget.getWidget();
+				ShelfTreeWidget fromWidget = (ShelfTreeWidget) oldshelfTreeWidget.getWidget();
+				List<FolderDo> folderListDoChild=new ArrayList<>();				
+				int childWidgetsCount=shelfTreeWidget.getChildCount();
+				for (int i = 0; i < childWidgetsCount; i++) {
+					ShelfTreeWidget widget1 = (ShelfTreeWidget)shelfTreeWidget.getChild(i).getWidget();
+					if(widget1.getCollectionDo()!=null){
+						folderListDoChild.add(widget1.getCollectionDo());
+					}
+				}
+				unitshelfTreeWidget.removeItems();
+				lessonshelfTreeWidget.removeItems();				
+				getUiHandlers().getShelfMainPresenter().setBreadCrumbs(widget.getUrlParams());
+				getUiHandlers().getShelfMainPresenter().setFolderActiveStatus();			
+				getUiHandlers().getShelfMainPresenter().updateTitleOfTreeWidget(widget.getFolderDo(),true,shelfTreeWidget);
+				getUiHandlers().getShelfMainPresenter().setRightPanelData(widget.getFolderDo(), COURSE, folderListDoChild);
+				
+				fromWidget.setActiveStyle(false);
+				fromWidget.setFolderOpenedStatus(false);
+				widget.setActiveStyle(true);
+				widget.setFolderOpenedStatus(false);
+				widget.getTitleFocPanel().addStyleName("course");				
+				getUiHandlers().getShelfMainPresenter().getOrganizeRootPnl().setStyleName("active");
+				widget.getTitleFocPanel().removeStyleName("open");				
+				shelfTreeWidget.removeItems();				
+				shelfTreeWidget.setState(false);				
+				widget.openFolderInShelfFromCourse(widget.getFolderDo());
+				
+				getUiHandlers().setTabItems(3, COURSE, widget.getFolderDo());
+				}
+			}
+		});
+        tootltipContainer.add(gblTlp);
+        tootltipContainer.setVisible(false);
         copyLbl.setTitle(i18n.GL0827());
-        moveLbl.setTitle(i18n.GL1261());
-
+        moveLbl.setTitle(i18n.GL1261());   
         glassPanelDiv.setVisible(false);
     }
     public void setIds(){
@@ -147,6 +211,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         lnkContent.getElement().setId("lnkContent");
         lnkshare.getElement().setId("lnkshare");
         pnlBreadCrumbMain.getElement().setId("pnlBreadCrumbMain");
+
     }
     /**
      * This inner class will handle the click event on the info,content and share tab.
@@ -291,48 +356,130 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         }
     }
     @Override
-    public void setCurrentTypeView(String currentTypeView) {
+    public void setCurrentTypeView(String currentTypeView,String o1Course) {
         this.currentTypeView =currentTypeView;
 //		enableAndHideTabs(true);
 //		enableOrHidePreviewBtn();
 //		enableOrHideShareTab();
-        enableTabItems();
+        enableTabItems(o1Course);
         enableActionButtons();
     }
     private void enableActionButtons(){
-    	String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1", null);
-    	String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2", null);
-    	String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3", null);
-    	String id = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+    	String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
     	if (currentTypeView == null) {
     		myCollDelLbl.setVisible(false);
 	    	moveLbl.setVisible(false);
 	    	copyLbl.setVisible(false);
 	    	lnkPreview.setVisible(false);
+	    	lnkPublish.setVisible(false);
+	    	lnkshare.setText(i18n.GL0536());
     	}else{
 	    	myCollDelLbl.setVisible(true);
 	    	copyLbl.setVisible(true);
 	        if (COURSE.equalsIgnoreCase(currentTypeView)){
 	        	lnkPreview.setVisible(false);
+		    	lnkPublish.setVisible(false);
+		    	lnkshare.setText(i18n.GL3602());
 	        	moveLbl.setVisible(false);
 	        	lnkPreview.getElement().getStyle().clearFloat();
 	        }else if (UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
 	        	lnkPreview.setVisible(false);
+	        	lnkPublish.setVisible(false);
+	        	lnkshare.setText(i18n.GL0536());
 	        	moveLbl.setVisible(true);
 	        	lnkPreview.getElement().getStyle().clearFloat();
 	        }else if (ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
 	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
+	            if(view==null || view.equalsIgnoreCase("course"))
+                {
+	        	lnkPublish.setVisible(true);
+                }
+	            else
+	            {
+	            lnkPublish.setVisible(false);	
+	            }
 	        	lnkPreview.getElement().getStyle().setFloat(Float.RIGHT);
 	        }else if (COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
 	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
 	        	lnkPreview.getElement().getStyle().clearFloat();
+	        	if(view==null || view.equalsIgnoreCase("course"))
+                {
+	        	lnkPublish.setVisible(true);
+	            }
+	        	else
+	        	{
+	        	lnkPublish.setVisible(false);
+	        	}
 	        }
     	}
     }
 
-    private void enableTabItems() {
+    private void enableTabItems(String o1Course) {
+    	String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+    	if((o1Course!=null && !o1Course.isEmpty()) && (view==null || view.equalsIgnoreCase("course")))
+    	{
+    	  	AppClientFactory.getInjector().getfolderService().getClassesAssociatedWithCourse(o1Course, new SimpleAsyncCallback<Integer>() {
+			@Override
+			public void onSuccess(Integer result) {
+				if(result>0){
+					 lnkPublish.setEnabled(true);
+			        lnkPublish.getElement().getStyle().setColor("#1076bb");
+			        
+			     
+			        if(handlerRegistrationHover!=null){
+			        	handlerRegistrationHover.removeHandler();
+					}
+			        
+				}else{
+				     lnkPublish.getElement().getStyle().setColor("#ddd");
+				     lnkPublish.setEnabled(false);
+				     if(handlerRegistration!=null){
+							handlerRegistration.removeHandler();
+						}
+				     handlerRegistrationHover = lnkPublish.addMouseOverHandler(new MouseOverHandler() {
+							@Override
+							public void onMouseOver(MouseOverEvent event) {
+								tootltipContainer.setVisible(true);
+							}
+						});
+				     lnkPublish.addMouseOutHandler(new MouseOutHandler() {
+							@Override
+							public void onMouseOut(MouseOutEvent event) {
+								tootltipContainer.setVisible(false);
+							}
+						});
+				    	MouseOutHandler mouseOutHandler=new MouseOutHandler() {
+							@Override
+							public void onMouseOut(MouseOutEvent event) {
+								tootltipContainer.setVisible(false);
+							}
+						};
+						tootltipContainer.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
+						MouseOverHandler mouseOverHandler=new MouseOverHandler() {
+							@Override
+							public void onMouseOver(MouseOverEvent event) {
+								tootltipContainer.setVisible(true);
+								
+							}
+						};
+						tootltipContainer.addDomHandler(mouseOverHandler, MouseOverEvent.getType());
+				    
+				     
+				     
+				}
+			}
+		});
+    	}
+    	else
+    	{
+    		lnkPublish.setVisible(false);
+    	}
+    	if(COURSE.equalsIgnoreCase(currentTypeView))
+    	{
+    		lnkshare.setText(i18n.GL3602());
+    	}
         if (COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
             lnkInfo.setVisible(true);
             lnkContent.setVisible(true);
@@ -347,6 +494,20 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             lnkshare.setVisible(false);
         }
     }
+    public void onpublishHover(MouseOverEvent event)
+    {
+
+/*    		toolTipPopupPanel.clear();
+			toolTipPopupPanel.setWidget(new GlobalToolTip("text sample data"));
+			toolTipPopupPanel.setStyleName("");
+			toolTipPopupPanel.setPopupPosition(publishContainer.getElement().getAbsoluteLeft()+18, publishContainer.getElement().getAbsoluteTop()+10);
+			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanel.show();*/
+
+    	tootltipContainer.setVisible(true);
+
+
+    }
     /**
      * To enable and disable the share tab based on type.
      */
@@ -358,6 +519,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             myCollDelLbl.setVisible(false);
         }else{
             lnkshare.setVisible(true);
+            lnkshare.setText(i18n.GL3602());
             copyLbl.setVisible(true);
             myCollDelLbl.setVisible(true);
         }
@@ -366,9 +528,18 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
      * Hiding preview button when type is course/unit/lesson/folder
      */
     private void enableOrHidePreviewBtn() {
+     	String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
         if(currentTypeView!=null){
             if(COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
                 lnkPreview.setVisible(true);
+                if(view==null || view.equalsIgnoreCase("course"))
+                {
+                lnkPublish.setVisible(true);
+                }
+                else
+                {
+                lnkPublish.setVisible(false);
+                }
                 moveLbl.setVisible(true);
 //				deletePnl.setVisible(false);
                 copyLbl.setVisible(true);
@@ -376,6 +547,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                 disableCollabaratorOptions(isCollaborator);
             }else{
                 lnkPreview.setVisible(false);
+                lnkPublish.setVisible(false);
+                lnkshare.setText(i18n.GL0536());
                 boolean isVisible=(FOLDER.equalsIgnoreCase(currentTypeView))?false:true;
                 copyLbl.setVisible(isVisible);
                 moveLbl.setVisible(false);
@@ -384,6 +557,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             }
         }else{
             lnkPreview.setVisible(false);
+            lnkPublish.setVisible(false);
             moveLbl.setVisible(false);
             copyLbl.setVisible(false);
             myCollDelLbl.setVisible(false);
@@ -392,7 +566,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     }
     @Override
     public void enableAndHideTabs(boolean isVisible){
+    	String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
         lnkContent.setVisible(isVisible);
+        if(COURSE.equalsIgnoreCase(currentTypeView))
+        {
+        	lnkshare.setText(i18n.GL3602());
+        }
         if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
             lnkshare.setVisible(isVisible);
         }
@@ -405,6 +584,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 
         if(ASSESSMENT_URL.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
             lnkPreview.setVisible(isVisible);
+            if(view==null || view.equalsIgnoreCase("course"))
+            {
+            lnkPublish.setVisible(isVisible);
+            }
+            else
+            {
+            lnkPublish.setVisible(false);	
+            }
         }
 
         copyLbl.setVisible(isVisible);
@@ -479,6 +666,49 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             }
         }
     }
+    
+    /**
+     * This inner class is used to Open the respective collection/Assessment player
+     *  when click on preview.
+     *
+     */
+    private class PublishClickHandler implements ClickHandler{
+        @Override
+        public void onClick(ClickEvent event) {
+        	final String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+        	final String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+        	final String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+        	final String assessmentCollectionId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+            String view = AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+            if(view==null || view.equalsIgnoreCase("course"))
+        	if(lnkPublish.isEnabled())
+        	{
+        		addtoClassPopup = new AddCollectionToClassView(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId) {
+    				@Override
+    				public void onClickPositiveButton(ClickEvent event) {
+    					if(addtoClassPopup.getClassId().size()==0) {
+    						addtoClassPopup.getErrorLabel().setVisible(true);
+    					} else {
+    						addtoClassPopup.getErrorLabel().setVisible(false);
+    						getUiHandlers().updateContentVisibilityData(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId,addtoClassPopup.getClassId());
+    						
+    					}
+    				}
+    			};
+    			addtoClassPopup.getElement().getStyle().setZIndex(9999999);
+    			addtoClassPopup.show();
+    			addtoClassPopup.center();
+        	}
+        }
+    }
+    
+	@Override
+	public void closePublishPopup() {
+		Window.enableScrolling(true);
+		if(addtoClassPopup!=null){
+			addtoClassPopup.hide();
+		}
+	}
 
 
     /**
@@ -609,6 +839,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                 getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
                 getUiHandlers().enableAddButton();
             }else if((COURSE.equalsIgnoreCase(currentTypeView))){
+            	lnkshare.setText(i18n.GL3602());
                 getUiHandlers().copyCourse(folderObj.getGooruOid());
             }
         }
@@ -700,6 +931,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             params.put(O1_LEVEL, o1CourseId);
             params.put(O2_LEVEL, o2UnitId);
             params.put(O3_LEVEL, o3LessonId);
+            lnkshare.setText(i18n.GL3602());
             getUiHandlers().setCollectionsListOnRightCluster(o1CourseId,o2UnitId,o3LessonId,deletedAssessmentCollectionId,currentTypeView);
             AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
         }
@@ -745,6 +977,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             }
         }else{
             if(COURSE.equalsIgnoreCase(currentTypeView)){
+            	lnkshare.setText(i18n.GL3602());
                 getUiHandlers().isStudentDataAvailable(currentTypeView,o1CourseId,o2UnitId, o3LessonId,assessmentCollectionId);
             }else{
                 invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
@@ -863,7 +1096,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     }
     public void disableButtons(boolean isTrue){
         //toggleButton.setVisible(isTrue);
+    	String view = AppClientFactory.getPlaceManager().getRequestParameter("view", null);
         lnkPreview.setVisible(isTrue);
+        if(view==null || view.equalsIgnoreCase("course"))
+        {
+        lnkPublish.setVisible(isTrue);
+        }
+        else
+        {
+        lnkPublish.setVisible(false);	
+        }
     }
 
 

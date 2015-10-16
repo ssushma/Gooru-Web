@@ -30,7 +30,9 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -51,6 +53,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -130,9 +133,11 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			selectedWidgetsTitleType = null;
 		}
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+		String o1Course=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		System.out.println("o1Course::"+o1Course);
 		getView().setBreadCrumbSlot(folderObj,type,selectedWidgetsTitleType);
 		getView().setDefaultActiveTab(index);
-		getView().setCurrentTypeView(type);
+		getView().setCurrentTypeView(type,o1Course);
 		getView().enableAndHideTabs(!StringUtil.isEmpty(folderObj==null?"":folderObj.getGooruOid())); 
 		if(view!=null && FOLDER.equalsIgnoreCase(view)){
 			getView().disableAndEnableBreadCums(false);
@@ -565,6 +570,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 					params.put("view", "Course");
 					shelfMainPresenter.setVersion();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+					String o1Course=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+					System.out.println("o1Course---::"+o1Course);
 					
 				}else if(result.get("status").equalsIgnoreCase("inprogress")){
 					Timer timer = new Timer() {
@@ -594,6 +601,30 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				
 			}
 		});
+	}
+	
+	@Override
+	public void updateContentVisibilityData(String courseId, String unitId, String lessonId,String collectionId,final List<Integer> classId) {
+		AppClientFactory.getInjector().getfolderService().getCollectionByCourse(courseId,unitId,lessonId, collectionId, new AsyncCallback<CollectionDo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+			@Override
+			public void onSuccess(CollectionDo result) {
+				AppClientFactory.getInjector().getClasspageService().updateCollectiontVisibilityToClass(classId, result.getCollectionId(), new AsyncCallback<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+					@Override
+					public void onSuccess(Boolean result) {
+						getView().closePublishPopup();
+					}
+				});
+			}
+		});
+	
 	}
 	
 }

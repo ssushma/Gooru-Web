@@ -62,6 +62,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionVisibilityDo;
 import org.ednovo.gooru.application.shared.model.content.MetaDO;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
@@ -73,7 +74,6 @@ import org.ednovo.gooru.application.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.application.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.application.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.util.GooruConstants;
-import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -122,6 +122,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	private static final String PLANNEDENDDATE="plannedEndDate";
 
 	private static final String COLLECTIONID="collectionId";
+	private static final String CLASSID="classId";
 
 	private static final String SEARCHRESULTS="searchResults";
 	private static final String GOALS="goals";
@@ -395,6 +396,20 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		}
 		return new ClasspageListDo();
 	}
+	
+	public List<ResourceDo> deserializeTaskResourceSearch(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference<List<ResourceDo>>() {
+				});
+
+			} catch (JSONException e) {
+				logger.error("Exception::", e);
+			}
+		}
+		return new  ArrayList<ResourceDo>();
+	}
 
 	@Override
 	public ClasspageListDo v2GetUserClasses(String limit, String offSet, String randomId) throws GwtException {
@@ -452,6 +467,19 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
+	}
+	
+	@Override
+	public List<CollectionVisibilityDo> v3GetUserCollectionAssociatedClasses(String courseId,String unitId, String lessonId, String collectionId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = "";
+		if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COLLECTION_ASSOCIATONCLASSES, courseId,unitId,lessonId,collectionId);
+		}
+		getLogger().info("v3GetUserCollectionAssociatedClasses::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageCollectionAssociationList(jsonRep);
 	}
 
 	@Override
@@ -800,18 +828,18 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeTaskResourceSearch(jsonRep);
 	}
-	public List<ResourceDo> deserializeTaskResourceSearch(JsonRepresentation jsonRep) {
+	public List<CollectionVisibilityDo> deserializeClasspageCollectionAssociationList(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
-						.toString(), new TypeReference<List<ResourceDo>>() {
+						.toString(), new TypeReference<List<CollectionVisibilityDo>>() {
 				});
 
 			} catch (JSONException e) {
 				logger.error("Exception::", e);
 			}
 		}
-		return new  ArrayList<ResourceDo>();
+		return new  ArrayList<CollectionVisibilityDo>();
 	}
 
 	@Override
@@ -2328,6 +2356,34 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 			}
 		}catch(Exception e){
 			getLogger().error("v3 updateClassContentVisibility ..:"+e.getMessage());
+		}
+		return isUpdated;
+	}
+	
+	@Override
+	public boolean updateCollectiontVisibilityToClass(List<Integer> classId, Integer collectionId) throws GwtException, ServerDownException {
+		boolean isUpdated = false;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V3_UPDATE_COLLECTION_VISIBILITY);
+		getLogger().info("updateCollectiontVisibilityToClass: "+url);
+		try{
+			JSONArray payload=new JSONArray();
+			for(int i=0;i<classId.size();i++) {
+			JSONObject content= new JSONObject();
+			content.put(CLASSID, classId.get(i));			
+			content.put(COLLECTIONID, collectionId);
+			content.put(VISIBILITY, true);
+			payload.put(content);
+			}		
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),payload.toString());
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			getLogger().info("updateCollectiontVisibilityToClass payload:"+payload.toString());
+			if(jsonResponseRep.getStatusCode()==200){
+				isUpdated = true;
+				getLogger().info("---update success---");
+			}
+		}catch(Exception e){
+			getLogger().error("v3 updateCollectiontVisibilityToClass ..:"+e.getMessage());
 		}
 		return isUpdated;
 	}
