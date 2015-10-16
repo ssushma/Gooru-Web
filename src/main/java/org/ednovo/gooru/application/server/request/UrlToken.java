@@ -372,6 +372,8 @@ public enum UrlToken {
 	V3_CREATE_COLLECTION("/v3/collection?"),
 
 	V1_UPDATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
+	
+	V1_GET_COLLECTION_ASSOCIATONCLASSES("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}/classes"),
 
 	V1_UPDATE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
 
@@ -706,6 +708,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	V1_COPY_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}"),
 	
 	V1_IS_STUDENT_DATA_AVAILABLE("/v1/class/find/usage?courseGooruId={0}"),
+	V3_UPDATE_COLLECTION_VISIBILITY("/v3/class/setting"),
 	
 	V3_UPDATE_CONTENT_VISIBILITY("/v3/class/{0}/setting");
 

@@ -797,7 +797,25 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return folderDo;
 	}
+	@Override
+	public CollectionDo getCollectionByCourse(String courseId, String unitId, String lessonId,String collectionId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		CollectionDo folderDo = new CollectionDo();
+		String urlGet = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_COLLECTION, courseId,unitId,lessonId,collectionId);
+		logger.info("folderDo obj urlGet: "+urlGet);
+		try {
 
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlGet, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			folderDo = deserializeCreatedCollInFolder(jsonRep);
+			logger.info("folderDo obj : "+folderDo);
+			
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
 	@Override
 	public void updateCourse(String courseId,String unitId,String lessonId,String collectionId, CreateDo createDo) throws GwtException, ServerDownException {
 		String url = null;
@@ -861,7 +879,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonRepresentation jsonRep = null;
 		Integer associatedClassesSize = 0;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CLASSES_ASSOCIATED_WITH_COURSE, o1CourseId);
-		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.LIMIT,"10");
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.LIMIT,"1");
 		getLogger().info("--- Associated classes for course -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();

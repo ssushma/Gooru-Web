@@ -229,6 +229,9 @@ public interface FolderService extends BaseService {
 	
 	public Boolean isTiedWithStudentData(String o1CourseId) throws GwtException;
 
+	public CollectionDo getCollectionByCourse(String courseId, String unitId, String lessonId, String collectionId)
+			throws GwtException;
+
 	
 
 	

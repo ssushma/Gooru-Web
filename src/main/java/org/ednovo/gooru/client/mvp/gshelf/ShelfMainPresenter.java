@@ -55,6 +55,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -689,6 +690,15 @@ public class ShelfMainPresenter extends BasePlacePresenter<IsShelfMainView, Shel
 	public void loadMyContentData(String type) {
 		getView().invokeSpinner();
 		setListPresenterBasedOnType(type);
+	}
+
+	public void setFolderActiveStatus() {
+		getView().setFolderActiveStatus();
+		
+	}
+	
+	public HTMLEventPanel getOrganizeRootPnl() {
+		return getView().getOrganizeRootPnl();
 	}
 
 }

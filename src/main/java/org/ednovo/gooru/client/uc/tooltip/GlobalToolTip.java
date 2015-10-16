@@ -24,9 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.core.shared.GWT;
@@ -34,8 +39,11 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -48,10 +56,31 @@ public class GlobalToolTip extends Composite {
 	HTMLEventPanel confirmationPanel;
 	
 	@UiField
-	Label desLbl;
+	Label desLbl,linkLbl;
 	
 	@UiField
 	HTMLPanel panelArrow;
+	
+	HashMap<String,String> urlParams = new HashMap<String,String>();
+	
+	private static final String O1_LEVEL = "o1";
+
+	private static final String O2_LEVEL = "o2";
+
+	private static final String O3_LEVEL = "o3";
+
+
+	private String widgetType;
+
+	private static final String ID = "id";
+
+	private static final String ASSESSMENT = "assessment";
+	private static final String FOLDER = "folder";
+	private static final String COURSE = "Course";
+	private static final String UNIT = "Unit";
+	private static final String LESSON = "Lesson";
+	private static final String COLLECTION = "collection";
+	private static final String ASSESSMENT_URL = "assessment/url";
 	
 	
 	public interface GlobalToolTipUiBinder extends UiBinder<Widget, GlobalToolTip>{
@@ -83,10 +112,33 @@ public class GlobalToolTip extends Composite {
 		desLbl.setText(description);
 		confirmationPanel.getElement().setId("epnlConfirmationPanel");
 		desLbl.getElement().setId("lblDesLbl");
-		desLbl.getElement().setAttribute("alt", description);
-		desLbl.getElement().setAttribute("title", description);
 		panelArrow.getElement().setId("pnlPanelArrow");
 		setPanelPosition();
+	}
+    public GlobalToolTip(String description,String linkValue, boolean isPublish){
+		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
+		desLbl.setText(description);
+		linkLbl.setText("here");
+		confirmationPanel.getElement().setId("epnlConfirmationPanel");
+		desLbl.getElement().setId("lblDesLbl");
+		panelArrow.getElement().setId("pnlPanelArrow");
+		setPanelPosition();
+	}
+	public void openFolderInShelf() {
+
+		Map<String,String> params = new HashMap<String,String>();
+		HashMap<String,String> widgetTitles = new HashMap<String,String>();
+
+		String o1Val=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+			params.put(O1_LEVEL, o1Val);
+			widgetTitles.put(COURSE, "Course");
+		
+		params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params,true);
+
+		AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(null, RefreshType.OPEN));
+//		AppClientFactory.fireEvent(new SetFolderParentNameEvent(title));
+
 	}
     public GlobalToolTip(String description, boolean isSharePopup){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
@@ -169,4 +221,16 @@ public class GlobalToolTip extends Composite {
     public HTMLPanel getPanelArrow(){
     	return panelArrow;
     }
+
+
+	public Label getLinkLbl() {
+		return linkLbl;
+	}
+
+
+	public void setLinkLbl(Label linkLbl) {
+		this.linkLbl = linkLbl;
+	}
+    
+    
 }
