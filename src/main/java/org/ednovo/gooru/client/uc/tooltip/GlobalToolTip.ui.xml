@@ -11,7 +11,7 @@
 		<g:HTMLPanel styleName="{toolTip.resourceRightsInnerPopup}">
 			<!-- <g:HTMLPanel ui:field="htmlContentRightsDesc"></g:HTMLPanel> -->
 			<g:HTMLPanel>
-				<g:Label ui:field="desLbl"></g:Label>
+				<g:Label ui:field="desLbl"></g:Label><g:Label styleName="toolTiphere" ui:field="linkLbl"></g:Label>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</panel:HTMLEventPanel>

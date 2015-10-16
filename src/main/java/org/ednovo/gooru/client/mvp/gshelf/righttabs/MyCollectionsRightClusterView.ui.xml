@@ -10,7 +10,9 @@
 			<div class="col-md-7 col-sm-7">
 				<g:Anchor ui:field="lnkInfo" styleName="active" text="{i18n.GL0828}"></g:Anchor>
 				<g:Anchor ui:field="lnkContent" text="{i18n.GL3488}"></g:Anchor>
+				<g:Anchor ui:field="lnkPublish" text="{i18n.GL3600}"></g:Anchor>
 				<g:Anchor ui:field="lnkshare" text="{i18n.GL0536}"></g:Anchor>
+				<hpanel:HTMLEventPanel styleName="tooltipStyle" ui:field="tootltipContainer"></hpanel:HTMLEventPanel>
 			</div>
 			<div class="col-md-5 col-sm-5 actions">
 				<hpanel:HTMLEventPanel styleName="copyLblStyle" ui:field="myCollDelLbl">

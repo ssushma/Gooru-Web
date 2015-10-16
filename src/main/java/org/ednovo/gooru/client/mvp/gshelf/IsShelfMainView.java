@@ -30,6 +30,7 @@ import java.util.List;
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -102,5 +103,9 @@ public interface IsShelfMainView extends IsViewWithHandlers<ShelfMainUiHandlers>
 	void showLastEditCollaborater(String lastEditedBy,
 			boolean hasLastModifiedUser);
 
-	void invokeSpinner();  
+	void invokeSpinner();
+
+	void setFolderActiveStatus();
+
+	HTMLEventPanel getOrganizeRootPnl();  
 }

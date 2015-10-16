@@ -42,6 +42,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionVisibilityDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
@@ -555,5 +556,11 @@ public interface ClasspageService extends BaseService {
 	public ArrayList<PlanProgressDo> getContentVisibilityData(String classpageId, String courseId, String unitId, String lessonId) throws GwtException, ServerDownException;
 
 	public boolean updateClassContentVisibility(String classId, List<PlanProgressDo> collectionIds) throws GwtException, ServerDownException;
+
+	public List<CollectionVisibilityDo> v3GetUserCollectionAssociatedClasses(String courseId, String unitId, String lessonId,
+			String collectionId) throws GwtException;
+
+	public boolean updateCollectiontVisibilityToClass(List<Integer> classId,  Integer collectionId)
+			throws GwtException, ServerDownException;
 
 }

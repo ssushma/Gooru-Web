@@ -319,6 +319,12 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		shelfFolderTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
+				for(int i=0;i<shelfFolderTree.getItemCount();i++)
+				{
+					TreeItem trItem = shelfFolderTree.getItem(i);
+					ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) trItem.getWidget();
+					shelfTreeWidget.getTitleFocPanel().removeStyleName("active");
+				}
 				organizeRootPnl.removeStyleName("active");
 				ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) event.getSelectedItem().getWidget();
 				treeChildSelectedItem = event.getSelectedItem();
@@ -972,7 +978,6 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		ShelfTreeWidget shelfTreeWidget = (ShelfTreeWidget) treeChildSelectedItem.getWidget();
-
 		if(shelfTreeWidget==null || organizeRootPnl.getStyleName().contains("active")) {
 			if(id!=null) {
 				gooruOid = id;
@@ -1465,4 +1470,14 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 		pnlSlot.clear();
 		pnlSlot.add(loadingImage());
 	}
+
+	public HTMLEventPanel getOrganizeRootPnl() {
+		return organizeRootPnl;
+	}
+
+	public void setOrganizeRootPnl(HTMLEventPanel organizeRootPnl) {
+		this.organizeRootPnl = organizeRootPnl;
+	}
+	
+	
 }

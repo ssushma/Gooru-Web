@@ -53,7 +53,7 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	 * @param tabIndex 
 	 */
 	public void setDefaultActiveTab(int tabIndex);
-	public void setCurrentTypeView(String type);
+	public void setCurrentTypeView(String type,String o1);
 	public void enableAndHideTabs(boolean isVisible);
 	
 	/**
@@ -86,4 +86,5 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	public void isCourseDeleteStatus(Boolean status, String type, String o1CourseId, String o2UnitId, String o3LessonId, String assessmentCollectionId);
 	
 	public void showCopyErrorMsg();
+	void closePublishPopup();
 }

@@ -10,6 +10,73 @@
 	position: fixed;
 	width:235px;
 }
+.shareTabtoAssign{
+	padding-right: 0px;
+padding-left: 0px;
+}
+.toolTiphere{
+	position: absolute;
+	margin-top: -20px;
+	bottom: 16px;
+	left: 44px;
+	color: #0066cc;
+}
+.modal-footerPublish{
+padding: 19px 20px 20px;
+margin-top: 15px;
+text-align: center;
+border-top: 1px solid #e5e5e5;
+}
+.my-content-class-error-msgPublish {
+	font-weight: bold;
+	height: 10px;
+	color: #fab03a;
+	font: 12px arial;
+	bottom: 20px;
+	position: relative;
+}
+.dropdownListClassContainerScrollPanel{
+	height:150px;
+}
+.my-content-class-error-msg-layoutPublish {
+	width: 30%;
+	margin: 2% 35%;
+}
+.dottedButtonCollClass{
+width: 22px;
+height: 22px;
+background: #d8d8d8;
+border-radius: 50% 50%;
+display: inline-block;
+vertical-align: middle;
+margin-right: 45px;
+cursor: pointer;
+position: absolute;
+margin-top: -33px;
+right: 16px;
+}
+.dottedButtonCollClass.green{
+	background: #7ab075;
+}
+.dottedButtonCollClass.green.tick{
+	display: inline-block;
+padding-left: 7px;
+padding-top: 4px;
+}
+.dottedButtonCollClass.green.tick:after{
+	content: '';
+	display: block;
+	width: 7px;
+	height: 13px;
+	border: solid #fff;
+	border-width: 0 4px 4px 0;
+	-webkit-transform: rotate(40deg);
+	-moz-transform: rotate(40deg);
+	-ms-transform: rotate(40deg);
+	-o-transform: rotate(40deg);
+	transform: rotate(40deg);
+}
+
 #gooruSearchMainContainer .copyPopupPanel:before {
 	  position: absolute;
 	  top: 0;
@@ -841,6 +908,17 @@ button.btn-disabled{
 	box-sizing: content-box;
 	padding: 0px 15px;
 }
+.my-content-class-individual-itemColl {
+	border-top: 1px solid white;
+	height: 35px;
+	line-height: 35px;
+	position: relative;
+	box-sizing: content-box;
+	padding: 4px 15px;
+	border: 1px solid grey;
+	margin-left: 2%;
+	margin-right: 2%;
+}
 .my-content-class-individual-item:hover {
 	cursor: pointer;
 	background-color: #cfe3f1!important;
@@ -1621,6 +1699,7 @@ button.btn-disabled {
 }
 #gShelfCourseInfo .actions{
 	text-align: right;
+	padding-right:0px;
 }
 #gShelfCourseInfo .actions .deleteButton{
 	display: inline-block;
@@ -1632,8 +1711,19 @@ button.btn-disabled {
 	border-right: 1px solid #dddddd;
 	color: #1076bb;
 }
+#gShelfCourseInfo .folderBlockSitemap .publishButton a {
+	padding: 16px 20px;
+	margin-left: -4px;
+	border-left: none;
+	border-right: none;
+}
+#gShelfCourseInfo .folderBlockSitemap .tooltipStyle {
+margin-left: 217px;
+position: absolute;
+margin-top: -27px;
+}
 #gShelfCourseInfo .folderBlockSitemap a {
-	padding: 16px 25px;
+	padding: 16px 16px;
 	display: inline-block;
 	color: #515151;
 	font-size: 13px;
@@ -1645,11 +1735,7 @@ button.btn-disabled {
 
 #gShelfCourseInfo .folderBlockSitemap a:hover,#gShelfCourseInfo .folderBlockSitemap a:focus
 	{
-	background: #d8d8d8;
-	color: #333333;
 	text-decoration: none;
-	margin: 0px;
-	border: 0px;
 }
 
 #gShelfCourseInfo .folderBlockSitemap a.active {

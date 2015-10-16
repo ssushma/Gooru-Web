@@ -61,6 +61,7 @@ public class CollectionDo extends ResourceDo implements IsSerializable{
 	private CollectionMetaInfoDo metaInfo;
 	private MetaDO meta;
 	private Integer statusCode;
+	private Integer collectionId;
 	private Integer itemCount;
 	private String classpageCode;
 	private Date lastModified;
@@ -519,5 +520,15 @@ public class CollectionDo extends ResourceDo implements IsSerializable{
 	public void setSubdomain(List<CourseSubjectDo> subdomain) {
 		this.subdomain = subdomain;
 	}
+
+	public Integer getCollectionId() {
+		return collectionId;
+	}
+
+	public void setCollectionId(Integer collectionId) {
+		this.collectionId = collectionId;
+	}
+	
+	
 	
 }

@@ -24,10 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gshelf.righttabs;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
+import org.ednovo.gooru.client.mvp.gshelf.ShelfMainPresenter;
+
+import com.google.gwt.user.client.ui.TreeItem;
 
 /**
  * @author Search Team
@@ -81,6 +85,10 @@ public interface MyCollectionsRightClusterUiHandlers extends BaseUiHandlers{
 	
 	public void copyCourse(String gooruOid);
 	
-	public void isStudentDataAvailable(String type, String o1CourseId, String o2UnitId, String o3LessonId, String assessmentCollectionId);   
+	public void isStudentDataAvailable(String type, String o1CourseId, String o2UnitId, String o3LessonId, String assessmentCollectionId);
+	public TreeItem getCurrentTreeItem();
+	public ShelfMainPresenter getShelfMainPresenter();
+	public void updateBreadCrumbsTitle(FolderDo folderObj, String course);
+	void updateContentVisibilityData(String courseId, String unitId, String lessonId,String collectionId,List<Integer> classId);   
 	
 }
