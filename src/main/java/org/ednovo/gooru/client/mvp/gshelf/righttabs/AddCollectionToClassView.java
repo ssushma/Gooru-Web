@@ -151,11 +151,10 @@ public abstract class AddCollectionToClassView extends PopupPanel {
 	
 	public Label getErrorLabel() {
 		return lblError;
-	}
+	}	
 	
-	@UiHandler("cancelResourcePopupBtnLbl")
-	public void cancelButtonEvent(ClickEvent event){
-		hide();
-		Window.enableScrolling(true);
+	public Button getCancelResourcePopupBtnLbl() {
+		return cancelResourcePopupBtnLbl;
 	}
+
 }
