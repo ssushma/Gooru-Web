@@ -391,6 +391,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	        }else if (ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
 	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
+	        	   lnkshare.setText(i18n.GL0536());
 	            if(view==null || view.equalsIgnoreCase("course"))
                 {
 	        	lnkPublish.setVisible(true);
@@ -403,6 +404,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	        }else if (COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
 	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
+	        	lnkshare.setText(i18n.GL0536());
 	        	lnkPreview.getElement().getStyle().clearFloat();
 	        	if(view==null || view.equalsIgnoreCase("course"))
                 {
@@ -485,6 +487,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     	{
     		lnkshare.setText(i18n.GL3602());
     	}
+    	else
+    	{
+    		lnkshare.setText(i18n.GL0536());
+    	}
         if (COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
             lnkInfo.setVisible(true);
             lnkContent.setVisible(true);
@@ -522,6 +528,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             moveLbl.setVisible(false);
             copyLbl.setVisible(false);
             myCollDelLbl.setVisible(false);
+            lnkshare.setText(i18n.GL0536());
         }else{
             lnkshare.setVisible(true);
             lnkshare.setText(i18n.GL3602());
@@ -576,6 +583,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         if(COURSE.equalsIgnoreCase(currentTypeView))
         {
         	lnkshare.setText(i18n.GL3602());
+        }
+        else
+        {
+        	lnkshare.setText(i18n.GL0536());
         }
         if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
             lnkshare.setVisible(isVisible);
@@ -854,6 +865,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                 getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
                 isCopySelected= true;
                 isMoveSelected=false;
+                lnkshare.setText(i18n.GL0536());
                 getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
                 getUiHandlers().enableAddButton();
             }else if((COURSE.equalsIgnoreCase(currentTypeView))){
@@ -919,6 +931,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     public void onDeleteCollectionAssessmentSuccess(String o1CourseId,String o2UnitId, String o3LessonId, String deletedAssessmentCollectionId) {
         hideDeletePopup();
         if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view", null))){
+        	lnkshare.setText(i18n.GL0536());
             Map<String, String> params = new HashMap<String, String>();
             if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
                 params.put("view", "Folder");
@@ -998,6 +1011,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             	lnkshare.setText(i18n.GL3602());
                 getUiHandlers().isStudentDataAvailable(currentTypeView,o1CourseId,o2UnitId, o3LessonId,assessmentCollectionId);
             }else{
+            	lnkshare.setText(i18n.GL0536());
                 invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
             }
         }
