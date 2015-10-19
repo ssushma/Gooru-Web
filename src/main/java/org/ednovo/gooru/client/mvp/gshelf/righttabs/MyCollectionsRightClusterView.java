@@ -859,7 +859,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         @Override
         public void onClick(ClickEvent event) {
 
-
+        	Window.enableScrolling(false);
             if(!(COURSE.equalsIgnoreCase(currentTypeView))){
                 getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
                 getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
@@ -868,16 +868,19 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                 lnkshare.setText(i18n.GL0536());
                 getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
                 getUiHandlers().enableAddButton();
+
             }else if((COURSE.equalsIgnoreCase(currentTypeView))){
             	lnkshare.setText(i18n.GL3602());
                 getUiHandlers().copyCourse(folderObj.getGooruOid());
             }
+        	Window.enableScrolling(false);
         }
     }
 
     private class onMoveClickHandler implements ClickHandler{
         @Override
         public void onClick(ClickEvent event) {
+        	Window.enableScrolling(false);
             isCopySelected= false;
             isMoveSelected= true;
             getUiHandlers().enableAddButton();
@@ -892,6 +895,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                     getUiHandlers().DisableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
                 }
             }
+
         }
 
     }

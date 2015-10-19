@@ -30,7 +30,6 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -501,6 +500,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+		Window.enableScrolling(false);
 	}
 	public Map<Integer,Integer> getFirstSelectedData(){
 		return firstSelectedData;
