@@ -79,4 +79,6 @@ public interface CollectionInfoUiHandlers extends BaseUiHandlers {
 
 	public void displayCropImage(String imageUrl);
 
+	void disableCollabaratorOptions(boolean isHide);
+
 }
