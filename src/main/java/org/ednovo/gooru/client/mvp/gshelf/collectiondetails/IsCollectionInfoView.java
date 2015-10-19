@@ -91,5 +91,7 @@ public interface IsCollectionInfoView extends IsViewWithHandlers<CollectionInfoU
 
 	void spinnerImageVisibility(boolean isVisible);
 
-	void setStandardsValue(List<StandardFo> standardFoObj); 
+	void setStandardsValue(List<StandardFo> standardFoObj);
+
+	void setActionButtons(String userId, Boolean isCollab); 
 }

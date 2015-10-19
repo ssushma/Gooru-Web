@@ -34,6 +34,7 @@ import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.application.shared.model.folder.CreateDo;
@@ -855,6 +856,16 @@ public class CollectionInfoView extends BaseViewWithHandlers<CollectionInfoUiHan
 			}
 		});
 		getUiHandlers().callCourseInfoTaxonomy();
+	}
+	@Override
+	public void setActionButtons(String userId, Boolean isCollab)
+	{
+		if (AppClientFactory.isContentAdmin() || userId.equals(AppClientFactory.getLoggedInUser()
+						.getGooruUId())){
+			getUiHandlers().disableCollabaratorOptions(true);
+		}else if(isCollab){
+			getUiHandlers().disableCollabaratorOptions(false);
+		}
 	}
 
 	public void setStaticData(String type){

@@ -395,6 +395,7 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 					folderDoObj.setTaxonomyCourse(result.getTaxonomyCourse());
 					folderDoObj.setSubdomain(result.getSubdomain());
 					getView().setCouseData(folderDoObj,result.getCollectionType());
+					setCollabValues(result.getUser().getGooruUId(), result.isIsCollaborator());
 					getView().setStandardsValue(result.getMetaInfo().getStandards());
 					centurySkillsPresenter.getView().setCollectionDo(result);
 					getView().getDepthOfKnowledgeContainer().setCollectionDo(result);
@@ -466,5 +467,13 @@ public class CollectionInfoPresenter extends PresenterWidget<IsCollectionInfoVie
 		imgUploadPresenter.setProfileImage(false);
 		imgUploadPresenter.setEditResourceImage(false);
 		imgUploadPresenter.setAnswerImage(false);
+	}
+	@Override
+	public void disableCollabaratorOptions(boolean isHide) {
+		myCollectionsRightClusterPresenter.disableCollabaratorOptions(isHide);
+	}
+	public void setCollabValues(String userId, Boolean collabVal)
+	{
+		getView().setActionButtons(userId,collabVal);
 	}
 }
