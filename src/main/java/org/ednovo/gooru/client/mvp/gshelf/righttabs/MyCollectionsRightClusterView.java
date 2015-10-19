@@ -427,10 +427,15 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 					 lnkPublish.setEnabled(true);
 			        lnkPublish.getElement().getStyle().setColor("#1076bb");
 			        
-			     
-			        if(handlerRegistrationHover!=null){
-			        	handlerRegistrationHover.removeHandler();
+			        if(handlerRegistration!=null){
+			        	 handlerRegistration = lnkPublish.addClickHandler(new PublishClickHandler());
 					}
+			        handlerRegistrationHover = lnkPublish.addMouseOverHandler(new MouseOverHandler() {
+						@Override
+						public void onMouseOver(MouseOverEvent event) {
+							tootltipContainer.setVisible(false);
+						}
+					});
 			        
 				}else{
 				     lnkPublish.getElement().getStyle().setColor("#ddd");
@@ -675,6 +680,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     private class PublishClickHandler implements ClickHandler{
         @Override
         public void onClick(ClickEvent event) {
+        	if(addtoClassPopup==null)
+        	{
         	final String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
         	final String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
         	final String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
@@ -689,16 +696,25 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     					if(addtoClassPopup.getClassId().size()==0) {
     						addtoClassPopup.getErrorLabel().setVisible(true);
     					} else {
-    						addtoClassPopup.getErrorLabel().setVisible(false);
+    						addtoClassPopup.getErrorLabel().setVisible(false);    					
     						getUiHandlers().updateContentVisibilityData(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId,addtoClassPopup.getClassId());
-    						
+    				
     					}
     				}
     			};
+    			addtoClassPopup.getCancelResourcePopupBtnLbl().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						closePublishPopup();
+						
+					}
+				});
     			addtoClassPopup.getElement().getStyle().setZIndex(9999999);
     			addtoClassPopup.show();
     			addtoClassPopup.center();
         	}
+        }
         }
     }
     
@@ -707,6 +723,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		Window.enableScrolling(true);
 		if(addtoClassPopup!=null){
 			addtoClassPopup.hide();
+			addtoClassPopup = null;
+	
 		}
 	}
 
