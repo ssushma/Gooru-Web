@@ -523,7 +523,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
      * To enable and disable the share tab based on type.
      */
     private void enableOrHideShareTab() {
-        if(UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView)){
+        if(COURSE.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView)){
             lnkshare.setVisible(false);
             moveLbl.setVisible(false);
             copyLbl.setVisible(false);
@@ -1123,7 +1123,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     @Override
     public void disableCollabaratorOptions(boolean hide){
         hide = ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)?true:hide;
-        moveLbl.setVisible(hide);
+        if(COURSE.equalsIgnoreCase(currentTypeView) || UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
+            moveLbl.setVisible(false);
+        }else{
+            moveLbl.setVisible(hide);
+        }
         myCollDelLbl.setVisible(hide);
     }
     @Override
