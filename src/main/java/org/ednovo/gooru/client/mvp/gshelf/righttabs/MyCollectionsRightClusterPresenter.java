@@ -624,6 +624,44 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 				});
 			}
 		});
+		AppClientFactory.getInjector().getfolderService().getLessonByCourse(courseId,unitId,lessonId, new AsyncCallback<CollectionDo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+			@Override
+			public void onSuccess(CollectionDo result) {
+				AppClientFactory.getInjector().getClasspageService().updateCollectiontVisibilityToClass(classId, result.getCollectionId(), new AsyncCallback<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+					@Override
+					public void onSuccess(Boolean result) {
+						getView().closePublishPopup();
+					}
+				});
+			}
+		});
+		AppClientFactory.getInjector().getfolderService().getUnitByCourse(courseId,unitId, new AsyncCallback<CollectionDo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+			@Override
+			public void onSuccess(CollectionDo result) {
+				AppClientFactory.getInjector().getClasspageService().updateCollectiontVisibilityToClass(classId, result.getCollectionId(), new AsyncCallback<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+					@Override
+					public void onSuccess(Boolean result) {
+						getView().closePublishPopup();
+					}
+				});
+			}
+		});
 	
 	}
 	

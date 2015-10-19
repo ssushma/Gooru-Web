@@ -113,6 +113,8 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void isTiedWithStudentData(String o1CourseId, AsyncCallback<Boolean> callback);
 	
 	void getCollectionByCourse(String courseId, String unitId, String lessonId, String collectionId,AsyncCallback<CollectionDo> callback);
+	void getLessonByCourse(String courseId, String unitId, String lessonId,AsyncCallback<CollectionDo> callback);
+	void getUnitByCourse(String courseId, String unitId,AsyncCallback<CollectionDo> callback);
 
 
 }
