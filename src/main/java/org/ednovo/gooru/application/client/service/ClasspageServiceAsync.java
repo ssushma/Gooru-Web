@@ -199,7 +199,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void  v3GetUserClasses(String limit, String offSet,boolean isContainsCourse, AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
 	
-	public void  v3GetUserCollectionAssociatedClasses(String courseId,String unitId, String lessonId, String collectionId, AsyncCallback<List<CollectionVisibilityDo>> callback) throws GwtException, ServerDownException;
+	public void  v3GetUserCollectionAssociatedClasses(String courseId,String unitId, String lessonId, String collectionId,String limit, String offSet, AsyncCallback<List<CollectionVisibilityDo>> callback) throws GwtException, ServerDownException;
 	
 	public void  v3GetUserStudyClasses(String limit, String offSet,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
 	
