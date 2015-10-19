@@ -373,7 +373,7 @@ public enum UrlToken {
 
 	V1_UPDATE_COLLECTION("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}?"),
 	
-	V1_GET_COLLECTION_ASSOCIATONCLASSES("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}/classes"),
+	V1_GET_COLLECTION_ASSOCIATONCLASSES("/v1/course/{0}/unit/{1}/lesson/{2}/collection/{3}/classes?limit={4}&offset={5}"),
 
 	V1_UPDATE_LESSON("/v1/course/{0}/unit/{1}/lesson/{2}?"),
 

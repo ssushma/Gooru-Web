@@ -558,7 +558,7 @@ public interface ClasspageService extends BaseService {
 	public boolean updateClassContentVisibility(String classId, List<PlanProgressDo> collectionIds) throws GwtException, ServerDownException;
 
 	public List<CollectionVisibilityDo> v3GetUserCollectionAssociatedClasses(String courseId, String unitId, String lessonId,
-			String collectionId) throws GwtException;
+			String collectionId,String limit, String offSet) throws GwtException;
 
 	public boolean updateCollectiontVisibilityToClass(List<Integer> classId,  Integer collectionId)
 			throws GwtException, ServerDownException;
