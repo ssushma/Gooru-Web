@@ -153,6 +153,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	 */
 	@Override
 	public PopupPanel getAppPopUp() {
+		Window.enableScrolling(false);
 		return appPopUp;
 	}
 
@@ -487,6 +488,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
+		Window.enableScrolling(true);
 		hide();
 		enableTopFilters();
 	}
@@ -496,6 +498,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
+		//Window.enableScrolling(true);
 		if(getStatus()){
 			if(cureentcollectionTreeItem!=null){
 				boolean flag = getUiHandlers().validateIsAssessments(cureentcollectionTreeItem.getcollectionType());
@@ -614,7 +617,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		if(element!=null){
 			element.removeAttribute("style");
 		}
-		Window.enableScrolling(true);
+		//Window.enableScrolling(true);
 	}
 	@Override
 	public void restrictionToAddResourcesData(String message) {

@@ -470,11 +470,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 	}
 	
 	@Override
-	public List<CollectionVisibilityDo> v3GetUserCollectionAssociatedClasses(String courseId,String unitId, String lessonId, String collectionId) throws GwtException {
+	public List<CollectionVisibilityDo> v3GetUserCollectionAssociatedClasses(String courseId,String unitId, String lessonId, String collectionId,String limit, String offSet) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = "";
 		if(courseId!=null && unitId!=null && lessonId!=null && collectionId!=null){
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COLLECTION_ASSOCIATONCLASSES, courseId,unitId,lessonId,collectionId);
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_GET_COLLECTION_ASSOCIATONCLASSES, courseId,unitId,lessonId,collectionId,limit,offSet);
 		}
 		getLogger().info("v3GetUserCollectionAssociatedClasses::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());

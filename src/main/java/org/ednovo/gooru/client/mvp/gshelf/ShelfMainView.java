@@ -747,6 +747,10 @@ public class ShelfMainView extends BaseViewWithHandlers<ShelfMainUiHandlers> imp
 	 */
 	@UiHandler("createNewCourse")
 	public void createNewCourseOrCollection(ClickEvent event) {
+		if(shelfFolderTree.getItemCount()>=50)
+		{
+			setCreateCourse(false);
+		}
 		if(isCreateCourse()){
 			createTopLevelTemplate(COURSE);
 		}

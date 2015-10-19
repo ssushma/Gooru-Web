@@ -14,6 +14,8 @@ import org.ednovo.gooru.client.uc.H4Panel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -23,6 +25,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AddCollectionToClassView extends PopupPanel {
@@ -35,9 +38,16 @@ public abstract class AddCollectionToClassView extends PopupPanel {
 	
 	@UiField Label lblEmptyErrorMessage, lblError;
 	
+	@UiField ScrollPanel dropdownListContainerScrollPanel;
+	
 	@UiField Button cancelResourcePopupBtnLbl, assignBtn;
 	
 	private List<Integer> classId = new ArrayList<>();
+	
+
+	int totalClassesCountVal = 0;
+	int limitClasses = 20;
+	int initialOffset = 0;
 	
 	private static AddCollectionToClassViewUiBinder uiBinder = GWT
 			.create(AddCollectionToClassViewUiBinder.class);
@@ -46,7 +56,7 @@ public abstract class AddCollectionToClassView extends PopupPanel {
 			UiBinder<Widget, AddCollectionToClassView> {
 	}
 
-	public AddCollectionToClassView(String courseId,String unitId, String lessonId, String collectionId) {
+	public AddCollectionToClassView(final String courseId,final String unitId, final String lessonId, final String collectionId) {
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
 		this.setGlassEnabled(true);
@@ -54,26 +64,57 @@ public abstract class AddCollectionToClassView extends PopupPanel {
 		addingTextLbl.setText("Select the class(es) that can view and access this content. Once you publish content to the class, it can't be reversed!");
 		lblError.setVisible(false);
 		assignBtn.setVisible(false);
-		getTeachClassesList(courseId,unitId,lessonId,collectionId);
+		resetValues();
+		getTeachClassesList(courseId,unitId,lessonId,collectionId,limitClasses,initialOffset);
+		dropdownListContainerScrollPanel.addScrollHandler(new ScrollHandler() {
+			
+			@Override
+			public void onScroll(ScrollEvent event) {
+				if(totalClassesCountVal>=initialOffset)
+				{
+				getTeachClassesList(courseId,unitId,lessonId,collectionId,limitClasses,initialOffset);
+				initialOffset = initialOffset+20;
+				}
+			}
+		});
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		assignBtn.setEnabled(false);
 		this.center();
 	}
 	
-	private void getTeachClassesList(String courseId,String unitId, String lessonId, String collectionId) {
-		AppClientFactory.getInjector().getClasspageService().v3GetUserCollectionAssociatedClasses(courseId,unitId,lessonId,collectionId, new SimpleAsyncCallback<List<CollectionVisibilityDo>>() {
+	private void getTeachClassesList(String courseId,String unitId, String lessonId, String collectionId,int limit, int offSet) {
+		AppClientFactory.getInjector().getClasspageService().v3GetUserCollectionAssociatedClasses(courseId,unitId,lessonId,collectionId,String.valueOf(limit), String.valueOf(offSet), new SimpleAsyncCallback<List<CollectionVisibilityDo>>() {
 			@Override
 			public void onSuccess(List<CollectionVisibilityDo> classPageListDo) {
+				if(classPageListDo.size()==20)
+				{
+				totalClassesCountVal = initialOffset+limitClasses;
+				}
+				else
+				{
+					totalClassesCountVal = 0;
+				}
+				if(classPageListDo.size()>0)
+				{
 				setClassesList(classPageListDo);
+				}
 			}
 		});
 	}
+	public void resetValues()
+	{
+		classListContainer.clear();
+		classId.clear();
+		totalClassesCountVal = 0;
+		limitClasses = 20;
+		initialOffset = 0;
+	}
 	
 	public void setClassesList(List<CollectionVisibilityDo> classList) {
-		classListContainer.clear();
+
 		if(classList!=null&&classList.size()>0) {
-			classId.clear();
+
 			for(int i=0;i<classList.size();i++) {
 				final Label classname = new Label(classList.get(i).getName());
 				Boolean visibleCollStatus = classList.get(i).getVisibility();
@@ -151,11 +192,10 @@ public abstract class AddCollectionToClassView extends PopupPanel {
 	
 	public Label getErrorLabel() {
 		return lblError;
-	}
+	}	
 	
-	@UiHandler("cancelResourcePopupBtnLbl")
-	public void cancelButtonEvent(ClickEvent event){
-		hide();
-		Window.enableScrolling(true);
+	public Button getCancelResourcePopupBtnLbl() {
+		return cancelResourcePopupBtnLbl;
 	}
+
 }

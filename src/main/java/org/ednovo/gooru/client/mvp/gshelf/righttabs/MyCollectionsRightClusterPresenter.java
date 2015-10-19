@@ -30,7 +30,6 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
-import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -501,6 +500,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().center();
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassEnabled(true);
 		searchAddResourceToCollectionPresenter.getView().getAppPopUp().setGlassStyleName("setGlassPanelZIndex");
+		Window.enableScrolling(false);
 	}
 	public Map<Integer,Integer> getFirstSelectedData(){
 		return firstSelectedData;
@@ -606,6 +606,44 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void updateContentVisibilityData(String courseId, String unitId, String lessonId,String collectionId,final List<Integer> classId) {
 		AppClientFactory.getInjector().getfolderService().getCollectionByCourse(courseId,unitId,lessonId, collectionId, new AsyncCallback<CollectionDo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+			@Override
+			public void onSuccess(CollectionDo result) {
+				AppClientFactory.getInjector().getClasspageService().updateCollectiontVisibilityToClass(classId, result.getCollectionId(), new AsyncCallback<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+					@Override
+					public void onSuccess(Boolean result) {
+						getView().closePublishPopup();
+					}
+				});
+			}
+		});
+		AppClientFactory.getInjector().getfolderService().getLessonByCourse(courseId,unitId,lessonId, new AsyncCallback<CollectionDo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+			@Override
+			public void onSuccess(CollectionDo result) {
+				AppClientFactory.getInjector().getClasspageService().updateCollectiontVisibilityToClass(classId, result.getCollectionId(), new AsyncCallback<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+					@Override
+					public void onSuccess(Boolean result) {
+						getView().closePublishPopup();
+					}
+				});
+			}
+		});
+		AppClientFactory.getInjector().getfolderService().getUnitByCourse(courseId,unitId, new AsyncCallback<CollectionDo>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				

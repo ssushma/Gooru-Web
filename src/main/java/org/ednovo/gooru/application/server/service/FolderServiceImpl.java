@@ -817,6 +817,44 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		return folderDo;
 	}
 	@Override
+	public CollectionDo getLessonByCourse(String courseId, String unitId, String lessonId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		CollectionDo folderDo = new CollectionDo();
+		String urlGet = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_LESSON, courseId,unitId,lessonId);
+		logger.info("folderDo obj urlGet: "+urlGet);
+		try {
+
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlGet, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			folderDo = deserializeCreatedCollInFolder(jsonRep);
+			logger.info("folderDo obj : "+folderDo);
+			
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
+	@Override
+	public CollectionDo getUnitByCourse(String courseId, String unitId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		CollectionDo folderDo = new CollectionDo();
+		String urlGet = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V1_UPDATE_UNIT, courseId,unitId);
+		logger.info("folderDo obj urlGet: "+urlGet);
+		try {
+
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlGet, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			folderDo = deserializeCreatedCollInFolder(jsonRep);
+			logger.info("folderDo obj : "+folderDo);
+			
+		} catch (Exception e) {
+			logger.error("Exception::", e);
+		}
+		return folderDo;
+	}
+	@Override
 	public void updateCourse(String courseId,String unitId,String lessonId,String collectionId, CreateDo createDo) throws GwtException, ServerDownException {
 		String url = null;
 	

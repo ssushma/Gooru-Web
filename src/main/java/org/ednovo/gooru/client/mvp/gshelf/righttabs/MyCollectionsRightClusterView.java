@@ -391,6 +391,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	        }else if (ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)){
 	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
+	        	   lnkshare.setText(i18n.GL0536());
 	            if(view==null || view.equalsIgnoreCase("course"))
                 {
 	        	lnkPublish.setVisible(true);
@@ -403,6 +404,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	        }else if (COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
 	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
+	        	lnkshare.setText(i18n.GL0536());
 	        	lnkPreview.getElement().getStyle().clearFloat();
 	        	if(view==null || view.equalsIgnoreCase("course"))
                 {
@@ -427,10 +429,15 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 					 lnkPublish.setEnabled(true);
 			        lnkPublish.getElement().getStyle().setColor("#1076bb");
 			        
-			     
-			        if(handlerRegistrationHover!=null){
-			        	handlerRegistrationHover.removeHandler();
+			        if(handlerRegistration!=null){
+			        	 handlerRegistration = lnkPublish.addClickHandler(new PublishClickHandler());
 					}
+			        handlerRegistrationHover = lnkPublish.addMouseOverHandler(new MouseOverHandler() {
+						@Override
+						public void onMouseOver(MouseOverEvent event) {
+							tootltipContainer.setVisible(false);
+						}
+					});
 			        
 				}else{
 				     lnkPublish.getElement().getStyle().setColor("#ddd");
@@ -480,6 +487,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     	{
     		lnkshare.setText(i18n.GL3602());
     	}
+    	else
+    	{
+    		lnkshare.setText(i18n.GL0536());
+    	}
         if (COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
             lnkInfo.setVisible(true);
             lnkContent.setVisible(true);
@@ -512,11 +523,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
      * To enable and disable the share tab based on type.
      */
     private void enableOrHideShareTab() {
-        if(UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView)){
+        if(COURSE.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView)|| LESSON.equalsIgnoreCase(currentTypeView) || FOLDER.equalsIgnoreCase(currentTypeView)){
             lnkshare.setVisible(false);
             moveLbl.setVisible(false);
             copyLbl.setVisible(false);
             myCollDelLbl.setVisible(false);
+            lnkshare.setText(i18n.GL0536());
         }else{
             lnkshare.setVisible(true);
             lnkshare.setText(i18n.GL3602());
@@ -571,6 +583,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         if(COURSE.equalsIgnoreCase(currentTypeView))
         {
         	lnkshare.setText(i18n.GL3602());
+        }
+        else
+        {
+        	lnkshare.setText(i18n.GL0536());
         }
         if(COURSE.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
             lnkshare.setVisible(isVisible);
@@ -675,6 +691,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     private class PublishClickHandler implements ClickHandler{
         @Override
         public void onClick(ClickEvent event) {
+        	if(addtoClassPopup==null)
+        	{
         	final String o1CourseId = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
         	final String o2UnitId = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
         	final String o3LessonId = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
@@ -689,16 +707,25 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     					if(addtoClassPopup.getClassId().size()==0) {
     						addtoClassPopup.getErrorLabel().setVisible(true);
     					} else {
-    						addtoClassPopup.getErrorLabel().setVisible(false);
+    						addtoClassPopup.getErrorLabel().setVisible(false);    					
     						getUiHandlers().updateContentVisibilityData(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId,addtoClassPopup.getClassId());
-    						
+    				
     					}
     				}
     			};
+    			addtoClassPopup.getCancelResourcePopupBtnLbl().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						closePublishPopup();
+						
+					}
+				});
     			addtoClassPopup.getElement().getStyle().setZIndex(9999999);
     			addtoClassPopup.show();
     			addtoClassPopup.center();
         	}
+        }
         }
     }
     
@@ -707,6 +734,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 		Window.enableScrolling(true);
 		if(addtoClassPopup!=null){
 			addtoClassPopup.hide();
+			addtoClassPopup = null;
+	
 		}
 	}
 
@@ -830,24 +859,28 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         @Override
         public void onClick(ClickEvent event) {
 
-
+        	Window.enableScrolling(false);
             if(!(COURSE.equalsIgnoreCase(currentTypeView))){
                 getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
                 getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
                 isCopySelected= true;
                 isMoveSelected=false;
+                lnkshare.setText(i18n.GL0536());
                 getUiHandlers().checkCopyOrMoveStatus(isCopySelected,isMoveSelected,folderObj.getType());
                 getUiHandlers().enableAddButton();
+
             }else if((COURSE.equalsIgnoreCase(currentTypeView))){
             	lnkshare.setText(i18n.GL3602());
                 getUiHandlers().copyCourse(folderObj.getGooruOid());
             }
+        	Window.enableScrolling(false);
         }
     }
 
     private class onMoveClickHandler implements ClickHandler{
         @Override
         public void onClick(ClickEvent event) {
+        	Window.enableScrolling(false);
             isCopySelected= false;
             isMoveSelected= true;
             getUiHandlers().enableAddButton();
@@ -862,6 +895,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                     getUiHandlers().DisableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
                 }
             }
+
         }
 
     }
@@ -901,6 +935,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     public void onDeleteCollectionAssessmentSuccess(String o1CourseId,String o2UnitId, String o3LessonId, String deletedAssessmentCollectionId) {
         hideDeletePopup();
         if("Folder".equalsIgnoreCase(AppClientFactory.getPlaceManager().getRequestParameter("view", null))){
+        	lnkshare.setText(i18n.GL0536());
             Map<String, String> params = new HashMap<String, String>();
             if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
                 params.put("view", "Folder");
@@ -980,6 +1015,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             	lnkshare.setText(i18n.GL3602());
                 getUiHandlers().isStudentDataAvailable(currentTypeView,o1CourseId,o2UnitId, o3LessonId,assessmentCollectionId);
             }else{
+            	lnkshare.setText(i18n.GL0536());
                 invokeDeletePopup(currentTypeView,o1CourseId, o2UnitId, o3LessonId,assessmentCollectionId);
             }
         }
@@ -1087,7 +1123,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     @Override
     public void disableCollabaratorOptions(boolean hide){
         hide = ASSESSMENT_URL.equalsIgnoreCase(currentTypeView)?true:hide;
-        moveLbl.setVisible(hide);
+        if(COURSE.equalsIgnoreCase(currentTypeView) || UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
+            moveLbl.setVisible(false);
+        }else{
+            moveLbl.setVisible(hide);
+        }
         myCollDelLbl.setVisible(hide);
     }
     @Override
