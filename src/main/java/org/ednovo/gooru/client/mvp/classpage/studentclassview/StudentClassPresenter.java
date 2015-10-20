@@ -247,6 +247,8 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 						}
 					};
 				}else{
+					if(classpageDo.getUser()!=null)
+					{
 					if(!classpageDo.getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
 						if(status.equalsIgnoreCase("not-invited")){
 							getView().setPrivateLogoutPanelVisibility(false);
@@ -259,6 +261,10 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 							studentClassLearningMapPresenter.showProgressMapBar(true);
 							getView().setPreviewClassMode(false);
 						}
+					}else{
+						studentClassLearningMapPresenter.showProgressMapBar(false);
+						getView().setPreviewClassMode(true);
+					}
 					}else{
 						studentClassLearningMapPresenter.showProgressMapBar(false);
 						getView().setPreviewClassMode(true);
@@ -279,9 +285,6 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 					getView().setPreviewClassMode(true);
 				}
 			}
-		} else {
-			studentClassLearningMapPresenter.showProgressMapBar(false);
-			getView().setPreviewClassMode(true);
 		}
 	}
 	
