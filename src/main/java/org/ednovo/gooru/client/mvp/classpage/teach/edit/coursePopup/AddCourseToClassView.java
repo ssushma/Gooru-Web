@@ -85,7 +85,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 
-	private int limit=20;
+	private int limit=50;
 	private int pageNum=1;
 	private CourseTreeItem currectCourseSelectedTreeItem = null;
 	private CourseTreeItem previousCourseSelectedTreeItem = null;
@@ -116,7 +116,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		dropdownListContainerScrollPanel.setVisible(false);
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTreePanel);
-		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
+		//dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
 		popupContainer.getElement().setId("addCourseToClasPopup");
 		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
@@ -165,7 +165,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 		}
 	}
 
-	private class ScrollDropdownListContainer implements ScrollHandler{
+/*	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
 			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition() && folderTreePanel.getItemCount()>=20)){
@@ -173,7 +173,7 @@ public class AddCourseToClassView extends PopupViewWithUiHandlers<AddCourseToCla
 				pageNum++;
 			}
 		}
-	}
+	}*/
 	@Override
 	public Widget asWidget() {
 		return appPopUp;

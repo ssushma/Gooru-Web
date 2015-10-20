@@ -88,6 +88,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     @UiField FlowPanel pnlBreadCrumbMain;
 
     FolderDo folderObj;
+    FolderDo courseFolderObj = new FolderDo();
 
     DeletePopupViewVc deletePopup = null;
 
@@ -162,13 +163,13 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				tootltipContainer.setVisible(false);
 				if(getUiHandlers().getCurrentTreeItem().getParentItem()!=null && getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem()!=null && getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem().getParentItem()!=null)
 				{
-				TreeItem shelfTreeWidget = getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem().getParentItem();
+				final TreeItem shelfTreeWidget = getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem().getParentItem();
 				TreeItem unitshelfTreeWidget = getUiHandlers().getCurrentTreeItem().getParentItem().getParentItem();
 				TreeItem lessonshelfTreeWidget = getUiHandlers().getCurrentTreeItem().getParentItem();
 				TreeItem oldshelfTreeWidget = getUiHandlers().getCurrentTreeItem();				
-				ShelfTreeWidget widget = (ShelfTreeWidget)shelfTreeWidget.getWidget();
-				ShelfTreeWidget fromWidget = (ShelfTreeWidget) oldshelfTreeWidget.getWidget();
-				List<FolderDo> folderListDoChild=new ArrayList<>();				
+				final ShelfTreeWidget widget = (ShelfTreeWidget)shelfTreeWidget.getWidget();
+				final ShelfTreeWidget fromWidget = (ShelfTreeWidget) oldshelfTreeWidget.getWidget();
+				final List<FolderDo> folderListDoChild=new ArrayList<>();				
 				int childWidgetsCount=shelfTreeWidget.getChildCount();
 				for (int i = 0; i < childWidgetsCount; i++) {
 					ShelfTreeWidget widget1 = (ShelfTreeWidget)shelfTreeWidget.getChild(i).getWidget();
@@ -179,10 +180,43 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				unitshelfTreeWidget.removeItems();
 				lessonshelfTreeWidget.removeItems();				
 				getUiHandlers().getShelfMainPresenter().setBreadCrumbs(widget.getUrlParams());
-				getUiHandlers().getShelfMainPresenter().setFolderActiveStatus();			
+				getUiHandlers().getShelfMainPresenter().setFolderActiveStatus();
+				if(widget.getFolderDo()!=null)
+				{
 				getUiHandlers().getShelfMainPresenter().updateTitleOfTreeWidget(widget.getFolderDo(),true,shelfTreeWidget);
 				getUiHandlers().getShelfMainPresenter().setRightPanelData(widget.getFolderDo(), COURSE, folderListDoChild);
-				
+				}
+				else
+				{
+					//here
+					final String courseId=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+
+					AppClientFactory.getInjector().getfolderService().getCourseDetails(courseId, null, null, new SimpleAsyncCallback<FolderDo>() {
+						@Override
+						public void onSuccess(FolderDo result) {
+							courseFolderObj = result;
+							getUiHandlers().getShelfMainPresenter().updateTitleOfTreeWidget(result,true,shelfTreeWidget);
+							getUiHandlers().getShelfMainPresenter().setRightPanelData(result, COURSE, folderListDoChild);
+							HashMap<String,String> params = new HashMap<String,String>();
+							params.put("o1", courseId);
+							params.put("view", "Course");
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+							fromWidget.setActiveStyle(false);
+							fromWidget.setFolderOpenedStatus(false);
+							widget.setActiveStyle(true);
+							widget.setFolderOpenedStatus(false);
+							widget.getTitleFocPanel().addStyleName("course");				
+							getUiHandlers().getShelfMainPresenter().getOrganizeRootPnl().setStyleName("active");
+							widget.getTitleFocPanel().removeStyleName("open");				
+							shelfTreeWidget.removeItems();				
+							shelfTreeWidget.setState(false);				
+							widget.openFolderInShelfFromCourse(result);
+							getUiHandlers().setTabItems(3, COURSE, result);
+						}
+					});
+				}
+				if(widget.getFolderDo()!=null)
+				{			
 				fromWidget.setActiveStyle(false);
 				fromWidget.setFolderOpenedStatus(false);
 				widget.setActiveStyle(true);
@@ -193,8 +227,8 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 				shelfTreeWidget.removeItems();				
 				shelfTreeWidget.setState(false);				
 				widget.openFolderInShelfFromCourse(widget.getFolderDo());
-				
 				getUiHandlers().setTabItems(3, COURSE, widget.getFolderDo());
+				}
 				}
 			}
 		});
@@ -415,6 +449,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	        	lnkPublish.setVisible(false);
 	        	}
 	        }
+	        else if(FOLDER.equalsIgnoreCase(currentTypeView))
+	        {
+	        	lnkPreview.setVisible(false);
+		    	lnkPublish.setVisible(false);
+		    	lnkshare.setText(i18n.GL0536());
+		    	lnkshare.setVisible(false);
+	        	moveLbl.setVisible(false);
+	        	copyLbl.setVisible(false);
+	        	lnkPreview.getElement().getStyle().clearFloat();
+	        }
     	}
     }
 
@@ -426,7 +470,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			@Override
 			public void onSuccess(Integer result) {
 				if(result>0){
-					 lnkPublish.setEnabled(true);
+					 lnkPublish.setStyleName("disabled");
 			        lnkPublish.getElement().getStyle().setColor("#1076bb");
 			        
 			        if(handlerRegistration!=null){
@@ -441,7 +485,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			        
 				}else{
 				     lnkPublish.getElement().getStyle().setColor("#ddd");
-				     lnkPublish.setEnabled(false);
+				     lnkPublish.removeStyleName("disabled");
 				     if(handlerRegistration!=null){
 							handlerRegistration.removeHandler();
 						}
@@ -503,6 +547,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             lnkInfo.setVisible(true);
             lnkContent.setVisible(false);
             lnkshare.setVisible(false);
+        }
+        else if(FOLDER.equalsIgnoreCase(currentTypeView))
+        {
+        	lnkPreview.setVisible(false);
+	    	lnkPublish.setVisible(false);
+	    	lnkshare.setText(i18n.GL0536());
+	    	lnkshare.setVisible(false);
+        	moveLbl.setVisible(false);
+        	copyLbl.setVisible(false);
+        	lnkPreview.getElement().getStyle().clearFloat();
         }
     }
     public void onpublishHover(MouseOverEvent event)
@@ -594,7 +648,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 
         if(COURSE.equalsIgnoreCase(currentTypeView) || UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
             moveLbl.setVisible(false);
-        }else{
+        }else if(FOLDER.equalsIgnoreCase(currentTypeView)){
+        	   moveLbl.setVisible(false);
+        }
+        else{
         	moveLbl.setVisible(isVisible);
         }
 
@@ -610,7 +667,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             }
         }
 
-        copyLbl.setVisible(isVisible);
+        if(FOLDER.equalsIgnoreCase(currentTypeView)){
+        	copyLbl.setVisible(false);
+        }
+        else
+        {
+            copyLbl.setVisible(isVisible);	
+        }
+   
         myCollDelLbl.setVisible(isVisible);
     }
     /**
@@ -699,7 +763,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         	final String assessmentCollectionId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
             String view = AppClientFactory.getPlaceManager().getRequestParameter("view",null);
             if(view==null || view.equalsIgnoreCase("course"))
-        	if(lnkPublish.isEnabled())
+        	if(lnkPublish.getStyleName().contains("disabled"))
         	{
         		addtoClassPopup = new AddCollectionToClassView(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId) {
     				@Override
