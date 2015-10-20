@@ -36,7 +36,7 @@ border-top: 1px solid #e5e5e5;
 	position: relative;
 }
 .dropdownListClassContainerScrollPanel{
-	height:150px;
+	height:200px;
 }
 .my-content-class-error-msg-layoutPublish {
 	width: 30%;
@@ -935,7 +935,7 @@ button.btn-disabled{
 }
 .my-content-class-error-msg-layout {
 	width: 30%;
-	margin: 10% 35%;
+	margin: 1% 2%;
 }
 .my-contentclass-collection-share{
 	margin-top: 30px;
