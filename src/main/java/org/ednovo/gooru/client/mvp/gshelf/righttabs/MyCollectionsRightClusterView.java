@@ -460,7 +460,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			@Override
 			public void onSuccess(Integer result) {
 				if(result>0){
-					 lnkPublish.setEnabled(true);
+					 lnkPublish.setStyleName("disabled");
 			        lnkPublish.getElement().getStyle().setColor("#1076bb");
 			        
 			        if(handlerRegistration!=null){
@@ -475,7 +475,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 			        
 				}else{
 				     lnkPublish.getElement().getStyle().setColor("#ddd");
-				     lnkPublish.setEnabled(false);
+				     lnkPublish.removeStyleName("disabled");
 				     if(handlerRegistration!=null){
 							handlerRegistration.removeHandler();
 						}
@@ -733,7 +733,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         	final String assessmentCollectionId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
             String view = AppClientFactory.getPlaceManager().getRequestParameter("view",null);
             if(view==null || view.equalsIgnoreCase("course"))
-        	if(lnkPublish.isEnabled())
+        	if(lnkPublish.getStyleName().contains("disabled"))
         	{
         		addtoClassPopup = new AddCollectionToClassView(o1CourseId,o2UnitId,o3LessonId,assessmentCollectionId) {
     				@Override
