@@ -449,6 +449,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	        	lnkPublish.setVisible(false);
 	        	}
 	        }
+	        else if(FOLDER.equalsIgnoreCase(currentTypeView))
+	        {
+	        	lnkPreview.setVisible(false);
+		    	lnkPublish.setVisible(false);
+		    	lnkshare.setText(i18n.GL0536());
+		    	lnkshare.setVisible(false);
+	        	moveLbl.setVisible(false);
+	        	copyLbl.setVisible(false);
+	        	lnkPreview.getElement().getStyle().clearFloat();
+	        }
     	}
     }
 
@@ -537,6 +547,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             lnkInfo.setVisible(true);
             lnkContent.setVisible(false);
             lnkshare.setVisible(false);
+        }
+        else if(FOLDER.equalsIgnoreCase(currentTypeView))
+        {
+        	lnkPreview.setVisible(false);
+	    	lnkPublish.setVisible(false);
+	    	lnkshare.setText(i18n.GL0536());
+	    	lnkshare.setVisible(false);
+        	moveLbl.setVisible(false);
+        	copyLbl.setVisible(false);
+        	lnkPreview.getElement().getStyle().clearFloat();
         }
     }
     public void onpublishHover(MouseOverEvent event)
@@ -628,7 +648,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 
         if(COURSE.equalsIgnoreCase(currentTypeView) || UNIT.equalsIgnoreCase(currentTypeView) || LESSON.equalsIgnoreCase(currentTypeView)){
             moveLbl.setVisible(false);
-        }else{
+        }else if(FOLDER.equalsIgnoreCase(currentTypeView)){
+        	   moveLbl.setVisible(false);
+        }
+        else{
         	moveLbl.setVisible(isVisible);
         }
 
@@ -644,7 +667,14 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             }
         }
 
-        copyLbl.setVisible(isVisible);
+        if(FOLDER.equalsIgnoreCase(currentTypeView)){
+        	copyLbl.setVisible(false);
+        }
+        else
+        {
+            copyLbl.setVisible(isVisible);	
+        }
+   
         myCollDelLbl.setVisible(isVisible);
     }
     /**
