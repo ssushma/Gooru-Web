@@ -407,9 +407,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	    	lnkPreview.setVisible(false);
 	    	lnkPublish.setVisible(false);
 	    	lnkshare.setText(i18n.GL0536());
+	        lnkContent.setVisible(true);
     	}else{
 	    	myCollDelLbl.setVisible(true);
 	    	copyLbl.setVisible(true);
+	    	 lnkContent.setVisible(true);
 	        if (COURSE.equalsIgnoreCase(currentTypeView)){
 	        	lnkPreview.setVisible(false);
 		    	lnkPublish.setVisible(false);
@@ -426,14 +428,17 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
 	        	moveLbl.setVisible(true);
 	        	lnkPreview.setVisible(true);
 	        	   lnkshare.setText(i18n.GL0536());
-	            if(view==null || view.equalsIgnoreCase("course"))
-                {
-	        	lnkPublish.setVisible(true);
-                }
-	            else
-	            {
-	            lnkPublish.setVisible(false);	
-	            }
+	        	   lnkshare.setVisible(false);
+		        	if(view==null || view.equalsIgnoreCase("course"))
+	                {
+		        	lnkPublish.setVisible(true);
+		            }
+		        	else
+		        	{
+		        	lnkPublish.setVisible(false);
+		        	}
+	            lnkContent.setVisible(false);
+	            
 	        	lnkPreview.getElement().getStyle().setFloat(Float.RIGHT);
 	        }else if (COLLECTION.equalsIgnoreCase(currentTypeView) || ASSESSMENT.equalsIgnoreCase(currentTypeView)){
 	        	moveLbl.setVisible(true);
@@ -659,7 +664,16 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             lnkPreview.setVisible(isVisible);
             if(view==null || view.equalsIgnoreCase("course"))
             {
-            lnkPublish.setVisible(isVisible);
+            	if(ASSESSMENT_URL.equalsIgnoreCase(currentTypeView))
+            	{
+            		 lnkPublish.setVisible(isVisible);
+            		  lnkshare.setVisible(false);
+            		  lnkContent.setVisible(false);
+            	}
+            	else
+            	{
+            		 lnkPublish.setVisible(isVisible);
+            	}
             }
             else
             {
@@ -1094,6 +1108,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
      * @param o3LessonId
      * @param assessmentCollectionId
      * @param isTiedWithClasses
+     * 
      */
     private void invokeMyCollDeletePopUp(String currentTypeView, final String o1CourseId, final String o2UnitId, final String o3LessonId, final String assessmentCollectionId, boolean isTiedWithClasses) {
         deletePopup = new DeletePopupViewVc() {
