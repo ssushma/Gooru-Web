@@ -107,7 +107,8 @@ public class ErrorPopup extends PopupPanel{
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("view", "Folder");
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT,params);
-		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
+		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) || 
+				AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASS)){
 			navigateClasspage();
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT_VIEW)){
 			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.HOME);
@@ -120,21 +121,28 @@ public class ErrorPopup extends PopupPanel{
 		closePopup();
 	}
 	private void navigateClasspage(){
-		AppClientFactory.getInjector().getClasspageService().v2GetAllClasspages("1", "0", new SimpleAsyncCallback<ClasspageListDo>() {
-			@Override
-			public void onSuccess(ClasspageListDo result) {
-				if (result.getSearchResults().size()>0){
-					String gooruOId = result.getSearchResults().get(0).getGooruOid();
-					Map<String, String> params = new HashMap<String, String>();
-					params.put("classpageId", gooruOId);
-					params.put("pageNum", "0");
-					params.put("pageSize", "10");
-					params.put("pos", "1");
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE, params);
-				}else{
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
+			AppClientFactory.getInjector().getClasspageService().v2GetAllClasspages("1", "0", new SimpleAsyncCallback<ClasspageListDo>() {
+				@Override
+				public void onSuccess(ClasspageListDo result) {
+					if (result.getSearchResults().size()>0){
+						String gooruOId = result.getSearchResults().get(0).getGooruOid();
+						Map<String, String> params = new HashMap<String, String>();
+						params.put("classpageId", gooruOId);
+						params.put("pageNum", "0");
+						params.put("pageSize", "10");
+						params.put("pos", "1");
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE, params);
+					}else{
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+					}
 				}
-			}
-		});
+			});
+		} else {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("page-view", "myclass");
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME, params);
+		}
+		
 	}
 }
