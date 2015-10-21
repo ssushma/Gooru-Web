@@ -11,33 +11,14 @@
 .imageCanvas {
 	opacity: 0.4;
 	background-color: #FFF;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	text-align: center;
-	right: 0px;
-	width: auto;
-	height: auto;
-	max-width: 400px;
-	max-height: 300px;
 }
 
 .selection {
 	border: 2px dashed white;
 	z-index: 1;
-	display:inline-block;
 }
 .selection IMG{
 	background-color: #FFF;
-	position: absolute;
-	top: 0px;
-	width:auto;
-	height: auto;
-	text-align: center;
-	right: 0px;
-	margin: 0 auto;
-	max-width: 400px;
-	max-height: 300px;
 }
 .selectionDraggableBackground{
 	background: rgba(255, 255, 255, 0);

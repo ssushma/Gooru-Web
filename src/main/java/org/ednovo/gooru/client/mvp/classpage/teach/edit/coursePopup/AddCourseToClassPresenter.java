@@ -93,7 +93,7 @@ public class AddCourseToClassPresenter extends PresenterWidget<IsAddCourseToClas
 		if(searchType.equalsIgnoreCase("class")){
 			type="course";
 		}
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, 50,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(type.equalsIgnoreCase("course")){

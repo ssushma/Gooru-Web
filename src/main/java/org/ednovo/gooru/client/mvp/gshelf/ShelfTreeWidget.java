@@ -387,6 +387,13 @@ public class ShelfTreeWidget extends FocusPanel {
 				openFolderInShelf();
 			}
 		}
+		else
+		{
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.MYCONTENT) && !isEditButtonSelected) {
+				openCollectionInShelf();
+			}
+			
+		}
 	}
 
 	public void setOpen() {
@@ -573,6 +580,38 @@ public class ShelfTreeWidget extends FocusPanel {
 		params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 //		AppClientFactory.fireEvent(new SetFolderParentNameEvent(title));
+
+	}
+	
+	public void openFolderInShelfFromCourse(FolderDo collectionDoObj) {
+		Map<String,String> params = new HashMap<String,String>();
+		HashMap<String,String> widgetTitles = new HashMap<String,String>();
+		String gooruoId = collectionDoObj==null?null:collectionDoObj.getGooruOid();
+		String title = collectionDoObj==null?"":collectionDoObj.getTitle();
+
+		if(getLevel()==1) {
+			params.put(O1_LEVEL, gooruoId);
+			widgetTitles.put(COURSE, title);
+		} else if(getLevel()==2) {
+			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			params.put(O2_LEVEL, gooruoId);
+
+			widgetTitles.put(COURSE, urlParams.get(COURSE));
+			widgetTitles.put(UNIT, title);
+
+		} else if(getLevel()==3) {
+			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+			params.put(O3_LEVEL, gooruoId);
+
+			widgetTitles.put(COURSE, urlParams.get(COURSE));
+			widgetTitles.put(UNIT, urlParams.get(UNIT));
+			widgetTitles.put(LESSON, title);
+
+		}
+		params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
+		//AppClientFactory.fireEvent(new SetFolderParentNameEvent(title));
 
 	}
 

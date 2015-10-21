@@ -126,6 +126,8 @@ public class PartnerLessonUc extends Composite{
 			}
 			lessonTitle.addStyleName("libraryTitle");
 		}
+		if(profileLibraryDoList!=null)
+		{
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			String conceptTitle = "";
 			ProfileLibraryDo profileLibraryTemp = null;
@@ -173,6 +175,7 @@ public class PartnerLessonUc extends Composite{
 					openCollection(libraryGooruOid);
 				}
 			});
+		}
 		}
 		lessonList.add(conceptList);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {

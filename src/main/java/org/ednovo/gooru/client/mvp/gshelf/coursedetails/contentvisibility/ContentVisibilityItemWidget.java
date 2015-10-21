@@ -93,6 +93,7 @@ public class ContentVisibilityItemWidget extends Composite {
 			spanDot.addStyleName(CssTokens.GREEN_STYLE);
 			Iterator<Widget> widgets= rowItem.iterator();
 			while (widgets.hasNext()){
+				AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
 				  Widget widget = widgets.next();
 				  if (widget instanceof ContentVisibilityItemWidget) {
 					  ContentVisibilityItemWidget childWidget = (ContentVisibilityItemWidget)widget;
@@ -108,7 +109,9 @@ public class ContentVisibilityItemWidget extends Composite {
 				  }
 			}
 			addParentSpanDots(contentType);
-			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+			if(!spanDot.getStyleName().contains("tick")) {
+				AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+			}
 		}
 	}
 	
@@ -124,7 +127,9 @@ public class ContentVisibilityItemWidget extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			setSpanDot(contentType, isVisible);
-			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+			if(!spanDot.getStyleName().contains("tick")) {
+				AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+			}
 		}
 	}
 	

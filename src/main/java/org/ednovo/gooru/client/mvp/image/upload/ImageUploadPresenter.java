@@ -221,13 +221,13 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			@Override
 			public void onSuccess(String imageUrl) {
 				if(isProfileImage){
-					AppClientFactory.fireEvent(new SetUserProfileImageEvent(fileNameWithRepository));
+					AppClientFactory.fireEvent(new SetUserProfileImageEvent(imageUrl));
 				}else if(isUdateProfileImage){
-					AppClientFactory.fireEvent(new SetUpdateProfileImageEvent(fileNameWithRepository));
+					AppClientFactory.fireEvent(new SetUpdateProfileImageEvent(imageUrl));
 				}else{
-					AppClientFactory.fireEvent(new SetUserPublicProfileImageEvent(fileNameWithRepository));
+					AppClientFactory.fireEvent(new SetUserPublicProfileImageEvent(imageUrl));
 				}
-				AppClientFactory.fireEvent(new UpdateProfileHeaderImageEvent(fileNameWithRepository));
+				AppClientFactory.fireEvent(new UpdateProfileHeaderImageEvent(imageUrl));
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
 			}

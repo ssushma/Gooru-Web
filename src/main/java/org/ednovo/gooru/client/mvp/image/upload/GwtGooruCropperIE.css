@@ -12,32 +12,13 @@
 	background-color: #FFF;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
     filter: alpha(opacity=40);
-    position: absolute;
-	left: 0px;
-	top: 0px;
-	text-align: center;
-	right: 0px;
-	width: auto;
-	height: auto;
-	max-width: 400px;
-	max-height: 300px;
 }
 .selection {
 	border: 1px dashed white;
 	background: #FFFFFF;
-	display:inline-block;
 }
 .selection IMG{
 	background-color: #FFF;
-	position: absolute;
-	top: 0px;
-	width:auto;
-	height: auto;
-	text-align: center;
-	right: 0px;
-	margin: 0 auto;
-	max-width: 400px;
-	max-height: 300px;
 }
 .selectionDraggableBackground {
 	/* we need this 'hack', because without this magic IE didn't see the draggable area */

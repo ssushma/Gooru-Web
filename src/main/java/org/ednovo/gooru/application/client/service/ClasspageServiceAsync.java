@@ -42,6 +42,7 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.application.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
+import org.ednovo.gooru.application.shared.model.content.CollectionVisibilityDo;
 import org.ednovo.gooru.application.shared.model.content.ResourceDo;
 import org.ednovo.gooru.application.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.application.shared.model.content.TaskDo;
@@ -188,8 +189,6 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence, AsyncCallback<Void> callback);
 	
-	
-	
 	/** new class **/
 	
 	public void v3GetClassByCode(String classCode, AsyncCallback<ClasspageDo> callback);
@@ -199,6 +198,8 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void createClass(String title,String grade,boolean visiblity,AsyncCallback<ClasspageDo> callback);
 	
 	public void  v3GetUserClasses(String limit, String offSet,boolean isContainsCourse, AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
+	
+	public void  v3GetUserCollectionAssociatedClasses(String courseId,String unitId, String lessonId, String collectionId,String limit, String offSet, AsyncCallback<List<CollectionVisibilityDo>> callback) throws GwtException, ServerDownException;
 	
 	public void  v3GetUserStudyClasses(String limit, String offSet,AsyncCallback<ClasspageListDo> callback) throws GwtException, ServerDownException;
 	
@@ -249,5 +250,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void getContentVisibilityData(String classpageId, String courseId, String unitId, String lessonId, AsyncCallback<ArrayList<PlanProgressDo>> simpleAsyncCallback) throws GwtException,ServerDownException;
 
 	public void updateClassContentVisibility(String classId, List<PlanProgressDo> collectionIds, AsyncCallback<Boolean> simpleAsyncCallback) throws GwtException,ServerDownException;
+	
+	public void updateCollectiontVisibilityToClass(List<Integer> classId,  Integer collectionId, AsyncCallback<Boolean> simpleAsyncCallback) throws GwtException,ServerDownException;
 	
 }
