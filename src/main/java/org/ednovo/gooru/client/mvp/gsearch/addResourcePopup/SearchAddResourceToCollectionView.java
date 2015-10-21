@@ -537,7 +537,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 										getUiHandlers().copyUnitToCourse(this.urlparams,AppClientFactory.getPlaceManager().getRequestParameter("o2",null));
 									}
 								}else if(LESSON.equalsIgnoreCase(copyType)){
-									if(item.getCourseSummary()!=null && item.getCourseSummary().getUnitCount()!=null&&item.getCourseSummary().getUnitCount()>=20){
+									if(item.getCourseSummary()!=null && item.getCourseSummary().getLessonCount()!=null&&item.getCourseSummary().getLessonCount()>=20){
 										lblError.setText("Lesson limit reached");
 										lblError.setVisible(true);
 										enableDisableAddBtn(false);
