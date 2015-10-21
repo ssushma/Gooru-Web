@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -226,16 +227,50 @@ public class ContentVisibilityItemWidget extends Composite {
 		this.isClicked = isClicked;
 	}
 
-	public void setArrowStyle(boolean isVisible) {
-		arrowPanel.setVisible(isVisible);
-		arrowPanel.setStyleName("class-name-arrow-down");
-		if(isVisible) {
+	public void setArrowStyle(boolean isVisible, int size) {
+		if(!isClicked()) {
+			arrowPanel.setVisible(isVisible);
+			arrowPanel.setStyleName("class-name-arrow-down");
 			iconPanel.addStyleName("open");
-		} else {
 			if("unit".equalsIgnoreCase(contentType)) {
 				iconPanel.getElement().getStyle().setMarginLeft(15, Unit.PX);
 			} else if("lesson".equalsIgnoreCase(contentType)) {
 				iconPanel.getElement().getStyle().setMarginLeft(35, Unit.PX);
+			}
+		} else {
+			if(isVisible) {
+				arrowPanel.setStyleName("class-name-arrow-down");
+				iconPanel.addStyleName("open");
+			} else {
+				if(size==0) {
+					arrowPanel.setStyleName("class-name-arrow-down");
+					iconPanel.addStyleName("open");
+				} else {
+					arrowPanel.setStyleName("class-name-arrow-right");
+					iconPanel.removeStyleName("open");
+				}
+			}
+		}
+	}
+	
+	@UiHandler("contentPanel")
+	public void ClickContentPanel(ClickEvent event) {
+		if(isClicked()) {
+			Iterator<Widget> childWidgets= rowItem.iterator();
+			while (childWidgets.hasNext()){
+				Widget childWidget = childWidgets.next();
+				if (childWidget instanceof ContentVisibilityItemWidget) {
+					if(arrowPanel.getStyleName().equalsIgnoreCase("class-name-arrow-down")) {
+						childWidget.setVisible(false);
+					} else if(arrowPanel.getStyleName().equalsIgnoreCase("class-name-arrow-right")) {
+						childWidget.setVisible(true);
+					}
+				}
+			}
+			if(arrowPanel.getStyleName().contains("class-name-arrow-down")) {
+				setArrowStyle(false,1);
+			} else if(arrowPanel.getStyleName().contains("class-name-arrow-right")) {
+				setArrowStyle(true,1);
 			}
 		}
 	}

@@ -108,9 +108,9 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		public void setLessonData(ArrayList<PlanProgressDo> dataList, final String classId, final String courseId, final String unitId, final String contentType, final ContentVisibilityItemWidget widget) {
 			int size = dataList.size();
 			if(size>0) {
-				widget.setArrowStyle(true);
+				widget.setArrowStyle(true,1);
 			} else {
-				widget.setArrowStyle(false);
+				widget.setArrowStyle(false,0);
 			}
 			for(int i=0;i<size;i++) {
 				final String lessonId = dataList.get(i).getGooruOid();
@@ -139,9 +139,9 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 		public void setCollectionData(ArrayList<PlanProgressDo> dataList, String unitId, String lessonId, ContentVisibilityItemWidget widget) {
 			int size = dataList.size();
 			if(size>0) {
-				widget.setArrowStyle(true);
+				widget.setArrowStyle(true,1);
 			} else {
-				widget.setArrowStyle(false);
+				widget.setArrowStyle(false,0);
 			}
 			for(int i=0;i<size;i++) {
 				final ContentVisibilityItemWidget collectionWidget = new ContentVisibilityItemWidget("collection",dataList.get(i),unitId,lessonId);
