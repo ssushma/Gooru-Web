@@ -314,6 +314,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 		});
 
+		questionContainerPnl.setVisible(false);
 	}
 
 	public void hideTabButtons(boolean isResourceWidget,boolean isQuestionWidget,boolean isAssementsWidget){
@@ -1237,6 +1238,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		questionContainerPnl.clear();
 		if (slot == AddResourceUiHandlers.SLOT_QUESTION_TYPE) {
 			tabViewContainer.setVisible(false);
+			questionContainerPnl.setVisible(true);
 			questionContainerPnl.setWidget(content);
 		}
 
@@ -1244,6 +1246,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	public void clearQuestionSlot() {
 		questionContainerPnl.clear();
+		questionContainerPnl.setVisible(false);
 		tabViewContainer.setVisible(true);
 	}
 

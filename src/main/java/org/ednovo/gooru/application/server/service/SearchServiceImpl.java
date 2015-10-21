@@ -899,45 +899,46 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		String query1=searchDo.getSearchQuery();
 		collectionQuery= query1 ;
 		try{
-			if(collectionQuery.length()>2)
-			{
-			if(searchDo.getFilters()!=null){
-			/*for (String key : searchDo.getFilters().keySet()) {
-					  String value = searchDo.getFilters().get(key);
-					  value=value.replaceAll("&", "%26");
-					  searchDo.getFilters().put(key, value);
-				}*/
-			 }
-			JsonRepresentation jsonRep=null;
-			if(collectionQuery!=null)
-			{
-			if(collectionQuery.equalsIgnoreCase("'*'")){
-				collectionQuery = "*";
-			}
-			}
-			String partialUrl = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_SIMPLE_COLLECTION_SEARCH,getLoggedInSessionToken());
-			Map<String,String> params = searchDo.getFilters();
+			if (collectionQuery.length() > 2) {
+				JsonRepresentation jsonRep = null;
+				if (collectionQuery != null) {
+					if (collectionQuery.equalsIgnoreCase("'*'")) {
+						collectionQuery = "*";
+					}
+				}
+				String partialUrl = UrlGenerator.generateUrl(
+						getSearchEndPoint(),
+						UrlToken.V2_SIMPLE_COLLECTION_SEARCH,
+						getLoggedInSessionToken());
+				Map<String, String> params = searchDo.getFilters();
 
-			//params.put(GooruConstants.ACCESS_TYPE, MY_STRING);
-			params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
-			params.put(GooruConstants.START, String.valueOf(searchDo.getPageNum()));
-			params.put(GooruConstants.Q, collectionQuery);
-			params.put(GooruConstants.INCLUDECIMETADATA, "true");
-			//params.put(GooruConstants.PRETTY, "1");
-			String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+				// params.put(GooruConstants.ACCESS_TYPE, MY_STRING);
+				params.put(GooruConstants.LENGTH,
+						String.valueOf(searchDo.getPageSize()));
+				params.put(GooruConstants.START,
+						String.valueOf(searchDo.getPageNum()));
+				params.put(GooruConstants.Q, collectionQuery);
+				params.put(GooruConstants.INCLUDECIMETADATA, "true");
+				// params.put(GooruConstants.PRETTY, "1");
+				String url = AddQueryParameter.constructQueryParams(partialUrl,
+						params);
 
-			if(getHomeEndPoint().contains(HTTPS)){
-				url = appendHttpsURL(url);
-			}
-			getLogger().info("collection search url::::::"+url);
-			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-			jsonRep=jsonResponseRep.getJsonRepresentation();
+				if (getHomeEndPoint().contains(HTTPS)) {
+					url = appendHttpsURL(url);
+				}
+				getLogger().info("collection search url::::::" + url);
+				JsonResponseRepresentation jsonResponseRep = ServiceProcessor
+						.get(url, getSearchUsername(), getSearchPassword());
+				jsonRep = jsonResponseRep.getJsonRepresentation();
 
-			return descralizeCollectionSearchResults(jsonRep.getJsonObject().toString(),searchDo);
-			}
-			else
-			{
-				return new SearchDo<CollectionSearchResultDo>();	
+				if  (jsonResponseRep.getStatusCode() == 200){
+					return descralizeCollectionSearchResults(jsonRep
+						.getJsonObject().toString(), searchDo);
+				}else{
+					return new SearchDo<CollectionSearchResultDo>();
+				}
+			} else {
+				return new SearchDo<CollectionSearchResultDo>();
 			}
 		}catch(Exception e){
 			logger.error("Exception::", e);
