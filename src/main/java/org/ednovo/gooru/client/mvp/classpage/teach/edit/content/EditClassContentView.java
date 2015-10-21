@@ -177,7 +177,7 @@ public class EditClassContentView extends BaseViewWithHandlers<EditClassContentV
 	@UiHandler("contentRedirectionLbl")
 	public void redirectContentVisibility(ClickEvent event){
 		Map<String,String> params = new HashMap<String,String>();
-		params.put("o1", classpageDo.getCourseGooruOid());
+		params.put("o1", AppClientFactory.getPlaceManager().getRequestParameter("c-id", ""));
 		params.put("share", "true");
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
 	}

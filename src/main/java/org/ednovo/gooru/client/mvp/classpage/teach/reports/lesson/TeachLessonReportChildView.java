@@ -150,7 +150,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
     				if(collectionProgressDataDo.getType()!=null && collectionProgressDataDo.getType().equalsIgnoreCase(QUESTION)){
     					HTML questionPnl=new HTML(collectionProgressDataDo.getSequence()+": Question");
     					adTable.setHeaderWidget(rowCount+1,questionPnl);
-    					 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
+    					 if(!collectionProgressDataDo.getQuestionType().equalsIgnoreCase("OE")){
     						 noOfQuestions++;
     					 }
     				}else{
