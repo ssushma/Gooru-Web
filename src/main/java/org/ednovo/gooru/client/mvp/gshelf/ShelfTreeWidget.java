@@ -119,6 +119,8 @@ public class ShelfTreeWidget extends FocusPanel {
 	private static final String O2_LEVEL = "o2";
 
 	private static final String O3_LEVEL = "o3";
+	
+	private String lessonId = "";
 
 
 	private String widgetType;
@@ -447,6 +449,8 @@ public class ShelfTreeWidget extends FocusPanel {
 		if(level==3) {
 			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+			lessonId = gooruoId;
+			
 			this.urlParams.put(O3_LEVEL, gooruoId);
 
 			this.urlParams.put(COURSE, urlParams.get(COURSE));
@@ -457,6 +461,7 @@ public class ShelfTreeWidget extends FocusPanel {
 			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
 			this.urlParams.put(O3_LEVEL, urlParams.get(O3_LEVEL));
+			lessonId = urlParams.get(O3_LEVEL);
 			this.urlParams.put(ID, gooruoId);
 
 			this.urlParams.put(COURSE, urlParams.get(COURSE));
@@ -618,7 +623,6 @@ public class ShelfTreeWidget extends FocusPanel {
 	public void openCollectionInShelf() {
     	Map<String,String> params = new HashMap<String,String>();
     	String gooruoId = collectionDo==null?null:collectionDo.getGooruOid();
-
     	if(getLevel()==2) {
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 		} else if(getLevel()==3) {
@@ -627,7 +631,14 @@ public class ShelfTreeWidget extends FocusPanel {
 		} else if(getLevel()==4){
 			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
 			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+			if(urlParams.get(O3_LEVEL)!=null)
+			{
 			params.put(O3_LEVEL, urlParams.get(O3_LEVEL));
+			}
+			else
+			{
+			params.put(O3_LEVEL, lessonId);
+			}
 		}
     	params.put(ID, gooruoId);
     	params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
