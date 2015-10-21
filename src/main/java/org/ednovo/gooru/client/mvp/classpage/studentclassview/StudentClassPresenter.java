@@ -211,17 +211,23 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 		AppClientFactory.getInjector().getClasspageService().v3GetClassById(id, new AsyncCallback<ClasspageDo>() {
 			@Override
 			public void onSuccess(ClasspageDo result) {
-				classpageDo = result;
-				getView().setCourseData(classpageDo);
-				setCheckClassVisiblity(classpageDo);
-				studentClassLearningMapPresenter.setClasspageDo(classpageDo);
-				studentClassReportPresenter.setClasspageDo(classpageDo);
-				if(result.getCourseGooruOid()==null) {
-					getView().setProgressBarVisibility(false);
-				} else {
-					getView().setProgressBarVisibility(true);
+				if(result!=null && result.getClassUid() != null){
+					classpageDo = result;
+					getView().setCourseData(classpageDo);
+					setCheckClassVisiblity(classpageDo);
+					studentClassLearningMapPresenter.setClasspageDo(classpageDo);
+					studentClassReportPresenter.setClasspageDo(classpageDo);
+					if(result.getCourseGooruOid()==null) {
+						getView().setProgressBarVisibility(false);
+					} else {
+						getView().setProgressBarVisibility(true);
+					}
+					loadNavigationPage();
+				} else{
+					ErrorPopup error = new ErrorPopup(i18n.GL1632());
+					error.center();
+					error.show();
 				}
-				loadNavigationPage();
 			}
 			
 			@Override

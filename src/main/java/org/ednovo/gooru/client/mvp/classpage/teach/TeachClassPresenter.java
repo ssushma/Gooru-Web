@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpage.teach;
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -34,7 +35,9 @@ import org.ednovo.gooru.client.UrlNavigationTokens;
 import org.ednovo.gooru.client.mvp.classpage.teach.TeachClassPresenter.IsTeachClassProxy;
 import org.ednovo.gooru.client.mvp.classpage.teach.edit.content.EditClassSettingsNavigationPresenter;
 import org.ednovo.gooru.client.mvp.classpage.teach.reports.TeachStudentDashboardPresenter;
+import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -67,6 +70,8 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	ClasspageDo classpageDo = null;
 	
 	boolean isReveal = false;
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.EDIT_CLASS)
@@ -108,7 +113,6 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
     	       loadNavigationPage();
     	   }
        }
-       getView().setNavaigationTab();
 	}
 	
 	public void getClassDetails(){
@@ -119,11 +123,17 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 
 				@Override
 				public void onSuccess(ClasspageDo result) {
-					classpageDo=result;
-					getView().setClassHeaderView(result);
-					editClassSettingsNavigationPresenter.setClassDetails(result); 
-					editClassSettingsNavigationPresenter.getCourseData();
-					loadNavigationPage();
+					if(result!=null && result.getClassUid() != null){
+						classpageDo=result;
+						getView().setClassHeaderView(result);
+						editClassSettingsNavigationPresenter.setClassDetails(result); 
+						editClassSettingsNavigationPresenter.getCourseData();
+						loadNavigationPage();
+					} else {
+						ErrorPopup error = new ErrorPopup(i18n.GL1632());
+						error.center();
+						error.show();
+					}
 				}
 				
 			});
@@ -147,6 +157,7 @@ public class TeachClassPresenter extends BasePlacePresenter<IsTeachClassView, Is
 	}
 	
 	public void  loadNavigationPage(){
+	    getView().setNavaigationTab();
 		String loadPage = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT,"");
 		try{
 			clearSlot(CLASS_CONTENT_TAB);
