@@ -659,7 +659,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         else{
         	moveLbl.setVisible(isVisible);
         }
-
         if(ASSESSMENT_URL.equalsIgnoreCase(currentTypeView) || COLLECTION.equalsIgnoreCase(currentTypeView)|| currentTypeView.contains(ASSESSMENT)){
             lnkPreview.setVisible(isVisible);
             if(view==null || view.equalsIgnoreCase("course"))
@@ -677,6 +676,11 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
             }
             else
             {
+        	if(ASSESSMENT_URL.equalsIgnoreCase(currentTypeView))
+        	{
+        		  lnkshare.setVisible(false);
+        		  lnkContent.setVisible(false);
+        	}
             lnkPublish.setVisible(false);	
             }
         }
