@@ -144,8 +144,6 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 	
 	@Override
 	public void setCourseData(ClasspageDo classpageDo) {
-		if(classpageDo.getPermissions()!=null)
-		{
 		this.classpageDo=classpageDo;
 		switchCheckBox.getElement().setId("myonoffswitch");
 		switchCheckBox.getElement().setAttribute("name", "onoffswitch");
@@ -192,14 +190,8 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 		};
 		AppClientFactory.getEventBus().addHandler(OpenJoinClassPopupEvent.TYPE,openJoinClassPopupHandler);
 		setEmptyContainerVisiblity(true);
-		}
-		else
-		{
-		ErrorPopup error = new ErrorPopup(i18n.GL3603());
-		error.center();
-		error.show();
-		setEmptyContainerVisiblity(false);
-		}
+		
+
 	}
 	
 	@Override

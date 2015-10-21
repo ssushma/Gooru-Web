@@ -70,7 +70,7 @@ public abstract class AddCollectionToClassView extends PopupPanel {
 			
 			@Override
 			public void onScroll(ScrollEvent event) {
-				if(totalClassesCountVal>=initialOffset)
+				if((totalClassesCountVal>=initialOffset)&&(initialOffset!=0))
 				{
 				getTeachClassesList(courseId,unitId,lessonId,collectionId,limitClasses,initialOffset);
 				initialOffset = initialOffset+20;
@@ -90,6 +90,7 @@ public abstract class AddCollectionToClassView extends PopupPanel {
 				if(classPageListDo.size()==20)
 				{
 				totalClassesCountVal = initialOffset+limitClasses;
+				initialOffset = initialOffset+20;
 				}
 				else
 				{

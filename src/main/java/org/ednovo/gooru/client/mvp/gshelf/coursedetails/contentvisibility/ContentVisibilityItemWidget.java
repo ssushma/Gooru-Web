@@ -93,7 +93,7 @@ public class ContentVisibilityItemWidget extends Composite {
 			spanDot.addStyleName(CssTokens.GREEN_STYLE);
 			Iterator<Widget> widgets= rowItem.iterator();
 			while (widgets.hasNext()){
-				AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+				AppClientFactory.fireEvent(new EnablePublishButtonEvent(false));
 				  Widget widget = widgets.next();
 				  if (widget instanceof ContentVisibilityItemWidget) {
 					  ContentVisibilityItemWidget childWidget = (ContentVisibilityItemWidget)widget;
