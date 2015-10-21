@@ -60,7 +60,7 @@ public abstract class AddClassToCourseView extends PopupPanel {
 	}
 	
 	private void getTeachClassesList() {
-		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses("20", "0",false, new SimpleAsyncCallback<ClasspageListDo>() {
+		AppClientFactory.getInjector().getClasspageService().v3GetUserClasses("20", "0",true, new SimpleAsyncCallback<ClasspageListDo>() {
 			@Override
 			public void onSuccess(ClasspageListDo classPageListDo) {
 				setClassesList(classPageListDo.getSearchResult());
