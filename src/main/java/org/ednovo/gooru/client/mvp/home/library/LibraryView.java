@@ -1143,8 +1143,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 					//here
 				}
 			} else {
-				educatorPhoto.setVisible(true);
-				featuredContributor.setVisible(true);
+				educatorPhoto.setVisible(false);
+				featuredContributor.setVisible(false);
 				final String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
 				if(courseDo!=null) {
 					if(courseDo.getThumbnails()!=null&&courseDo.getThumbnails().getUrl().isEmpty()) {
