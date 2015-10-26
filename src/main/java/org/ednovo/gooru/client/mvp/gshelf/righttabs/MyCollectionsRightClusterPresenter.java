@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
@@ -560,6 +561,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	
 	protected void callJobSuccessApi(final String jobUrl,final HashMap<String, String> urlparams) {
+
 		AppClientFactory.getInjector().getfolderService().jobCheck(jobUrl,new SimpleAsyncCallback<Map<String,String>>() {
 
 			@Override

@@ -42,6 +42,7 @@ import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
+import org.ednovo.gooru.application.shared.model.library.StandardsObjectDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.application.shared.model.player.FeaturedContentDo;
@@ -197,6 +198,8 @@ public interface PlayerAppService extends BaseService {
 	public List<UserPlayedSessionDo> getPreviousSessionDataForUser(String gooruUid,
 			String classGooruId, String lessonGooruId, String unitGooruId,
 			String courseGooruId, String assessmentId)throws GwtException, ServerDownException;
+
+	public StandardsObjectDo getStandardObj(Integer taxonomyId);
 
 
 }
