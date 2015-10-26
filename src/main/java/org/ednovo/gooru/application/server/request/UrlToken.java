@@ -709,6 +709,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V1_IS_STUDENT_DATA_AVAILABLE("/v1/class/find/usage?courseGooruId={0}"),
 	V3_UPDATE_COLLECTION_VISIBILITY("/v3/class/setting"),
+	V2_GETSTANDARDSBYIDVAL("/v2/taxonomy/{0}"),
 	
 	V3_UPDATE_CONTENT_VISIBILITY("/v3/class/{0}/setting");
 
