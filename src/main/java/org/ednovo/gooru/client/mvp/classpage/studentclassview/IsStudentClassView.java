@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpage.studentclassview;
 
 import org.ednovo.gooru.application.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.uc.LoadingUc;
 /**
  * 
  * @fileName : IsStudentClassView.java
@@ -80,5 +81,7 @@ public interface IsStudentClassView extends IsViewWithHandlers<StudentClassUiHan
 	void closeJoinPopup(boolean isVisible);
 
 	void setPrivateLogoutPanelVisibility(boolean isVisible);
+	
+	LoadingUc getCropImageLoading();
 	
 }

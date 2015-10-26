@@ -224,6 +224,7 @@ public class StudentClassPresenter extends BasePlacePresenter<IsStudentClassView
 					}
 					loadNavigationPage();
 				} else{
+					getView().getCropImageLoading().setVisible(false);
 					ErrorPopup error = new ErrorPopup(i18n.GL1632());
 					error.center();
 					error.show();
