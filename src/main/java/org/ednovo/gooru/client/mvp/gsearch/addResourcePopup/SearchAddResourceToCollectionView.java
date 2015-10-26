@@ -728,9 +728,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
 					addtocollHeaderText.setText(i18n.GL3510());
 					addingTextLbl.setText(i18n.GL3509());
+					btnAddExisting.setText("Copy");
+					btnAddExisting.setTitle("Copy");
 				}else if(!StringUtil.isEmpty(copyType)&& LESSON.equalsIgnoreCase(copyType)){
 					addtocollHeaderText.setText(i18n.GL3512());
 					addingTextLbl.setText(i18n.GL3511());
+					btnAddExisting.setText("Copy");
+					btnAddExisting.setTitle("Copy");
 				}else{
 					addtocollHeaderText.setText(i18n.GL3462_13_1());
 					addingTextLbl.setText(i18n.GL3462_14_1());
