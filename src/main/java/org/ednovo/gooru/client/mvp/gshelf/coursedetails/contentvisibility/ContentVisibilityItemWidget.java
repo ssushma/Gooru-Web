@@ -32,7 +32,7 @@ public class ContentVisibilityItemWidget extends Composite {
 	
 	private String contentType = null, unitId = null, lessonId = null;
 	private int collectionId;
-	private boolean isVisible = false, isClicked = false;
+	private boolean isVisible = false, isClicked = false, isSelectAll = false;
 	
 	private static ContentVisibilityItemWidgetUiBinder uiBinder = GWT
 			.create(ContentVisibilityItemWidgetUiBinder.class);
@@ -91,31 +91,41 @@ public class ContentVisibilityItemWidget extends Composite {
 	public class AllContentItems implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			spanDot.addStyleName(CssTokens.GREEN_STYLE);
-			Iterator<Widget> widgets= rowItem.iterator();
-			while (widgets.hasNext()){
-				AppClientFactory.fireEvent(new EnablePublishButtonEvent(false));
-				  Widget widget = widgets.next();
-				  if (widget instanceof ContentVisibilityItemWidget) {
-					  ContentVisibilityItemWidget childWidget = (ContentVisibilityItemWidget)widget;
-					  childWidget.getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
-					  Iterator<Widget> childWidgets= childWidget.getRowItem().iterator();
-					  while (childWidgets.hasNext()){
-						  Widget collectionWidget = childWidgets.next();
-						  if (collectionWidget instanceof ContentVisibilityItemWidget) {
-							  ContentVisibilityItemWidget collectionWidgetItem = (ContentVisibilityItemWidget)collectionWidget;
-							  collectionWidgetItem.getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
-						  }
-					  }
-				  }
-			}
-			addParentSpanDots(contentType);
-			if(!spanDot.getStyleName().contains("tick")) {
-				AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
-			}
+			setSelectAllData(false);
 		}
 	}
 	
+	public void setSelectAllData(boolean isChildClicked) {
+		setSelectAll(true);
+		spanDot.addStyleName(CssTokens.GREEN_STYLE);
+		Iterator<Widget> widgets= rowItem.iterator();
+		while (widgets.hasNext()){
+			AppClientFactory.fireEvent(new EnablePublishButtonEvent(false));
+			  Widget widget = widgets.next();
+			  if (widget instanceof ContentVisibilityItemWidget) {
+				  ContentVisibilityItemWidget childWidget = (ContentVisibilityItemWidget)widget;
+				  childWidget.getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
+				  if(isChildClicked) {
+					  childWidget.setSelectAll(true);
+				  }
+				  Iterator<Widget> childWidgets= childWidget.getRowItem().iterator();
+				  while (childWidgets.hasNext()){
+					  Widget collectionWidget = childWidgets.next();
+					  if (collectionWidget instanceof ContentVisibilityItemWidget) {
+						  ContentVisibilityItemWidget collectionWidgetItem = (ContentVisibilityItemWidget)collectionWidget;
+						  if(isChildClicked) {
+							  collectionWidgetItem.setSelectAll(true);
+						  }
+						  collectionWidgetItem.getSpanDot().addStyleName(CssTokens.GREEN_STYLE);
+					  }
+				  }
+			  }
+		}
+		addParentSpanDots(contentType);
+		if(!spanDot.getStyleName().contains("tick")) {
+			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
+		}
+	}
 	
 	public class SpanDot implements ClickHandler {
 		String contentType = null;
@@ -141,6 +151,7 @@ public class ContentVisibilityItemWidget extends Composite {
 				spanDot.removeStyleName(CssTokens.GREEN_STYLE);
 			}
 			if ("lesson".equalsIgnoreCase(contentType) || "unit".equalsIgnoreCase(contentType)) {
+				setSelectAll(false);
 				removeSpanDot();
 			}
 		} else {
@@ -226,7 +237,15 @@ public class ContentVisibilityItemWidget extends Composite {
 	public void setClicked(boolean isClicked) {
 		this.isClicked = isClicked;
 	}
+	
+	public boolean isSelectAll() {
+		return isSelectAll;
+	}
 
+	public void setSelectAll(boolean isSelectAll) {
+		this.isSelectAll = isSelectAll;
+	}
+	
 	public void setArrowStyle(boolean isVisible, int size) {
 		if(!isClicked()) {
 			arrowPanel.setVisible(isVisible);
