@@ -500,6 +500,7 @@ public class AssessmentsPreviewPlayerMetadataView extends BaseViewWithHandlers<A
 	}
 	public void renderStandards(final FlowPanel standardsContainer, final List<Map<String,String>> standardsList) {
 		standardsContainer.clear();
+		countVal = 0;
 		if (standardsList != null&&standardsList.size()>0) {
 			standardSection.setVisible(true);
 			Iterator<Map<String, String>> iterator = standardsList.iterator();

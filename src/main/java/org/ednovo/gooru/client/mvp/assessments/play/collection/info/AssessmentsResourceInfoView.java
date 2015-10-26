@@ -1809,6 +1809,7 @@ public class AssessmentsResourceInfoView extends BaseViewWithHandlers<Assessment
 		standardsContainer.clear();
 		String stdCode = null;
 		String stdDec = null;
+		countVal = 0;
 		if (standardsList != null && standardsList.size()>0) {
 			standaInfo.setVisible(false);
 			standardsContentContainer.setVisible(true);
