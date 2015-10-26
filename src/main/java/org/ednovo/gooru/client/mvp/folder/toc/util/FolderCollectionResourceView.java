@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -33,6 +33,7 @@ import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,7 +56,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @date: Feb 10 2015
 
  * @Author Gooru Team
- * 
+ *
  * Reviewer Gooru Team
  *
  */
@@ -73,7 +74,7 @@ public class FolderCollectionResourceView extends Composite {
 	FolderDo folderDo;
 
 	FolderTocCBundle res;
-	
+
 	String parentId=null;
 
 	LiPanel liPanel;
@@ -112,7 +113,7 @@ public class FolderCollectionResourceView extends Composite {
 					resourceType = folderDo.getCollectionItems().get(i).getResourceFormat().getValue();
 					liPanel.addStyleName(ResourceCategoryClass.getInstance().getCategoryStyle(resourceType));
 				}
-				liPanel.addClickHandler(new clickOnResource(folderDo.getCollectionItems().get(i)));
+				liPanel.addClickHandler(new clickOnResource(folderDo.getCollectionItems().get(i), folderDo.getCollectionType()));
 				ulCollectionResources.add(liPanel);
 				final String description=stripHtmlRegex(folderDo.getCollectionItems().get(i).getDescription()!=null?folderDo.getCollectionItems().get(i).getDescription():"");
 				//Mouse over handler on resource title
@@ -149,18 +150,23 @@ public class FolderCollectionResourceView extends Composite {
 	 * @date: Feb 10 2015
 
 	 * @Author Gooru Team
-	 * 
+	 *
 	 * Reviewer Gooru Team
 	 */
 
 	private class clickOnResource implements ClickHandler {
 		FolderItemDo folderItemDo;
+		String collectionType;
 		String resourceLink = "";
-		public clickOnResource(FolderItemDo folderItemDo) {
+		public clickOnResource(FolderItemDo folderItemDo, String collectionType) {
 			this.folderItemDo = folderItemDo;
+			this.collectionType = collectionType;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+
+			System.out.println("folderItemDo.getCollectionType() : "+folderItemDo.getCollectionType());
+
 			String collectionId = folderDo.getGooruOid();
 			String selectedfolderId = AppClientFactory.getPlaceManager().getRequestParameter("id");
 			if(parentId==null){
@@ -175,14 +181,17 @@ public class FolderCollectionResourceView extends Composite {
 			params.put("folderId", parentId);
 			params.put("folderItemId", folderDo.getCollectionItemId());
 
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
-
+			if (ClientConstants.COLLECTION.equalsIgnoreCase(collectionType) ){
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ASSESSMENT_PLAY, params);
+			}
 		}
 	}
 
 	/**
 	 * To remove html tags
-	 * 
+	 *
 	 * @param html
 	 * @return text without tags
 	 */
