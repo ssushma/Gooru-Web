@@ -41,7 +41,9 @@ import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.LicenseDo;
 import org.ednovo.gooru.application.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
+import org.ednovo.gooru.application.shared.model.library.StandardsObjectDo;
 import org.ednovo.gooru.application.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
@@ -94,6 +96,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandlers> implements IsResourceInfoView,ClientConstants{
 	
 	public static final String STANDARD_CODE = "code";
+	public static final String STANDARD_ID = "id";
 	public static final String STANDARD_DESCRIPTION = "description";
 	private String title;
 	private boolean isRatingUpdated=true;
@@ -151,6 +154,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     private int collectionItemSizeData=0;
     
     private int totalItemSize=0;
+    
+	static int countVal = 0;
     
     private Integer currentPageSize=1;
     
@@ -409,7 +414,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private void setAvgRatingWidget() {
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
-		if(collectionItemDoGlobal.getResource().getRatings()!=null){
+		if(collectionItemDoGlobal.getResource()!=null && collectionItemDoGlobal.getResource().getRatings()!=null){
 			Integer reviewCount=collectionItemDoGlobal.getResource().getRatings().getReviewCount();
 			if(reviewCount==null){
 				reviewCount = 0;
@@ -473,14 +478,23 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():null,collectionItemDo.getResource().getTaxonomySet()!=null?collectionItemDo.getResource().getTaxonomySet():null);
 			setResourceDescription(collectionItemDo.getResource().getDescription()!=null?collectionItemDo.getResource().getDescription():"");
 		}
+		if(collectionItemDo.getResource()!=null)
+		{
 		if(!StringUtil.isEmpty(collectionItemDo.getResource().getViews())){
 			setResourceViewsCount(collectionItemDo.getResource().getViews());
 		}
+		}
+		if(collectionItemDo.getResource()!=null)
+		{
 		setResourceLicenceLogo(collectionItemDo.getResource().getAssetURI(), collectionItemDo.getResource().getLicense());
+		}
 
 		renderStandards(standardsInfoConatiner,collectionItemDo.getStandards()!=null?collectionItemDo.getStandards():null);
 
+		if(collectionItemDo.getResource()!=null)
+		{
 		renderCentury(centuryInfoConatiner,collectionItemDo.getResource().getSkills());
+		}
 
 		
 		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getGrade()!=null){
@@ -530,7 +544,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			originalUrlTitle.setVisible(false);
 			originalUrlText.setVisible(false);
 		}
+		if(collectionItemDo.getResource()!=null)
+		{
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
+		}
 		
 		if(collectionItemDo.getResource()!=null && (collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null)){
 			if(collectionItemDo.getResource().getPublisher()!=null){
@@ -1789,57 +1806,54 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}		
 	}	
 	
-	public static void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
+	public static void renderStandards(final FlowPanel standardsContainer, final List<Map<String,String>> standardsList) {
 		standardsContainer.clear();
-		String stdCode = null; 
-		String stdDec = null;
-		if (standardsList != null && standardsList.size()>0) {
-			standaInfo.setVisible(false);
-			standardsContentContainer.setVisible(true);
+		countVal = 0;
+		if (standardsList != null&&standardsList.size()>0) {
+			standaInfo.setVisible(true);
 			Iterator<Map<String, String>> iterator = standardsList.iterator();
-			int count = 0;
-			FlowPanel toolTipwidgets = new FlowPanel();
+			final FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
-				Map<String, String> standard = iterator.next();
-				if(standard.containsKey(STANDARD_CODE)){
-					stdCode = standard.get(STANDARD_CODE);
-				}
-				if(standard.containsKey(STANDARD_DESCRIPTION)){
-					stdDec = standard.get(STANDARD_DESCRIPTION);
-				}
-				if (count > 2) {
-					if (count < 18){
-						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
-						toolTipwidgets.add(standardItem);
+				final Map<String, String> standard = iterator.next();				
+				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));				
+				AppClientFactory.getInjector().getPlayerAppService().getStandardObj(taxonomyId, new SimpleAsyncCallback<StandardsObjectDo>() {
+					@Override
+					public void onSuccess(StandardsObjectDo standardsObjectDo) {
+						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
+						standardsList.get(countVal).put("code", standardsObjectDo.getCode());
+						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
+						String stdCode = standardsObjectDo.getCode();
+						String stdDec = standardsObjectDo.getLabel();
+						if (countVal > 2) {
+							if (countVal < 18){
+								StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+								toolTipwidgets.add(standardItem);
+							}
+						} else {
+							DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+							toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
+							standardsContainer.add(toolTipUc);
+						}
+						countVal++;
 					}
-				}else{
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
-					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
-					standardsContainer.add(toolTipUc);
-				}
-				count++;
+				});
+
 			}
 			if (standardsList.size()>18){
 				final Label left = new Label("+"+(standardsList.size() - 18));
 				toolTipwidgets.add(left);
-				standardsContentContainer.setVisible(true);
 			}
 			if (standardsList.size() > 2) {
 				Integer moreStandardsCount = standardsList.size() - 3;
-				if (moreStandardsCount >0){
+				if (moreStandardsCount > 0){
+					System.out.println("toolTipwidgets::"+toolTipwidgets);
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
 					standardsContainer.add(toolTipUc);
-					standardsContentContainer.setVisible(true);
 				}
 			}
-			if(standardsList.size()==0)
-			{
-				standardsContentContainer.setVisible(false);
-			}
-		}
-		else{
-			standardsContentContainer.setVisible(false);
+		}else{
+			standaInfo.setVisible(false);
 		}
 	}
 	

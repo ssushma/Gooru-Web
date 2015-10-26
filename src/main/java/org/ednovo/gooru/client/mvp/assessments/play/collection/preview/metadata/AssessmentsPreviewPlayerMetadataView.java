@@ -40,6 +40,7 @@ import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.application.shared.model.library.ConceptDo;
+import org.ednovo.gooru.application.shared.model.library.StandardsObjectDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
@@ -98,6 +99,8 @@ public class AssessmentsPreviewPlayerMetadataView extends BaseViewWithHandlers<A
 	@UiField Label lbllanguageObjectiveText,lbldepthOfKnowledgeText,teacherTipLabel,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
 	@UiField InlineLabel lbllanguageObjective,lbllanguageObjectiveAll;
 	private static final String CREATE = "CREATE";
+	
+	int countVal = 0;
 
 	private static final String DELETE = "DELETE";
 
@@ -122,6 +125,7 @@ public class AssessmentsPreviewPlayerMetadataView extends BaseViewWithHandlers<A
 	private CollectionDo collectionDo=null;
 
 	public static final String STANDARD_CODE = "code";
+	public static final String STANDARD_ID = "id";
 
 	public static final String STANDARD_DESCRIPTION = "description";
 
@@ -491,28 +495,38 @@ public class AssessmentsPreviewPlayerMetadataView extends BaseViewWithHandlers<A
 		userNameLabel.getElement().setAttribute("title","");
 		userNameLabel.getElement().appendChild(anchor.getElement());
 	}
-	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
+	public void renderStandards(final FlowPanel standardsContainer, final List<Map<String,String>> standardsList) {
 		standardsContainer.clear();
+		countVal = 0;
 		if (standardsList != null&&standardsList.size()>0) {
 			standardSection.setVisible(true);
 			Iterator<Map<String, String>> iterator = standardsList.iterator();
 			int count = 0;
-			FlowPanel toolTipwidgets = new FlowPanel();
+			final FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
-				Map<String, String> standard = iterator.next();
-				String stdCode = standard.get(STANDARD_CODE);
-				String stdDec = standard.get(STANDARD_DESCRIPTION);
-				if (count > 2) {
-					if (count < 18){
-						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
-						toolTipwidgets.add(standardItem);
+				final Map<String, String> standard = iterator.next();				
+				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));				
+				AppClientFactory.getInjector().getPlayerAppService().getStandardObj(taxonomyId, new SimpleAsyncCallback<StandardsObjectDo>() {
+					@Override
+					public void onSuccess(StandardsObjectDo standardsObjectDo) {
+						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
+						standardsList.get(countVal).put("code", standardsObjectDo.getCode());
+						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
+						String stdCode = standardsObjectDo.getCode();
+						String stdDec = standardsObjectDo.getLabel();
+						if (countVal > 2) {
+							if (countVal < 18){
+								StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+								toolTipwidgets.add(standardItem);
+							}
+						} else {
+							DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+							toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
+							standardsContainer.add(toolTipUc);
+						}
+						countVal++;
 					}
-				} else {
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
-					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
-					standardsContainer.add(toolTipUc);
-				}
-				count++;
+				});
 			}
 			if (standardsList.size()>18){
 				final Label left = new Label("+"+(standardsList.size() - 18));

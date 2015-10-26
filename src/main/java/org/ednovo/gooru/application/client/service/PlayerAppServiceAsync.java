@@ -39,6 +39,7 @@ import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
+import org.ednovo.gooru.application.shared.model.library.StandardsObjectDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.application.shared.model.player.FeaturedContentDo;
@@ -172,6 +173,8 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void deleteRating(String deleteRatingGooruOid,AsyncCallback<Void> callback);
 
 	public void getGoogleDriveFileStatusCode(String fileUrl,AsyncCallback<Integer> callback);
+	
+	public void getStandardObj(Integer taxonomyId,AsyncCallback<StandardsObjectDo> callback);
 
 	public void getYoutubeFeedCallback(String utubeId, AsyncCallback<Map<String,String>> callback);
 
