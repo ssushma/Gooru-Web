@@ -58,7 +58,6 @@ public class StandardSgItemVc extends Composite {
 	 */
 	public StandardSgItemVc(String title, String desc) {
 		initWidget(uiBinder.createAndBindUi(this));
-		System.out.println("desc::"+desc);
 		if(!StringUtil.isEmpty(title)){
 			standardsTitle.setHTML(title);
 			standardsTitle.getElement().setId("htmlStandardsTitle");

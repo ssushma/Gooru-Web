@@ -40,6 +40,8 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.application.shared.model.library.StandardsObjectDo;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.htmltags.AsideTag;
 import org.ednovo.gooru.client.mvp.assessments.play.collection.preview.AssessmentsPreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
@@ -87,10 +89,12 @@ public class AssessmentsMetadataWidget extends Composite {
 	private CollectionDo collectionDo=null;
 
 	private Anchor usernameAnchor=null;
+	int countVal =0;
 
 	private String languageObjectiveValue=null;
 
     public static final String STANDARD_CODE = "code";
+	public static final String STANDARD_ID = "id";
 
 	public static final String STANDARD_DESCRIPTION = "description";
 
@@ -218,9 +222,11 @@ public class AssessmentsMetadataWidget extends Composite {
 			for(int i=0;i<standareds.size();i++){
 				Map<String, String> standardMap=new HashMap<String, String>();
 				if(isStandards){
+					standardMap.put(STANDARD_ID, standareds.get(i).getId()+"");
 					standardMap.put(STANDARD_CODE, standareds.get(i).getCode());
 					standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription());
 				}else{
+					standardMap.put(STANDARD_ID, standareds.get(i).getId()+"");
 					standardMap.put(STANDARD_CODE, standareds.get(i).getLabel());
 					standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription()!=null?standareds.get(i).getDescription():"");
 				}
@@ -229,8 +235,9 @@ public class AssessmentsMetadataWidget extends Composite {
 		}
 		return standardsList;
 	}
-	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList,boolean isStandards) {
+	public void renderStandards(final FlowPanel standardsContainer, final List<Map<String,String>> standardsList,boolean isStandards) {
 		standardsContainer.clear();
+		countVal = 0;
 		String stdCode ="";
 		String stdDec ="";
 		if (standardsList != null&&standardsList.size()>0) {
@@ -241,34 +248,31 @@ public class AssessmentsMetadataWidget extends Composite {
 			}
 			Iterator<Map<String, String>> iterator = standardsList.iterator();
 			int count = 0;
-			FlowPanel toolTipwidgets = new FlowPanel();
+			final FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
-				Map<String, String> standard = iterator.next();
-				if(standard.containsKey(STANDARD_CODE)){
-					stdCode = standard.get(STANDARD_CODE);
-				}
-				if(standard.containsKey(STANDARD_DESCRIPTION)){
-					stdDec = standard.get(STANDARD_DESCRIPTION);
-				}
-				if (count > 2) {
-					if (count < 18){
-						if(!isStandards){
-							stdDec=stdCode;
+				final Map<String, String> standard = iterator.next();				
+				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));				
+				AppClientFactory.getInjector().getPlayerAppService().getStandardObj(taxonomyId, new SimpleAsyncCallback<StandardsObjectDo>() {
+					@Override
+					public void onSuccess(StandardsObjectDo standardsObjectDo) {
+						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
+						standardsList.get(countVal).put("code", standardsObjectDo.getCode());
+						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
+						String stdCode = standardsObjectDo.getCode();
+						String stdDec = standardsObjectDo.getLabel();
+						if (countVal > 2) {
+							if (countVal < 18){
+								StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+								toolTipwidgets.add(standardItem);
+							}
+						} else {
+							DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+							toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
+							standardsContainer.add(toolTipUc);
 						}
-						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
-						toolTipwidgets.add(standardItem);
+						countVal++;
 					}
-				} else {
-					DownToolTipWidgetUc toolTipUc;
-					if(isStandards){
-						 toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
-					}else{
-						 toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), null, standardsList);
-					}
-					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
-					standardsContainer.add(toolTipUc);
-				}
-				count++;
+				});
 			}
 			if (standardsList.size()>18){
 				final Label left = new Label("+"+(standardsList.size() - 18));
