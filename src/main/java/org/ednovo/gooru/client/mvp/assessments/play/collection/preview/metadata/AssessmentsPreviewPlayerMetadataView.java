@@ -401,35 +401,32 @@ public class AssessmentsPreviewPlayerMetadataView extends BaseViewWithHandlers<A
 	}
 
 	public void setUserName(String userName){
-		if(collectionDo.getUser()!=null && collectionDo.getUser().getCustomFields()!=null && collectionDo.getUser().getCustomFields().size()>0){
-			if(collectionDo.getUser().getCustomFields().get(0).getOptionalValue()!=null){
-				String getUserProfileStatus	=collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
-				if(getUserProfileStatus.equalsIgnoreCase("true")){
-					usernameAnchor = new Anchor();
-					if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()!=null?collectionDo.getUser().getUsername():"")){
-						usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
-					}else{
-						String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
-						usernameAnchor.setHref(token);
-					}
-					usernameAnchor.setText(userName);
-					usernameAnchor.getElement().setAttribute("alt",userName);
-					usernameAnchor.getElement().setAttribute("title",userName);
-					usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
-					usernameAnchor.setTarget("_blank");
-					userNameLabel.setText("");
-					userNameLabel.getElement().setAttribute("alt","");
-					userNameLabel.getElement().setAttribute("title","");
-					userNameLabel.getElement().appendChild(usernameAnchor.getElement());
-				}
-				else{
-					userNameLabel.setText(userName);
-					userNameLabel.getElement().setAttribute("alt",userName);
-					userNameLabel.getElement().setAttribute("title",userName);
-				}
+		String getUserProfileStatus	= collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
+		if(getUserProfileStatus.equalsIgnoreCase("true")){
+			usernameAnchor = new Anchor();
+			if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()!=null?collectionDo.getUser().getUsername():"")){
+				usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+			}else{
+				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
+				usernameAnchor.setHref(token);
 			}
+			usernameAnchor.setText(userName);
+			usernameAnchor.getElement().setAttribute("alt",userName);
+			usernameAnchor.getElement().setAttribute("title",userName);
+			usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+			usernameAnchor.setTarget("_blank");
+			userNameLabel.setText("");
+			userNameLabel.getElement().setAttribute("alt","");
+			userNameLabel.getElement().setAttribute("title","");
+			userNameLabel.getElement().appendChild(usernameAnchor.getElement());
+		}
+		else{
+			userNameLabel.setText(userName);
+			userNameLabel.getElement().setAttribute("alt",userName);
+			userNameLabel.getElement().setAttribute("title",userName);
 		}
 	}
+
 	public void setUserProfileImage(String profileUserId){
 		profileThumbnailImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png?v="+Math.random());
 	}
