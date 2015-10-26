@@ -1602,7 +1602,7 @@ public class ProfileTopicListView extends Composite{
 			if(params.containsKey(CUSTOMIZE)){
 				params.remove(CUSTOMIZE);
 			}
-			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
+			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals(), getProfileLibraryDo().getCollectionType()) {
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -1714,7 +1714,7 @@ public class ProfileTopicListView extends Composite{
 					.getHref());
 			if(colleId.equals(collectionId) && isVisible){
 				isVisible=false;
-				AssignPopupVc assignPopup = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
+				AssignPopupVc assignPopup = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals(),getProfileLibraryDo().getCollectionType()) {
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);

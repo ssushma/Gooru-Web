@@ -427,9 +427,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 			}
 		}
-		/*String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid);
-		getLogger().info("getShortenShareUrl :::::::"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());*/
+
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SHARE_SHORTEN_URL,contentGooruOid);
 		try {
 			fullUrlObject.put("fullUrl", URLDecoder.decode(params.get(REAL_URL)).toString());
@@ -441,7 +439,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestUsername(), fullUrlObject.toString());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
-		shortenUrl = shareDeSerializer.deserializeShortenUrl(jsonRep);
+			shortenUrl = shareDeSerializer.deserializeShortenUrl(jsonRep);
 		}
 		catch(Exception e)
 		{
@@ -449,8 +447,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
 			shortenUrl.put(SHORTEN_URL, shortenUrl.get(SHORTEN_URL).replaceAll(HTTP, HTTPS));
-			//shortenUrl.put(RAWURL, shortenUrl.get(RAWURL).replaceAll(HTTP, HTTPS));
-			//shortenUrl.put(DECODERAWURL, shortenUrl.get(DECODERAWURL).replaceAll(HTTP, HTTPS));
 		}
 		return shortenUrl;
 	}
@@ -460,31 +456,31 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		JsonRepresentation jsonRep=null;
 		Map<String, String> shortenUrl = new HashMap<String, String>();
 		JSONObject fullUrlObject = new JSONObject();
-			if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {
-				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
-				}else{
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
-				}
-			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
-				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
+		if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {
+			if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
+			}else{
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
 			}
-			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
-				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
+		}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
+			params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
+		}
+		else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+			params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
+		}
+		else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
+			params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.ASSESSMENTS_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
+		}else {
+			System.out.println("params.get(COLLECTION_TYPE) : "+params.get(COLLECTION_TYPE));
+			if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
+			}else if(params.get(COLLECTION_TYPE).equalsIgnoreCase("assessment")){
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.ASSESSMENT_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
+			}else{
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 			}
-			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.ASSESSMENT_PLAY)){
-				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.ASSESSMENTS_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
-			}else {
-				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
-					//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
-				}else{
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URLAssign.getUrl()+"%26share=true", contentGooruOid));
-				}
-			}
-		/*String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid);
-		getLogger().info("SHARE_SHORTEN_URL getShortenShareUrl getShortenShareUrlforAssign:::::::"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());*/
+		}
+
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SHARE_SHORTEN_URL,contentGooruOid);
 		try {
 			fullUrlObject.put("fullUrl", URLDecoder.decode(params.get(REAL_URL)).toString());
