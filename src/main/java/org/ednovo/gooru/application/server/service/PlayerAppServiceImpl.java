@@ -54,7 +54,9 @@ import org.ednovo.gooru.application.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.content.UserStarRatingsDo;
+import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
+import org.ednovo.gooru.application.shared.model.library.StandardsObjectDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.application.shared.model.player.FeaturedContentDo;
@@ -233,6 +235,30 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceCollection(jsonRep);
+	}
+	
+	@Override
+	public StandardsObjectDo getStandardObj(Integer taxonomyId) {
+		JsonRepresentation jsonRepresentation = null;
+		StandardsObjectDo standardsObjectDo=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETSTANDARDSBYIDVAL,String.valueOf(taxonomyId));
+
+		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+
+		return standardsObjectDo=deserializeStandardsInfo(jsonRepresentation);
+		
+	}
+	
+	public StandardsObjectDo deserializeStandardsInfo(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), StandardsObjectDo.class);
+			} catch (JSONException e) {
+				logger.error("Exception::", e);
+			}
+		}
+		return new StandardsObjectDo();
 	}
 
 	public CollectionItemDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {

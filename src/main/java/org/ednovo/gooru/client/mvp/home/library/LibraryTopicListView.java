@@ -170,6 +170,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 
 	private String placeToken = null;
 
+	String collectionType=null;
+
 	private int pageNumber = 2;
 
 	String lessonCode="";
@@ -832,6 +834,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				resourcesInside.setVisible(true);
 				noCollectionLbl.setVisible(false);
 				final String collectionType=StringUtil.isEmpty(conceptDo.getCollectionType())?null:conceptDo.getCollectionType();
+				this.collectionType = collectionType;
 				StringUtil.setDefaultImages(collectionType, collectionImage, "high");
 					if(conceptDo.getThumbnails()!=null && conceptDo.getThumbnails().getUrl()!=null){
 					collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
@@ -890,7 +893,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 
 					}
 					int resources=resourceCount<=4?resourceCount:4;
-					final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
+					String resourcesIn = ClientConstants.COLLECTION.equalsIgnoreCase(collectionType) ? i18n.GL1094().toLowerCase() : i18n.GL1094_1().toLowerCase();
+					final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+ resourcesIn);
 					resourcesInside.add(resourceCountLbl);
 					for(int i=0;i<resources;i++) {
 						try {
@@ -1015,7 +1019,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 														folderItemId = folderListDo.getCollectionItems().get(i).getCollectionItemId();
 														params.put("folderId", folderIdVal);
 														params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
-														AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+//														AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 //														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 														PlaceRequest placeRequest=null;
 														if(ASSESSMENT.equalsIgnoreCase(collectionType)){
@@ -1650,7 +1654,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				if(!isAssignPopup){
 					isAssignPopup=true;
 				//final Map<String,String> params = new HashMap<String,String>();
-				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
+				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals(), collectionType) {
 
 					@Override
 					public void closePoup() {
@@ -1793,7 +1797,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					.getHref());
 			if(colleId.equals(collectionId) && isVisible ){
 				isVisible=false;
-				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
+				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals(), collectionType) {
 
 					@Override
 					public void closePoup() {

@@ -115,13 +115,13 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 			for(int i=0;i<size;i++) {
 				final String lessonId = dataList.get(i).getGooruOid();
 				final ContentVisibilityItemWidget lessonWidget = new ContentVisibilityItemWidget(contentType, dataList.get(i), unitId, lessonId);
-				if(i==0) {
+/*				if(i==0) {
 					if(!lessonWidget.isClicked()) {
 						lessonWidget.setClicked(true);
 						getPresenter().getClassData(classId, courseId, unitId, lessonId, "collection",lessonWidget);
 					}
 				}
-				lessonWidget.getLblContentName().addClickHandler(new ClickHandler() {
+*/				lessonWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						if(!lessonWidget.isClicked()) {
@@ -133,6 +133,9 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 					}
 				});
 				widget.getRowItem().add(lessonWidget);
+			}
+			if(widget.isSelectAll()) {
+				widget.setSelectAllData(true);
 			}
 		}
 		
@@ -149,6 +152,9 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 					widget.getRowItem().add(collectionWidget);
 				}
 			}
+			if(widget.isSelectAll()) {
+				widget.setSelectAllData(true);
+			}
 		}
 		
 		public void setUnitData(ArrayList<PlanProgressDo> dataList, final String classId, final String courseId, String contentType) {
@@ -157,13 +163,13 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 			for(int i=0;i<size;i++) {
 				final String unitId = dataList.get(i).getGooruOid();
 				final ContentVisibilityItemWidget unitWidget = new ContentVisibilityItemWidget(contentType, dataList.get(i), unitId, null);
-				if(i==0) {
+/*				if(i==0) {
 					if(!unitWidget.isClicked()) {
 						unitWidget.setClicked(true);
 						getPresenter().getClassData(classId, courseId, unitId, null, "lesson",unitWidget);
 					}
 				}
-				unitWidget.getLblContentName().addClickHandler(new ClickHandler() {
+*/				unitWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						if(!unitWidget.isClicked()) {

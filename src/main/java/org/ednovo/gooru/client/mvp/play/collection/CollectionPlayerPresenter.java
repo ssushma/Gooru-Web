@@ -573,7 +573,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	            		   setCookieValues();
 	            	   }
             	   }
-             }
+               }
         });
     }
 

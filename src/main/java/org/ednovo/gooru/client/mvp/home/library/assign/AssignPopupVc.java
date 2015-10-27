@@ -61,6 +61,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.ScrollPopupUtil;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -152,6 +153,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 	CollectionDo collectionDoGlobal = null;
 	String classpageId = null;
 	String assignmentId = null;
+	String collectionType = null;
 	boolean isMoreThanLimit = false; // Limit = 10
 	private TermsOfUse termsOfUse;
 	private static final int HTTP_UNAUTHORISED_STATUS_CODE = 401;
@@ -196,7 +198,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 	/**
 	 *
 	 */
-	public AssignPopupVc(String collectionIdVal, String collectionTitle, String collectionDescription) {
+	public AssignPopupVc(String collectionIdVal, String collectionTitle, String collectionDescription, String collectionType) {
 		super(false);
 		res = AssignPopUpCBundle.INSTANCE;
 		AssignPopUpCBundle.INSTANCE.css().ensureInjected();
@@ -204,6 +206,9 @@ public abstract class AssignPopupVc extends PopupPanel {
 		this.setGlassEnabled(true);
 		this.getGlassElement().getStyle().setZIndex(99999);
 		this.getElement().getStyle().setZIndex(99999);
+
+		this.collectionType = collectionType;
+
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
@@ -502,6 +507,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 			}
 		} else if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0643())
 				&& swithUrlLbl.getText().equalsIgnoreCase(i18n.GL0640())) {
+				System.out.println("decodeRawUrl : "+decodeRawUrl);
 			if (buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
@@ -661,6 +667,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 		params.put("type", currentPlaceToken);
 		params.put("shareType", "");
+		System.out.println("collectionType in assign : "+collectionType);
+		params.put("collectionType", collectionType);
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrlforAssign(classpageId, params,classpageItemId, new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
 			public void onSuccess(Map<String, String> result) {
@@ -671,6 +679,12 @@ public abstract class AssignPopupVc extends PopupPanel {
 				bitlyLink = result.get("shortenUrl");
 				rawUrl = result.get("rawUrl");
 				addShareWidgetInPlay(decodeRawUrl, rawUrl,collectionTitle,collectionDesc,bitlyLink, "","public");
+
+
+				System.out.println("decodeRawUrl : "+decodeRawUrl);
+				System.out.println("bitlyLink : "+bitlyLink);
+				System.out.println("rawUrl : "+rawUrl);
+
 			}
 		});
 	}

@@ -265,6 +265,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				for(int k=0;k<temp.length;k++){
 
 					final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
+
 					if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT)|| lbl.getText().trim().endsWith(END_DELIMITER+COMMA) || lbl.getText().trim().endsWith(END_DELIMITER+SEMICOLUMN))){
 						String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 						lbl.setText(lblText);
@@ -295,7 +296,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				for(int k=0;k<temp.length;k++){
 					if(temp[k].trim().length()>0){
 						final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
-
+						if(lbl.getText().startsWith(SPACE))
+						{
+							lbl.setText(lbl.getText().trim());
+						}
 						if(lbl.getText().startsWith(START_DELIMITER) ||  lbl.getText().startsWith(" [") ){
 							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 							lbl.setText(lblText);
@@ -393,7 +397,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 	}
 
 	private void showCorrectResult(){
-
 		if(collectionItemDo.getResource().getType()==9){
 
 			boolean HTDragChoiceStatus=true;
@@ -476,7 +479,6 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				InlineLabel lbl=(InlineLabel) optionsContainerFpnl.getWidget(i);
 				answerIds.add(i+1);
 				if(lbl.getStyleName().contains(STYLE_HIGHLIGHT)){
-
 					if(lbl.getElement().getId().equalsIgnoreCase(STYLE_CORRECT)){
 						lbl.addStyleName(STYLE_CORRECT);
 						answerOptionResult.put(1, true);

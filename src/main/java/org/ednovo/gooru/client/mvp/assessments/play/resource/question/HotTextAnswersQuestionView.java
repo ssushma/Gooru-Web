@@ -265,7 +265,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 				for(int k=0;k<temp.length;k++){
 					if(temp[k].trim().length()>0){
 						final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
-
+						if(lbl.getText().startsWith(SPACE))
+						{
+							lbl.setText(lbl.getText().trim());
+						}
 						if(lbl.getText().startsWith(START_DELIMITER) ||  lbl.getText().startsWith(" [") ){
 							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
 							lbl.setText(lblText);

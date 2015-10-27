@@ -343,7 +343,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
 		getUiHandlers().triggerCollectionShareDataEvent(null,PlayerDataLogEvents.COLLECTION,"gooru",false);
 		String collectionId = collectionDo.getGooruOid();
-			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
+			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals(), collectionDo.getCollectionType()) {
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);

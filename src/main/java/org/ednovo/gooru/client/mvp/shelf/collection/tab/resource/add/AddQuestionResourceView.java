@@ -2324,6 +2324,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						boolean isCorrect=false;
 						for(int k=0;k<temp.length;k++){
 							if(temp[k].contains("[") || temp[k].contains("]")){
+								if(temp[k].startsWith(" "))
+								{
+									temp[k] = temp[k].trim();
+								}
 								if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith("]") || temp[k].endsWith("].") || temp[k].endsWith("],") || temp[k].endsWith("];") || temp[k].endsWith("] ")) && temp[k].trim().length()>0){
 									isCorrect=true;
 								}else{
