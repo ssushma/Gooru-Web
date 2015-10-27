@@ -437,6 +437,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else{
 			resourceplayUrl=collectionItemDo.getResource().getUrl();
 		}
+
 		wrapperContainerField.getElement().getStyle().clearHeight();
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
 			String utubeId=ResourceImageUtil.getYoutubeVideoId(resourceplayUrl);
@@ -452,7 +453,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 			getUiHandlers().showQuestionView(collectionItemDo);
 		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")||resourceTypeName.equalsIgnoreCase("vimeo/video")){
-			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(collectionItemDo.getResource().getUrl())){
+			if(resourceTypeName.equalsIgnoreCase("image/png")){
+				if (FlashAndVideoPlayerWidget.getProtocal().equalsIgnoreCase("https:")){
+					resourceplayUrl = resourceplayUrl.replaceAll("http://", "https://");
+				}
+			}
+			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(resourceplayUrl)){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
