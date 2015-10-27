@@ -32,7 +32,6 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.EnablePublishButtonEvent;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.EnablePublishButtonHandler;
@@ -75,14 +74,14 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				UiBinder<Widget, ContentVisibilityChildView> {
 		}
 
-		public ContentVisibilityChildView(ClasspageDo classObj, String courseId) {
+		public ContentVisibilityChildView(String classId, String classNameTxt, String courseId) {
 			initWidget(uiBinder.createAndBindUi(this));
 			setPresenter(new ContentVisibilityChildPresenter(this));
-			className.setText(classObj.getName());
+			className.setText(classNameTxt);
 			setIds();
-			classId = classObj.getClassUid();
+			this.classId = classId;
 			enableDeleteBtn(true);
-			getPresenter().getClassData(classObj.getClassUid(), courseId, null, null, "unit", null);
+			getPresenter().getClassData(classId, courseId, null, null, "unit", null);
 			AppClientFactory.getEventBus().addHandler(EnablePublishButtonEvent.TYPE, enablePublishButtonHandler);
 		}
 
@@ -183,7 +182,7 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				tableItems.add(unitWidget);
 			}
 		}
-
+		
 		@Override
 		public void setData(ArrayList<PlanProgressDo> dataList, String classId, String courseId, String unitId, String lessonId, String contentType, ContentVisibilityItemWidget widget) {
 				if("unit".equalsIgnoreCase(contentType)) {

@@ -81,6 +81,7 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
    /**
     * To get classes of associated with Course
     */
+	@Override
 	public void getAssociatedClasses() {
 		final String courseId= AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		if(courseId!=null){
@@ -97,13 +98,12 @@ public class CourseSharePresenter extends PresenterWidget<IsCourseShareView> imp
 	 * To assign course to particular class.
 	 */
 	@Override
-	public void assign2ClassPage(String value, final String courseId) {
-		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(value, null,null,null,null,null,courseId, new SimpleAsyncCallback<ClasspageDo>() {
+	public void assign2ClassPage(final String classId, final String className, final String courseId) {
+		AppClientFactory.getInjector().getClasspageService().v3UpdateClass(classId, null,null,null,null,null,courseId, new SimpleAsyncCallback<ClasspageDo>() {
 			@Override
 			public void onSuccess(ClasspageDo result) {
 				getView().clearSharePlanes();
-				getAssociatedClasses();
-				getView().redirectToContentVisibility(result, courseId);
+				getView().redirectToContentVisibility(classId, className, courseId);
 				getView().setDefaultClass();
 			}
 			@Override
