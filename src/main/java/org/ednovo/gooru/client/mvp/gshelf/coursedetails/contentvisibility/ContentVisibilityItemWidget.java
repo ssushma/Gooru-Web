@@ -53,9 +53,7 @@ public class ContentVisibilityItemWidget extends Composite {
 		spanDot.addClickHandler(new SpanDot(contentType,planProgressDo.isVisibility()));
 		anrSelect.addClickHandler(new AllContentItems());
 		AppClientFactory.getEventBus().addHandler(HighlightContentSpanEvent.TYPE, highlightContentHandler);
-		if("collection".equalsIgnoreCase(contentType)) {
-			anrSelect.setVisible(false);
-		}
+		anrSelect.setVisible(false);
 	}
 	
 	private void setData(String contentType, PlanProgressDo data) {
@@ -121,7 +119,6 @@ public class ContentVisibilityItemWidget extends Composite {
 			  }
 		}
 		addParentSpanDots(contentType);
-		AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
 		if(!spanDot.getStyleName().contains("tick")) {
 			AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
 		}
@@ -137,8 +134,8 @@ public class ContentVisibilityItemWidget extends Composite {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			setSpanDot(contentType, isVisible);
 			if(!spanDot.getStyleName().contains("tick")) {
+				setSpanDot(contentType, isVisible);
 				AppClientFactory.fireEvent(new EnablePublishButtonEvent(true));
 			}
 		}
@@ -244,6 +241,10 @@ public class ContentVisibilityItemWidget extends Composite {
 
 	public void setSelectAll(boolean isSelectAll) {
 		this.isSelectAll = isSelectAll;
+	}
+	
+	public Anchor getAnrSelect() {
+		return anrSelect;
 	}
 	
 	public void setArrowStyle(boolean isVisible, int size) {
