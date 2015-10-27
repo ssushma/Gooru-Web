@@ -87,4 +87,5 @@ public interface IsMyCollectionsRightClusterView extends IsViewWithHandlers<MyCo
 	
 	public void showCopyErrorMsg();
 	void closePublishPopup();
+	void hideglassPanel();
 }

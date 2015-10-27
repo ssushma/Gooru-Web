@@ -2316,13 +2316,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						errorMsg=ERROR_MSG_HTHL_SYNTAX;
 						errorMsg2=ERROR_MSG_HTHL;
 					}else{
-						temp = text.split("(?=\\[)|(?<=\\])");
+						temp = text.split("\\s(?=\\[)|(?<=\\])\\s");
 						errorMsg=ERROR_MSG_HTHL_SENTENCE;
 						errorMsg2=ERROR_MSG_HTHL_SENTENCE;
 					}
 					if(temp.length>1  && answerChoiceValue.contains("[") && answerChoiceValue.contains("]")){
 						boolean isCorrect=false;
 						for(int k=0;k<temp.length;k++){
+							System.out.println("tempkk::"+temp[k]);
 							if(temp[k].contains("[") || temp[k].contains("]")){
 								if(temp[k].startsWith(" "))
 								{
