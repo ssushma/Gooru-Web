@@ -77,6 +77,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -110,7 +111,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -1351,6 +1351,12 @@ public class HeaderUc extends Composite
 						.equals(AppClientFactory.GOORU_ANONYMOUS)) {
 
 			int flag = userDo.getViewFlag() != null ? userDo.getViewFlag() : 0;
+			loggedInfoLbl.getElement().getStyle().setTextAlign(TextAlign.RIGHT);
+			if (userDo.getUsername().length() >= 18){
+				loggedInfoLbl.getElement().getStyle().setWidth(136, Unit.PX);
+			}else{
+				loggedInfoLbl.getElement().getStyle().clearWidth();
+			}
 
 			loggedInfoLbl.setText(userDo.getUsername());
 			loggedInfoLbl.setTitle(userDo.getUsername());
