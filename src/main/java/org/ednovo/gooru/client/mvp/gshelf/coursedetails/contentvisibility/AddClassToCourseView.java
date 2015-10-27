@@ -36,7 +36,7 @@ public abstract class AddClassToCourseView extends PopupPanel {
 	
 	@UiField Button cancelResourcePopupBtnLbl, assignBtn;
 	
-	private String classId = null;
+	private String classId = null, className = null;
 	
 	private static AddClassToCourseViewUiBinder uiBinder = GWT
 			.create(AddClassToCourseViewUiBinder.class);
@@ -79,6 +79,7 @@ public abstract class AddClassToCourseView extends PopupPanel {
 					@Override
 					public void onClick(ClickEvent event) {
 						classId = classname.getElement().getId();
+						className = classname.getText();
 						highlightClass(classname);
 					}
 				});
@@ -113,6 +114,10 @@ public abstract class AddClassToCourseView extends PopupPanel {
 	
 	public String getClassId() {
 		return classId;
+	}
+	
+	public String getClassName() {
+		return className;
 	}
 	
 	public Label getErrorLabel() {

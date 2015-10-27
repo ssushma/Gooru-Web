@@ -101,7 +101,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 						addClassPopup.getErrorLabel().setVisible(true);
 					} else {
 						addClassPopup.getErrorLabel().setVisible(false);
-						getUiHandlers().assign2ClassPage(addClassPopup.getClassId(), AppClientFactory.getPlaceManager().getRequestParameter("o1", ""));
+						getUiHandlers().assign2ClassPage(addClassPopup.getClassId(), addClassPopup.getClassName(), AppClientFactory.getPlaceManager().getRequestParameter("o1", ""));
 					}
 				}
 			};
@@ -148,7 +148,7 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 					classListWidget.getEditClassAnchor().addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							redirectToContentVisibility(classObj, courseId);
+							redirectToContentVisibility(classObj.getClassUid(), classObj.getName(), courseId);
 						}
 					});
 					classListPnl.add(classListWidget);
@@ -163,16 +163,19 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	}
 	
 	@Override
-	public void redirectToContentVisibility(ClasspageDo classObj, String courseId) {
+	public void redirectToContentVisibility(String classId, String className, String courseId) {
 		classPanel.setVisible(false);
 		contentVisibilityPanel.clear();
 		contentVisibilityPanel.setVisible(true);
-		ContentVisibilityChildView classListWidget = new ContentVisibilityChildView(classObj,courseId);
+		
+		ContentVisibilityChildView classListWidget = new ContentVisibilityChildView(classId, className, courseId);
 		classListWidget.getAnrAllClasses().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				clearSharePlanes();
 				classPanel.setVisible(true);
 				contentVisibilityPanel.setVisible(false);
+				getUiHandlers().getAssociatedClasses();
 			}
 		});
 		contentVisibilityPanel.add(classListWidget);
@@ -191,4 +194,5 @@ public class CourseShareView extends BaseViewWithHandlers<CourseShareUiHandlers>
 	public HTMLPanel getAssociatedClassesPnl() {
 		return associatedClassesPnl;
 	}
+
 }

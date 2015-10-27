@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.gshelf.coursedetails;
 
 import org.ednovo.gooru.application.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 
 /**
  * @author Search Team
@@ -33,6 +32,8 @@ import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
  */
 public interface CourseShareUiHandlers extends BaseUiHandlers {
 
-	void assign2ClassPage(String value, String courseId);
+	void assign2ClassPage(String classId, String className, String courseId);
+
+	void getAssociatedClasses();
 	
 }
