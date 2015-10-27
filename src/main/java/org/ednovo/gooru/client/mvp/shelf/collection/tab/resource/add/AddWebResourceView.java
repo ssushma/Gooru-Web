@@ -2194,11 +2194,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			count++;
 		}
 
-		idx = 0;
-		while ((idx = string.indexOf(substring4, idx)) != -1) {
-			idx++;
-			count++;
-		}
+//		idx = 0;
+//		while ((idx = string.indexOf(substring4, idx)) != -1) {
+//			idx++;
+//			count++;
+//		}
 
 		return count;
 
