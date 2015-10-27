@@ -786,7 +786,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		getUiHandlers().triggerCollectionShareDataEvent(null,PlayerDataLogEvents.COLLECTION,"gooru",false);
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		String collectionId = collectionDo.getGooruOid();
-		AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
+		AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals(), collectionDo.getCollectionType()) {
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);

@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.application.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.application.shared.model.library.StandardsObjectDo;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.gshelf.util.LiPanelWithClose;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;

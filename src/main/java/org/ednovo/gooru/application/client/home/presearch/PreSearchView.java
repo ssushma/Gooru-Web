@@ -615,6 +615,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 *
 	 */
 	private void renderSubjects(List<String> list){
+		ulSubjectPanel.clear();
 		InlineLabel text=new InlineLabel(i18n.GL3234()+i18n.GL_SPL_SEMICOLON());
 		ulSubjectPanel.add(text);
 		for (String subject : list) {

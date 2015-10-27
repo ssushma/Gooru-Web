@@ -452,7 +452,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 			getUiHandlers().showQuestionView(collectionItemDo);
 		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")||resourceTypeName.equalsIgnoreCase("vimeo/video")){
-			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||!isProtocolMatched(collectionItemDo.getResource().getUrl())){
+			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(collectionItemDo.getResource().getUrl())){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
@@ -1001,22 +1001,24 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	public boolean isProtocolMatched(String sourceUrl){
 		boolean isProtocolsMatched=false;
 		if(FlashAndVideoPlayerWidget.getProtocal().equalsIgnoreCase("https:")){
-				isProtocolsMatched=!sourceUrl.contains("https");
-		}
-		else{
+			isProtocolsMatched=!sourceUrl.contains("https");
 			if(sourceUrl.contains("docs.google.com")){
-				isProtocolsMatched=true;
-			}else{
 				isProtocolsMatched=false;
 			}
+		}else{
+//			if(sourceUrl.contains("docs.google.com")){
+//				isProtocolsMatched=true;
+//			}else{
+//				isProtocolsMatched=false;
+//			}
+			isProtocolsMatched=false;
 		}
 		if(sourceUrl.toLowerCase().endsWith("jpg")||sourceUrl.toLowerCase().endsWith("jpeg")){
 			if(FlashAndVideoPlayerWidget.getProtocal().equalsIgnoreCase("https:")){
-					isProtocolsMatched=!sourceUrl.contains("https");
-				}else{
-					isProtocolsMatched=sourceUrl.contains("https");
-				}
-
+				isProtocolsMatched=!sourceUrl.contains("https");
+			}else{
+				isProtocolsMatched=sourceUrl.contains("https");
+			}
 		}
 		return isProtocolsMatched;
 	}

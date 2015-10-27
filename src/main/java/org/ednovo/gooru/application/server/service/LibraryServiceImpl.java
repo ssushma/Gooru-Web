@@ -929,6 +929,12 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				conceptDo.setGoals(thirdLevelJsonObject.getString(GOALS));
 			}
 
+			if(thirdLevelJsonObject.isNull(GooruConstants.COLLECTION_TYPE)) {
+
+			} else {
+				conceptDo.setCollectionType(thirdLevelJsonObject.getString(GooruConstants.COLLECTION_TYPE));
+			}
+
 			conceptDo.setTitle(thirdLevelJsonObject.getString(TITLE));
 			if(thirdLevelJsonObject.isNull("itemCount")) {
 
