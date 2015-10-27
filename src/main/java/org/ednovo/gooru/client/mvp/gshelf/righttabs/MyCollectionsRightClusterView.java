@@ -951,9 +951,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     private class onCopyClickHandler implements ClickHandler{
         @Override
         public void onClick(ClickEvent event) {
-			glassPanelDiv.setVisible(true);
-			Element element = Document.get().getDocumentElement();
-			element.appendChild(glassPanelDiv.getElement());
         	Window.enableScrolling(false);
             if(!(COURSE.equalsIgnoreCase(currentTypeView))){
                 getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
@@ -965,6 +962,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                 getUiHandlers().enableAddButton();
 
             }else if((COURSE.equalsIgnoreCase(currentTypeView))){
+    			glassPanelDiv.setVisible(true);
+    			Element element = Document.get().getDocumentElement();
+    			element.appendChild(glassPanelDiv.getElement());
             	lnkshare.setText(i18n.GL3602());
                 getUiHandlers().copyCourse(folderObj.getGooruOid());
             }
