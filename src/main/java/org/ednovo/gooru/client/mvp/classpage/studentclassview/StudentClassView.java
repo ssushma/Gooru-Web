@@ -34,7 +34,6 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.EmPanel;
 import org.ednovo.gooru.client.uc.H2Panel;
@@ -360,4 +359,10 @@ public class StudentClassView extends BaseViewWithHandlers<StudentClassUiHandler
 		}
 		return mainContainerStatus;
 	}
+
+	@Override
+	public LoadingUc getCropImageLoading() {
+		return cropImageLoading;
+	}
+	
 }

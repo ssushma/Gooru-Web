@@ -32,7 +32,6 @@ import org.ednovo.gooru.application.client.child.ChildView;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
 import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.classpages.PlanProgressDo;
-import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.EnablePublishButtonEvent;
 import org.ednovo.gooru.client.mvp.gshelf.coursedetails.EnablePublishButtonHandler;
@@ -75,14 +74,14 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				UiBinder<Widget, ContentVisibilityChildView> {
 		}
 
-		public ContentVisibilityChildView(ClasspageDo classObj, String courseId) {
+		public ContentVisibilityChildView(String classId, String classNameTxt, String courseId) {
 			initWidget(uiBinder.createAndBindUi(this));
 			setPresenter(new ContentVisibilityChildPresenter(this));
-			className.setText(classObj.getName());
+			className.setText(classNameTxt);
 			setIds();
-			classId = classObj.getClassUid();
+			this.classId = classId;
 			enableDeleteBtn(true);
-			getPresenter().getClassData(classObj.getClassUid(), courseId, null, null, "unit", null);
+			getPresenter().getClassData(classId, courseId, null, null, "unit", null);
 			AppClientFactory.getEventBus().addHandler(EnablePublishButtonEvent.TYPE, enablePublishButtonHandler);
 		}
 
@@ -115,24 +114,33 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 			for(int i=0;i<size;i++) {
 				final String lessonId = dataList.get(i).getGooruOid();
 				final ContentVisibilityItemWidget lessonWidget = new ContentVisibilityItemWidget(contentType, dataList.get(i), unitId, lessonId);
-/*				if(i==0) {
+				if(i==0) {
 					if(!lessonWidget.isClicked()) {
 						lessonWidget.setClicked(true);
+						if(!lessonWidget.getSpanDot().getStyleName().contains("tick")) {
+							lessonWidget.getAnrSelect().setVisible(true);
+						}
+						widget.getRowItem().add(lessonWidget);
+						enableUnitSelectAllAnchor(widget);
 						getPresenter().getClassData(classId, courseId, unitId, lessonId, "collection",lessonWidget);
 					}
 				}
-*/				lessonWidget.getLblContentName().addClickHandler(new ClickHandler() {
+				lessonWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						if(!lessonWidget.isClicked()) {
 							lessonWidget.setClicked(true);
+							if(!lessonWidget.getSpanDot().getStyleName().contains("tick")) {
+								lessonWidget.getAnrSelect().setVisible(true);
+							}
+							widget.getRowItem().add(lessonWidget);
+							enableUnitSelectAllAnchor(widget);
 							if(lessonWidget.getRowItem().getWidgetCount()<=1) {
 								getPresenter().getClassData(classId, courseId, unitId, lessonId, "collection",lessonWidget);
 							}
 						}
 					}
 				});
-				widget.getRowItem().add(lessonWidget);
 			}
 			if(widget.isSelectAll()) {
 				widget.setSelectAllData(true);
@@ -163,13 +171,13 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 			for(int i=0;i<size;i++) {
 				final String unitId = dataList.get(i).getGooruOid();
 				final ContentVisibilityItemWidget unitWidget = new ContentVisibilityItemWidget(contentType, dataList.get(i), unitId, null);
-/*				if(i==0) {
+				if(i==0) {
 					if(!unitWidget.isClicked()) {
 						unitWidget.setClicked(true);
 						getPresenter().getClassData(classId, courseId, unitId, null, "lesson",unitWidget);
 					}
 				}
-*/				unitWidget.getLblContentName().addClickHandler(new ClickHandler() {
+				unitWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						if(!unitWidget.isClicked()) {
@@ -183,7 +191,7 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				tableItems.add(unitWidget);
 			}
 		}
-
+		
 		@Override
 		public void setData(ArrayList<PlanProgressDo> dataList, String classId, String courseId, String unitId, String lessonId, String contentType, ContentVisibilityItemWidget widget) {
 				if("unit".equalsIgnoreCase(contentType)) {
@@ -229,6 +237,27 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 				enableDeleteBtn(true);
 				updateContentData(data);
 				publishPopup.hide();
+			}
+		}
+		
+		private void enableUnitSelectAllAnchor(ContentVisibilityItemWidget widget) {
+			int count = 0, length = 0, tickCount = 0;
+			Iterator<Widget> lessonWidgets=widget.getRowItem().iterator();
+			while(lessonWidgets.hasNext()){
+				Widget lessonWidget = lessonWidgets.next();
+				if (lessonWidget instanceof ContentVisibilityItemWidget) {
+					length++;
+					ContentVisibilityItemWidget lessonWidgetItem = (ContentVisibilityItemWidget)lessonWidget;
+					if(lessonWidgetItem.isClicked()) {
+						count++;
+					}
+					if(lessonWidgetItem.getSpanDot().getStyleName().contains("tick")) {
+						tickCount++;
+					}
+				}
+			}
+			if(count>0&&count==length&&tickCount!=length) {
+				widget.getAnrSelect().setVisible(true);
 			}
 		}
 		

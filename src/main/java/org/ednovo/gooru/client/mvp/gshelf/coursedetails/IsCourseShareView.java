@@ -45,6 +45,6 @@ public interface IsCourseShareView extends IsViewWithHandlers<CourseShareUiHandl
 
 	HTMLPanel getAssociatedClassesPnl();
 
-	void redirectToContentVisibility(ClasspageDo classObj, String courseId);
+	void redirectToContentVisibility(String classId, String className, String courseId);
 
 }

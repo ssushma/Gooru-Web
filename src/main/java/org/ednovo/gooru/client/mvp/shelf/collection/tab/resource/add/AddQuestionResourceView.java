@@ -2316,7 +2316,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						errorMsg=ERROR_MSG_HTHL_SYNTAX;
 						errorMsg2=ERROR_MSG_HTHL;
 					}else{
-						temp = text.split("\\.");
+						temp = text.split("(?=\\[)|(?<=\\])");
 						errorMsg=ERROR_MSG_HTHL_SENTENCE;
 						errorMsg2=ERROR_MSG_HTHL_SENTENCE;
 					}
@@ -2328,7 +2328,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 								{
 									temp[k] = temp[k].trim();
 								}
-								if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith("]") || temp[k].endsWith("].") || temp[k].endsWith("],") || temp[k].endsWith("];") || temp[k].endsWith("] ")) && temp[k].trim().length()>0){
+								if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith("]") || temp[k].endsWith(".]")|| temp[k].endsWith(". ]")|| temp[k].endsWith("],") || temp[k].endsWith("];") || temp[k].endsWith("] ")) && temp[k].trim().length()>0){
 									isCorrect=true;
 								}else{
 									isCorrect=false;

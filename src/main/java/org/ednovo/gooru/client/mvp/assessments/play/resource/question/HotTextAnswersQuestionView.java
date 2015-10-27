@@ -261,10 +261,10 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					optionsContainerFpnl.add(lbl);
 				}
 			}else{
-				temp = text.split("\\.");
+				temp = text.split("(?=\\[)|(?<=\\])");
 				for(int k=0;k<temp.length;k++){
 					if(temp[k].trim().length()>0){
-						final InlineLabel lbl=new InlineLabel(temp[k]+DOT);
+						final InlineLabel lbl=new InlineLabel(temp[k]);
 						if(lbl.getText().startsWith(SPACE))
 						{
 							lbl.setText(lbl.getText().trim());
