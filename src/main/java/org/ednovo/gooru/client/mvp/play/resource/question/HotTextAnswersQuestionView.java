@@ -249,7 +249,34 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 	}
 
+	 public List<String> getName(String input){
+		 List<String> message = new ArrayList<>();
+         String tempStrVal = input;
+         
+         int charCount = 0;
+         char temp;
 
+         for( int i = 0; i < input.length(); i++ )
+         {
+             temp = input.charAt(i);
+             if(temp == '[')
+                 charCount++;
+         }
+         for(int j=0;j<charCount; j++)
+         {
+         int open = tempStrVal.indexOf("[");
+         int close = tempStrVal.indexOf("]");
+
+         if(open != -1 && close != -1){
+             message.add("["+tempStrVal.substring(open + 1, close).trim()+"]");
+         }
+         if(close>0)
+         {
+         tempStrVal = input.substring((close+1),input.length());
+         }
+         }
+         return message;
+	 }
 
 	public void setRenderAnswers(TreeSet<QuestionAnswerDo> answersSet){
 		Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
@@ -291,7 +318,8 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 					optionsContainerFpnl.add(lbl);
 				}
 			}else{
-				temp = text.split("\\s(?=\\[)|(?<=\\])\\s");
+				List<String> checkStr = getName(text);
+				temp = checkStr.toArray(new String[0]);
 				for(int k=0;k<temp.length;k++){
 					if(temp[k].trim().length()>0){
 						final InlineLabel lbl=new InlineLabel(temp[k]);

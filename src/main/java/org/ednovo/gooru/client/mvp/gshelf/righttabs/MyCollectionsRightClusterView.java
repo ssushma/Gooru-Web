@@ -953,6 +953,7 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         public void onClick(ClickEvent event) {
         	Window.enableScrolling(false);
             if(!(COURSE.equalsIgnoreCase(currentTypeView))){
+            	hideglassPanel();
                 getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
                 getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
                 isCopySelected= true;
