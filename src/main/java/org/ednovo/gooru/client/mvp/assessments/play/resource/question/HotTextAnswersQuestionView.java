@@ -230,17 +230,30 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
              if(temp == '[')
                  charCount++;
          }
-         for(int j=0;j<charCount; j++)
+         for(int j=0;j<=charCount; j++)
          {
          int open = tempStrVal.indexOf("[");
          int close = tempStrVal.indexOf("]");
+
+         if(open==-1)
+         {
+        	 if(!tempStrVal.trim().equalsIgnoreCase("."))
+        	 {
+        	 message.add(tempStrVal.trim()); 
+        	 }
+         }
+         
+         if(open>0)
+         {
+        	 message.add(tempStrVal.substring(0, open).trim()); 
+         }
 
          if(open != -1 && close != -1){
              message.add("["+tempStrVal.substring(open + 1, close).trim()+"]");
          }
          if(close>0)
          {
-         tempStrVal = input.substring((close+1),input.length());
+         tempStrVal = tempStrVal.substring((close+1),tempStrVal.length());
          }
          }
          return message;
