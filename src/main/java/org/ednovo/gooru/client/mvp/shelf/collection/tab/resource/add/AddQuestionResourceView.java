@@ -2276,6 +2276,35 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		return hintsAdded;
 	}
+	
+	 public List<String> getName(String input){
+		 List<String> message = new ArrayList<>();
+         String tempStrVal = input;
+         
+         int charCount = 0;
+         char temp;
+
+         for( int i = 0; i < input.length(); i++ )
+         {
+             temp = input.charAt(i);
+             if(temp == '[')
+                 charCount++;
+         }
+         for(int j=0;j<charCount; j++)
+         {
+         int open = tempStrVal.indexOf("[");
+         int close = tempStrVal.indexOf("]");
+
+         if(open != -1 && close != -1){
+             message.add("["+tempStrVal.substring(open + 1, close).trim()+"]");
+         }
+         if(close>0)
+         {
+         tempStrVal = input.substring((close+1),input.length());
+         }
+         }
+         return message;
+	 }
 
 	public boolean isHotTextAnswerChoiceEmpty(HTMLPanel questionAnswerChoiceContainer){
 		profanityList=new ArrayList<ProfanityCheckDo>();
@@ -2316,14 +2345,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						errorMsg=ERROR_MSG_HTHL_SYNTAX;
 						errorMsg2=ERROR_MSG_HTHL;
 					}else{
-						temp = text.split("\\s(?=\\[)|(?<=\\])\\s");
+						
+						List<String> checkStr = getName(text);
+						temp = checkStr.toArray(new String[0]);
 						errorMsg=ERROR_MSG_HTHL_SENTENCE;
 						errorMsg2=ERROR_MSG_HTHL_SENTENCE;
 					}
 					if(temp.length>1  && answerChoiceValue.contains("[") && answerChoiceValue.contains("]")){
 						boolean isCorrect=false;
 						for(int k=0;k<temp.length;k++){
-							System.out.println("tempkk::"+temp[k]);
 							if(temp[k].contains("[") || temp[k].contains("]")){
 								if(temp[k].startsWith(" "))
 								{
