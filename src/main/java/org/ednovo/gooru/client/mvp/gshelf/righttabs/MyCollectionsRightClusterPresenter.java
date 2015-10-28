@@ -585,7 +585,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 						}
 						
 					};
-					timer.schedule(15000);
+					timer.schedule(8000);
 				}else{
 					new AlertForImageUpload("Oops", "Something went wrong, plewase try again.");
 					//getView().hidePopup();
