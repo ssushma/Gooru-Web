@@ -124,17 +124,18 @@ public class ContentVisibilityChildView extends ChildView<ContentVisibilityChild
 						enableUnitSelectAllAnchor(widget);
 						getPresenter().getClassData(classId, courseId, unitId, lessonId, "collection",lessonWidget);
 					}
+				} else {
+					widget.getRowItem().add(lessonWidget);
 				}
 				lessonWidget.getLblContentName().addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						if(!lessonWidget.isClicked()) {
 							lessonWidget.setClicked(true);
+							enableUnitSelectAllAnchor(widget);
 							if(!lessonWidget.getSpanDot().getStyleName().contains("tick")) {
 								lessonWidget.getAnrSelect().setVisible(true);
 							}
-							widget.getRowItem().add(lessonWidget);
-							enableUnitSelectAllAnchor(widget);
 							if(lessonWidget.getRowItem().getWidgetCount()<=1) {
 								getPresenter().getClassData(classId, courseId, unitId, lessonId, "collection",lessonWidget);
 							}
