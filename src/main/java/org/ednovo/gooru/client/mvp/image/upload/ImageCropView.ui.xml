@@ -60,7 +60,7 @@
 		}
 		
 		.cropImageWidgetLoading {
-			height: 70%;
+			height: 50%;
 			left: 0;
 			margin-top: 50px;
 			position: absolute;
