@@ -48,6 +48,8 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -236,7 +238,12 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         tootltipContainer.setVisible(false);
         copyLbl.setTitle(i18n.GL0827());
         moveLbl.setTitle(i18n.GL1261());   
-        glassPanelDiv.setVisible(false);
+        
+    	glassPanelDiv.getElement().setAttribute("style", "position: absolute; left: 0px; top: 0px;");
+		glassPanelDiv.getElement().getStyle().setWidth(Window.getClientWidth(), Unit.PX);
+		glassPanelDiv.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
+		glassPanelDiv.setStyleName("gwt-PopupPanelGlass");
+		glassPanelDiv.setVisible(false);
     }
     public void setIds(){
         mainPanel.getElement().setId("gShelfCourseInfo");
@@ -247,6 +254,10 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         pnlBreadCrumbMain.getElement().setId("pnlBreadCrumbMain");
 
     }
+	@Override
+	public void hideglassPanel() {
+		glassPanelDiv.setVisible(false);
+	}
     /**
      * This inner class will handle the click event on the info,content and share tab.
      */
@@ -940,7 +951,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
     private class onCopyClickHandler implements ClickHandler{
         @Override
         public void onClick(ClickEvent event) {
-
         	Window.enableScrolling(false);
             if(!(COURSE.equalsIgnoreCase(currentTypeView))){
                 getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
@@ -952,6 +962,9 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                 getUiHandlers().enableAddButton();
 
             }else if((COURSE.equalsIgnoreCase(currentTypeView))){
+    			glassPanelDiv.setVisible(true);
+    			Element element = Document.get().getDocumentElement();
+    			element.appendChild(glassPanelDiv.getElement());
             	lnkshare.setText(i18n.GL3602());
                 getUiHandlers().copyCourse(folderObj.getGooruOid());
             }

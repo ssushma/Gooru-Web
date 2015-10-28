@@ -567,13 +567,14 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 			@Override
 			public void onSuccess(Map<String, String> result) {
 				if(result.get("status").equalsIgnoreCase("completed")){
+	
 					HashMap<String,String> params = new HashMap<String,String>();
 					params.put("o1", result.get("gooruOid"));
 					params.put("view", "Course");
 					shelfMainPresenter.setVersion();
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.MYCONTENT, params);
-					String o1Course=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
-					System.out.println("o1Course---::"+o1Course);
+				//	String o1Course=AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+					getView().hideglassPanel();
 					
 				}else if(result.get("status").equalsIgnoreCase("inprogress")){
 					Timer timer = new Timer() {
@@ -584,7 +585,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 						}
 						
 					};
-					timer.schedule(150);
+					timer.schedule(15000);
 				}else{
 					new AlertForImageUpload("Oops", "Something went wrong, plewase try again.");
 					//getView().hidePopup();
