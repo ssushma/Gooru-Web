@@ -953,7 +953,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
         public void onClick(ClickEvent event) {
         	Window.enableScrolling(false);
             if(!(COURSE.equalsIgnoreCase(currentTypeView))){
-            	hideglassPanel();
                 getUiHandlers().disableCopyPopupTabs((LESSON.equalsIgnoreCase(currentTypeView)||UNIT.equalsIgnoreCase(currentTypeView))?false:true,currentTypeView);
                 getUiHandlers().EnableMyCollectionsTreeData(folderObj.getGooruOid(),folderObj.getTitle());
                 isCopySelected= true;
@@ -963,7 +962,6 @@ public class MyCollectionsRightClusterView extends BaseViewWithHandlers<MyCollec
                 getUiHandlers().enableAddButton();
 
             }else if((COURSE.equalsIgnoreCase(currentTypeView))){
-    			glassPanelDiv.setVisible(true);
     			Element element = Document.get().getDocumentElement();
     			element.appendChild(glassPanelDiv.getElement());
             	lnkshare.setText(i18n.GL3602());

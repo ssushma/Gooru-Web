@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.application.client.PlaceTokens;
 import org.ednovo.gooru.application.client.gin.AppClientFactory;
+import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.code.CourseSubjectDo;
 import org.ednovo.gooru.application.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
@@ -47,9 +48,13 @@ import org.ednovo.gooru.client.mvp.gshelf.coursedetails.CourseSharePresenter;
 import org.ednovo.gooru.client.mvp.gshelf.lessondetails.LessonInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.unitdetails.UnitInfoPresenter;
 import org.ednovo.gooru.client.mvp.gshelf.util.AssessmentPopupWidget;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.AlertForImageUpload;
+import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
@@ -84,6 +89,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	CollectionShareTabPresenter collectionShareTabPresenter = null;
 	
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
+	
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	List<FolderDo> folderListDoChild;
 
@@ -555,7 +562,18 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 		AppClientFactory.getInjector().getfolderService().copyCourse(gooruOid, null, null, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String url) {
-				callJobSuccessApi(url,null);
+				SuccessPopupViewVc success = new SuccessPopupViewVc() {
+					@Override
+					public void onClickPositiveButton(ClickEvent event) {
+						this.hide();
+					}
+				};
+				success.setPopupTitle(i18n.GL1556());
+				success.setDescText(i18n.GL3604());
+				success.setPositiveButtonText(i18n.GL0190());
+				success.center();
+				success.show();
+				success.getElement().getStyle().setZIndex(99999);
 			}
 		});
 	}
