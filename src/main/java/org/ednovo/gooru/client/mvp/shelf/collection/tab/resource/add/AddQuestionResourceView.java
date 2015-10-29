@@ -2362,7 +2362,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					}else{
 						
 						List<String> checkStr = getName(text);
-						System.out.println("checkStr:::"+checkStr);
 						//temp = text.split("\\.");
 						temp = checkStr.toArray(new String[0]);
 						errorMsg=ERROR_MSG_HTHL_SENTENCE;
@@ -2371,13 +2370,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					if(temp.length>1  && answerChoiceValue.contains("[") && answerChoiceValue.contains("]")){
 						boolean isCorrect=false;
 						for(int k=0;k<temp.length;k++){
-							System.out.println("tempk::"+temp[k]);
 							if(temp[k].contains("[") || temp[k].contains("]")){
 								if(temp[k].startsWith(" "))
 								{
 									temp[k] = temp[k].trim();
 								}
-								if((temp[k].startsWith("[") || temp[k].startsWith("&nbsp;[") || temp[k].startsWith(" [")) &&(temp[k].endsWith(".]") || temp[k].endsWith(".]")|| temp[k].endsWith(". ]")|| temp[k].endsWith("],") || temp[k].endsWith("];") || temp[k].endsWith("] ")) && temp[k].trim().length()>0){
+								if((((temp[k].startsWith("[")) && (temp[k].endsWith("]")) && htType.equalsIgnoreCase(i18n.GL3219_1())) || ((temp[k].startsWith("[")) && (temp[k].endsWith(".]")) && !htType.equalsIgnoreCase(i18n.GL3219_1()))) && temp[k].trim().length()>0){
 									isCorrect=true;
 								}else{
 									isCorrect=false;
