@@ -725,6 +725,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				if("collection".equalsIgnoreCase(this.selectedType)){
 					addtocollHeaderText.setText(i18n.GL3462_13());
 					addingTextLbl.setText(i18n.GL3462_14());
+					btnAddExisting.setText("Copy");
+					btnAddExisting.setTitle("Copy");
 				}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
 					addtocollHeaderText.setText(i18n.GL3510());
 					addingTextLbl.setText(i18n.GL3509());
@@ -738,18 +740,26 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				}else{
 					addtocollHeaderText.setText(i18n.GL3462_13_1());
 					addingTextLbl.setText(i18n.GL3462_14_1());
+					btnAddExisting.setText("Copy");
+					btnAddExisting.setTitle("Copy");
 				}
 			}else if(isMoveSelected){
 				if("collection".equalsIgnoreCase(this.selectedType)){
 					addtocollHeaderText.setText(i18n.GL3462_15());
 					addingTextLbl.setText(i18n.GL3462_16());
+					btnAddExisting.setText(i18n.GL0590());
+					btnAddExisting.setTitle(i18n.GL0590());
 				}else{
 					addtocollHeaderText.setText(i18n.GL3462_15_1());
 					addingTextLbl.setText(i18n.GL3462_16_1());
+					btnAddExisting.setText(i18n.GL0590());
+					btnAddExisting.setTitle(i18n.GL0590());
 				}
 			}else{
 				addtocollHeaderText.setText(i18n.GL3223());
 				addingTextLbl.setText(i18n.GL3462_17());
+				btnAddExisting.setText(i18n.GL0590());
+				btnAddExisting.setTitle(i18n.GL0590());
 			}
 		}
 	}

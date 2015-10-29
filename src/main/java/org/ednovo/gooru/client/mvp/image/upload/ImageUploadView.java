@@ -52,6 +52,7 @@ import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -155,6 +156,9 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	@UiField Image displayImage,displayImage1;
 
 	String height=null,width=null,xVal=null,yVal=null;
+	
+	private HandlerRegistration handlerRegistration=null;
+	private HandlerRegistration handlerRegistrationOther=null;
 
 	/**
 	 * See for more details  {@link PopupViewWithUiHandlers} for details.
@@ -278,6 +282,10 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
 		uploadGooruImages.getElement().getStyle().setDisplay(Display.NONE);
 		imageWebUploadUrlTxtBox.getElement().setId("tbImageWebUploadUrl");
+		
+
+        handlerRegistration = onOkButton.addClickHandler(new OKClickHandler());
+        handlerRegistrationOther = onOkButton1.addClickHandler(new OKClickHandler());
 
 		urlValidation.setVisible(false);
 		imageWebUploadUrlTxtBox.addFocusHandler(new OnTextFocus());
@@ -800,13 +808,13 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			displayCropPopup(mediaUploadDo);
 		}
 	}
-	@UiHandler(value={"onOkButton","onOkButton1"})
+/*	@UiHandler(value={"onOkButton","onOkButton1"})
 	public void clickEventOnUseImage(ClickEvent e){
 		if(mediaUploadDo!=null){
 			//getUiHandlers().setUploadData(mediaUploadDo.getName(), mediaUploadDo);
 			getUiHandlers().cropImage(mediaUploadDo, height, width, xVal, yVal);
 		}
-	}
+	}*/
 
 	/**
 	 * This method is used to display crop popup
@@ -891,4 +899,36 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		displayCromImagePanel1.getElement().getStyle().clearBackgroundImage();
 		imageCropPopup.hide();
 	}
+	
+	@Override
+	public void setClickHandlers() {
+        handlerRegistration = onOkButton.addClickHandler(new OKClickHandler());
+        handlerRegistrationOther = onOkButton1.addClickHandler(new OKClickHandler());
+	}
+	
+	 /**
+     * This inner class is used to Open the respective collection/Assessment player
+     *  when click on preview.
+     *
+     */
+    private class OKClickHandler implements ClickHandler{
+        @Override
+        public void onClick(ClickEvent event) {
+   		 if(handlerRegistration!=null){
+        	 handlerRegistration.removeHandler();
+		}
+		 if(handlerRegistrationOther!=null){
+			 handlerRegistrationOther.removeHandler();
+		}
+		
+        	if(mediaUploadDo!=null){
+    			//getUiHandlers().setUploadData(mediaUploadDo.getName(), mediaUploadDo);
+    			getUiHandlers().cropImage(mediaUploadDo, height, width, xVal, yVal);
+    		}
+        	else
+        	{
+        		setClickHandlers();
+        	}
+        }
+    }
 }
