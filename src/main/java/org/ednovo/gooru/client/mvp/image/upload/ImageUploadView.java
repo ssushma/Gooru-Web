@@ -900,6 +900,12 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		imageCropPopup.hide();
 	}
 	
+	@Override
+	public void setClickHandlers() {
+        handlerRegistration = onOkButton.addClickHandler(new OKClickHandler());
+        handlerRegistrationOther = onOkButton1.addClickHandler(new OKClickHandler());
+	}
+	
 	 /**
      * This inner class is used to Open the respective collection/Assessment player
      *  when click on preview.
@@ -919,6 +925,10 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
     			//getUiHandlers().setUploadData(mediaUploadDo.getName(), mediaUploadDo);
     			getUiHandlers().cropImage(mediaUploadDo, height, width, xVal, yVal);
     		}
+        	else
+        	{
+        		setClickHandlers();
+        	}
         }
     }
 }
