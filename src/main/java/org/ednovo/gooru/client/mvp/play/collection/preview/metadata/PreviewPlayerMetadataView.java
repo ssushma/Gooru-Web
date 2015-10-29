@@ -519,10 +519,11 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					@Override
 					public void onSuccess(StandardsObjectDo standardsObjectDo) {
 						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
-						standardsList.get(countVal).put("code", standardsObjectDo.getCode());
+						standardsList.get(countVal).put("code", standard.get(STANDARD_CODE));
 						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
-						String stdCode = standardsObjectDo.getCode();
+						String stdCode = standard.get(STANDARD_CODE);
 						String stdDec = standardsObjectDo.getLabel();
+
 						if (countVal > 2) {
 							if (countVal < 18){
 								StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
