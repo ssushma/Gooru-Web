@@ -82,4 +82,5 @@ public interface IsImageUploadView extends PopupView, IsViewWithHandlers<ImageUp
 	void setCroppedImage(String filename);
 	void uploadedImagetobeSet(CreateDo createDoObj);
 	void setDataUrlText(String imageURL);
+	void setClickHandlers();
 }

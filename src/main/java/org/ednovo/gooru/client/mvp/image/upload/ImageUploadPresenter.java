@@ -281,6 +281,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			getView().closeImageUploadWidget();
 			getView().resetImageUploadWidget();
 		}
+		getView().setClickHandlers();
 	}
 	/**
 	 * This method is to get the editResourceImageAysncCallback

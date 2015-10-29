@@ -1807,6 +1807,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}	
 	
 	public static void renderStandards(final FlowPanel standardsContainer, final List<Map<String,String>> standardsList) {
+		System.out.println("standardsList::"+standardsList);
 		standardsContainer.clear();
 		countVal = 0;
 		if (standardsList != null&&standardsList.size()>0) {
@@ -1820,9 +1821,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					@Override
 					public void onSuccess(StandardsObjectDo standardsObjectDo) {
 						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
-						standardsList.get(countVal).put("code", standardsObjectDo.getCode());
+						standardsList.get(countVal).put("code", standard.get(STANDARD_CODE));
 						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
-						String stdCode = standardsObjectDo.getCode();
+						String stdCode = standard.get(STANDARD_CODE);
 						String stdDec = standardsObjectDo.getLabel();
 						if (countVal > 2) {
 							if (countVal < 18){
