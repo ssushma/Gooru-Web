@@ -1825,6 +1825,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
 						String stdCode = standard.get(STANDARD_CODE);
 						String stdDec = standardsObjectDo.getLabel();
+
 						if (countVal > 2) {
 							if (countVal < 18){
 								StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);

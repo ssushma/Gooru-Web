@@ -129,7 +129,7 @@ public class MetadataWidget extends Composite {
 			renderCourseInfo(collectionDo.getMetaInfo().getCourse());
 		}
 		renderStandards(standardsContainer,getStandardsMap(((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getStandards()!=null)?this.collectionDo.getMetaInfo().getStandards():null),true),true);
-		renderStandards(centuryContainer,getStandardsMap(((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getSkills()!=null)?this.collectionDo.getMetaInfo().getSkills():null),false),false);
+		renderCentury(centuryContainer,getStandardsMap(((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getSkills()!=null)?this.collectionDo.getMetaInfo().getSkills():null),false),false);
 		renderLanguageObjective(collectionDo.getLanguageObjective()!=null?collectionDo.getLanguageObjective():"");
 		renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges()!=null?collectionDo.getDepthOfKnowledges():null);
 		renderInstructionalMethod(collectionDo.getInstructionalMethod()!=null?collectionDo.getInstructionalMethod():null);
@@ -250,10 +250,11 @@ public class MetadataWidget extends Composite {
 					@Override
 					public void onSuccess(StandardsObjectDo standardsObjectDo) {
 						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
-						standardsList.get(countVal).put("code", standardsObjectDo.getCode());
+						standardsList.get(countVal).put("code", standard.get(STANDARD_CODE));
 						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
-						String stdCode = standardsObjectDo.getCode();
+						String stdCode = standard.get(STANDARD_CODE);
 						String stdDec = standardsObjectDo.getLabel();
+
 						if (countVal > 2) {
 							if (countVal < 18){
 								StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
@@ -616,6 +617,69 @@ public class MetadataWidget extends Composite {
 		standardSection.setVisible(!hide);
 		viewSection.setVisible(!hide);
 		centurySection.setVisible(!hide);
+	}
+	
+	public void renderCentury(FlowPanel standardsContainer, List<Map<String,String>> standardsList,boolean isStandards) {
+		standardsContainer.clear();
+		String stdCode ="";
+		String stdDec ="";
+		if (standardsList != null&&standardsList.size()>0) {
+			if(isStandards){
+				standardSection.setVisible(true);
+			}else{
+				centurySection.setVisible(true);
+			}
+			Iterator<Map<String, String>> iterator = standardsList.iterator();
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			while (iterator.hasNext()) {
+				Map<String, String> standard = iterator.next();
+				if(standard.containsKey(STANDARD_CODE)){
+					stdCode = standard.get(STANDARD_CODE);
+				}
+				if(standard.containsKey(STANDARD_DESCRIPTION)){
+					stdDec = standard.get(STANDARD_DESCRIPTION);
+				}
+				if (count > 2) {
+					if (count < 18){
+						if(!isStandards){
+							stdDec=stdCode;
+						}
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc;
+					if(isStandards){
+						 toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+					}else{
+						 toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), null, standardsList);
+					}
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
+					standardsContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (standardsList.size()>18){
+				final Label left = new Label("+"+(standardsList.size() - 18));
+				toolTipwidgets.add(left);
+			}
+			if (standardsList.size() > 2) {
+				Integer moreStandardsCount = standardsList.size() - 3;
+				if (moreStandardsCount > 0){
+					DownToolTipWidgetUc	toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList);
+					toolTipUc.setStandards(isStandards);
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
+					standardsContainer.add(toolTipUc);
+				}
+			}
+		}else{
+			if(isStandards){
+			    standardSection.setVisible(false);
+			}else{
+				centurySection.setVisible(false);
+			}
+		}
 	}
 
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
