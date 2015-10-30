@@ -153,7 +153,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 	CollectionDo collectionDoGlobal = null;
 	String classpageId = null;
 	String assignmentId = null;
-	String collectionType = null;
+	String collectionTypeGbl = null;
 	boolean isMoreThanLimit = false; // Limit = 10
 	private TermsOfUse termsOfUse;
 	private static final int HTTP_UNAUTHORISED_STATUS_CODE = 401;
@@ -207,8 +207,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		this.getGlassElement().getStyle().setZIndex(99999);
 		this.getElement().getStyle().setZIndex(99999);
 
-		this.collectionType = collectionType;
-
+	
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
@@ -234,6 +233,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 				toAssignStr = result.getGooruOid();
 				if (result.getGooruOid() != null) {
 					collectionDoGlobal = result;
+					collectionTypeGbl = result.getCollectionType();
 					if (AppClientFactory.isAnonymous()) {
 						hideContainers();
 					} else {
@@ -242,15 +242,19 @@ public abstract class AssignPopupVc extends PopupPanel {
 				}
 				loadingImageLabel.setVisible(false);
 				popupContentAssign.setVisible(true);
+				
+				generateShareLink(collectionDoGlobal.getGooruOid(),collectionDoGlobal.getTitle(),collectionDoGlobal.getGoals());
+				setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
+					@Override
+					public void onSuccess(Map<String, String> result) {
+						embedBitlyLink=result.get("decodeRawUrl");
+					}
+				});
+				
+				
 			}
 		});
-		generateShareLink(collectionIdVal,collectionTitle,collectionDescription);
-		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
-			@Override
-			public void onSuccess(Map<String, String> result) {
-				embedBitlyLink=result.get("decodeRawUrl");
-			}
-		});
+
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.center();
 		Window.enableScrolling(false);
@@ -667,8 +671,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 		params.put("type", currentPlaceToken);
 		params.put("shareType", "");
-		System.out.println("collectionType in assign : "+collectionType);
-		params.put("collectionType", collectionType);
+		System.out.println("collectionType in assign : "+collectionTypeGbl);
+		params.put("collectionType", collectionTypeGbl);
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrlforAssign(classpageId, params,classpageItemId, new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
 			public void onSuccess(Map<String, String> result) {
