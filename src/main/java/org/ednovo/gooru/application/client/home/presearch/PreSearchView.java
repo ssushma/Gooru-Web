@@ -432,8 +432,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	 */
 	private void setSubjectVisibility(){
 		lblErrorMessage.setVisible(false);
-
-		if (ulSubjectPanel.isVisible()){
+		if (ulSubjectPanel.getElement().getAttribute("style").equalsIgnoreCase("display:inline-block;")){
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
 		}else{
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
