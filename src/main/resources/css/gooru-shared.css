@@ -610,10 +610,6 @@
 	cursor: pointer;
 }
 
-#gooruSearchMainContainer .btn-group:hover .dropdown-menu {
-	display: block;
-}
-
 .myCourseContainer .myCousesTabMenu {
 	background: #ffffff;
 }
