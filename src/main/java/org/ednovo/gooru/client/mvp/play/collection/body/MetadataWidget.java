@@ -565,7 +565,7 @@ public class MetadataWidget extends Composite {
 		if(collectionDo!=null){
 
 			if(StringUtil.isPartnerUser((collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getUsername()))?collectionDo.getUser().getUsername():"")){
-				anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+				anchor.setHref("#"+collectionDo.getUser().getUsername());
 			}else if(PlaceTokens.YCGL_LIBRARY.equals(StringUtil.getLibNameOnClickAuthorName(collectionDo.getUser().getUsernameDisplay()))){
 				anchor.setHref("#"+PlaceTokens.YCGL_LIBRARY);
 
