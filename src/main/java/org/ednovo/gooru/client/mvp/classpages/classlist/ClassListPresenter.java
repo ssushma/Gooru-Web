@@ -145,6 +145,11 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
                 		}
                 		else
                 		{
+            			if(AppClientFactory.getLoggedInUser().getAccountTypeId()!=null && AppClientFactory.getLoggedInUser().getAccountTypeId().equals(3))
+            			{
+               				String email = AppClientFactory.getLoggedInUser().getEmailId();
+               				result.getSearchResults().get(0).setEmailId(email);
+            			}  
                 		getView().insertActiveUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0);
                 		}
                 	}

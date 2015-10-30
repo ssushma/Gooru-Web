@@ -727,6 +727,11 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 				tableContainer.clear();
 			}
 			for (int k=0; k<lstActiveMembers.size();k++){
+       			if(AppClientFactory.getLoggedInUser().getAccountTypeId()!=null && AppClientFactory.getLoggedInUser().getAccountTypeId().equals(3))
+    			{
+       				String email = AppClientFactory.getLoggedInUser().getEmailId();
+       				lstActiveMembers.get(k).setEmailId(email);
+    			}        		
 				insertActiveUserAfterDeletion(lstActiveMembers.get(k),isNew,totalCount,k);
 				if((pageSize*activeListPageNum)<activeListTotalCount){
 					ancActiveListSeeMore.setVisible(true);
