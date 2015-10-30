@@ -238,7 +238,6 @@ public class AssessmentsMetadataWidget extends Composite {
 	public void renderStandards(final FlowPanel standardsContainer, final List<Map<String,String>> standardsList,boolean isStandards) {
 		standardsContainer.clear();
 		countVal = 0;
-		String stdCode ="";
 		String stdDec ="";
 		if (standardsList != null&&standardsList.size()>0) {
 			if(isStandards){
@@ -251,14 +250,14 @@ public class AssessmentsMetadataWidget extends Composite {
 			final FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
 				final Map<String, String> standard = iterator.next();				
-				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));				
+				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));	
+				final String stdCode = standard.get(STANDARD_CODE);
 				AppClientFactory.getInjector().getPlayerAppService().getStandardObj(taxonomyId, new SimpleAsyncCallback<StandardsObjectDo>() {
 					@Override
 					public void onSuccess(StandardsObjectDo standardsObjectDo) {
 						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
-						standardsList.get(countVal).put("code", standard.get(STANDARD_CODE));
+						standardsList.get(countVal).put("code", stdCode);
 						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
-						String stdCode = standard.get(STANDARD_CODE);
 						String stdDec = standardsObjectDo.getLabel();
 						if (countVal > 2) {
 							if (countVal < 18){

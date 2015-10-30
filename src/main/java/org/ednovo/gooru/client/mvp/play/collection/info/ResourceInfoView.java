@@ -1807,7 +1807,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}	
 	
 	public static void renderStandards(final FlowPanel standardsContainer, final List<Map<String,String>> standardsList) {
-		System.out.println("standardsList::"+standardsList);
 		standardsContainer.clear();
 		countVal = 0;
 		if (standardsList != null&&standardsList.size()>0) {
@@ -1815,15 +1814,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			Iterator<Map<String, String>> iterator = standardsList.iterator();
 			final FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
-				final Map<String, String> standard = iterator.next();				
+				final Map<String, String> standard = iterator.next();	
+				final String stdCode = standard.get(STANDARD_CODE);
 				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));				
 				AppClientFactory.getInjector().getPlayerAppService().getStandardObj(taxonomyId, new SimpleAsyncCallback<StandardsObjectDo>() {
 					@Override
 					public void onSuccess(StandardsObjectDo standardsObjectDo) {
 						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
-						standardsList.get(countVal).put("code", standard.get(STANDARD_CODE));
-						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());
-						String stdCode = standard.get(STANDARD_CODE);
+						standardsList.get(countVal).put("code", stdCode);
+						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());			
 						String stdDec = standardsObjectDo.getLabel();
 
 						if (countVal > 2) {
