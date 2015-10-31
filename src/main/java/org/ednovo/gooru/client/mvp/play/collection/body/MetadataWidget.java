@@ -244,8 +244,14 @@ public class MetadataWidget extends Composite {
 			final FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
 				final Map<String, String> standard = iterator.next();				
-				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));	
+				Integer taxonomyId = 0;
+				if(standard.get(STANDARD_ID)!=null)
+				{
+					taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));	
+				}
 				final String stdCode = standard.get(STANDARD_CODE);
+				if(standard.get(STANDARD_ID)!=null)
+				{
 				AppClientFactory.getInjector().getPlayerAppService().getStandardObj(taxonomyId, new SimpleAsyncCallback<StandardsObjectDo>() {
 					@Override
 					public void onSuccess(StandardsObjectDo standardsObjectDo) {
@@ -267,6 +273,22 @@ public class MetadataWidget extends Composite {
 						countVal++;
 					}
 				});
+				}
+				else
+				{
+					stdDec = standard.get(STANDARD_CODE);
+					if (countVal > 2) {
+						if (countVal < 18){
+							StandardSgItemVc standardItem = new StandardSgItemVc(stdDec, stdDec);
+							toolTipwidgets.add(standardItem);
+						}
+					} else {
+						DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDec), new Label(stdDec));
+						toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
+						standardsContainer.add(toolTipUc);
+					}
+					countVal++;
+				}
 			}
 			if (standardsList.size()>18){
 				final Label left = new Label("+"+(standardsList.size() - 18));
