@@ -156,6 +156,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     private int totalItemSize=0;
     
 	static int countVal = 0;
+	
+	static String stdDecVal = "";
     
     private Integer currentPageSize=1;
     
@@ -1816,28 +1818,50 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			while (iterator.hasNext()) {
 				final Map<String, String> standard = iterator.next();	
 				final String stdCode = standard.get(STANDARD_CODE);
-				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));				
+				Integer taxonomyId = 0;
+				if(standard.get(STANDARD_ID)!=null)
+				{
+					taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));	
+				}
+				if(standard.get(STANDARD_ID)!=null)
+				{
 				AppClientFactory.getInjector().getPlayerAppService().getStandardObj(taxonomyId, new SimpleAsyncCallback<StandardsObjectDo>() {
 					@Override
 					public void onSuccess(StandardsObjectDo standardsObjectDo) {
 						standardsList.get(countVal).put("id", String.valueOf(standardsObjectDo.getCodeId()));
 						standardsList.get(countVal).put("code", stdCode);
 						standardsList.get(countVal).put("description", standardsObjectDo.getLabel());			
-						String stdDec = standardsObjectDo.getLabel();
+						stdDecVal = standardsObjectDo.getLabel();
 
 						if (countVal > 2) {
 							if (countVal < 18){
-								StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+								StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDecVal);
 								toolTipwidgets.add(standardItem);
 							}
 						} else {
-							DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+							DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDecVal), standardsList);
 							toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
 							standardsContainer.add(toolTipUc);
 						}
 						countVal++;
 					}
 				});
+				}
+				else
+				{
+					stdDecVal = standard.get(STANDARD_CODE);
+					if (countVal > 2) {
+						if (countVal < 18){
+							StandardSgItemVc standardItem = new StandardSgItemVc(stdDecVal, stdDecVal);
+							toolTipwidgets.add(standardItem);
+						}
+					} else {
+						DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDecVal), new Label(stdDecVal));
+						toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
+						standardsContainer.add(toolTipUc);
+					}
+					countVal++;
+				}
 
 			}
 			if (standardsList.size()>18){
