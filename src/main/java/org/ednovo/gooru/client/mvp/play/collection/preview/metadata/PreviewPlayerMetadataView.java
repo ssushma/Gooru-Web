@@ -145,6 +145,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	int countVal =0;
 	
+	String strDecval ="";
+	
 	private boolean isConceptsVisible = false;
 	
 	private String languageObjectiveValue, depthofKnowledgeValue;
@@ -514,8 +516,14 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			final FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
 				final Map<String, String> standard = iterator.next();				
-				Integer taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));	
+				Integer taxonomyId = 0;
+				if(standard.get(STANDARD_ID)!=null)
+				{
+					taxonomyId = Integer.parseInt(standard.get(STANDARD_ID));	
+				}	
 				final String stdCode = standard.get(STANDARD_CODE);
+				if(standard.get(STANDARD_ID)!=null)
+				{
 				AppClientFactory.getInjector().getPlayerAppService().getStandardObj(taxonomyId, new SimpleAsyncCallback<StandardsObjectDo>() {
 					@Override
 					public void onSuccess(StandardsObjectDo standardsObjectDo) {
@@ -537,6 +545,22 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 						countVal++;
 					}
 				});
+				}
+				else
+				{
+					strDecval = standard.get(STANDARD_CODE);
+					if (countVal > 2) {
+						if (countVal < 18){
+							StandardSgItemVc standardItem = new StandardSgItemVc(strDecval, strDecval);
+							toolTipwidgets.add(standardItem);
+						}
+					} else {
+						DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(strDecval), new Label(strDecval));
+						toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
+						standardsContainer.add(toolTipUc);
+					}
+					countVal++;
+				}
 			}
 			if (standardsList.size()>18){
 				final Label left = new Label("+"+(standardsList.size() - 18));
