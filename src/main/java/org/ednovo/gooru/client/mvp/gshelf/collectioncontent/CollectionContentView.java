@@ -604,7 +604,10 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
         for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
         	JSONObject momentsOfLearningJsonObj = new JSONObject();
         	momentsOfLearningJsonObj.put("selected",JSONBoolean.getInstance(collectionItemDo.getResource().getMomentsOfLearning().get(i).isSelected()));
+        	if(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue()!=null)
+        	{
         	momentsOfLearningJsonObj.put("value",new JSONString(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue()));
+        	}
             momentsOfLearningArrValue.set(i, momentsOfLearningJsonObj);
         }
         attach.put("momentsOfLearning", momentsOfLearningArrValue);
@@ -612,8 +615,11 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
         for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
         	JSONObject educatUseJsonObj = new JSONObject();
         	educatUseJsonObj.put("selected",JSONBoolean.getInstance(collectionItemDo.getResource().getEducationalUse().get(i).isSelected()));
+        	if(collectionItemDo.getResource().getEducationalUse().get(i).getValue()!=null)
+        	{
         	educatUseJsonObj.put("value", new JSONString(collectionItemDo.getResource().getEducationalUse().get(i).getValue()));
         	educatUseArrValue.set(i, educatUseJsonObj);
+        	}
         }
         attach.put("educationalUse", educatUseArrValue);
 
