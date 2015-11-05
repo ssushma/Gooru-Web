@@ -533,7 +533,7 @@
 					<module>org.ednovo.gooru.application.Application</module>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<logLevel>ERROR</logLevel>
-					<style>PRETTY</style>
+					<style></style>
 					<!-- <extraJvmArgs>-XX:MaxPermSize=1024m -Xmx4024m</extraJvmArgs> -->
 					<extraJvmArgs>-XX:MaxPermSize=2048m -Xmx4096m</extraJvmArgs>
 					<localWorkers>3</localWorkers>
