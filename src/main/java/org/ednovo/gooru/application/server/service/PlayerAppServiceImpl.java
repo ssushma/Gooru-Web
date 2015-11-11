@@ -242,6 +242,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		StandardsObjectDo standardsObjectDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETSTANDARDSBYIDVAL,String.valueOf(taxonomyId));
+		
+		getLogger().info("getStandardObj::"+url);
 
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
@@ -894,7 +896,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			generatePdfJsonObj.put("html", innerHtml);
 			generatePdfJsonObj.put("fileName", completedDateTime);
-			String url =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF);
+			String url =UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_GENERATE_PDF);
 			stringRepresentation=ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),generatePdfJsonObj.toString());
 			pdfUrl=stringRepresentation.getText();
 		} catch (Exception e) {
@@ -942,7 +944,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 
 			infoJsonObj.put("attachment", new JSONArray("["+attachment.toString()+"]"));
 
-			String apiUrl =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SEND_EMAIL_WITH_PDF);
+			String apiUrl =UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_SEND_EMAIL_WITH_PDF);
 
 			stringRepresentation=ServiceProcessor.postString(apiUrl, getRestUsername(), getRestPassword(),infoJsonObj.toString());
 

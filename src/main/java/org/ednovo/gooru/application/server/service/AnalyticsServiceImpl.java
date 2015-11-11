@@ -289,7 +289,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String downloadUrl="";
 		try{
 			//String url = "http://www.goorulearning.org/gooruapi/rest/v2/media/htmltopdf?sessionToken=aec96f9c-42df-11e4-8d6c-123141016e2a";
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
+			String url = UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
 			//To disable escape sequence enabled this line
 			htmlString=htmlString.replaceAll("max-height: 100%;", "");
 			htmlString = htmlString.replaceAll("[\n\r]", "<br>");
@@ -303,7 +303,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			if(isClickedOnEmail){
 				downloadUrl=savedFileName;
 			}else{
-				downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,savedFileName,pdfName,getLoggedInSessionToken());
+				downloadUrl=UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_DOWNLOADFILE,savedFileName,pdfName,getLoggedInSessionToken());
 			}
 		}catch(Exception e){
 			logger.error("Exception::", e);
@@ -612,7 +612,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public void sendEmail(String to, String subject, String message,String displayName, String fileName, String path) {
 		JsonRepresentation jsonRep = null;
 		//String url = "http://www.goorulearning.org/gooruapi/rest/v2/share/mail?sessionToken=5ef6d576-663a-11e4-a2ea-123141016e2a";
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SEND_EMAIL_WITH_PDF,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_SEND_EMAIL_WITH_PDF,getLoggedInSessionToken());
 		logger.info("sendEmail url:+"+url);
 		JSONObject mainObj=new JSONObject();
 		JSONObject attachmentObj=new JSONObject();
