@@ -458,7 +458,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					resourceplayUrl = resourceplayUrl.replaceAll("http://", "https://");
 				}
 			}
-			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(resourceplayUrl)){
+			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(resourceplayUrl)||resourceTypeName.equalsIgnoreCase("vimeo/video")){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
