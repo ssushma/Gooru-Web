@@ -840,7 +840,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.gooru.org/hc/en-us/articles/200688506","_blank","");
+				Window.open("http://support.gooru.org","_blank","");
 			}
 		});
 

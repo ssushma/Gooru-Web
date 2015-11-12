@@ -2405,7 +2405,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 	}
 	@UiHandler("commuGuideLinesAnr")
 	public void onClickCommunityGuide(ClickEvent event){
-		Window.open("http://support.gooru.org/hc/en-us/articles/200688506","_blank","");
+		Window.open("http://support.gooru.org","_blank","");
 
 	}
 
