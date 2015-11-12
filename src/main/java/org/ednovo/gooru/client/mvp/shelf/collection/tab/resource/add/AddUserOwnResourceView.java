@@ -895,7 +895,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.gooru.org/hc/en-us/articles/200688506","_blank","");
+				Window.open("http://support.gooru.org","_blank","");
 			}
 		});
 		categorypanel.setStyleName(texts.getStyleName());

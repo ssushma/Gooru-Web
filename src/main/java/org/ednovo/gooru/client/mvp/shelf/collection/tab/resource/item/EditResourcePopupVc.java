@@ -778,7 +778,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.gooru.org/hc/en-us/articles/200688506","_blank","");
+				Window.open("http://support.gooru.org","_blank","");
 			}
 		});
 		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));

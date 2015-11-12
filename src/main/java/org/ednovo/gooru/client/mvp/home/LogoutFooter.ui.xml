@@ -23,7 +23,7 @@
 								    <g:Anchor href="http://about.gooru.org/about/careers/" target="_blank" text="{i18n.GL1244}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://support.gooru.org/hc/en-us" target="_blank" text="{i18n.GL1307}" />
+								    <g:Anchor href="http://support.gooru.org" target="_blank" text="{i18n.GL1307}" />
 								</li>
 								<li>
 								    <g:Anchor href="http://about.gooru.org/contact/" target="_blank" text="{i18n.GL1245}" />
@@ -40,7 +40,7 @@
 								    <g:Anchor href="http://partners.gooru.org/" target="_blank" text="{i18n.Gl2151}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.gooru.org/educators/coach-program/" target="_blank" text="{i18n.GL3327}" />
+								    <g:Anchor href="http://about.gooru.org/educators/stories/" target="_blank" text="{i18n.GL3327}" />
 								</li>
 								<!-- <li>
 								    <g:Anchor href="http://developers.gooru.org/" target="_blank" text="{i18n.GL2154}" />
