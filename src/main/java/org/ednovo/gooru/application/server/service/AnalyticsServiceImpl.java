@@ -229,33 +229,28 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		logger.info(" getCollectionMetaDataByUserAndSession url:+--- "+url);
 
 		String url2 = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER,collectionId,userId,classObj.getClassId(),classObj.getCourseId(),classObj.getUnitId(),classObj.getLessonId(),sessionId);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 
-		if(classObj.isCollection()) {
-			collectionSummaryMetaDataDoList = getCollectionSummaryMetaData(url2);
-		} else {
+		try {
+
 			if(getSessionStatus(url)){
-				collectionSummaryMetaDataDoList = getCollectionSummaryMetaData(url2);
+				logger.info("getCollectionMetaDataByUserAndSession url2:+--- "+url2);
+				JsonResponseRepresentation jsonResponseRep2 = ServiceProcessor.get(url2, getRestUsername(), getRestPassword(),true);
+				jsonRep2 = jsonResponseRep2.getJsonRepresentation();
+
+				collectionSummaryMetaDataDoList= (ArrayList<CollectionSummaryMetaDataDo>) JsonDeserializer.deserialize(jsonRep2.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryMetaDataDo>>() {});
+
+				logger.info("API collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
 			}
+
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		logger.info("end collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
 		return  collectionSummaryMetaDataDoList;
 	}
 
-	private ArrayList<CollectionSummaryMetaDataDo> getCollectionSummaryMetaData(String url) {
-		JsonRepresentation jsonRep = null;
-		ArrayList<CollectionSummaryMetaDataDo> collectionSummaryMetaDataDoList=new ArrayList<CollectionSummaryMetaDataDo>();
-		logger.info("getCollectionMetaDataByUserAndSession url2:+--- "+url);
-		try {
-			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword(),true);
-			jsonRep = jsonResponseRep.getJsonRepresentation();
-			collectionSummaryMetaDataDoList = (ArrayList<CollectionSummaryMetaDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryMetaDataDo>>() {});
-		} catch (JSONException e) {
-			logger.error("Exception::", e);
-		}
-		logger.info("API collectionSummaryMetaDataDoList--"+collectionSummaryMetaDataDoList.size());
-		return collectionSummaryMetaDataDoList;
-	}
-	
 	public boolean getSessionStatus(final String url) {
 
 		boolean status = true;
@@ -289,7 +284,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String downloadUrl="";
 		try{
 			//String url = "http://www.goorulearning.org/gooruapi/rest/v2/media/htmltopdf?sessionToken=aec96f9c-42df-11e4-8d6c-123141016e2a";
-			String url = UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
+			String url = UrlGenerator.generateUrl(getDownloadEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
 			//To disable escape sequence enabled this line
 			htmlString=htmlString.replaceAll("max-height: 100%;", "");
 			htmlString = htmlString.replaceAll("[\n\r]", "<br>");
@@ -299,11 +294,10 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			logger.info("html to pdf url json -- "+jsonStr);
 			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),jsonStr);
 			savedFileName=stringRepresentation.getText();
-
 			if(isClickedOnEmail){
 				downloadUrl=savedFileName;
 			}else{
-				downloadUrl=UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_DOWNLOADFILE,savedFileName,pdfName,getLoggedInSessionToken());
+				downloadUrl=UrlGenerator.generateUrl(getDownloadEndPoint(), UrlToken.V2_DOWNLOADFILE,savedFileName,pdfName,getLoggedInSessionToken());
 			}
 		}catch(Exception e){
 			logger.error("Exception::", e);
@@ -612,7 +606,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public void sendEmail(String to, String subject, String message,String displayName, String fileName, String path) {
 		JsonRepresentation jsonRep = null;
 		//String url = "http://www.goorulearning.org/gooruapi/rest/v2/share/mail?sessionToken=5ef6d576-663a-11e4-a2ea-123141016e2a";
-		String url = UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_SEND_EMAIL_WITH_PDF,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getDownloadEndPoint(), UrlToken.V2_SEND_EMAIL_WITH_PDF,getLoggedInSessionToken());
 		logger.info("sendEmail url:+"+url);
 		JSONObject mainObj=new JSONObject();
 		JSONObject attachmentObj=new JSONObject();

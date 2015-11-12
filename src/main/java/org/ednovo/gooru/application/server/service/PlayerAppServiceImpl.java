@@ -54,7 +54,6 @@ import org.ednovo.gooru.application.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.application.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.application.shared.model.content.UserPlayedSessionDo;
 import org.ednovo.gooru.application.shared.model.content.UserStarRatingsDo;
-import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.application.shared.model.library.StandardsObjectDo;
 import org.ednovo.gooru.application.shared.model.player.CommentsDo;
@@ -235,32 +234,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceCollection(jsonRep);
-	}
-	
-	@Override
-	public StandardsObjectDo getStandardObj(Integer taxonomyId) {
-		JsonRepresentation jsonRepresentation = null;
-		StandardsObjectDo standardsObjectDo=null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETSTANDARDSBYIDVAL,String.valueOf(taxonomyId));
-		
-		getLogger().info("getStandardObj::"+url);
-
-		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
-
-		return standardsObjectDo=deserializeStandardsInfo(jsonRepresentation);
-		
-	}
-	
-	public StandardsObjectDo deserializeStandardsInfo(JsonRepresentation jsonRep) {
-		if (jsonRep != null && jsonRep.getSize() != -1) {
-			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), StandardsObjectDo.class);
-			} catch (JSONException e) {
-				logger.error("Exception::", e);
-			}
-		}
-		return new StandardsObjectDo();
 	}
 
 	public CollectionItemDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {
@@ -896,7 +869,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			generatePdfJsonObj.put("html", innerHtml);
 			generatePdfJsonObj.put("fileName", completedDateTime);
-			String url =UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_GENERATE_PDF);
+			String url =UrlGenerator.generateUrl(getDownloadEndPoint(), UrlToken.V2_GENERATE_PDF);
 			stringRepresentation=ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),generatePdfJsonObj.toString());
 			pdfUrl=stringRepresentation.getText();
 		} catch (Exception e) {
@@ -944,7 +917,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 
 			infoJsonObj.put("attachment", new JSONArray("["+attachment.toString()+"]"));
 
-			String apiUrl =UrlGenerator.generateUrl(getHomeEndPoint()+"/gooruapi/rest", UrlToken.V2_SEND_EMAIL_WITH_PDF);
+			String apiUrl =UrlGenerator.generateUrl(getDownloadEndPoint(), UrlToken.V2_SEND_EMAIL_WITH_PDF);
 
 			stringRepresentation=ServiceProcessor.postString(apiUrl, getRestUsername(), getRestPassword(),infoJsonObj.toString());
 
@@ -1575,6 +1548,31 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		}
 
 		return userPlayedSessions;
+	}
+
+	@Override
+	public StandardsObjectDo getStandardObj(Integer taxonomyId) {
+		JsonRepresentation jsonRepresentation = null;
+		StandardsObjectDo standardsObjectDo=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETSTANDARDSBYIDVAL,String.valueOf(taxonomyId));
+		
+		getLogger().info("getStandardObj::"+url);
+
+		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+
+		return standardsObjectDo=deserializeStandardsInfo(jsonRepresentation);
+		
+	}
+	public StandardsObjectDo deserializeStandardsInfo(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), StandardsObjectDo.class);
+			} catch (JSONException e) {
+				logger.error("Exception::", e);
+			}
+		}
+		return new StandardsObjectDo();
 	}
 
 

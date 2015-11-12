@@ -136,6 +136,14 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return restEndPoint;
 	}
 
+	public String getDownloadEndPoint() {
+		String downloadEndPoint =  getPropertyByKey(DOWNLOAD_ENDPOINT);
+		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			downloadEndPoint = downloadEndPoint.replaceAll(HTTP, HTTPS);
+		}
+		return downloadEndPoint;
+	}
+	
 	public String getSearchEndPoint() {
 		String searchEndPoint =  getPropertyByKey(SEARCH_ENDPOINT);
 		if(getHttpRequest() != null && getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
