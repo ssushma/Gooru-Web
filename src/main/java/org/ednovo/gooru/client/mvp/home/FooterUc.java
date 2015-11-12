@@ -244,7 +244,7 @@ public class FooterUc extends Composite {
 		//featuresAnr.setTarget("_blank");
 		communityAnr.setHref("http://about.gooru.org/educators/stories/");
 		communityAnr.setTarget("_blank");
-		supportAnr.setHref("http://support.gooru.org/hc/en-us");
+		supportAnr.setHref("http://support.gooru.org");
 		supportAnr.setTarget("_blank");
 		careersAnr.setHref("http://about.gooru.org/about/careers/");
 		careersAnr.setTarget("_blank");
