@@ -1057,7 +1057,8 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			JsonRepresentation jsonRep = null;
 			String partialUrl = null;
 			String sessionToken = getLoggedInSessionToken();
-
+			if(parentId!=null)
+			{
 			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST_PUBLIC, parentId);
 			Map<String, String> params = new LinkedHashMap<String, String>();
 			params.put(GooruConstants.OFFSET, offset);
@@ -1069,6 +1070,11 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
+			if(profileLibraryListDo.getCount()<=Integer.parseInt(offset))
+			{
+				profileLibraryListDo = new ProfileLibraryListDo();
+			}
+			}
 			return profileLibraryListDo;
 	}
 
