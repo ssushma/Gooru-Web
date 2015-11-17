@@ -1124,6 +1124,7 @@ public class ProfileTopicListView extends Composite{
 							@Override
 							public void onSuccess(ProfileLibraryListDo profileLibraryList) {
 								int count = LESSON_PAGE_INITIAL_LIMIT;
+								if(profileLibraryList.getSearchResult()!=null)
 								for(int j = 0; j<profileLibraryList.getSearchResult().size();j++) {
 									conceptList.add(new PartnerLessonUc(profileLibraryList.getSearchResult().get(j),topicId,false, (j+count+1), true,libraryGooruOid));
 								}
