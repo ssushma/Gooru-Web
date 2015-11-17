@@ -183,7 +183,7 @@
 		.cropImagePanel{
 			height: 300px;
 			width: 400px;
-			margin: 20px auto 0 auto;
+			margin: 30px auto 0 auto;
 			clear: both;
 			background-position: center center;
 			background-repeat: no-repeat;
