@@ -57,6 +57,8 @@ import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -153,12 +155,14 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void setPreviewEndPresenter(){
 		previewEndPresenter.setCollectionMetadata(collectionDo);
 		setInSlot(METADATA_PRESENTER_SLOT, previewEndPresenter,false);
+		hideTooltip();
 	}
 
 	public void setStudyEndPage(){
 		previewHomePresenter.setCollectionMetadata(collectionDo);
 		previewHomePresenter.removeAssignmentImagetButtons();
 		setInSlot(METADATA_PRESENTER_SLOT, previewHomePresenter,false);
+		hideTooltip();
 	}
 
 	public void setCollectionHomeMetadata(){
@@ -167,12 +171,14 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	public void setCollectionSummaryBasedOnClasspageIdSessionId(){
 		getSessionsDataByUser(collectionDo.getGooruOid(),classpageId!=null?classpageId:"",AppClientFactory.getLoggedInUser().getGooruUId());
+		hideTooltip();
 	}
 
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
 		if(AppClientFactory.isAnonymous()){
 			getView().getLoadingImageLabel().setVisible(false);
 		}
+		hideTooltip();
 	}
 	public void clearslot(){
 		getView().resetData();
@@ -589,6 +595,14 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void setDefaultTypeAndVersion() {
 		// TODO Auto-generated method stub
 		shelfMainPresenter.SetDefaultTypeAndVersion();
+	}
+	
+	private void hideTooltip()
+	{
+		Element element = Document.get().getElementById("epnlConfirmationPanel");
+		if(element!=null){
+			element.setAttribute("style", "display:none;");
+		}
 	}
 
 }

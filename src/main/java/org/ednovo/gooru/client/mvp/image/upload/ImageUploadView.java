@@ -294,6 +294,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		appPopUp.setModal(true);
 		notWorkingPanel.setVisible(false);
 		readThisLbl.setHref(i18n.GL1265());
+		xVal=null;
+		yVal=null;
 //		Window.enableScrolling(false);
 //		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
 		addClickEventToDefaultImages();
@@ -416,6 +418,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	 */
 	@UiHandler("imageUploadOnComputerLbl")
 	public void imageUploadOnComputer(ClickEvent clickEvent) {
+			xVal=null;
+			yVal=null;
 			imageUploadOnComputerLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
 			uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
 			imageUploadOnWebLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
@@ -495,6 +499,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	 */
 	@UiHandler("imageUploadOnWebLbl")
 	public void imageUploadOnWeb(ClickEvent clickEvent) {
+		xVal=null;
+		yVal=null;
 		if(isUserUnder13){
 			uploadGooruImages.getElement().getStyle().setDisplay(Display.BLOCK);
 			imageUploadOnComputerLbl.getElement().getStyle().setDisplay(Display.NONE);
@@ -519,6 +525,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@UiHandler("uploadGooruImages")
 	public void uploadImagesFromGooru(ClickEvent clickEvent){
+		xVal=null;
+		yVal=null;
 		uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
 		imageUploadOnComputerLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
 		imageUploadOnWebLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
@@ -703,6 +711,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
+			this.mediaUploadDo=new MediaUploadDo();
 			Window.scrollTo(0, 0);
 			if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
 				Window.enableScrolling(false);
@@ -922,7 +931,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 		
         	if(mediaUploadDo!=null){
-    			//getUiHandlers().setUploadData(mediaUploadDo.getName(), mediaUploadDo);
     			getUiHandlers().cropImage(mediaUploadDo, height, width, xVal, yVal);
     		}
         	else

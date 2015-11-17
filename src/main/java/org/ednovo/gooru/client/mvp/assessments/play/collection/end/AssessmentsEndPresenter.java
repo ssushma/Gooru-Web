@@ -51,6 +51,8 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -119,12 +121,14 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	public void setPreviewEndPresenter(){
 		previewEndPresenter.setCollectionMetadata(collectionDo);
 		setInSlot(METADATA_PRESENTER_SLOT, previewEndPresenter,false);
+		hideTooltip();
 	}
 
 	public void setStudyEndPage(){
 		previewHomePresenter.setCollectionMetadata(collectionDo);
 		previewHomePresenter.removeAssignmentImagetButtons();
 		setInSlot(METADATA_PRESENTER_SLOT, previewHomePresenter,false);
+
 	}
 
 	public void setCollectionHomeMetadata(){
@@ -133,11 +137,13 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	}
 	public void setCollectionSummaryBasedOnClasspageIdSessionId(){
 		getView().setReportContainer(sessionId);
+		hideTooltip();
 		//getSessionsDataByUser(collectionDo.getGooruOid(),classpageId!=null?classpageId:"",AppClientFactory.getLoggedInUser().getGooruUId());
 	}
 
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
 		setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,printData);
+		hideTooltip();
 	}
 
 	public void clearslot(){
@@ -407,6 +413,14 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 	@Override
 	protected void onReset() {
 		getView().getQuestionsTable().clear();
+	}
+	
+	private void hideTooltip()
+	{
+		Element element = Document.get().getElementById("epnlConfirmationPanel");
+		if(element!=null){
+			element.setAttribute("style", "display:none;");
+		}
 	}
 
 }
