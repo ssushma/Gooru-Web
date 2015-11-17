@@ -2893,6 +2893,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 */
 
 	private boolean isFIBQuestionBalanced(String questionTextFIB) {
+		
 
 		Stack<Character> st = new Stack<Character>();
 
@@ -2939,7 +2940,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				int j=i;
 				while((questionTextFIB.charAt(j)!=']'))
 				{
-
 					temp=temp+questionTextFIB.charAt(j);
 					j=j+1;
 				}
@@ -2955,8 +2955,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				 */
 
 				ans = temp.substring(1).replace("&nbsp;", "").trim();
-				if(ans.equalsIgnoreCase("")){
+				
+				if(ans.isEmpty()){
 					isAnsweEmpty = true;
+					break;
 				}else{
 					isAnsweEmpty = false;
 				}
