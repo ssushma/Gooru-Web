@@ -128,7 +128,7 @@ public class AssessmentsEndPresenter extends PresenterWidget<IsAssessmentsEndVie
 		previewHomePresenter.setCollectionMetadata(collectionDo);
 		previewHomePresenter.removeAssignmentImagetButtons();
 		setInSlot(METADATA_PRESENTER_SLOT, previewHomePresenter,false);
-
+		hideTooltip();
 	}
 
 	public void setCollectionHomeMetadata(){
