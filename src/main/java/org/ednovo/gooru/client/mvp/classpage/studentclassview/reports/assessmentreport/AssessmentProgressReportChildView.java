@@ -593,12 +593,23 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 							// int ansStatus=entry.getValue();
 							 if(userSelectedOption!=null){
 									anserlbl.setText(getTextFromHTML(userSelectedOption));
-									if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
-										anserlbl.getElement().getStyle().setColor(CORRECT);
-									}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
-										anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-									}else{
-										anserlbl.getElement().getStyle().setColor(INCORRECT);
+									if(isCollection)
+									{
+										if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts==1){
+											anserlbl.getElement().getStyle().setColor(CORRECT);
+										}else if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus) && noOfAttempts>1){
+											anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+										}else{
+											anserlbl.getElement().getStyle().setColor(INCORRECT);
+										}
+									}
+									else
+									{
+										if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus)){
+											anserlbl.getElement().getStyle().setColor(CORRECT);
+										}else{
+											anserlbl.getElement().getStyle().setColor(INCORRECT);
+										}
 									}
 								}
 						 }
