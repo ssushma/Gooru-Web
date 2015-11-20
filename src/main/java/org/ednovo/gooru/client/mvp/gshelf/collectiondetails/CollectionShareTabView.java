@@ -85,7 +85,7 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	}
 
 	@UiField TextArea shareTextArea;
-	@UiField Anchor bitlyLink,embedLink;
+	@UiField Anchor embedLink;
 	@UiField HTMLEventPanel privateShareFloPanel,publicShareFloPanel,linkShareFloPanel;
 	@UiField HTMLPanel rbPublicPanel,publishedPanel,collaboratorPanel;
 	@UiField Button rbPublic;
@@ -251,9 +251,9 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 		embedLink.getElement().setAttribute("alt",i18n.GL0640_1());
 		embedLink.getElement().setAttribute("title",i18n.GL0640_1());
 
-		bitlyLink.setText(i18n.GL0639_1());
+/*		bitlyLink.setText(i18n.GL0639_1());
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639_1());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639_1());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639_1());*/
 
 		shareTextArea.setText(shareUrl);
 		shareTextArea.getElement().setAttribute("alt",shareUrl);
@@ -292,25 +292,6 @@ public class CollectionShareTabView extends BaseViewWithHandlers<CollectionShare
 	public void onClickshareTextArea(ClickEvent clickEvent){
 		shareTextArea.selectAll();
 		shareTextArea.setFocus(true);
-	}
-
-	@UiHandler("bitlyLink")
-	public void onClickBitlyLink(ClickEvent clickEvent){
-		String shareTxt=shareTextArea.getText();
-		String linkUrl=bitlyLink.getText();
-		Iterator<String> keyIterator = collectionShareMap.keySet().iterator();
-		while(keyIterator.hasNext()){
-			String key = keyIterator.next();
-			String value= collectionShareMap.get(key);
-			if(shareTxt.equalsIgnoreCase(value)){
-				bitlyLink.setText(key);
-				bitlyLink.getElement().setAttribute("alt",key);
-				bitlyLink.getElement().setAttribute("title",key);
-				shareTextArea.setText(collectionShareMap.get(linkUrl));
-				shareTextArea.getElement().setAttribute("alt",collectionShareMap.get(linkUrl));
-				shareTextArea.getElement().setAttribute("title",collectionShareMap.get(linkUrl));
-			}
-		}
 	}
 
 	@Override

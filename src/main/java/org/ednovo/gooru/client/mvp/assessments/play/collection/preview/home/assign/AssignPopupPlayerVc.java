@@ -115,7 +115,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 	Label cancelButton,lblPleaseWait,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
 
 	@UiField
-	Anchor  swithUrlLbl, swithToEmbedLbl;
+	Anchor  swithToEmbedLbl;
 
 	@UiField InlineLabel lblPii,toUsText;
 
@@ -177,7 +177,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		donothaveAccountText.getElement().setAttribute("style", "float: left;margin-left: 22%;");
 		ancSignUp.setText(i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
 
-		swithUrlLbl.setText(i18n.GL0639());
 		swithToEmbedLbl.setText(i18n.GL0640());
 		ancSignUp.getElement().setAttribute("style", "float: left;margin-left: 2%;");
 
@@ -379,13 +378,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		htmlEvenPanelContainer.getElement().setId("epnlHtmlEvenPanelContainer");
 	}
 
-	@UiHandler("swithUrlLbl")
-	public void onClickSwithUrl(ClickEvent clickevent) {
-		if (!getIsPrivate()) {
-			changeShareUrlEvents(i18n.GL0639());
-		}
-	}
-
 	public boolean getIsPrivate() {
 		return isPrivate;
 	}
@@ -398,47 +390,32 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 	public void setSwitchButtonStyles() {
 		if (getIsPrivate()) {
 			swithToEmbedLbl.getElement().getStyle().setCursor(Cursor.DEFAULT);
-			swithUrlLbl.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		} else {
 			swithToEmbedLbl.getElement().getStyle().setCursor(Cursor.POINTER);
-			swithUrlLbl.getElement().getStyle().setCursor(Cursor.POINTER);
 		}
 	}
 
 	private void changeShareUrlEvents(String buttonType) {
-		if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0639())
-				&& swithUrlLbl.getText().equalsIgnoreCase(i18n.GL0640())) {
-			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
+		if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0639())) {
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt",bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title",bitlyLink);
-				swithUrlLbl.setText(i18n.GL0640());
+				/*swithUrlLbl.setText(i18n.GL0640());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0640());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0640());
+				swithUrlLbl.getElement().setAttribute("title",i18n.GL0640());*/
 				swithToEmbedLbl.setText(i18n.GL0643());
 				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0643());
 				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0643());
-			}else{
-				shareLinkTxtBox.setText(getIframeText());
-				shareLinkTxtBox.getElement().setAttribute("alt",getIframeText());
-				shareLinkTxtBox.getElement().setAttribute("title",getIframeText());
-				swithUrlLbl.setText(i18n.GL0643());
-				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0643());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0643());
-				swithToEmbedLbl.setText(i18n.GL0639());
-				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0639());
-				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0639());
-			}
+
 		} else if (swithToEmbedLbl.getText()
-				.equalsIgnoreCase(i18n.GL0640())
-				&& swithUrlLbl.getText().equalsIgnoreCase(i18n.GL0639())) {
+				.equalsIgnoreCase(i18n.GL0640())) {
 			if (buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("alt",getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("title",getIframeText());
-				swithUrlLbl.setText(i18n.GL0639());
+/*				swithUrlLbl.setText(i18n.GL0639());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
+				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());*/
 				swithToEmbedLbl.setText(i18n.GL0643());
 				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0643());
 				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0643());
@@ -446,92 +423,54 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt",bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title",bitlyLink);
-				swithUrlLbl.setText(i18n.GL0643());
+/*				swithUrlLbl.setText(i18n.GL0643());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0643());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0643());
+				swithUrlLbl.getElement().setAttribute("title",i18n.GL0643());*/
 				swithToEmbedLbl.setText(i18n.GL0640());
 				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
 			}
-		} else if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0643())
-				&& swithUrlLbl.getText().equalsIgnoreCase(i18n.GL0640())) {
-			if (buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
-				shareLinkTxtBox.setText(decodeRawUrl);
-				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
-				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-				swithUrlLbl.setText(i18n.GL0640());
-				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0640());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0640());
-				swithToEmbedLbl.setText(i18n.GL0639());
-				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0639());
-				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0639());
-			} else {
+		} else if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0643())) {
 				shareLinkTxtBox.setText(getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("alt",getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("title",getIframeText());
-				swithUrlLbl.setText(i18n.GL0639());
+/*				swithUrlLbl.setText(i18n.GL0639());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
-				swithToEmbedLbl.setText(i18n.GL0643());
-				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0643());
-				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0643());
-			}
+				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());*/
+				swithToEmbedLbl.setText(i18n.GL0640());
+				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
+				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
+			
 		} else if (swithToEmbedLbl.getText()
-				.equalsIgnoreCase(i18n.GL0640())
-				&& swithUrlLbl.getText().equalsIgnoreCase(i18n.GL0643())) {
-			if (buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
-				shareLinkTxtBox.setText(getIframeText());
-				shareLinkTxtBox.getElement().setAttribute("alt",getIframeText());
-				shareLinkTxtBox.getElement().setAttribute("title",getIframeText());
-				swithUrlLbl.setText(i18n.GL0643());
-				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0643());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0643());
-				swithToEmbedLbl.setText(i18n.GL0639());
-				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0639());
-				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0639());
-			} else {
+				.equalsIgnoreCase(i18n.GL0640())) {
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-				swithUrlLbl.setText(i18n.GL0639());
+/*				swithUrlLbl.setText(i18n.GL0639());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
+				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());*/
 				swithToEmbedLbl.setText(i18n.GL0640());
 				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
-			}
-		} else if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0639())
-				&& swithUrlLbl.getText().equalsIgnoreCase(i18n.GL0643())) {
-			if (buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
+		} else if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0639())) {
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt",bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title",bitlyLink);
-				swithUrlLbl.setText(i18n.GL0643());
+/*				swithUrlLbl.setText(i18n.GL0643());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0643());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0643());
+				swithUrlLbl.getElement().setAttribute("title",i18n.GL0643());*/
 				swithToEmbedLbl.setText(i18n.GL0640());
 				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
-			} else {
-				shareLinkTxtBox.setText(decodeRawUrl);
-				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
-				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-				swithUrlLbl.setText(i18n.GL0640());
-				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0640());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0640());
-				swithToEmbedLbl.setText(i18n.GL0639());
-				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0639());
-				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0639());
-			}
-		} else if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0643())
-				&& swithUrlLbl.getText().equalsIgnoreCase(i18n.GL0639())) {
+
+		} else if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0643())) {
 			if (buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-				swithUrlLbl.setText(i18n.GL0639());
+/*				swithUrlLbl.setText(i18n.GL0639());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
+				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());*/
 				swithToEmbedLbl.setText(i18n.GL0640());
 				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
@@ -539,9 +478,9 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt",bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title",bitlyLink);
-				swithUrlLbl.setText(i18n.GL0640());
+/*				swithUrlLbl.setText(i18n.GL0640());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0640());
-				swithUrlLbl.getElement().setAttribute("title",i18n.GL0640());
+				swithUrlLbl.getElement().setAttribute("title",i18n.GL0640());*/
 				swithToEmbedLbl.setText(i18n.GL0643());
 				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0643());
 				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0643());
