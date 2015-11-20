@@ -35,7 +35,6 @@
 	         </g:HTMLPanel>
 	         <g:HTMLPanel styleName="col-md-5 col-sm-6">
 	            <uc:PPanel ui:field="shareLnkPanel"></uc:PPanel>
-	            <g:TextBox ui:field="sharTxtBox" styleName="form-control"></g:TextBox>
 	            <g:TextBox ui:field="fullTxtBox" styleName="form-control"></g:TextBox>
 	         </g:HTMLPanel>
 	         <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>

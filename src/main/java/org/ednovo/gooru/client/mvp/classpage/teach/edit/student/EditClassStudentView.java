@@ -98,7 +98,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 
 	@UiField InlineLabel classCodeTxtPanel;
 
-	@UiField TextBox sharTxtBox,fullTxtBox;
+	@UiField TextBox fullTxtBox;
 
 	@UiField Button inviteBtn;
 
@@ -168,7 +168,6 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	public EditClassStudentView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		setIds();
-		sharTxtBox.addClickHandler(new TextCopyHandler());
 		fullTxtBox.addClickHandler(new FullTextCopyHandler());
 	}
 
@@ -247,31 +246,18 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 
 		panelSuggestBox.getElement().setId("pnlSuggestbox");
 
+		
 
-		sharTxtBox.setReadOnly(true);
-		sharTxtBox.getElement().getStyle().setBackgroundColor("#FFF");
-		sharTxtBox.getElement().getStyle().setCursor(Cursor.DEFAULT);
-		StringUtil.setAttributes(sharTxtBox, true);
 
 		fullTxtBox.setReadOnly(true);
 		fullTxtBox.getElement().setAttribute("style", "margin:10px 0px;background-color: #FFF;cursor: default");
 		StringUtil.setAttributes(fullTxtBox, true);
-
 
 		createAutoSuggestBox();
 
 
 	}
 
-	public class TextCopyHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			sharTxtBox.selectAll();
-			sharTxtBox.setFocus(true);
-		}
-
-	}
 
 	public class FullTextCopyHandler implements ClickHandler{
 
@@ -491,7 +477,7 @@ public class EditClassStudentView extends BaseViewWithHandlers<EditClassStudentV
 	@Override
 	public void setShortenUrl(Map<String, String> shortenUrl) {
 		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
-			sharTxtBox.setText(shortenUrl.get(SHORTEN_URL));
+			//sharTxtBox.setText(shortenUrl.get(SHORTEN_URL));
 		}
 		if(shortenUrl != null && shortenUrl.containsKey(DECODERAWURL)){
 			fullTxtBox.setText(shortenUrl.get(DECODERAWURL));
