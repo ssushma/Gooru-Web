@@ -106,7 +106,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 
 	@UiField SpanPanel classCodeTxtPanel;
 
-	@UiField TextBox classTitleTextLbl,shareUrlTxtLbl,fullTxtBox;
+	@UiField TextBox classTitleTextLbl,fullTxtBox;
 
 	@UiField Button saveBtn,uploadImagePanel;
 
@@ -200,7 +200,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		saveBtn.addClickHandler(new UpdateClassDataHandler());
 		AppClientFactory.getEventBus().addHandler(setClassImageEvent.TYPE, imageHandler);
 		
-		shareUrlTxtLbl.addClickHandler(new TextCopyHandler());
+		
 		fullTxtBox.addClickHandler(new FullTextCopyHandler());
 	}
 
@@ -322,11 +322,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 
 		classImage.getElement().setId("thumbnailImage");
 		classImage.setVisible(false);
-		
-		shareUrlTxtLbl.setReadOnly(true);
-		shareUrlTxtLbl.getElement().getStyle().setBackgroundColor("#FFF");
-		shareUrlTxtLbl.getElement().getStyle().setCursor(Cursor.DEFAULT);
-		StringUtil.setAttributes(shareUrlTxtLbl, true);
+
 
 		fullTxtBox.setReadOnly(true);
 		fullTxtBox.getElement().setAttribute("style", "background-color: #FFF;cursor: default");
@@ -345,15 +341,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 		
 	}
 	
-	public class TextCopyHandler implements ClickHandler{
 
-		@Override
-		public void onClick(ClickEvent event) {
-			shareUrlTxtLbl.selectAll();
-			shareUrlTxtLbl.setFocus(true);
-		}
-
-	}
 	
 	public class FullTextCopyHandler implements ClickHandler{
 
@@ -562,7 +550,7 @@ public class EditClassSettingsView extends BaseViewWithHandlers<EditClassSetting
 	@Override
 	public void setShortenUrl(Map<String, String> shortenUrl) {
 		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
-			shareUrlTxtLbl.setText(shortenUrl.get(SHORTEN_URL));
+			//shareUrlTxtLbl.setText(shortenUrl.get(SHORTEN_URL));
 		}
 		if(shortenUrl != null && shortenUrl.containsKey(DECODERAWURL)){
 			fullTxtBox.setText(shortenUrl.get(DECODERAWURL));

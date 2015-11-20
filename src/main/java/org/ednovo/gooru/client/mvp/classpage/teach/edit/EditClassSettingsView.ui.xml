@@ -28,7 +28,6 @@
 		<uc:PPanel ui:field="classCodePanel"></uc:PPanel>
 		<g:HTMLPanel styleName="rightWhiteBox"><uc:SpanPanel ui:field="classCodeTxtPanel"></uc:SpanPanel></g:HTMLPanel>
 		<uc:PPanel ui:field="sharePanel"></uc:PPanel>
-		<g:TextBox styleName="form-control" ui:field="shareUrlTxtLbl"></g:TextBox>
 		<g:TextBox ui:field="fullTxtBox" styleName="form-control"></g:TextBox>
 			<g:HTMLPanel styleName="visibilityBlock">
 			 <uc:PPanel  ui:field="visiblityPanel"></uc:PPanel>
