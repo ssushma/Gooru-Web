@@ -67,7 +67,7 @@ public class SocialShareLinksView extends Composite {
 	@UiField
 	FlowPanel shareLinkFlwPl;
 
-	@UiField Anchor swithUrlLbl, swithToEmbedLbl;
+	@UiField Anchor swithToEmbedLbl;
 	
 	@UiField PPanel  shareLbl,shareLinkContainer;
 	
@@ -105,13 +105,13 @@ public class SocialShareLinksView extends Composite {
 		if(placeToken!=null&&placeToken.equalsIgnoreCase(PlaceTokens.SHELF))
 		shareLinkTxtBox.getElement().getStyle().setWidth(62, Unit.PCT);
 		StringUtil.setAttributes(shareLinkTxtBox, true);
-		swithUrlLbl.setText(i18n.GL0639());
+/*		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt", i18n.GL0639());
-		swithUrlLbl.getElement().setAttribute("title", i18n.GL0639());
+		swithUrlLbl.getElement().setAttribute("title", i18n.GL0639());*/
 		swithToEmbedLbl.setText(i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("alt", i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("title", i18n.GL0640());
-		swithUrlLbl.getElement().setId("lblSwithUrl");
+		//swithUrlLbl.getElement().setId("lblSwithUrl");
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
 		/*swithUrlLbl.getElement().getStyle().setMarginRight(35, Unit.PX);*/
 		shareLbl.setText(i18n.GL0512());
@@ -167,21 +167,6 @@ public class SocialShareLinksView extends Composite {
 		return swithToEmbedLbl;
 	}
 
-	public Anchor getSwithUrlLbl() {
-		return swithUrlLbl;
-	}
-
-	/**
-	 * Switching between Url and Bitly link
-	 * @param clickEvent instance of {@link ClickEvent}
-	 */
-	@UiHandler("swithUrlLbl")
-	public void onClickSwithUrl(ClickEvent clickevent){
-		if(!getIsPrivate()) {
-			changeShareUrlEvents(SWITCH_BITLY);
-		}
-	}
-	
 	/**
 	 * Switching between Url and Bitly link
 	 * @param clickEvent instance of {@link ClickEvent}
@@ -194,15 +179,15 @@ public class SocialShareLinksView extends Composite {
 	}
 	
 	private void changeShareUrlEvents(String buttonType) {
-		if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_BITLY)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)){
+		if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_BITLY)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt", bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title", bitlyLink);
 
-				swithUrlLbl.setText(SWITCH_EMBED_CODE);
+/*				swithUrlLbl.setText(SWITCH_EMBED_CODE);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);*/
 				swithToEmbedLbl.setText(SWITCH_FULL_URL);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
@@ -210,21 +195,21 @@ public class SocialShareLinksView extends Composite {
 				shareLinkTxtBox.setText(getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("alt", getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("title", getIframeText());
-				swithUrlLbl.setText(SWITCH_FULL_URL);
+/*				swithUrlLbl.setText(SWITCH_FULL_URL);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);*/
 				swithToEmbedLbl.setText(SWITCH_BITLY);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_BITLY);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_BITLY);
 			}
-		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_BITLY)){
+		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("alt", getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("title", getIframeText());
-				swithUrlLbl.setText(SWITCH_BITLY);
+/*				swithUrlLbl.setText(SWITCH_BITLY);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_BITLY);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);*/
 				swithToEmbedLbl.setText(SWITCH_FULL_URL);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
@@ -232,22 +217,22 @@ public class SocialShareLinksView extends Composite {
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt", bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title", bitlyLink);
-				swithUrlLbl.setText(SWITCH_FULL_URL);
+/*				swithUrlLbl.setText(SWITCH_FULL_URL);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);*/
 				swithToEmbedLbl.setText(SWITCH_EMBED_CODE);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 			}
-		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)){
+		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt", decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title", decodeRawUrl);
 				fullUrlMixPanelEvent();
-				swithUrlLbl.setText(SWITCH_EMBED_CODE);
+/*				swithUrlLbl.setText(SWITCH_EMBED_CODE);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);*/
 				swithToEmbedLbl.setText(SWITCH_BITLY);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_BITLY);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_BITLY);
@@ -255,21 +240,21 @@ public class SocialShareLinksView extends Composite {
 				shareLinkTxtBox.setText(getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("alt", getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("title", getIframeText());
-				swithUrlLbl.setText(SWITCH_BITLY);
+/*				swithUrlLbl.setText(SWITCH_BITLY);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_BITLY);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);*/
 				swithToEmbedLbl.setText(SWITCH_FULL_URL);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 			}
-		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)){
+		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("alt", getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("title", getIframeText());
-				swithUrlLbl.setText(SWITCH_FULL_URL);
+/*				swithUrlLbl.setText(SWITCH_FULL_URL);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);*/
 				swithToEmbedLbl.setText(SWITCH_BITLY);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_BITLY);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_BITLY);
@@ -278,21 +263,21 @@ public class SocialShareLinksView extends Composite {
 				shareLinkTxtBox.getElement().setAttribute("alt", decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title", decodeRawUrl);
 				fullUrlMixPanelEvent();
-				swithUrlLbl.setText(SWITCH_BITLY);
+/*				swithUrlLbl.setText(SWITCH_BITLY);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_BITLY);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);*/
 				swithToEmbedLbl.setText(SWITCH_EMBED_CODE);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 			}
-		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_BITLY)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)){
+		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_BITLY)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt", bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title", bitlyLink);
-				swithUrlLbl.setText(SWITCH_FULL_URL);
+/*				swithUrlLbl.setText(SWITCH_FULL_URL);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);*/
 				swithToEmbedLbl.setText(SWITCH_EMBED_CODE);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
@@ -301,22 +286,22 @@ public class SocialShareLinksView extends Composite {
 				shareLinkTxtBox.getElement().setAttribute("alt", decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title", decodeRawUrl);
 				fullUrlMixPanelEvent();
-				swithUrlLbl.setText(SWITCH_EMBED_CODE);
+/*				swithUrlLbl.setText(SWITCH_EMBED_CODE);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);*/
 				swithToEmbedLbl.setText(SWITCH_BITLY);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_BITLY);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_BITLY);
 			}
-		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_BITLY)){
+		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt", decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title", decodeRawUrl);
 				fullUrlMixPanelEvent();
-				swithUrlLbl.setText(SWITCH_BITLY);
+/*				swithUrlLbl.setText(SWITCH_BITLY);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_BITLY);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);*/
 				swithToEmbedLbl.setText(SWITCH_EMBED_CODE);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
@@ -324,9 +309,9 @@ public class SocialShareLinksView extends Composite {
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt", bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title", bitlyLink);
-				swithUrlLbl.setText(SWITCH_EMBED_CODE);
+/*				swithUrlLbl.setText(SWITCH_EMBED_CODE);
 				swithUrlLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
-				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);*/
 				swithToEmbedLbl.setText(SWITCH_FULL_URL);
 				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
 				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
@@ -359,10 +344,8 @@ public class SocialShareLinksView extends Composite {
 	public void setSwitchButtonStyles() {
 		if(getIsPrivate()) {
 			swithToEmbedLbl.getElement().getStyle().setCursor(Cursor.DEFAULT);
-			swithUrlLbl.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		} else {
 			swithToEmbedLbl.getElement().getStyle().setCursor(Cursor.POINTER);
-			swithUrlLbl.getElement().getStyle().setCursor(Cursor.POINTER);
 		}
 	}
 	private void fullUrlMixPanelEvent() {

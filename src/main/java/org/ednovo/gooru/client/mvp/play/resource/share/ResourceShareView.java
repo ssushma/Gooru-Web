@@ -75,7 +75,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		
 		@UiField FlowPanel socialSharePanel,resourceSharePanel;
 
-		@UiField InlineLabel embedLink,bitlyLink;
+		@UiField InlineLabel embedLink;
 		
 		@UiField Label resourceTitleText,hideText;
 		
@@ -102,20 +102,20 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
 		embedLink.getElement().setAttribute("title",i18n.GL0640());
 		
-		bitlyLink.setText(i18n.GL0639());
+/*		bitlyLink.setText(i18n.GL0639());
 		bitlyLink.getElement().setId("spnBitlyLink");
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());*/
 		
 		shareMainTitle.getElement().setInnerHTML(i18n.GL0644());
 		shareMainTitle.getElement().setId("pnlShareMainTitle");
 		shareMainTitle.getElement().setAttribute("alt",i18n.GL0644());
 		shareMainTitle.getElement().setAttribute("title",i18n.GL0644());
 		
-		bitlyLink.getElement().setInnerHTML(i18n.GL0639());
+/*		bitlyLink.getElement().setInnerHTML(i18n.GL0639());
 		bitlyLink.getElement().setId("spnBitlyLink");
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());*/
 		
 		embedLink.getElement().setInnerHTML(i18n.GL0640());
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
@@ -155,9 +155,9 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		embedLink.setText(i18n.GL0640());
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
 		embedLink.getElement().setAttribute("title",i18n.GL0640());
-		bitlyLink.setText(i18n.GL0639());
+/*		bitlyLink.setText(i18n.GL0639());
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());*/
 		}
 	}
 	
@@ -239,25 +239,6 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 			}
 		}
 
-	}
-
-	@UiHandler("bitlyLink")
-	public void onClickBitlyLink(ClickEvent clickEvent){
-		String shareTxt=resourceShareTextArea.getText();
-		String linkUrl=bitlyLink.getText();
-		Iterator<String> keyIterator = resourceShareMap.keySet().iterator();
-		while(keyIterator.hasNext()){
-			String key = keyIterator.next();
-			String value= resourceShareMap.get(key);
-			if(shareTxt.equalsIgnoreCase(value)){
-				bitlyLink.setText(key);
-				bitlyLink.getElement().setAttribute("alt",key);
-				bitlyLink.getElement().setAttribute("title",key);
-				resourceShareTextArea.setText(resourceShareMap.get(linkUrl));
-				resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
-				resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
-			}
-		}
 	}
 	@Override
 	public void hideSendEmailPopup(String toEmail){
