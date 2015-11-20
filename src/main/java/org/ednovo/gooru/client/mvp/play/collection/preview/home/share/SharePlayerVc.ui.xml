@@ -29,7 +29,6 @@
         		<g:TextArea styleName="{res.css.shareTextarea}" ui:field="shareLinkTxtBox">
            		</g:TextArea>
       		</g:HTMLPanel>
-      	<g:Label styleName="{res.css.url}" ui:field="swithUrlLbl" />
       	<g:Label styleName="{res.css.url}" ui:field="swithToEmbedLbl"/>
       	<g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
       	<g:HTMLPanel styleName="{res.css.contentBorderShare}"></g:HTMLPanel>

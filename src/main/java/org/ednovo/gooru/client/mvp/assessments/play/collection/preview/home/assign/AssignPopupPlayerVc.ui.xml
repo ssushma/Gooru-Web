@@ -30,7 +30,6 @@
         </g:TextArea>
       </g:HTMLPanel>
       <g:HTMLPanel styleName="sharenEmbedContainer">
-     	 <g:Anchor styleName="{res.css.url}" ui:field="swithUrlLbl"/>
       	<g:Anchor styleName="{res.css.url}" ui:field="swithToEmbedLbl"/>
       </g:HTMLPanel>
 

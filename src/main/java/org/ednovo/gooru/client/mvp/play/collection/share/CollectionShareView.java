@@ -74,7 +74,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	
 	@UiField FlowPanel socialSharePanel,collectionShareContainer;
 
-	@UiField InlineLabel embedLink,bitlyLink;
+	@UiField InlineLabel embedLink;
 	
 	@UiField Label resourceTitleText,collectionShareText,hideText,shareText;
 	
@@ -112,10 +112,10 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
 		embedLink.getElement().setAttribute("title",i18n.GL0640());
 		
-		bitlyLink.setText(i18n.GL0639());
+/*		bitlyLink.setText(i18n.GL0639());
 		bitlyLink.getElement().setId("spnBitlyLink");
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());*/
 		
 		shareMainTitle.getElement().setInnerHTML(i18n.GL0644());
 		shareMainTitle.getElement().setId("pnlShareMainTitle");
@@ -126,10 +126,10 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		collectionShareText.getElement().setId("lblCollectionShareText");
 		collectionShareText.getElement().setAttribute("alt",i18n.GL0645());
 		collectionShareText.getElement().setAttribute("title",i18n.GL0645());
-		
+/*		
 		bitlyLink.getElement().setInnerHTML(i18n.GL0639());
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());*/
 		
 		embedLink.getElement().setInnerHTML(i18n.GL0640());
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
@@ -187,9 +187,9 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
 		embedLink.getElement().setAttribute("title",i18n.GL0640());
 		
-		bitlyLink.setText(i18n.GL0639());
+/*		bitlyLink.setText(i18n.GL0639());
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());*/
 		
 		resourceShareTextArea.setText(shareUrl);
 		resourceShareTextArea.getElement().setAttribute("alt",shareUrl);
@@ -213,17 +213,17 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		embedLink.setText(i18n.GL0640());
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
 		embedLink.getElement().setAttribute("title",i18n.GL0640());
-		bitlyLink.setText(i18n.GL0639());
+/*		bitlyLink.setText(i18n.GL0639());
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());*/
 	}
 	public void setCollectionShareData(){
 		embedLink.setText(i18n.GL0640());
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
 		embedLink.getElement().setAttribute("title",i18n.GL0640());
-		bitlyLink.setText(i18n.GL0639());
+/*		bitlyLink.setText(i18n.GL0639());
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
-		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());*/
 		if(isResourceView){
 			collectionShareTextArea.setText(shareUrl);
 			collectionShareTextArea.getElement().setAttribute("alt",shareUrl);
@@ -337,35 +337,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		resourceShareTextArea.setFocus(true);
 	}
 
-	@UiHandler("bitlyLink")
-	public void onClickBitlyLink(ClickEvent clickEvent){
-		String shareTxt=resourceShareTextArea.getText();
-		String linkUrl=bitlyLink.getText();
-		Iterator<String> keyIterator =null;
-		if(isResourceView){
-			keyIterator=resourceShareMap.keySet().iterator();
-		}else{
-			keyIterator=collectionShareMap.keySet().iterator();
-		}
-		while(keyIterator.hasNext()){
-			String key = keyIterator.next();
-			String value= isResourceView?resourceShareMap.get(key):collectionShareMap.get(key);
-			if(shareTxt.equalsIgnoreCase(value)){
-				bitlyLink.setText(key);
-				bitlyLink.getElement().setAttribute("alt",key);
-				bitlyLink.getElement().setAttribute("title",key);
-				if(isResourceView){
-					resourceShareTextArea.setText(resourceShareMap.get(linkUrl));
-					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
-					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
-				}else{
-					resourceShareTextArea.setText(collectionShareMap.get(linkUrl));
-					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
-					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
-				}
-			}
-		}
-	}
+	
 	@Override
 	public void hideSendEmailPopup(String toEmail){
 		emailShareView.hide();
