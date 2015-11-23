@@ -306,7 +306,7 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 
 					final InlineLabel lbl=new InlineLabel(temp[k]+SPACE);
 					if(lbl.getText().startsWith(START_DELIMITER) && (lbl.getText().endsWith(END_DELIMITER+SPACE)|| lbl.getText().trim().endsWith(END_DELIMITER+DOT)|| lbl.getText().trim().endsWith(END_DELIMITER+COMMA) || lbl.getText().trim().endsWith(END_DELIMITER+SEMICOLUMN))){
-						String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
+						String lblText=lbl.getText().replaceAll("[{}\\[\\]]", "");
 						lbl.setText(lblText);
 						lbl.getElement().setId(STYLE_CORRECT);
 					}else{
@@ -341,11 +341,11 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 							lbl.setText(lbl.getText().trim());
 						}
 						if(lbl.getText().startsWith(START_DELIMITER) ||  lbl.getText().startsWith(" [") ){
-							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
+							String lblText=lbl.getText().replaceAll("$[{}\\[\\]]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_CORRECT);
 						}else{
-							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
+							String lblText=lbl.getText().replaceAll("$[{}\\[\\]]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_INCORRECT);
 						}
