@@ -79,19 +79,20 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 	
 	@Override
 	public void onReset() {
-		String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
-        if(classGooruOid!=null) {
-                getView().setContentVisiblity(false);
-        }
+
 	}
 	
 	public void setData() {
 		String pageType = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_PAGE_DIRECT, UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW);
 		String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
-		String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
+		String classGooruOid = getClasspageDo().getCourseGooruOid();
 		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
 		
+        if(classGooruOid!=null) {
+            getView().setContentVisiblity(false);
+        }
+
 		if(classGooruOid==null) {
 			getView().setContent(new ArrayList<PlanProgressDo>(), "","");
 		} else if(pageType.equalsIgnoreCase(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_VIEW)) {
@@ -152,7 +153,7 @@ public class StudentClassLearningMapPresenter extends PresenterWidget<IsStudentC
 	@Override
 	public void getLessonPlanData(String contentGooruIds) {
 		final String classUId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_CLASS_ID, null);
-		final String classGooruOid = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_COURSE_ID, null);
+		final String classGooruOid = getClasspageDo().getCourseGooruOid();
 		final String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_UNIT_ID, null);
 		final String lessonId = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.STUDENT_CLASSPAGE_LESSON_ID, null);
 		final Map<String,String> queryParams = new HashMap<String,String>();

@@ -67,26 +67,28 @@ public class SlnUnitReportView extends Composite {
 		int score = planProgressDo.getScoreInPercentage();
 		int views = planProgressDo.getViews();
 		String scoreValue = "--";
+		String scoreStyle = "darkGrey border-bottom-white";
 		
-		String scoreStyle = "";
-		if(views==0&&score==0) {
+		if(planProgressDo.getScoreStatus()!=null&&planProgressDo.getScoreStatus().equalsIgnoreCase("NotAttempted")) {
 			scoreStyle = "darkGrey border-bottom-white";
-		} else if(views>0&&score==0) {
-			scoreStyle = "red";
-		} else if(score>0&&score<60) {
-			scoreStyle = "red";
-		} else if(score>=60&&score<=69) {
-			scoreStyle = "org";
-		} else if(score>=70&&score<=79) {
-			scoreStyle = "yellowGreen";
-		} else if(score>=80&&score<=89) {
-			scoreStyle = "lightGreen";
-		} else if(score>=90&&score<=100) {
-			scoreStyle = "darkGreen";
-		}
-		if(views>0&&score>=0) {
-			scoreValue = score+"%";
-		}
+		} else {
+			if(views>0&&score==0) {
+				scoreStyle = "red";
+			} else if(score>0&&score<60) {
+				scoreStyle = "red";
+			} else if(score>=60&&score<=69) {
+				scoreStyle = "org";
+			} else if(score>=70&&score<=79) {
+				scoreStyle = "yellowGreen";
+			} else if(score>=80&&score<=89) {
+				scoreStyle = "lightGreen";
+			} else if(score>=90&&score<=100) {
+				scoreStyle = "darkGreen";
+			}
+			if(views>0&&score>=0) {
+				scoreValue = score+"%";
+			}
+		}		
 		avgScorePanel.addStyleName(scoreStyle);
 		totalScore.setText(scoreValue);
 		
