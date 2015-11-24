@@ -311,11 +311,11 @@ public abstract  class HotTextAnswersQuestionView extends Composite{
 							lbl.setText(lbl.getText().trim());
 						}
 						if(lbl.getText().startsWith(START_DELIMITER) ||  lbl.getText().startsWith(" [") ){
-							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
+							String lblText=lbl.getText().replaceAll("[{}\\[\\]]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_CORRECT);
 						}else{
-							String lblText=lbl.getText().replaceAll("[${}\\[\\]]", "");
+							String lblText=lbl.getText().replaceAll("[{}\\[\\]]", "");
 							lbl.setText(lblText);
 							lbl.getElement().setId(STYLE_INCORRECT);
 						}
