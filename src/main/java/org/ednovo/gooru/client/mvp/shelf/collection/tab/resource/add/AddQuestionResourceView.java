@@ -391,16 +391,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		alphaLetterA.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
+				
 				if(alphaLetterA.getParent().getElement().getChildNodes().getLength()>3)
 				{
 					alphaLetterA.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
-
+	
 				}else {
-
 					alphaLetterA.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 				}
 			}
 		});
+		
 		alphaLetterA.addMouseOutHandler(new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
@@ -2323,6 +2324,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 	public boolean isHotTextAnswerChoiceEmpty(HTMLPanel questionAnswerChoiceContainer){
 		profanityList=new ArrayList<ProfanityCheckDo>();
+
 		for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
 			final AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
 			String answerChoiceValue=null;
@@ -2367,6 +2369,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						errorMsg=ERROR_MSG_HTHL_SENTENCE;
 						errorMsg2=ERROR_MSG_HTHL_SENTENCE;
 					}
+
 					if(temp.length>1  && answerChoiceValue.contains("[") && answerChoiceValue.contains("]")){
 						boolean isCorrect=false;
 						for(int k=0;k<temp.length;k++){
@@ -2374,12 +2377,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 								if(temp[k].startsWith(" "))
 								{
 									temp[k] = temp[k].trim();
+
 								}
-								if((((temp[k].startsWith("[")) && (temp[k].endsWith("]")) && htType.equalsIgnoreCase(i18n.GL3219_1())) || ((temp[k].startsWith("[")) && (temp[k].endsWith(".]")) && !htType.equalsIgnoreCase(i18n.GL3219_1()))) && temp[k].trim().length()>0){
+								if((((temp[k].startsWith("[")) && (temp[k].endsWith("]")) && htType.equalsIgnoreCase(i18n.GL3219_1())&&temp[k].trim().length()>2) || ((temp[k].startsWith("[")) && (temp[k].endsWith(".]")) && !htType.equalsIgnoreCase(i18n.GL3219_1()))&&temp[k].trim().length()>3)){
+								
 									isCorrect=true;
+								
 								}else{
+									
 									isCorrect=false;
 									break;
+								
 								}
 							}
 						}
@@ -2389,16 +2397,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 							profanitymodel.setQuestionID(Integer.toString(i));
 							profanitymodel.setQuestionText(answerChoiceValue);
 							profanityList.add(profanitymodel);
+						
 						}else{
 							isAnswerChoiceSelected=true;
 							setHTAnswerErrorMessage(addQuestionAnswerChoice,errorMsg);
 						}
 
-					}
-
-					else{
+					}else{
+						
 						isAnswerChoiceSelected=true;
 						setHTAnswerErrorMessage(addQuestionAnswerChoice,errorMsg2);
+					
 					}
 
 
