@@ -95,6 +95,9 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	private static final String QUESTION = "question";
 
 	private static final String MYCONTENT ="coursebuilder";
+	private static final String COURSE = "Course";
+	private static final String UNIT = "Unit";
+	private static final String FOLDER = "folder";
 	private boolean isFromCopyResource= false;
 
 
@@ -174,8 +177,11 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 					}
 				}else if(type.equalsIgnoreCase("course")){
 					if(folderListDo.getSearchResult().size()==0 && clearShelfPanel){
+						
 						getView().displayNoCollectionsMsg(type);
+					
 					}else{
+						
 						getView().enableAddButton();
 						getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
 					}

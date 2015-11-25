@@ -72,7 +72,11 @@ public class StudentClassContentWidget extends Composite {
 			url = planDo.getThumbnail();
 			imagePanel.setUrl(url);
 		}
-
+		
+		if(planDo.getScoreStatus()!=null&&planDo.getScoreStatus().equalsIgnoreCase("Viewed")) {
+			imagePanel.setStyleName("empty-plan-collection-selected");
+		}
+		
 		imagePanel.setHeight("55px");
 		imagePanel.setWidth("75px");
 		imagePanel.addErrorHandler(new ErrorHandler() {
@@ -98,7 +102,6 @@ public class StudentClassContentWidget extends Composite {
 			imagePanel.setUrl(DEFAULT_ASSESSMENT_IMAGE);
 		} else {
 			imagePanel.setUrl(DEFAULT_COLLECTION_IMAGE);
-			imagePanel.setStyleName("empty-plan-collection-selected");
 		}
 	}
 
