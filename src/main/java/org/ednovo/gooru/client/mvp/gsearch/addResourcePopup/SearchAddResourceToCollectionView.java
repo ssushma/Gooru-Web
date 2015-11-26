@@ -919,7 +919,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 						getFolderItems(item, folderTreeItemWidget.getGooruOid());
 					}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
 					}else if(!StringUtil.isEmpty(copyType)&& LESSON.equalsIgnoreCase(copyType)){ 
-
 						courseId=urlparams.get(O1_LEVEL);
 						unitId=null;
 						lessonId=null;
@@ -927,7 +926,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 							getUiHandlers().getCourseItems(item,courseId,unitId,lessonId,typevalue);
 						}
 					}else{
-
+ 
+						
 						courseId=urlparams.get(O1_LEVEL);
 						unitId=urlparams.get(O2_LEVEL);
 						lessonId=urlparams.get(O3_LEVEL);
