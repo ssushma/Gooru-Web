@@ -484,8 +484,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 	}
 	
-	
-	
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
 		Window.enableScrolling(true);
@@ -532,21 +530,23 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 										lblError.setText("Unit limit reached");
 										lblError.setVisible(true);
 										enableDisableAddBtn(false);
-										
 									}else{
 										getUiHandlers().copyUnitToCourse(this.urlparams,AppClientFactory.getPlaceManager().getRequestParameter("o2",null));
 									}
 								}else if(LESSON.equalsIgnoreCase(copyType)){
+									
 									if(item.getCourseSummary()!=null && item.getCourseSummary().getLessonCount()!=null&&item.getCourseSummary().getLessonCount()>=20){
 										lblError.setText("Lesson limit reached");
 										lblError.setVisible(true);
 										enableDisableAddBtn(false);
-										
+									
 									}else{
 										getUiHandlers().copyLessonToUnit(this.urlparams,AppClientFactory.getPlaceManager().getRequestParameter("o3",null));
 									}
+								
 								}else{
 									getUiHandlers().copyCollectionToLession("","",this.urlparams);
+								
 								}
 							}
 //						}
@@ -718,9 +718,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void setPopupTitle(){
 
 		if(getStatus()){
+			
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3462_18());
+		
 		}else{
+		
 			if(isCopySelected){
 				if("collection".equalsIgnoreCase(this.selectedType)){
 					addtocollHeaderText.setText(i18n.GL3462_13());
@@ -761,6 +764,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				btnAddExisting.setText(i18n.GL0590());
 				btnAddExisting.setTitle(i18n.GL0590());
 			}
+			
 		}
 	}
 	
@@ -861,6 +865,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					enableDisableAddBtn(false);	
 					}
 				}else{
+					
 					if(LESSON.equalsIgnoreCase(copyType)&&(COURSE.equalsIgnoreCase(foldertypevalue))){
 						enableDisableAddBtn(false);
 					}
@@ -915,10 +920,14 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
 					}else if(!StringUtil.isEmpty(copyType)&& LESSON.equalsIgnoreCase(copyType)){ 
 						courseId=urlparams.get(O1_LEVEL);
+						unitId=null;
+						lessonId=null;
 						if(!UNIT.equalsIgnoreCase(typevalue)){
 							getUiHandlers().getCourseItems(item,courseId,unitId,lessonId,typevalue);
 						}
 					}else{
+ 
+						
 						courseId=urlparams.get(O1_LEVEL);
 						unitId=urlparams.get(O2_LEVEL);
 						lessonId=urlparams.get(O3_LEVEL);
@@ -961,13 +970,16 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@Override
 	public void disableTabs(boolean isVisible,String copyType) {
 		if(UNIT.equalsIgnoreCase(copyType)||LESSON.equalsIgnoreCase(copyType)){
+			
 			this.copyType=copyType;
+		
 		}else{
+			
 			this.copyType=null;
+		
 		}
+		
 		myCourseContainer.setVisible(isVisible);
-		
-		
 	}
 
 }
