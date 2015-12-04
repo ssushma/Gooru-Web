@@ -933,7 +933,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void setShareData(ProfileDo profileDo, List<String> shortenUrl,
 			String profileUrl) {
 		shareDo = new SocialShareDo();
-		shareDo.setBitlylink(shortenUrl.get(0));
+		//shareDo.setBitlylink(shortenUrl.get(0));
 		shareDo.setRawUrl(shortenUrl.get(1));
 		shareDo.setTitle(profileDo.getUser().getUsername());
 		shareDo.setDescription(i18n.GL1085_3());

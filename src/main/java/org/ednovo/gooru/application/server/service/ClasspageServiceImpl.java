@@ -734,7 +734,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements ClasspageSe
 		socialShareDo.setMessage(completeLogoDetails);
 
 		socialShareDo.setGooruOid(null);
-		socialShareDo.setBitlylink(null);
 		socialShareDo.setTitle(null);
 		socialShareDo.setDescription(null);
 		socialShareDo.setThumbnailurl(null);

@@ -393,14 +393,14 @@ IsSocialShareSmallView{
 		if(PlaceTokens.PROFILE_PAGE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 			if(socialDo.getIsSearchShare()){
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + "", "_blank", "width=600,height=300");
 			}else{
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1085_1() +" "+i18n.GL_GRR_Hyphen()+" " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1085_1() +" "+i18n.GL_GRR_Hyphen()+" " + "", "_blank", "width=600,height=300");
 			}
 		}else{
 			triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-			Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
+			Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + "", "_blank", "width=600,height=300");
 		}
 	}
 	/**
