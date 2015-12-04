@@ -76,7 +76,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	@UiField Image addAnsPlusImage;
 	@UiField HTMLEventPanel ansImageBlock;
 
-	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5","6"};
+	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5","6","7","8","9","10","11"};
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
@@ -186,7 +186,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 			}
 		}
-		if(textAnsContainer.getWidgetCount()<5){
+		if(textAnsContainer.getWidgetCount()<10){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		}else {
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
