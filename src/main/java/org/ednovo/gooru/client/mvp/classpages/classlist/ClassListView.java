@@ -777,7 +777,6 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		shareDo = new SocialShareDo();
 		shareDo.setTitle(classpageDo.getTitle());
 		shareDo.setDecodeRawUrl(txtClasspageCodeShare.getText());
-		shareDo.setBitlylink(txtClasspageLinkShare.getText());
 		shareDo.setCategoryType(AppClientFactory.getLoggedInUser().getUsername());
 		shareDo.setOnlyIcon(false);
 		shareDo.setIsSearchShare(false);
