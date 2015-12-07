@@ -100,15 +100,14 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,sharePanel,
+	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,
 	folderTocMainPnl;
-	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks,shareLbl;
+	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks;
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
 	@UiField H2Panel bannerTitle,userTitle;
 	@UiField Image logoImage,bannerImage,profImage,errorPageImg;
 	//@UiField Anchor mainTitle,firstTitle;
-	@UiField TextBox shareTxtBox;
 	
 	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel,breadCrumbsPanel,mainContainer,pageNotFoundPanel;
 	
@@ -224,8 +223,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			  }
 			}
 		});
-		shareTxtBox.addClickHandler(new OnTextBoxClick());
-		shareTxtBox.setReadOnly(true);
 	}
 	
 	/* (non-Javadoc)
@@ -772,22 +769,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		return folderTocTree;
 	}
 
-	@Override
-	public void setBitlyLink(Map<String, String> shareResult) {
-		shareTxtBox.setText(shareResult.get(SHORTEN_URL));
-	}
-	
-	/**
-	 * Selected shareLink textBox data.
-	 */
-	public class OnTextBoxClick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			shareTxtBox.selectAll();
-			shareTxtBox.setFocus(true);
-		}
-	}
 	@Override
 	public void setBreadCrumbs(final String key, String value, String separator) {
 		Label routeLbl= new Label();

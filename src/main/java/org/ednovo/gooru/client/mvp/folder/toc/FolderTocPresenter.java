@@ -160,7 +160,6 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				}
 			}
 		});
-		getShortenUrl(folderId, params);
 	}
 	/**
 	 * This method is used to check the sharable value what need to be passed.
@@ -200,20 +199,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		}
 	}
 	
-    /**
-     * To generate the bitly link of the TOC Page.
-     */
-	@Override
-	public void getShortenUrl(String folderId, Map<String, String> params) {
-		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderId, params, new SimpleAsyncCallback<Map<String,String>>() {
-			@Override
-			public void onSuccess(Map<String, String> result) {
-				if(result!=null){
-					getView().setBitlyLink(result);
-				}
-			}
-		});
-	}
+
     /**
      * To get the User profile details 
 	 * @param profId {@link String}

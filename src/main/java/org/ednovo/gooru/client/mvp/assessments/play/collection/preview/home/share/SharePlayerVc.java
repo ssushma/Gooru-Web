@@ -409,7 +409,6 @@ public abstract class SharePlayerVc extends PopupPanel{
 	public void addShareWidgetInPlay(String link, String rawUrl, String title,String desc, String shortenUrl, String type, String shareType) {
 		try {
 			SocialShareDo shareDo = new SocialShareDo();
-			shareDo.setBitlylink(rawUrl);
 			shareDo.setRawUrl(rawUrl);
 			shareDo.setTitle(title);
 			shareDo.setDescription(desc);

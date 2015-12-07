@@ -248,7 +248,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	String courseCode="";
 	boolean isEditResource=false;
 
-	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
+	String[] anserChoiceArray=new String[]{"A","B","C","D","E","F","G","H","I","J"};
 	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5","6","7","8","9","10"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
 	private boolean isBrowseTooltip =false;
@@ -997,7 +997,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
 			addQuestionAnswerChoice.setLabelName(anserChoiceArray[i]);
 		}
-		if(questionAnswerChoiceContainer.getWidgetCount()<5){
+		if(questionAnswerChoiceContainer.getWidgetCount()<10){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
@@ -1006,7 +1006,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionHotTextAnswerChoiceContainer.getWidget(i);
 			addQuestionAnswerChoice.setLabelName(anserChoiceNumArray[i]);
 		}
-		if(questionHotTextAnswerChoiceContainer.getWidgetCount()<5){
+		if(questionHotTextAnswerChoiceContainer.getWidgetCount()<10){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
@@ -1307,7 +1307,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			showRemoveToolTip(addQuestionAnswer.ansChoiceDeleteButton);
 		}
 		questionAnswerChoiceContainer.add(addQuestionAnswer);
-		if(questionAnswerChoiceContainer.getWidgetCount()>=5){
+		if(questionAnswerChoiceContainer.getWidgetCount()>=10){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
@@ -1350,7 +1350,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			showRemoveToolTip(addQuestionAnswer.ansChoiceDeleteButton);
 		}
 		questionHotTextAnswerChoiceContainer.add(addQuestionAnswer);
-		if(questionHotTextAnswerChoiceContainer.getWidgetCount()>=5){
+		if(questionHotTextAnswerChoiceContainer.getWidgetCount()>=10){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}

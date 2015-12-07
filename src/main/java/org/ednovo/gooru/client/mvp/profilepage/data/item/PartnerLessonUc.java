@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
- * 
+ *
  *  http://www.goorulearning.org/
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the
  *  "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  *  distribute, sublicense, and/or sell copies of the Software, and to
  *  permit persons to whom the Software is furnished to do so, subject to
  *  the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- * 
+ *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -62,7 +62,7 @@ public class PartnerLessonUc extends Composite{
 	Map<String,Label> conceptTitles = new HashMap<String,Label>();
 	HTMLPanel conceptList = new HTMLPanel("");
 	HTML lessonTitle = new HTML();
-	
+
 	private static PartnerLessonUcUiBinder uiBinder = GWT
 			.create(PartnerLessonUcUiBinder.class);
 
@@ -87,23 +87,23 @@ public class PartnerLessonUc extends Composite{
 		}
 	}
 	/**
-	 * 
-	 * @param arrayList 
-	 * @param lessonNumber 
-	 * @function setLessonData 
-	 * 
+	 *
+	 * @param arrayList
+	 * @param lessonNumber
+	 * @function setLessonData
+	 *
 	 * @created_date : 11-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
-	 * 
+	 *
+	 *
 	 * @parm(s) : @param lessonDo
 	 * @parm(s) : @param isLessonHighlighted
-	 * 
+	 *
 	 * @return : void
 	 *
-	 * @throws : <Mentioned if any exceptions>	 
-	 * 
+	 * @throws : <Mentioned if any exceptions>
+	 *
 	 */
 	private void setLessonData(final LessonDo lessonDo, final ProfileLibraryDo profileLibraryDo, ArrayList<ProfileLibraryDo> profileLibraryDoList, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated,final String libraryGooruOid) {
 		lessonList.getElement().setId("pnlLessonList");
@@ -131,27 +131,32 @@ public class PartnerLessonUc extends Composite{
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			String conceptTitle = "";
 			ProfileLibraryDo profileLibraryTemp = null;
-			if((AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)|| 
-					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)|| 
-					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY)|| 
-					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)|| 
+			if((AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)||
+					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||
+					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EPISD_LIBRARY)||
+					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)||
 					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE))&&(isPaginated==false)) {
 				profileLibraryTemp = profileLibraryDoList.get(i).getCollectionItems().get(0);
 			} else {
-				profileLibraryTemp = profileLibraryDoList.get(i);
+				String user = AppClientFactory.getPlaceManager().getRequestParameter("user") != null ?  AppClientFactory.getPlaceManager().getRequestParameter("user") : null;
+				if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE) && user != null && "lusd".equalsIgnoreCase(user)){
+					profileLibraryTemp = profileLibraryDoList.get(i).getCollectionItems().get(0);
+				}else{
+					profileLibraryTemp = profileLibraryDoList.get(i);
+				}
 			}
 			final ProfileLibraryDo profileLibrary = profileLibraryTemp;
 			conceptTitle = profileLibrary.getTitle();
-			
+
 			Label conceptTitleLbl = new Label(conceptTitle);
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-				conceptTitleLbl.addStyleName("conceptTitle"); 
+				conceptTitleLbl.addStyleName("conceptTitle");
 				if(profileLibraryTemp.getType().contains(ASSESSMENT)){
 					conceptTitleLbl.addStyleName("assessmentSmall");
 				}else{
 					conceptTitleLbl.addStyleName("collectionSmall");
 				}
-				
+
 			} else {
 				conceptTitleLbl.addStyleName("libraryConceptTitle");
 			}
@@ -197,10 +202,10 @@ public class PartnerLessonUc extends Composite{
 				if(profileLibraryDo.getType().contains(ASSESSMENT)){
 					lessonTitle.setStyleName("assessment");
 				}else{
-					lessonTitle.setStyleName("collection"); 
+					lessonTitle.setStyleName("collection");
 				}
 				lessonTitle.addStyleName("lessonTitle");
-				
+
 			} else {
 				//lessonTitle.addStyleName(style.libraryTitle());
 				lessonTitle.addStyleName("libraryConceptTitle");
@@ -231,23 +236,23 @@ public class PartnerLessonUc extends Composite{
 			}
 		});
 	}
-	
+
 	private void openCollection(String libraryGooruOid) {
 		AppClientFactory.fireEvent(new SetProfileCollectionStyleEvent(conceptId,topicId,lessonId));
 		AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
 		getConceptDetails(conceptId,libraryGooruOid);
 	}
-	
+
 	/**
-	 * 
-	 * @function getConceptDetails 
-	 * 
+	 *
+	 * @function getConceptDetails
+	 *
 	 * @created_date : 13-Dec-2013
-	 * 
+	 *
 	 * @description
-	 * 
+	 *
 	 * @parm(s) : @param gooruOid
-	 * 
+	 *
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
@@ -260,11 +265,11 @@ public class PartnerLessonUc extends Composite{
 				if(profileLibraryDo != null){
 					AppClientFactory.fireEvent(new OpenProfileCollectionEvent(profileLibraryDo,topicId,lessonId+"",lessonLabel,lessonCode,libraryGooruOid));
 				}
-			}			
+			}
 		});
 	}
-	
-	
+
+
 	SetProfileCollectionStyleHandler setProfileCollectionStyleHandler = new SetProfileCollectionStyleHandler() {
 		@Override
 		public void setProfileCollectionStyleHandler(String collectionId, Integer topicNo, Integer lessonNo) {
@@ -285,7 +290,7 @@ public class PartnerLessonUc extends Composite{
 			}
 		}
 	};
-	
+
 	private HTML setOpenStyle(boolean isOpen) {
 		if(isOpen) {
 			lessonTitle.addStyleName("folderOpen");
@@ -294,7 +299,7 @@ public class PartnerLessonUc extends Composite{
 		}
 		return lessonTitle;
 	}
-	
+
 	private HTMLPanel openConceptList(boolean isOpen) {
 		if(isOpen) {
 			conceptList.setVisible(true);
@@ -303,7 +308,7 @@ public class PartnerLessonUc extends Composite{
 		}
 		return conceptList;
 	}
-	
+
 	public class OpenLessonHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {

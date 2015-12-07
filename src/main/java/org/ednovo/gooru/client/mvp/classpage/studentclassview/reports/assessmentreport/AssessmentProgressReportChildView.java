@@ -605,11 +605,7 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 									}
 									else
 									{
-										if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus)){
 											anserlbl.getElement().getStyle().setColor(CORRECT);
-										}else{
-											anserlbl.getElement().getStyle().setColor(INCORRECT);
-										}
 									}
 								}
 						 }
@@ -640,7 +636,15 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 										answerChoice.getElement().getStyle().setColor(CORRECT);
 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+										if(isCollection)
+										{
+											answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+										}
+										else
+										{
+											answerChoice.getElement().getStyle().setColor(CORRECT);
+										}
+										
 									}
 								}
 								answerChoice.setStyleName(STYLE_TABLE_CENTER);
@@ -680,7 +684,14 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 										answerChoice.getElement().getStyle().setColor(CORRECT);
 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+										if(isCollection)
+										{
+											answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+										}
+										else
+										{
+											answerChoice.getElement().getStyle().setColor(CORRECT);
+										}
 									}
 								}
 								answerChoice.setStyleName(STYLE_TABLE_CENTER);

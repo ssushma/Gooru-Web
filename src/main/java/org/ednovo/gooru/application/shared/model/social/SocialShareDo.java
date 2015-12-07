@@ -38,8 +38,6 @@ public class SocialShareDo {
 	
 	private boolean isOnlyIcon;
 	
-	private String bitlylink;
-	
 	private String to;
 	
 	private String fromDisplayName;
@@ -104,13 +102,6 @@ public class SocialShareDo {
 		this.isOnlyIcon = isOnlyIcon;
 	}
 
-	public String getBitlylink() {
-		return bitlylink;
-	}
-
-	public void setBitlylink(String bitlylink) {
-		this.bitlylink = bitlylink;
-	}
 	
 	public String getTo() {
 		return to;

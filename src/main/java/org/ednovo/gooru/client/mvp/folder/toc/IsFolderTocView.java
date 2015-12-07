@@ -100,11 +100,6 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 	 */
 	void setProfileBannerDetails(ProfileDo profileDo);
 	/**
-	 * To set the share link (bitly url)
-	 * @param shareResult {@link Map}
-	 */
-	void setBitlyLink(Map<String, String> shareResult);
-	/**
 	 * To set the folder route nodes
 	 * @param key {@link String}
 	 * @param value {@link String}

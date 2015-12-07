@@ -643,7 +643,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 			String desc, String shortenUrl, String type, String shareType) {
 		try {
 			SocialShareDo shareDo = new SocialShareDo();
-			shareDo.setBitlylink(link);
 			shareDo.setRawUrl(rawUrl);
 			shareDo.setTitle(title);
 			shareDo.setDescription(desc);
