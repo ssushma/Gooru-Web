@@ -645,7 +645,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				totatHintCount=followingUserObject.getInt("totalHitCount");
 
 				JSONArray followingList=followingUserObject.getJSONArray("searchResults");
-
+				if(followingList!=null)
+				{
 				for(int i=0;i<followingList.length();i++){
 					userFollowDo=new UserFollowDo();
 					UserSummaryDo userSummaryDo=new UserSummaryDo();
@@ -672,6 +673,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 					userFollowDo.setTotalHintCount(totatHintCount);
 					userFollowList.add(userFollowDo);
+				}
 				}
 				return userFollowList;
 				} catch (JSONException e) {
