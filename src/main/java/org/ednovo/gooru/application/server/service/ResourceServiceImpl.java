@@ -945,13 +945,42 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 
 		JsonRepresentation jsonRep = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS, url);
-		String urlStr = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.CHECK_SHORTENED_URL, GooruConstants.TRUE);
-		getLogger().info("--- checkResourceExists --  "+urlStr);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS,getLoggedInSessionToken());
+		//String urlStr = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.CHECK_SHORTENED_URL, GooruConstants.TRUE);
+		getLogger().info("--- checkResourceExists --  "+partialUrl);
+		
+		String rawData = "url="+url;
+		
+/*		JSONObject premissonJsonObject=new JSONObject();
+		try {
+			premissonJsonObject.put("url", url);
+		} catch (JSONException e) {
+			logger.error("Exception::", e);
+		}*/
+		
+		getLogger().info("--- checkResourceExists11 --  "+rawData);
+		
+		getLogger().info("--- checkResourceExists22 --  "+getLoggedInSessionToken());
 
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeResourceItem(jsonRep);
+		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
+		
+		//String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.UPDATE_FILE_PERMISSION, driveFileId);
+		String contentType="application/json";
+		String access_token = getLoggedInSessionToken() != null ? getLoggedInSessionToken() : null;
+		String response= "";
+		try {
+			response=new WebService(partialUrl,false).postWebserviceForCheck("POST",partialUrl,contentType,access_token,url);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		getLogger().info("--- response --  "+response);
+		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.postForResource(url, getRestUsername(), getRestPassword());
+		//jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		//jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeResourceItemString(response);
 	}
 
 	public ExistsResourceDo deserializeResourceItem(JsonRepresentation jsonRep) {
@@ -965,6 +994,16 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 		}
 		return new ExistsResourceDo();
+	}
+	
+	public ExistsResourceDo deserializeResourceItemString(String jsonRep) {
+		
+		ExistsResourceDo resourceExists=new ExistsResourceDo();
+		if (jsonRep != null) {
+			resourceExists=JsonDeserializer.deserialize(jsonRep, new TypeReference<ExistsResourceDo>() {
+			});
+		}
+		return resourceExists;
 	}
 
 	public ResourceDo deserializeResourceDoItem(JsonRepresentation jsonRep) {

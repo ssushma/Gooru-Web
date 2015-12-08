@@ -6,8 +6,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -16,12 +21,17 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.restlet.data.Form;
+import org.restlet.representation.Representation;
+import org.restlet.resource.ClientResource;
 
 /**
  * This class is mainly used for invoking the web services and return the
@@ -93,6 +103,20 @@ public class WebService {
 		}
 
 		return ret;
+	}
+	
+	public String postWebserviceForCheck(String methodName, String apiCall, String contentType,String accessToken,String urlVal) throws UnsupportedEncodingException {
+			Form df = new Form();
+			df.set("url", urlVal);
+			String responseVal = "";
+			Representation cr = new ClientResource(apiCall).post(df);
+			try {
+				responseVal = cr.getText();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return responseVal;
 	}
 
 	public String webInvokefordelete(String methodName, String data,
