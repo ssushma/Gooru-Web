@@ -938,11 +938,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	@Override
 	public ExistsResourceDo checkResourceExists(String url) throws GwtException {
-		try {
+/*		try {
 			url = URLEncoder.encode(url, "UTF-8");
 		} catch (UnsupportedEncodingException ex) {
 			logger.error("Exception::", ex);
-		}
+		}*/
 
 		JsonRepresentation jsonRep = null;
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS,getLoggedInSessionToken());
@@ -975,12 +975,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			e.printStackTrace();
 		}
 		
+		 JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
+  	   jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(response));
+		
 		getLogger().info("--- response --  "+response);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.postForResource(url, getRestUsername(), getRestPassword());
 		//jsonRep = jsonResponseRep.getJsonRepresentation();
 		
 		//jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeResourceItemString(response);
+		return deserializeResourceItem(jsonResponseRepresentation.getJsonRepresentation());
 	}
 
 	public ExistsResourceDo deserializeResourceItem(JsonRepresentation jsonRep) {
