@@ -903,9 +903,10 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 
 
 							String categoryString = "";
-							if(libraryResourceDo.getCategory()!=null) {
+						/*	if(libraryResourceDo.getCategory()!=null) {
 								categoryString = libraryResourceDo.getCategory();
-							} else if(libraryResourceDo.getResourceFormat()!=null){
+							} else*/ 
+							if(libraryResourceDo.getResourceFormat()!=null){
 								categoryString = libraryResourceDo.getResourceFormat().getDisplayName();
 							}
 

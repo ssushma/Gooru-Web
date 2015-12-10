@@ -283,10 +283,14 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(ExistsResourceDo result) {
 				
+
+				if(result!=null)
+				{
 				if (result.getSharing()!=null)
 					if(GooruConstants.PUBLIC.equals(result.getSharing())){
 						getView().setExistingResourceData(result, getCollectionDo());
 					}
+				}
 					
 			}
 		});
