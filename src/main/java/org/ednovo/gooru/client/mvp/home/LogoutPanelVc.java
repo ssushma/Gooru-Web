@@ -50,8 +50,6 @@ public class LogoutPanelVc extends Composite{
 
 	@UiField
 	Anchor logoutAnr, anrSettings, gooruTutorialsAnr;
-	@UiField
-	Anchor feedbackAnr;
 
 	@UiField
 	Anchor supportAnr;
@@ -100,19 +98,12 @@ public class LogoutPanelVc extends Composite{
 		gooruTutorialsAnr.setHref("/tutorials");
 
 
-
-		feedbackAnr.setText(i18n.GL0195());
-		feedbackAnr.getElement().setId("lnkFeedback");
-		feedbackAnr.getElement().setAttribute("alt",i18n.GL0195());
-		feedbackAnr.getElement().setAttribute("title",i18n.GL0195());
-
 		logoutAnr.setText(i18n.GL0197());
 		logoutAnr.getElement().setId("lnkLogout");
 		logoutAnr.getElement().setAttribute("alt",i18n.GL0197());
 		logoutAnr.getElement().setAttribute("title",i18n.GL0197());
 
 		logPanel.getElement().setId("fpnlLogPanel");
-		triggerUserVoice();
 
 		mainContainer.getElement().setId("headerMainPanel");
 	}
@@ -153,31 +144,7 @@ public class LogoutPanelVc extends Composite{
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
-	@UiHandler("feedbackAnr")
-	public void feedbackPopupClick(ClickEvent clickEvent) {
-		MixpanelUtil.Click_On_FeedBack();
-		triggerUserVoiceFeedback();
-		hide();
-	}
 
-	protected final native void triggerUserVoice() /*-{
 
-		UserVoice = window.UserVoice || [];
-		$wnd.UserVoice.push(['showTab', 'classic_widget', { mode: 'feedback', primary_color: '#cc6d00', link_color: '#007dbf', forum_id: 192782, tab_label: 'Feedback', tab_color: '#4e9746', tab_position: 'bottom-right', tab_inverted: false }]);
 
-	}-*/;
-	protected final native void triggerUserVoiceFeedback() /*-{
-    var my_options = {
-        mode: 'feedback',
-        primary_color: '#cc6d00',
-        link_color: '#007dbf',
-        default_mode: 'support',
-        forum_id: 34190,
-        tab_label: 'Feedback & Support',
-        tab_color: '#cc6d00',
-        tab_position: 'middle-right',
-        tab_inverted: false
-    };
-    $wnd.UserVoice.push(['showLightbox', 'classic_widget', my_options]);
-}-*/;
 }
