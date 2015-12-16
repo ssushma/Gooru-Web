@@ -154,7 +154,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiField HTMLPanel editButtonContainerAccount,settingsMainContainer,editButtonContainerEdu,editButtonContainerContact,buttonContainer,emailbuttonContainer,EduInfoButtonContainer,gradeContainer,DefaultGardeContainer,courseContainer, panelToolTipContent,panelTooltipContainer;
 	@UiField Button editButtonAccount,editButtonEdu,editButtonContact,settingCancelButton,emailCancelButton,emailSaveButton,eduInfoCancelButton,eduInfoSaveButton,standardsSaveButton,standardsCancelButton,standardsEditButton, btnConnect;
 
-	@UiField Label panelHeading, lblPleaseWait,lblCommonCore,lblCaliforniaScience,description,standardSavingTextLabel,lblTexas,lblUserMessage,lblNgss,lblImageSubHeading, lblHeading, lblSubHeading,lblDisconnect;
+	@UiField Label panelHeading, lblPleaseWait,lblCommonCore,lblCthree,lblCaliforniaScience,description,standardSavingTextLabel,lblTexas,lblUserMessage,lblNgss,lblImageSubHeading, lblHeading, lblSubHeading,lblDisconnect;
 
 	@UiField HTML htmlToolTipDesc, htmlConnectedAs;
 	@UiField TextBox txtUserName;
@@ -194,6 +194,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	CheckBox CSSChk = new CheckBox();
 	CheckBox CaliforniaSocialSciencesStandardsChk = new CheckBox();
 	CheckBox CaliforniaELDSChk = new CheckBox();
+	CheckBox c3Stds = new CheckBox();
 
 	String USER_TAXONOMY_ROOT_CODE="user_taxonomy_root_code";
 	List<String> userStandardPrefcode=new ArrayList<String>();
@@ -661,6 +662,12 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblCommonCore.getElement().setId("lblLblCommonCore");
 		lblCommonCore.getElement().setAttribute("alt",i18n.GL1560());
 		lblCommonCore.getElement().setAttribute("title", i18n.GL1560());
+		
+		lblCthree.setText(i18n.GL3323());
+		lblCthree.getElement().setId("lblLblCthree");
+		lblCthree.getElement().setAttribute("alt",i18n.GL3323());
+		lblCthree.getElement().setAttribute("title", i18n.GL3323());
+		
 		lblCaliforniaScience.setText(i18n.GL1561());
 		lblCaliforniaScience.getElement().setId("lblLblCaliforniaScience");
 		lblCaliforniaScience.getElement().setAttribute("alt",i18n.GL1561());
@@ -683,8 +690,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userStandardTextPanel.add(texasChk);
 		userStandardTextPanel.add(ngssChk);
 
+
 		commonCoreChk.setText(i18n.GL1560());
 		commonCoreChk.setName("27787,24146");
+		c3Stds.setText(i18n.GL3323());
+		c3Stds.setName("79612");
 
 		californiaStandChk.setText(i18n.GL1561());
 		//californiaStandChk.setName("30424,42236,42237");
@@ -695,6 +705,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		ngssChk.setName("77271");
 
 		commonCoreChk.setStyleName("standardsCheckBox");
+		c3Stds.setStyleName("standardsCheckBox");
 
 		texasChk.setStyleName("standardsCheckBox");
 
@@ -735,6 +746,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userStandardTextPanel.add(californiaStandChk);
 		userStandardTextPanel.add(CaliforniaSocialSciencesStandardsChk);
 		userStandardTextPanel.add(CaliforniaELDSChk);
+		userStandardTextPanel.add(c3Stds);
 		CaliforniaSocialSciencesStandardsChk.setName("30424");
 		CaliforniaELDSChk.setName("78320");
 		//CSSChk.setName("42236,42237");
@@ -754,6 +766,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblTexas.setVisible(false);
 		lblCaliforniaScience.setVisible(false);
 		lblCommonCore.setVisible(false);
+		lblCthree.setVisible(false);
 		lblNgss.setVisible(false);
 		lblCSS.setVisible(false);
 		lblCaliforniaSocialSciencesStandards.setVisible(false);
@@ -776,6 +789,19 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 			}
 		});
+		c3Stds.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				//if(commonCoreChk.isChecked()||californiaStandChk.isChecked()||texasChk.isChecked())
+				if(commonCoreChk.isChecked()||c3Stds.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
+				{
+					standardsSaveButton.setEnabled(true);
+					standardsSaveButton.getElement().removeClassName("disabled");
+				}
+
+			}
+		});
 		californiaStandChk.addClickHandler(new ClickHandler() {
 
 					@Override
@@ -788,7 +814,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 							CSSChk.setChecked(false);
 
 						}
-						if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
+						if(commonCoreChk.isChecked()||c3Stds.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 						{
 							standardsSaveButton.setEnabled(true);
 							standardsSaveButton.getElement().removeClassName("disabled");
@@ -800,7 +826,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				@Override
 				public void onClick(ClickEvent event) {
 				//	if(commonCoreChk.isChecked()||californiaStandChk.isChecked()||texasChk.isChecked())
-					if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
+					if(commonCoreChk.isChecked()||c3Stds.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 					{
 						standardsSaveButton.setEnabled(true);
 						standardsSaveButton.getElement().removeClassName("disabled");
@@ -813,7 +839,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
+				if(commonCoreChk.isChecked()||c3Stds.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 				{
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
@@ -836,7 +862,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					CaliforniaELDSChk.setChecked(false);
 					californiaStandChk.setChecked(false);
 				}
-				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
+				if(commonCoreChk.isChecked()||c3Stds.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 				{
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
@@ -856,7 +882,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					CSSChk.setChecked(false);
 
 				}
-				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
+				if(commonCoreChk.isChecked()||c3Stds.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 				{
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
@@ -876,7 +902,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					CSSChk.setChecked(false);
 
 				}
-				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
+				if(commonCoreChk.isChecked()||c3Stds.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
 				{
 					standardsSaveButton.setEnabled(true);
 					standardsSaveButton.getElement().removeClassName("disabled");
@@ -2093,7 +2119,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public void onClickOfstandardsSaveButton(ClickEvent event)
 	{
 
-		if(commonCoreChk.isChecked() || californiaStandChk.isChecked() || texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()){
+		if(commonCoreChk.isChecked() ||c3Stds.isChecked()|| californiaStandChk.isChecked() || texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()){
 			getUiHandlers().updatePartyCustomField(USER_TAXONOMY_ROOT_CODE,getcheckedValue());
 		}
 		if(userStandardPrefcode!=null){
@@ -2109,7 +2135,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		}
 		else
 		{
-			if(!commonCoreChk.isChecked() && !californiaStandChk.isChecked() && !texasChk.isChecked()&& !ngssChk.isChecked()&& !CaliforniaSocialSciencesStandardsChk.isChecked()&& !CaliforniaELDSChk.isChecked()){
+			if(!commonCoreChk.isChecked() &&!c3Stds.isChecked() && !californiaStandChk.isChecked() && !texasChk.isChecked()&& !ngssChk.isChecked()&& !CaliforniaSocialSciencesStandardsChk.isChecked()&& !CaliforniaELDSChk.isChecked()){
 				standardsSaveButton.setEnabled(false);
 				standardsSaveButton.getElement().addClassName("disabled");
 			}
@@ -2147,6 +2173,15 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			{
 				lblCommonCore.setVisible(false);
 				commonCoreChk.setChecked(false);
+			}
+			if(list.contains("C3")){
+				c3Stds.setChecked(true);
+				lblCthree.setVisible(true);
+			}
+			else
+			{
+				c3Stds.setChecked(false);
+				lblCthree.setVisible(false);
 			}
 			if(list.contains("CASK5")){
 				lblCSS.setVisible(true);
@@ -2222,6 +2257,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 		}else{
 			lblCommonCore.setVisible(false);
+			lblCthree.setVisible(false);
 			lblCaliforniaScience.setVisible(false);
 			lblTexas.setVisible(false);
 			lblNgss.setVisible(false);
@@ -2236,7 +2272,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			commonCoreChk.setChecked(false);
 			CSSChk.setChecked(false);
 			ngssChk.setChecked(false);
-
+			c3Stds.setVisible(false);
 			CaliforniaSocialSciencesStandardsChk.setChecked(false);
 			CaliforniaELDSChk.setChecked(false);
 		}
@@ -2244,6 +2280,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		else
 		{
 			lblCommonCore.setVisible(false);
+			lblCthree.setVisible(false);
 			lblCaliforniaScience.setVisible(false);
 			lblTexas.setVisible(false);
 			lblNgss.setVisible(false);
@@ -2260,6 +2297,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			CaliforniaSocialSciencesStandardsChk.setChecked(false);
 			CaliforniaELDSChk.setChecked(false);
 			CSSChk.setChecked(false);
+			c3Stds.setVisible(false);
 
 		}
 
