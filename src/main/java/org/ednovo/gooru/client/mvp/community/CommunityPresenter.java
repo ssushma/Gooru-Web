@@ -194,8 +194,7 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		Document doc = Document.get();
-		doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
+
 	}
 
 	@Override
