@@ -547,10 +547,7 @@ public class MixpanelUtil {
    	//$wnd.mixpanel.track("Click_On_Support",{},function() { });
    	       	$wnd.hewlettTracking("Click_On_Support");
    	}-*/;
-	public static native void Click_On_FeedBack()/*-{
-   	//$wnd.mixpanel.track("Click_On_FeedBack",{},function() { });
-   	       	$wnd.hewlettTracking("Click_On_FeedBack");
-   	}-*/;
+
 	public static native void Click_On_GooruGuide()/*-{
    	//$wnd.mixpanel.track("Click_On_GooruGuide",{},function() { });
    	       	$wnd.hewlettTracking("Click_On_GooruGuide");
