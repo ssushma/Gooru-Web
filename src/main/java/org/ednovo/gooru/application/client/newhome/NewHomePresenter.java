@@ -169,10 +169,7 @@ public class NewHomePresenter extends BasePlacePresenter<IsNewHomeView, IsEditCl
 			AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		}
 
-		Document doc = Document.get();
-		if(doc.getElementById("uvTab") != null){
-			doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
-		}
+
 
 		setInSlot(BANNER_SLOT, banner);
 		setInSlot(PRESEARCH_SLOT, presearchPresenter);

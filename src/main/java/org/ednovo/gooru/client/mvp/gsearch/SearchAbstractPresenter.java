@@ -348,8 +348,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			update.center();
 		}
 
-		Document doc = Document.get();
-		doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 	}
 
