@@ -22,7 +22,6 @@
 						target="_blank"></g:Anchor>
 				</uc:LiPanel>
 				<uc:LiPanel>
-					<g:Anchor styleName="logoutText" ui:field="feedbackAnr"></g:Anchor>
 					<g:HTMLPanel styleName="userMenuBottomLine" />
 				</uc:LiPanel>
 				<uc:LiPanel>
