@@ -218,6 +218,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
+	private boolean isB21Available =false;
+	private boolean isC3vailable =false;
 
 	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
 
@@ -497,6 +499,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			GWT.runAsync(new RunAsyncCallback(){
 				@Override
 				public void onSuccess() {
+					getAddStandards();
 					isClickedOnDropDwn=true;
 					if (gradesPanel.isVisible()){
 						gradesPanel.setVisible(false);
@@ -2006,20 +2009,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params, true);
 	}
 	public final void populateStandardValues(){
+		standardsDropListValues.clear();
         for (String standardsTypesArray1 : standardsTypesArray) {
             List<String> standardsDescriptionList = Arrays.asList(standardsTypesArray1.split(","));
             LiPanel liPanel = new LiPanel();
             for(int j=0; j<standardsDescriptionList.size(); j++){
                 HTMLPanel headerDiv = new HTMLPanel("");
                 if(j==0){
-                	if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
-                        liPanel.getElement().setId("CA");
-                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
-                        liPanel.getElement().setId("B21");
-                    }else{
-                        liPanel.getElement().setId(standardsDescriptionList.get(j));
-                    }
-
                     if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
       		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
@@ -2033,6 +2029,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
       		      else if((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")){
       		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
+      		    else if((!isC3vailable) && standardsDescriptionList.get(j).equalsIgnoreCase("C3")){
+  		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+  		        }
+    		  else if((!isB21Available) && standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+		        }
 
                     headerDiv.setStyleName("liPanelStyle");
                 }else{
@@ -2091,6 +2093,16 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			}else{
 				isTEKSAvailable = false;
 			}
+			if(standarsPreferencesList.contains("C3")){
+				isC3vailable = true;
+			}else{
+				isC3vailable = false;
+			}
+			if(standarsPreferencesList.contains("B21")){
+				isB21Available = true;
+			}else{
+				isB21Available = false;
+			}
 			if(standarsPreferencesList.contains("CA")){
 				isCAAvailable = true;
 			}else{
@@ -2119,6 +2131,8 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			isNGSSAvailable = true;
 			isCAAvailable = true;
 			isTEKSAvailable = false;
+			isB21Available = true;
+			isC3vailable = true;
 			populateStandardValues();
 		}
 	}

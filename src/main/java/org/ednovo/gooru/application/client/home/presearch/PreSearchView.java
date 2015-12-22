@@ -134,6 +134,9 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
+	
+	private boolean isB21Available =false;
+	private boolean isC3vailable =false;
 
 	List<LiPanelWithClose> searchLiPanelWithCloseArray = new ArrayList<>();
 
@@ -1133,14 +1136,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
             for(int j=0; j<standardsDescriptionList.size(); j++){
                 HTMLPanel headerDiv = new HTMLPanel("");
                 if(j==0){
-                	if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
-                        liPanel.getElement().setId("CA");
-                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
-                        liPanel.getElement().setId("B21");
-                    }else{
-                        liPanel.getElement().setId(standardsDescriptionList.get(j));
-                    }
-
                     if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
       		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
@@ -1154,8 +1149,13 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
       		      else if((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")){
       		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
+      		    else if((!isC3vailable) && standardsDescriptionList.get(j).equalsIgnoreCase("C3")){
+    		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+    		        }
+      		  else if((!isB21Available) && standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+  		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+  		        }
 
-                    headerDiv.setStyleName("liPanelStyle");
                 }else{
                 	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
                 	{
@@ -1195,6 +1195,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
         }
 }
 public void checkStandarsList(List<String> standarsPreferencesList) {
+	
 
 
 		if(standarsPreferencesList!=null){
@@ -1212,6 +1213,16 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 				isTEKSAvailable = true;
 			}else{
 				isTEKSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("C3")){
+				isC3vailable = true;
+			}else{
+				isC3vailable = false;
+			}
+			if(standarsPreferencesList.contains("B21")){
+				isB21Available = true;
+			}else{
+				isB21Available = false;
 			}
 			if(standarsPreferencesList.contains("CA")){
 				isCAAvailable = true;
@@ -1240,6 +1251,8 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			isNGSSAvailable = true;
 			isCAAvailable = true;
 			isTEKSAvailable = false;
+			isB21Available = true;
+			isC3vailable = true;
 			populateStandardValues();
 		}
 	}

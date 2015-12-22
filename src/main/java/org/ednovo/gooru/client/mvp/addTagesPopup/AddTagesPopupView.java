@@ -165,6 +165,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	private boolean isNGSSAvailable = false;
 	private boolean isTEKSAvailable = false;
 	private boolean isCAAvailable = false;
+	
+	private boolean isB21Available =false;
+	private boolean isC3vailable =false;
 
 	private static String CSSNAME_AT_SELECT = "at-select";
 	private static String CSSNAME_AT_SELECTED = "at-selected";
@@ -2209,14 +2212,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			for (int j = 0; j < standardsDescriptionList.size(); j++) {
 				HTMLPanel headerDiv = new HTMLPanel("");
 				if (j == 0) {
-					if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
-                        liPanel.getElement().setId("CA");
-                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
-                        liPanel.getElement().setId("B21");
-                    }else{
-                        liPanel.getElement().setId(standardsDescriptionList.get(j));
-                    }
-
 					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
 						liPanel.getElement().setAttribute("style", "opacity:0.5;");
 					} else if ((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
@@ -2226,6 +2221,12 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 					} else if ((!isTEKSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("TEKS")) {
 						liPanel.getElement().setAttribute("style", "opacity:0.5;");
 					}
+	      		    else if((!isC3vailable) && standardsDescriptionList.get(j).equalsIgnoreCase("C3")){
+	    		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+	    		     }
+	      		    else if((!isB21Available) && standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+	  		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
+	  		        }
 
 					headerDiv.setStyleName("liPanelStyle");
 				} else {
@@ -2277,6 +2278,16 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				isNGSSAvailable = true;
 			} else {
 				isNGSSAvailable = false;
+			}
+			if(standarsPreferencesList.contains("C3")){
+				isC3vailable = true;
+			}else{
+				isC3vailable = false;
+			}
+			if(standarsPreferencesList.contains("B21")){
+				isB21Available = true;
+			}else{
+				isB21Available = false;
 			}
 			if (standarsPreferencesList.contains("TEKS")) {
 				isTEKSAvailable = true;
@@ -2374,6 +2385,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			isNGSSAvailable = true;
 			isCAAvailable = true;
 			isTEKSAvailable = false;
+			isB21Available = true;
+			isC3vailable = true;
 		}
 	}
 
