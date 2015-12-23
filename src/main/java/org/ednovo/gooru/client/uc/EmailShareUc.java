@@ -258,9 +258,9 @@ public class EmailShareUc extends PopupPanel{
 				subTxt.setText(StringUtil.generateMessage(i18n.GL0220(), socialShareDo.getTitle()));
 				subTxt.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0220(), socialShareDo.getTitle()));
 				subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0220(), socialShareDo.getTitle()));
-				msgTxa.setHTML(StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), "", AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
-				msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), "", AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
-				msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), "", AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+				msgTxa.setHTML(StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+				msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+				msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0221(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 			}
 		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
 			   lblEmailFriend.setText(i18n.GL0222_1());
@@ -269,9 +269,9 @@ public class EmailShareUc extends PopupPanel{
 			   subTxt.setText(StringUtil.generateMessage(i18n.GL0218_1(), socialShareDo.getCategoryType(), "\"" + socialShareDo.getTitle() + "\""));
 			   subTxt.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0218_1(), socialShareDo.getCategoryType(), "\"" + socialShareDo.getTitle() + "\""));
 			   subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0218_1(), socialShareDo.getCategoryType(), "\"" + socialShareDo.getTitle() + "\""));
-			   msgTxa.setHTML(StringUtil.generateMessage(i18n.GL0219_1(), socialShareDo.getCategoryType(), socialShareDo.getTitle(), "", socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
-			   msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0219_1(), socialShareDo.getCategoryType(), socialShareDo.getTitle(), "", socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
-			   msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0219_1(), socialShareDo.getCategoryType(), socialShareDo.getTitle(), "", socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+			   msgTxa.setHTML(StringUtil.generateMessage(i18n.GL0219_1(), socialShareDo.getCategoryType(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+			   msgTxa.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0219_1(), socialShareDo.getCategoryType(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+			   msgTxa.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0219_1(), socialShareDo.getCategoryType(), socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 
 		}else{
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
