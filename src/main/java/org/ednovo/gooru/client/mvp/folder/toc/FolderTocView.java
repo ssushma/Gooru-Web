@@ -57,6 +57,7 @@ import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -100,14 +101,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,
+	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,sharePanel,
 	folderTocMainPnl;
-	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks;
+	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks,shareLbl;
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
 	@UiField H2Panel bannerTitle,userTitle;
 	@UiField Image logoImage,bannerImage,profImage,errorPageImg;
 	//@UiField Anchor mainTitle,firstTitle;
+	@UiField TextBox shareTxtBox;
 	
 	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel,breadCrumbsPanel,mainContainer,pageNotFoundPanel;
 	
@@ -120,7 +122,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	private static final String USER_ID = "userId";
 	private static final String BACK2TOC = "backToToc";
 	private static final String EMPTY_FOLDER = i18n.GL3198();
-	private static final String SHORTEN_URL = "shortenUrl";
+	private static final String SHORTEN_URL = "rawUrl";
 	private static final String ID = "id";
 	private static final String PARENT_ID = "parentId";
 	private static final String LIBRARY_NAME = "libName";
@@ -223,6 +225,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			  }
 			}
 		});
+		shareTxtBox.addClickHandler(new OnTextBoxClick());
+		shareTxtBox.setReadOnly(true);
 	}
 	
 	/* (non-Javadoc)
@@ -769,6 +773,23 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		return folderTocTree;
 	}
 
+	@Override
+	public void setBitlyLink(Map<String, String> shareResult) {
+		String urlVal = URL.decodeQueryString(shareResult.get(SHORTEN_URL));
+		shareTxtBox.setText(urlVal);
+	}
+	
+	/**
+	 * Selected shareLink textBox data.
+	 */
+	public class OnTextBoxClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			shareTxtBox.selectAll();
+			shareTxtBox.setFocus(true);
+		}
+	}
 	@Override
 	public void setBreadCrumbs(final String key, String value, String separator) {
 		Label routeLbl= new Label();
