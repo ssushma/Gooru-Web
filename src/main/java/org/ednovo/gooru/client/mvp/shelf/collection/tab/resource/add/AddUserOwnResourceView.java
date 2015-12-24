@@ -2363,6 +2363,14 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				HTMLPanel headerDiv = new HTMLPanel("");
 				if (j == 0) {
 
+                	if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
+                        liPanel.getElement().setId("CA");
+                    }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
+                        liPanel.getElement().setId("B21");
+                    }else{
+                        liPanel.getElement().setId(standardsDescriptionList.get(j));
+                    }
+					
 					if ((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")) {
 						liPanel.getElement().setAttribute("style", "opacity:0.5;");
 					} else if ((!isCAAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")) {
