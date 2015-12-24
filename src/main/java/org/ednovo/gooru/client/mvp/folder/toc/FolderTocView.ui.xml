@@ -44,10 +44,10 @@
 							<g:HTMLPanel styleName="tocShareContainer">
 							<g:HTMLPanel styleName="col-md-8 col-xs-6 col-sm-8 folderTitleContainer">
 								<tbp:H3Panel styleName="pageHeader" ui:field="lblFolderTitle"/></g:HTMLPanel>
-								<!-- <g:HTMLPanel styleName="col-md-4 col-xs-6 col-sm-4 {folderTocStyle.css.shareButton}" ui:field="sharePanel">
+							<g:HTMLPanel styleName="col-md-4 col-xs-6 col-sm-4 {folderTocStyle.css.shareButton}" ui:field="sharePanel">
 									<g:Label styleName="tocShareBtn" ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
 									<g:TextBox styleName="tocShareTxb" ui:field="shareTxtBox"></g:TextBox>
-								</g:HTMLPanel> -->
+								</g:HTMLPanel>
 								<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 							</g:HTMLPanel>
 							<g:HTMLPanel ui:field="bigIdeasPanel">

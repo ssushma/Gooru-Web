@@ -180,7 +180,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 			@Override
 			public void onTwitter() {
 				getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+" "+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+" "+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + originalUrl, "_blank", "width=600,height=300");
 			}
 			
 			@Override

@@ -1136,7 +1136,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
             for(int j=0; j<standardsDescriptionList.size(); j++){
                 HTMLPanel headerDiv = new HTMLPanel("");
                 if(j==0){
-                	
                 	if(standardsDescriptionList.get(j).equalsIgnoreCase("CA SS")){
                         liPanel.getElement().setId("CA");
                     }else if(standardsDescriptionList.get(j).equalsIgnoreCase("LWMCS")){
@@ -1144,7 +1143,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
                     }else{
                         liPanel.getElement().setId(standardsDescriptionList.get(j));
                     }
-                	
+
                     if((!isCCSSAvailable) && standardsDescriptionList.get(j).equalsIgnoreCase("CCSS")){
       		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
       		        }
@@ -1165,6 +1164,7 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
   		    	  liPanel.getElement().setAttribute("style", "opacity:0.5;");
   		        }
 
+                    headerDiv.setStyleName("liPanelStyle");
                 }else{
                 	if(standardsDescriptionList.get(j).equalsIgnoreCase("College Career and Civic Life"))
                 	{
@@ -1204,7 +1204,6 @@ public class PreSearchView extends BaseViewWithHandlers<PreSearchUiHandlers> imp
         }
 }
 public void checkStandarsList(List<String> standarsPreferencesList) {
-	
 
 
 		if(standarsPreferencesList!=null){
@@ -1218,11 +1217,6 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 			}else{
 				isNGSSAvailable = false;
 			}
-			if(standarsPreferencesList.contains("TEKS")){
-				isTEKSAvailable = true;
-			}else{
-				isTEKSAvailable = false;
-			}
 			if(standarsPreferencesList.contains("C3")){
 				isC3vailable = true;
 			}else{
@@ -1232,6 +1226,11 @@ public void checkStandarsList(List<String> standarsPreferencesList) {
 				isB21Available = true;
 			}else{
 				isB21Available = false;
+			}
+			if(standarsPreferencesList.contains("TEKS")){
+				isTEKSAvailable = true;
+			}else{
+				isTEKSAvailable = false;
 			}
 			if(standarsPreferencesList.contains("CA")){
 				isCAAvailable = true;
