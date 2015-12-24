@@ -45,6 +45,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -143,7 +144,8 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		if(shareUrlsList.containsKey("rawUrl")){
 		originalUrl=shareUrlsList.get("rawUrl").toString();
 		}
-		setResourceIframeUrl(shareUrl);
+		String resultUrl = URL.decodeQueryString(originalUrl);
+		setResourceIframeUrl(resultUrl);
 		if(shareUrlsList.containsKey("shortenUrl")){
 		shareBitlyUrl = shareUrlsList.get("shortenUrl").toString();
 		}
@@ -193,7 +195,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 			@Override
 			public void onEmail() {
 				String emailSubject=i18n.GL1439()+" "+collectionItemDo.getResource().getTitle();
-				String emailDescription= removeHtmlTags(collectionItemDo.getResource().getTitle())+"<div><br/></div><div>"+shareBitlyUrl+"</div><div><br/></div><div>"+i18n.GL1440()+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+i18n.GL1441()+"</div>";
+				String emailDescription= removeHtmlTags(collectionItemDo.getResource().getTitle())+"<div><br/></div><div>"+shareUrl+"</div><div><br/></div><div>"+i18n.GL1440()+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+i18n.GL1441()+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
 					@Override
 					public void sendEmail(String fromEmail, String toEmail,
