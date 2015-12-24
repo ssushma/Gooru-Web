@@ -665,7 +665,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblCommonCore.getElement().setAttribute("alt",i18n.GL1560());
 		lblCommonCore.getElement().setAttribute("title", i18n.GL1560());
 		
-		lblCthree.setText(i18n.GL3323());
+		lblCthree.setText("C3, College, Career, and Civic Life");
 		lblCthree.getElement().setId("lblLblCthree");
 		lblCthree.getElement().setAttribute("alt",i18n.GL3323());
 		lblCthree.getElement().setAttribute("title", i18n.GL3323());
