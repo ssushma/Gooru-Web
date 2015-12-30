@@ -703,13 +703,26 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 					adTable.setWidget(i, 2,answerspnl);
 				}else if(HT_RO.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType) || OE.equalsIgnoreCase(questionType)){
 					if(result.get(i).getAnswerObject()!=null && !result.get(i).getStatus().equalsIgnoreCase("skipped")) {
-						Label viewResponselbl=new Label(VIEWRESPONSE);
+						JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+						JSONObject answerObject = value.isObject();
+						Set<String> keys=answerObject.keySet();
+						Iterator<String> itr = keys.iterator();
+						JSONArray attemptsObj=null;
+						while(itr.hasNext()) {
+							attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+						}
+						String hsImage = "";
+						for(int j=0;j<attemptsObj.size();j++){
+							hsImage =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+							break;
+						}
+						Label viewResponselbl=new Label(hsImage);
 						viewResponselbl.setStyleName("summaryViewResponse");
 						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
 						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
+						//viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 						adTable.setWidget(i, 2,viewResponselbl);
 					}
 				}
