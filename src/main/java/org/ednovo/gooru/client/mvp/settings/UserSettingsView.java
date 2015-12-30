@@ -665,10 +665,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblCommonCore.getElement().setAttribute("alt",i18n.GL1560());
 		lblCommonCore.getElement().setAttribute("title", i18n.GL1560());
 		
-		lblCthree.setText("C3, College, Career, and Civic Life");
+		lblCthree.setText("College, Career, and Civic Life (C3) Standards");
 		lblCthree.getElement().setId("lblLblCthree");
 		lblCthree.getElement().setAttribute("alt",i18n.GL3323());
-		lblCthree.getElement().setAttribute("title", i18n.GL3323());
+		lblCthree.getElement().setAttribute("title", "College, Career, and Civic Life (C3) Standards");
 		
 		
 		lblLWMCS.setText(i18n.GL3321());
@@ -701,7 +701,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 		commonCoreChk.setText(i18n.GL1560());
 		commonCoreChk.setName("27787,24146");
-		c3Stds.setText(i18n.GL3323());
+		c3Stds.setText("College, Career, and Civic Life (C3) Standards");
 		AppClientFactory.getInjector().getSearchService().getFirstLevelStandards("0", "C3", new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
 
 			@Override
