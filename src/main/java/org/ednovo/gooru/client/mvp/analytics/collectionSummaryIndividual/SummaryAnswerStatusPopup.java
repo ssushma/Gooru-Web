@@ -61,7 +61,7 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 							answerChoice.getElement().getStyle().setBorderColor(CORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-							answerChoice.getElement().getStyle().setBorderColor(ONMULTIPULEATTEMPTS);
+							answerChoice.getElement().getStyle().setBorderColor(CORRECT);
 						}
 				  }
 		        ansFlowPnl.add(answerChoice);
@@ -81,7 +81,7 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 							} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 								answerChoice.addStyleName(HS_CORRECT);
 							} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-								answerChoice.addStyleName(HS_ONMULTIPULEATTEMPTS);
+								answerChoice.addStyleName(HS_CORRECT);
 							}
 					  }
   		      ansFlowPnl.add(answerChoice);
@@ -104,7 +104,7 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
   		        		 hlText=hlText.replaceAll(PLAYER_HT_ANS, SUMMARY_HTPLAYER_ANS);
   		        	 }
   		        	 if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-  		        		hlText=hlText.replaceAll(CORRECT_WORD, MULTI_CORRECT_WORD);
+  		        		hlText=hlText.replaceAll(CORRECT_WORD, CORRECT_WORD);
   		        	 }
   		        	 answerChoice.setHTML(URL.decodeQueryString(hlText));
   		         }
@@ -125,7 +125,7 @@ public class SummaryAnswerStatusPopup extends PopupPanel implements ClientConsta
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 							answerChoice.addStyleName(HS_CORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
-							answerChoice.addStyleName(HS_ONMULTIPULEATTEMPTS);
+							answerChoice.addStyleName(HS_CORRECT);
 						}
 					  }
 		       ansFlowPnl.add(answerChoice);
