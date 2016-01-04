@@ -1628,7 +1628,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public void clickedOnAddQuestionButton(ClickEvent event)
 	{
 
-		boolean fieldValidationCheck;
+		Boolean fieldValidationCheck = false;
 		if(getQuestionType().equalsIgnoreCase("T/F")){
 			if (isAnswerChoiceEmpty(questionTrueOrFalseAnswerChoiceContainer)) {
 				fieldValidationCheck = false;
@@ -1643,13 +1643,21 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 			}
 		}else if(getQuestionType().equalsIgnoreCase("MC")){
+			System.out.println("iam1:::"+isAnswerChoiceEmpty(questionAnswerChoiceContainer));
 			if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
-				fieldValidationCheck = false;
+				fieldValidationCheck = true;
 				isAddBtnClicked=true;
 			}
+			else
+			{
+				fieldValidationCheck = false;
+			}
+			System.out.println("iam2:::"+!isHintsAdded(hintsContainer));
 			if(!isHintsAdded(hintsContainer)){
-				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
-					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
+				System.out.println("iam:3::"+!isAnswerChoiceEmpty(questionAnswerChoiceContainer));
+				System.out.println("iamfieldValidationCheck:3::"+!fieldValidationCheck);
+				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer) && !fieldValidationCheck) {
+					String errorMessage=getQuestionType().equalsIgnoreCase("MC")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					showErrorMessageForAnswer(errorMessage);
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
@@ -2322,19 +2330,22 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				answerChoiceValue=addQuestionAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
 			}
 			ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
-			if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
+			System.out.println("anschoice::"+answerChoiceValue.trim().isEmpty());
+			if(answerChoiceValue==null||answerChoiceValue.trim().isEmpty()){
 				isAnswerChoiceSelected=true;
 				addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
 				addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
 				profanitymodel.setQuestionID(Integer.toString(i));
 				profanityList.add(profanitymodel);
 				addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "display:block");
+				break;
 			}else{
 				if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
 					isAnswerChoiceSelected=true;
 					Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
 					addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
 					addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
+					break;
 				}else{
 					isAnswerChoiceSelected=false;
 					profanitymodel.setQuestionID(Integer.toString(i));
