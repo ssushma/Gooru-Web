@@ -64,12 +64,14 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -82,6 +84,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -501,14 +504,136 @@ public class AssessmentsEndView extends BaseViewWithHandlers<AssessmentsEndUiHan
 							hsImage =attemptsObj.get(k).isObject().get("text").isString().stringValue();
 							break;
 						}
+						if(HS_IMG.equalsIgnoreCase(questionType))
+						{
+							FlowPanel fnlPnl = new FlowPanel();
+							for(int j=0;j<attemptsObj.size();j++){
+					        	Image answerChoice=new Image();
+					        	answerChoice.addStyleName("summaryHsImg");
+					            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+					        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+					        	String hsImage1 =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+						         if(skip == false)
+								  {
+									answerChoice.setUrl(hsImage1);
+										if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+											answerChoice.getElement().getStyle().setBorderColor(INCORRECT);
+										} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+											answerChoice.getElement().getStyle().setBorderColor(CORRECT);
+										} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+											answerChoice.getElement().getStyle().setBorderColor(CORRECT);
+										}
+								  }
+				
+						         fnlPnl.add(answerChoice);
+					         }
+							adTable.setWidget(i, 2,fnlPnl);
+							//viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
+			
+						} else if(questionType.equalsIgnoreCase("HS") || HS_TXT.equalsIgnoreCase(questionType)){
+							FlowPanel fnlPnl = new FlowPanel();
+							 for(int j=0;j<attemptsObj.size();j++){
+						        	HTML answerChoice=new HTML();
+						        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);
+						            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+						        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+						        	String hsText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+				  		         if(skip == false)
+									  {
+										answerChoice.setHTML(URL.decodeQueryString(hsText));
+											if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+												answerChoice.addStyleName(HS_INCORRECT);
+											} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+												answerChoice.addStyleName(HS_CORRECT);
+											} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+												answerChoice.addStyleName(HS_CORRECT);
+											}
+									  }
+				  		       fnlPnl.add(answerChoice);
+						         }
+							 adTable.setWidget(i, 2,fnlPnl);
+
+						}else if(HT_HL.equalsIgnoreCase(questionType)){
+							FlowPanel fnlPnl = new FlowPanel();
+							 for(int j=0;j<attemptsObj.size();j++){
+						        	HTML answerChoice=new HTML();
+						        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);
+						            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+						        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+						        	String hlText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+
+				  		         if(skip == false)
+				  		         {
+				  		        	 if(hlText.contains(PLAYER_HT_HL)){
+				  		        		 hlText=hlText.replaceAll(PLAYER_HT_HL, SUMMARY_HT_HL);
+				  		        	 }
+				  		        	 if(hlText.contains(PLAYER_HT_ANS)){
+				  		        		 hlText=hlText.replaceAll(PLAYER_HT_ANS, SUMMARY_HTPLAYER_ANS);
+				  		        	 }
+				  		        	 if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+				  		        		hlText=hlText.replaceAll(CORRECT_WORD, CORRECT_WORD);
+				  		        	 }
+				  		        	 answerChoice.setHTML(URL.decodeQueryString(hlText));
+				  		         }
+				  		       fnlPnl.add(answerChoice);
+						         }
+							 adTable.setWidget(i, 2,fnlPnl);
+						} else if(HT_RO.equalsIgnoreCase(questionType)){
+							FlowPanel fnlPnl = new FlowPanel();
+							 for(int j=0;j<attemptsObj.size();j++){
+						        	HTML answerChoice=new HTML();
+						        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);
+						            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+						        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+						        	String htROText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+						         if(skip == false)
+									  {
+										answerChoice.setHTML(URL.decodeQueryString(htROText));
+										if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+											answerChoice.addStyleName(HS_INCORRECT);
+										} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+											answerChoice.addStyleName(HS_CORRECT);
+										} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+											answerChoice.addStyleName(HS_CORRECT);
+										}
+									  }
+						         fnlPnl.add(answerChoice);
+						         }
+							 adTable.setWidget(i, 2,fnlPnl);
+						}else if(OE.equalsIgnoreCase(questionType)){
+							FlowPanel fnlPnl = new FlowPanel();
+							 for(int j=0;j<attemptsObj.size();j++){
+						        	HTML answerChoice=new HTML();
+						        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);
+						            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+						        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+						        	String OeAnswer =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+						         if(skip == false)
+									  {
+						        	 	AppClientFactory.printInfoLogger("OeAnswer : "+OeAnswer);
+										answerChoice.setHTML(URL.decodeQueryString(OeAnswer));
+										/*if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+											answerChoice.addStyleName(HS_INCORRECT);
+										} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+											answerChoice.addStyleName(HS_CORRECT);
+										} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+											answerChoice.addStyleName(HS_ONMULTIPULEATTEMPTS);
+										}*/
+									  }
+						         fnlPnl.add(answerChoice);
+						        }
+								adTable.setWidget(i, 2,fnlPnl);
+						}
+						else
+						{
 						Label viewResponselbl=new Label(hsImage);
 						viewResponselbl.setStyleName("summaryViewResponse");
 						viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
 						viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 						viewResponselbl.getElement().setAttribute("answerObj", result.get(i).getAnswerObject());
 						viewResponselbl.getElement().setAttribute("attempts",String.valueOf(noOfAttempts));
-						//viewResponselbl.addClickHandler(new SummaryPopupClick(result.get(i)));
 						adTable.setWidget(i, 2,viewResponselbl);
+						}
 					}
 				}
 
