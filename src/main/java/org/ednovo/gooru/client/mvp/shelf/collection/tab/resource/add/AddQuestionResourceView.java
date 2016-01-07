@@ -1679,7 +1679,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		} else if(getQuestionType().equalsIgnoreCase("HT_HL") ||getQuestionType().equalsIgnoreCase("HT_RO")){
 			if (isHotTextAnswerChoiceEmpty(questionHotTextAnswerChoiceContainer)) {
-				fieldValidationCheck = false;
+				fieldValidationCheck = true;
 				isAddBtnClicked=true;
 			}
 		}
