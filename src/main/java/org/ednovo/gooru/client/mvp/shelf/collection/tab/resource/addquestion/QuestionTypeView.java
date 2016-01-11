@@ -1426,7 +1426,7 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 		boolean fieldValidationCheck;
 		if(questionType.equalsIgnoreCase("HS_TXT") ||questionType.equalsIgnoreCase("HS_IMG") ){
 			if (isHotSpotAnswerChoiceEmpty(questionHotSpotAnswerChoiceContainer)) {
-				fieldValidationCheck = false;
+				fieldValidationCheck = true;
 				isAddBtnClicked=true;
 			}
 			if (!isHotSpotAnswerChoiceSelected(questionHotSpotAnswerChoiceContainer)) {
@@ -1502,9 +1502,8 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 
 									else if(fieldValidationStaus && (questionType.equalsIgnoreCase("HS_TXT") || questionType.equalsIgnoreCase("HS_IMG"))){
 										clearErrorQuestionMessage();
-
 										if (isHotSpotAnswerChoiceEmpty(questionHotSpotAnswerChoiceContainer)) {
-											fieldValidationStaus = false;
+											fieldValidationStaus = true;
 											isAddBtnClicked=true;
 										}else{
 
@@ -1646,12 +1645,13 @@ implements IsQuestionTypeView,SelectionHandler<SuggestOracle.Suggestion> {
 				answerChoiceValue=addAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
 
 				ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
-				if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
+				if(answerChoiceValue==null||answerChoiceValue.isEmpty()){
 					selectedAnswerImage=true;
 					addHotSpotQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
 					addAnswerChoice.answerTextBox.getElement().addClassName("errorBorderMessage");
 					profanitymodel.setQuestionID(Integer.toString(i));
 					profanityList.add(profanitymodel);
+					break;
 				}else{
 					if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
 						selectedAnswerImage=true;
