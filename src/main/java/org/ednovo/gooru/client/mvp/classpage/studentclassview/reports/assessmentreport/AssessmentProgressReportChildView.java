@@ -605,7 +605,11 @@ public class AssessmentProgressReportChildView extends ChildView<AssessmentProgr
 									}
 									else
 									{
-											anserlbl.getElement().getStyle().setColor(CORRECT);
+										if(STATUS_CORRECT.equalsIgnoreCase(scoreStatus)){
+  											anserlbl.getElement().getStyle().setColor(CORRECT);
+ 										}else{
+ 											anserlbl.getElement().getStyle().setColor(INCORRECT);
+ 										}
 									}
 								}
 						 }
