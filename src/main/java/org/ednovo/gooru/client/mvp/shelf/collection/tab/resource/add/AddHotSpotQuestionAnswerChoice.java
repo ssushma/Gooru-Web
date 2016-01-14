@@ -76,7 +76,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	@UiField Image addAnsPlusImage;
 	@UiField HTMLEventPanel ansImageBlock;
 
-	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5","6","7","8","9","10","11"};
+	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5","6","7","8","9","10"};
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
@@ -139,54 +139,56 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	public void setAnswerChoices(){
 		int widgetCount=textAnsContainer.getWidgetCount();
 		for(int i=0;i<widgetCount;i++){
-			final AddAnswerChoice addAnswerChoice=(AddAnswerChoice)textAnsContainer.getWidget(i);
-			addAnswerChoice.getElement().setId(i+"");
-			addAnswerChoice.setLabelName(anserChoiceNumArray[i]);
+			final AddAnswerChoice addAnswerChoice1=(AddAnswerChoice)textAnsContainer.getWidget(i);
+			addAnswerChoice1.getElement().setId(i+"");
+			addAnswerChoice1.setLabelName(anserChoiceNumArray[i]);
 
-			if(!addAnswerChoice.optionSelectedButton.getElement().getId().equalsIgnoreCase(CLICK)){
-				addAnswerChoice.optionSelectedButton.addClickHandler(new ClickHandler() {
+			if(!addAnswerChoice1.optionSelectedButton.getElement().getId().equalsIgnoreCase(CLICK)){
+				addAnswerChoice1.optionSelectedButton.addClickHandler(new ClickHandler() {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						if(addAnswerChoice.isOptionSelectedButton){
-							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkDeselected");
-							addAnswerChoice.isOptionSelectedButton=false;
+						if(addAnswerChoice1.isOptionSelectedButton){
+							addAnswerChoice1.optionSelectedButton.setStyleName("answerMarkDeselected");
+							addAnswerChoice1.isOptionSelectedButton=false;
 						}else{
-							addAnswerChoice.optionSelectedButton.setStyleName("answerMarkSelected");
-							addAnswerChoice.isOptionSelectedButton=true;
+							addAnswerChoice1.optionSelectedButton.setStyleName("answerMarkSelected");
+							addAnswerChoice1.isOptionSelectedButton=true;
 						}
 
 					}
 				});
 			}
 
-			addAnswerChoice.optionSelectedButton.getElement().setId(CLICK);
+			addAnswerChoice1.optionSelectedButton.getElement().setId(CLICK);
 
 			if(i>1){
 
-				addAnswerChoice.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
+				addAnswerChoice1.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
 					@Override
-					public void onClick(ClickEvent event) {
-						addAnswerChoice.removeFromParent();
+					public void onClick(ClickEvent event) {	
+							addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
+							addAnswerChoice1.removeFromParent();
+
 					}
 				});
 
-				addAnswerChoice.addMouseOverHandler(new MouseOverHandler() {
+				addAnswerChoice1.addMouseOverHandler(new MouseOverHandler() {
 					@Override
 					public void onMouseOver(MouseOverEvent event) {
-						addAnswerChoice.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
+						addAnswerChoice1.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
 					}
 				});
-				addAnswerChoice.addMouseOutHandler(new MouseOutHandler() {
+				addAnswerChoice1.addMouseOutHandler(new MouseOutHandler() {
 					@Override
 					public void onMouseOut(MouseOutEvent event) {
-						addAnswerChoice.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+						addAnswerChoice1.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 					}
 				});
 
 			}
 		}
-		if(textAnsContainer.getWidgetCount()<10){
+		if(textAnsContainer.getWidgetCount()<=9){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		}else {
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
@@ -208,7 +210,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	private class panelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			if(ansImageContainer.getWidgetCount()<6){
+			if(ansImageContainer.getWidgetCount()<10){
 			questionTypeView.uploadAnswerImage();
 			}
 		}
@@ -262,7 +264,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	public void updateImageContainer(){
 
-		if(ansImageContainer.getWidgetCount()==6){
+		if(ansImageContainer.getWidgetCount()==10){
 			ansImageBlock.getElement().getStyle().setOpacity(0.5);
 			ansImage.getElement().getStyle().setCursor(Cursor.DEFAULT);
 			ansImageBlock.getElement().getStyle().setCursor(Cursor.DEFAULT);
