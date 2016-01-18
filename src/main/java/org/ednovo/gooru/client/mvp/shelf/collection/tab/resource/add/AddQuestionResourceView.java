@@ -406,7 +406,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				
-				if(alphaLetterA.getParent().getElement().getChildNodes().getLength()>2)
+				if(questionAnswerChoiceContainer.getWidgetCount()>2)
 				{
 					alphaLetterA.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
 	
@@ -437,7 +437,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		alphaLetterB.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(alphaLetterB.getParent().getElement().getChildNodes().getLength()>2)
+				if(questionAnswerChoiceContainer.getWidgetCount()>2)
 				{
 					alphaLetterB.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				}
@@ -1374,6 +1374,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addQuestionAnswer.addMouseOverHandler(new MouseOverHandler() {
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
+					System.out.println("iam called::::"+questionAnswerChoiceContainer.getWidgetCount());
 					if(questionAnswerChoiceContainer.getWidgetCount()>2)
 					{
 						addQuestionAnswer.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1426,6 +1427,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addQuestionAnswer.addMouseOverHandler(new MouseOverHandler() {
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
+					System.out.println("iam called3222::::"+questionHotTextAnswerChoiceContainer.getWidgetCount());
 					if(questionHotTextAnswerChoiceContainer.getWidgetCount()>2)
 					{
 						addQuestionAnswer.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
