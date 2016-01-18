@@ -1655,7 +1655,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 			if(!isHintsAdded(hintsContainer)){
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer) && !fieldValidationCheck) {
-					String errorMessage=getQuestionType().equalsIgnoreCase("MC")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
+					String errorMessage=getQuestionType().equalsIgnoreCase("MC")?ERROR_MSG_ANSWER_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					showErrorMessageForAnswer(errorMessage);
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
