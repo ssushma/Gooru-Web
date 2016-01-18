@@ -82,6 +82,9 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	private String richTextData=null;
 	private String widgetId;
 	private final static String CLICK="click";
+	
+	int gblwidgetCount = 0;
+	int iteratorVal = 0;
 
 	QuestionTypeView questionTypeView;
 	public AddHotSpotQuestionAnswerChoice(QuestionTypeView questionTypeView){
@@ -138,7 +141,9 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 	public void setAnswerChoices(){
 		int widgetCount=textAnsContainer.getWidgetCount();
+		gblwidgetCount = widgetCount;
 		for(int i=0;i<widgetCount;i++){
+			iteratorVal = i;
 			final AddAnswerChoice addAnswerChoice1=(AddAnswerChoice)textAnsContainer.getWidget(i);
 			addAnswerChoice1.getElement().setId(i+"");
 			addAnswerChoice1.setLabelName(anserChoiceNumArray[i]);
@@ -162,21 +167,47 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 
 			addAnswerChoice1.optionSelectedButton.getElement().setId(CLICK);
 
-			if(i>1){
+	
 
 				addAnswerChoice1.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {	
+							if(textAnsContainer.getWidgetCount()>2){
 							addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 							addAnswerChoice1.removeFromParent();
+							addAnswerChoice1.addMouseOverHandler(new MouseOverHandler() {
+								@Override
+								public void onMouseOver(MouseOverEvent event) {
+									if(textAnsContainer.getWidgetCount()>2){
+									addAnswerChoice1.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
+									}
+									else
+									{
+									addAnswerChoice1.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+									}
+								}
+							});
+							addAnswerChoice1.addMouseOutHandler(new MouseOutHandler() {
+								@Override
+								public void onMouseOut(MouseOutEvent event) {
+									addAnswerChoice1.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+								}
+							});
+							refreshTextBoxContainer();
+							}
 
 					}
 				});
-
 				addAnswerChoice1.addMouseOverHandler(new MouseOverHandler() {
 					@Override
 					public void onMouseOver(MouseOverEvent event) {
+						if(textAnsContainer.getWidgetCount()>2){
 						addAnswerChoice1.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
+						}
+						else
+						{
+						addAnswerChoice1.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+						}
 					}
 				});
 				addAnswerChoice1.addMouseOutHandler(new MouseOutHandler() {
@@ -186,7 +217,7 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 					}
 				});
 
-			}
+			
 		}
 		if(textAnsContainer.getWidgetCount()<=9){
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -197,8 +228,8 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 	}
 
 	public void addAnswerChoice(){
-		AddAnswerChoice addAnswerChoice=new AddAnswerChoice();
-		textAnsContainer.add(addAnswerChoice);
+		AddAnswerChoice addAnswerChoice2=new AddAnswerChoice();
+		textAnsContainer.add(addAnswerChoice2);
 		setAnswerChoices();
 	}
 
@@ -274,6 +305,15 @@ public class AddHotSpotQuestionAnswerChoice extends Composite implements AddAnsw
 			ansImageBlock.getElement().getStyle().clearOpacity();
 		}
 
+	}
+	
+	public void refreshTextBoxContainer(){
+		for(int i=0;i<textAnsContainer.getWidgetCount();i++){
+			AddAnswerChoice addAnswerChoice2=(AddAnswerChoice)textAnsContainer.getWidget(i);
+			addAnswerChoice2.getElement().setId(i+"");
+			addAnswerChoice2.setLabelName(anserChoiceNumArray[i]);
+//here
+		}
 	}
 
 	public void refreshImageContainer(){
