@@ -406,7 +406,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				
-				if(alphaLetterA.getParent().getElement().getChildNodes().getLength()>3)
+				if(alphaLetterA.getParent().getElement().getChildNodes().getLength()>2)
 				{
 					alphaLetterA.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
 	
@@ -426,7 +426,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		alphaLetterA.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if(alphaLetterA.getParent().getElement().getChildNodes().getLength()>3)
+				if(alphaLetterA.getParent().getElement().getChildNodes().getLength()>=3)
 				{
 					alphaLetterA.removeFromParent();
 					refreshOptionNames();
@@ -437,7 +437,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		alphaLetterB.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(alphaLetterB.getParent().getElement().getChildNodes().getLength()>3)
+				if(alphaLetterB.getParent().getElement().getChildNodes().getLength()>2)
 				{
 					alphaLetterB.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				}
@@ -1358,7 +1358,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 			}
 		});
-		if(widgetCount>1){
+		
 			addQuestionAnswer.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -1374,7 +1374,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addQuestionAnswer.addMouseOverHandler(new MouseOverHandler() {
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					if(addQuestionAnswer.getParent().getElement().getChildNodes().getLength()>3)
+					if(questionAnswerChoiceContainer.getWidgetCount()>2)
 					{
 						addQuestionAnswer.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
 					}
@@ -1391,7 +1391,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 			});
 			showRemoveToolTip(addQuestionAnswer.ansChoiceDeleteButton);
-		}
+		
 		questionAnswerChoiceContainer.add(addQuestionAnswer);
 		if(questionType.equals("HT_RO"))
 		{
@@ -1410,7 +1410,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private void addHotTextQuesetionAnswerOptionTextArea(final AddHotTextQuestionAnswerChoice addQuestionAnswer,int widgetCount){
 
 		answerChoicesList.add(addQuestionAnswer);
-		if(widgetCount>1){
+	
 			addQuestionAnswer.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -1426,7 +1426,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addQuestionAnswer.addMouseOverHandler(new MouseOverHandler() {
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					if(addQuestionAnswer.getParent().getElement().getChildNodes().getLength()>1)
+					if(questionHotTextAnswerChoiceContainer.getWidgetCount()>2)
 					{
 						addQuestionAnswer.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
 					}
@@ -1443,7 +1443,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 			});
 			showRemoveToolTip(addQuestionAnswer.ansChoiceDeleteButton);
-		}
+		
 		questionHotTextAnswerChoiceContainer.add(addQuestionAnswer);
 		if(questionType.equals("HT_RO")){
 		if(questionHotTextAnswerChoiceContainer.getWidgetCount()>=5){
@@ -1643,7 +1643,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 			}
 		}else if(getQuestionType().equalsIgnoreCase("MC")){
-			System.out.println("iam1:::"+isAnswerChoiceEmpty(questionAnswerChoiceContainer));
 			if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
 				fieldValidationCheck = true;
 				isAddBtnClicked=true;
@@ -1652,10 +1651,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			{
 				fieldValidationCheck = false;
 			}
-			System.out.println("iam2:::"+!isHintsAdded(hintsContainer));
 			if(!isHintsAdded(hintsContainer)){
-				System.out.println("iam:3::"+!isAnswerChoiceEmpty(questionAnswerChoiceContainer));
-				System.out.println("iamfieldValidationCheck:3::"+!fieldValidationCheck);
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer) && !fieldValidationCheck) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MC")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					showErrorMessageForAnswer(errorMessage);
@@ -2330,7 +2326,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				answerChoiceValue=addQuestionAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
 			}
 			ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
-			System.out.println("anschoice::"+answerChoiceValue.trim().isEmpty());
 			if(answerChoiceValue==null||answerChoiceValue.trim().isEmpty()){
 				isAnswerChoiceSelected=true;
 				addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
