@@ -173,8 +173,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
 	
-	AddQuestionAnswerChoice addQuestionAnswerChoice;
-	AddQuestionAnswerChoice addQuestionAnswer;
+
+
 	AddHotTextQuestionAnswerChoice addHTQuestionAnswer;
 	AddHotTextQuestionAnswerChoice addHotTextQuestionAnswer;
 	AddHotTextQuestionAnswerChoice addHotTextAnsChoice;
@@ -1008,14 +1008,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 	public void refreshOptionNames(){
 		for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
+			AddQuestionAnswerChoice addQuestionAnswer=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
 			if(questionType.equals("HT_RO")){
-			addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
-			addQuestionAnswerChoice.setLabelName(anserChoiceArrayHR[i]);
+				addQuestionAnswer.setLabelName(anserChoiceArrayHR[i]);
 			}
 			else
 			{
-			addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
-			addQuestionAnswerChoice.setLabelName(anserChoiceArray[i]);
+				addQuestionAnswer.setLabelName(anserChoiceArray[i]);
 			}
 		}
 		if(questionType.equals("HT_RO"))
@@ -1148,8 +1147,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionTrueOrFalseAnswerChoiceContainer.clear();
 		for(int i=0;i<2;i++){
 			int widgetCount=questionTrueOrFalseAnswerChoiceContainer.getWidgetCount();
+			AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
+	
 			if(questionType.equals("HT_RO")){
-				addQuestionAnswer =new AddQuestionAnswerChoice(anserChoiceArrayHR[widgetCount]);	
+			addQuestionAnswer =new AddQuestionAnswerChoice(anserChoiceArrayHR[widgetCount]);	
 			}
 			else
 			{
@@ -1168,10 +1169,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				falseHtmlString.getElement().getStyle().setMarginTop(8, Unit.PX);
 				addQuestionAnswer.tinyOrTextBoxConatiner.add(falseHtmlString);
 			}
+			final AddQuestionAnswerChoice addQuestionAnswerTemp=addQuestionAnswer;
 			addQuestionAnswer.optionSelectedButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					selectOrDeselectOption(questionTrueOrFalseAnswerChoiceContainer,addQuestionAnswer);
+					selectOrDeselectOption(questionTrueOrFalseAnswerChoiceContainer,addQuestionAnswerTemp);
 				}
 			});
 			questionTrueOrFalseAnswerChoiceContainer.add(addQuestionAnswer);
@@ -1190,6 +1192,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionAnswerChoiceContainer.clear();
 		for(int i=0;i<2;i++){
 			int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
+			AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
 			if(questionType.equals("HT_RO"))
 			{
 			addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArrayHR[widgetCount]);	
@@ -1199,13 +1202,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
 			}
 			addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
+			final AddQuestionAnswerChoice addQuestionAnswerTemp=addQuestionAnswer;
 			addQuestionAnswer.optionSelectedButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					if(questionType.equals("MA")){
-						selectYesOption(questionAnswerChoiceContainer, addQuestionAnswer);
+						selectYesOption(questionAnswerChoiceContainer, addQuestionAnswerTemp);
 					}else{
-						selectOrDeselectOption(questionAnswerChoiceContainer,addQuestionAnswer);
+						selectOrDeselectOption(questionAnswerChoiceContainer,addQuestionAnswerTemp);
 					}
 				}
 			});
@@ -1213,7 +1217,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				@Override
 				public void onClick(ClickEvent event) {
 					if(questionType.equals("MA")){
-						selectNoOption(questionAnswerChoiceContainer, addQuestionAnswer);
+						selectNoOption(questionAnswerChoiceContainer, addQuestionAnswerTemp);
 					}
 				}
 			});
@@ -1319,6 +1323,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 
 			int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
+			AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
 			if(questionType.equals("HT_RO"))
 			{
 			addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArrayHR[widgetCount]);	
@@ -2857,6 +2862,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			while (it.hasNext()) {
 				QuestionAnswerDo answer = it.next();
 				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
+				AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
 				if(questionType.equals("HT_RO"))
 				{
 					addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArrayHR[widgetCount],answer.getAnswerText());
@@ -2885,6 +2891,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			while (it.hasNext()) {
 				QuestionAnswerDo answer = it.next();
 				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
+				AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
 				if(questionType.equals("HT_RO"))
 				{
 				addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArrayHR[widgetCount],answer.getAnswerText());	
