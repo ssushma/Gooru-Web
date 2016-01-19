@@ -97,6 +97,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private String courseId=null;
 	private String unitId=null;
 	private String lessonId=null;
+	private String collId=null;
 	private String copyType;
 
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";
@@ -911,23 +912,40 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					urlparams.put(O3_LEVEL, folderTreeItemWidget.getGooruOid());
 				}
 				
-				
 				if (!folderTreeItemWidget.isApiCalled()) {
 					folderTreeItemWidget.setApiCalled(true);
 					String typevalue=	folderTreeItemWidget.getType();
-					if(FOLDER.equalsIgnoreCase(typevalue)){
+					collId = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+					
+					if(FOLDER.equalsIgnoreCase(typevalue))
+					{
 						getFolderItems(item, folderTreeItemWidget.getGooruOid());
-					}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
-					}else if(!StringUtil.isEmpty(copyType)&& LESSON.equalsIgnoreCase(copyType)){ 
-						courseId=urlparams.get(O1_LEVEL);
-						unitId=null;
+					}
+					else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)&& collId==null)
+					{
+					}
+					else if(!StringUtil.isEmpty(copyType)&& LESSON.equalsIgnoreCase(copyType))
+					{ 
+				
+						courseId=AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+						unitId=AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+			
+						if(!folderTreeItemWidget.getGooruOid().equalsIgnoreCase(unitId))
+						{
+							unitId =  null;
+						}
 						lessonId=null;
-						if(!UNIT.equalsIgnoreCase(typevalue)){
+						
+						if((collId!=null && unitId!=null) ||folderTreeItemWidget.getGooruOid().equalsIgnoreCase(courseId)){
 							getUiHandlers().getCourseItems(item,courseId,unitId,lessonId,typevalue);
 						}
-					}else{
- 
 						
+						//if(!UNIT.equalsIgnoreCase(typevalue)){
+						
+						//}
+					}
+					else
+					{						
 						courseId=urlparams.get(O1_LEVEL);
 						unitId=urlparams.get(O2_LEVEL);
 						lessonId=urlparams.get(O3_LEVEL);
