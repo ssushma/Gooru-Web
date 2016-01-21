@@ -276,9 +276,10 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		//String qType =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 		if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
 			
-			Label anserlbl=new Label();
+	
 			
 			for(int j=0;j<attemptsObj.size();j++){
+				Label anserlbl=new Label();
 	        	Image answerChoice=new Image();
 	        	answerChoice.addStyleName("summaryHsImg");
 	            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
@@ -311,16 +312,19 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 									}
 							}
 						}
+					 
 				 }
-			
-			anserlbl.setStyleName(STYLE_TABLE_CENTER);
-			timeStamplbl.add(anserlbl);
+					
+					anserlbl.setStyleName(STYLE_TABLE_CENTER);
+					timeStamplbl.add(anserlbl);
+
 			//adTable.setWidget(i, 2,anserlbl);
 			}
 		}else if (FIB.equalsIgnoreCase(questionType)){
-			VerticalPanel answerspnl=new VerticalPanel();
+
 
 					for(int j=0;j<attemptsObj.size();j++){
+						FlowPanel answerspnl=new FlowPanel();
 						Label answerChoice=new Label();
 						boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 						String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
@@ -346,17 +350,19 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 						}
 						answerChoice.setStyleName(STYLE_TABLE_CENTER);
 						answerspnl.add(answerChoice);
+						
+						answerspnl.setStyleName(STYLE_MARGIN_AUTO);
+						timeStamplbl.add(answerspnl);
 					}
 				
-			
-			answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-			timeStamplbl.add(answerspnl);
+
 			//adTable.setWidget(i, 2,answerspnl);
 			//data.setValue(i, 2, answerspnl.toString());
 		}else  if(MA.equalsIgnoreCase(questionType)){
-			VerticalPanel answerspnl=new VerticalPanel();
+
 		
 					for(int j=0;j<attemptsObj.size();j++){
+						FlowPanel answerspnl=new FlowPanel();
 						Label answerChoice=new Label();
 						String showMessage = null;
 						boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
@@ -387,11 +393,13 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 						}
 						answerChoice.setStyleName(STYLE_TABLE_CENTER);
 						answerspnl.add(answerChoice);
+						
+						answerspnl.setStyleName(STYLE_MARGIN_AUTO);
+						timeStamplbl.add(answerspnl);
 					}
 				
 			
-			answerspnl.setStyleName(STYLE_MARGIN_AUTO);
-			timeStamplbl.add(answerspnl);
+
 		}else if(HS_IMG.equalsIgnoreCase(questionType)){
 			for(int j=0;j<attemptsObj.size();j++){
 	        	Image answerChoice=new Image();
