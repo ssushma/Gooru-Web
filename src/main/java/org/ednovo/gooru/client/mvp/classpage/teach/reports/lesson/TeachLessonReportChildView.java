@@ -429,7 +429,16 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		        	String hsText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
   		         if(skip == false)
 					  {
-						answerChoice.setHTML(URL.decodeQueryString(hsText));
+  		     	  String newDatVal =URL.decodeQueryString(hsText).replaceAll("></table>", "</div>");  
+	  		     	newDatVal =newDatVal.replaceAll("<table", "<div");
+	  		     	newDatVal =newDatVal.replaceAll("></tbody>", "</div>");  
+	  		     	newDatVal =newDatVal.replaceAll("<tbody>", "<div>");
+	  		     	newDatVal =newDatVal.replaceAll("></tr>", "</div>");  
+	  		     	newDatVal =newDatVal.replaceAll("<tr>", "<div>");
+	  		     	newDatVal =newDatVal.replaceAll("></td>", "</div>");  
+	  		     	newDatVal =newDatVal.replaceAll("<td", "<div");
+	  		     	System.out.println("table::"+newDatVal);
+						answerChoice.setHTML(newDatVal);
 							if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 								answerChoice.addStyleName(HS_INCORRECT);
 							} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
@@ -460,7 +469,15 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
   		        	 if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
   		        		hlText=hlText.replaceAll(CORRECT_WORD, CORRECT_WORD);
   		        	 }
-  		        	 answerChoice.setHTML(URL.decodeQueryString(hlText));
+  	  		     	  String newDatVal =URL.decodeQueryString(hlText).replaceAll("></table>", "</div>");  
+  	  		     	newDatVal =newDatVal.replaceAll("<table", "<div");
+  	  		     	newDatVal =newDatVal.replaceAll("></tbody>", "</div>");  
+  	  		     	newDatVal =newDatVal.replaceAll("<tbody>", "<div>");
+  	  		     	newDatVal =newDatVal.replaceAll("></tr>", "</div>");  
+  	  		     	newDatVal =newDatVal.replaceAll("<tr>", "<div>");
+  	  		     	newDatVal =newDatVal.replaceAll("></td>", "</div>");  
+  	  		     	newDatVal =newDatVal.replaceAll("<td", "<div");
+  		        	 answerChoice.setHTML(newDatVal);
   		         }
   		       timeStamplbl.add(answerChoice);
 		         }
@@ -473,7 +490,15 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		        	String htROText =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 		         if(skip == false)
 					  {
-						answerChoice.setHTML(URL.decodeQueryString(htROText));
+ 	  		     	  String newDatVal =URL.decodeQueryString(htROText).replaceAll("></table>", "</div>");  
+ 	  		     	newDatVal =newDatVal.replaceAll("<table", "<div");
+ 	  		     	newDatVal =newDatVal.replaceAll("></tbody>", "</div>");  
+ 	  		     	newDatVal =newDatVal.replaceAll("<tbody>", "<div>");
+ 	  		     	newDatVal =newDatVal.replaceAll("></tr>", "</div>");  
+ 	  		     	newDatVal =newDatVal.replaceAll("<tr>", "<div>");
+ 	  		     	newDatVal =newDatVal.replaceAll("></td>", "</div>");  
+ 	  		     	newDatVal =newDatVal.replaceAll("<td", "<div");
+						answerChoice.setHTML(newDatVal);
 						if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 							answerChoice.addStyleName(HS_INCORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
@@ -494,7 +519,15 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		         if(skip == false)
 					  {
 		        	 	AppClientFactory.printInfoLogger("OeAnswer : "+OeAnswer);
-						answerChoice.setHTML(URL.decodeQueryString(OeAnswer));
+		        	 	  String newDatVal =URL.decodeQueryString(OeAnswer).replaceAll("></table>", "</div>");  
+		 	  		     	newDatVal =newDatVal.replaceAll("<table", "<div");
+		 	  		     	newDatVal =newDatVal.replaceAll("></tbody>", "</div>");  
+		 	  		     	newDatVal =newDatVal.replaceAll("<tbody>", "<div>");
+		 	  		     	newDatVal =newDatVal.replaceAll("></tr>", "</div>");  
+		 	  		     	newDatVal =newDatVal.replaceAll("<tr>", "<div>");
+		 	  		     	newDatVal =newDatVal.replaceAll("></td>", "</div>");  
+		 	  		     	newDatVal =newDatVal.replaceAll("<td", "<div");
+						answerChoice.setHTML(newDatVal);
 						/*if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 							answerChoice.addStyleName(HS_INCORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
