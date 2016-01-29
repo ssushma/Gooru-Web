@@ -41,6 +41,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.gwt.advanced.client.ui.widget.AdvancedFlexTable;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -114,6 +116,9 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		String contentView = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
 		lessonTablePanel.clear();
 		setDataTable(result, contentView);
+		setDataTableH(result, contentView);
+		Element element = Document.get().getElementById("exampleH");
+		element.setAttribute("style", "display:none;");
 	}
 	
 	public static native void sortAndFixed() /*-{
@@ -147,6 +152,132 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
     			lessonTablePanel.clear();
     			final AdvancedFlexTable adTable=new AdvancedFlexTable();
     			adTable.getElement().setId("example");
+    			lessonTablePanel.add(adTable);
+    			// create headers and put them in the thead tag
+    			Label title=new Label(i18n.GL1932());
+    			adTable.setHeaderWidget(0, title);
+    			adTable.setHeaderWidget(1, new Label(i18n.GL2288()));
+    			
+    			int noOfQuestions=0;
+
+    			MasterReportDo defaultUserDataForUsers=null;
+    			int rowCount=0;
+    			for (MasterReportDo collectionProgressDataDo : collectionProgressData) {
+    				defaultUserDataForUsers=collectionProgressDataDo;
+    				rowCount=rowCount+1;
+    				if(collectionProgressDataDo.getType()!=null && collectionProgressDataDo.getType().equalsIgnoreCase(QUESTION)){
+    					HTML questionPnl=new HTML(collectionProgressDataDo.getSequence()+": Question");
+    					adTable.setHeaderWidget(rowCount+1,questionPnl);
+    					 if(!collectionProgressDataDo.getQuestionType().equalsIgnoreCase("OE")){
+    						 noOfQuestions++;
+    					 }
+    				}else{
+    					HTML resourcePnl=new HTML(collectionProgressDataDo.getSequence()+": Resource");
+    					adTable.setHeaderWidget(rowCount+1,resourcePnl);
+    				}
+    			}
+    			if(defaultUserDataForUsers!=null){
+    				int sizeNames=defaultUserDataForUsers.getUsageData().size();
+    		        for(int i=0;i<sizeNames;i++) {
+    		        	  int score=0,position=0;
+    		        	  for(int j=0;j<columnsSize;j++) {
+    		        		  	  String color=WHITE;
+    			        		  if(collectionProgressData.get(j).getType()!=null && !collectionProgressData.get(j).getType().equalsIgnoreCase(QUESTION)){
+    				        		  
+    			        		  }else{
+    			        			  String questionType = collectionProgressData.get(j).getQuestionType()!=null?collectionProgressData.get(j).getQuestionType():"";
+    			        			  if(!questionType.equalsIgnoreCase("OE")) {
+        			        			  int attemptCount=collectionProgressData.get(j).getUsageData().get(i).getAttempts();
+        			        			  int scoreValue=collectionProgressData.get(j).getUsageData().get(i).getScore();
+        			        			  
+        			        			  if(isCollection) {
+        			        				  if(attemptCount>1&&scoreValue>=1){
+        			        					  color = COLLECTION_ORANGE;
+        			        					  score++;
+        			        				  } else if(attemptCount==1&&scoreValue==1) {
+        			        					  color = COLLECTION_GREEN;
+        			        					  score++;
+        			        				  } else if(attemptCount>=1&&scoreValue==0) {
+        			        					  color=COLLECTION_RED;
+        			        				  } else {
+        			        					  color=WHITE;
+        			        				  }
+        			        			  } else {
+        			        				  if(attemptCount>=1&&scoreValue>=1){
+        			        					  color = ASSESSMENT_GREEN;
+        			        					  score++;
+        			        				  } else if(attemptCount>=1&&scoreValue==0) {
+        			        					  color = ASSESSMENT_ORANGE;
+        			        				  } else {
+        			        					  color=WHITE;
+        			        				  }
+        			        			  }
+    			        			  }
+    			        		  }
+    			        		  if(OE.equalsIgnoreCase(collectionProgressData.get(j).getQuestionType()))
+    			        		  {
+    			        			  FlowPanel flwPnl = new FlowPanel();
+    				        		  if(collectionProgressData.get(j).getUsageData().get(i).getAnswerObject()!=null)
+    				        		  {
+    	    			        		JSONValue value = JSONParser.parseStrict(collectionProgressData.get(j).getUsageData().get(i).getAnswerObject());
+    	    			  				JSONObject answerObject = value.isObject();
+    	    			  				Set<String> keys=answerObject.keySet();
+    	    			  				Iterator<String> itr = keys.iterator();
+    	    			  				JSONArray attemptsObj=null;
+    	    			  				while(itr.hasNext()) {
+    	    			  					attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+    	    			  				}
+    	    			  				if(attemptsObj!=null){
+    	    			  					flwPnl = renderAnswersDataOE(attemptsObj,collectionProgressData.get(j).getQuestionType(),collectionProgressData.get(j).getUsageData().get(i).getAttempts(),collectionProgressData.get(j).getUsageData().get(i).getOptions());
+    	    			  					adTable.setWidget(i, position+2,flwPnl);
+    	    			  				}
+    				        		  }
+    			        		  }
+    			        		  else
+    			        		  {
+    			        	  		  Label timeStamplbl=new Label(StringUtil.getElapsedTime(collectionProgressData.get(j).getUsageData().get(i).getTimeSpent()));
+        			        		  adTable.setWidget(i, position+2,timeStamplbl);
+    			        		  }
+    			      
+    			        		  adTable.getCellFormatter().getElement(i, position+2).setAttribute("style", "background-color:"+color);
+    			        		  position++;
+    		        	   }
+    		        	  HTML studentName = new HTML(defaultUserDataForUsers.getUsageData().get(i).getUserName());
+    		        	  adTable.setWidget(i, 0,studentName);
+    		        	  studentName.addClickHandler(new StudentPlaySummary(defaultUserDataForUsers.getUsageData().get(i).getUserName(), defaultUserDataForUsers.getUsageData().get(i).getUserUId()));
+    		        	  studentName.setStyleName("myclasses-mastery-unit-cell-style");
+    		        	  int percent=0;
+    		        	  if(noOfQuestions!=0){
+    		        		  percent=((score*100)/noOfQuestions);
+    		        	  }
+    		        	  Label scoreWidget=new Label(score+"/"+noOfQuestions+" ("+percent+"%)");
+    		        	  adTable.setWidget(i, 1,scoreWidget);
+    		        }
+    			}
+    		}catch(Exception e){
+    			e.printStackTrace();
+    		}
+        } else {
+        	lessonTablePanel.clear();
+        	lessonTablePanel.add(new TeachStudentEmptyDataView());
+        }
+	}
+	
+	
+	public void setDataTableH(ArrayList<MasterReportDo> collectionProgressData, String contentView) {
+        int columnsSize=collectionProgressData.size();
+        if(columnsSize>0) {
+    		try{
+    			boolean isCollection = false;
+    			String contentName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.TEACHER_CLASSPAGE_CONTENT, UrlNavigationTokens.TEACHER_CLASSPAGE_ASSESSMENT);
+    			if(contentName.equalsIgnoreCase(UrlNavigationTokens.TEACHER_CLASSPAGE_COLLECTION)) {
+    				isCollection = true;
+    			}
+    			
+    			//lessonTablePanel.clear();
+    			final AdvancedFlexTable adTable=new AdvancedFlexTable();
+    			adTable.getElement().setId("exampleH");
+    			//adTable.setVisible(false);
     			lessonTablePanel.add(adTable);
     			// create headers and put them in the thead tag
     			Label title=new Label(i18n.GL1932());
@@ -332,7 +463,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 						if(skip == false)
 						{
 							answerChoice.setText(fibtext);
-							if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+							/*if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 								answerChoice.getElement().getStyle().setColor(INCORRECT);
 							} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 								answerChoice.getElement().getStyle().setColor(CORRECT);
@@ -346,7 +477,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 								answerChoice.getElement().getStyle().setColor(CORRECT);
 							}
 								
-							}
+							}*/
 						}
 						answerChoice.setStyleName(STYLE_TABLE_CENTER);
 						answerspnl.add(answerChoice);
@@ -402,21 +533,21 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 
 		}else if(HS_IMG.equalsIgnoreCase(questionType)){
 			for(int j=0;j<attemptsObj.size();j++){
-	        	Image answerChoice=new Image();
+	        	Label answerChoice=new Label("");
 	        	answerChoice.addStyleName("summaryHsImg");
 	            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 	        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
 	        	String hsImage =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 		         if(skip == false)
 				  {
-					answerChoice.setUrl(hsImage);
-						if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+					answerChoice.setText(hsImage);
+						/*if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 							answerChoice.getElement().getStyle().setBorderColor(INCORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 							answerChoice.getElement().getStyle().setBorderColor(CORRECT);
 						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
 							answerChoice.getElement().getStyle().setBorderColor(CORRECT);
-						}
+						}*/
 				  }
 		         timeStamplbl.add(answerChoice);
 	         }
@@ -437,15 +568,14 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	  		     	newDatVal =newDatVal.replaceAll("<tr>", "<div>");
 	  		     	newDatVal =newDatVal.replaceAll("></td>", "</div>");  
 	  		     	newDatVal =newDatVal.replaceAll("<td", "<div");
-	  		     	System.out.println("table::"+newDatVal);
 						answerChoice.setHTML(newDatVal);
-							if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+							/*if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 								answerChoice.addStyleName(HS_INCORRECT);
 							} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 								answerChoice.addStyleName(HS_CORRECT);
 							} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
 								answerChoice.addStyleName(HS_CORRECT);
-							}
+							}*/
 					  }
   		       timeStamplbl.add(answerChoice);
 		         }
@@ -510,6 +640,43 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 		         timeStamplbl.add(answerChoice);
 		         }
 		}else if(OE.equalsIgnoreCase(questionType)){
+			 for(int j=0;j<attemptsObj.size();j++){
+		        	HTML answerChoice=new HTML();
+		        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);
+		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+		        	String OeAnswer =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+		         if(skip == false)
+					  {
+		        	 	AppClientFactory.printInfoLogger("OeAnswer : "+OeAnswer);
+		        	 	  String newDatVal =URL.decodeQueryString(OeAnswer).replaceAll("></table>", "</div>");  
+		 	  		     	newDatVal =newDatVal.replaceAll("<table", "<div");
+		 	  		     	newDatVal =newDatVal.replaceAll("></tbody>", "</div>");  
+		 	  		     	newDatVal =newDatVal.replaceAll("<tbody>", "<div>");
+		 	  		     	newDatVal =newDatVal.replaceAll("></tr>", "</div>");  
+		 	  		     	newDatVal =newDatVal.replaceAll("<tr>", "<div>");
+		 	  		     	newDatVal =newDatVal.replaceAll("></td>", "</div>");  
+		 	  		     	newDatVal =newDatVal.replaceAll("<td", "<div");
+						answerChoice.setHTML(newDatVal);
+						/*if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
+							answerChoice.addStyleName(HS_INCORRECT);
+						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
+							answerChoice.addStyleName(HS_CORRECT);
+						} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
+							answerChoice.addStyleName(HS_ONMULTIPULEATTEMPTS);
+						}*/
+					  }
+		         timeStamplbl.add(answerChoice);
+		        }
+		}
+
+		return timeStamplbl;
+	}
+	
+	public FlowPanel renderAnswersDataOE(JSONArray attemptsObj, String questionType, int noOfAttempts, Map<String, Integer> authorObject){
+		FlowPanel timeStamplbl = new FlowPanel();
+		//String qType =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+		if(OE.equalsIgnoreCase(questionType)){
 			 for(int j=0;j<attemptsObj.size();j++){
 		        	HTML answerChoice=new HTML();
 		        	answerChoice.getElement().getStyle().setPadding(5, Unit.PX);

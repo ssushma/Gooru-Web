@@ -768,6 +768,19 @@
 	border-bottom: 1px solid #eee;
 	vertical-align: middle;
 }
+#exampleH thead tr th{
+	padding: 5px 10px;
+	border-left:1px solid #eee;
+	border-bottom: 1px solid #eee;
+	vertical-align: middle;
+	min-width: 100px;
+}
+#exampleH > tbody > tr > td{
+	padding:8px;
+	border-left:1px solid #eee;
+	border-bottom: 1px solid #eee;
+	vertical-align: middle;
+}
 #pnlHtmlpnlProgress .DTFC_LeftHeadWrapper{
 	background: white;
 }
