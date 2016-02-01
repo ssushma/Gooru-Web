@@ -271,11 +271,20 @@ public class TeachStudentDashboardView extends BaseViewWithHandlers<TeachStudent
 		String outputData = "";
 		final Iterator<Widget> iterator = bodyView.iterator();
         while (iterator.hasNext()) {
-        	
-           // TeachLessonReportChildView reportView = (TeachLessonReportChildView) iterator.next();
-            Element element = Document.get().getElementById("exampleH");
-            outputData = element.getInnerHTML().toString();
-            outputData = "<table>"+outputData+"</table>";
+            TeachLessonReportChildView reportView = (TeachLessonReportChildView) iterator.next();
+            outputData = reportView.getElement().getInnerHTML().toString();
+	/*	  String newDatVal =outputData.replaceAll("></img>", "</div>");  
+		  newDatVal =newDatVal.replaceAll("<img", "<div>");
+		  newDatVal =newDatVal.replaceAll("class=\"gwt-Image summaryHsImg\" src=\"","");
+		  newDatVal =newDatVal.replaceAll("style=\"border-color:" ,"");
+		  newDatVal =newDatVal.replaceAll("rgb\\(77, 150, 69\\);" ,"");
+		  newDatVal =newDatVal.replaceAll("rgb\\(219, 15, 15\\);" ,"");
+		  newDatVal =newDatVal.replaceAll("\" \"\\>" ,"");
+		  outputData = newDatVal;*/
+		  
+	       Element element = Document.get().getElementById("exampleH");
+           outputData = element.getInnerHTML().toString();
+           outputData = "<table>"+outputData+"</table>";
         }
 		String contentName = AppClientFactory.getPlaceManager().getRequestParameter(UrlNavigationTokens.CONTENT_NAME, "");
 		getUiHandlers().getXlsxReport(outputData.replaceAll("\"", "\\\\\""),contentName.replaceAll(" ", "_")+"_teacher_summary_report");
