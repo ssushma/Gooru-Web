@@ -168,6 +168,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
     				if(collectionProgressDataDo.getType()!=null && collectionProgressDataDo.getType().equalsIgnoreCase(QUESTION)){
     					HTML questionPnl=new HTML(collectionProgressDataDo.getSequence()+": Question");
     					adTable.setHeaderWidget(rowCount+1,questionPnl);
+    					
     					 if(!collectionProgressDataDo.getQuestionType().equalsIgnoreCase("OE")){
     						 noOfQuestions++;
     					 }
@@ -182,6 +183,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
     		        	  int score=0,position=0;
     		        	  for(int j=0;j<columnsSize;j++) {
     		        		  	  String color=WHITE;
+    		        			
     			        		  if(collectionProgressData.get(j).getType()!=null && !collectionProgressData.get(j).getType().equalsIgnoreCase(QUESTION)){
     				        		  
     			        		  }else{
@@ -352,7 +354,8 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	        			        			  }
 	    			        			  }
 	    			        		  }
-	    			        		  if(OE.equalsIgnoreCase(questionType)|| MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType) || FIB.equalsIgnoreCase(questionType) || MA.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType) || "HS".equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HT_RO.equalsIgnoreCase(questionType))
+	    			        		 
+	    			        		  if(OE.equalsIgnoreCase(questionType)|| MC.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType) || FIB.equalsIgnoreCase(questionType) || MA.equalsIgnoreCase(questionType) || HS_IMG.equalsIgnoreCase(questionType) || "HS".equalsIgnoreCase(questionType) || HS_TXT.equalsIgnoreCase(questionType) || HT_HL.equalsIgnoreCase(questionType) || HT_RO.equalsIgnoreCase(questionType))
 	    			        		  {
 	    			        			  FlowPanel flwPnl = new FlowPanel();
 	    				        		  if(collectionProgressData.get(j).getUsageData().get(i).getAnswerObject()!=null)
@@ -431,7 +434,7 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	public FlowPanel renderAnswersData(JSONArray attemptsObj, String questionType, int noOfAttempts, Map<String, Integer> authorObject){
 		FlowPanel timeStamplbl = new FlowPanel();
 		//String qType =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-		if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
+		if(MC.equalsIgnoreCase(questionType) || TSLASHF.equalsIgnoreCase(questionType)){
 			
 	
 			
@@ -442,13 +445,17 @@ public class TeachLessonReportChildView extends ChildView<TeachLessonReportChild
 	            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
 	        	String scoreStatus =attemptsObj.get(j).isObject().get("status").isString().stringValue();
 	        	String hsImage =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+	        	
 			
 				 for (Map.Entry<String, Integer> entry : authorObject.entrySet())
 				 {
 					 String userSelectedOption=entry.getKey();
 					// int ansStatus=entry.getValue();
 					 if(userSelectedOption!=null){
+						 if(entry.getValue()==1)
+						 {
 							anserlbl.setText(getTextFromHTML(userSelectedOption));
+						 }
 							
 							if(collectionType.equalsIgnoreCase("collection"))
 							{
