@@ -98,8 +98,12 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -1038,8 +1042,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 						CodeDo codeObjStandard=new CodeDo();
 						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObjStandard.setCode(entry.getValue());
-						standardsDo.add(codeObjStandard);
-						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+						//standardsDo.add(codeObjStandard);
+						DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(entry.getValue(),entry.getKey()+"","");
+						downToolTipWidgetUc.getElement().setId(entry.getKey()+"");
+						downToolTipWidgetUc.getElement().setTitle(entry.getValue()+"");
+						centuryPanel.add(downToolTipWidgetUc);
 					}
 				}
 			 hideCenturyPopup();
@@ -1066,7 +1073,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 								CodeDo deletedObj=new CodeDo();
 								deletedObj.setCodeId(codeObj.getCodeId());
 								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);
+							//	standardsDo.remove(codeObj);
 								centurySelectedValues.remove(Long.parseLong(id));
 							}
 						});
@@ -1467,15 +1474,21 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			updateStandardsAdvancedSetupStyle();
 		}
 		//This will set the 21 centry skill values if the user as added already
-		if(collectionItemDo.getSkills()!= null && collectionItemDo.getSkills().size()>0){
+		if(collectionItemDo.getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
 			centuryPanel.clear();
-			for (StandardFo standardObj : collectionItemDo.getSkills()) {
+			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
 				 CodeDo codeObj=new CodeDo();
-				 codeObj.setCodeId(standardObj.getCodeId());
+				 codeObj.setCodeId(standardObj.getId());
 				 codeObj.setCode(standardObj.getLabel());
-				 standardsDo.add(codeObj);
-				 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
-				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
+				// standardsDo.add(codeObj);
+				 centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
+				 
+					DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"","");
+					downToolTipWidgetUc.getElement().setId(standardObj.getId()+"");
+					downToolTipWidgetUc.getElement().setTitle(standardObj.getLabel()+"");
+					centuryPanel.add(downToolTipWidgetUc);
+				 
+				// centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
 			}
             updateCenturyAdvancedSetupStyle();
 		}
@@ -1724,6 +1737,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 												}
 											}
 											collectionItemDo.setStandards(getStandards());
+											collectionItemDo.setSkills(getCenturySkills());
+							
 
 											if(fileChanged && (uploadContainer.isVisible())){
 												fileuploadForm.setAction(GWT.getModuleBaseURL() +"upServlet?sessionToken="+AppClientFactory.getLoginSessionToken());
@@ -1749,7 +1764,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 													AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(collectionItemDo.getResource().getGooruOid(), tagListGlobal.toString(), new AsyncCallback<Void>() {
 
 														@Override
-														public void onSuccess(Void result) {
+														public void onSuccess(Void result) {															
 															updateUserOwnResource(filePath,mediaFileName,originalFileName,titleStr,descriptionTxtAera.getText().trim(),categoryStr,thumbnailUrlStr,collectionItemDo,tagList);
 														}
 
@@ -2049,6 +2064,18 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		}
 		return suggestions;
 	}
+	public List<StandardFo> getCenturySkills(){
+		List<StandardFo> standardsList=new ArrayList<>();
+		int size=centuryPanel.getWidgetCount();
+		for(int i=0;i<size;i++){
+			StandardFo checkboxSelectedDo=new StandardFo();
+			DownToolTipWidgetUc downToolTipWidgetUc=(DownToolTipWidgetUc)centuryPanel.getWidget(i);
+			checkboxSelectedDo.setId(Integer.parseInt(downToolTipWidgetUc.getElement().getId()));
+			checkboxSelectedDo.setLabel(downToolTipWidgetUc.getElement().getTitle());
+			standardsList.add(checkboxSelectedDo);
+		}
+		return standardsList;
+	}
 	@UiHandler("defaultPanel")
 	void defaultPanel(ClickEvent event) {
 		resourceEducationalLabel.setText(i18n.GL1684());
@@ -2296,10 +2323,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			CodeDo codeObjStandard=new CodeDo();
 			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
 			codeObjStandard.setCode(centurySgstBox.getValue());
-			standardsDo.add(codeObjStandard);
+			//standardsDo.add(codeObjStandard);
+			DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(centuryCodesMap.get(id),id+"","");
+			downToolTipWidgetUc.getElement().setId(id+"");
+			downToolTipWidgetUc.getElement().setTitle(centuryCodesMap.get(id)+"");
 
 			centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
-			centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
+			centuryPanel.add(downToolTipWidgetUc);
+			//centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
 		}
 	}
 	/**
@@ -2877,5 +2908,70 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 			addSetupAdvancedView.standardsAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}
+	}
+	
+	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl, CollectionItemDo collectionItemDo, List<String> tagList) {
+		JSONObject file = new JSONObject();
+		 if(originalFilename!=null && mediaFileName!=null){
+			 file.put("filename", new JSONString(originalFilename));
+			 file.put("mediaFilename", new JSONString(mediaFileName));
+		 }
+		JSONObject attach = new JSONObject();
+        attach.put("title", new JSONString(editedTitle));
+        attach.put("description", new JSONString(editedDescription));
+        JSONObject resourceFormat = new JSONObject();
+        resourceFormat.put("value", new JSONString(editedCategory));
+        attach.put("resourceFormat", resourceFormat);
+        if(editedThumbnailUrl!=null){
+        	 attach.put("thumbnail", new JSONString(editedThumbnailUrl));
+        }
+        if(originalFilename!=null && mediaFileName!=null){
+        	 attach.put("attach", file);
+
+        }
+
+        
+
+        JSONArray standardsJsonArray = new JSONArray();
+        JSONArray momentsOfLearningArrValue = new JSONArray();
+        JSONArray educatUseArrValue = new JSONArray();
+        JSONArray tagsArrValue = new JSONArray();
+        
+
+        for(int i=0;i<collectionItemDo.getStandards().size();i++){
+         	standardsJsonArray.set(i,new JSONNumber(Integer.parseInt(collectionItemDo.getStandards().get(i).get("id"))));
+        }
+        attach.put("standardIds", standardsJsonArray);
+
+        for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
+        	JSONObject momentsOfLearningJsonObj = new JSONObject();
+        	momentsOfLearningJsonObj.put("selected",JSONBoolean.getInstance(collectionItemDo.getResource().getMomentsOfLearning().get(i).isSelected()));
+        	if(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue()!=null)
+        	{
+        	momentsOfLearningJsonObj.put("value",new JSONString(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue()));
+        	}
+            momentsOfLearningArrValue.set(i, momentsOfLearningJsonObj);
+        }
+        attach.put("momentsOfLearning", momentsOfLearningArrValue);
+
+        for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
+        	JSONObject educatUseJsonObj = new JSONObject();
+        	educatUseJsonObj.put("selected",JSONBoolean.getInstance(collectionItemDo.getResource().getEducationalUse().get(i).isSelected()));
+        	if(collectionItemDo.getResource().getEducationalUse().get(i).getValue()!=null)
+        	{
+        	educatUseJsonObj.put("value", new JSONString(collectionItemDo.getResource().getEducationalUse().get(i).getValue()));
+        	educatUseArrValue.set(i, educatUseJsonObj);
+        	}
+        }
+        attach.put("educationalUse", educatUseArrValue);
+
+        for(int i=0;i<tagList.size();i++){
+        	tagsArrValue.set(i, new JSONString(tagList.get(i)));
+        }
+        JSONObject resource = new JSONObject();
+        resource.put("resourceTags",tagsArrValue);
+        resource.put("resource", attach);
+
+		return resource;
 	}
 }
