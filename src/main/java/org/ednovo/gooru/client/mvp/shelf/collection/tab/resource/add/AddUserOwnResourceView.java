@@ -992,7 +992,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 						CodeDo codeObjStandard=new CodeDo();
 						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObjStandard.setCode(entry.getValue());
-						standardsDo.add(codeObjStandard);
+						//standardsDo.add(codeObjStandard);
 						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 					}
 				}
@@ -1651,7 +1651,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				CodeDo codeObjStandard=new CodeDo();
 				codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
 				codeObjStandard.setCode(centurySgstBox.getValue());
-				standardsDo.add(codeObjStandard);
+				//standardsDo.add(codeObjStandard);
 				centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
 				centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
 			}

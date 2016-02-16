@@ -966,7 +966,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						CodeDo codeObjStandard=new CodeDo();
 						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObjStandard.setCode(entry.getValue());
-						standardsDo.add(codeObjStandard);
+						//standardsDo.add(codeObjStandard);
 						DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(entry.getValue(),entry.getKey()+"","");
 						downToolTipWidgetUc.getElement().setId(entry.getKey()+"");
 						downToolTipWidgetUc.getElement().setTitle(entry.getValue()+"");
@@ -1528,7 +1528,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				CodeDo codeObj=new CodeDo();
 				codeObj.setCodeId(standardObj.getId());
 				codeObj.setCode(standardObj.getLabel());
-				standardsDo.add(codeObj);
+				//standardsDo.add(codeObj);
 				centurySelectedValues.put(Long.parseLong(standardObj.getId()+""), standardObj.getLabel());
 				DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(standardObj.getLabel(),standardObj.getId()+"","");
 				downToolTipWidgetUc.getElement().setId(standardObj.getId()+"");
@@ -2167,7 +2167,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			CodeDo codeObjStandard=new CodeDo();
 			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
 			codeObjStandard.setCode(centurySgstBox.getValue());
-				standardsDo.add(codeObjStandard);
+			//	standardsDo.add(codeObjStandard);
 
 			centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
 			DownToolTipWidgetUc downToolTipWidgetUc=create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id));

@@ -37,6 +37,7 @@ import org.ednovo.gooru.application.shared.model.code.CodeDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.application.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.application.shared.model.content.StandardFo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.gshelf.courselist.EmptyAssessmentView;
@@ -622,6 +623,13 @@ public class CollectionContentView extends BaseViewWithHandlers<CollectionConten
         	}
         }
         attach.put("educationalUse", educatUseArrValue);
+        
+        JSONArray skillsIds = new JSONArray();
+        for (int i = 0; i < collectionItemDo.getSkills().size(); i++) {
+        	StandardFo standardFo = collectionItemDo.getSkills().get(i);
+        	skillsIds.set(i, new JSONNumber(standardFo.getId()));
+		}
+        attach.put("skillIds",skillsIds);
 
         for(int i=0;i<tagList.size();i++){
         	tagsArrValue.set(i, new JSONString(tagList.get(i)));

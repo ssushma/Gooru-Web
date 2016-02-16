@@ -671,6 +671,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 				@Override
 				public void addUserOwnResource() {
+					
 					JSONObject jsonObject = setImageUploadJsonObject(originalFileName,mediaFilename, title, desc, category, ownResourceImgUrl,educationalLevel,momentsOfLearning,standardsDo,tagList,hazardsAndMediaFeatures,mediaType,centuryCodesMap);
 					ownResourceImgUrl = null;
 					userOwnResourcePreview.lblConfirmAdding.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1364,6 +1365,13 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
         educatUseArrValue.set(0,new JSONNumber(Integer.parseInt(educationalLevel)));
 
         attach.put("educationalUseIds", educatUseArrValue);
+        
+        JSONArray skillsIds = new JSONArray();
+        for (int i = 0; i < centuryCodesMap.size(); i++) {
+        	StandardFo standardFo = centuryCodesMap.get(i);
+        	skillsIds.set(i, new JSONNumber(standardFo.getCodeId()));
+		}
+        attach.put("skillIds",skillsIds);
 
         for(int i=0;i<tagList.size();i++){
         	tagsArrValue.set(i, new JSONString(tagList.get(i)));
@@ -1384,12 +1392,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
         }
         resource.put("mediaFeatureIds",mediaIds);
 
-        JSONArray skillsIds = new JSONArray();
-        for (int i = 0; i < centuryCodesMap.size(); i++) {
-        	StandardFo standardFo = centuryCodesMap.get(i);
-        	skillsIds.set(i, new JSONNumber(standardFo.getCodeId()));
-		}
-        resource.put("skillIds",skillsIds);
+
        	return resource;
 	}
 
