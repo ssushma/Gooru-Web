@@ -98,7 +98,7 @@
 								<div class="catBody">
 									<g:Label styleName="contentPane" text="{i18n.GL3300}"></g:Label>
 									<div class="callToAction">
-										<g:Anchor href="http://about.gooru.org/mission/impact/" text="{i18n.GL3301}" target="_blank" styleName="primary" ui:field="ancSeeOurImpact"></g:Anchor>
+										<g:Anchor href="http://about.gooru.org/our-mission/" text="{i18n.GL3301}" target="_blank" styleName="primary" ui:field="ancSeeOurImpact"></g:Anchor>
 									</div>
 								</div>
 							</div>
@@ -209,7 +209,7 @@
 							    <tbp:PPanel text="{i18n.GL3314}"></tbp:PPanel>
 							</div>
 							<div class="callToAction">
-								<g:Anchor href="http://about.gooru.org/mission/approach/" target="_blank" ui:field="btnLearnAboutApproach" styleName="primary aboutApproach" text="{i18n.GL3315}"></g:Anchor>
+								<g:Anchor href="http://about.gooru.org/our-mission/" target="_blank" ui:field="btnLearnAboutApproach" styleName="primary aboutApproach" text="{i18n.GL3315}"></g:Anchor>
 							</div>
 						</div>
 						<div class="clearfix"></div>
