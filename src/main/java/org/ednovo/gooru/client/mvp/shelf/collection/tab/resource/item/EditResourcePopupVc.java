@@ -988,22 +988,17 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				for(final CodeDo codeObj:standardsDo){
-					if(codeObj.getCodeId()==Integer.parseInt(id)){
-						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					if(id.equalsIgnoreCase(String.valueOf(entry.getKey()))){
+						int idVal=Integer.parseInt(id);
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(),idVal, new SimpleAsyncCallback<Void>() {
 							@Override
 							public void onSuccess(Void result) {
-								CodeDo deletedObj=new CodeDo();
-								deletedObj.setCodeId(codeObj.getCodeId());
-								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);
 								centurySelectedValues.remove(Long.parseLong(id));
-
 							}
 						});
 						this.getParent().removeFromParent();
 						return;
-
 					}
 				}
 			}
