@@ -66,7 +66,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
 	@UiField Label lblEmptyErrorMessage,lblError;
-	@UiField public Label myCollDefault,addtocollHeaderText,addingTextLbl;
+	@UiField public Label myCollDefault,addtocollHeaderText,addingTextLbl,copyCollectionLblMsg;
 
 	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 
@@ -721,28 +721,37 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			
 			addtocollHeaderText.setText(i18n.GL3224());
 			addingTextLbl.setText(i18n.GL3462_18());
-		
+			copyCollectionLblMsg.setVisible(false);
+			//copyCollectionLblMsg.setText(i18n.GL3462_18());
 		}else{
 		
 			if(isCopySelected){
 				if("collection".equalsIgnoreCase(this.selectedType)){
 					addtocollHeaderText.setText(i18n.GL3462_13());
 					addingTextLbl.setText(i18n.GL3462_14());
+					copyCollectionLblMsg.setVisible(true);
+					copyCollectionLblMsg.setText(i18n.GL3605());
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#fab03a;");
 					btnAddExisting.setText("Copy");
 					btnAddExisting.setTitle("Copy");
 				}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
 					addtocollHeaderText.setText(i18n.GL3510());
 					addingTextLbl.setText(i18n.GL3509());
+					copyCollectionLblMsg.setVisible(false);
 					btnAddExisting.setText("Copy");
 					btnAddExisting.setTitle("Copy");
 				}else if(!StringUtil.isEmpty(copyType)&& LESSON.equalsIgnoreCase(copyType)){
 					addtocollHeaderText.setText(i18n.GL3512());
 					addingTextLbl.setText(i18n.GL3511());
+					copyCollectionLblMsg.setVisible(false);
 					btnAddExisting.setText("Copy");
 					btnAddExisting.setTitle("Copy");
 				}else{
 					addtocollHeaderText.setText(i18n.GL3462_13_1());
 					addingTextLbl.setText(i18n.GL3462_14_1());
+					copyCollectionLblMsg.setVisible(true);
+					copyCollectionLblMsg.setText(i18n.GL3606());
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#fab03a;");
 					btnAddExisting.setText("Copy");
 					btnAddExisting.setTitle("Copy");
 				}
@@ -750,17 +759,24 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				if("collection".equalsIgnoreCase(this.selectedType)){
 					addtocollHeaderText.setText(i18n.GL3462_15());
 					addingTextLbl.setText(i18n.GL3462_16());
+					copyCollectionLblMsg.setVisible(true);
+					copyCollectionLblMsg.setText(i18n.GL3605());
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#fab03a;");
 					btnAddExisting.setText(i18n.GL0590());
 					btnAddExisting.setTitle(i18n.GL0590());
 				}else{
 					addtocollHeaderText.setText(i18n.GL3462_15_1());
 					addingTextLbl.setText(i18n.GL3462_16_1());
+					copyCollectionLblMsg.setVisible(true);
+					copyCollectionLblMsg.setText(i18n.GL3606());
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#fab03a;");
 					btnAddExisting.setText(i18n.GL0590());
 					btnAddExisting.setTitle(i18n.GL0590());
 				}
 			}else{
 				addtocollHeaderText.setText(i18n.GL3223());
 				addingTextLbl.setText(i18n.GL3462_17());
+				copyCollectionLblMsg.setVisible(false);
 				btnAddExisting.setText(i18n.GL0590());
 				btnAddExisting.setTitle(i18n.GL0590());
 			}
