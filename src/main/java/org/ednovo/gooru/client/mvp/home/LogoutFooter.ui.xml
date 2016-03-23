@@ -20,13 +20,13 @@
 									<g:Anchor href="http://about.gooru.org/" target="_blank" text="{i18n.GL1024}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.gooru.org/about/careers/" target="_blank" text="{i18n.GL1244}" />
+								    <g:Anchor href="http://about.gooru.org/careers/" target="_blank" text="{i18n.GL1244}" />
 								</li>
 								<li>
 								    <g:Anchor href="http://support.gooru.org" target="_blank" text="{i18n.GL1307}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.gooru.org/contact/" target="_blank" text="{i18n.GL1245}" />
+								    <g:Anchor href="http://about.gooru.org" target="_blank" text="{i18n.GL1245}" />
 								</li>
 							</ul>
 						</div>
@@ -40,13 +40,13 @@
 								    <g:Anchor href="http://partners.gooru.org/" target="_blank" text="{i18n.Gl2151}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.gooru.org/educators/stories/" target="_blank" text="{i18n.GL3327}" />
+								    <g:Anchor href="https://docs.google.com/document/d/1wBypcpyNRmZPMrojYtpZ5CN4rhS4AfIivRd_fpQgwIk/edit?usp=sharing" target="_blank" text="{i18n.GL3327}" />
 								</li>
 								<!-- <li>
 								    <g:Anchor href="http://developers.gooru.org/" target="_blank" text="{i18n.GL2154}" />
 								</li> -->
 								<li>
-								    <g:Anchor href="http://about.gooru.org/community/events" target="_blank" text="{i18n.GL2166}" />
+								    <g:Anchor href="http://about.gooru.org/events" target="_blank" text="{i18n.GL2166}" />
 								</li>
 							</ul>
 						</div>
