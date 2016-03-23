@@ -242,13 +242,13 @@ public class FooterUc extends Composite {
 		aboutGooruAnr.setTarget("_blank");
 		//featuresAnr.setHref("http://about.gooru.org/product/overview/");
 		//featuresAnr.setTarget("_blank");
-		communityAnr.setHref("http://about.gooru.org/educators/stories/");
+		communityAnr.setHref("https://docs.google.com/document/d/1wBypcpyNRmZPMrojYtpZ5CN4rhS4AfIivRd_fpQgwIk/edit?usp=sharing");
 		communityAnr.setTarget("_blank");
 		supportAnr.setHref("http://support.gooru.org");
 		supportAnr.setTarget("_blank");
-		careersAnr.setHref("http://about.gooru.org/about/careers/");
+		careersAnr.setHref("http://about.gooru.org/careers/");
 		careersAnr.setTarget("_blank");
-		contactUsAnr.setHref("http://about.gooru.org/contact/");
+		contactUsAnr.setHref("http://about.gooru.org");
 		contactUsAnr.setTarget("_blank");
 
 //		mixpanelLink.getElement().setId("lnkMixpanelLink");

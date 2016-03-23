@@ -73,7 +73,7 @@
 								<div class="catBody">
 									<g:Label styleName="contentPane" text="{i18n.GL3296}"></g:Label>
 									<div class="callToAction">
-										<g:Anchor href="http://about.gooru.org/educators/stories/" target="_blank" styleName="primary" ui:field="ancSeeStories" text="{i18n.GL3328}"></g:Anchor>
+										<g:Anchor href="https://docs.google.com/document/d/1wBypcpyNRmZPMrojYtpZ5CN4rhS4AfIivRd_fpQgwIk/edit?usp=sharing" target="_blank" styleName="primary" ui:field="ancSeeStories" text="{i18n.GL3328}"></g:Anchor>
 									</div>
 								</div>
 							</div>
@@ -109,7 +109,7 @@
 								<div class="catBody">
 									<g:Label styleName="contentPane" text="{i18n.GL3303}" />
 									<div class="callToAction">
-									    <g:Anchor href="http://about.gooru.org/partners/" text="{i18n.GL3304}" target="_blank" styleName="primary" ui:field="ancLearnMore"></g:Anchor>
+									    <g:Anchor href="http://about.gooru.org/partner" text="{i18n.GL3304}" target="_blank" styleName="primary" ui:field="ancLearnMore"></g:Anchor>
 									</div>
 								</div>
 							</div>
@@ -127,13 +127,13 @@
 						<tbp:H2Panel text="{i18n.GL3305}"/>
 						<div class="blocks">
 						    <h3>
-						    <g:Anchor styleName="h3" target="_blank" href="http://about.gooru.org/educators/get-started/" text="{i18n.GL2134}" />
+						    <g:Anchor styleName="h3" target="_blank" href="http://about.gooru.org/downloads" text="{i18n.GL2134}" />
 						    </h3>
 							<tbp:PPanel text="{i18n.GL3307}" />
 						</div>
 						<div class="blocks">
 						    <h3>
-								<g:Anchor styleName="h3" target="_blank" href="http://about.gooru.org/educators/stories/" text="{i18n.GL2144}" />
+								<g:Anchor styleName="h3" target="_blank" href="https://docs.google.com/document/d/1wBypcpyNRmZPMrojYtpZ5CN4rhS4AfIivRd_fpQgwIk/edit?usp=sharing" text="{i18n.GL2144}" />
 							</h3>
 							<tbp:PPanel text="{i18n.GL2146}" />
 						</div>
@@ -142,7 +142,7 @@
 						    </div>
 						    <div class="events">
 						        <h3>
-									<g:Anchor target="_blank" styleName="h3" href="http://about.gooru.org/community/events" text="{i18n.GL2143}" />
+									<g:Anchor target="_blank" styleName="h3" href="http://about.gooru.org/events" text="{i18n.GL2143}" />
 								</h3>
 								<tbp:PPanel text="{i18n.GL2142}" />
 							</div>
