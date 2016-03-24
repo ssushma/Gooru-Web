@@ -26,7 +26,7 @@
 								    <g:Anchor href="http://support.gooru.org" target="_blank" text="{i18n.GL1307}" />
 								</li>
 								<li>
-								    <g:Anchor href="http://about.gooru.org" target="_blank" text="{i18n.GL1245}" />
+								    <g:Anchor href="http://about.gooru.org/contact-us/" target="_blank" text="{i18n.GL1245}" />
 								</li>
 							</ul>
 						</div>

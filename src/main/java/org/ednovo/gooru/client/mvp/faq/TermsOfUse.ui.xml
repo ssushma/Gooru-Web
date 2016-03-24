@@ -17,7 +17,7 @@
 							<div class="lastUpdated">Effective Date: March 15, 2016</div>
 							<br/>
 							<div class="privacyLinkText">
-							<a href="http://support.gooru.org" class="privacyLinkText" target="_blank">Welcome to Gooru! Thank you for choosing to learn with us.</a>
+							<div class="policyTextLine"><b>Welcome to Gooru! Thank you for choosing to learn with us.</b></div>
 							</div>
 							<div class="textContentDiv">
 
@@ -26,9 +26,9 @@
 									<b>Gooru</b>
 									" or "
 									<b>we</b>
-									") is a 501(c)(3) organization, which operates the website located at www.gooru.org (our “Site”)We’re delighted to have you on our Site and using our services and content (the “Services”)Please continue reading to learn about our Services and the terms that apply to the access and use of our Site and our Services ( "
+									") is a 501(c)(3) organization, which operates the website located at www.gooru.org (our “Site”) We’re delighted to have you on our Site and using our services and content (the “Services”). Please continue reading to learn about our Services and the terms that apply to the access and use of our Site and our Services ( "
 									<b>Terms of Use</b>
-									")If you have questions about the Site, Gooru’s Services, or these Terms of Use, please contact us at
+									"). If you have questions about the Site, Gooru’s Services, or these Terms of Use, please contact us at
 									 <a href="mailto:info@gooru.org" target="_blank">
 										<i class="privacyLinkText">info@gooru.org</i>
 									</a>
@@ -63,18 +63,23 @@
 									
 									<b>KEY CONTENT RELATED TERMS</b>
 									</span>
-									<span class="policyTextLine">
-									 <b>Content</b> in Gooru is created, uploaded, edited, and shared by UsersContent can include:
-									 <ul><li style="padding-left:1.5em;text-indent:-1.5em;">Questions: Authored by Users in the Gooru system</li>									     
-									 <li style="padding-left:1.5em;text-indent:-1.5em;">Resources: Uploaded or linked to by UsersResources linked to another site follow the copyright and terms of use of that site</li>
-									 <li style="padding-left:1.5em;text-indent:-1.5em;">Learning Collections: A set of resources and questions</li>
-									 <li style="padding-left:1.5em;text-indent:-1.5em;">Assessments: A set of questions; external assessments created outside of Gooru are treated as linked resources</li>
-									 <li style="padding-left:1.5em;text-indent:-1.5em;">Courses: A set of Learning Collections and Assessments, organized into units and lessons</li>
+								<span class="policyTextLine">
+									When you read these Terms of Use, you will see specially-defined terms, indicated by the use of an initial capital letter.  These terms are specially defined to enhance your understanding of these Terms of Use, and Gooru’s Site and Services.  The following are some of the more commonly used defined terms:
+								</span>
+								<span class="policyTextLine">
+									 <b>Content</b> in Gooru is created, uploaded, edited, and shared by Users, Content can include:
+								</span>
+									<span class="policyTextLine">									
+									 <ul><li style="padding-left:0.5em;text-indent:-0.1em;list-style:initial;margin-left:3em;">Questions: Authored by Users in the Gooru system</li>									     
+									 <li style="padding-left:0.5em;text-indent:-0.1em;list-style:initial;margin-left:3em;">Resources: Uploaded or linked to by UsersResources linked to another site follow the copyright and terms of use of that site</li>
+									 <li style="padding-left:0.5em;text-indent:-0.1em;list-style:initial;margin-left:3em;">Learning Collections: A set of resources and questions</li>
+									 <li style="padding-left:0.5em;text-indent:-0.1em;list-style:initial;margin-left:3em;">Assessments: A set of questions; external assessments created outside of Gooru are treated as linked resources</li>
+									 <li style="padding-left:0.5em;text-indent:-0.1em;list-style:initial;margin-left:3em;">Courses: A set of Learning Collections and Assessments, organized into units and lessons</li>
 									 </ul>
 								</span>
 
 								<span class="policyTextLine">
-									Each Content type has associated metadata fields that are added by a UserThese fields are descriptive and provide additional context for how and where content is used for learning or teaching.
+									Each Content type has associated metadata fields that are added by a User, These fields are descriptive and provide additional context for how and where content is used for learning or teaching.
 								</span>
 
 								<span class="policyTextLine">
@@ -111,7 +116,7 @@
 								</span>
 
 								<span class="policyTextLine">
-									<b>CONTENT LICENSE:</b>  Subject to the terms and conditions of these Terms of Use, we grant you (I) a non-exclusive, limited, non-transferable, freely revocable license to use our Site and the Services, and (ii) the ability to post, upload, publish, submit, transmit or create ContentContent creation in Gooru includes the ability to create assessments using the Gooru assessment authoring tool, the ability to upload documents to the Gooru platform, and the ability to create and save Learning Collections, multimedia playlists of web resourcesContent found on Gooru’s Site, other than web resources, is content dedicated to the public domain pursuant to the terms and conditions of the Creative Commons CC0 1.0 Universal license found at http://creativecommons.org/publicdomain/zero/1.0/legalcodeWeb resources within Gooru playlists have a wide range of terms of use, and may be subject to license terms of the authors but the arrangement of content and associated narration on Gooru are made part of the public domain pursuant to the CC0 1.0 license.
+									<b>CONTENT LICENSE:</b>  Subject to the terms and conditions of these Terms of Use, we grant you (I) a non-exclusive, limited, non-transferable, freely revocable license to use our Site and the Services, and (ii) the ability to post, upload, publish, submit, transmit or create ContentContent creation in Gooru includes the ability to create assessments using the Gooru assessment authoring tool, the ability to upload documents to the Gooru platform, and the ability to create and save Learning Collections, multimedia playlists of web resourcesContent found on Gooru’s Site, other than web resources, is content dedicated to the public domain pursuant to the terms and conditions of the Creative Commons CC0 1.0 Universal license found at http://creativecommons.org/publicdomain/zero/1.0/legalcode. Web resources within Gooru playlists have a wide range of terms of use, and may be subject to license terms of the authors but the arrangement of content and associated narration on Gooru are made part of the public domain pursuant to the CC0 1.0 license.
 								</span>
 
 								<span class="policyTextLine">
