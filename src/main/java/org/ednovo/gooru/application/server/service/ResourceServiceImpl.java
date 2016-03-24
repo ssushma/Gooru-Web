@@ -1098,6 +1098,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			List<Integer> skills=new ArrayList<Integer>();
 			List<StandardFo> standardFos=collectionItemDo.getSkills();
+			System.out.println("received skills::"+collectionItemDo.getSkills());
 			if(standardFos!=null){
 				for(StandardFo standardFo:standardFos){
 					skills.add(standardFo.getId());

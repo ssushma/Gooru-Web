@@ -731,7 +731,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					addingTextLbl.setText(i18n.GL3462_14());
 					copyCollectionLblMsg.setVisible(true);
 					copyCollectionLblMsg.setText(i18n.GL3605());
-					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#fab03a;");
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");
 					btnAddExisting.setText("Copy");
 					btnAddExisting.setTitle("Copy");
 				}else if(!StringUtil.isEmpty(copyType)&& UNIT.equalsIgnoreCase(copyType)){
@@ -751,7 +751,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					addingTextLbl.setText(i18n.GL3462_14_1());
 					copyCollectionLblMsg.setVisible(true);
 					copyCollectionLblMsg.setText(i18n.GL3606());
-					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#fab03a;");
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");
 					btnAddExisting.setText("Copy");
 					btnAddExisting.setTitle("Copy");
 				}
@@ -761,7 +761,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					addingTextLbl.setText(i18n.GL3462_16());
 					copyCollectionLblMsg.setVisible(true);
 					copyCollectionLblMsg.setText(i18n.GL3605());
-					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#fab03a;");
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");
 					btnAddExisting.setText(i18n.GL0590());
 					btnAddExisting.setTitle(i18n.GL0590());
 				}else{
@@ -769,14 +769,25 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					addingTextLbl.setText(i18n.GL3462_16_1());
 					copyCollectionLblMsg.setVisible(true);
 					copyCollectionLblMsg.setText(i18n.GL3606());
-					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#fab03a;");
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");
 					btnAddExisting.setText(i18n.GL0590());
 					btnAddExisting.setTitle(i18n.GL0590());
 				}
 			}else{
 				addtocollHeaderText.setText(i18n.GL3223());
-				addingTextLbl.setText(i18n.GL3462_17());
-				copyCollectionLblMsg.setVisible(false);
+				addingTextLbl.setText(i18n.GL3462_17());			
+				String nameToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				if(PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(nameToken)){
+					copyCollectionLblMsg.setVisible(true);
+					copyCollectionLblMsg.setText(i18n.GL3605());
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");
+				}
+				else
+				{
+					copyCollectionLblMsg.setVisible(true);
+					copyCollectionLblMsg.setText(i18n.GL3606());
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");	
+				}
 				btnAddExisting.setText(i18n.GL0590());
 				btnAddExisting.setTitle(i18n.GL0590());
 			}
