@@ -98,6 +98,8 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	final String ASSESSMENT="assessment";
 	private static final String ASSESSMENT_URL = "assessment/url";
 	
+	String collectionType = "";
+	
 	private static final String COURSE = "Course";
 	private static final String UNIT = "Unit";
 	private static final String LESSON = "Lesson";
@@ -135,6 +137,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void setTabItems(int index,String type,FolderDo folderObj) {
+		collectionType = type;
 		clearSlot(INNER_SLOT);
 		if(folderObj==null){
 			selectedWidgetsTitleType = null;
@@ -337,7 +340,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	}
 	@Override
 	public void getUserShelfData(String collectionId,String valuetype) {
-		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, valuetype,"");
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, valuetype,"",collectionType);
 		showAppPopup();
 	}
 
@@ -488,7 +491,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void EnableMyCollectionsTreeData(String collectionId,String collectionTitle) {
 		searchAddResourceToCollectionPresenter.getLoadingImage();
-		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle,collectionType);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(false);
 		shelfMainPresenter.SetDefaultTypeAndVersion();
@@ -497,7 +500,7 @@ public class MyCollectionsRightClusterPresenter extends PresenterWidget<IsMyColl
 	@Override
 	public void DisableMyCollectionsTreeData(String collectionId,String collectionTitle) {
 		searchAddResourceToCollectionPresenter.getLoadingImage();
-		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle,collectionType);
 		searchAddResourceToCollectionPresenter.setCollectionTitle(collectionTitle);
 		searchAddResourceToCollectionPresenter.DisableMyCollectionsPanelData(true);
 		shelfMainPresenter.SetDefaultTypeAndVersion();

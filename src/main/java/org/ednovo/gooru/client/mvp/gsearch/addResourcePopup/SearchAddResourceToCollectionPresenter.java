@@ -133,11 +133,12 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 
 	@Override
-	public void getUserShelfCollectionsData(String collectionId,String searchType,String collectionTitle) {
+	public void getUserShelfCollectionsData(String collectionId,String searchType,String collectionTitle,String collectionType) {
 		this.collectionSearchWidget=null;
 		this.collectionId=collectionId;
 		this.collectionTitle=collectionTitle;
 		getView().setDefaultPanelVisibility(false);
+		getView().setCollectionType(collectionType);
 		getWorkspaceData(0,20,true,searchType);
 	}
 

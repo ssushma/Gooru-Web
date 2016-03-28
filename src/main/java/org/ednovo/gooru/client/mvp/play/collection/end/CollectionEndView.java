@@ -703,7 +703,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 								getUiHandlers().setDefaultTypeAndVersion();
 								remixPresenterWidget.DisableMyCollectionsPanelData(false);
 								remixPresenterWidget.getLoadingImage();
-								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle,collectionDo.getCollectionType());
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
 								remixPresenterWidget.getView().getAppPopUp().center();
@@ -718,7 +718,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						getUiHandlers().setDefaultTypeAndVersion();
 						remixPresenterWidget.DisableMyCollectionsPanelData(false);
 						remixPresenterWidget.getLoadingImage();
-						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle,collectionDo.getCollectionType());
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
 						remixPresenterWidget.getView().getAppPopUp().center();

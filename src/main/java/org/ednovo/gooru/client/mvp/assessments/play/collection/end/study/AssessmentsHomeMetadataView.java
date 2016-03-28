@@ -285,7 +285,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 								getUiHandlers().setDefultVersionAndType();
 								remixPresenterWidget.DisableMyCollectionsPanelData(false);
 								remixPresenterWidget.getLoadingImage();
-								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+								remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle,collectionDo.getCollectionType());
 								remixPresenterWidget.getView().getAppPopUp().show();
 								isCustomizePopup = false;
 								remixPresenterWidget.getView().getAppPopUp().center();
@@ -301,7 +301,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 						getUiHandlers().setDefultVersionAndType();
 						remixPresenterWidget.DisableMyCollectionsPanelData(false);
 						remixPresenterWidget.getLoadingImage();
-						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+						remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle,collectionDo.getCollectionType());
 						remixPresenterWidget.getView().getAppPopUp().show();
 						isCustomizePopup = false;
 						remixPresenterWidget.getView().getAppPopUp().center();
@@ -402,7 +402,7 @@ public class AssessmentsHomeMetadataView extends BaseViewWithHandlers<Assessment
 			getUiHandlers().setDefultVersionAndType();
 			remixPresenterWidget.DisableMyCollectionsPanelData(false);
 			remixPresenterWidget.getLoadingImage();
-			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle);
+			remixPresenterWidget.getUserShelfCollectionsData(collectionId, "coursebuilder",collectionTitle,collectionDo.getCollectionType());
 			remixPresenterWidget.getView().getAppPopUp().show();
 			isCustomizePopup = false;
 			remixPresenterWidget.getView().getAppPopUp().center();

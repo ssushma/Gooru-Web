@@ -74,4 +74,5 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	public void closeTabView();
 	
 	public void disableTabs(boolean isVisible, String copyType);
+	void setCollectionType(String collectionTypeVal);
 }

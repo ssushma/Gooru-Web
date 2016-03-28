@@ -11,6 +11,7 @@ import org.ednovo.gooru.application.shared.i18n.MessageProperties;
 import org.ednovo.gooru.application.shared.model.folder.CourseSummaryDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderDo;
 import org.ednovo.gooru.application.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
 import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
@@ -98,6 +99,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private String unitId=null;
 	private String lessonId=null;
 	private String copyType;
+	private String collectionTypeValG = "";
 
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";
 
@@ -599,6 +601,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	public void setDefaultPanelVisibility(Boolean blnVal){
 		pageNum=1;
 	}
+	
+	@Override
+	public void setCollectionType(String collectionTypeVal){
+		collectionTypeValG=collectionTypeVal;
+	}
 
 	@Override
 	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params,String searchType,FolderDo folderDo) {
@@ -774,19 +781,46 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 					btnAddExisting.setTitle(i18n.GL0590());
 				}
 			}else{
-				addtocollHeaderText.setText(i18n.GL3223());
-				addingTextLbl.setText(i18n.GL3462_17());			
+			
 				String nameToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(nameToken)){
-					copyCollectionLblMsg.setVisible(true);
-					copyCollectionLblMsg.setText(i18n.GL3605());
-					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");
-				}
-				else
-				{
+				String collectionType=AppClientFactory.getPlaceManager().getRequestParameter(IsGooruSearchView.COLLECTIONTYPE_FLT);
+
+				if(PlaceTokens.ASSESSMENT_PLAY.equalsIgnoreCase(nameToken) || (!collectionTypeValG.isEmpty() && collectionTypeValG.equalsIgnoreCase("assessment"))){
+					addtocollHeaderText.setText(i18n.GL3374());
+					addingTextLbl.setText(i18n.GL3607());
 					copyCollectionLblMsg.setVisible(true);
 					copyCollectionLblMsg.setText(i18n.GL3606());
 					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");	
+				}
+				else if(collectionType!=null)
+				{
+					if("collectionsearch".equalsIgnoreCase(nameToken) && collectionType.equalsIgnoreCase("assessment"))
+					{
+						addtocollHeaderText.setText(i18n.GL3374());
+						addingTextLbl.setText(i18n.GL3607());
+						copyCollectionLblMsg.setVisible(true);
+						copyCollectionLblMsg.setText(i18n.GL3606());
+						copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");	
+					}
+					else
+					{
+						addtocollHeaderText.setText(i18n.GL3223());
+						addingTextLbl.setText(i18n.GL3462_17());
+						copyCollectionLblMsg.setVisible(true);
+						copyCollectionLblMsg.setText(i18n.GL3605());
+						copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");
+					}
+				}
+				else
+				{
+					
+					addtocollHeaderText.setText(i18n.GL3223());
+					addingTextLbl.setText(i18n.GL3462_17());
+					copyCollectionLblMsg.setVisible(true);
+					copyCollectionLblMsg.setText(i18n.GL3605());
+					copyCollectionLblMsg.getElement().setAttribute("style", "padding:0px; color:#ff1493;");
+					
+
 				}
 				btnAddExisting.setText(i18n.GL0590());
 				btnAddExisting.setTitle(i18n.GL0590());

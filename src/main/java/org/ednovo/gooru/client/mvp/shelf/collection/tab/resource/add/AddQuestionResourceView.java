@@ -2123,6 +2123,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setStandardIds(standards);
 			//collectionQuestionItemDo.setTaxonomySet(taxonomySet);
 			collectionQuestionItemDo.setDepthOfKnowledgeIds(depthOfKnowledgesList);
+			System.out.println("skilIds::"+getSelectedCenturySkills());
 			collectionQuestionItemDo.setSkillIds(getSelectedCenturySkills());
 			if(getQuestionType().equalsIgnoreCase("HT_HL") || getQuestionType().equalsIgnoreCase("HT_RO") ){
 				collectionQuestionItemDo.setHlType(htType);
